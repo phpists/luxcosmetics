@@ -1863,6 +1863,7 @@
             <textarea name="Сообщение" placeholder="Сообщение"></textarea>
             <button class="btn btn-feed">Отправить</button>
         </form> -->
+        @include('layouts.includes.purchase_modal')
     </div>
     <div class="done-w">
         <div class="done-window">
