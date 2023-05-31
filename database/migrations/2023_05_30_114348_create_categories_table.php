@@ -15,9 +15,9 @@ return new class extends Migration
             $table->id();
             $table->string('key', 40)->comment('Клач');
             $table->string('alias')->default('Аліас');
+            $table->bigInteger('parent_id')->comment('Батьківська категорія');
             $table->bigInteger('position')->comment('Позиція');
             $table->boolean('status')->default(0)->comment('Статус');
-            $table->string('image', 300)->nullable();
             $table->boolean('add_to_top_menu')->default(0);
             $table->timestamps();
         });
