@@ -207,11 +207,11 @@
                                         <div class="product__btm">
                                             <div class="product__reviews">
                                                 <div class="stars">
-                                                    <span class="stars__item is-active"><svg class="icon"><use xlink:href="images/dist/sprite.svg#star"></use></svg></span>
-                                                    <span class="stars__item is-active"><svg class="icon"><use xlink:href="images/dist/sprite.svg#star"></use></svg></span>
-                                                    <span class="stars__item is-active"><svg class="icon"><use xlink:href="images/dist/sprite.svg#star"></use></svg></span>
-                                                    <span class="stars__item"><svg class="icon"><use xlink:href="images/dist/sprite.svg#star"></use></svg></span>
-                                                    <span class="stars__item"><svg class="icon"><use xlink:href="images/dist/sprite.svg#star"></use></svg></span>
+                                                    <span class="stars__item is-active"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#start')}}"></use></svg></span>
+                                                    <span class="stars__item is-active"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#start')}}"></use></svg></span>
+                                                    <span class="stars__item is-active"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#start')}}"></use></svg></span>
+                                                    <span class="stars__item"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#start')}}"></use></svg></span>
+                                                    <span class="stars__item"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#start')}}"></use></svg></span>
                                                 </div>
                                                 <a href="">16 отзывов</a>
                                             </div>
@@ -265,11 +265,11 @@
                                         <div class="product__btm">
                                             <div class="product__reviews">
                                                 <div class="stars">
-                                                    <span class="stars__item is-active"><svg class="icon"><use xlink:href="images/dist/sprite.svg#star"></use></svg></span>
-                                                    <span class="stars__item is-active"><svg class="icon"><use xlink:href="images/dist/sprite.svg#star"></use></svg></span>
-                                                    <span class="stars__item is-active"><svg class="icon"><use xlink:href="images/dist/sprite.svg#star"></use></svg></span>
-                                                    <span class="stars__item"><svg class="icon"><use xlink:href="images/dist/sprite.svg#star"></use></svg></span>
-                                                    <span class="stars__item"><svg class="icon"><use xlink:href="images/dist/sprite.svg#star"></use></svg></span>
+                                                    <span class="stars__item is-active"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#start')}}"></use></svg></span>
+                                                    <span class="stars__item is-active"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#start')}}"></use></svg></span>
+                                                    <span class="stars__item is-active"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#start')}}"></use></svg></span>
+                                                    <span class="stars__item"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#start')}}"></use></svg></span>
+                                                    <span class="stars__item"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#start')}}"></use></svg></span>
                                                 </div>
                                                 <a href="">16 отзывов</a>
                                             </div>
@@ -323,11 +323,11 @@
                                         <div class="product__btm">
                                             <div class="product__reviews">
                                                 <div class="stars">
-                                                    <span class="stars__item is-active"><svg class="icon"><use xlink:href="images/dist/sprite.svg#star"></use></svg></span>
-                                                    <span class="stars__item is-active"><svg class="icon"><use xlink:href="images/dist/sprite.svg#star"></use></svg></span>
-                                                    <span class="stars__item is-active"><svg class="icon"><use xlink:href="images/dist/sprite.svg#star"></use></svg></span>
-                                                    <span class="stars__item"><svg class="icon"><use xlink:href="images/dist/sprite.svg#star"></use></svg></span>
-                                                    <span class="stars__item"><svg class="icon"><use xlink:href="images/dist/sprite.svg#star"></use></svg></span>
+                                                    <span class="stars__item is-active"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#start')}}"></use></svg></span>
+                                                    <span class="stars__item is-active"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#start')}}"></use></svg></span>
+                                                    <span class="stars__item is-active"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#start')}}"></use></svg></span>
+                                                    <span class="stars__item"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#start')}}"></use></svg></span>
+                                                    <span class="stars__item"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#start')}}"></use></svg></span>
                                                 </div>
                                                 <a href="">16 отзывов</a>
                                             </div>
@@ -386,11 +386,11 @@
                                         <div class="product__btm">
                                             <div class="product__reviews">
                                                 <div class="stars">
-                                                    <span class="stars__item is-active"><svg class="icon"><use xlink:href="images/dist/sprite.svg#star"></use></svg></span>
-                                                    <span class="stars__item is-active"><svg class="icon"><use xlink:href="images/dist/sprite.svg#star"></use></svg></span>
-                                                    <span class="stars__item is-active"><svg class="icon"><use xlink:href="images/dist/sprite.svg#star"></use></svg></span>
-                                                    <span class="stars__item"><svg class="icon"><use xlink:href="images/dist/sprite.svg#star"></use></svg></span>
-                                                    <span class="stars__item"><svg class="icon"><use xlink:href="images/dist/sprite.svg#star"></use></svg></span>
+                                                    <span class="stars__item is-active"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#start')}}"></use></svg></span>
+                                                    <span class="stars__item is-active"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#start')}}"></use></svg></span>
+                                                    <span class="stars__item is-active"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#start')}}"></use></svg></span>
+                                                    <span class="stars__item"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#start')}}"></use></svg></span>
+                                                    <span class="stars__item"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#start')}}"></use></svg></span>
                                                 </div>
                                                 <a href="">16 отзывов</a>
                                             </div>
@@ -452,11 +452,11 @@
                                         <div class="product__btm">
                                             <div class="product__reviews">
                                                 <div class="stars">
-                                                    <span class="stars__item is-active"><svg class="icon"><use xlink:href="images/dist/sprite.svg#star"></use></svg></span>
-                                                    <span class="stars__item is-active"><svg class="icon"><use xlink:href="images/dist/sprite.svg#star"></use></svg></span>
-                                                    <span class="stars__item is-active"><svg class="icon"><use xlink:href="images/dist/sprite.svg#star"></use></svg></span>
-                                                    <span class="stars__item"><svg class="icon"><use xlink:href="images/dist/sprite.svg#star"></use></svg></span>
-                                                    <span class="stars__item"><svg class="icon"><use xlink:href="images/dist/sprite.svg#star"></use></svg></span>
+                                                    <span class="stars__item is-active"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#start')}}"></use></svg></span>
+                                                    <span class="stars__item is-active"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#start')}}"></use></svg></span>
+                                                    <span class="stars__item is-active"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#start')}}"></use></svg></span>
+                                                    <span class="stars__item"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#start')}}"></use></svg></span>
+                                                    <span class="stars__item"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#start')}}"></use></svg></span>
                                                 </div>
                                                 <a href="">16 отзывов</a>
                                             </div>
@@ -515,11 +515,11 @@
                                         <div class="product__btm">
                                             <div class="product__reviews">
                                                 <div class="stars">
-                                                    <span class="stars__item is-active"><svg class="icon"><use xlink:href="images/dist/sprite.svg#star"></use></svg></span>
-                                                    <span class="stars__item is-active"><svg class="icon"><use xlink:href="images/dist/sprite.svg#star"></use></svg></span>
-                                                    <span class="stars__item is-active"><svg class="icon"><use xlink:href="images/dist/sprite.svg#star"></use></svg></span>
-                                                    <span class="stars__item"><svg class="icon"><use xlink:href="images/dist/sprite.svg#star"></use></svg></span>
-                                                    <span class="stars__item"><svg class="icon"><use xlink:href="images/dist/sprite.svg#star"></use></svg></span>
+                                                    <span class="stars__item is-active"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#start')}}"></use></svg></span>
+                                                    <span class="stars__item is-active"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#start')}}"></use></svg></span>
+                                                    <span class="stars__item is-active"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#start')}}"></use></svg></span>
+                                                    <span class="stars__item"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#start')}}"></use></svg></span>
+                                                    <span class="stars__item"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#start')}}"></use></svg></span>
                                                 </div>
                                                 <a href="">16 отзывов</a>
                                             </div>
@@ -578,11 +578,11 @@
                                         <div class="product__btm">
                                             <div class="product__reviews">
                                                 <div class="stars">
-                                                    <span class="stars__item is-active"><svg class="icon"><use xlink:href="images/dist/sprite.svg#star"></use></svg></span>
-                                                    <span class="stars__item is-active"><svg class="icon"><use xlink:href="images/dist/sprite.svg#star"></use></svg></span>
-                                                    <span class="stars__item is-active"><svg class="icon"><use xlink:href="images/dist/sprite.svg#star"></use></svg></span>
-                                                    <span class="stars__item"><svg class="icon"><use xlink:href="images/dist/sprite.svg#star"></use></svg></span>
-                                                    <span class="stars__item"><svg class="icon"><use xlink:href="images/dist/sprite.svg#star"></use></svg></span>
+                                                    <span class="stars__item is-active"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#start')}}"></use></svg></span>
+                                                    <span class="stars__item is-active"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#start')}}"></use></svg></span>
+                                                    <span class="stars__item is-active"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#start')}}"></use></svg></span>
+                                                    <span class="stars__item"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#start')}}"></use></svg></span>
+                                                    <span class="stars__item"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#start')}}"></use></svg></span>
                                                 </div>
                                                 <a href="">16 отзывов</a>
                                             </div>
@@ -641,11 +641,11 @@
                                         <div class="product__btm">
                                             <div class="product__reviews">
                                                 <div class="stars">
-                                                    <span class="stars__item is-active"><svg class="icon"><use xlink:href="images/dist/sprite.svg#star"></use></svg></span>
-                                                    <span class="stars__item is-active"><svg class="icon"><use xlink:href="images/dist/sprite.svg#star"></use></svg></span>
-                                                    <span class="stars__item is-active"><svg class="icon"><use xlink:href="images/dist/sprite.svg#star"></use></svg></span>
-                                                    <span class="stars__item"><svg class="icon"><use xlink:href="images/dist/sprite.svg#star"></use></svg></span>
-                                                    <span class="stars__item"><svg class="icon"><use xlink:href="images/dist/sprite.svg#star"></use></svg></span>
+                                                    <span class="stars__item is-active"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#start')}}"></use></svg></span>
+                                                    <span class="stars__item is-active"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#start')}}"></use></svg></span>
+                                                    <span class="stars__item is-active"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#start')}}"></use></svg></span>
+                                                    <span class="stars__item"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#start')}}"></use></svg></span>
+                                                    <span class="stars__item"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#start')}}"></use></svg></span>
                                                 </div>
                                                 <a href="">16 отзывов</a>
                                             </div>

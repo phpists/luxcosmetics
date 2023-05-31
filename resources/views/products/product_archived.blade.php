@@ -20,15 +20,7 @@
                 <div class="col-lg-7">
                     <div class="for-mobile">
                         <div class="product-page__title">{{$product->brand->name}}</div>
-                        <div class="product-page__subtitle">{{$product->title}}</div>
-                        @php
-                            if (sizeof($product->product_variations) > 0) {
-                                $product_variation = $product->product_variations[0];
-                            }
-                            else {
-                                $product_variation = $product;
-                            }
-                        @endphp
+                        <div class="product-page__subtitle">Libre Eau de Parfum (50ml)</div>
                         <div class="product-page__reviewsblock">
                             <div class="product-page__reviews">
                                 <div class="stars">
@@ -43,25 +35,26 @@
                             <div class="product-page__available"><svg class="icon"><use xlink:href="images/dist/sprite.svg#check"></use></svg> В наличии</div>
                         </div>
                     </div>
-                    @php
-                        $images = $product->getImages();
-                    @endphp
                     <div class="product-page__galleryblock">
                         <div class="product-page__gallery">
 
                             <div class="gallery ">
-                                @foreach($images as $image)
-                                    <div class="gallery__item"><a href="{{asset('images/uploads/'.$image->path)}}"><img src="{{asset('images/uploads/'.$image->path)}}" alt=""></a></div>
-                                @endforeach
+                                <div class="gallery__item"><a href="images/dist/tmp-bigproduct.jpg"><img src="{{asset('images/dist/tmp-bigproduct.jpg')}}" alt=""></a></div>
+                                <div class="gallery__item"><a href="images/dist/tmp-bigproduct.jpg"><img src="{{asset('images/dist/tmp-bigproduct.jpg')}}" alt=""></a></div>
+                                <div class="gallery__item"><a href="images/dist/tmp-bigproduct.jpg"><img src="{{asset('images/dist/tmp-bigproduct.jpg')}}" alt=""></a></div>
+                                <div class="gallery__item"><a href="images/dist/tmp-bigproduct.jpg"><img src="{{asset('images/dist/tmp-bigproduct.jpg')}}" alt=""></a></div>
+                                <div class="gallery__item"><a href="images/dist/tmp-bigproduct.jpg"><img src="{{asset('images/dist/tmp-bigproduct.jpg')}}" alt=""></a></div>
                             </div>
 
                         </div>
                         <div class="product-page__gallerythumb">
                             <button class="btn-gallery btn-gallery__up" id="gallery-up"><svg class="icon"><use xlink:href="images/dist/sprite.svg#arrow"></use></svg></button>
                             <div class="gallerythumb">
-                                @foreach($images as $image)
-                                    <div class="gallerythumb__item"><img src="{{asset('images/uploads/'.$image->path)}}" alt=""></div>
-                                @endforeach
+                                <div class="gallerythumb__item"><img src="{{asset('images/dist/tmp-thumb.png')}}" alt=""></div>
+                                <div class="gallerythumb__item"><img src="{{asset('images/dist/tmp-thumb.png')}}" alt=""></div>
+                                <div class="gallerythumb__item"><img src="{{asset('images/dist/tmp-thumb.png')}}" alt=""></div>
+                                <div class="gallerythumb__item"><img src="{{asset('images/dist/tmp-thumb.png')}}" alt=""></div>
+                                <div class="gallerythumb__item"><img src="{{asset('images/dist/tmp-thumb.png')}}" alt=""></div>
                             </div>
                             <button class="btn-gallery btn-gallery__down" id="gallery-down"><svg class="icon"><use xlink:href="images/dist/sprite.svg#arrow"></use></svg></button>
                         </div>
@@ -69,33 +62,37 @@
                 </div>
                 <div class="col-lg-5">
                     <div class="for-desktop">
-                        <div class="product-page__title">{{$product->brand->name}}</div>
-                        <div class="product-page__subtitle">{{$product->title}}</div>
+                        <div class="product-page__title">YVES SAINT LAURENT</div>
+                        <div class="product-page__subtitle">Libre Eau de Parfum (50ml)</div>
                         <div class="product-page__reviewsblock">
                             <div class="product-page__reviews">
                                 <div class="stars">
-                                    <span class="stars__item is-active"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#star')}}"></use></svg></span>
-                                    <span class="stars__item is-active"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#star')}}"></use></svg></span>
-                                    <span class="stars__item is-active"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#star')}}"></use></svg></span>
-                                    <span class="stars__item"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#star')}}"></use></svg></span>
-                                    <span class="stars__item"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#star')}}"></use></svg></span>
+                                    <span class="stars__item is-active"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#start')}}"></use></svg></span>
+                                    <span class="stars__item is-active"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#start')}}"></use></svg></span>
+                                    <span class="stars__item is-active"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#start')}}"></use></svg></span>
+                                    <span class="stars__item"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#start')}}"></use></svg></span>
+                                    <span class="stars__item"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#start')}}"></use></svg></span>
                                 </div>
                                 <a href="">16 отзывов</a>
                             </div>
-                            <div class="product-page__available"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#check')}}"></use></svg> В наличии</div>
+                            <div class="product-page__available"><svg class="icon"><use xlink:href="images/dist/sprite.svg#check"></use></svg> В наличии</div>
                         </div>
                     </div>
-                    @if(sizeof($product->product_variations))
-                        <div class="product-page__options">
-                            <div class="product-page__options-title">Выбранный размер: <b>90ml</b></div>
-                            @foreach($product->product_variations as $product_variation)
-                                <label class="volume">
-                                    <input type="radio" name="volume"/>
-                                    <div class="volume__text"><b>{{$product_variation->size}}</b> {{$product_variation->discount_price?? $product_variation->price}} ₽ </div>
-                                </label>
-                            @endforeach
-                        </div>
-                    @endif
+                    <div class="product-page__options">
+                        <div class="product-page__options-title">Выбранный размер: <b>90ml</b></div>
+                        <label class="volume">
+                            <input type="radio" name="volume"  checked/>
+                            <div class="volume__text"><b>50ml</b> 10 073 ₽ </div>
+                        </label>
+                        <label class="volume">
+                            <input type="radio" name="volume" />
+                            <div class="volume__text"><b>90ml</b> 13 326 ₽  </div>
+                        </label>
+                        <label class="volume">
+                            <input type="radio" name="volume"/>
+                            <div class="volume__text"><b>150ml</b> 15 320 ₽  </div>
+                        </label>
+                    </div>
                     <div class="product-page__options">
                         <div class="product-page__options-title">Выбранный цвет: <b>Red</b></div>
                         <label class="color">
@@ -117,12 +114,12 @@
                     </div>
                     <div class="product-page__priceblock">
                         <div class="product-page__prices">
-                            <div class="product-page__price">{{$product_variation->discount_price??$product_variation->price}} ₽ </div>
-                            <del class="product-page__oldprice">{{$product_variation->price}} ₽ </del>
+                            <div class="product-page__price">10 073 ₽ </div>
+                            <del class="product-page__oldprice">12 650 ₽ </del>
                         </div>
-                        <div class="product-page__points"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#warning')}}"></use></svg><a href=""> Заработайте 345 баллов</a></div>
+                        <div class="product-page__points"><svg class="icon"><use xlink:href="images/dist/sprite.svg#warning"></use></svg><a href=""> Заработайте 345 баллов</a></div>
                     </div>
-                    <button class="btn btn--accent product-page__addcart"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#cart')}}"></use></svg> Добавить в корзину</button>
+                    <button class="btn btn--accent product-page__addcart"><svg class="icon"><use xlink:href="images/dist/sprite.svg#cart"></use></svg> Добавить в корзину</button>
                     <div class="product-page__deliveryinfo">
                         <p>Доставка в тот же день: заказ до 13:00 в Москве и <a href="">других городах.</a></p>
                         <p>Бесплатная экспресс-доставка для всех заказов на сумму свыше 10 000 ₽ </p>
@@ -148,17 +145,29 @@
                     <div class="product-page__description">
                         <div class="accordeon product-page__accordeon typography">
                             <dl>
-                                <dt class="active">Информация о продукте <svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#arrow')}}"></use></svg></dt>
+                                <dt class="active">Информация о продукте <svg class="icon"><use xlink:href="images/dist/sprite.svg#arrow"></use></svg></dt>
                                 <dd>
                                     <div class="typography">
-                                        {!! $product->description_1 !!}
+                                        <h3>Об аромате</h3>
+                                        <p>LIBRE, новый женский аромат от <a href="">Yves Saint Laurent </a>, свобода жить с избытком. Аромат сильной, смелой и свободной женщины, чрезвычайно экспериментирующей со своей свободой.</p>
+                                        <p>Новый аромат свободы <a href="">от Ива Сен-Лорана</a>сочетает в себе эссенцию лаванды из Франции и чувственность марокканского апельсинового цвета, создавая уникальное цветочное слияние, дополненное смелой нотой мускусного аккорда.</p>
+                                        <h3>Семейство ароматов</h3>
+                                        <ul>
+                                            <li>Цветочный</li>
+                                        </ul>
+                                        <h3>Основные примечания</h3>
+                                        <ul>
+                                            <li>Лавандовая эссенция, апельсиновый цвет, мускусный аккорд</li>
+                                        </ul>
+                                        <h3>О флаконе</h3>
+                                        <p>Флакон представляет собой модный аксессуар с черной асимметричной крышкой, напоминающей сексуальное платье от кутюр.Золотые цепочки на шее напоминают о культовых сумках YSL, а дизайн дополняет вневременной логотип Yves Saint Laurent.</p>
                                     </div>
                                 </dd>
                             </dl>
                             <dl>
-                                <dt>Как использовать <svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#arrow')}}"></use></svg></dt>
+                                <dt>Как использовать <svg class="icon"><use xlink:href="images/dist/sprite.svg#arrow"></use></svg></dt>
                                 <dd style="display: none;">
-                                    {!! $product->description_2 !!}
+                                    <p>Флакон представляет собой модный аксессуар с черной асимметричной крышкой, напоминающей сексуальное платье от кутюр.Золотые цепочки на шее напоминают о культовых сумках YSL, а дизайн дополняет вневременной логотип Yves Saint Laurent.</p>
                                 </dd>
                             </dl>
                         </div>
@@ -371,7 +380,7 @@
                                 <h4 class="reviewsfilters__title">Фильтр отзывов</h4>
                                 <form action="" class="reviewsfilters__search search">
                                     <input type="text" class="search__input" placeholder="Поиск отзывов">
-                                    <button class="search__btn"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#search')}}"></use></svg></button>
+                                    <button class="search__btn"><svg class="icon"><use xlink:href="images/dist/sprite.svg#search"></use></svg></button>
                                 </form>
                                 <div class="reviewsfilters__selects">
                                     <div class="reviewsfilters__select">
@@ -416,7 +425,7 @@
                                 <div class="review">
                                     <div class="review__header">
                                         <div class="review__name">Ольга</div>
-                                        <div class="review__userstatus"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#shield')}}"></use></svg> Проверенный покупатель</div>
+                                        <div class="review__userstatus"><svg class="icon"><use xlink:href="images/dist/sprite.svg#shield"></use></svg> Проверенный покупатель</div>
                                     </div>
                                     <div class="review__body">
                                         <div class="review__content">Этот аромат стал для меня настоящим открытием! Libre от ИВ СЕН-ЛОРАН обладает свежими и оригинальными нотками, которые прекрасно сочетаются с моим стилем. Парфюмированная вода держится на коже весь день, и я получаю множество комплиментов от коллег и друзей. Рекомендую всем, кто хочет выделиться из толпы и подчеркнуть свою индивидуальность.</div>

@@ -16,7 +16,6 @@ return new class extends Migration
             $table->string('table_name')->comment('Назва таблиці');
             $table->bigInteger('record_id')->comment('Id запису');
             $table->string('path')->comment('Шлях');
-            $table->string('key', 40)->nullable()->comment('Ключ');
             $table->timestamps();
         });
     }

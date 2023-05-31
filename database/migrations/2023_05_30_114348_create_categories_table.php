@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('categories', function (Blueprint $table) {
             $table->id();
-            $table->string('key', 40)->comment('Клач');
             $table->string('alias')->default('Аліас');
-            $table->bigInteger('parent_id')->comment('Батьківська категорія');
+            $table->string('name')->default('Назва');
+            $table->bigInteger('parent_id')->nullable()->comment('Батьківська категорія');
             $table->bigInteger('position')->comment('Позиція');
             $table->boolean('status')->default(0)->comment('Статус');
             $table->boolean('add_to_top_menu')->default(0);
