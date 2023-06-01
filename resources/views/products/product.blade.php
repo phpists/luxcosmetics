@@ -21,14 +21,6 @@
                     <div class="for-mobile">
                         <div class="product-page__title">{{$product->brand->name}}</div>
                         <div class="product-page__subtitle">{{$product->title}}</div>
-                        @php
-                            if (sizeof($product->product_variations) > 0) {
-                                $product_variation = $product->product_variations[0];
-                            }
-                            else {
-                                $product_variation = $product;
-                            }
-                        @endphp
                         <div class="product-page__reviewsblock">
                             <div class="product-page__reviews">
                                 <div class="stars">
@@ -87,7 +79,7 @@
                     </div>
                     @if(sizeof($product->product_variations))
                         <div class="product-page__options">
-                            <div class="product-page__options-title">Выбранный размер: <b>90ml</b></div>
+                            <div class="product-page__options-title">Выбранный размер: <b>{{$selected_variation->size}}</b></div>
                             @foreach($product->product_variations as $product_variation)
                                 <label class="volume">
                                     <input type="radio" name="volume"/>
@@ -117,8 +109,8 @@
                     </div>
                     <div class="product-page__priceblock">
                         <div class="product-page__prices">
-                            <div class="product-page__price">{{$product_variation->discount_price??$product_variation->price}} ₽ </div>
-                            <del class="product-page__oldprice">{{$product_variation->price}} ₽ </del>
+                            <div class="product-page__price">{{$selected_variation->discount_price??$selected_variation->price}} ₽ </div>
+                            <del class="product-page__oldprice">{{$selected_variation->price}} ₽ </del>
                         </div>
                         <div class="product-page__points"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#warning')}}"></use></svg><a href=""> Заработайте 345 баллов</a></div>
                     </div>

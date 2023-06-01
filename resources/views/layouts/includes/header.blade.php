@@ -38,7 +38,7 @@
                     Каталог товаров
                 </a>
                 <ul class="navigation__menu">
-                    <li><a href="">Бренды <svg class="icon"><use xlink:href="images/dist/sprite.svg#arrow"></use></svg></a>
+                    <li><a href="">Бренды <svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#arrow')}}"></use></svg></a>
                         <div class="submenu">
                             <div class="container">
                                 <div class="row">
@@ -118,14 +118,42 @@
                             </div>
                         </div>
                     </li>
-                    <li><a href="">Ароматы <svg class="icon"><use xlink:href="images/dist/sprite.svg#arrow"></use></svg></a></li>
-                    <li><a href="">Макияж <svg class="icon"><use xlink:href="images/dist/sprite.svg#arrow"></use></svg></a></li>
-                    <li><a href="">Уход за кожей <svg class="icon"><use xlink:href="images/dist/sprite.svg#arrow"></use></svg></a></li>
-                    <li><a href="">Уход за телом <svg class="icon"><use xlink:href="images/dist/sprite.svg#arrow"></use></svg></a></li>
-                    <li><a href="">Уход за волосами <svg class="icon"><use xlink:href="images/dist/sprite.svg#arrow"></use></svg></a></li>
-                    <li><a href="">Подарки <svg class="icon"><use xlink:href="images/dist/sprite.svg#arrow"></use></svg></a></li>
-                    <li><a href="">Эксклюзивно онлайн <svg class="icon"><use xlink:href="images/dist/sprite.svg#arrow"></use></svg></a></li>
-                    <li><a href="">Акции <svg class="icon"><use xlink:href="images/dist/sprite.svg#arrow"></use></svg></a></li>
+                    @php
+                      $menu_categories = \App\Models\Category::query()->with('subcategories')->where('add_to_top_menu', true)->get()
+                    @endphp
+                    @foreach($menu_categories as $menu_category)
+                        <li><a href="/categories/{{$menu_category->alias}}">{{$menu_category->name}} <svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#arrow')}}"></use></svg></a>
+                            <div class="submenu">
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="submenu__wrapper">
+                                                <ul class="submenu__menu">
+                                                    @foreach($menu_category->subcategories as $subcategory)
+                                                        <li><a href="/categories/{{$subcategory->alias}}">{{$subcategory->name}}</a>
+                                                            <ul>
+                                                                @foreach($subcategory->categories as $inner_subcategory)
+                                                                    <li><a href="/categories/{{$inner_subcategory->alias}}">{{$inner_subcategory->name}}</a></li>
+                                                                @endforeach
+                                                            </ul>
+                                                        </li>
+                                                    @endforeach
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    @endforeach
+{{--                    <li><a href="">Ароматы <svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#arrow')}}"></use></svg></a></li>--}}
+{{--                    <li><a href="">Макияж <svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#arrow')}}"></use></svg></a></li>--}}
+{{--                    <li><a href="">Уход за кожей <svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#arrow')}}"></use></svg></a></li>--}}
+{{--                    <li><a href="">Уход за телом <svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#arrow')}}"></use></svg></a></li>--}}
+{{--                    <li><a href="">Уход за волосами <svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#arrow')}}"></use></svg></a></li>--}}
+                    <li><a href="">Подарки <svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#arrow')}}"></use></svg></a></li>
+                    <li><a href="">Эксклюзивно онлайн <svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#arrow')}}"></use></svg></a></li>
+                    <li><a href="">Акции <svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#arrow')}}"></use></svg></a></li>
                 </ul>
             </div>
         </div>

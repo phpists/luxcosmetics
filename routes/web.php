@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CategoryController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,5 +18,11 @@ Route::get('/', function () {
     return view('index');
 });
 
-Route::get('categories', [\App\Http\Controllers\CategoryController::class, 'index'])->name('categories');
+Route::get('categories', [CategoryController::class, 'index'])->name('categories');
+Route::get('categories/{alias}', [CategoryController::class, 'show'])->name('categories.show');
 Route::get('products/{alias}', [\App\Http\Controllers\ProductController::class, 'show'])->name('products.product');
+Route::get('products/{alias}/{variation_id}', [\App\Http\Controllers\ProductController::class, 'show'])->name('products.product');
+Route::group(['prefix' => 'admin'], function () {
+    Route::resource('categories', \App\Http\Controllers\Admin\CategoryController::class);
+    Route::resource('products', \App\Http\Controllers\Admin\ProductController::class);
+});
