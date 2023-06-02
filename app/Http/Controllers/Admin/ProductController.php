@@ -8,7 +8,12 @@ use Illuminate\Http\Client\Request;
 
 class ProductController extends Controller
 {
-    public function show(Request $request, string $alias) {
-        return response()->json(Product::all()->where('alias', $alias)->first());
+    public function index() {
+        $products = Product::query()->get();
+        return response()->view('admin.products.index', compact('products'));
+    }
+
+    public function create() {
+        return response()->view('admin.products.create');
     }
 }

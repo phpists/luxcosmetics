@@ -3,25 +3,25 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="header__container">
-                    <div class="header__logo"><a href=""><img src="{{asset('images/dist/logo.svg')}}" alt=""></a></div>
+                    <div class="header__logo"><a href="{{route('home')}}"><img src="{{asset('images/dist/logo.svg')}}" alt=""></a></div>
                     <form action="" class="header__search search">
                         <input type="text" class="search__input" placeholder="Поиск по каталогу">
-                        <button class="search__btn"><svg class="icon"><use xlink:href="images/dist/sprite.svg#search"></use></svg></button>
+                        <button class="search__btn"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#search')}}"></use></svg></button>
                     </form>
                     <div class="header__contacts">
                         <div class="header__social social">
-                            <a href="" class="social__item"><svg class="icon"><use xlink:href="images/dist/sprite.svg#insta"></use></svg></a>
-                            <a href="" class="social__item"><svg class="icon"><use xlink:href="images/dist/sprite.svg#vk"></use></svg></a>
+                            <a href="" class="social__item"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#insta')}}"></use></svg></a>
+                            <a href="" class="social__item"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#vk')}}"></use></svg></a>
                         </div>
                         <div class="header__phone"><a href="">+7 495 152 85 44</a></div>
                         <div class="header__links">
                             <button class="header__link header__link--search">
-                                <div class="if-close"><svg class="icon"><use xlink:href="images/dist/sprite.svg#search"></use></svg></div>
-                                <div class="if-open"><svg class="icon"><use xlink:href="images/dist/sprite.svg#close"></use></svg></div>
+                                <div class="if-close"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#search')}}"></use></svg></div>
+                                <div class="if-open"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#close')}}"></use></svg></div>
                             </button>
-                            <a href="" class="header__link header__link--auth"><svg class="icon"><use xlink:href="images/dist/sprite.svg#user"></use></svg></a>
-                            <a href="" class="header__link header__link--fav"><svg class="icon"><use xlink:href="images/dist/sprite.svg#heart"></use></svg> <span class="header__linkcount">5</span></a>
-                            <a href="" class="header__link header__link--cart"><svg class="icon"><use xlink:href="images/dist/sprite.svg#cart"></use></svg> <span class="header__linkcount">2</span></a>
+                            <a href="{{route('profile')}}" class="header__link header__link--auth"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#user')}}"></use></svg></a>
+                            <a href="" class="header__link header__link--fav"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#heart')}}"></use></svg> <span class="header__linkcount">5</span></a>
+                            <a href="" class="header__link header__link--cart"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#cart')}}"></use></svg> <span class="header__linkcount">2</span></a>
                         </div>
                     </div>
                 </div>
@@ -34,7 +34,7 @@
         <div class="row">
             <div class="col-lg-12 static">
                 <a href="#menu"   class="navigation__btncat">
-                    <svg class="icon"><use xlink:href="images/dist/sprite.svg#menu"></use></svg>
+                    <svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#menu')}}"></use></svg>
                     Каталог товаров
                 </a>
                 <ul class="navigation__menu">

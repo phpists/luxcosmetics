@@ -11,7 +11,24 @@ class Product extends Model
 {
     use HasFactory;
 
-    protected $fillable = [];
+    protected $fillable = [
+        'title',
+        'alias',
+        'code',
+        'code_1c',
+        'status',
+        'price',
+        'image_print_id',
+        'discount_price',
+        'category_id',
+        'brand_id',
+        'description_1',
+        'description_2',
+        'description_3',
+        'availability',
+        'created_at',
+        'updated_at'
+    ];
 
     public function getImages(): Collection
     {

@@ -32,7 +32,7 @@
                                 </div>
                                 <a href="">16 отзывов</a>
                             </div>
-                            <div class="product-page__available"><svg class="icon"><use xlink:href="images/dist/sprite.svg#check"></use></svg> В наличии</div>
+                            <div class="product-page__available"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#check')}}"></use></svg> В наличии</div>
                         </div>
                     </div>
                     @php
@@ -49,13 +49,13 @@
 
                         </div>
                         <div class="product-page__gallerythumb">
-                            <button class="btn-gallery btn-gallery__up" id="gallery-up"><svg class="icon"><use xlink:href="images/dist/sprite.svg#arrow"></use></svg></button>
+                            <button class="btn-gallery btn-gallery__up" id="gallery-up"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#arrow')}}"></use></svg></button>
                             <div class="gallerythumb">
                                 @foreach($images as $image)
                                     <div class="gallerythumb__item"><img src="{{asset('images/uploads/'.$image->path)}}" alt=""></div>
                                 @endforeach
                             </div>
-                            <button class="btn-gallery btn-gallery__down" id="gallery-down"><svg class="icon"><use xlink:href="images/dist/sprite.svg#arrow"></use></svg></button>
+                            <button class="btn-gallery btn-gallery__down" id="gallery-down"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#arrow')}}"></use></svg></button>
                         </div>
                     </div>
                 </div>
@@ -413,9 +413,9 @@
                                     <div class="review__body">
                                         <div class="review__content">Этот аромат стал для меня настоящим открытием! Libre от ИВ СЕН-ЛОРАН обладает свежими и оригинальными нотками, которые прекрасно сочетаются с моим стилем. Парфюмированная вода держится на коже весь день, и я получаю множество комплиментов от коллег и друзей. Рекомендую всем, кто хочет выделиться из толпы и подчеркнуть свою индивидуальность.</div>
                                         <div class="review__images popup-gallery">
-                                            <div class="review__image"><a href="images/dist/tmp-gallery.jpg"><img src="{{asset('images/dist/tmp-gallery.jpg')}}" alt=""></a></div>
-                                            <div class="review__image"><a href="images/dist/tmp-gallery.jpg"><img src="{{asset('images/dist/tmp-gallery.jpg')}}" alt=""></a></div>
-                                            <div class="review__image"><a href="images/dist/tmp-gallery.jpg"><img src="{{asset('images/dist/tmp-gallery.jpg')}}" alt=""></a></div>
+                                            <div class="review__image"><a href="{{asset('images/dist/tmp-gallery.jpg"><img src="{{asset('images/dist/tmp-gallery.jpg')}}" alt="')}}"></a></div>
+                                            <div class="review__image"><a href="{{asset('images/dist/tmp-gallery.jpg"><img src="{{asset('images/dist/tmp-gallery.jpg')}}" alt="')}}"></a></div>
+                                            <div class="review__image"><a href="{{asset('images/dist/tmp-gallery.jpg"><img src="{{asset('images/dist/tmp-gallery.jpg')}}" alt="')}}"></a></div>
                                         </div>
                                         <div class="review__points">
                                             <div class="reviewresult">
@@ -451,11 +451,11 @@
                                         </div>
                                     </div>
                                     <div class="review__footer">
-                                        <div class="review__date"><svg class="icon"><use xlink:href="images/dist/sprite.svg#calendar"></use></svg> 15.03.2022</div>
+                                        <div class="review__date"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#calendar')}}"></use></svg> 15.03.2022</div>
                                         <div class="review__mark markblock">
                                             <div class="markblock__title">Был ли этот отзыв полезен? </div>
-                                            <button class="markblock__btn is-active"><svg class="icon"><use xlink:href="images/dist/sprite.svg#like"></use></svg> 2</button>
-                                            <button class="markblock__btn"><svg class="icon"><use xlink:href="images/dist/sprite.svg#dislike"></use></svg> 0</button>
+                                            <button class="markblock__btn is-active"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#like')}}"></use></svg> 2</button>
+                                            <button class="markblock__btn"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#dislike')}}"></use></svg> 0</button>
                                         </div>
                                     </div>
 
@@ -463,14 +463,14 @@
                                 <div class="review">
                                     <div class="review__header">
                                         <div class="review__name">Ольга</div>
-                                        <div class="review__userstatus"><svg class="icon"><use xlink:href="images/dist/sprite.svg#shield"></use></svg> Проверенный покупатель</div>
+                                        <div class="review__userstatus"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#shield')}}"></use></svg> Проверенный покупатель</div>
                                     </div>
                                     <div class="review__body">
                                         <div class="review__content">Этот аромат стал для меня настоящим открытием! Libre от ИВ СЕН-ЛОРАН обладает свежими и оригинальными нотками, которые прекрасно сочетаются с моим стилем. Парфюмированная вода держится на коже весь день, и я получаю множество комплиментов от коллег и друзей. Рекомендую всем, кто хочет выделиться из толпы и подчеркнуть свою индивидуальность.</div>
                                         <div class="review__images popup-gallery">
-                                            <div class="review__image"><a href="images/dist/tmp-gallery.jpg"><img src="{{asset('images/dist/tmp-gallery.jpg')}}" alt=""></a></div>
-                                            <div class="review__image"><a href="images/dist/tmp-gallery.jpg"><img src="{{asset('images/dist/tmp-gallery.jpg')}}" alt=""></a></div>
-                                            <div class="review__image"><a href="images/dist/tmp-gallery.jpg"><img src="{{asset('images/dist/tmp-gallery.jpg')}}" alt=""></a></div>
+                                            <div class="review__image"><a href="{{asset('images/dist/tmp-gallery.jpg')}}"><img src="{{asset('images/dist/tmp-gallery.jpg')}}" alt=""></a></div>
+                                            <div class="review__image"><a href="{{asset('images/dist/tmp-gallery.jpg')}}"><img src="{{asset('images/dist/tmp-gallery.jpg')}}" alt=""></a></div>
+                                            <div class="review__image"><a href="{{asset('images/dist/tmp-gallery.jpg')}}"><img src="{{asset('images/dist/tmp-gallery.jpg')}}" alt=""></a></div>
                                         </div>
                                         <div class="review__points">
                                             <div class="reviewresult">
@@ -506,11 +506,11 @@
                                         </div>
                                     </div>
                                     <div class="review__footer">
-                                        <div class="review__date"><svg class="icon"><use xlink:href="images/dist/sprite.svg#calendar"></use></svg> 15.03.2022</div>
+                                        <div class="review__date"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#calendar')}}"></use></svg> 15.03.2022</div>
                                         <div class="review__mark markblock">
                                             <div class="markblock__title">Был ли этот отзыв полезен? </div>
-                                            <button class="markblock__btn is-active"><svg class="icon"><use xlink:href="images/dist/sprite.svg#like"></use></svg> 2</button>
-                                            <button class="markblock__btn"><svg class="icon"><use xlink:href="images/dist/sprite.svg#dislike"></use></svg> 0</button>
+                                            <button class="markblock__btn is-active"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#like')}}"></use></svg> 2</button>
+                                            <button class="markblock__btn"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#dislike')}}"></use></svg> 0</button>
                                         </div>
                                     </div>
 
@@ -518,14 +518,14 @@
                                 <div class="review">
                                     <div class="review__header">
                                         <div class="review__name">Ольга</div>
-                                        <div class="review__userstatus"><svg class="icon"><use xlink:href="images/dist/sprite.svg#shield"></use></svg> Проверенный покупатель</div>
+                                        <div class="review__userstatus"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#shield')}}"></use></svg> Проверенный покупатель</div>
                                     </div>
                                     <div class="review__body">
                                         <div class="review__content">Этот аромат стал для меня настоящим открытием! Libre от ИВ СЕН-ЛОРАН обладает свежими и оригинальными нотками, которые прекрасно сочетаются с моим стилем. Парфюмированная вода держится на коже весь день, и я получаю множество комплиментов от коллег и друзей. Рекомендую всем, кто хочет выделиться из толпы и подчеркнуть свою индивидуальность.</div>
                                         <div class="review__images popup-gallery">
-                                            <div class="review__image"><a href="images/dist/tmp-gallery.jpg"><img src="{{asset('images/dist/tmp-gallery.jpg')}}" alt=""></a></div>
-                                            <div class="review__image"><a href="images/dist/tmp-gallery.jpg"><img src="{{asset('images/dist/tmp-gallery.jpg')}}" alt=""></a></div>
-                                            <div class="review__image"><a href="images/dist/tmp-gallery.jpg"><img src="{{asset('images/dist/tmp-gallery.jpg')}}" alt=""></a></div>
+                                            <div class="review__image"><a href="{{asset('images/dist/tmp-gallery.jpg')}}"><img src="{{asset('images/dist/tmp-gallery.jpg')}}" alt=""></a></div>
+                                            <div class="review__image"><a href="{{asset('images/dist/tmp-gallery.jpg')}}"><img src="{{asset('images/dist/tmp-gallery.jpg')}}" alt=""></a></div>
+                                            <div class="review__image"><a href="{{asset('images/dist/tmp-gallery.jpg')}}"><img src="{{asset('images/dist/tmp-gallery.jpg')}}" alt=""></a></div>
                                         </div>
                                         <div class="review__points">
                                             <div class="reviewresult">
@@ -561,28 +561,28 @@
                                         </div>
                                     </div>
                                     <div class="review__footer">
-                                        <div class="review__date"><svg class="icon"><use xlink:href="images/dist/sprite.svg#calendar"></use></svg> 15.03.2022</div>
+                                        <div class="review__date"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#calendar')}}"></use></svg> 15.03.2022</div>
                                         <div class="review__mark markblock">
                                             <div class="markblock__title">Был ли этот отзыв полезен? </div>
-                                            <button class="markblock__btn is-active"><svg class="icon"><use xlink:href="images/dist/sprite.svg#like"></use></svg> 2</button>
-                                            <button class="markblock__btn"><svg class="icon"><use xlink:href="images/dist/sprite.svg#dislike"></use></svg> 0</button>
+                                            <button class="markblock__btn is-active"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#like')}}"></use></svg> 2</button>
+                                            <button class="markblock__btn"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#dislike')}}"></use></svg> 0</button>
                                         </div>
                                     </div>
 
                                 </div>
                             </div>
                             <div class="pagination">
-                                <button class="pagination__more">Показать  еще <span>12 товаров</span> <svg class="icon"><use xlink:href="images/dist/sprite.svg#refresh"></use></svg></button>
+                                <button class="pagination__more">Показать  еще <span>12 товаров</span> <svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#refresh')}}"></use></svg></button>
                                 <ul class="pagination__list">
-                                    <li class="pagination__item pagination__item--first"><a href=""><svg class="icon"><use xlink:href="images/dist/sprite.svg#first"></use></svg></a></li>
-                                    <li class="pagination__item pagination__item--prev"><a href=""><svg class="icon"><use xlink:href="images/dist/sprite.svg#prev1"></use></svg></a></li>
+                                    <li class="pagination__item pagination__item--first"><a href=""><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#first')}}"></use></svg></a></li>
+                                    <li class="pagination__item pagination__item--prev"><a href=""><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#prev1')}}"></use></svg></a></li>
                                     <li class="pagination__item pagination__item--active"><span>1</span></li>
                                     <li class="pagination__item"><a href="">2</a></li>
                                     <li class="pagination__item"><a href="">3</a></li>
                                     <li class="pagination__item pagination__item--dots">...</li>
                                     <li class="pagination__item"><a href="">36</a></li>
-                                    <li class="pagination__item pagination__item--next"><a href=""><svg class="icon"><use xlink:href="images/dist/sprite.svg#next1"></use></svg></a></li>
-                                    <li class="pagination__item pagination__item--last"><a href=""><svg class="icon"><use xlink:href="images/dist/sprite.svg#last"></use></svg></a></li>
+                                    <li class="pagination__item pagination__item--next"><a href=""><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#next1')}}"></use></svg></a></li>
+                                    <li class="pagination__item pagination__item--last"><a href=""><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#last')}}"></use></svg></a></li>
                                 </ul>
                             </div>
                         </div>
@@ -600,14 +600,14 @@
                                             <div class="review__answer answer">
                                                 <div class="answer__hdr">
                                                     <div class="answer__author">Техподдержка</div>
-                                                    <div class="answer__date"><svg class="icon"><use xlink:href="images/dist/sprite.svg#calendar"></use></svg> 20.03.2022</div>
+                                                    <div class="answer__date"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#calendar')}}"></use></svg> 20.03.2022</div>
                                                 </div>
                                                 <div class="answer__content">Парфюмерная вода Libre от ИВ СЕН-ЛОРАН обладает уникальным сочетанием цветочных, фруктовых и древесных нот</div>
                                             </div>
                                             <div class="review__answer answer">
                                                 <div class="answer__hdr">
                                                     <div class="answer__author">Техподдержка</div>
-                                                    <div class="answer__date"><svg class="icon"><use xlink:href="images/dist/sprite.svg#calendar"></use></svg> 20.03.2022</div>
+                                                    <div class="answer__date"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#calendar')}}"></use></svg> 20.03.2022</div>
                                                 </div>
                                                 <div class="answer__content">Парфюмерная вода Libre от ИВ СЕН-ЛОРАН обладает уникальным сочетанием цветочных, фруктовых и древесных нот</div>
                                             </div>
@@ -615,11 +615,11 @@
 
                                     </div>
                                     <div class="review__footer">
-                                        <div class="review__date"><svg class="icon"><use xlink:href="images/dist/sprite.svg#calendar"></use></svg> 15.03.2022</div>
+                                        <div class="review__date"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#calendar')}}"></use></svg> 15.03.2022</div>
                                         <div class="review__mark markblock">
                                             <div class="markblock__title">Был ли этот отзыв полезен? </div>
-                                            <button class="markblock__btn"><svg class="icon"><use xlink:href="images/dist/sprite.svg#like"></use></svg> 2</button>
-                                            <button class="markblock__btn"><svg class="icon"><use xlink:href="images/dist/sprite.svg#dislike"></use></svg> 0</button>
+                                            <button class="markblock__btn"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#like')}}"></use></svg> 2</button>
+                                            <button class="markblock__btn"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#dislike')}}"></use></svg> 0</button>
                                         </div>
                                     </div>
 
@@ -636,14 +636,14 @@
                                             <div class="review__answer answer">
                                                 <div class="answer__hdr">
                                                     <div class="answer__author">Техподдержка</div>
-                                                    <div class="answer__date"><svg class="icon"><use xlink:href="images/dist/sprite.svg#calendar"></use></svg> 20.03.2022</div>
+                                                    <div class="answer__date"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#calendar')}}"></use></svg> 20.03.2022</div>
                                                 </div>
                                                 <div class="answer__content">Парфюмерная вода Libre от ИВ СЕН-ЛОРАН обладает уникальным сочетанием цветочных, фруктовых и древесных нот</div>
                                             </div>
                                             <div class="review__answer answer">
                                                 <div class="answer__hdr">
                                                     <div class="answer__author">Техподдержка</div>
-                                                    <div class="answer__date"><svg class="icon"><use xlink:href="images/dist/sprite.svg#calendar"></use></svg> 20.03.2022</div>
+                                                    <div class="answer__date"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#calendar')}}"></use></svg> 20.03.2022</div>
                                                 </div>
                                                 <div class="answer__content">Парфюмерная вода Libre от ИВ СЕН-ЛОРАН обладает уникальным сочетанием цветочных, фруктовых и древесных нот</div>
                                             </div>
@@ -651,11 +651,11 @@
 
                                     </div>
                                     <div class="review__footer">
-                                        <div class="review__date"><svg class="icon"><use xlink:href="images/dist/sprite.svg#calendar"></use></svg> 15.03.2022</div>
+                                        <div class="review__date"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#calendar')}}"></use></svg> 15.03.2022</div>
                                         <div class="review__mark markblock">
                                             <div class="markblock__title">Был ли этот отзыв полезен? </div>
-                                            <button class="markblock__btn"><svg class="icon"><use xlink:href="images/dist/sprite.svg#like"></use></svg> 2</button>
-                                            <button class="markblock__btn"><svg class="icon"><use xlink:href="images/dist/sprite.svg#dislike"></use></svg> 0</button>
+                                            <button class="markblock__btn"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#like')}}"></use></svg> 2</button>
+                                            <button class="markblock__btn"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#dislike')}}"></use></svg> 0</button>
                                         </div>
                                     </div>
 
@@ -672,14 +672,14 @@
                                             <div class="review__answer answer">
                                                 <div class="answer__hdr">
                                                     <div class="answer__author">Техподдержка</div>
-                                                    <div class="answer__date"><svg class="icon"><use xlink:href="images/dist/sprite.svg#calendar"></use></svg> 20.03.2022</div>
+                                                    <div class="answer__date"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#calendar')}}"></use></svg> 20.03.2022</div>
                                                 </div>
                                                 <div class="answer__content">Парфюмерная вода Libre от ИВ СЕН-ЛОРАН обладает уникальным сочетанием цветочных, фруктовых и древесных нот</div>
                                             </div>
                                             <div class="review__answer answer">
                                                 <div class="answer__hdr">
                                                     <div class="answer__author">Техподдержка</div>
-                                                    <div class="answer__date"><svg class="icon"><use xlink:href="images/dist/sprite.svg#calendar"></use></svg> 20.03.2022</div>
+                                                    <div class="answer__date"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#calendar')}}"></use></svg> 20.03.2022</div>
                                                 </div>
                                                 <div class="answer__content">Парфюмерная вода Libre от ИВ СЕН-ЛОРАН обладает уникальным сочетанием цветочных, фруктовых и древесных нот</div>
                                             </div>
@@ -687,28 +687,28 @@
 
                                     </div>
                                     <div class="review__footer">
-                                        <div class="review__date"><svg class="icon"><use xlink:href="images/dist/sprite.svg#calendar"></use></svg> 15.03.2022</div>
+                                        <div class="review__date"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#calendar')}}"></use></svg> 15.03.2022</div>
                                         <div class="review__mark markblock">
                                             <div class="markblock__title">Был ли этот отзыв полезен? </div>
-                                            <button class="markblock__btn"><svg class="icon"><use xlink:href="images/dist/sprite.svg#like"></use></svg> 2</button>
-                                            <button class="markblock__btn"><svg class="icon"><use xlink:href="images/dist/sprite.svg#dislike"></use></svg> 0</button>
+                                            <button class="markblock__btn"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#like')}}"></use></svg> 2</button>
+                                            <button class="markblock__btn"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#dislike')}}"></use></svg> 0</button>
                                         </div>
                                     </div>
 
                                 </div>
                             </div>
                             <div class="pagination">
-                                <button class="pagination__more">Показать  еще <span>12 товаров</span> <svg class="icon"><use xlink:href="images/dist/sprite.svg#refresh"></use></svg></button>
+                                <button class="pagination__more">Показать  еще <span>12 товаров</span> <svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#refresh')}}"></use></svg></button>
                                 <ul class="pagination__list">
-                                    <li class="pagination__item pagination__item--first"><a href=""><svg class="icon"><use xlink:href="images/dist/sprite.svg#first"></use></svg></a></li>
-                                    <li class="pagination__item pagination__item--prev"><a href=""><svg class="icon"><use xlink:href="images/dist/sprite.svg#prev1"></use></svg></a></li>
+                                    <li class="pagination__item pagination__item--first"><a href=""><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#first')}}"></use></svg></a></li>
+                                    <li class="pagination__item pagination__item--prev"><a href=""><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#prev1')}}"></use></svg></a></li>
                                     <li class="pagination__item pagination__item--active"><span>1</span></li>
                                     <li class="pagination__item"><a href="">2</a></li>
                                     <li class="pagination__item"><a href="">3</a></li>
                                     <li class="pagination__item pagination__item--dots">...</li>
                                     <li class="pagination__item"><a href="">36</a></li>
-                                    <li class="pagination__item pagination__item--next"><a href=""><svg class="icon"><use xlink:href="images/dist/sprite.svg#next1"></use></svg></a></li>
-                                    <li class="pagination__item pagination__item--last"><a href=""><svg class="icon"><use xlink:href="images/dist/sprite.svg#last"></use></svg></a></li>
+                                    <li class="pagination__item pagination__item--next"><a href=""><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#next1')}}"></use></svg></a></li>
+                                    <li class="pagination__item pagination__item--last"><a href=""><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#last')}}"></use></svg></a></li>
                                 </ul>
                             </div>
                         </div>
@@ -739,7 +739,7 @@
                                                         <div class="product__label product__label--green">Хит продаж</div>
                                                     </div>
                                                     <a href=""><img src="{{asset('images/dist/tmp-product.jpg')}}" alt=""></a>
-                                                    <button class="product__fav"><svg class="icon"><use xlink:href="images/dist/sprite.svg#heart"></use></svg></button>
+                                                    <button class="product__fav"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#heart')}}"></use></svg></button>
                                                 </div>
                                                 <div class="product__title"><a href="">ROBERTO CAVALLI</a></div>
                                                 <div class="product__subtitle">Frantic Rose Gold Collection Eau de Parfum 100ml (100ml)</div>
@@ -760,7 +760,7 @@
                                                         <div class="product__price">4 009 ₽</div>
                                                         <del class="product__oldprice">4 700 ₽</del>
                                                     </div>
-                                                    <button class="product__mobile-btn"><svg class="icon"><use xlink:href="images/dist/sprite.svg#cart"></use></svg></button>
+                                                    <button class="product__mobile-btn"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#cart')}}"></use></svg></button>
                                                 </div>
                                                 <div class="product__sizesinfo">Еще два размера</div>
 
@@ -802,7 +802,7 @@
                                                         <div class="product__label product__label--green">Хит продаж</div>
                                                     </div>
                                                     <a href=""><img src="{{asset('images/dist/tmp-product.jpg')}}" alt=""></a>
-                                                    <button class="product__fav"><svg class="icon"><use xlink:href="images/dist/sprite.svg#heart"></use></svg></button>
+                                                    <button class="product__fav"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#heart')}}"></use></svg></button>
                                                 </div>
                                                 <div class="product__title"><a href="">ROBERTO CAVALLI</a></div>
                                                 <div class="product__subtitle">Frantic Rose Gold Collection Eau de Parfum 100ml (100ml)</div>
@@ -823,7 +823,7 @@
                                                         <div class="product__price">4 009 ₽</div>
                                                         <del class="product__oldprice">4 700 ₽</del>
                                                     </div>
-                                                    <button class="product__mobile-btn"><svg class="icon"><use xlink:href="images/dist/sprite.svg#cart"></use></svg></button>
+                                                    <button class="product__mobile-btn"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#cart')}}"></use></svg></button>
                                                 </div>
                                                 <div class="product__sizesinfo">Еще два размера</div>
 
@@ -865,7 +865,7 @@
                                                         <div class="product__label product__label--green">Хит продаж</div>
                                                     </div>
                                                     <a href=""><img src="{{asset('images/dist/tmp-product.jpg')}}" alt=""></a>
-                                                    <button class="product__fav"><svg class="icon"><use xlink:href="images/dist/sprite.svg#heart"></use></svg></button>
+                                                    <button class="product__fav"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#heart')}}"></use></svg></button>
                                                 </div>
                                                 <div class="product__title"><a href="">ROBERTO CAVALLI</a></div>
                                                 <div class="product__subtitle">Frantic Rose Gold Collection Eau de Parfum 100ml (100ml)</div>
@@ -886,7 +886,7 @@
                                                         <div class="product__price">4 009 ₽</div>
                                                         <del class="product__oldprice">4 700 ₽</del>
                                                     </div>
-                                                    <button class="product__mobile-btn"><svg class="icon"><use xlink:href="images/dist/sprite.svg#cart"></use></svg></button>
+                                                    <button class="product__mobile-btn"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#cart')}}"></use></svg></button>
                                                 </div>
                                                 <div class="product__sizesinfo">Еще два размера</div>
 
@@ -928,7 +928,7 @@
                                                         <div class="product__label product__label--green">Хит продаж</div>
                                                     </div>
                                                     <a href=""><img src="{{asset('images/dist/tmp-product.jpg')}}" alt=""></a>
-                                                    <button class="product__fav"><svg class="icon"><use xlink:href="images/dist/sprite.svg#heart"></use></svg></button>
+                                                    <button class="product__fav"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#heart')}}"></use></svg></button>
                                                 </div>
                                                 <div class="product__title"><a href="">ROBERTO CAVALLI</a></div>
                                                 <div class="product__subtitle">Frantic Rose Gold Collection Eau de Parfum 100ml (100ml)</div>
@@ -949,7 +949,7 @@
                                                         <div class="product__price">4 009 ₽</div>
                                                         <del class="product__oldprice">4 700 ₽</del>
                                                     </div>
-                                                    <button class="product__mobile-btn"><svg class="icon"><use xlink:href="images/dist/sprite.svg#cart"></use></svg></button>
+                                                    <button class="product__mobile-btn"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#cart')}}"></use></svg></button>
                                                 </div>
                                                 <div class="product__sizesinfo">Еще два размера</div>
 
@@ -991,7 +991,7 @@
                                                         <div class="product__label product__label--green">Хит продаж</div>
                                                     </div>
                                                     <a href=""><img src="{{asset('images/dist/tmp-product.jpg')}}" alt=""></a>
-                                                    <button class="product__fav"><svg class="icon"><use xlink:href="images/dist/sprite.svg#heart"></use></svg></button>
+                                                    <button class="product__fav"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#heart')}}"></use></svg></button>
                                                 </div>
                                                 <div class="product__title"><a href="">ROBERTO CAVALLI</a></div>
                                                 <div class="product__subtitle">Frantic Rose Gold Collection Eau de Parfum 100ml (100ml)</div>
@@ -1012,7 +1012,7 @@
                                                         <div class="product__price">4 009 ₽</div>
                                                         <del class="product__oldprice">4 700 ₽</del>
                                                     </div>
-                                                    <button class="product__mobile-btn"><svg class="icon"><use xlink:href="images/dist/sprite.svg#cart"></use></svg></button>
+                                                    <button class="product__mobile-btn"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#cart')}}"></use></svg></button>
                                                 </div>
                                                 <div class="product__sizesinfo">Еще два размера</div>
 
@@ -1058,7 +1058,7 @@
                                                         <div class="product__label product__label--green">Хит продаж</div>
                                                     </div>
                                                     <a href=""><img src="{{asset('images/dist/tmp-product.jpg')}}" alt=""></a>
-                                                    <button class="product__fav"><svg class="icon"><use xlink:href="images/dist/sprite.svg#heart"></use></svg></button>
+                                                    <button class="product__fav"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#heart')}}"></use></svg></button>
                                                 </div>
                                                 <div class="product__title"><a href="">ROBERTO CAVALLI</a></div>
                                                 <div class="product__subtitle">Frantic Rose Gold Collection Eau de Parfum 100ml (100ml)</div>
@@ -1079,7 +1079,7 @@
                                                         <div class="product__price">4 009 ₽</div>
                                                         <del class="product__oldprice">4 700 ₽</del>
                                                     </div>
-                                                    <button class="product__mobile-btn"><svg class="icon"><use xlink:href="images/dist/sprite.svg#cart"></use></svg></button>
+                                                    <button class="product__mobile-btn"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#cart')}}"></use></svg></button>
                                                 </div>
                                                 <div class="product__sizesinfo">Еще два размера</div>
 
@@ -1121,7 +1121,7 @@
                                                         <div class="product__label product__label--green">Хит продаж</div>
                                                     </div>
                                                     <a href=""><img src="{{asset('images/dist/tmp-product.jpg')}}" alt=""></a>
-                                                    <button class="product__fav"><svg class="icon"><use xlink:href="images/dist/sprite.svg#heart"></use></svg></button>
+                                                    <button class="product__fav"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#heart')}}"></use></svg></button>
                                                 </div>
                                                 <div class="product__title"><a href="">ROBERTO CAVALLI</a></div>
                                                 <div class="product__subtitle">Frantic Rose Gold Collection Eau de Parfum 100ml (100ml)</div>
@@ -1142,7 +1142,7 @@
                                                         <div class="product__price">4 009 ₽</div>
                                                         <del class="product__oldprice">4 700 ₽</del>
                                                     </div>
-                                                    <button class="product__mobile-btn"><svg class="icon"><use xlink:href="images/dist/sprite.svg#cart"></use></svg></button>
+                                                    <button class="product__mobile-btn"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#cart')}}"></use></svg></button>
                                                 </div>
                                                 <div class="product__sizesinfo">Еще два размера</div>
 
@@ -1184,7 +1184,7 @@
                                                         <div class="product__label product__label--green">Хит продаж</div>
                                                     </div>
                                                     <a href=""><img src="{{asset('images/dist/tmp-product.jpg')}}" alt=""></a>
-                                                    <button class="product__fav"><svg class="icon"><use xlink:href="images/dist/sprite.svg#heart"></use></svg></button>
+                                                    <button class="product__fav"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#heart')}}"></use></svg></button>
                                                 </div>
                                                 <div class="product__title"><a href="">ROBERTO CAVALLI</a></div>
                                                 <div class="product__subtitle">Frantic Rose Gold Collection Eau de Parfum 100ml (100ml)</div>
@@ -1205,7 +1205,7 @@
                                                         <div class="product__price">4 009 ₽</div>
                                                         <del class="product__oldprice">4 700 ₽</del>
                                                     </div>
-                                                    <button class="product__mobile-btn"><svg class="icon"><use xlink:href="images/dist/sprite.svg#cart"></use></svg></button>
+                                                    <button class="product__mobile-btn"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#cart')}}"></use></svg></button>
                                                 </div>
                                                 <div class="product__sizesinfo">Еще два размера</div>
 
@@ -1247,7 +1247,7 @@
                                                         <div class="product__label product__label--green">Хит продаж</div>
                                                     </div>
                                                     <a href=""><img src="{{asset('images/dist/tmp-product.jpg')}}" alt=""></a>
-                                                    <button class="product__fav"><svg class="icon"><use xlink:href="images/dist/sprite.svg#heart"></use></svg></button>
+                                                    <button class="product__fav"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#heart')}}"></use></svg></button>
                                                 </div>
                                                 <div class="product__title"><a href="">ROBERTO CAVALLI</a></div>
                                                 <div class="product__subtitle">Frantic Rose Gold Collection Eau de Parfum 100ml (100ml)</div>
@@ -1268,7 +1268,7 @@
                                                         <div class="product__price">4 009 ₽</div>
                                                         <del class="product__oldprice">4 700 ₽</del>
                                                     </div>
-                                                    <button class="product__mobile-btn"><svg class="icon"><use xlink:href="images/dist/sprite.svg#cart"></use></svg></button>
+                                                    <button class="product__mobile-btn"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#cart')}}"></use></svg></button>
                                                 </div>
                                                 <div class="product__sizesinfo">Еще два размера</div>
 
@@ -1310,7 +1310,7 @@
                                                         <div class="product__label product__label--green">Хит продаж</div>
                                                     </div>
                                                     <a href=""><img src="{{asset('images/dist/tmp-product.jpg')}}" alt=""></a>
-                                                    <button class="product__fav"><svg class="icon"><use xlink:href="images/dist/sprite.svg#heart"></use></svg></button>
+                                                    <button class="product__fav"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#heart')}}"></use></svg></button>
                                                 </div>
                                                 <div class="product__title"><a href="">ROBERTO CAVALLI</a></div>
                                                 <div class="product__subtitle">Frantic Rose Gold Collection Eau de Parfum 100ml (100ml)</div>
@@ -1331,7 +1331,7 @@
                                                         <div class="product__price">4 009 ₽</div>
                                                         <del class="product__oldprice">4 700 ₽</del>
                                                     </div>
-                                                    <button class="product__mobile-btn"><svg class="icon"><use xlink:href="images/dist/sprite.svg#cart"></use></svg></button>
+                                                    <button class="product__mobile-btn"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#cart')}}"></use></svg></button>
                                                 </div>
                                                 <div class="product__sizesinfo">Еще два размера</div>
 
@@ -1377,7 +1377,7 @@
                                                         <div class="product__label product__label--green">Хит продаж</div>
                                                     </div>
                                                     <a href=""><img src="{{asset('images/dist/tmp-product.jpg')}}"  alt=""></a>
-                                                    <button class="product__fav"><svg class="icon"><use xlink:href="images/dist/sprite.svg#heart"></use></svg></button>
+                                                    <button class="product__fav"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#heart')}}"></use></svg></button>
                                                 </div>
                                                 <div class="product__title"><a href="">ROBERTO CAVALLI</a></div>
                                                 <div class="product__subtitle">Frantic Rose Gold Collection Eau de Parfum 100ml (100ml)</div>
@@ -1398,7 +1398,7 @@
                                                         <div class="product__price">4 009 ₽</div>
                                                         <del class="product__oldprice">4 700 ₽</del>
                                                     </div>
-                                                    <button class="product__mobile-btn"><svg class="icon"><use xlink:href="images/dist/sprite.svg#cart"></use></svg></button>
+                                                    <button class="product__mobile-btn"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#cart')}}"></use></svg></button>
                                                 </div>
                                                 <div class="product__sizesinfo">Еще два размера</div>
 
@@ -1440,7 +1440,7 @@
                                                         <div class="product__label product__label--green">Хит продаж</div>
                                                     </div>
                                                     <a href=""><img src="{{asset('images/dist/tmp-product.jpg')}}"  alt=""></a>
-                                                    <button class="product__fav"><svg class="icon"><use xlink:href="images/dist/sprite.svg#heart"></use></svg></button>
+                                                    <button class="product__fav"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#heart')}}"></use></svg></button>
                                                 </div>
                                                 <div class="product__title"><a href="">ROBERTO CAVALLI</a></div>
                                                 <div class="product__subtitle">Frantic Rose Gold Collection Eau de Parfum 100ml (100ml)</div>
@@ -1461,7 +1461,7 @@
                                                         <div class="product__price">4 009 ₽</div>
                                                         <del class="product__oldprice">4 700 ₽</del>
                                                     </div>
-                                                    <button class="product__mobile-btn"><svg class="icon"><use xlink:href="images/dist/sprite.svg#cart"></use></svg></button>
+                                                    <button class="product__mobile-btn"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#cart')}}"></use></svg></button>
                                                 </div>
                                                 <div class="product__sizesinfo">Еще два размера</div>
 
@@ -1503,7 +1503,7 @@
                                                         <div class="product__label product__label--green">Хит продаж</div>
                                                     </div>
                                                     <a href=""><img src="{{asset('images/dist/tmp-product.jpg')}}"  alt=""></a>
-                                                    <button class="product__fav"><svg class="icon"><use xlink:href="images/dist/sprite.svg#heart"></use></svg></button>
+                                                    <button class="product__fav"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#heart')}}"></use></svg></button>
                                                 </div>
                                                 <div class="product__title"><a href="">ROBERTO CAVALLI</a></div>
                                                 <div class="product__subtitle">Frantic Rose Gold Collection Eau de Parfum 100ml (100ml)</div>
@@ -1524,7 +1524,7 @@
                                                         <div class="product__price">4 009 ₽</div>
                                                         <del class="product__oldprice">4 700 ₽</del>
                                                     </div>
-                                                    <button class="product__mobile-btn"><svg class="icon"><use xlink:href="images/dist/sprite.svg#cart"></use></svg></button>
+                                                    <button class="product__mobile-btn"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#cart')}}"></use></svg></button>
                                                 </div>
                                                 <div class="product__sizesinfo">Еще два размера</div>
 
@@ -1566,7 +1566,7 @@
                                                         <div class="product__label product__label--green">Хит продаж</div>
                                                     </div>
                                                     <a href=""><img src="{{asset('images/dist/tmp-product.jpg')}}"  alt=""></a>
-                                                    <button class="product__fav"><svg class="icon"><use xlink:href="images/dist/sprite.svg#heart"></use></svg></button>
+                                                    <button class="product__fav"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#heart')}}"></use></svg></button>
                                                 </div>
                                                 <div class="product__title"><a href="">ROBERTO CAVALLI</a></div>
                                                 <div class="product__subtitle">Frantic Rose Gold Collection Eau de Parfum 100ml (100ml)</div>
@@ -1587,7 +1587,7 @@
                                                         <div class="product__price">4 009 ₽</div>
                                                         <del class="product__oldprice">4 700 ₽</del>
                                                     </div>
-                                                    <button class="product__mobile-btn"><svg class="icon"><use xlink:href="images/dist/sprite.svg#cart"></use></svg></button>
+                                                    <button class="product__mobile-btn"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#cart')}}"></use></svg></button>
                                                 </div>
                                                 <div class="product__sizesinfo">Еще два размера</div>
 
@@ -1629,7 +1629,7 @@
                                                         <div class="product__label product__label--green">Хит продаж</div>
                                                     </div>
                                                     <a href=""><img src="{{asset('images/dist/tmp-product.jpg')}}"  alt=""></a>
-                                                    <button class="product__fav"><svg class="icon"><use xlink:href="images/dist/sprite.svg#heart"></use></svg></button>
+                                                    <button class="product__fav"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#heart')}}"></use></svg></button>
                                                 </div>
                                                 <div class="product__title"><a href="">ROBERTO CAVALLI</a></div>
                                                 <div class="product__subtitle">Frantic Rose Gold Collection Eau de Parfum 100ml (100ml)</div>
@@ -1650,7 +1650,7 @@
                                                         <div class="product__price">4 009 ₽</div>
                                                         <del class="product__oldprice">4 700 ₽</del>
                                                     </div>
-                                                    <button class="product__mobile-btn"><svg class="icon"><use xlink:href="images/dist/sprite.svg#cart"></use></svg></button>
+                                                    <button class="product__mobile-btn"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#cart')}}"></use></svg></button>
                                                 </div>
                                                 <div class="product__sizesinfo">Еще два размера</div>
 
@@ -1705,7 +1705,7 @@
                                             <div class="product__label product__label--green">Хит продаж</div>
                                         </div>
                                         <a href=""><img src="{{asset('images/dist/tmp-product.jpg')}}" alt=""></a>
-                                        <button class="product__fav"><svg class="icon"><use xlink:href="images/dist/sprite.svg#heart"></use></svg></button>
+                                        <button class="product__fav"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#heart')}}"></use></svg></button>
                                     </div>
                                     <div class="product__title"><a href="">ROBERTO CAVALLI</a></div>
                                     <div class="product__subtitle">Frantic Rose Gold Collection Eau de Parfum 100ml (100ml)</div>
@@ -1726,7 +1726,7 @@
                                             <div class="product__price">4 009 ₽</div>
                                             <del class="product__oldprice">4 700 ₽</del>
                                         </div>
-                                        <button class="product__mobile-btn"><svg class="icon"><use xlink:href="images/dist/sprite.svg#cart"></use></svg></button>
+                                        <button class="product__mobile-btn"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#cart')}}"></use></svg></button>
                                     </div>
                                     <div class="product__sizesinfo">Еще два размера</div>
 
@@ -1767,7 +1767,7 @@
                                             <div class="product__label product__label--green">Хит продаж</div>
                                         </div>
                                         <a href=""><img src="{{asset('/images/dist/tmp-product.jpg')}}" alt=""></a>
-                                        <button class="product__fav"><svg class="icon"><use xlink:href="images/dist/sprite.svg#heart"></use></svg></button>
+                                        <button class="product__fav"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#heart')}}"></use></svg></button>
                                     </div>
                                     <div class="product__title"><a href="">ROBERTO CAVALLI</a></div>
                                     <div class="product__subtitle">Frantic Rose Gold Collection Eau de Parfum 100ml (100ml)</div>
@@ -1788,7 +1788,7 @@
                                             <div class="product__price">4 009 ₽</div>
                                             <del class="product__oldprice">4 700 ₽</del>
                                         </div>
-                                        <button class="product__mobile-btn"><svg class="icon"><use xlink:href="images/dist/sprite.svg#cart"></use></svg></button>
+                                        <button class="product__mobile-btn"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#cart')}}"></use></svg></button>
                                     </div>
                                     <div class="product__sizesinfo">Еще два размера</div>
 
@@ -1825,7 +1825,7 @@
                             <div class="product-set__subtitle">Цена за комплект</div>
                             <div class="product-set__price">24 800 ₽ </div>
                             <del class="product-set__oldprice">32 650 ₽ </del>
-                            <button class="btn btn--accent product-page__addcart product-set__addcart"><svg class="icon"><use xlink:href="images/dist/sprite.svg#cart"></use></svg> Добавить в корзину</button>
+                            <button class="btn btn--accent product-page__addcart product-set__addcart"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#cart')}}"></use></svg> Добавить в корзину</button>
                         </div>
                     </div>
                 </div>

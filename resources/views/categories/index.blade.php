@@ -22,14 +22,14 @@
                     <div class="category-page__container">
                         <aside class="category-page__aside">
                             <div class="filters" id="filters">
-                                <div class="filters__close"><svg class="icon"><use xlink:href="images/dist/sprite.svg#close"></use></svg></div>
+                                <div class="filters__close"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#close')}}"></use></svg></div>
                                 <div class="filters__hdr">
                                     <div class="filters__title">Сортировать по</div>
                                     <button class="filters__btn">Сбросить все</button>
                                 </div>
                                 <div class="filters__wrapper">
                                     <div class="filters__item filter">
-                                        <div class="filter__title">Цена <svg class="icon"><use xlink:href="images/dist/sprite.svg#arrow"></use></svg></div>
+                                        <div class="filter__title">Цена <svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#arrow')}}"></use></svg></div>
                                         <div class="filter__block">
                                             <div class="filter__wrap">
                                                 <div class="filter__range" id="slider-range"></div>
@@ -47,7 +47,7 @@
                                         </div>
                                     </div>
                                     <div class="filters__item filter">
-                                        <div class="filter__title">Бренд <svg class="icon"><use xlink:href="images/dist/sprite.svg#arrow"></use></svg></div>
+                                        <div class="filter__title">Бренд <svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#arrow')}}"></use></svg></div>
                                         <div class="filter__block">
                                             <div class="filter__wrap filter__scroll">
                                                 <label class="checkbox">
@@ -76,7 +76,7 @@
                                         </div>
                                     </div>
                                     <div class="filters__item filter">
-                                        <div class="filter__title is-close">Цвет <svg class="icon"><use xlink:href="images/dist/sprite.svg#arrow"></use></svg></div>
+                                        <div class="filter__title is-close">Цвет <svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#arrow')}}"></use></svg></div>
                                         <div class="filter__block" style="display: none;">
                                             <div class="filter__wrap filter__scroll">
                                                 <label class="checkbox">
@@ -120,7 +120,7 @@
                                         </div>
                                     </div>
                                     <div class="filters__item filter">
-                                        <div class="filter__title is-close">Пол <svg class="icon"><use xlink:href="images/dist/sprite.svg#arrow"></use></svg></div>
+                                        <div class="filter__title is-close">Пол <svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#arrow')}}"></use></svg></div>
                                         <div class="filter__block" style="display: none;">
                                             <div class="filter__wrap filter__scroll">
                                                 <label class="checkbox">
@@ -170,8 +170,8 @@
                                 </div>
                             </div>
                             <div class="category-page__mobilenav">
-                                <button class="category-page__mobilebtn btnfilters"><svg class="icon"><use xlink:href="images/dist/sprite.svg#filters"></use></svg> Показать фильтры</button>
-                                <button class="category-page__mobilebtn btnsort"><svg class="icon"><use xlink:href="images/dist/sprite.svg#arrows"></use></svg> Сортировать по</button>
+                                <button class="category-page__mobilebtn btnfilters"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#filters')}}"></use></svg> Показать фильтры</button>
+                                <button class="category-page__mobilebtn btnsort"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#arrows')}}"></use></svg> Сортировать по</button>
                             </div>
                             <div class="category-page__products">
                                 @foreach($products as $product)
@@ -189,7 +189,7 @@
                                                     <a href="/products/{{$product->alias}}{{$selected_variation !== null?'/'.$selected_variation->id:''}}">
                                                         <img src="{{asset('images/uploads/'.$product->image)}}" alt="">
                                                     </a>
-                                                    <button class="product__fav"><svg class="icon"><use xlink:href="images/dist/sprite.svg#heart"></use></svg></button>
+                                                    <button class="product__fav"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#heart')}}"></use></svg></button>
                                                 </div>
                                                 <div class="product__title"><a href="/products/{{$product->alias}}{{$selected_variation !== null?'/'.$selected_variation->id:''}}">{{$product->brand->name}}</a></div>
                                                 <div class="product__subtitle">{{$product->title}}</div>
@@ -300,7 +300,7 @@
         </div>
     </section>
     <div class="sortmobile">
-        <div class="sortmobile__close"><svg class="icon"><use xlink:href="images/dist/sprite.svg#close"></use></svg></div>
+        <div class="sortmobile__close"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#close')}}"></use></svg></div>
         <div class="sortmobile__title">Сортировать</div>
         <label class="radio">
             <input type="radio" name="sort" />

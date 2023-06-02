@@ -8,15 +8,15 @@
                 <div class="footer__social social">
                     <div class="social__title">Мы в социальных сетях</div>
                     <div class="social__items">
-                        <a href="" class="social__item"><svg class="icon"><use xlink:href="images/dist/sprite.svg#insta"></use></svg></a>
-                        <a href="" class="social__item"><svg class="icon"><use xlink:href="images/dist/sprite.svg#vk"></use></svg></a>
+                        <a href="" class="social__item"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#insta')}}"></use></svg></a>
+                        <a href="" class="social__item"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#vk')}}"></use></svg></a>
                     </div>
                 </div>
             </div>
             <div class="col-lg-7  colmenu">
                 <div class="footer__menublock">
                     <div class="footer__menu">
-                        <h4 class="footer__menutitle">Категории <svg class="icon"><use xlink:href="images/dist/sprite.svg#arrow"></use></svg></h4>
+                        <h4 class="footer__menutitle">Категории <svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#arrow')}}"></use></svg></h4>
                         <ul>
                             <li><a href="">Бренды</a></li>
                             <li><a href="">Ароматы</a></li>
@@ -30,7 +30,7 @@
                         </ul>
                     </div>
                     <div class="footer__menu">
-                        <h4 class="footer__menutitle">Бренды <svg class="icon"><use xlink:href="images/dist/sprite.svg#arrow"></use></svg></h4>
+                        <h4 class="footer__menutitle">Бренды <svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#arrow')}}"></use></svg></h4>
                         <ul>
                             <li><a href="">CHANEL</a></li>
                             <li><a href="">Dior</a></li>
@@ -42,7 +42,7 @@
                         </ul>
                     </div>
                     <div class="footer__menu">
-                        <h4 class="footer__menutitle">Помощь <svg class="icon"><use xlink:href="images/dist/sprite.svg#arrow"></use></svg></h4>
+                        <h4 class="footer__menutitle">Помощь <svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#arrow')}}"></use></svg></h4>
                         <ul>
                             <li><a href="">О компании</a></li>
                             <li><a href="">Сервис</a></li>
@@ -57,7 +57,7 @@
             <div class="col-lg-2 col-md-4 col-sm-4 col-6 colcontacts">
                 <div class="footer__contacts">
                     <div class="footer__phone"><a href="">+7 495 152 85 44</a></div>
-                    <a href="#callback" class="btn btn--accent popup-with-form">Заказать звонок <svg class="icon"><use xlink:href="images/dist/sprite.svg#circle-arrow"></use></svg></a>
+                    <a href="#callback" class="btn btn--accent popup-with-form">Заказать звонок <svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#circle-arrow')}}"></use></svg></a>
                 </div>
             </div>
             <div class="col-lg-12 colcopyright">
