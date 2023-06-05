@@ -18,6 +18,7 @@ class Product extends Model
         'code_1c',
         'status',
         'price',
+        'discount_price',
         'image_print_id',
         'discount_price',
         'category_id',

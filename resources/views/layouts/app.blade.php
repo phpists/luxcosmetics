@@ -14,6 +14,7 @@
     <meta name="theme-color" content="#06473A">
 
     <link rel="stylesheet" href="{{ asset('/css/main.min.css') }}">
+    @vite(['resources/js/app.js'])
     <![endif]-->
 
     @yield('styles')

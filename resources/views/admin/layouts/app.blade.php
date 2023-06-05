@@ -4,7 +4,7 @@
 <head>
     <base href="">
     <meta charset="utf-8"/>
-    <title>MustHave | Админ-панель</title>
+    <title>LuxCosmetics | Админ-панель</title>
     <meta name="description" content="Betinsurance"/>
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="lang" content="{{ app()->getLocale() }}">

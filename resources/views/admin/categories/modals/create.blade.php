@@ -1,4 +1,4 @@
-<div class="modal fade" id="updateCategoryImageModal" tabindex="-1" role="dialog" aria-labelledby="createFaqTitle"
+<div class="modal fade" id="createCategoryImageModal" tabindex="-1" role="dialog" aria-labelledby="createFaqTitle"
      aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -9,10 +9,9 @@
                 </button>
             </div>
 
-            <form action="{{ route('admin.product.image.update') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('admin.category.image.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
-                <input type="hidden" id="imageId" name="image_id">
-                <input type="hidden" name="category_id" value="{{ $product->id }}">
+                <input type="hidden" name="category_id" value="{{ $category->id }}">
                 <div class="modal-body">
                     <div class="row">
                         <div class="col">
@@ -20,13 +19,15 @@
                                 <div class="mb-lg-0 d-flex flex-column" style="width:95%;">
                                     <label>Зображення</label>
                                     <div class="image-input image-input-outline" id="kt_image_1">
-                                        <div class="image-input-wrapper categoryImage" style="width:100%; height: 200px;  background-image: url('')"></div>
+                                        <div class="image-input-wrapper"
+                                             style="width:100%; height: 200px;  background-image: url()"></div>
                                         <label
                                             class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
                                             data-action="change" data-toggle="tooltip" title=""
                                             data-original-title="Change avatar">
                                             <i class="fa fa-pen icon-sm text-muted"></i>
-                                            <input type="file" name="image" accept=".png, .jpg, .jpeg"/>
+                                            <input type="file" name="image"
+                                                   accept=".png, .jpg, .jpeg"/>
                                             <input type="hidden" name="profile_avatar_remove"/>
                                         </label>
                                         <span
@@ -46,9 +47,9 @@
                             <div class="row d-flex justify-content-around">
                                 <div class="form-group w-100">
                                     <label for="createSeller"
-                                           class="col-sm-12 col-form-label font-weight-bold">Главное</label>
+                                           class="col-sm-12 col-form-label font-weight-bold">Головне</label>
                                     <div class="col-sm-12">
-                                        <select class="form-control" id="is_main" name="is_main">
+                                        <select class="form-control status" name="is_main">
                                             <option value="1">Так</option>
                                             <option value="0">Ні</option>
                                         </select>
@@ -59,9 +60,9 @@
                         <div class="col">
                             <div class="row d-flex justify-content-around">
                                 <div class="form-group w-100">
-                                    <label for="createSeller" class="col-sm-12 col-form-label font-weight-bold">Отображать</label>
+                                    <label for="createSeller" class="col-sm-12 col-form-label font-weight-bold">Відобразити</label>
                                     <div class="col-sm-12">
-                                        <select class="form-control" id="active" name="active">
+                                        <select class="form-control status" name="active">
                                             <option value="1">Так</option>
                                             <option value="0">Ні</option>
                                         </select>
@@ -77,7 +78,7 @@
                                 <div class="form-group w-100">
                                     <label for="createSeller" class="col-sm-12 col-form-label font-weight-bold">Заголовок</label>
                                     <div class="col-sm-12">
-                                        <input type="text" class="form-control" id="title" name="title" required>
+                                        <input type="text" class="form-control" name="title" required>
                                     </div>
                                 </div>
                             </div>
@@ -91,7 +92,7 @@
                                     <label for="createSeller"
                                            class="col-sm-12 col-form-label font-weight-bold">Alt</label>
                                     <div class="col-sm-12">
-                                        <input type="text" class="form-control" id="alt" name="alt" required>
+                                        <input type="text" class="form-control" name="alt" required>
                                     </div>
                                 </div>
                             </div>

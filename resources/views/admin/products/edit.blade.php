@@ -24,7 +24,7 @@
                         <a href="{{ route('admin.products') }}" class="text-muted">Товар</a>
                     </li>
                     <li class="breadcrumb-item">
-                        <a href="{{ route('admin.product.create') }}" class="text-muted">Создание товара</a>
+                        <a href="{{ route('admin.product.edit', $product->id) }}" class="text-muted">Создание товара</a>
                     </li>
                 </ul>
                 <!--end::Breadcrumb-->
@@ -45,7 +45,12 @@
                         <ul class="nav nav-tabs nav-bold nav-tabs-line">
                             <li class="nav-item">
                                 <a class="nav-link active" data-toggle="tab" href="#kt_tab_pane_1_4">
-                                    <span class="nav-text">Створити</span>
+                                    <span class="nav-text">Оновити</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#kt_tab_pane_2_4">
+                                    <span class="nav-text">Редагувати зображення</span>
                                 </a>
                             </li>
                         </ul>
@@ -58,24 +63,35 @@
                     <div class="tab-content">
                         <div class="tab-pane fade show active" id="kt_tab_pane_1_4" role="tabpanel"
                              aria-labelledby="kt_tab_pane_1_4">
-                            <form id="blog_post" action="{{ route('admin.products.store') }}" method="POST"
+                            <form id="blog_post" action="{{ route('admin.product.update', $product->id) }}" method="POST"
                                   enctype="multipart/form-data">
                                 @csrf
+                                @method('PUT')
 
                                 <div class="row">
                                     <div class="col-8">
                                         <div class="form-group">
                                             <label for="exampleSelect2">Назва</label>
-                                            <input type="text" name="title" class="form-control" required/>
+                                            <input type="text" name="title" class="form-control" value="{{$product->title}}" required/>
                                         </div>
-                                        <div class="form-group">
-                                            <label>Категорії</label>
-                                            <select class="form-control select2" id="kt_select2_4"
-                                                    name="category_id" required>
-                                                @foreach($categories as $category)
-                                                    <option value="{{ $category->id }}">{{ $category->name }}</option>
-                                                @endforeach
-                                            </select>
+                                        <div class="row">
+                                            <div class="col-md-8">
+                                                <div class="form-group">
+                                                    <label>Категорії</label>
+                                                    <select class="form-control select2" id="kt_select2_4"
+                                                            name="category_id" required>
+                                                        @foreach($categories as $category)
+                                                            <option @if($product->category_id == $category->id) @endif value="{{ $category->id }}">{{ $category->name }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label>Alias</label>
+                                                    <input type="text" name="alias" value="{{$product->alias}}" class="form-control" required/>
+                                                </div>
+                                            </div>
                                         </div>
                                         <div class="row">
                                             <div class="col-md-6">
@@ -84,37 +100,18 @@
                                                     <select class="form-control select2" id="kt_select2_3"
                                                             name="brand_id">
                                                         @foreach($brands as $brand)
-                                                            <option value="{{ $brand->id }}">{{ $brand->name }}</option>
+                                                            <option @if($product->brand_id == $brand->id) @endif value="{{ $brand->id }}">{{ $brand->name }}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>
                                             </div>
-                                            <div class="col-md-2">
+                                            <div class="col-md-3">
                                                 <label for="exampleSelect2">Ціна</label>
-                                                <input type="number" step="any" name="price" class="form-control" required/>
+                                                <input type="number" step="any" name="price" value="{{$product->price}}" class="form-control" required/>
                                             </div>
-                                            <div class="col-md-2">
+                                            <div class="col-md-3">
                                                 <label for="exampleSelect2">Знижка</label>
-                                                <input type="number" step="any" name="discount_price" class="form-control"/>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-4">
-                                        <div class="form-group">
-                                            <label>Зображення</label>
-                                            <div class="col-auto ml-2">
-                                                <div class="image-input  image-input-outline" id="createImagePlugin"
-                                                     style="max-height: 700px;">
-                                                    <div class="image-input-wrapper" id="updateImageBackground"></div>
-                                                    <label
-                                                        class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
-                                                        data-action="change" data-toggle="tooltip"
-                                                        data-original-title="Change avatar">
-                                                        <i class="fa fa-pen icon-sm text-muted"></i>
-                                                        <input type="file" name="image" required accept="image/*"/>
-                                                        <input type="hidden" name="image_remove"/>
-                                                    </label>
-                                                </div>
+                                                <input type="number" step="any" name="discount_price" value="{{$product->discount_price}}" class="form-control"/>
                                             </div>
                                         </div>
                                     </div>
@@ -127,7 +124,7 @@
                                             <label>Статус</label>
                                             <select class="form-control status" id="kt_select2_1" name="availability">
                                                 @foreach(array_column(\App\Enums\AvailableOptions::cases(), 'value') as $value)
-                                                    <option value="{{$value}}">{{\App\Services\SiteService::getProductStatus($value)}}</option>
+                                                    <option @if(\App\Services\SiteService::getProductStatus($product->availability) == \App\Services\SiteService::getProductStatus($value)) selected @endif value="{{$value}}">{{\App\Services\SiteService::getProductStatus($value)}}</option>
                                                 @endforeach
                                             </select>
                                         </div>
@@ -135,19 +132,13 @@
                                     <div class="col-md-2">
                                         <div class="form-group">
                                             <label for="exampleSelect2">Артикул</label>
-                                            <input type="text" name="code" class="form-control" required/>
+                                            <input type="text" name="code" value="{{$product->code}}" class="form-control" required/>
                                         </div>
                                     </div>
                                     <div class="col-md-2">
                                         <div class="form-group">
                                             <label for="exampleSelect2">Артикул 1C</label>
-                                            <input type="text" name="code_1c" class="form-control" required/>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label>Alias</label>
-                                            <input type="text" name="alias" class="form-control" required/>
+                                            <input type="text" name="code_1c" value="{{$product->code_1c}}" class="form-control" required/>
                                         </div>
                                     </div>
                                 </div>
@@ -155,15 +146,15 @@
                                 <div class="row">
                                     <div class="col-md-12 mb-5">
                                         <label>Описание товара</label>
-                                        <textarea class="textEditor" name="description_1"></textarea>
+                                        <textarea class="textEditor" name="description_1">{{$product->description_1}}</textarea>
                                     </div>
                                     <div class="col-md-12 mb-5">
                                         <label>Как использовать</label>
-                                        <textarea class="textEditor" name="description_2"></textarea>
+                                        <textarea class="textEditor" name="description_2">{{$product->description_2}}</textarea>
                                     </div>
                                     <div class="col-md-12 mb-5">
                                         <label>Доп. описание</label>
-                                        <textarea class="textEditor" name="description_3"></textarea>
+                                        <textarea class="textEditor" name="description_3">{{$product->description_3}}</textarea>
                                     </div>
                                 </div>
 
@@ -173,65 +164,79 @@
                                 </div>
                             </form>
                         </div>
-                        <div class="tab-pane fade" id="kt_tab_pane_3_4" role="tabpanel"
-                             aria-labelledby="kt_tab_pane_3_4">
+                        <div class="tab-pane fade" id="kt_tab_pane_2_4" role="tabpanel"
+                             aria-labelledby="kt_tab_pane_2_4">
+                            <div class="row mb-5">
+                                <div class="col">
+                                    <div class="mb-7">
+                                        <h3>Редагувати зображення</h3>
+                                    </div>
+                                </div>
+                                <div class="col-auto">
+                                    <button data-toggle="modal" data-target="#createCategoryImageModal"
+                                            class="btn btn-primary font-weight-bold">
+                                        <i class="fas fa-plus mr-2"></i>
+                                        Додати
+                                    </button>
+                                </div>
+                            </div>
+                            <div>
+                                <!--begin::Table-->
+                                <div class="table-responsive">
+                                    <table class="table table-head-custom table-vertical-center">
+                                        <thead>
+                                        <tr>
+                                            <th class="pl-0 text-center">
+                                                #
+                                            </th>
+                                            <th class="pl-0 text-center">
+                                                Зображення
+                                            </th>
+                                            <th class="pr-0 text-center">
+                                                Головне
+                                            </th>
+                                            <th class="pr-0 text-center">
+                                                Дії
+                                            </th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        @foreach($product_images as $image)
+                                            <tr data-id="{{ $image->id }}">
+                                                <td class="text-center pl-0">
+                                                    {{ $loop->iteration }}
+                                                </td>
+                                                <td class="text-center pl-0">
+                                                    <img src="/images/uploads/products/{{ $image->path }}" width="100" height="100">
+                                                </td>
+                                                <td class="text-center pl-0">
+                                                    {{ \App\Services\SiteService::getIsMain($image->id===$product->image_print_id) }}
+                                                </td>
+                                                <td class="text-center pr-0">
+                                                    <button class="btn btn-sm btn-clean btn-icon">
+                                                        <i class="handle_cat_image flaticon2-sort"
+                                                           style="cursor:pointer;"></i>
+                                                    </button>
+                                                    <a href="javascript:;" data-toggle="modal"
+                                                       data-target="#updateCategoryImageModal"
+                                                       data-id="{{ $image->id }}"
+                                                       class="btn btn-sm btn-clean btn-icon updateCategoryImage">
+                                                        <i class="las la-edit"></i>
+                                                    </a>
 
-{{--                            <form action="{{ route('admin.blog.update.seo') }}" method="POST">--}}
-{{--                                @csrf--}}
-{{--                                <input type="hidden" name="blog_id">--}}
-{{--                                <div class="row">--}}
-{{--                                    <div class="col-md-12">--}}
-{{--                                        <div class="form-group">--}}
-{{--                                            <label>H1</label>--}}
-{{--                                            <input type="text" name="h1" class="form-control"/>--}}
-{{--                                        </div>--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
+                                                    <a href="{{ route('admin.product.image.delete', $image->id) }}"
+                                                       class="btn btn-sm btn-clean btn-icon"
+                                                       onclick="return confirm('Ви впевнені, що хочете видалити цей запис?')">
+                                                        <i class="las la-trash"></i>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
 
-{{--                                <div class="row">--}}
-{{--                                    <div class="col-md-12">--}}
-{{--                                        <div class="form-group">--}}
-{{--                                            <label>Meta title</label>--}}
-{{--                                            <input type="text" name="meta_title" class="form-control"/>--}}
-{{--                                        </div>--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
-
-{{--                                <div class="row">--}}
-{{--                                    <div class="col-md-12">--}}
-{{--                                        <div class="form-group">--}}
-{{--                                            <label>Meta robots</label>--}}
-{{--                                            <input type="text" name="meta_robots" class="form-control"/>--}}
-{{--                                        </div>--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
-
-{{--                                <div class="row">--}}
-{{--                                    <div class="col-md-12">--}}
-{{--                                        <div class="form-group">--}}
-{{--                                            <label>Meta description</label>--}}
-{{--                                            <textarea class="form-control" id="meta_description"--}}
-{{--                                                      name="meta_description"></textarea>--}}
-{{--                                        </div>--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
-
-{{--                                <div class="row">--}}
-{{--                                    <div class="col-md-12">--}}
-{{--                                        <div class="form-group">--}}
-{{--                                            <label>Meta keywords</label>--}}
-{{--                                            <textarea class="form-control" id="meta_keywords"--}}
-{{--                                                      name="meta_keywords"></textarea>--}}
-
-{{--                                        </div>--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
-
-{{--                                <div class="card-footer">--}}
-{{--                                    <button type="submit" class="btn btn-primary mr-2">Зберегти</button>--}}
-{{--                                </div>--}}
-{{--                            </form>--}}
-
+                            </div>
                         </div>
                     </div>
                 </div>

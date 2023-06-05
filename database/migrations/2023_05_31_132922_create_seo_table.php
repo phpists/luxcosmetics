@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('seo', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('record_id')->comment('Id запису');
+            $table->string('table_name')->comment('Назва таблиці');
             $table->string('title');
             $table->text('description');
             $table->text('keywords');

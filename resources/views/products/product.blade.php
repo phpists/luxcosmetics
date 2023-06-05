@@ -43,7 +43,7 @@
 
                             <div class="gallery ">
                                 @foreach($images as $image)
-                                    <div class="gallery__item"><a href="{{asset('images/uploads/'.$image->path)}}"><img src="{{asset('images/uploads/'.$image->path)}}" alt=""></a></div>
+                                    <div class="gallery__item"><a href="{{asset('images/uploads/products/'.$image->path)}}"><img src="{{asset('images/uploads/products/'.$image->path)}}" alt=""></a></div>
                                 @endforeach
                             </div>
 
@@ -52,7 +52,7 @@
                             <button class="btn-gallery btn-gallery__up" id="gallery-up"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#arrow')}}"></use></svg></button>
                             <div class="gallerythumb">
                                 @foreach($images as $image)
-                                    <div class="gallerythumb__item"><img src="{{asset('images/uploads/'.$image->path)}}" alt=""></div>
+                                    <div class="gallerythumb__item"><img src="{{asset('images/uploads/products/'.$image->path)}}" alt=""></div>
                                 @endforeach
                             </div>
                             <button class="btn-gallery btn-gallery__down" id="gallery-down"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#arrow')}}"></use></svg></button>
@@ -413,9 +413,9 @@
                                     <div class="review__body">
                                         <div class="review__content">Этот аромат стал для меня настоящим открытием! Libre от ИВ СЕН-ЛОРАН обладает свежими и оригинальными нотками, которые прекрасно сочетаются с моим стилем. Парфюмированная вода держится на коже весь день, и я получаю множество комплиментов от коллег и друзей. Рекомендую всем, кто хочет выделиться из толпы и подчеркнуть свою индивидуальность.</div>
                                         <div class="review__images popup-gallery">
-                                            <div class="review__image"><a href="{{asset('images/dist/tmp-gallery.jpg"><img src="{{asset('images/dist/tmp-gallery.jpg')}}" alt="')}}"></a></div>
-                                            <div class="review__image"><a href="{{asset('images/dist/tmp-gallery.jpg"><img src="{{asset('images/dist/tmp-gallery.jpg')}}" alt="')}}"></a></div>
-                                            <div class="review__image"><a href="{{asset('images/dist/tmp-gallery.jpg"><img src="{{asset('images/dist/tmp-gallery.jpg')}}" alt="')}}"></a></div>
+                                            <div class="review__image"><a href="{{asset('images/dist/tmp-gallery.jpg')}}"><img src="{{asset('images/dist/tmp-gallery.jpg')}}" alt=""></a></div>
+                                            <div class="review__image"><a href="{{asset('images/dist/tmp-gallery.jpg')}}"><img src="{{asset('images/dist/tmp-gallery.jpg')}}" alt=""></a></div>
+                                            <div class="review__image"><a href="{{asset('images/dist/tmp-gallery.jpg')}}"><img src="{{asset('images/dist/tmp-gallery.jpg')}}" alt=""></a></div>
                                         </div>
                                         <div class="review__points">
                                             <div class="reviewresult">

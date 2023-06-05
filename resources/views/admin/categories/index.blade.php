@@ -14,7 +14,7 @@
                         <a href="{{ route('admin.dashboard') }}" class="text-muted">Головна</a>
                     </li>
                     <li class="breadcrumb-item">
-                        <a href="{{ route('admin.products') }}" class="text-muted">Категорії</a>
+                        <a href="{{ route('admin.categories') }}" class="text-muted">Категорії</a>
                     </li>
                 </ul>
                 <!--end::Breadcrumb-->
@@ -35,7 +35,7 @@
             <!--begin::Container-->
             <div class="container-fluid">
                 <div class="card gutter-b col-lg-12 ml-0">
-                    @include('admin.products.parts.filter')
+                    @include('admin.categories.parts.filter')
                 </div>
                 @include('admin.layouts.includes.messages')
                 <div class="card card-custom">
@@ -46,21 +46,21 @@
                         <div class="card-toolbar">
                             <!--begin::Dropdown-->
                             <div class="dropdown dropdown-inline mr-2">
-                                <button class="btn btn-danger font-weight-bolder deletedproducts">
+                                <button class="btn btn-danger font-weight-bolder deletedCategories">
                                     <span class="svg-icon svg-icon-md">
                                         <i class="las la-trash"></i>
                                     </span>Видалити
                                 </button>
                             </div>
                             <div class="dropdown dropdown-inline mr-2">
-                                <button class="btn btn-success font-weight-bolder activeproducts" data-status="1">
+                                <button class="btn btn-success font-weight-bolder activeCategories" data-status="1">
                                     <span class="svg-icon svg-icon-md">
                                         <i class="fas fa-toggle-on"></i>
                                     </span>Активувати
                                 </button>
                             </div>
                             <div class="dropdown dropdown-inline mr-2">
-                                <button class="btn btn-success font-weight-bolder activeproducts" data-status="0">
+                                <button class="btn btn-success font-weight-bolder activeCategories" data-status="0">
                                     <span class="svg-icon svg-icon-md"><i class="fas fa-toggle-off"></i></span>Деактивувати
                                 </button>
                             </div>
@@ -72,7 +72,7 @@
                                 </button>
                             </div>
                             <div class="dropdown dropdown-inline mr-2">
-                                <a href="{{ route('admin.product.create') }}"
+                                <a href="{{ route('admin.category.create') }}"
                                    class="btn btn-success font-weight-bolder">
                                     <span class="svg-icon svg-icon-md">
                                         <i class="fas fa-plus"></i>
@@ -116,38 +116,38 @@
                                 </tr>
                                 </thead>
                                 <tbody id="table">
-                                @foreach($products as $product)
-                                    <tr id="product_{{$product->id}}" data-id="{{ $product->id }}">
+                                @foreach($categories as $category)
+                                    <tr id="category_{{$category->id}}" data-id="{{ $category->id }}">
                                         <td class="text-center pl-0">
                                             <span style="width: 20px;">
                                                 <label class="checkbox checkbox-single">
                                                     <input class="checkbox-item" type="checkbox" name="checkbox[]"
-                                                           value="{{ $product->id }}">&nbsp;<span></span>
+                                                           value="{{ $category->id }}">&nbsp;<span></span>
                                                 </label>
                                             </span>
                                         </td>
                                         <td class="text-center pl-0">
-                                            {{ $product->id }}
+                                            {{ $category->id }}
                                         </td>
                                         <td class="text-center pr-0">
-                                            {{ $product->title }}
+                                            {{ $category->title }}
                                         </td>
                                         <td class="text-center pr-0">
-                                            {{ $product->alias }}
+                                            {{ $category->alias }}
                                         </td>
                                         <td class="text-center pr-0">
-                                            {{ $product->created_at->format('m Y, H:i:s') }}
+                                            {{ $category->created_at->format('m Y, H:i:s') }}
                                         </td>
                                         <td class="text-center pr-0 status">
-                                            {{ \App\Services\SiteService::getProductStatus($product->availability) }}
+                                            {{ \App\Services\SiteService::getStatus($category->status) }}
                                         </td>
                                         <td class="text-center pr-0">
                                             <i class="handle flaticon2-sort" style="cursor:pointer;"></i>
-                                            <a href="{{ route('admin.product.edit', ['id' => $product->id]) }}"
+                                            <a href="{{ route('admin.category.edit', $category->id) }}"
                                                class="btn btn-sm btn-clean btn-icon">
                                                 <i class="las la-edit"></i>
                                             </a>
-                                            <a href="{{ route('admin.product.delete', $product->id) }}"
+                                            <a href="{{ route('admin.category.delete', $category->id) }}"
                                                class="btn btn-sm btn-clean btn-icon"
                                                onclick="return confirm('Ви впевнені, що хочете видалити цей запис?')">
                                                 <i class="las la-trash"></i>
@@ -158,9 +158,9 @@
                                 </tbody>
                             </table>
                         </div>
-{{--                        <div id="pagination">--}}
-{{--                            {{ $products->appends(request()->all())->links('vendor.pagination.product_pagination') }}--}}
-{{--                        </div>--}}
+                        <div id="pagination">
+                            {{ $categories->appends(request()->all())->links('vendor.pagination.category_pagination') }}
+                        </div>
                         <!--end::Table-->
                     </div>
                 </div>
@@ -172,13 +172,11 @@
         <!--end::Entry-->
 
     </div>
-    @include('admin.products.modals.create')
-    @include('admin.products.modals.update')
 @endsection
 
 @section('js_after')
     <script src="https://raw.githack.com/SortableJS/Sortable/master/Sortable.js"></script>
-    <script src="{{ asset('super_admin/js/product.js') }}"></script>
+    <script src="{{ asset('super_admin/js/category.js') }}"></script>
     <script src="{{ asset('super_admin/js/pages/crud/forms/widgets/select2.js') }}"></script>
 @endsection
 

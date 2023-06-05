@@ -9,9 +9,9 @@
                 </button>
             </div>
 
-            <form action="{{ route('admin.category.image.store') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('admin.product.image.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
-                <input type="hidden" name="category_id" value="{{ $category->id }}">
+                <input type="hidden" name="category_id" value="{{ $product->id }}">
                 <div class="modal-body">
                     <div class="row">
                         <div class="col">

@@ -187,7 +187,7 @@
                                                         $selected_variation = $product->product_variations->first();
                                                     @endphp
                                                     <a href="/products/{{$product->alias}}{{$selected_variation !== null?'/'.$selected_variation->id:''}}">
-                                                        <img src="{{asset('images/uploads/'.$product->image)}}" alt="">
+                                                        <img src="{{asset('images/uploads/products/'.$product->image)}}" alt="">
                                                     </a>
                                                     <button class="product__fav"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#heart')}}"></use></svg></button>
                                                 </div>
