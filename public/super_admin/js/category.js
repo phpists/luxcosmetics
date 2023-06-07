@@ -106,7 +106,6 @@ $(document).ready(function () {
 
     /* Масове видалення категорій */
     $(document).on('click', '.deletedCategories', function (e) {
-        let lang = $('meta[name="lang"]').attr('content');
         let csrf = $('meta[name="csrf-token"]').attr('content');
         let checkbox = $(".checkbox-item:checkbox:checked").map(function () {
             return $(this).val();
@@ -116,7 +115,7 @@ $(document).ready(function () {
 
         $.ajax({
             type: "POST",
-            url: '/' + lang + '/admin/_delete-categories',
+            url: '/admin/_delete-categories',
             data: {
                 csrf: csrf,
                 checkbox: checkbox,
@@ -154,7 +153,7 @@ $(document).ready(function () {
 
         $.ajax({
             type: "POST",
-            url: '/' + lang + '/admin/_active-categories',
+            url: '/admin/_active-categories',
             data: {
                 csrf: csrf,
                 checkbox: checkbox,

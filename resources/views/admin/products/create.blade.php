@@ -51,7 +51,7 @@
                         </ul>
                     </div>
                     <div class="card-toolbar">
-                        <button type="submit" form="blog_post" class="btn btn-primary">Зберегти</button>
+                        <button type="submit" form="blog_post" class="btn btn-primary">Сохранить</button>
                     </div>
                 </div>
                 <div class="card-body">
@@ -101,7 +101,7 @@
                                     </div>
                                     <div class="col-4">
                                         <div class="form-group">
-                                            <label>Зображення</label>
+                                            <label>ИЗОБРАЖЕНИЕ</label>
                                             <div class="col-auto ml-2">
                                                 <div class="image-input  image-input-outline" id="createImagePlugin"
                                                      style="max-height: 700px;">
@@ -169,7 +169,7 @@
 
 
                                 <div class="card-footer">
-                                    <button type="submit" class="btn btn-primary mr-2">Зберегти</button>
+                                    <button type="submit" class="btn btn-primary mr-2">Сохранить</button>
                                 </div>
                             </form>
                         </div>
@@ -228,7 +228,7 @@
 {{--                                </div>--}}
 
 {{--                                <div class="card-footer">--}}
-{{--                                    <button type="submit" class="btn btn-primary mr-2">Зберегти</button>--}}
+{{--                                    <button type="submit" class="btn btn-primary mr-2">Сохранить</button>--}}
 {{--                                </div>--}}
 {{--                            </form>--}}
 
@@ -268,8 +268,8 @@
 
         tinymce.init({
             selector: '.textEditor',
-            plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed linkchecker a11ychecker tinymcespellchecker permanentpen powerpaste advtable advcode editimage tinycomments tableofcontents footnotes mergetags autocorrect typography inlinecss grid',
-            toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat | grid',
+            plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed linkchecker a11ychecker tinymcespellchecker permanentpen powerpaste advtable advcode editimage tinycomments tableofcontents footnotes mergetags autocorrect typography inlinecss',
+            toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
             tinycomments_mode: 'embedded',
             tinycomments_author: 'Author name',
             language: 'uk',

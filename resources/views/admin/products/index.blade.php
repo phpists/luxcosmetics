@@ -41,42 +41,42 @@
                 <div class="card card-custom">
                     <div class="card-header flex-wrap border-0 pt-6 pb-0">
                         <div class="card-title">
-                            <h3 class="card-label">Категорії</h3>
+                            <h3 class="card-label">Товар</h3>
                         </div>
                         <div class="card-toolbar">
                             <!--begin::Dropdown-->
                             <div class="dropdown dropdown-inline mr-2">
-                                <button class="btn btn-danger font-weight-bolder deletedproducts">
+                                <button class="btn btn-danger font-weight-bolder deletedProducts">
                                     <span class="svg-icon svg-icon-md">
                                         <i class="las la-trash"></i>
-                                    </span>Видалити
+                                    </span>Удалить
                                 </button>
                             </div>
-                            <div class="dropdown dropdown-inline mr-2">
-                                <button class="btn btn-success font-weight-bolder activeproducts" data-status="1">
-                                    <span class="svg-icon svg-icon-md">
-                                        <i class="fas fa-toggle-on"></i>
-                                    </span>Активувати
-                                </button>
-                            </div>
-                            <div class="dropdown dropdown-inline mr-2">
-                                <button class="btn btn-success font-weight-bolder activeproducts" data-status="0">
-                                    <span class="svg-icon svg-icon-md"><i class="fas fa-toggle-off"></i></span>Деактивувати
-                                </button>
-                            </div>
-                            <div class="dropdown dropdown-inline mr-2">
-                                <button class="btn btn-primary font-weight-bolder">
-                                    <span class="svg-icon svg-icon-md">
-                                        <i class="fas fa-toggle-off"></i>
-                                    </span>Імпортувати
-                                </button>
-                            </div>
+{{--                            <div class="dropdown dropdown-inline mr-2">--}}
+{{--                                <button class="btn btn-success font-weight-bolder activeproducts" data-status="1">--}}
+{{--                                    <span class="svg-icon svg-icon-md">--}}
+{{--                                        <i class="fas fa-toggle-on"></i>--}}
+{{--                                    </span>Активувати--}}
+{{--                                </button>--}}
+{{--                            </div>--}}
+{{--                            <div class="dropdown dropdown-inline mr-2">--}}
+{{--                                <button class="btn btn-success font-weight-bolder activeproducts" data-status="0">--}}
+{{--                                    <span class="svg-icon svg-icon-md"><i class="fas fa-toggle-off"></i></span>Деактивувати--}}
+{{--                                </button>--}}
+{{--                            </div>--}}
+{{--                            <div class="dropdown dropdown-inline mr-2">--}}
+{{--                                <button class="btn btn-primary font-weight-bolder">--}}
+{{--                                    <span class="svg-icon svg-icon-md">--}}
+{{--                                        <i class="fas fa-toggle-off"></i>--}}
+{{--                                    </span>Імпортувати--}}
+{{--                                </button>--}}
+{{--                            </div>--}}
                             <div class="dropdown dropdown-inline mr-2">
                                 <a href="{{ route('admin.product.create') }}"
                                    class="btn btn-success font-weight-bolder">
                                     <span class="svg-icon svg-icon-md">
                                         <i class="fas fa-plus"></i>
-                                    </span>Додати категорію
+                                    </span>Добавить товар
                                 </a>
                             </div>
                         </div>
@@ -149,7 +149,7 @@
                                             </a>
                                             <a href="{{ route('admin.product.delete', $product->id) }}"
                                                class="btn btn-sm btn-clean btn-icon"
-                                               onclick="return confirm('Ви впевнені, що хочете видалити цей запис?')">
+                                               onclick="return confirm('Вы уверены,я что хотите удалить запись?')">
                                                 <i class="las la-trash"></i>
                                             </a>
                                         </td>

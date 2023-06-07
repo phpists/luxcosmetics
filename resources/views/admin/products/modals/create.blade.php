@@ -1,9 +1,9 @@
-<div class="modal fade" id="createCategoryImageModal" tabindex="-1" role="dialog" aria-labelledby="createFaqTitle"
+<div class="modal fade" id="createProductImageModal" tabindex="-1" role="dialog" aria-labelledby="createProductImageModal"
      aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="createFaqTitle">Нове Зображення</h5>
+                <h5 class="modal-title" id="createFaqTitle">Новое ИЗОБРАЖЕНИЕ</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <i aria-hidden="true" class="ki ki-close"></i>
                 </button>
@@ -11,16 +11,16 @@
 
             <form action="{{ route('admin.product.image.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
-                <input type="hidden" name="category_id" value="{{ $product->id }}">
+                <input type="hidden" name="product_id" value="{{ $product->id }}">
                 <div class="modal-body">
                     <div class="row">
                         <div class="col">
                             <div class="row d-flex justify-content-around">
                                 <div class="mb-lg-0 d-flex flex-column" style="width:95%;">
-                                    <label>Зображення</label>
+                                    <label>ИЗОБРАЖЕНИЕ</label>
                                     <div class="image-input image-input-outline" id="kt_image_1">
                                         <div class="image-input-wrapper"
-                                             style="width:100%; height: 200px;  background-image: url()"></div>
+                                             style="width:100%; height: 200px"></div>
                                         <label
                                             class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
                                             data-action="change" data-toggle="tooltip" title=""
@@ -47,11 +47,11 @@
                             <div class="row d-flex justify-content-around">
                                 <div class="form-group w-100">
                                     <label for="createSeller"
-                                           class="col-sm-12 col-form-label font-weight-bold">Головне</label>
+                                           class="col-sm-12 col-form-label font-weight-bold">Главное</label>
                                     <div class="col-sm-12">
                                         <select class="form-control status" name="is_main">
-                                            <option value="1">Так</option>
-                                            <option value="0">Ні</option>
+                                            <option value="1">Да</option>
+                                            <option value="0">Нет</option>
                                         </select>
                                     </div>
                                 </div>
@@ -60,39 +60,12 @@
                         <div class="col">
                             <div class="row d-flex justify-content-around">
                                 <div class="form-group w-100">
-                                    <label for="createSeller" class="col-sm-12 col-form-label font-weight-bold">Відобразити</label>
+                                    <label for="createSeller" class="col-sm-12 col-form-label font-weight-bold">Отобразить</label>
                                     <div class="col-sm-12">
-                                        <select class="form-control status" name="active">
-                                            <option value="1">Так</option>
-                                            <option value="0">Ні</option>
+                                        <select class="form-control status" name="is_active">
+                                            <option value="1">Да</option>
+                                            <option value="0">Нет</option>
                                         </select>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col">
-                            <div class="row d-flex justify-content-around">
-                                <div class="form-group w-100">
-                                    <label for="createSeller" class="col-sm-12 col-form-label font-weight-bold">Заголовок</label>
-                                    <div class="col-sm-12">
-                                        <input type="text" class="form-control" name="title" required>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col">
-                            <div class="row d-flex justify-content-around">
-                                <div class="form-group w-100">
-                                    <label for="createSeller"
-                                           class="col-sm-12 col-form-label font-weight-bold">Alt</label>
-                                    <div class="col-sm-12">
-                                        <input type="text" class="form-control" name="alt" required>
                                     </div>
                                 </div>
                             </div>
@@ -102,9 +75,9 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-lg btn-light-primary font-weight-bold"
                                 data-dismiss="modal">
-                            Закрити
+                            Закрыть
                         </button>
-                        <button type="submit" class="btn btn-lg btn-primary mr-2">Зберегти</button>
+                        <button type="submit" class="btn btn-lg btn-primary mr-2">Сохранить</button>
                     </div>
                 </div>
             </form>

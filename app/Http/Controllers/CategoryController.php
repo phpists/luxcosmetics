@@ -27,7 +27,18 @@ class CategoryController extends Controller
             ->where('images.table_name', 'products')
             ->with('product_variations')
             ->with('brand')
-            ->get();
-        return view('categories.index', compact('category', 'products'));
+            ->paginate(12);
+        $products_list = view('categories.parts.products', compact('products'))->render();
+
+        if ($request->ajax()) {
+            return response()->json([
+                'data' => $products_list,
+                'next_link' => $products->nextPageUrl(),
+                'current_page' => $products->currentPage()
+            ]);
+        }
+        $last_page_url = $products->url($products->lastPage());
+        $pagination = view('categories.parts.pagination', compact('products', 'last_page_url'))->render();
+        return view('categories.index', compact('category', 'products', 'pagination', 'products_list'));
     }
 }
