@@ -227,19 +227,19 @@
                                         </g>
                                      </svg>
                                 </span>
-                                <span class="menu-text">Загальні</span><i class="menu-arrow"></i>
+                                <span class="menu-text">Общие</span><i class="menu-arrow"></i>
                             </a>
                             <div class="menu-submenu ">
                                 <i class="menu-arrow"></i>
                                 <ul class="menu-subnav">
                                     <li class="menu-item  menu-item-parent" aria-haspopup="true">
-                                        <span class="menu-link"><span class="menu-text">Загальні</span></span>
+                                        <span class="menu-link"><span class="menu-text">Общие</span></span>
                                     </li>
                                     <li class="menu-item {{ request()->routeIs('admin.settings.contacts') ? 'menu-item-active' : '' }}"
                                         aria-haspopup="true">
                                         <a href="" class="menu-link">
                                             <i class="menu-bullet menu-bullet-dot"><span></span></i>
-                                            <span class="menu-text">Контактні дані</span>
+                                            <span class="menu-text">Контактные данные</span>
                                         </a>
                                     </li>
                                 </ul>
@@ -248,13 +248,13 @@
                                 <i class="menu-arrow"></i>
                                 <ul class="menu-subnav">
                                     <li class="menu-item  menu-item-parent" aria-haspopup="true">
-                                        <span class="menu-link"><span class="menu-text">Загальні</span></span>
+                                        <span class="menu-link"><span class="menu-text">Общие</span></span>
                                     </li>
                                     <li class="menu-item  {{ request()->routeIs('admin.settings.socials') ? 'menu-item-active' : '' }}"
                                         aria-haspopup="true">
-                                        <a href="" class="menu-link">
+                                        <a href="{{route('admin.settings.socials')}}" class="menu-link">
                                             <i class="menu-bullet menu-bullet-dot"><span></span></i>
-                                            <span class="menu-text">Соц.медіа</span>
+                                            <span class="menu-text">Соц.медиа</span>
                                         </a>
                                     </li>
                                 </ul>
@@ -263,13 +263,13 @@
                                 <i class="menu-arrow"></i>
                                 <ul class="menu-subnav">
                                     <li class="menu-item  menu-item-parent" aria-haspopup="true">
-                                        <span class="menu-link"><span class="menu-text">Загальні</span></span>
+                                        <span class="menu-link"><span class="menu-text">Общие</span></span>
                                     </li>
                                     <li class="menu-item  {{ request()->routeIs('admin.settings.banners') ? 'menu-item-active' : '' }}"
                                         aria-haspopup="true">
                                         <a href="" class="menu-link">
                                             <i class="menu-bullet menu-bullet-dot"><span></span></i>
-                                            <span class="menu-text">Банери</span>
+                                            <span class="menu-text">Банеры</span>
                                         </a>
                                     </li>
                                 </ul>
@@ -278,13 +278,13 @@
                                 <i class="menu-arrow"></i>
                                 <ul class="menu-subnav">
                                     <li class="menu-item  menu-item-parent" aria-haspopup="true">
-                                        <span class="menu-link"><span class="menu-text">Загальні</span></span>
+                                        <span class="menu-link"><span class="menu-text">Общие</span></span>
                                     </li>
                                     <li class="menu-item  {{ request()->routeIs('admin.settings.translations') ? 'menu-item-active' : '' }}"
                                         aria-haspopup="true">
                                         <a href="" class="menu-link">
                                             <i class="menu-bullet menu-bullet-dot"><span></span></i>
-                                            <span class="menu-text">Переклади</span>
+                                            <span class="menu-text">Переводы</span>
                                         </a>
                                     </li>
                                 </ul>

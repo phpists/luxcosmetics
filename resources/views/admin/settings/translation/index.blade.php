@@ -28,13 +28,13 @@
                         <div class="card-header">
                             <div class="card-title">
                                 <h3 class="card-label">
-                                    Переклади
+                                    Переводы
                                 </h3>
                             </div>
                             <div class="card-toolbar">
                                 <button data-toggle="modal" data-target="#createModal"
                                         class="btn btn-primary font-weight-bold createBtn">
-                                    <i class="fas fa-plus mr-2"></i> Додати
+                                    <i class="fas fa-plus mr-2"></i> Добавить
                                 </button>
                             </div>
                         </div>
@@ -50,13 +50,13 @@
                                             #
                                         </th>
                                         <th class="pr-0 text-center">
-                                            Назва
+                                            Название
                                         </th>
                                         <th class="pr-0 text-center">
-                                           Переклад
+                                           Перевод
                                         </th>
                                         <th class="pr-0 text-center">
-                                            Дії
+                                            Действия
                                         </th>
                                     </tr>
                                     </thead>

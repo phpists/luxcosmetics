@@ -1,6 +1,6 @@
 @extends('admin.layouts.app')
 @section('title')
-    <h5 class="text-dark font-weight-bold mt-2 mb-2 mr-5">Соціальні медіа</h5>
+    <h5 class="text-dark font-weight-bold mt-2 mb-2 mr-5">Социальные медиа</h5>
 @endsection
 @section('styles')
     <style>
@@ -31,12 +31,12 @@
                                     <i class="flaticon-network text-primary"></i>
                                 </span>
                                 <h3 class="card-label">
-                                    Соціальні мережі
+                                    Социальные сети
                                 </h3>
                             </div>
                             <div class="card-toolbar">
                                 <button data-toggle="modal" data-target="#createModal" data-type="{{ \App\Models\SocialMedia::TYPE_NETWORK }}" data-pos="{{ $network_next_pos }}" class="btn btn-primary font-weight-bold createBtn">
-                                    <i class="fas fa-plus mr-2"></i>Додати
+                                    <i class="fas fa-plus mr-2"></i>Добавить
                                 </button>
                             </div>
                         </div>
@@ -52,19 +52,19 @@
                                             #
                                         </th>
                                         <th class="pr-0 text-center">
-                                            Іконка
+                                            Иконка
                                         </th>
                                         <th class="pr-0 text-center">
-                                            Посилання
+                                            Ссылка
                                         </th>
                                         <th class="pr-0 text-center">
-                                            "Контакти"
+                                            Контакты
                                         </th>
                                         <th class="pr-0 text-center">
                                             Футер
                                         </th>
                                         <th class="pr-0 text-center">
-                                            Дії
+                                            Действия
                                         </th>
                                     </tr>
                                     </thead>
@@ -141,12 +141,12 @@
                                     <i class="flaticon2-chat-2 text-primary"></i>
                                 </span>
                                 <h3 class="card-label">
-                                    Месенджери
+                                    Мессенджеры
                                 </h3>
                             </div>
                             <div class="card-toolbar">
                                 <button data-toggle="modal" data-target="#createModal" data-type="{{ \App\Models\SocialMedia::TYPE_MESSENGER }}" data-pos="{{ $messenger_next_pos }}" class="btn btn-primary font-weight-bold createBtn">
-                                    <i class="fas fa-plus mr-2"></i>Додати
+                                    <i class="fas fa-plus mr-2"></i>Добавить
                                 </button>
                             </div>
                         </div>
@@ -162,19 +162,19 @@
                                             #
                                         </th>
                                         <th class="pr-0 text-center">
-                                            Іконка
+                                            Иконка
                                         </th>
                                         <th class="pr-0 text-center">
-                                            Посилання
+                                            Ссылка
                                         </th>
                                         <th class="pr-0 text-center">
-                                            "Контакти"
+                                            Контакты 
                                         </th>
                                         <th class="pr-0 text-center">
                                             Футер
                                         </th>
                                         <th class="pr-0 text-center">
-                                            Дії
+                                            Действия
                                         </th>
                                     </tr>
                                     </thead>
@@ -240,6 +240,32 @@
                         </div>
                         <!--end::Body-->
                     </div>
+                    <br>
+                    
+                    <div class="card card-custom text-center">
+                        <div class="card-header">
+                            <div class="card-title">
+                                <span class="card-icon">
+                                    <i class="flaticon-network text-primary"></i>
+                                </span>
+                                @foreach ($phone as $item)
+                                <h3 class="card-label">
+                                    Ваш номер: {{$item->number}}
+                                </h3>
+                            </div>
+                            <div class="card-toolbar">
+                                <form action="{{ route('admin.settings.telephone.edit') }}">
+                                    <a href="javascript:;" class="btn btn-sm btn-clean btn-icon editSocial"
+                                       data-toggle="modal" data-target="#telephonModal"
+                                       data-id="{{ $item->number }}">
+                                        <i class="las la-edit"></i>
+                                    </a>
+                                </form>
+                            </div>
+                            @endforeach       
+                        </div>
+                    </div>
+                    
                     <!--end::Card-->
                 </div>
             </div>
@@ -252,6 +278,7 @@
 
 @include('admin.settings.socials.modals.create')
 @include('admin.settings.socials.modals.update')
+@include('admin.settings.socials.modals.telephon')
 @endsection
 
 @section('js_after')
@@ -356,7 +383,7 @@
 
         function loadModel() {
             let id = $(this).data('id');
-
+            console.log(id);
             $.ajax({
                 url: '{{ route('admin.settings.social.show') }}',
                 data: {
@@ -377,6 +404,7 @@
                 }
             });
         }
+
     </script>
 @endsection
 

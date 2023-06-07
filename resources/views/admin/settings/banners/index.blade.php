@@ -1,6 +1,6 @@
 @extends('admin.layouts.app')
 @section('title')
-    <h5 class="text-dark font-weight-bold mt-2 mb-2 mr-5">Банери</h5>
+    <h5 class="text-dark font-weight-bold mt-2 mb-2 mr-5">Банеры</h5>
 @endsection
 @section('styles')
     <style>
@@ -28,13 +28,13 @@
                         <div class="card-header">
                             <div class="card-title">
                                 <h3 class="card-label">
-                                    Банери
+                                    Банеры
                                 </h3>
                             </div>
                             <div class="card-toolbar">
                                 <button data-toggle="modal" data-target="#createModal"
                                         class="btn btn-primary font-weight-bold createBtn">
-                                    <i class="fas fa-plus mr-2"></i> Додати
+                                    <i class="fas fa-plus mr-2"></i> Добавить
                                 </button>
                             </div>
                         </div>
@@ -50,22 +50,22 @@
                                             #
                                         </th>
                                         <th class="pr-0 text-center">
-                                            Назва
+                                            Название
                                         </th>
                                         <th class="pr-0 text-center">
                                             Заголовок
                                         </th>
                                         <th class="pr-0 text-center">
-                                            Посилання
+                                            Ссылка
                                         </th>
                                         <th class="pr-0 text-center">
-                                            Колір
+                                            Цвет
                                         </th>
                                         <th class="pr-0 text-center">
                                             Статус
                                         </th>
                                         <th class="pr-0 text-center">
-                                            Дії
+                                            Действия
                                         </th>
                                     </tr>
                                     </thead>

@@ -1,6 +1,6 @@
 @extends('admin.layouts.app')
 @section('title')
-    <h5 class="text-dark font-weight-bold mt-2 mb-2 mr-5">Загальні налаштування</h5>
+    <h5 class="text-dark font-weight-bold mt-2 mb-2 mr-5">Общие настройки</h5>
 @endsection
 
 @section('content')
@@ -20,7 +20,7 @@
                             <div class="card-header">
                                 <div class="card-title">
                                     <h2 class="card-label">
-                                        Контактні дані
+                                        Контактные данные
                                     </h2>
                                 </div>
                             </div>
@@ -55,7 +55,7 @@
                                                     <tr>
                                                         <th scope="col">Тип</th>
                                                         <th scope="col">Контакт</th>
-                                                        <th scope="col">Дод.інфо</th>
+                                                        <th scope="col">Дод.инфо</th>
                                                         <th scope="col" class="text-center">
                                                             <button type="button" class="btn btn-sm btn-icon btn-light-primary create-contact" data-toggle="modal" data-target="#createContact" data-group-id="{{ $group_id }}">
                                                                 <i class="flaticon2-plus"></i>
@@ -96,10 +96,10 @@
                                             <table class="table table-sm">
                                                 <thead>
                                                 <tr>
-                                                    <th scope="col">Відділ</th>
+                                                    <th scope="col">Отдел</th>
                                                     <th scope="col">Тип</th>
                                                     <th scope="col">Контакт</th>
-                                                    <th scope="col">Дод.інфо</th>
+                                                    <th scope="col">Дод.инфо</th>
                                                     <th scope="col" class="text-center">
                                                         <button type="button" class="btn btn-sm btn-icon btn-light-primary create-contact" data-toggle="modal" data-target="#createContact" data-group-id="{{ \App\Models\Contact::GROUP_DEPARTMENT }}">
                                                             <i class="flaticon2-plus"></i>
@@ -132,12 +132,12 @@
                                         </div>
                                     </div>
                                     <div class="col mb-5">
-                                        <h4 class="text-dark font-weight-bold mb-2">Відділи компанії</h4>
+                                        <h4 class="text-dark font-weight-bold mb-2">Отделы компании</h4>
                                         <div class="mb-15 mx-4">
                                             <table class="table table-sm">
                                                 <thead>
                                                 <tr>
-                                                    <th scope="col">Назва</th>
+                                                    <th scope="col">Название</th>
                                                     <th scope="col" class="text-center">
                                                         <button type="button" class="btn btn-sm btn-icon btn-light-primary" data-toggle="modal" data-target="#createDepartmentModal">
                                                             <i class="flaticon2-plus"></i>
@@ -181,7 +181,7 @@
                                                     <tr>
                                                         <th scope="col">Тип</th>
                                                         <th scope="col">Контакт</th>
-                                                        <th scope="col">Дод.інфо</th>
+                                                        <th scope="col">Дод.инфо</th>
                                                         <th scope="col" class="text-center">
                                                             <button type="button" class="btn btn-sm btn-icon btn-light-primary create-contact" data-toggle="modal" data-target="#createContact" data-group-id="{{ $group_id }}">
                                                                 <i class="flaticon2-plus"></i>
@@ -292,7 +292,7 @@
             let button = this,
                 id = button.dataset.id;
 
-            if (!confirm('Ви впевнені, що хочете видалити відділ? Всі його контактні дані будуть видалені вслід за ним')) return
+            if (!confirm('Вы уверены, что хотите удалить отдел? Все его контактные данные будут удалены вслед за ним')) return
 
             $.ajaxSetup({
                 headers: {
@@ -384,7 +384,7 @@
         $(document).on('click', '.drop-contact', function(e) {
             let button = this;
 
-            if (!confirm('Ви впевнені, що хочете видалити запис?')) return
+            if (!confirm('Вы уверены, что хотите удалить запись?')) return
 
             $.ajaxSetup({
                 headers: {

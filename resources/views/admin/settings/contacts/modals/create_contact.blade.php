@@ -4,7 +4,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="createContactTitle">Додати новий запис</h5>
+                <h5 class="modal-title" id="createContactTitle">Добавить новую запись</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <i aria-hidden="true" class="ki ki-close"></i>
                 </button>
@@ -19,7 +19,7 @@
                     <div class="row row-cols-1 row-cols-md-2 d-flex justify-content-around">
                         <div class="col px-0 d-none">
                             <div class="form-group w-100">
-                                <label for="createContactDepartmentId" class="col-auto col-form-label font-weight-bold">Відділ</label>
+                                <label for="createContactDepartmentId" class="col-auto col-form-label font-weight-bold">Отдел</label>
                                 <div class="col-sm-12">
                                     <select class="form-control" id="createContactDepartmentId" name="department_id">
                                         @foreach($departments as $department)
@@ -43,7 +43,7 @@
                         </div>
                         <div class="col px-0 d-none">
                             <div class="form-group w-100">
-                                <label for="createContactTypeTitle" class="col-auto col-form-label font-weight-bold">Назва</label>
+                                <label for="createContactTypeTitle" class="col-auto col-form-label font-weight-bold">Название</label>
                                 <div class="col-sm-12">
                                     <input type="text" class="form-control" id="createContactTypeTitle" name="type_title">
                                 </div>
@@ -51,7 +51,7 @@
                         </div>
                         <div class="col px-0">
                             <div class="form-group w-100">
-                                <label for="createContactValue" class="col-auto col-form-label font-weight-bold">Значення</label>
+                                <label for="createContactValue" class="col-auto col-form-label font-weight-bold">Значения</label>
                                 <div class="col-sm-12">
                                     <input type="text" class="form-control" id="createContactValue" name="value" required>
                                 </div>
@@ -59,7 +59,7 @@
                         </div>
                         <div class="col px-0">
                             <div class="form-group w-100">
-                                <label for="departureCreateInfo" class="col-auto col-form-label font-weight-bold">Дод.інформація</label>
+                                <label for="departureCreateInfo" class="col-auto col-form-label font-weight-bold">Дод.информация</label>
                                 <div class="col-sm-12">
                                     <input type="text" class="form-control" id="departureCreateInfo" name="info">
                                 </div>

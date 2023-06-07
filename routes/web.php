@@ -75,6 +75,19 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function 
 //    Dashboard
     Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
 
+    //    Social media
+    Route::get('settings/socials', [\App\Http\Controllers\Admin\Settings\SocialMediaController::class, 'index'])->name('admin.settings.socials');
+    Route::get('settings/social', [\App\Http\Controllers\Admin\Settings\SocialMediaController::class, 'show'])->name('admin.settings.social.show');
+    Route::post('settings/social', [\App\Http\Controllers\Admin\Settings\SocialMediaController::class, 'store'])->name('admin.settings.social.store');
+    Route::post('settings/social/update', [\App\Http\Controllers\Admin\Settings\SocialMediaController::class, 'update'])->name('admin.settings.social.update');
+    Route::delete('settings/social/drop', [\App\Http\Controllers\Admin\Settings\SocialMediaController::class, 'destroy'])->name('admin.settings.social.destroy');
+    Route::post('settings/social/change_status', [\App\Http\Controllers\Admin\Settings\SocialMediaController::class, 'change_status'])->name('admin.settings.social.change_status');
+    Route::post('settings/social/update-positions', [\App\Http\Controllers\Admin\Settings\SocialMediaController::class, 'updates_positions'])->name('admin.settings.social.update_positions');
+
+//     Telephone
+    Route::get('settings/telephone/edit', [App\Http\Controllers\Admin\Settings\PhoneController::class, 'edit'])->name('admin.settings.telephone.edit');
+    Route::patch('settings/telephone/update/{number}', [App\Http\Controllers\Admin\Settings\PhoneController::class, 'update'])->name('admin.settings.telephone.update');
+
     Route::get('clear-cache', [SettingController::class, 'clearCache'])->name('admin.clear.cache');
     Route::post('logout')->name('logout');
 //    Images

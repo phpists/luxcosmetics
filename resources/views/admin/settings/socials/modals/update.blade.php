@@ -4,7 +4,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="updateModalTitle">Редагувати соц.медіа</h5>
+                <h5 class="modal-title" id="updateModalTitle">Редактирование соц.сети</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <i aria-hidden="true" class="ki ki-close"></i>
                 </button>
@@ -14,6 +14,7 @@
                 @csrf
 
                 <input id="updateId" type="hidden" name="id">
+                
 
                 <div class="modal-body">
 
@@ -32,7 +33,7 @@
 
                         <div class="col px-0">
                             <div class="form-group w-100">
-                                <label for="updateLink" class="col-auto col-form-label font-weight-bold">Посилання</label>
+                                <label for="updateLink" class="col-auto col-form-label font-weight-bold">Ссылка</label>
                                 <div class="col-sm-12">
                                     <input type="text" class="form-control" id="updateLink" name="link" required>
                                 </div>
@@ -44,7 +45,7 @@
                     <div class="row row-cols-1 row-cols-md-2">
                         <div class="col">
                             <div class="form-group row mb-0">
-                                <label class="col-auto col-form-label" for="updateIsActiveInContacts">Сторінка "Контакти"</label>
+                                <label class="col-auto col-form-label" for="updateIsActiveInContacts">Страница "Контакты"</label>
                                 <div class="col-3">
                                     <span class="switch">
                                         <label>
@@ -57,7 +58,7 @@
                         </div>
                         <div class="col">
                             <div class="form-group row mb-0">
-                                <label class="col-auto col-form-label" for="updateIsActiveInFooter">Активна в футері</label>
+                                <label class="col-auto col-form-label" for="updateIsActiveInFooter">Активная в футере</label>
                                 <div class="col-3">
                                     <span class="switch">
                                         <label>
@@ -78,7 +79,7 @@
                     <button type="button" class="btn btn-lg btn-light-primary font-weight-bold" data-dismiss="modal">
                         Закрыть
                     </button>
-                    <button type="submit" class="btn btn-lg btn-primary mr-2">Сохранить</button>
+                    <button type="submit" name="go" class="btn btn-lg btn-primary mr-2">Сохранить</button>
                 </div>
 
             </form>
@@ -86,3 +87,8 @@
         </div>
     </div>
 </div>
+<script>
+    
+
+    
+</script>
