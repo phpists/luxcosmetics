@@ -247,20 +247,21 @@
                                     </div>
                                 @endforeach
                             </div>
-                            <div class="category-page__pagination pagination">
-                                <button class="pagination__more">Показать  еще <span>12 товаров</span> <svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#refresh')}}"></use></svg></button>
-                                <ul class="pagination__list">
-                                    <li class="pagination__item pagination__item--first"><a href=""><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#first')}}"></use></svg></a></li>
-                                    <li class="pagination__item pagination__item--prev"><a href=""><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#prev1')}}"></use></svg></a></li>
-                                    <li class="pagination__item pagination__item--active"><span>1</span></li>
-                                    <li class="pagination__item"><a href="">2</a></li>
-                                    <li class="pagination__item"><a href="">3</a></li>
-                                    <li class="pagination__item pagination__item--dots">...</li>
-                                    <li class="pagination__item"><a href="">36</a></li>
-                                    <li class="pagination__item pagination__item--next"><a href=""><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#next1')}}"></use></svg></a></li>
-                                    <li class="pagination__item pagination__item--last"><a href=""><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#last')}}"></use></svg></a></li>
-                                </ul>
-                            </div>
+{{--                            <div class="category-page__pagination pagination">--}}
+{{--                                <button class="pagination__more">Показать  еще <span>12 товаров</span> <svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#refresh')}}"></use></svg></button>--}}
+{{--                                <ul class="pagination__list">--}}
+{{--                                    <li class="pagination__item pagination__item--first"><a href=""><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#first')}}"></use></svg></a></li>--}}
+{{--                                    <li class="pagination__item pagination__item--prev"><a href=""><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#prev1')}}"></use></svg></a></li>--}}
+{{--                                    <li class="pagination__item pagination__item--active"><span>1</span></li>--}}
+{{--                                    <li class="pagination__item"><a href="">2</a></li>--}}
+{{--                                    <li class="pagination__item"><a href="">3</a></li>--}}
+{{--                                    <li class="pagination__item pagination__item--dots">...</li>--}}
+{{--                                    <li class="pagination__item"><a href="">36</a></li>--}}
+{{--                                    <li class="pagination__item pagination__item--next"><a href=""><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#next1')}}"></use></svg></a></li>--}}
+{{--                                    <li class="pagination__item pagination__item--last"><a href=""><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#last')}}"></use></svg></a></li>--}}
+{{--                                </ul>--}}
+{{--                            </div>--}}
+                            {!! $pagination !!}
                         </main>
                     </div>
                 </div>
@@ -346,4 +347,18 @@
 
 @section('scripts')
     <script src="{{asset('/js/app.min.js')}}"></script>
+    <script>
+        $('.pagination__more').on('click', function () {
+            console.log($('.pagination__item--active').attr('aria-current'));
+            $.ajax({
+                url: '{{route('categories.show', $category->alias)}}',
+                success: function (response) {
+                    console.log(response)
+                },
+                error: function (response) {
+                    console.log(response)
+                }
+            })
+        })
+    </script>
 @endsection

@@ -101,7 +101,7 @@
                             </div>
                             <div class="col-4">
                                 <div class="form-group">
-                                    <label>Зображення</label>
+                                    <label>ИЗОБРАЖЕНИЕ</label>
                                     <div class="col-auto ml-2">
                                         <div class="image-input  image-input-outline" id="createImagePlugin"
                                              style="max-height: 700px;">
@@ -121,7 +121,7 @@
                         </div>
                     </div>
                     <div class="card-footer">
-                        <button type="submit" class="btn btn-primary mr-2">Зберегти</button>
+                        <button type="submit" class="btn btn-primary mr-2">Сохранить</button>
                     </div>
                 </form>
                 <!--end::Form-->
@@ -142,7 +142,7 @@
     <script>
         $("#cat_select").select2(
             {
-                placeholder: "fdd",
+                placeholder: "Категория",
                 allowClear: true
             }
         );

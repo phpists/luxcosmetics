@@ -6,9 +6,11 @@ use App\Http\Controllers\Controller;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\ProductVariation;
 use App\Services\ImageService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class ProductController extends Controller
 {
@@ -42,15 +44,18 @@ class ProductController extends Controller
                 ]);
             }
         }
-        return response()->redirectTo('admin.products');
+        return redirect()->route('admin.products')->with('success', 'Товар успешно добавлен');
     }
 
     public function edit(Request $request, string $id) {
         $product = Product::query()
             ->select('products.*', 'images.path as image')
-            ->join('images', 'products.image_print_id', 'images.id')
-            ->where('images.table_name', 'products')
-            ->find($id);
+            ->leftJoin('images', 'products.image_print_id', 'images.id')
+            ->where(function ($query) {
+                $query->where('images.table_name', 'products')
+                    ->orWhereNull('images.table_name');
+            })->find($id);
+
         $categories = Category::query()
             ->select('id', 'name')
             ->get();
@@ -66,33 +71,82 @@ class ProductController extends Controller
 
     public function update(Request $request, $id)
     {
-        $product = Product::query()->find($id);
+        $product = Product::query()->findOrFail($id);
         $product->update($request->all());
+        return redirect()->route('admin.products')->with('success', 'Товар успешно обновлен');
     }
 
     public function storeImage(Request $request) {
         $image_path = ImageService::saveImage('uploads', "products", $request->image);
         if($image_path) {
-            DB::table('images')->insert([
+            $imageId = DB::table('images')->insertGetId([
                 'path' => $image_path,
                 'record_id' => $request->product_id,
-                'table_name' => 'products'
+                'table_name' => 'products',
+                'is_active' => $request->is_active
             ]);
+            if ($request->is_main == 1) {
+                DB::table('products')->where('id', $request->product_id)->update([
+                    'image_print_id' => $imageId
+                ]);
+            }
         }
-        return redirect()->route('admin.products.index')->with('success', 'Изображение создано');
+        return redirect()->route('admin.products')->with('success', 'Изображение создано');
     }
 
-    public function deleteImage(Request $request) {
-        DB::table('images')->find($request->id)->delete();
-        return redirect()->route('admin.products.index')->with('success', 'Изображение удалено');
+    public function deleteImage($id) {
+        DB::table('images')->where('id', $id)->delete();
+        return redirect()->route('admin.products')->with('success', 'Изображение удалено');
     }
 
     public function updateImage(Request $request) {
-
+        DB::table('images')->where('id', $request->image_id)->update([
+            'is_active' => $request->is_active
+        ]);
+        Log::info($request->is_main);
+        if ($request->is_main == 1) {
+            DB::table('products')->where('id', $request->product_id)->update([
+                'image_print_id' => $request->image_id
+            ]);
+        }
+        return redirect()->back()->with('success', 'Изображение успешно обновлено');
     }
+
+    public function storeVariation(Request $request) {
+        $product_variation = new ProductVariation($request->all());
+        $product_variation->save();
+        return redirect()->back()->with('success', 'Модификация создано');
+    }
+
+    public function deleteVariation($id) {
+        DB::table('product_variations')->where('id', $id)->delete();
+        return redirect()->route('admin.products')->with('success', 'Модификация удалена');
+    }
+
+    public function updateVariation(Request $request){
+        $product_variation = ProductVariation::query()->find($request->variation_id);
+        $product_variation->update($request->all());
+        redirect()->back()->with('success', 'Модификация успешно отредактировано');
+    }
+
+    public function showVariation(Request $request) {
+        $product_variation = ProductVariation::query()->find($request->id);
+        return response()->json($product_variation);
+    }
+
 
     public function delete(Request $request, $id) {
         Product::query()->find($id)->delete();
         return redirect()->back()->with('success', 'Товар удален успешно');
+    }
+
+    public function deleteProducts(Request $request) {
+        $product_ids = $request->checkbox;
+        Product::query()->whereIn('id', $product_ids)->delete();
+        return response()->json([
+            'status' => true,
+            'products' => $product_ids,
+            'message' => 'Товары успешно удалены!'
+        ]);
     }
 }

@@ -27,7 +27,11 @@ class CategoryController extends Controller
             ->where('images.table_name', 'products')
             ->with('product_variations')
             ->with('brand')
-            ->get();
-        return view('categories.index', compact('category', 'products'));
+            ->paginate(12);
+        if ($request->ajax()) {
+            return response()->json($products);
+        }
+        $pagination = view('categories.parts.pagination', compact('products'))->render();
+        return view('categories.index', compact('category', 'products', 'pagination'));
     }
 }

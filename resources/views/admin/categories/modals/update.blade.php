@@ -3,7 +3,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="createFaqTitle">Нове Зображення</h5>
+                <h5 class="modal-title" id="createFaqTitle">Новое ИЗОБРАЖЕНИЕ</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <i aria-hidden="true" class="ki ki-close"></i>
                 </button>
@@ -18,7 +18,7 @@
                         <div class="col">
                             <div class="row d-flex justify-content-around">
                                 <div class="mb-lg-0 d-flex flex-column" style="width:95%;">
-                                    <label>Зображення</label>
+                                    <label>ИЗОБРАЖЕНИЕ</label>
                                     <div class="image-input image-input-outline" id="kt_image_1">
                                         <div class="image-input-wrapper categoryImage" style="width:100%; height: 200px;  background-image: url('')"></div>
                                         <label
@@ -101,9 +101,9 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-lg btn-light-primary font-weight-bold"
                                 data-dismiss="modal">
-                            Закрити
+                            Закрыть
                         </button>
-                        <button type="submit" class="btn btn-lg btn-primary mr-2">Зберегти</button>
+                        <button type="submit" class="btn btn-lg btn-primary mr-2">Сохранить</button>
                     </div>
                 </div>
             </form>
