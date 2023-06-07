@@ -30,6 +30,7 @@
 </div>
 @yield('after_content')
 @yield('scripts')
+<script src="{{asset('/js/app.min.js')}}"></script>
 </body>
 
 </html>

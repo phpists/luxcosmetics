@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\Settings\SettingController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\FaqController;
 use Illuminate\Support\Facades\Route;
 use \App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
 
@@ -26,6 +27,10 @@ Route::get('categories/{alias}', [CategoryController::class, 'show'])->name('cat
 // Products
 Route::get('products/{alias}', [\App\Http\Controllers\ProductController::class, 'show'])->name('products.product');
 Route::get('products/{alias}/{variation_id}', [\App\Http\Controllers\ProductController::class, 'show'])->name('products.product');
+Route::get('faq', [FaqController::class, 'index'])->name('faq');
+Route::get('brands', [\App\Http\Controllers\BrandController::class, 'index'])->name('brands');
+Route::get('favourites', [\App\Http\Controllers\FavouritesController::class, 'index'])->name('favourites');
+Route::get('sales', [\App\Http\Controllers\SalesController::class, 'index'])->name('sales');
 // Profile
 Route::group(['prefix' => 'profile'], function () {
     Route::get('/', [\App\Http\Controllers\ProfileController::class, 'index'])->name('profile');
