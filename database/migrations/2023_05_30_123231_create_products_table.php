@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('code_1c', 30)->comment('Код article 1C');
             $table->boolean('status')->default(1)->comment('Статус');
             $table->float('price')->comment('Ціна');
-            $table->bigInteger('image_print_id')->nullable()->comment('Головне зображення');
+            $table->bigInteger('image_print_id')->nullable()->comment('ГЛАВНОЕ ИЗОБРАЖЕНИЕ');
             $table->float('discount_price')->nullable()->comment('Ціна зі знижкою');
             $table->foreignId('category_id')->comment('Головна категорія')->constrained('categories');
             $table->foreignId('brand_id')->comment('Бренд')->constrained();

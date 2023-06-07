@@ -24,7 +24,7 @@
                         <a href="{{ route('admin.products') }}" class="text-muted">Товар</a>
                     </li>
                     <li class="breadcrumb-item">
-                        <a href="{{ route('admin.product.edit', $product->id) }}" class="text-muted">Создание товара</a>
+                        <a href="{{ route('admin.product.edit', $product->id) }}" class="text-muted">{{$product->title}}</a>
                     </li>
                 </ul>
                 <!--end::Breadcrumb-->
@@ -45,18 +45,23 @@
                         <ul class="nav nav-tabs nav-bold nav-tabs-line">
                             <li class="nav-item">
                                 <a class="nav-link active" data-toggle="tab" href="#kt_tab_pane_1_4">
-                                    <span class="nav-text">Оновити</span>
+                                    <span class="nav-text">Обновить</span>
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" data-toggle="tab" href="#kt_tab_pane_2_4">
-                                    <span class="nav-text">Редагувати зображення</span>
+                                    <span class="nav-text">Редактировать изображения</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#kt_tab_pane_3_4">
+                                    <span class="nav-text">Редактировать модификации</span>
                                 </a>
                             </li>
                         </ul>
                     </div>
                     <div class="card-toolbar">
-                        <button type="submit" form="blog_post" class="btn btn-primary">Зберегти</button>
+                        <button type="submit" form="blog_post" class="btn btn-primary">Сохранить</button>
                     </div>
                 </div>
                 <div class="card-body">
@@ -81,7 +86,7 @@
                                                     <select class="form-control select2" id="kt_select2_4"
                                                             name="category_id" required>
                                                         @foreach($categories as $category)
-                                                            <option @if($product->category_id == $category->id) @endif value="{{ $category->id }}">{{ $category->name }}</option>
+                                                            <option @if($product->category_id == $category->id) selected @endif value="{{ $category->id }}">{{ $category->name }}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>
@@ -160,7 +165,7 @@
 
 
                                 <div class="card-footer">
-                                    <button type="submit" class="btn btn-primary mr-2">Зберегти</button>
+                                    <button type="submit" class="btn btn-primary mr-2">Сохранить</button>
                                 </div>
                             </form>
                         </div>
@@ -169,14 +174,14 @@
                             <div class="row mb-5">
                                 <div class="col">
                                     <div class="mb-7">
-                                        <h3>Редагувати зображення</h3>
+                                        <h3>Редактировать изображение</h3>
                                     </div>
                                 </div>
                                 <div class="col-auto">
-                                    <button data-toggle="modal" data-target="#createCategoryImageModal"
+                                    <button data-toggle="modal" data-target="#createProductImageModal"
                                             class="btn btn-primary font-weight-bold">
                                         <i class="fas fa-plus mr-2"></i>
-                                        Додати
+                                        Добавить
                                     </button>
                                 </div>
                             </div>
@@ -190,10 +195,10 @@
                                                 #
                                             </th>
                                             <th class="pl-0 text-center">
-                                                Зображення
+                                                ИЗОБРАЖЕНИЕ
                                             </th>
                                             <th class="pr-0 text-center">
-                                                Головне
+                                                ГЛАВНОЕ
                                             </th>
                                             <th class="pr-0 text-center">
                                                 Дії
@@ -218,13 +223,93 @@
                                                            style="cursor:pointer;"></i>
                                                     </button>
                                                     <a href="javascript:;" data-toggle="modal"
-                                                       data-target="#updateCategoryImageModal"
+                                                       data-target="#updateProductImageModal"
                                                        data-id="{{ $image->id }}"
-                                                       class="btn btn-sm btn-clean btn-icon updateCategoryImage">
+                                                       class="btn btn-sm btn-clean btn-icon updateCategoryImage edit-btn-img">
                                                         <i class="las la-edit"></i>
                                                     </a>
 
-                                                    <a href="{{ route('admin.product.image.delete', $image->id) }}"
+                                                    <a href="{{ route('admin.product.image.remove', $image->id) }}"
+                                                       class="btn btn-sm btn-clean btn-icon"
+                                                       onclick="return confirm('Ви впевнені, що хочете видалити цей запис?')">
+                                                        <i class="las la-trash"></i>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="kt_tab_pane_3_4" role="tabpanel"
+                             aria-labelledby="kt_tab_pane_2_4">
+                            <div class="row mb-5">
+                                <div class="col">
+                                    <div class="mb-7">
+                                        <h3>Редактировать модификации</h3>
+                                    </div>
+                                </div>
+                                <div class="col-auto">
+                                    <button data-toggle="modal" data-target="#createProductVariationModal"
+                                            class="btn btn-primary font-weight-bold">
+                                        <i class="fas fa-plus mr-2"></i>
+                                        Добавить
+                                    </button>
+                                </div>
+                            </div>
+                            <div>
+                                <!--begin::Table-->
+                                <div class="table-responsive">
+                                    <table class="table table-head-custom table-vertical-center">
+                                        <thead>
+                                        <tr>
+                                            <th class="pl-0 text-center">
+                                                #
+                                            </th>
+                                            <th class="pl-0 text-center">
+                                                Объем
+                                            </th>
+                                            <th class="pr-0 text-center">
+                                                Цена
+                                            </th>
+                                            <th class="pr-0 text-center">
+                                                Скидка
+                                            </th>
+                                            <th class="pr-0 text-center">
+                                                Дії
+                                            </th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        @foreach($product->product_variations as $product_variation)
+                                            <tr data-id="{{ $product_variation->id }}">
+                                                <td class="text-center pl-0">
+                                                    {{ $loop->iteration }}
+                                                </td>
+                                                <td class="text-center pl-0">
+                                                    {{$product_variation->size}}
+                                                </td>
+                                                <td class="text-center pl-0">
+                                                    {{$product_variation->price}}
+                                                </td>
+                                                <td class="text-center pl-0">
+                                                    {{$product_variation->discount_price??"-"}}
+                                                </td>
+                                                <td class="text-center pr-0">
+                                                    <button class="btn btn-sm btn-clean btn-icon">
+                                                        <i class="handle_cat_image flaticon2-sort"
+                                                           style="cursor:pointer;"></i>
+                                                    </button>
+                                                    <a href="javascript:;" data-toggle="modal"
+                                                       data-target="#updateProductVariationModal"
+                                                       data-id="{{ $product_variation->id }}"
+                                                       class="btn btn-sm btn-clean btn-icon updateCategoryImage edit-btn-variation">
+                                                        <i class="las la-edit"></i>
+                                                    </a>
+
+                                                    <a href="{{ route('admin.product.variation.remove', $product_variation->id) }}"
                                                        class="btn btn-sm btn-clean btn-icon"
                                                        onclick="return confirm('Ви впевнені, що хочете видалити цей запис?')">
                                                         <i class="las la-trash"></i>
@@ -244,6 +329,10 @@
         </div>
         <!--end::Container-->
     </div>
+    @include('admin.products.modals.create')
+    @include('admin.products.modals.update')
+    @include('admin.products.modals.create-variation')
+    @include('admin.products.modals.update-variation')
 @endsection
 
 @section('js_after')
@@ -273,8 +362,8 @@
 
         tinymce.init({
             selector: '.textEditor',
-            plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed linkchecker a11ychecker tinymcespellchecker permanentpen powerpaste advtable advcode editimage tinycomments tableofcontents footnotes mergetags autocorrect typography inlinecss grid',
-            toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat | grid',
+            plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed linkchecker a11ychecker tinymcespellchecker permanentpen powerpaste advtable advcode editimage tinycomments tableofcontents footnotes mergetags autocorrect typography inlinecss',
+            toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
             tinycomments_mode: 'embedded',
             tinycomments_author: 'Author name',
             language: 'uk',
@@ -288,9 +377,60 @@
                 }
             });
 
-            var createImagePlugin = new KTImageInput('createImagePlugin');
-            var createPageImagePlugin = new KTImageInput('createPageImagePlugin');
+            var createImagePlugin = new KTImageInput('kt_image_1');
+            var createPageImagePlugin = new KTImageInput('kt_image_1');
         });
+        $(document).on('click', ".edit-btn-img", loadModel);
+
+        function loadModel() {
+            let id = $(this).data('id');
+            $.ajax({
+                url: '{{ route("admin.image.show", $image->id) }}',
+                data: {
+                    id: id
+                },
+                success: function (response) {
+                    {{--let img_url = 'url("{{ asset('images/uploads/products/') }}/' + response.path + '")';--}}
+                    {{--$('#updateImageBackground').css('background-image', img_url);--}}
+                    let is_main = response.is_main;
+                    let is_active = response.is_active;
+                    $(`#updateActive option[value="${is_active}"]`).attr('selected', 'selected');
+                    $(`#updateIsMain option[value="${is_main}"]`).attr('selected', 'selected');
+                    if(is_main === 1) {
+                        $(`#updateIsMain`).attr('disabled', true);
+                    }
+                    else {
+                        $(`#updateIsMain`).attr('disabled', false);
+                    }
+                    $('#imageId').val(id);
+                },
+                error: function (response) {
+                    console.log(response)
+                }
+            })
+        }
+        $(document).on('click', ".edit-btn-variation", loadModelVariation);
+
+        function loadModelVariation() {
+            let id = $(this).data('id');
+            $.ajax({
+                url: '{{ route("admin.product.variation.show", $image->id) }}',
+                data: {
+                    id: id
+                },
+                success: function (response) {
+                    {{--let img_url = 'url("{{ asset('images/uploads/products/') }}/' + response.path + '")';--}}
+                    {{--$('#updateImageBackground').css('background-image', img_url);--}}
+                    $('#updateVariationSize').val(response.size);
+                    $('#updateVariationPrice').val(response.price);
+                    $('#updateVariationDiscountPrice').val(response.discount_price);
+                    $('#variationId').val(id);
+                },
+                error: function (response) {
+                    console.log(response)
+                }
+            })
+        }
     </script>
 
 @endsection

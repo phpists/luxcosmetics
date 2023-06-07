@@ -1229,7 +1229,5 @@
     </div>
 @endsection
 
-@section('scripts')
-    <script src="{{asset('/js/app.min.js')}}"></script>
-@endsection
+
 

@@ -4,7 +4,9 @@ use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\Settings\SettingController;
 use App\Http\Controllers\CategoryController;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\FaqController;
 use Illuminate\Support\Facades\Route;
+use \App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
 
 Auth::routes();
 
@@ -17,6 +19,10 @@ Route::get('categories/{alias}', [CategoryController::class, 'show'])->name('cat
 // Products
 Route::get('products/{alias}', [\App\Http\Controllers\ProductController::class, 'show'])->name('products.product');
 Route::get('products/{alias}/{variation_id}', [\App\Http\Controllers\ProductController::class, 'show'])->name('products.product');
+Route::get('faq', [FaqController::class, 'index'])->name('faq');
+Route::get('brands', [\App\Http\Controllers\BrandController::class, 'index'])->name('brands');
+Route::get('favourites', [\App\Http\Controllers\FavouritesController::class, 'index'])->name('favourites');
+Route::get('sales', [\App\Http\Controllers\SalesController::class, 'index'])->name('sales');
 // Profile
 Route::group(['prefix' => 'profile'], function () {
     Route::get('/', [\App\Http\Controllers\ProfileController::class, 'index'])->name('profile');
@@ -43,26 +49,43 @@ Route::get('giftcards/{alias}', [\App\Http\Controllers\GiftController::class, 's
 // Admin
 Route::get('admin', [AdminController::class, 'index'])->name('admin.home');
 Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function () {
-
+//    Product Images
+    Route::get('products/image/{id}/remove', [\App\Http\Controllers\Admin\ProductController::class, 'deleteImage'])->name('admin.product.image.remove');
+    Route::post('products/image', [\App\Http\Controllers\Admin\ProductController::class, 'storeImage'])->name('admin.product.image.store');
+    Route::put('products/image', [\App\Http\Controllers\Admin\ProductController::class, 'updateImage'])->name('admin.product.image.update');
+//    Product Variation
+    Route::get('products/variation/{id}/remove', [\App\Http\Controllers\Admin\ProductController::class, 'deleteVariation'])->name('admin.product.variation.remove');
+    Route::get('products/variation/{id}', [\App\Http\Controllers\Admin\ProductController::class, 'showVariation'])->name('admin.product.variation.show');
+    Route::post('products/variation', [\App\Http\Controllers\Admin\ProductController::class, 'storeVariation'])->name('admin.product.variation.store');
+    Route::put('products/variation', [\App\Http\Controllers\Admin\ProductController::class, 'updateVariation'])->name('admin.product.variation.update');
+//    Product
     Route::get('products', [\App\Http\Controllers\Admin\ProductController::class, 'index'])->name('admin.products');
     Route::post('products', [\App\Http\Controllers\Admin\ProductController::class, 'store'])->name('admin.products.store');
     Route::delete('products/{id}', [\App\Http\Controllers\Admin\ProductController::class, 'delete'])->name('admin.product.delete');
     Route::get('products/create', [\App\Http\Controllers\Admin\ProductController::class, 'create'])->name('admin.product.create');
     Route::get('products/edit/{id}', [\App\Http\Controllers\Admin\ProductController::class, 'edit'])->name('admin.product.edit');
     Route::put('products/{id}', [\App\Http\Controllers\Admin\ProductController::class, 'update'])->name('admin.product.update');
-    Route::delete('products/image', [\App\Http\Controllers\Admin\ProductController::class, 'deleteImage'])->name('admin.product.image.delete');
-    Route::post('products/image', [\App\Http\Controllers\Admin\ProductController::class, 'storeImage'])->name('admin.product.image.store');
-    Route::put('products/image', [\App\Http\Controllers\Admin\ProductController::class, 'updateImage'])->name('admin.product.image.update');
 //    Categories
-    Route::get('categories', [\App\Http\Controllers\Admin\CategoryController::class, 'index'])->name('admin.categories');
-    Route::post('categories', [\App\Http\Controllers\Admin\CategoryController::class, 'store'])->name('admin.category.store');
-    Route::get('categories/remove/{id}', [\App\Http\Controllers\Admin\CategoryController::class, 'delete'])->name('admin.category.delete');
-    Route::get('categories/edit/{id}', [\App\Http\Controllers\Admin\CategoryController::class, 'edit'])->name('admin.category.edit');
-    Route::get('categories/create', [\App\Http\Controllers\Admin\CategoryController::class, 'create'])->name('admin.category.create');
+    Route::get('categories', [AdminCategoryController::class, 'index'])->name('admin.categories');
+    Route::post('categories', [AdminCategoryController::class, 'store'])->name('admin.category.store');
+    Route::get('categories/remove/{id}', [AdminCategoryController::class, 'delete'])->name('admin.category.delete');
+    Route::put('categories', [AdminCategoryController::class, 'update'])->name('admin.category.update');
+    Route::get('categories/edit/{id}', [AdminCategoryController::class, 'edit'])->name('admin.category.edit');
+    Route::get('categories/create', [AdminCategoryController::class, 'create'])->name('admin.category.create');
 //    Dashboard
     Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
 
     Route::get('clear-cache', [SettingController::class, 'clearCache'])->name('admin.clear.cache');
+    Route::post('logout')->name('logout');
+//    Images
+    Route::get('images/show', [\App\Http\Controllers\Admin\ImageController::class, 'show'])->name('admin.image.show');
+
+    /* Categories Operation */
+    Route::post('_delete-categories', [AdminCategoryController::class, 'deleteCategories']);
+    Route::post('_active-categories', [AdminCategoryController::class, 'activeCategories']);
+
+    Route::post('_delete-products', [\App\Http\Controllers\Admin\ProductController::class, 'deleteProducts']);
+//    Route::post('_active-products', [\App\Http\Controllers\Admin\ProductController::class, 'activeProducts']);
 });
 
 

@@ -1,4 +1,4 @@
-<div class="modal fade" id="updateProductImageModal" tabindex="-1" role="dialog" aria-labelledby="createFaqTitle"
+<div class="modal fade" id="updateProductVariationModal" tabindex="-1" role="dialog" aria-labelledby="createFaqTitle"
      aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -9,23 +9,18 @@
                 </button>
             </div>
 
-            <form action="{{ route('admin.product.image.update') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('admin.product.variation.store') }}" method="POST">
                 @csrf
-                @method('put')
-                <input type="hidden" id="imageId" name="image_id">
-                <input type="hidden" name="product_id" value="{{ $product->id }}">
+                @method('PUT')
+                <input type="hidden" name="variation_id" id="variationId">
                 <div class="modal-body">
                     <div class="row">
-                        <div class="col">
+                        <div class="col-12">
                             <div class="row d-flex justify-content-around">
                                 <div class="form-group w-100">
-                                    <label for="createSeller"
-                                           class="col-sm-12 col-form-label font-weight-bold">Главное</label>
+                                    <label for="variationDiscountPrice" class="col-sm-12 col-form-label font-weight-bold">Размер</label>
                                     <div class="col-sm-12">
-                                        <select class="form-control" id="updateIsMain" name="is_main">
-                                            <option value="1">Да</option>
-                                            <option value="0">Нет</option>
-                                        </select>
+                                        <input class="form-control" type="text" name="size" id="updateVariationSize" required>
                                     </div>
                                 </div>
                             </div>
@@ -33,12 +28,19 @@
                         <div class="col">
                             <div class="row d-flex justify-content-around">
                                 <div class="form-group w-100">
-                                    <label for="createSeller" class="col-sm-12 col-form-label font-weight-bold">Отображать</label>
+                                    <label for="variationPrice" class="col-sm-12 col-form-label font-weight-bold">Цена</label>
                                     <div class="col-sm-12">
-                                        <select class="form-control" id="updateActive" name="is_active">
-                                            <option value="1">Да</option>
-                                            <option value="0">Нет</option>
-                                        </select>
+                                        <input class="form-control" type="number" step="any" name="price" id="updateVariationPrice" required>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="row d-flex justify-content-around">
+                                <div class="form-group w-100">
+                                    <label for="variationDiscountPrice" class="col-sm-12 col-form-label font-weight-bold">Скидка</label>
+                                    <div class="col-sm-12">
+                                        <input class="form-control" type="number" step="any" name="discount_price" id="updateVariationDiscountPrice">
                                     </div>
                                 </div>
                             </div>

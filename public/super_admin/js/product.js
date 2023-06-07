@@ -110,7 +110,7 @@ $(document).ready(function () {
 
     /* Масове видалення товарів */
     $(document).on('click', '.deletedProducts', function (e) {
-        let lang = $('meta[name="lang"]').attr('content');
+
         let csrf = $('meta[name="csrf-token"]').attr('content');
         let checkbox = $(".checkbox-item:checkbox:checked").map(function () {
             return $(this).val();
@@ -120,7 +120,7 @@ $(document).ready(function () {
 
         $.ajax({
             type: "POST",
-            url: '/' + lang + '/admin/_delete-products',
+            url: '/admin/_delete-products',
             data: {
                 csrf: csrf,
                 checkbox: checkbox,
@@ -149,7 +149,7 @@ $(document).ready(function () {
     $(document).on('click', '.activeProducts', function (e) {
 
         let status = $(this).data('status');
-        let lang = $('meta[name="lang"]').attr('content');
+
         let csrf = $('meta[name="csrf-token"]').attr('content');
         let checkbox = $(".checkbox-item:checkbox:checked").map(function () {
             return $(this).val();
@@ -159,7 +159,7 @@ $(document).ready(function () {
 
         $.ajax({
             type: "POST",
-            url: '/' + lang + '/admin/_active-products',
+            url: '/admin/_active-products',
             data: {
                 csrf: csrf,
                 checkbox: checkbox,
