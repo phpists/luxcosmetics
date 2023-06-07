@@ -98,6 +98,14 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function 
     Route::post('_active-categories', [AdminCategoryController::class, 'activeCategories']);
 
     Route::post('_delete-products', [\App\Http\Controllers\Admin\ProductController::class, 'deleteProducts']);
+    /* Admin Faq */
+    Route::get('faqs', [\App\Http\Controllers\Admin\FaqController::class, 'index'])->name('admin.faqs');
+    Route::get('faqs/search', [\App\Http\Controllers\Admin\FaqController::class, 'search'])->name('admin.faqs.search');
+    Route::post('faqs/update-positions', [\App\Http\Controllers\Admin\FaqController::class, 'updates_positions'])->name('admin.faqs.update_positions');
+    Route::get('faq/show', [\App\Http\Controllers\Admin\FaqController::class, 'show'])->name('admin.faq.show');
+    Route::post('faq/store', [\App\Http\Controllers\Admin\FaqController::class, 'store'])->name('admin.faq.store');
+    Route::post('faq/update', [\App\Http\Controllers\Admin\FaqController::class, 'update'])->name('admin.faq.update');
+    Route::delete('faq/delete', [\App\Http\Controllers\Admin\FaqController::class, 'delete'])->name('admin.faq.delete');
 //    Route::post('_active-products', [\App\Http\Controllers\Admin\ProductController::class, 'activeProducts']);
 });
 
