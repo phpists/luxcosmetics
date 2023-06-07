@@ -203,6 +203,13 @@
                             <h4 class="menu-text">Налаштування</h4>
                             <i class="menu-icon ki ki-bold-more-hor icon-md"></i>
                         </li>
+                        <li class="menu-item {{ request()->routeIs('admin.faqs') ? 'menu-item-active' : '' }}"
+                            aria-haspopup="true">
+                            <a href="{{ route('admin.faqs') }}" class="menu-link">
+                                <i class="far fa-question-circle menu-icon"></i>
+                                <span class="menu-text">FAQ</span>
+                            </a>
+                        </li>
                         <li class="menu-item {{ request()->routeIs('admin.menu') ? 'menu-item-active' : '' }}"
                             aria-haspopup="true">
                             <a href="" class="menu-link">
