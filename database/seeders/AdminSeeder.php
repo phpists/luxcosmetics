@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Models\Role;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -16,7 +15,7 @@ class AdminSeeder extends Seeder
     public function run(): void
     {
         User::create([
-            'role_id' => Role::ADMIN,
+            'role_id' => User::ADMIN,
             'name' => 'Admin',
             'email' => 'admin@gmail.com',
             'password' => Hash::make('1'),
