@@ -4,7 +4,7 @@
 <head>
     <base href="../../../">
     <meta charset="utf-8"/>
-    <title>MustHave | Админ-панель</title>
+    <title>Luxcosmetics | Админ-панель</title>
     <meta name="description" content="Login page example"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
     <link rel="canonical" href="https://keenthemes.com/metronic"/>
@@ -46,7 +46,7 @@
                 <!--end::Aside header-->
                 <!--begin::Aside title-->
                 <h3 class="font-weight-bolder text-center font-size-h4 font-size-h1-lg" style="color: #986923;">
-                    Адмін-панель <br> MustHave</h3>
+                    Админ-панель <br> Luxcosmetics</h3>
                 <!--end::Aside title-->
             </div>
             <!--end::Aside Top-->
@@ -90,12 +90,12 @@
                             </div>
                         @endif
                         <div class="pb-13 pt-lg-0 pt-5">
-                            <h3 class="font-weight-bolder text-dark font-size-h4 font-size-h1-lg">Ласкаво просимо</h3>
+                            <h3 class="font-weight-bolder text-dark font-size-h4 font-size-h1-lg">Добро пожаловать</h3>
                         </div>
                         <!--begin::Title-->
                         <!--begin::Form group-->
                         <div class="form-group">
-                            <label class="font-size-h6 font-weight-bolder text-dark">Пошта</label>
+                            <label class="font-size-h6 font-weight-bolder text-dark">Почта</label>
                             <input class="form-control form-control-solid h-auto py-6 px-6 rounded-lg" name="email"
                                    type="email" autocomplete="off" value="admin@gmail.com"/>
                         </div>
@@ -106,7 +106,7 @@
                                 <label class="font-size-h6 font-weight-bolder text-dark pt-5">Пароль</label>
                                 <a href="javascript:;"
                                    class="text-primary font-size-h6 font-weight-bolder text-hover-primary pt-5"
-                                   id="kt_login_forgot">Забули пароль?</a>
+                                   id="kt_login_forgot">Забыли пароль?</a>
                             </div>
                             <input class="form-control form-control-solid h-auto py-6 px-6 rounded-lg" name="password"
                                    type="password" autocomplete="off"/>
@@ -115,7 +115,7 @@
                         <!--begin::Action-->
                         <div class="pb-lg-0 pb-5">
                             <button type="submit" id="kt_login_signin_submit"
-                                    class="btn btn-primary font-weight-bolder font-size-h6 px-8 py-4 my-3 mr-3">Увійти
+                                    class="btn btn-primary font-weight-bolder font-size-h6 px-8 py-4 my-3 mr-3">Вход
                             </button>
                         </div>
                         <!--end::Action-->

@@ -11,7 +11,12 @@ class AdminController extends Controller
 {
     public function index()
     {
-        return view('admin.dashboard.dashboard');
+        $user = Auth::user();
+
+        if (Auth::check() && $user->role_id == User::ADMIN) {
+            return view('admin.dashboard.dashboard');
+        }
+        return view('admin.auth.login');
     }
 
     public function dashboard(Request $request)
