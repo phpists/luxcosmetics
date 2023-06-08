@@ -24,7 +24,6 @@
                                 @enderror
                             </div>
                         </div>
-
                         <div class="row mb-3">
                             <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Email Address') }}</label>
 
@@ -65,6 +64,11 @@
                             <div class="col-md-6 offset-md-4">
                                 <button type="submit" class="btn btn-primary">
                                     {{ __('Register') }}
+                                </button>
+                                <button type="submit" class="btn btn-primary">
+                                    <a href="{{ route('login') }}">
+                                    {{ __('Login') }}
+                                    </a>
                                 </button>
                             </div>
                         </div>
