@@ -7,12 +7,16 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\FaqController;
 use Illuminate\Support\Facades\Route;
 use \App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\RegisterController;
 
+/* Socialize */
 Auth::routes();
 
 Route::get('/', function () {
     return view('index');
 })->name('home');
+
 // Categories
 Route::get('categories', [CategoryController::class, 'index'])->name('categories');
 Route::get('categories/{alias}', [CategoryController::class, 'show'])->name('categories.show');
@@ -24,6 +28,7 @@ Route::get('brands', [\App\Http\Controllers\BrandController::class, 'index'])->n
 Route::get('favourites', [\App\Http\Controllers\FavouritesController::class, 'index'])->name('favourites');
 Route::get('sales', [\App\Http\Controllers\SalesController::class, 'index'])->name('sales');
 Route::group(['middleware' => 'auth'], function () {
+    // Profile
     Route::group(['prefix' => 'profile'], function () {
         Route::get('/', [\App\Http\Controllers\ProfileController::class, 'index'])->name('profile');
         Route::get('/order-history', [\App\Http\Controllers\ProfileController::class, 'order_history'])->name('profile.order-history');
@@ -44,7 +49,6 @@ Route::group(['middleware' => 'auth'], function () {
 
     });
 });
-// Profile
 // Cart
 Route::get('cart', [\App\Http\Controllers\CartController::class, 'index'])->name('cart');
 Route::get('cart/step1', [\App\Http\Controllers\CartController::class, 'step_first'])->name('cart.step1');
@@ -115,7 +119,7 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function 
     Route::post('faq/update', [\App\Http\Controllers\Admin\FaqController::class, 'update'])->name('admin.faq.update');
     Route::delete('faq/delete', [\App\Http\Controllers\Admin\FaqController::class, 'delete'])->name('admin.faq.delete');
 //    Route::post('_active-products', [\App\Http\Controllers\Admin\ProductController::class, 'activeProducts']);
+
 });
 
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/user/home', [App\Http\Controllers\HomeController::class, 'index'])->name('user.home');
