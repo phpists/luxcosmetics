@@ -23,20 +23,28 @@ Route::get('faq', [FaqController::class, 'index'])->name('faq');
 Route::get('brands', [\App\Http\Controllers\BrandController::class, 'index'])->name('brands');
 Route::get('favourites', [\App\Http\Controllers\FavouritesController::class, 'index'])->name('favourites');
 Route::get('sales', [\App\Http\Controllers\SalesController::class, 'index'])->name('sales');
-// Profile
-Route::group(['prefix' => 'profile'], function () {
-    Route::get('/', [\App\Http\Controllers\ProfileController::class, 'index'])->name('profile');
-    Route::get('/order-history', [\App\Http\Controllers\ProfileController::class, 'order_history'])->name('profile.order-history');
-    Route::get('/subscriptions', [\App\Http\Controllers\ProfileController::class, 'subscriptions'])->name('profile.subscriptions');
-    Route::get('/addresses', [\App\Http\Controllers\ProfileController::class, 'addresses'])->name('profile.addresses');
-    Route::get('/payment-methods', [\App\Http\Controllers\ProfileController::class, 'payment_methods'])->name('profile.payment-methods');
-    Route::get('/gift-cards', [\App\Http\Controllers\ProfileController::class, 'gift_cards'])->name('profile.gift-cards');
-    Route::get('/bonuses', [\App\Http\Controllers\ProfileController::class, 'bonuses'])->name('profile.bonuses');
-    Route::get('/password', [\App\Http\Controllers\ProfileController::class, 'password'])->name('profile.password');
-    Route::get('/support', [\App\Http\Controllers\ProfileController::class, 'support'])->name('profile.support');
-    Route::get('/logout', [\App\Http\Controllers\ProfileController::class, 'logout'])->name('profile.logout');
-    Route::get('/edit', [\App\Http\Controllers\ProfileController::class, 'edit'])->name('profile.edit');
+Route::group(['middleware' => 'auth'], function () {
+    Route::group(['prefix' => 'profile'], function () {
+        Route::get('/', [\App\Http\Controllers\ProfileController::class, 'index'])->name('profile');
+        Route::get('/order-history', [\App\Http\Controllers\ProfileController::class, 'order_history'])->name('profile.order-history');
+        Route::get('/subscriptions', [\App\Http\Controllers\ProfileController::class, 'subscriptions'])->name('profile.subscriptions');
+        Route::get('/addresses', [\App\Http\Controllers\ProfileController::class, 'addresses'])->name('profile.addresses');
+        Route::get('/payment-methods', [\App\Http\Controllers\ProfileController::class, 'payment_methods'])->name('profile.payment-methods');
+        Route::get('/gift-cards', [\App\Http\Controllers\ProfileController::class, 'gift_cards'])->name('profile.gift-cards');
+        Route::get('/bonuses', [\App\Http\Controllers\ProfileController::class, 'bonuses'])->name('profile.bonuses');
+        Route::get('/password', [\App\Http\Controllers\ProfileController::class, 'password'])->name('profile.password');
+        Route::get('/support', [\App\Http\Controllers\ProfileController::class, 'support'])->name('profile.support');
+//        Route::get('/logout', [\App\Http\Controllers\ProfileController::class, 'logout'])->name('profile.logout');
+        Route::get('/edit', [\App\Http\Controllers\ProfileController::class, 'edit'])->name('profile.edit');
+        Route::put('/update', [\App\Http\Controllers\ProfileController::class, 'update'])->name('profile.update');
+        Route::post('/add-payment-method', [\App\Http\Controllers\ProfileController::class, 'add_payment'])->name('profile.add-payment-method');
+        Route::post('/add-address', [\App\Http\Controllers\ProfileController::class, 'add_address'])->name('profile.add-address');
+        Route::post('/update-default-address', [\App\Http\Controllers\ProfileController::class, 'update_default_address'])->name('profile.update-default-address');
+        Route::post('/reset-password', [\App\Http\Controllers\ProfileController::class, 'reset_password'])->name('profile.reset-password');
+
+    });
 });
+// Profile
 // Cart
 Route::get('cart', [\App\Http\Controllers\CartController::class, 'index'])->name('cart');
 Route::get('cart/step1', [\App\Http\Controllers\CartController::class, 'step_first'])->name('cart.step1');
@@ -96,7 +104,7 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function 
     /* Categories Operation */
     Route::post('_delete-categories', [AdminCategoryController::class, 'deleteCategories']);
     Route::post('_active-categories', [AdminCategoryController::class, 'activeCategories']);
-
+    /* Product Operation */
     Route::post('_delete-products', [\App\Http\Controllers\Admin\ProductController::class, 'deleteProducts']);
     /* Admin Faq */
     Route::get('faqs', [\App\Http\Controllers\Admin\FaqController::class, 'index'])->name('admin.faqs');
