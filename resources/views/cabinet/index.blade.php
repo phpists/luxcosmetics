@@ -1,6 +1,6 @@
 @extends('cabinet.layouts.cabinet')
 
-@section('title', 'Мій профіль')
+@section('title', 'Мой профиль')
 
 @section('page_content')
     <main class="cabinet-page__main">
@@ -10,19 +10,19 @@
                 <div class="chars">
                     <div class="chars__item">
                         <div class="chars__name"><span>Имя и фамилия</span></div>
-                        <div class="chars__value"><span>Иван Петров</span></div>
+                        <div class="chars__value"><span>{{$user->name}} {{$user->surname}}</span></div>
                     </div>
                     <div class="chars__item">
                         <div class="chars__name"><span>Номер телефона</span></div>
-                        <div class="chars__value"><span>+7 495 456 78 96</span></div>
+                        <div class="chars__value"><span>{{$user->phone}}</span></div>
                     </div>
                     <div class="chars__item">
                         <div class="chars__name"><span>Дата рождения</span></div>
-                        <div class="chars__value"><span>17 января 1978</span></div>
+                        <div class="chars__value"><span>{{$user->birthday?$user->birthday: '-'}}</span></div>
                     </div>
                     <div class="chars__item">
                         <div class="chars__name"><span>E-mail</span></div>
-                        <div class="chars__value"><span>info@domen.ru</span></div>
+                        <div class="chars__value"><span>{{$user->email}}</span></div>
                     </div>
                 </div>
                 <a href="{{route('profile.edit')}}" class="btn-edit">
@@ -48,7 +48,11 @@
         <div class="cabinet-page__group">
             <h3 class="cabinet-page__subheading subheading">Мои адреса</h3>
             <div class="cabinet-page__item cabinet-page__item--justify">
-                <div class="cabinet-page__data">г.Москва ул. Пролетарская 24 / 5</div>
+                <div class="cabinet-page__data">
+                @isset($user->first_address)
+                        {{$user->first_address->city}} {{$user->first_address->address}}
+                @endisset
+                </div>
                 <div class="cabinet-page__btns">
                     <a href="{{route('profile.addresses')}}" class="btn-edit">
                         <svg class="icon">
@@ -67,7 +71,11 @@
         <div class="cabinet-page__group">
             <h3 class="cabinet-page__subheading subheading">Мои карты</h3>
             <div class="cabinet-page__item cabinet-page__item--justify">
-                <div class="cabinet-page__data"><b>4006 **** **** 4569</b></div>
+                <div class="cabinet-page__data">
+                @isset($user->default_card)
+                    <b>{{\App\Services\SiteService::displayCardNumber($user->default_card->card_number)}}</b>
+                @endisset
+                </div>
                 <div class="cabinet-page__btns">
                     <button class="btn-edit">
                         <svg class="icon">

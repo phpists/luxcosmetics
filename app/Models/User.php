@@ -3,7 +3,9 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -22,6 +24,9 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'surname',
+        'phone',
+        'birthday'
     ];
 
     /**
@@ -43,4 +48,28 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function cards(): HasMany
+    {
+        return $this->hasMany(PaymentCard::class);
+    }
+    public function addresses(): HasMany
+    {
+        return $this->hasMany(Address::class);
+    }
+
+    public function firstAddress(): Attribute
+    {
+        return Attribute::make(
+            get: fn() => Address::query()->where('user_id', $this->id)->where('is_default', '1')->first()
+        );
+    }
+
+    protected function defaultCard(): Attribute
+    {
+        return Attribute::make(
+            get: fn() => PaymentCard::query()->where('user_id', $this->id)->where('is_default', '1')->first()
+        );
+    }
+
 }

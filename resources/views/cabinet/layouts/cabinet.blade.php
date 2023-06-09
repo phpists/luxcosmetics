@@ -69,11 +69,14 @@
                                         </svg>
                                         Обратная связь</a></li>
                             </ul>
-                            <a href="{{route('profile.logout')}}" class="btn btn--accent btn--full">
-                                <svg class="icon">
-                                    <use xlink:href="{{asset('images/dist/sprite.svg#exit')}}"></use>
-                                </svg>
-                                Выйти из личного кабинета</a>
+                            <form action="{{route('logout')}}" method="POST">
+                                @csrf
+                                <button class="btn btn--accent btn--full">
+                                    <svg class="icon">
+                                        <use xlink:href="{{asset('images/dist/sprite.svg#exit')}}"></use>
+                                    </svg>
+                                    Выйти из личного кабинета</button>
+                            </form>
                         </aside>
                         @yield('page_content')
                     </div>

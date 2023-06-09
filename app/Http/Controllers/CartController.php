@@ -15,6 +15,6 @@ class CartController extends Controller
     }
 
     public function step_second() {
-        return view('cart.pay-step1');
+        return view('cart.pay-step2');
     }
 }
