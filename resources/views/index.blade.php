@@ -115,311 +115,85 @@
                 <div class="col-lg-12">
                     <h2 class="title-h2">Новинки</h2>
                     <div class="products-slider">
-                        <div class="products-slider__item">
-                            <div class="product">
-                                <div class="product__top">
-                                    <div class="product__image">
-                                        <div class="product__labels">
-                                            <div class="product__label product__label--brown">-50%</div>
-                                            <div class="product__label product__label--green">Хит продаж</div>
-                                        </div>
-                                        <a href=""><img src="{{asset('images/dist/tmp-product.jpg')}}" alt=""></a>
-                                        <button class="product__fav"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#heart')}}"></use></svg></button>
-                                    </div>
-                                    <div class="product__title"><a href="">ROBERTO CAVALLI</a></div>
-                                    <div class="product__subtitle">Frantic Rose Gold Collection Eau de Parfum 100ml (100ml)</div>
-                                </div>
-                                <div class="product__btm">
-                                    <div class="product__reviews">
-                                        <div class="stars">
-                                            <span class="stars__item is-active"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#start')}}"></use></svg></span>
-                                            <span class="stars__item is-active"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#start')}}"></use></svg></span>
-                                            <span class="stars__item is-active"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#start')}}"></use></svg></span>
-                                            <span class="stars__item"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#start')}}"></use></svg></span>
-                                            <span class="stars__item"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#start')}}"></use></svg></span>
-                                        </div>
-                                        <a href="">16 отзывов</a>
-                                    </div>
-                                    <div class="product__ftrwrap">
-                                        <div class="product__prices">
-                                            <div class="product__price">4 009 ₽</div>
-                                            <del class="product__oldprice">4 700 ₽</del>
-                                        </div>
-                                        <button class="product__mobile-btn"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#cart')}}"></use></svg></button>
-                                    </div>
-                                    <div class="product__sizesinfo">Еще два размера</div>
-
-
-                                    <div class="product__pnl">
-                                        <div class="product__optionsblock">
-                                            <div class="product__optionstitle">Выбранный цвет: <b>Red</b></div>
-                                            <div class="product__options product__colors">
-                                                <label class="color">
-                                                    <input type="radio" name="color"  checked/>
-                                                    <div class="color__text" style="background-color: #880B0B"></div>
-                                                </label>
-                                                <label class="color">
-                                                    <input type="radio" name="color" />
-                                                    <div class="color__text" style="background-color: #188299"></div>
-                                                </label>
-                                                <label class="color">
-                                                    <input type="radio" name="color" />
-                                                    <div class="color__text" style="background-color: #AE3A80"></div>
-                                                </label>
-                                                <label class="color">
-                                                    <input type="radio" name="color" />
-                                                    <div class="color__text" style="background-color: #99CB47"></div>
-                                                </label>
+                        @foreach($new_products as $new_product)
+                            @php
+                                $selected_variation = $new_product->product_variations->first();
+                            @endphp
+                            <div class="products-slider__item">
+                                <div class="product">
+                                    <div class="product__top">
+                                        <div class="product__image">
+                                            <div class="product__labels">
+                                                <div class="product__label product__label--brown">-50%</div>
+                                                <div class="product__label product__label--green">Хит продаж</div>
                                             </div>
+                                            <a href="products/{{$new_product->alias}}{{$selected_variation !== null?'/'.$selected_variation->id:''}}"><img src="{{asset('images/uploads/products/'.$new_product->image)}}" alt=""></a>
+                                            <button class="product__fav"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#heart')}}"></use></svg></button>
                                         </div>
-                                        <button class="product__addcart">Добавить в корзину <span>23 878 ₽</span></button>
+                                        <div class="product__title"><a href="">{{$new_product->brand->name}}</a></div>
+                                        <div class="product__subtitle">{{$new_product->title}}</div>
                                     </div>
-                                </div>
-
-                            </div>
-                        </div>
-                        <div class="products-slider__item">
-                            <div class="product">
-                                <div class="product__top">
-                                    <div class="product__image">
-                                        <div class="product__labels">
-                                            <div class="product__label product__label--brown">-50%</div>
-                                            <div class="product__label product__label--green">Хит продаж</div>
-                                        </div>
-                                        <a href=""><img src="{{asset('images/dist/tmp-product.jpg')}}" alt=""></a>
-                                        <button class="product__fav"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#heart')}}"></use></svg></button>
-                                    </div>
-                                    <div class="product__title"><a href="">ROBERTO CAVALLI</a></div>
-                                    <div class="product__subtitle">Frantic Rose Gold Collection Eau de Parfum 100ml (100ml)</div>
-                                </div>
-                                <div class="product__btm">
-                                    <div class="product__reviews">
-                                        <div class="stars">
-                                            <span class="stars__item is-active"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#start')}}"></use></svg></span>
-                                            <span class="stars__item is-active"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#start')}}"></use></svg></span>
-                                            <span class="stars__item is-active"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#start')}}"></use></svg></span>
-                                            <span class="stars__item"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#start')}}"></use></svg></span>
-                                            <span class="stars__item"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#start')}}"></use></svg></span>
-                                        </div>
-                                        <a href="">16 отзывов</a>
-                                    </div>
-                                    <div class="product__ftrwrap">
-                                        <div class="product__prices">
-                                            <div class="product__price">4 009 ₽</div>
-                                            <del class="product__oldprice">4 700 ₽</del>
-                                        </div>
-                                        <button class="product__mobile-btn"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#cart')}}"></use></svg></button>
-                                    </div>
-                                    <div class="product__sizesinfo">Еще два размера</div>
-                                    <div class="product__pnl">
-                                        <div class="product__optionsblock">
-                                            <div class="product__optionstitle">Выбранный объем: <b>150ml</b></div>
-                                            <div class="product__options product__volume">
-                                                <label class="volume">
-                                                    <input type="radio" name="volume"  checked/>
-                                                    <div class="volume__text"><b>50ml</b> 10 073 ₽ </div>
-                                                </label>
-                                                <label class="volume">
-                                                    <input type="radio" name="volume" />
-                                                    <div class="volume__text"><b>90ml</b> 13 326 ₽  </div>
-                                                </label>
-                                                <label class="volume">
-                                                    <input type="radio" name="volume"/>
-                                                    <div class="volume__text"><b>150ml</b> 15 320 ₽  </div>
-                                                </label>
-
+                                    <div class="product__btm">
+                                        <div class="product__reviews">
+                                            <div class="stars">
+                                                <span class="stars__item is-active"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#start')}}"></use></svg></span>
+                                                <span class="stars__item is-active"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#start')}}"></use></svg></span>
+                                                <span class="stars__item is-active"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#start')}}"></use></svg></span>
+                                                <span class="stars__item"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#start')}}"></use></svg></span>
+                                                <span class="stars__item"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#start')}}"></use></svg></span>
                                             </div>
+                                            <a href="">16 отзывов</a>
                                         </div>
-                                        <button class="product__addcart">Добавить в корзину <span>23 878 ₽</span></button>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                        <div class="products-slider__item">
-                            <div class="product">
-                                <div class="product__top">
-                                    <div class="product__image">
-                                        <div class="product__labels">
-                                            <div class="product__label product__label--brown">-50%</div>
-                                            <div class="product__label product__label--green">Хит продаж</div>
-                                        </div>
-                                        <a href=""><img src="{{asset('images/dist/tmp-product.jpg')}}" alt=""></a>
-                                        <button class="product__fav"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#heart')}}"></use></svg></button>
-                                    </div>
-                                    <div class="product__title"><a href="">ROBERTO CAVALLI</a></div>
-                                    <div class="product__subtitle">Frantic Rose Gold Collection Eau de Parfum 100ml (100ml)</div>
-                                </div>
-                                <div class="product__btm">
-                                    <div class="product__reviews">
-                                        <div class="stars">
-                                            <span class="stars__item is-active"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#start')}}"></use></svg></span>
-                                            <span class="stars__item is-active"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#start')}}"></use></svg></span>
-                                            <span class="stars__item is-active"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#start')}}"></use></svg></span>
-                                            <span class="stars__item"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#start')}}"></use></svg></span>
-                                            <span class="stars__item"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#start')}}"></use></svg></span>
-                                        </div>
-                                        <a href="">16 отзывов</a>
-                                    </div>
-                                    <div class="product__ftrwrap">
-                                        <div class="product__prices">
-                                            <div class="product__price">4 009 ₽</div>
-                                            <del class="product__oldprice">4 700 ₽</del>
-                                        </div>
-                                        <button class="product__mobile-btn"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#cart')}}"></use></svg></button>
-                                    </div>
-                                    <div class="product__sizesinfo">Еще два размера</div>
-
-
-                                    <div class="product__pnl">
-                                        <div class="product__optionsblock">
-                                            <div class="product__optionstitle">Выбранный цвет: <b>Red</b></div>
-                                            <div class="product__options product__colors">
-                                                <label class="color">
-                                                    <input type="radio" name="color"  checked/>
-                                                    <div class="color__text" style="background-color: #880B0B"></div>
-                                                </label>
-                                                <label class="color">
-                                                    <input type="radio" name="color" />
-                                                    <div class="color__text" style="background-color: #188299"></div>
-                                                </label>
-                                                <label class="color">
-                                                    <input type="radio" name="color" />
-                                                    <div class="color__text" style="background-color: #AE3A80"></div>
-                                                </label>
-                                                <label class="color">
-                                                    <input type="radio" name="color" />
-                                                    <div class="color__text" style="background-color: #99CB47"></div>
-                                                </label>
+                                        <div class="product__ftrwrap">
+                                            <div class="product__prices">
+                                                @if($selected_variation != null)
+                                                    <div class="product__price">
+                                                        {{$selected_variation->discount_price??$selected_variation->price}} ₽
+                                                    </div>
+                                                    @isset($selected_variation->discount_price)
+                                                        <del class="product__oldprice">{{$selected_variation->price}} ₽</del>
+                                                    @endisset
+                                                @else
+                                                    <div class="product__price">{{$new_product->discount_price??$new_product->price}} ₽</div>
+                                                    @isset($new_product->discount_price)
+                                                        <del class="product__oldprice">{{$new_product->price}} ₽</del>
+                                                    @endisset
+                                                @endif
                                             </div>
+                                            <button class="product__mobile-btn"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#cart')}}"></use></svg></button>
                                         </div>
-                                        <button class="product__addcart">Добавить в корзину <span>23 878 ₽</span></button>
-                                    </div>
-                                </div>
+                                        <div class="product__sizesinfo">Еще два размера</div>
 
-                            </div>
-                        </div>
-                        <div class="products-slider__item">
-                            <div class="product">
-                                <div class="product__top">
-                                    <div class="product__image">
-                                        <div class="product__labels">
-                                            <div class="product__label product__label--brown">-50%</div>
-                                            <div class="product__label product__label--green">Хит продаж</div>
-                                        </div>
-                                        <a href=""><img src="{{asset('images/dist/tmp-product.jpg')}}" alt=""></a>
-                                        <button class="product__fav"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#heart')}}"></use></svg></button>
-                                    </div>
-                                    <div class="product__title"><a href="">ROBERTO CAVALLI</a></div>
-                                    <div class="product__subtitle">Frantic Rose Gold Collection Eau de Parfum 100ml (100ml)</div>
-                                </div>
-                                <div class="product__btm">
-                                    <div class="product__reviews">
-                                        <div class="stars">
-                                            <span class="stars__item is-active"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#start')}}"></use></svg></span>
-                                            <span class="stars__item is-active"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#start')}}"></use></svg></span>
-                                            <span class="stars__item is-active"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#start')}}"></use></svg></span>
-                                            <span class="stars__item"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#start')}}"></use></svg></span>
-                                            <span class="stars__item"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#start')}}"></use></svg></span>
-                                        </div>
-                                        <a href="">16 отзывов</a>
-                                    </div>
-                                    <div class="product__ftrwrap">
-                                        <div class="product__prices">
-                                            <div class="product__price">4 009 ₽</div>
-                                            <del class="product__oldprice">4 700 ₽</del>
-                                        </div>
-                                        <button class="product__mobile-btn"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#cart')}}"></use></svg></button>
-                                    </div>
-                                    <div class="product__sizesinfo">Еще два размера</div>
-                                    <div class="product__pnl">
-                                        <div class="product__optionsblock">
-                                            <div class="product__optionstitle">Выбранный объем: <b>150ml</b></div>
-                                            <div class="product__options product__volume">
-                                                <label class="volume">
-                                                    <input type="radio" name="volume"  checked/>
-                                                    <div class="volume__text"><b>50ml</b> 10 073 ₽ </div>
-                                                </label>
-                                                <label class="volume">
-                                                    <input type="radio" name="volume" />
-                                                    <div class="volume__text"><b>90ml</b> 13 326 ₽  </div>
-                                                </label>
-                                                <label class="volume">
-                                                    <input type="radio" name="volume"/>
-                                                    <div class="volume__text"><b>150ml</b> 15 320 ₽  </div>
-                                                </label>
 
+                                        <div class="product__pnl">
+                                            <div class="product__optionsblock">
+                                                <div class="product__optionstitle">Выбранный цвет: <b>Red</b></div>
+                                                <div class="product__options product__colors">
+                                                    <label class="color">
+                                                        <input type="radio" name="color"  checked/>
+                                                        <div class="color__text" style="background-color: #880B0B"></div>
+                                                    </label>
+                                                    <label class="color">
+                                                        <input type="radio" name="color" />
+                                                        <div class="color__text" style="background-color: #188299"></div>
+                                                    </label>
+                                                    <label class="color">
+                                                        <input type="radio" name="color" />
+                                                        <div class="color__text" style="background-color: #AE3A80"></div>
+                                                    </label>
+                                                    <label class="color">
+                                                        <input type="radio" name="color" />
+                                                        <div class="color__text" style="background-color: #99CB47"></div>
+                                                    </label>
+                                                </div>
                                             </div>
+                                            <button class="product__addcart">Добавить в корзину <span>23 878 ₽</span></button>
                                         </div>
-                                        <button class="product__addcart">Добавить в корзину <span>23 878 ₽</span></button>
                                     </div>
-                                </div>
 
+                                </div>
                             </div>
-                        </div>
-                        <div class="products-slider__item">
-                            <div class="product">
-                                <div class="product__top">
-                                    <div class="product__image">
-                                        <div class="product__labels">
-                                            <div class="product__label product__label--brown">-50%</div>
-                                            <div class="product__label product__label--green">Хит продаж</div>
-                                        </div>
-                                        <a href=""><img src="{{asset('images/dist/tmp-product.jpg')}}" alt=""></a>
-                                        <button class="product__fav"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#heart')}}"></use></svg></button>
-                                    </div>
-                                    <div class="product__title"><a href="">ROBERTO CAVALLI</a></div>
-                                    <div class="product__subtitle">Frantic Rose Gold Collection Eau de Parfum 100ml (100ml)</div>
-                                </div>
-                                <div class="product__btm">
-                                    <div class="product__reviews">
-                                        <div class="stars">
-                                            <span class="stars__item is-active"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#start')}}"></use></svg></span>
-                                            <span class="stars__item is-active"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#start')}}"></use></svg></span>
-                                            <span class="stars__item is-active"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#start')}}"></use></svg></span>
-                                            <span class="stars__item"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#start')}}"></use></svg></span>
-                                            <span class="stars__item"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#start')}}"></use></svg></span>
-                                        </div>
-                                        <a href="">16 отзывов</a>
-                                    </div>
-                                    <div class="product__ftrwrap">
-                                        <div class="product__prices">
-                                            <div class="product__price">4 009 ₽</div>
-                                            <del class="product__oldprice">4 700 ₽</del>
-                                        </div>
-                                        <button class="product__mobile-btn"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#cart')}}"></use></svg></button>
-                                    </div>
-                                    <div class="product__sizesinfo">Еще два размера</div>
-
-
-                                    <div class="product__pnl">
-                                        <div class="product__optionsblock">
-                                            <div class="product__optionstitle">Выбранный цвет: <b>Red</b></div>
-                                            <div class="product__options product__colors">
-                                                <label class="color">
-                                                    <input type="radio" name="color"  checked/>
-                                                    <div class="color__text" style="background-color: #880B0B"></div>
-                                                </label>
-                                                <label class="color">
-                                                    <input type="radio" name="color" />
-                                                    <div class="color__text" style="background-color: #188299"></div>
-                                                </label>
-                                                <label class="color">
-                                                    <input type="radio" name="color" />
-                                                    <div class="color__text" style="background-color: #AE3A80"></div>
-                                                </label>
-                                                <label class="color">
-                                                    <input type="radio" name="color" />
-                                                    <div class="color__text" style="background-color: #99CB47"></div>
-                                                </label>
-                                            </div>
-                                        </div>
-                                        <button class="product__addcart">Добавить в корзину <span>23 878 ₽</span></button>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
+                        @endforeach
                     </div>
                 </div>
             </div>
@@ -446,321 +220,85 @@
                 <div class="col-lg-12">
                     <h2 class="title-h2">Популярные</h2>
                     <div class="products-slider">
-                        <div class="products-slider__item">
-                            <div class="product">
-                                <div class="product__top">
-                                    <div class="product__image">
-                                        <div class="product__labels">
-                                            <div class="product__label product__label--brown">-50%</div>
-                                            <div class="product__label product__label--green">Хит продаж</div>
-                                        </div>
-                                        <a href=""><img src="{{asset('images/dist/tmp-product.jpg')}}" alt=""></a>
-                                        <button class="product__fav"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#heart')}}"></use></svg></button>
-                                    </div>
-                                    <div class="product__title"><a href="">ROBERTO CAVALLI</a></div>
-                                    <div class="product__subtitle">Frantic Rose Gold Collection Eau de Parfum 100ml (100ml)</div>
-                                </div>
-                                <div class="product__btm">
-                                    <div class="product__reviews">
-                                        <div class="stars">
-                                            <span class="stars__item is-active"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#start')}}"></use></svg></span>
-                                            <span class="stars__item is-active"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#start')}}"></use></svg></span>
-                                            <span class="stars__item is-active"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#start')}}"></use></svg></span>
-                                            <span class="stars__item"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#start')}}"></use></svg></span>
-                                            <span class="stars__item"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#start')}}"></use></svg></span>
-                                        </div>
-                                        <a href="">16 отзывов</a>
-                                    </div>
-                                    <div class="product__ftrwrap">
-                                        <div class="product__prices">
-                                            <div class="product__price">4 009 ₽</div>
-                                            <del class="product__oldprice">4 700 ₽</del>
-                                        </div>
-                                        <button class="product__mobile-btn"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#cart')}}"></use></svg></button>
-                                    </div>
-                                    <div class="product__sizesinfo">Еще два размера</div>
-
-
-                                    <div class="product__pnl">
-                                        <div class="product__optionsblock">
-                                            <div class="product__optionstitle">Выбранный цвет: <b>Red</b></div>
-                                            <div class="product__options product__colors">
-                                                <label class="color">
-                                                    <input type="radio" name="color"  checked/>
-                                                    <div class="color__text" style="background-color: #880B0B"></div>
-                                                </label>
-                                                <label class="color">
-                                                    <input type="radio" name="color" />
-                                                    <div class="color__text" style="background-color: #188299"></div>
-                                                </label>
-                                                <label class="color">
-                                                    <input type="radio" name="color" />
-                                                    <div class="color__text" style="background-color: #AE3A80"></div>
-                                                </label>
-                                                <label class="color">
-                                                    <input type="radio" name="color" />
-                                                    <div class="color__text" style="background-color: #99CB47"></div>
-                                                </label>
+                        @foreach($new_products as $new_product)
+                            @php
+                                $selected_variation = $new_product->product_variations->first();
+                            @endphp
+                            <div class="products-slider__item">
+                                <div class="product">
+                                    <div class="product__top">
+                                        <div class="product__image">
+                                            <div class="product__labels">
+                                                <div class="product__label product__label--brown">-50%</div>
+                                                <div class="product__label product__label--green">Хит продаж</div>
                                             </div>
+                                            <a href="products/{{$new_product->alias}}{{$selected_variation !== null?'/'.$selected_variation->id:''}}"><img src="{{asset('images/uploads/products/'.$new_product->image)}}" alt=""></a>
+                                            <button class="product__fav"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#heart')}}"></use></svg></button>
                                         </div>
-                                        <button class="product__addcart">Добавить в корзину <span>23 878 ₽</span></button>
+                                        <div class="product__title"><a href="">{{$new_product->brand->name}}</a></div>
+                                        <div class="product__subtitle">{{$new_product->title}}</div>
                                     </div>
-                                </div>
-
-                            </div>
-                        </div>
-                        <div class="products-slider__item">
-                            <div class="product">
-                                <div class="product__top">
-                                    <div class="product__image">
-                                        <div class="product__labels">
-                                            <div class="product__label product__label--brown">-50%</div>
-                                            <div class="product__label product__label--green">Хит продаж</div>
-                                        </div>
-                                        <a href=""><img src="{{asset('images/dist/tmp-product.jpg')}}" alt=""></a>
-                                        <button class="product__fav"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#heart')}}"></use></svg></button>
-                                    </div>
-                                    <div class="product__title"><a href="">ROBERTO CAVALLI</a></div>
-                                    <div class="product__subtitle">Frantic Rose Gold Collection Eau de Parfum 100ml (100ml)</div>
-                                </div>
-                                <div class="product__btm">
-                                    <div class="product__reviews">
-                                        <div class="stars">
-                                            <span class="stars__item is-active"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#start')}}"></use></svg></span>
-                                            <span class="stars__item is-active"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#start')}}"></use></svg></span>
-                                            <span class="stars__item is-active"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#start')}}"></use></svg></span>
-                                            <span class="stars__item"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#start')}}"></use></svg></span>
-                                            <span class="stars__item"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#start')}}"></use></svg></span>
-                                        </div>
-                                        <a href="">16 отзывов</a>
-                                    </div>
-                                    <div class="product__ftrwrap">
-                                        <div class="product__prices">
-                                            <div class="product__price">4 009 ₽</div>
-                                            <del class="product__oldprice">4 700 ₽</del>
-                                        </div>
-                                        <button class="product__mobile-btn"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#cart')}}"></use></svg></button>
-                                    </div>
-                                    <div class="product__sizesinfo">Еще два размера</div>
-
-
-                                    <div class="product__pnl">
-                                        <div class="product__optionsblock">
-                                            <div class="product__optionstitle">Выбранный цвет: <b>Red</b></div>
-                                            <div class="product__options product__colors">
-                                                <label class="color">
-                                                    <input type="radio" name="color"  checked/>
-                                                    <div class="color__text" style="background-color: #880B0B"></div>
-                                                </label>
-                                                <label class="color">
-                                                    <input type="radio" name="color" />
-                                                    <div class="color__text" style="background-color: #188299"></div>
-                                                </label>
-                                                <label class="color">
-                                                    <input type="radio" name="color" />
-                                                    <div class="color__text" style="background-color: #AE3A80"></div>
-                                                </label>
-                                                <label class="color">
-                                                    <input type="radio" name="color" />
-                                                    <div class="color__text" style="background-color: #99CB47"></div>
-                                                </label>
+                                    <div class="product__btm">
+                                        <div class="product__reviews">
+                                            <div class="stars">
+                                                <span class="stars__item is-active"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#start')}}"></use></svg></span>
+                                                <span class="stars__item is-active"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#start')}}"></use></svg></span>
+                                                <span class="stars__item is-active"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#start')}}"></use></svg></span>
+                                                <span class="stars__item"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#start')}}"></use></svg></span>
+                                                <span class="stars__item"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#start')}}"></use></svg></span>
                                             </div>
+                                            <a href="">16 отзывов</a>
                                         </div>
-                                        <button class="product__addcart">Добавить в корзину <span>23 878 ₽</span></button>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                        <div class="products-slider__item">
-                            <div class="product">
-                                <div class="product__top">
-                                    <div class="product__image">
-                                        <div class="product__labels">
-                                            <div class="product__label product__label--brown">-50%</div>
-                                            <div class="product__label product__label--green">Хит продаж</div>
-                                        </div>
-                                        <a href=""><img src="{{asset('images/dist/tmp-product.jpg')}}" alt=""></a>
-                                        <button class="product__fav"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#heart')}}"></use></svg></button>
-                                    </div>
-                                    <div class="product__title"><a href="">ROBERTO CAVALLI</a></div>
-                                    <div class="product__subtitle">Frantic Rose Gold Collection Eau de Parfum 100ml (100ml)</div>
-                                </div>
-                                <div class="product__btm">
-                                    <div class="product__reviews">
-                                        <div class="stars">
-                                            <span class="stars__item is-active"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#start')}}"></use></svg></span>
-                                            <span class="stars__item is-active"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#start')}}"></use></svg></span>
-                                            <span class="stars__item is-active"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#start')}}"></use></svg></span>
-                                            <span class="stars__item"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#start')}}"></use></svg></span>
-                                            <span class="stars__item"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#start')}}"></use></svg></span>
-                                        </div>
-                                        <a href="">16 отзывов</a>
-                                    </div>
-                                    <div class="product__ftrwrap">
-                                        <div class="product__prices">
-                                            <div class="product__price">4 009 ₽</div>
-                                            <del class="product__oldprice">4 700 ₽</del>
-                                        </div>
-                                        <button class="product__mobile-btn"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#cart')}}"></use></svg></button>
-                                    </div>
-                                    <div class="product__sizesinfo">Еще два размера</div>
-
-
-                                    <div class="product__pnl">
-                                        <div class="product__optionsblock">
-                                            <div class="product__optionstitle">Выбранный цвет: <b>Red</b></div>
-                                            <div class="product__options product__colors">
-                                                <label class="color">
-                                                    <input type="radio" name="color"  checked/>
-                                                    <div class="color__text" style="background-color: #880B0B"></div>
-                                                </label>
-                                                <label class="color">
-                                                    <input type="radio" name="color" />
-                                                    <div class="color__text" style="background-color: #188299"></div>
-                                                </label>
-                                                <label class="color">
-                                                    <input type="radio" name="color" />
-                                                    <div class="color__text" style="background-color: #AE3A80"></div>
-                                                </label>
-                                                <label class="color">
-                                                    <input type="radio" name="color" />
-                                                    <div class="color__text" style="background-color: #99CB47"></div>
-                                                </label>
+                                        <div class="product__ftrwrap">
+                                            <div class="product__prices">
+                                                @if($selected_variation != null)
+                                                    <div class="product__price">
+                                                        {{$selected_variation->discount_price??$selected_variation->price}} ₽
+                                                    </div>
+                                                    @isset($selected_variation->discount_price)
+                                                        <del class="product__oldprice">{{$selected_variation->price}} ₽</del>
+                                                    @endisset
+                                                @else
+                                                    <div class="product__price">{{$new_product->discount_price??$new_product->price}} ₽</div>
+                                                    @isset($new_product->discount_price)
+                                                        <del class="product__oldprice">{{$new_product->price}} ₽</del>
+                                                    @endisset
+                                                @endif
                                             </div>
+                                            <button class="product__mobile-btn"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#cart')}}"></use></svg></button>
                                         </div>
-                                        <button class="product__addcart">Добавить в корзину <span>23 878 ₽</span></button>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                        <div class="products-slider__item">
-                            <div class="product">
-                                <div class="product__top">
-                                    <div class="product__image">
-                                        <div class="product__labels">
-                                            <div class="product__label product__label--brown">-50%</div>
-                                            <div class="product__label product__label--green">Хит продаж</div>
-                                        </div>
-                                        <a href=""><img src="{{asset('images/dist/tmp-product.jpg')}}" alt=""></a>
-                                        <button class="product__fav"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#heart')}}"></use></svg></button>
-                                    </div>
-                                    <div class="product__title"><a href="">ROBERTO CAVALLI</a></div>
-                                    <div class="product__subtitle">Frantic Rose Gold Collection Eau de Parfum 100ml (100ml)</div>
-                                </div>
-                                <div class="product__btm">
-                                    <div class="product__reviews">
-                                        <div class="stars">
-                                            <span class="stars__item is-active"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#start')}}"></use></svg></span>
-                                            <span class="stars__item is-active"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#start')}}"></use></svg></span>
-                                            <span class="stars__item is-active"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#start')}}"></use></svg></span>
-                                            <span class="stars__item"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#start')}}"></use></svg></span>
-                                            <span class="stars__item"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#start')}}"></use></svg></span>
-                                        </div>
-                                        <a href="">16 отзывов</a>
-                                    </div>
-                                    <div class="product__ftrwrap">
-                                        <div class="product__prices">
-                                            <div class="product__price">4 009 ₽</div>
-                                            <del class="product__oldprice">4 700 ₽</del>
-                                        </div>
-                                        <button class="product__mobile-btn"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#cart')}}"></use></svg></button>
-                                    </div>
-                                    <div class="product__sizesinfo">Еще два размера</div>
+                                        <div class="product__sizesinfo">Еще два размера</div>
 
 
-                                    <div class="product__pnl">
-                                        <div class="product__optionsblock">
-                                            <div class="product__optionstitle">Выбранный цвет: <b>Red</b></div>
-                                            <div class="product__options product__colors">
-                                                <label class="color">
-                                                    <input type="radio" name="color"  checked/>
-                                                    <div class="color__text" style="background-color: #880B0B"></div>
-                                                </label>
-                                                <label class="color">
-                                                    <input type="radio" name="color" />
-                                                    <div class="color__text" style="background-color: #188299"></div>
-                                                </label>
-                                                <label class="color">
-                                                    <input type="radio" name="color" />
-                                                    <div class="color__text" style="background-color: #AE3A80"></div>
-                                                </label>
-                                                <label class="color">
-                                                    <input type="radio" name="color" />
-                                                    <div class="color__text" style="background-color: #99CB47"></div>
-                                                </label>
+                                        <div class="product__pnl">
+                                            <div class="product__optionsblock">
+                                                <div class="product__optionstitle">Выбранный цвет: <b>Red</b></div>
+                                                <div class="product__options product__colors">
+                                                    <label class="color">
+                                                        <input type="radio" name="color"  checked/>
+                                                        <div class="color__text" style="background-color: #880B0B"></div>
+                                                    </label>
+                                                    <label class="color">
+                                                        <input type="radio" name="color" />
+                                                        <div class="color__text" style="background-color: #188299"></div>
+                                                    </label>
+                                                    <label class="color">
+                                                        <input type="radio" name="color" />
+                                                        <div class="color__text" style="background-color: #AE3A80"></div>
+                                                    </label>
+                                                    <label class="color">
+                                                        <input type="radio" name="color" />
+                                                        <div class="color__text" style="background-color: #99CB47"></div>
+                                                    </label>
+                                                </div>
                                             </div>
+                                            <button class="product__addcart">Добавить в корзину <span>23 878 ₽</span></button>
                                         </div>
-                                        <button class="product__addcart">Добавить в корзину <span>23 878 ₽</span></button>
                                     </div>
-                                </div>
 
+                                </div>
                             </div>
-                        </div>
-                        <div class="products-slider__item">
-                            <div class="product">
-                                <div class="product__top">
-                                    <div class="product__image">
-                                        <div class="product__labels">
-                                            <div class="product__label product__label--brown">-50%</div>
-                                            <div class="product__label product__label--green">Хит продаж</div>
-                                        </div>
-                                        <a href=""><img src="{{asset('images/dist/tmp-product.jpg')}}" alt=""></a>
-                                        <button class="product__fav"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#heart')}}"></use></svg></button>
-                                    </div>
-                                    <div class="product__title"><a href="">ROBERTO CAVALLI</a></div>
-                                    <div class="product__subtitle">Frantic Rose Gold Collection Eau de Parfum 100ml (100ml)</div>
-                                </div>
-                                <div class="product__btm">
-                                    <div class="product__reviews">
-                                        <div class="stars">
-                                            <span class="stars__item is-active"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#start')}}"></use></svg></span>
-                                            <span class="stars__item is-active"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#start')}}"></use></svg></span>
-                                            <span class="stars__item is-active"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#start')}}"></use></svg></span>
-                                            <span class="stars__item"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#start')}}"></use></svg></span>
-                                            <span class="stars__item"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#start')}}"></use></svg></span>
-                                        </div>
-                                        <a href="">16 отзывов</a>
-                                    </div>
-                                    <div class="product__ftrwrap">
-                                        <div class="product__prices">
-                                            <div class="product__price">4 009 ₽</div>
-                                            <del class="product__oldprice">4 700 ₽</del>
-                                        </div>
-                                        <button class="product__mobile-btn"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#cart')}}"></use></svg></button>
-                                    </div>
-                                    <div class="product__sizesinfo">Еще два размера</div>
-
-
-                                    <div class="product__pnl">
-                                        <div class="product__optionsblock">
-                                            <div class="product__optionstitle">Выбранный цвет: <b>Red</b></div>
-                                            <div class="product__options product__colors">
-                                                <label class="color">
-                                                    <input type="radio" name="color"  checked/>
-                                                    <div class="color__text" style="background-color: #880B0B"></div>
-                                                </label>
-                                                <label class="color">
-                                                    <input type="radio" name="color" />
-                                                    <div class="color__text" style="background-color: #188299"></div>
-                                                </label>
-                                                <label class="color">
-                                                    <input type="radio" name="color" />
-                                                    <div class="color__text" style="background-color: #AE3A80"></div>
-                                                </label>
-                                                <label class="color">
-                                                    <input type="radio" name="color" />
-                                                    <div class="color__text" style="background-color: #99CB47"></div>
-                                                </label>
-                                            </div>
-                                        </div>
-                                        <button class="product__addcart">Добавить в корзину <span>23 878 ₽</span></button>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
+                        @endforeach
                     </div>
                 </div>
             </div>
@@ -810,321 +348,85 @@
                 <div class="col-lg-12">
                     <h2 class="title-h2">Товары со скидкой</h2>
                     <div class="products-slider">
-                        <div class="products-slider__item">
-                            <div class="product">
-                                <div class="product__top">
-                                    <div class="product__image">
-                                        <div class="product__labels">
-                                            <div class="product__label product__label--brown">-50%</div>
-                                            <div class="product__label product__label--green">Хит продаж</div>
-                                        </div>
-                                        <a href=""><img src="{{asset('images/dist/tmp-product.jpg')}}" alt=""></a>
-                                        <button class="product__fav"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#heart')}}"></use></svg></button>
-                                    </div>
-                                    <div class="product__title"><a href="">ROBERTO CAVALLI</a></div>
-                                    <div class="product__subtitle">Frantic Rose Gold Collection Eau de Parfum 100ml (100ml)</div>
-                                </div>
-                                <div class="product__btm">
-                                    <div class="product__reviews">
-                                        <div class="stars">
-                                            <span class="stars__item is-active"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#start')}}"></use></svg></span>
-                                            <span class="stars__item is-active"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#start')}}"></use></svg></span>
-                                            <span class="stars__item is-active"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#start')}}"></use></svg></span>
-                                            <span class="stars__item"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#start')}}"></use></svg></span>
-                                            <span class="stars__item"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#start')}}"></use></svg></span>
-                                        </div>
-                                        <a href="">16 отзывов</a>
-                                    </div>
-                                    <div class="product__ftrwrap">
-                                        <div class="product__prices">
-                                            <div class="product__price">4 009 ₽</div>
-                                            <del class="product__oldprice">4 700 ₽</del>
-                                        </div>
-                                        <button class="product__mobile-btn"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#cart')}}"></use></svg></button>
-                                    </div>
-                                    <div class="product__sizesinfo">Еще два размера</div>
-
-
-                                    <div class="product__pnl">
-                                        <div class="product__optionsblock">
-                                            <div class="product__optionstitle">Выбранный цвет: <b>Red</b></div>
-                                            <div class="product__options product__colors">
-                                                <label class="color">
-                                                    <input type="radio" name="color"  checked/>
-                                                    <div class="color__text" style="background-color: #880B0B"></div>
-                                                </label>
-                                                <label class="color">
-                                                    <input type="radio" name="color" />
-                                                    <div class="color__text" style="background-color: #188299"></div>
-                                                </label>
-                                                <label class="color">
-                                                    <input type="radio" name="color" />
-                                                    <div class="color__text" style="background-color: #AE3A80"></div>
-                                                </label>
-                                                <label class="color">
-                                                    <input type="radio" name="color" />
-                                                    <div class="color__text" style="background-color: #99CB47"></div>
-                                                </label>
+                        @foreach($product_discounts  as $product)
+                            @php
+                                $selected_variation = $product->product_variations->whereNotNull('discount_price')->first();
+                            @endphp
+                            <div class="products-slider__item">
+                                <div class="product">
+                                    <div class="product__top">
+                                        <div class="product__image">
+                                            <div class="product__labels">
+                                                <div class="product__label product__label--brown">-50%</div>
+                                                <div class="product__label product__label--green">Хит продаж</div>
                                             </div>
+                                            <a href="products/{{$product->alias}}{{$selected_variation !== null?'/'.$selected_variation->id:''}}"><img src="{{asset('images/uploads/products/'.$product->image)}}" alt=""></a>
+                                            <button class="product__fav"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#heart')}}"></use></svg></button>
                                         </div>
-                                        <button class="product__addcart">Добавить в корзину <span>23 878 ₽</span></button>
+                                        <div class="product__title"><a href="">{{$product->brand->name}}</a></div>
+                                        <div class="product__subtitle">{{$product->title}}</div>
                                     </div>
-                                </div>
-
-                            </div>
-                        </div>
-                        <div class="products-slider__item">
-                            <div class="product">
-                                <div class="product__top">
-                                    <div class="product__image">
-                                        <div class="product__labels">
-                                            <div class="product__label product__label--brown">-50%</div>
-                                            <div class="product__label product__label--green">Хит продаж</div>
-                                        </div>
-                                        <a href=""><img src="{{asset('images/dist/tmp-product.jpg')}}" alt=""></a>
-                                        <button class="product__fav"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#heart')}}"></use></svg></button>
-                                    </div>
-                                    <div class="product__title"><a href="">ROBERTO CAVALLI</a></div>
-                                    <div class="product__subtitle">Frantic Rose Gold Collection Eau de Parfum 100ml (100ml)</div>
-                                </div>
-                                <div class="product__btm">
-                                    <div class="product__reviews">
-                                        <div class="stars">
-                                            <span class="stars__item is-active"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#start')}}"></use></svg></span>
-                                            <span class="stars__item is-active"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#start')}}"></use></svg></span>
-                                            <span class="stars__item is-active"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#start')}}"></use></svg></span>
-                                            <span class="stars__item"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#start')}}"></use></svg></span>
-                                            <span class="stars__item"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#start')}}"></use></svg></span>
-                                        </div>
-                                        <a href="">16 отзывов</a>
-                                    </div>
-                                    <div class="product__ftrwrap">
-                                        <div class="product__prices">
-                                            <div class="product__price">4 009 ₽</div>
-                                            <del class="product__oldprice">4 700 ₽</del>
-                                        </div>
-                                        <button class="product__mobile-btn"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#cart')}}"></use></svg></button>
-                                    </div>
-                                    <div class="product__sizesinfo">Еще два размера</div>
-
-
-                                    <div class="product__pnl">
-                                        <div class="product__optionsblock">
-                                            <div class="product__optionstitle">Выбранный цвет: <b>Red</b></div>
-                                            <div class="product__options product__colors">
-                                                <label class="color">
-                                                    <input type="radio" name="color"  checked/>
-                                                    <div class="color__text" style="background-color: #880B0B"></div>
-                                                </label>
-                                                <label class="color">
-                                                    <input type="radio" name="color" />
-                                                    <div class="color__text" style="background-color: #188299"></div>
-                                                </label>
-                                                <label class="color">
-                                                    <input type="radio" name="color" />
-                                                    <div class="color__text" style="background-color: #AE3A80"></div>
-                                                </label>
-                                                <label class="color">
-                                                    <input type="radio" name="color" />
-                                                    <div class="color__text" style="background-color: #99CB47"></div>
-                                                </label>
+                                    <div class="product__btm">
+                                        <div class="product__reviews">
+                                            <div class="stars">
+                                                <span class="stars__item is-active"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#start')}}"></use></svg></span>
+                                                <span class="stars__item is-active"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#start')}}"></use></svg></span>
+                                                <span class="stars__item is-active"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#start')}}"></use></svg></span>
+                                                <span class="stars__item"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#start')}}"></use></svg></span>
+                                                <span class="stars__item"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#start')}}"></use></svg></span>
                                             </div>
+                                            <a href="">16 отзывов</a>
                                         </div>
-                                        <button class="product__addcart">Добавить в корзину <span>23 878 ₽</span></button>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                        <div class="products-slider__item">
-                            <div class="product">
-                                <div class="product__top">
-                                    <div class="product__image">
-                                        <div class="product__labels">
-                                            <div class="product__label product__label--brown">-50%</div>
-                                            <div class="product__label product__label--green">Хит продаж</div>
-                                        </div>
-                                        <a href=""><img src="{{asset('images/dist/tmp-product.jpg')}}" alt=""></a>
-                                        <button class="product__fav"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#heart')}}"></use></svg></button>
-                                    </div>
-                                    <div class="product__title"><a href="">ROBERTO CAVALLI</a></div>
-                                    <div class="product__subtitle">Frantic Rose Gold Collection Eau de Parfum 100ml (100ml)</div>
-                                </div>
-                                <div class="product__btm">
-                                    <div class="product__reviews">
-                                        <div class="stars">
-                                            <span class="stars__item is-active"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#start')}}"></use></svg></span>
-                                            <span class="stars__item is-active"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#start')}}"></use></svg></span>
-                                            <span class="stars__item is-active"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#start')}}"></use></svg></span>
-                                            <span class="stars__item"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#start')}}"></use></svg></span>
-                                            <span class="stars__item"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#start')}}"></use></svg></span>
-                                        </div>
-                                        <a href="">16 отзывов</a>
-                                    </div>
-                                    <div class="product__ftrwrap">
-                                        <div class="product__prices">
-                                            <div class="product__price">4 009 ₽</div>
-                                            <del class="product__oldprice">4 700 ₽</del>
-                                        </div>
-                                        <button class="product__mobile-btn"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#cart')}}"></use></svg></button>
-                                    </div>
-                                    <div class="product__sizesinfo">Еще два размера</div>
-
-
-                                    <div class="product__pnl">
-                                        <div class="product__optionsblock">
-                                            <div class="product__optionstitle">Выбранный цвет: <b>Red</b></div>
-                                            <div class="product__options product__colors">
-                                                <label class="color">
-                                                    <input type="radio" name="color"  checked/>
-                                                    <div class="color__text" style="background-color: #880B0B"></div>
-                                                </label>
-                                                <label class="color">
-                                                    <input type="radio" name="color" />
-                                                    <div class="color__text" style="background-color: #188299"></div>
-                                                </label>
-                                                <label class="color">
-                                                    <input type="radio" name="color" />
-                                                    <div class="color__text" style="background-color: #AE3A80"></div>
-                                                </label>
-                                                <label class="color">
-                                                    <input type="radio" name="color" />
-                                                    <div class="color__text" style="background-color: #99CB47"></div>
-                                                </label>
+                                        <div class="product__ftrwrap">
+                                            <div class="product__prices">
+                                                @if($selected_variation != null)
+                                                    <div class="product__price">
+                                                        {{$selected_variation->discount_price??$selected_variation->price}} ₽
+                                                    </div>
+                                                    @isset($selected_variation->discount_price)
+                                                        <del class="product__oldprice">{{$selected_variation->price}} ₽</del>
+                                                    @endisset
+                                                @else
+                                                    <div class="product__price">{{$product->discount_price??$product->price}} ₽</div>
+                                                    @isset($product->discount_price)
+                                                        <del class="product__oldprice">{{$product->price}} ₽</del>
+                                                    @endisset
+                                                @endif
                                             </div>
+                                            <button class="product__mobile-btn"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#cart')}}"></use></svg></button>
                                         </div>
-                                        <button class="product__addcart">Добавить в корзину <span>23 878 ₽</span></button>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                        <div class="products-slider__item">
-                            <div class="product">
-                                <div class="product__top">
-                                    <div class="product__image">
-                                        <div class="product__labels">
-                                            <div class="product__label product__label--brown">-50%</div>
-                                            <div class="product__label product__label--green">Хит продаж</div>
-                                        </div>
-                                        <a href=""><img src="{{asset('images/dist/tmp-product.jpg')}}" alt=""></a>
-                                        <button class="product__fav"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#heart')}}"></use></svg></button>
-                                    </div>
-                                    <div class="product__title"><a href="">ROBERTO CAVALLI</a></div>
-                                    <div class="product__subtitle">Frantic Rose Gold Collection Eau de Parfum 100ml (100ml)</div>
-                                </div>
-                                <div class="product__btm">
-                                    <div class="product__reviews">
-                                        <div class="stars">
-                                            <span class="stars__item is-active"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#start')}}"></use></svg></span>
-                                            <span class="stars__item is-active"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#start')}}"></use></svg></span>
-                                            <span class="stars__item is-active"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#start')}}"></use></svg></span>
-                                            <span class="stars__item"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#start')}}"></use></svg></span>
-                                            <span class="stars__item"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#start')}}"></use></svg></span>
-                                        </div>
-                                        <a href="">16 отзывов</a>
-                                    </div>
-                                    <div class="product__ftrwrap">
-                                        <div class="product__prices">
-                                            <div class="product__price">4 009 ₽</div>
-                                            <del class="product__oldprice">4 700 ₽</del>
-                                        </div>
-                                        <button class="product__mobile-btn"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#cart')}}"></use></svg></button>
-                                    </div>
-                                    <div class="product__sizesinfo">Еще два размера</div>
+                                        <div class="product__sizesinfo">Еще два размера</div>
 
 
-                                    <div class="product__pnl">
-                                        <div class="product__optionsblock">
-                                            <div class="product__optionstitle">Выбранный цвет: <b>Red</b></div>
-                                            <div class="product__options product__colors">
-                                                <label class="color">
-                                                    <input type="radio" name="color"  checked/>
-                                                    <div class="color__text" style="background-color: #880B0B"></div>
-                                                </label>
-                                                <label class="color">
-                                                    <input type="radio" name="color" />
-                                                    <div class="color__text" style="background-color: #188299"></div>
-                                                </label>
-                                                <label class="color">
-                                                    <input type="radio" name="color" />
-                                                    <div class="color__text" style="background-color: #AE3A80"></div>
-                                                </label>
-                                                <label class="color">
-                                                    <input type="radio" name="color" />
-                                                    <div class="color__text" style="background-color: #99CB47"></div>
-                                                </label>
+                                        <div class="product__pnl">
+                                            <div class="product__optionsblock">
+                                                <div class="product__optionstitle">Выбранный цвет: <b>Red</b></div>
+                                                <div class="product__options product__colors">
+                                                    <label class="color">
+                                                        <input type="radio" name="color"  checked/>
+                                                        <div class="color__text" style="background-color: #880B0B"></div>
+                                                    </label>
+                                                    <label class="color">
+                                                        <input type="radio" name="color" />
+                                                        <div class="color__text" style="background-color: #188299"></div>
+                                                    </label>
+                                                    <label class="color">
+                                                        <input type="radio" name="color" />
+                                                        <div class="color__text" style="background-color: #AE3A80"></div>
+                                                    </label>
+                                                    <label class="color">
+                                                        <input type="radio" name="color" />
+                                                        <div class="color__text" style="background-color: #99CB47"></div>
+                                                    </label>
+                                                </div>
                                             </div>
+                                            <button class="product__addcart">Добавить в корзину <span>23 878 ₽</span></button>
                                         </div>
-                                        <button class="product__addcart">Добавить в корзину <span>23 878 ₽</span></button>
                                     </div>
-                                </div>
 
+                                </div>
                             </div>
-                        </div>
-                        <div class="products-slider__item">
-                            <div class="product">
-                                <div class="product__top">
-                                    <div class="product__image">
-                                        <div class="product__labels">
-                                            <div class="product__label product__label--brown">-50%</div>
-                                            <div class="product__label product__label--green">Хит продаж</div>
-                                        </div>
-                                        <a href=""><img src="{{asset('images/dist/tmp-product.jpg')}}" alt=""></a>
-                                        <button class="product__fav"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#heart')}}"></use></svg></button>
-                                    </div>
-                                    <div class="product__title"><a href="">ROBERTO CAVALLI</a></div>
-                                    <div class="product__subtitle">Frantic Rose Gold Collection Eau de Parfum 100ml (100ml)</div>
-                                </div>
-                                <div class="product__btm">
-                                    <div class="product__reviews">
-                                        <div class="stars">
-                                            <span class="stars__item is-active"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#start')}}"></use></svg></span>
-                                            <span class="stars__item is-active"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#start')}}"></use></svg></span>
-                                            <span class="stars__item is-active"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#start')}}"></use></svg></span>
-                                            <span class="stars__item"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#start')}}"></use></svg></span>
-                                            <span class="stars__item"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#start')}}"></use></svg></span>
-                                        </div>
-                                        <a href="">16 отзывов</a>
-                                    </div>
-                                    <div class="product__ftrwrap">
-                                        <div class="product__prices">
-                                            <div class="product__price">4 009 ₽</div>
-                                            <del class="product__oldprice">4 700 ₽</del>
-                                        </div>
-                                        <button class="product__mobile-btn"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#cart')}}"></use></svg></button>
-                                    </div>
-                                    <div class="product__sizesinfo">Еще два размера</div>
-
-
-                                    <div class="product__pnl">
-                                        <div class="product__optionsblock">
-                                            <div class="product__optionstitle">Выбранный цвет: <b>Red</b></div>
-                                            <div class="product__options product__colors">
-                                                <label class="color">
-                                                    <input type="radio" name="color"  checked/>
-                                                    <div class="color__text" style="background-color: #880B0B"></div>
-                                                </label>
-                                                <label class="color">
-                                                    <input type="radio" name="color" />
-                                                    <div class="color__text" style="background-color: #188299"></div>
-                                                </label>
-                                                <label class="color">
-                                                    <input type="radio" name="color" />
-                                                    <div class="color__text" style="background-color: #AE3A80"></div>
-                                                </label>
-                                                <label class="color">
-                                                    <input type="radio" name="color" />
-                                                    <div class="color__text" style="background-color: #99CB47"></div>
-                                                </label>
-                                            </div>
-                                        </div>
-                                        <button class="product__addcart">Добавить в корзину <span>23 878 ₽</span></button>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
+                        @endforeach
                     </div>
                 </div>
             </div>

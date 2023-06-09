@@ -13,9 +13,7 @@ use App\Http\Controllers\Auth\RegisterController;
 /* Socialize */
 Auth::routes();
 
-Route::get('/', function () {
-    return view('index');
-})->name('home');
+Route::get('/', [\App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 // Categories
 Route::get('categories', [CategoryController::class, 'index'])->name('categories');
@@ -122,4 +120,4 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function 
 
 });
 
-Route::get('/user/home', [App\Http\Controllers\HomeController::class, 'index'])->name('user.home');
+Route::get('/user/home', [App\Http\Controllers\HomeController::class, 'home'])->name('user.home');

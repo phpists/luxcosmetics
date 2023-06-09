@@ -148,16 +148,11 @@ class ProfileController extends Controller
         }
     }
 
-<<<<<<< HEAD
-    public function support(Request $request) {
+    public function support(Request $request)
+    {
         return view('cabinet.support', [
             'user' => $request->user
         ]);
-=======
-    public function logout() {
-        Auth::logout();
-        return redirect()->route('home');
->>>>>>> b006592f8d75532e437315e089ac05a1794d8a18
     }
 
 //    public function logout() {
