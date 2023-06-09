@@ -212,11 +212,22 @@
                         </li>
                         <li class="menu-item {{ request()->routeIs('admin.menu') ? 'menu-item-active' : '' }}"
                             aria-haspopup="true">
-                            <a href="" class="menu-link">
+                            <a href="{{ route('admin.menu') }}" class="menu-link">
                                 <i class="fas flaticon2-copy menu-icon"></i>
                                 <span class="menu-text">Меню</span>
                             </a>
                         </li>
+
+                        <li class="menu-item {{ request()->routeIs('admin.news') || request()->routeIs('admin.news.edit') ? 'menu-item-active' : '' }}"
+                            aria-haspopup="true">
+                            <a href="{{route('admin.news')}}" class="menu-link">
+                                <i class="menu-bullet menu-bullet-dot">
+                                    <span></span>
+                                </i>
+                                <span class="menu-text">Новости</span>
+                            </a>
+                        </li>
+                        
                         <li class="menu-item  menu-item-submenu {{  request()->routeIs('admin.settings.contacts') || request()->routeIs('admin.settings.socials') ? 'menu-item-open' : '' }}"
                             aria-haspopup="true" data-menu-toggle="hover">
                             <a href="javascript:;" class="menu-link menu-toggle">

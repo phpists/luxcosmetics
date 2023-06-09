@@ -1164,28 +1164,19 @@
                     <h2 class="title-h2">Новости</h2>
                 </div>
                 <div class="newsblock__container">
+                @foreach (\App\Services\NewsService::getNews() as $item)   
                     <div class="article article--news">
-                        <div class="article__image"><a href=""><img src="{{asset('images/dist/tmp-news.jpg')}}" alt=""></a></div>
-                        <div class="article__date"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#calendar')}}"></use></svg> 18 апреля 2023</div>
-                        <div class="article__title"><a href="">Эко-инициатива</a></div>
-                        <div class="article__intro">Наш магазин присоединяется к глобальной кампании по уменьшению использования пластика! Мы представляем новую линию экологичной упаковки и средств для ухода...</div>
+                        <div class="article__image"><a href=""><img src="{{asset('images/uploads/news/' . $item->image)}}" alt=""></a></div>
+                        <div class="article__date"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#calendar')}}"></use></svg>{{$item->published_at}}</div>
+                        <div class="article__title"><a href="">{{ $item->title }}</a></div>
+                        <div class="article__intro">{{ Str::limit(strip_tags($item->text), $limit = 30, $end = '...') }}</div>
                     </div>
-                    <div class="article article--news">
-                        <div class="article__image"><a href=""><img src="{{asset('images/dist/tmp-news.jpg')}}" alt=""></a></div>
-                        <div class="article__date"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#calendar')}}"></use></svg> 18 апреля 2023</div>
-                        <div class="article__title"><a href="">Эко-инициатива</a></div>
-                        <div class="article__intro">Наш магазин присоединяется к глобальной кампании по уменьшению использования пластика! Мы представляем новую линию экологичной упаковки и средств для ухода...</div>
-                    </div>
-                    <div class="article article--news">
-                        <div class="article__image"><a href=""><img src="{{asset('images/dist/tmp-news.jpg')}}" alt=""></a></div>
-                        <div class="article__date"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#calendar')}}"></use></svg> 18 апреля 2023</div>
-                        <div class="article__title"><a href="">Эко-инициатива</a></div>
-                        <div class="article__intro">Наш магазин присоединяется к глобальной кампании по уменьшению использования пластика! Мы представляем новую линию экологичной упаковки и средств для ухода...</div>
-                    </div>
+                @endforeach    
                 </div>
             </div>
         </div>
-    </section>
+    </section>   
+  
     <section class="mailing">
         <div class="container">
             <div class="row">

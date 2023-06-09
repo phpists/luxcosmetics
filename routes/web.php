@@ -7,8 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\FaqController;
 use Illuminate\Support\Facades\Route;
 use \App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
-use App\Http\Controllers\Auth\LoginController;
-use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\NewsController;
 
 /* Socialize */
 Auth::routes();
@@ -16,6 +15,9 @@ Auth::routes();
 Route::get('/', function () {
     return view('index');
 })->name('home');
+
+Route::view('sim', [NewsController::class, 'index']);
+
 
 // Categories
 Route::get('categories', [CategoryController::class, 'index'])->name('categories');
@@ -54,7 +56,27 @@ Route::get('giftcards/{alias}', [\App\Http\Controllers\GiftController::class, 's
 // Admin
 Route::get('admin', [AdminController::class, 'index'])->name('admin.home');
 Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function () {
-//    Product Images
+
+    /* Menu */
+    Route::get('menu', [MenuController::class, 'index'])->name('admin.menu');
+    Route::get('menu/show-all-parents', [MenuController::class, 'showAllParents'])->name('admin.menu.show_all_parents');
+    Route::post('menu/store', [MenuController::class, 'storeMenu'])->name('admin.menu.store');
+    Route::get('menu/show', [MenuController::class, 'showMenu'])->name('admin.menu.show');
+    Route::post('menu/update', [MenuController::class, 'updateMenu'])->name('admin.menu.update');
+    Route::delete('menu/delete', [MenuController::class, 'deleteMenu'])->name('admin.menu.delete');
+    Route::post('menu/update-positions', [MenuController::class, 'updatePositionMenu']);
+
+
+    /* Menu Category */
+    Route::post('menu/category/store', [MenuCategoryController::class, 'storeMenuCategory'])->name('admin.menu.category.store');
+    Route::post('menu/category/images/store', [MenuController::class, 'storeMenuImages'])->name('admin.menu.images.store');
+    Route::get('menu/category/show', [MenuCategoryController::class, 'showMenuCategory'])->name('admin.menu.category.show');
+    Route::post('menu/category/update', [MenuCategoryController::class, 'updateMenuCategory'])->name('admin.menu.category.update');
+    Route::delete('menu/category/delete', [MenuCategoryController::class, 'deleteMenuCategory'])->name('admin.menu.category.delete');
+    Route::post('menu/category/update-positions', [MenuCategoryController::class, 'updatePositionMenuCategory'])->name('admin.menu.update_positions');
+
+
+    //    Product Images
     Route::get('products/image/{id}/remove', [\App\Http\Controllers\Admin\ProductController::class, 'deleteImage'])->name('admin.product.image.remove');
     Route::post('products/image', [\App\Http\Controllers\Admin\ProductController::class, 'storeImage'])->name('admin.product.image.store');
     Route::put('products/image', [\App\Http\Controllers\Admin\ProductController::class, 'updateImage'])->name('admin.product.image.update');
@@ -112,6 +134,20 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function 
     Route::post('faq/update', [\App\Http\Controllers\Admin\FaqController::class, 'update'])->name('admin.faq.update');
     Route::delete('faq/delete', [\App\Http\Controllers\Admin\FaqController::class, 'delete'])->name('admin.faq.delete');
 //    Route::post('_active-products', [\App\Http\Controllers\Admin\ProductController::class, 'activeProducts']);
+
+    /* News */
+    Route::get('newses', [\App\Http\Controllers\Admin\News\NewsController::class, 'index'])->name('admin.news');
+    Route::get('news', [\App\Http\Controllers\Admin\News\NewsController::class, 'create'])->name('admin.news.create');
+    Route::post('news', [\App\Http\Controllers\Admin\News\NewsController::class, 'store'])->name('admin.news.store');    
+    Route::get('news/edit/{id}', [\App\Http\Controllers\Admin\News\NewsController::class, 'edit'])->name('admin.news.edit');
+    Route::post('news/update', [\App\Http\Controllers\Admin\News\NewsController::class, 'update'])->name('admin.news.update');
+    Route::post('news/update/seo', [\App\Http\Controllers\Admin\News\NewsController::class, 'updateSeo'])->name('admin.news.update.seo');
+    Route::get('news/delete/{id}', [\App\Http\Controllers\Admin\News\NewsController::class, 'delete'])->name('admin.news.delete');
+
+    /* News Operation */
+    Route::post('_delete-posts', [\App\Http\Controllers\Admin\News\NewsController::class, 'deletePosts']);
+    Route::post('_active-posts', [\App\Http\Controllers\Admin\News\NewsController::class, 'activePosts']);
+
 
 });
 
