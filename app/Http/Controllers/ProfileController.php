@@ -150,8 +150,10 @@ class ProfileController extends Controller
 
     public function support(Request $request)
     {
+        $feedback_reasons = DB::table('feedbacks_reasons')->get();
         return view('cabinet.support', [
-            'user' => $request->user
+            'user' => $request->user,
+            'feedback_reasons' => $feedback_reasons
         ]);
     }
 

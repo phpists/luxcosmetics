@@ -4,42 +4,41 @@
 
 @section('page_content')
     <main class="cabinet-page__main">
-        <form action="" class="form form--box">
-
+        <form method="POST" action="{{route('create-chat')}}" class="form form--box">
+            @csrf
             <div class="form__fieldset">
                 <legend class="form__label">Причина обращения *</legend>
-                <select name="" id="" class="selectCustom">
-                    <option value="">Причина 1</option>
-                    <option value="">Причина 2</option>
-                    <option value="">Причина 3</option>
-                    <option value="">Причина 4</option>
+                <select name="feedbacks_reason_id" id="" class="selectCustom">
+                    @foreach($feedback_reasons as $reason)
+                        <option value="{{$reason->id}}">{{$reason->reason}}</option>
+                    @endforeach
                 </select>
             </div>
             <div class="form__row">
                 <div class="form__col form__col--50">
                     <div class="form__fieldset">
                         <legend class="form__label">Адрес электронной почты *</legend>
-                        <input type="text" class="form__input">
+                        <input type="text" name="email" class="form__input">
                     </div>
                 </div>
                 <div class="form__col form__col--50">
                     <div class="form__fieldset">
                         <legend class="form__label">Номер телефона *</legend>
-                        <input type="text" class="form__input">
+                        <input type="text" name="phone" class="form__input">
                     </div>
                 </div>
             </div>
             <div class="form__fieldset">
                 <legend class="form__label">Номер заказа *</legend>
-                <input type="text" class="form__input">
+                <input type="text" name="order_number" class="form__input">
             </div>
             <div class="form__fieldset">
                 <legend class="form__label">Тема обращения</legend>
-                <input type="text" class="form__input">
+                <input type="text" name="feedback_theme" class="form__input">
             </div>
             <div class="form__fieldset">
                 <legend class="form__label">Текст вашего обращения</legend>
-                <textarea name="" class="form__textarea"></textarea>
+                <textarea name="message" class="form__textarea"></textarea>
             </div>
             <button class="btn btn--accent">Отправить на рассмотрение</button>
         </form>

@@ -26,6 +26,9 @@ Route::get('brands', [\App\Http\Controllers\BrandController::class, 'index'])->n
 Route::get('favourites', [\App\Http\Controllers\FavouritesController::class, 'index'])->name('favourites');
 Route::get('sales', [\App\Http\Controllers\SalesController::class, 'index'])->name('sales');
 Route::group(['middleware' => 'auth'], function () {
+    Route::post('create-chat', [\App\Http\Controllers\FeedbackController::class, 'store'])->name('create-chat');
+    Route::put('update-chat/{id}', [\App\Http\Controllers\FeedbackController::class, 'update'])->name('update-chat');
+    Route::post('send-message', [\App\Http\Controllers\FeedbackController::class, 'store_message'])->name('send-message');
     // Profile
     Route::group(['prefix' => 'profile'], function () {
         Route::get('/', [\App\Http\Controllers\ProfileController::class, 'index'])->name('profile');
@@ -117,6 +120,11 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function 
     Route::post('faq/update', [\App\Http\Controllers\Admin\FaqController::class, 'update'])->name('admin.faq.update');
     Route::delete('faq/delete', [\App\Http\Controllers\Admin\FaqController::class, 'delete'])->name('admin.faq.delete');
 //    Route::post('_active-products', [\App\Http\Controllers\Admin\ProductController::class, 'activeProducts']);
+
+    // Feedback Chat
+    Route::get('chats', [\App\Http\Controllers\Admin\FeedbackController::class, 'index'])->name('admin.chats');
+    Route::get('chats/{id}/edit', [\App\Http\Controllers\Admin\FeedbackController::class, 'edit'])->name('admin.chats.edit');
+
 
 });
 

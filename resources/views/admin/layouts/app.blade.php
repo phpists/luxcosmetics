@@ -129,6 +129,14 @@
                             </a>
                         </li>
 
+                        <li class="menu-item {{ request()->routeIs('admin.chats') ? 'menu-item-active' : '' }}"
+                            aria-haspopup="true">
+                            <a href="{{route('admin.chats')}}" class="menu-link">
+                                <i class="fas flaticon2-copy menu-icon"></i>
+                                <span class="menu-text">Feedback</span>
+                            </a>
+                        </li>
+
                         <li class="menu-item menu-item-submenu"
                             aria-haspopup="true" data-menu-toggle="hover">
                             <a href="javascript:;" class="menu-link menu-toggle">

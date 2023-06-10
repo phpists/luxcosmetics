@@ -35,4 +35,12 @@ class SiteService
         }
         return 'Не действительная';
     }
+
+    static public function getChatStatus(int $status) {
+        return match ($status) {
+            1 => 'Новый',
+            2 => 'Просмотрен',
+            3 => 'Закрыт',
+        };
+    }
 }

@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('feedback_message', function (Blueprint $table) {
             $table->id();
+            $table->bigInteger('user_id');
+            $table->text('message');
+            $table->bigInteger('chat_id');
             $table->timestamps();
         });
     }
