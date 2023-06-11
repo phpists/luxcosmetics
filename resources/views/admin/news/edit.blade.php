@@ -16,7 +16,7 @@
             <!--begin::Page Heading-->
             <div class="d-flex align-items-baseline flex-wrap mr-5">
                 <!--begin::Page Title-->
-                <h5 class="text-dark font-weight-bold my-1 mr-5">Редактировать новости</h5>
+                <h5 class="text-dark font-weight-bold my-1 mr-5">Редактирования новости</h5>
                 <!--end::Page Title-->
             </div>
             <!--end::Page Heading-->
@@ -39,7 +39,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" data-toggle="tab" href="#kt_tab_pane_6_4">
+                                <a class="nav-link" data-toggle="tab" href="#kt_tab_pane_2_8">
                                     <span class="nav-text">Редактировать Изображения</span>
                                 </a>
                             </li>
@@ -47,14 +47,14 @@
                     </div>
                     
                     <div class="card-toolbar">
-                        <button type="submit" form="news_post" class="btn btn-primary">Редактировать</button>
+                        <button type="submit" form="form1" class="btn btn-primary">Сохранить</button>
                     </div>
                 </div>
                 <div class="card-body">
                     <div class="tab-content">
                         <div class="tab-pane fade show active" id="kt_tab_pane_1_4" role="tabpanel"
                              aria-labelledby="kt_tab_pane_1_4">
-                            <form id="news_post" action="{{ route('admin.news.update') }}" method="POST"
+                            <form id="form1" action="{{ route('admin.news.update') }}" method="POST"
                                   enctype="multipart/form-data">
                                 @csrf
                                 <input type="hidden" name="id" value="{{ $item->id }}">
@@ -86,11 +86,11 @@
                                             </div>
                                             <div class="col">
                                                 <div class="form-group">
-                                                    <label>Дата публікації</label>
+                                                    <label>Дата публикации</label>
                                                     <div class="input-group date" id="kt_datetimepicker_1"
                                                          data-target-input="nearest">
                                                         <input type="text" class="form-control datetimepicker-input"
-                                                               placeholder="Дата публікації"
+                                                               placeholder="Дата публикации"
                                                                value="{{ date('Y-m-d H:i:s', strtotime($item->published_at)) }}"
                                                                name="published_at" required
                                                                data-target="#kt_datetimepicker_1"/>
@@ -104,109 +104,32 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="form-group">
-                                                <label>Зображення</label>
-                                                <div class="col-auto ml-2">
-                                                    <div class="image-input image-input-outline" id="createImagePlugin"
-                                                         style="background-image: url('{{ asset('uploads/news/' . $item->image) }}')">
-                                                        <div class="image-input-wrapper" id="updateImageBackground"></div>
-                                                        <label
-                                                            class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
-                                                            data-action="change" data-toggle="tooltip"
-                                                            data-original-title="Change avatar">
-                                                            <i class="fa fa-pen icon-sm text-muted"></i>
-                                                            <input type="file" name="image" accept="image/*"/>
-                                                            <input type="hidden" name="image_remove"/>
-                                                        </label>
-                                                    </div>
-                                                </div>
-                                            </div>
                                         </div>
                                     </div>
-                                <div class="form-group">
-                                    <label>Текст</label>
-                                    <textarea id="textEditor" name="text">{{ $item->text }}</textarea>
                                 </div>
-
+                            <div class="form-group">
+                                <label>Текст</label>
+                                <textarea id="textEditor" name="text">{{ $item->text }}</textarea>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="kt_tab_pane_2_8" role="tabpanel"
+                             aria-labelledby="kt_tab_pane_2_8">
+                             <div class="form-group">
+                                <label>Изображения</label>
+                                <div class="col-auto ml-2">
+                                    <div class="image-input image-input-outline" id="createImagePlugin" style="background-image: url('{{ asset('uploads/news/' . $item->image) }}')">
+                                        <div class="image-input-wrapper" id="updateImageBackground"></div>
+                                        <label class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="change" data-toggle="tooltip" data-original-title="Change avatar">
+                                            <i class="fa fa-pen icon-sm text-muted"></i>
+                                            <input type="file" name="image" accept="image/*"/>
+                                            <input type="hidden" name="image_remove"/>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            
                             </form>
                         </div>
-                        <div class="tab-pane fade" id="kt_tab_pane_3_4" role="tabpanel"
-                             aria-labelledby="kt_tab_pane_3_4">
-
-                            <form action="{{ route('admin.news.update.seo') }}" method="POST">
-                                @csrf
-                                <input type="hidden" name="news_id" value="{{ $item->record_id }}">
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <label>H1</label>
-                                            <input type="text" name="h1" class="form-control"
-                                                   value="{{ $seo->h1 ?? '' }}"/>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <label>Meta title</label>
-                                            <input type="text" name="meta_title" class="form-control"
-                                                   value="{{ $seo->meta_title ?? '' }}"/>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <label>Meta robots</label>
-                                            <input type="text" name="meta_robots" class="form-control"
-                                                   value="{{ $seo->meta_robots ?? '' }}"/>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <label>Meta description</label>
-                                            <textarea class="form-control" id="meta_description"
-                                                      name="meta_description">{{ $seo->meta_description ?? '' }}</textarea>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <label>Meta keywords</label>
-                                            <textarea class="form-control" id="meta_keywords"
-                                                      name="meta_keywords">{{ $seo->meta_keywords ?? '' }}</textarea>
-
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="card-footer">
-                                    <button type="submit" class="btn btn-primary mr-2">Редактировать</button>
-                                </div>
-                            </form>
-
-                        </div>
-
-
-                        <div class="tab-pane fade" id="kt_tab_pane_6_4" role="tabpanel"
-                             aria-labelledby="kt_tab_pane_6_4">
-
-                            <form action="#" method="POST">
-                                @csrf
-
-                                
-                            </form>
-
-                        </div>
-
-
                     </div>
                 </div>
             </div>
@@ -224,6 +147,9 @@
     <script src="https://cdn.tiny.cloud/1/3h27q9hxq81txaaz86zvgxqs5cuixqt8167b543rwzusizui/tinymce/6/tinymce.min.js"
             referrerpolicy="origin"></script>
     <script>
+        $('#kt_select2_4').select2({
+            allowClear: true
+        });
         Promise.allSettled = Promise.allSettled || ((promises) => Promise.all(
             promises.map(p => p
                 .then(value => ({
@@ -239,8 +165,8 @@
 
         tinymce.init({
             selector: '#textEditor',
-            plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed linkchecker a11ychecker tinymcespellchecker permanentpen powerpaste advtable advcode editimage tinycomments tableofcontents footnotes mergetags autocorrect typography inlinecss',
-            toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
+            plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed linkchecker a11ychecker tinymcespellchecker permanentpen powerpaste advtable advcode editimage tinycomments tableofcontents footnotes mergetags autocorrect typography inlinecss grid',
+            toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat | grid',
             tinycomments_mode: 'embedded',
             tinycomments_author: 'Author name',
             language: 'uk',
@@ -248,13 +174,15 @@
         });
 
         $(function () {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
             var createImagePlugin = new KTImageInput('createImagePlugin');
             var createPageImagePlugin = new KTImageInput('createPageImagePlugin');
         });
     </script>
 
 @endsection
-
-
-
-
