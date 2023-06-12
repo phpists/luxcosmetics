@@ -16,7 +16,7 @@
             <!--begin::Page Heading-->
             <div class="d-flex align-items-baseline flex-wrap mr-5">
                 <!--begin::Page Title-->
-                <h5 class="text-dark font-weight-bold my-1 mr-5">Редактирования новости</h5>
+                <h5 class="text-dark font-weight-bold my-1 mr-5">Редактирования новость</h5>
                 <!--end::Page Title-->
             </div>
             <!--end::Page Heading-->
@@ -40,7 +40,7 @@
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" data-toggle="tab" href="#kt_tab_pane_2_8">
-                                    <span class="nav-text">Редактировать Изображения</span>
+                                    <span class="nav-text">Изображения</span>
                                 </a>
                             </li>
                         </ul>
@@ -58,59 +58,55 @@
                                   enctype="multipart/form-data">
                                 @csrf
                                 <input type="hidden" name="id" value="{{ $item->id }}">
-                                <div class="row">
-                                    <div class="col-8">
-                                        <div class="form-group">
-                                            <label for="exampleSelect2">Название</label>
-                                            <input type="text" name="title" class="form-control"
-                                                   value="{{ $item->title }}" required/>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="exampleSelect2">Ссылка</label>
-                                            <input type="text" name="link" class="form-control"
-                                                   value="{{ $item->link }}"/>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col">
-                                                <div class="form-group">
-                                                    <label>Статус</label>
-                                                    <select class="form-control status" id="kt_select2_1" name="status">
-                                                        <option value="1" @if($item->status == true) selected @endif>
-                                                            Активный
-                                                        </option>
-                                                        <option value="0" @if($item->status == false) selected @endif>
-                                                            Неактивный
-                                                        </option>
-                                                    </select>
-                                                </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="exampleSelect2">Название</label>
+                                                <input type="text" name="title" class="form-control" value="{{ $item->title }}" required/>
                                             </div>
-                                            <div class="col">
-                                                <div class="form-group">
-                                                    <label>Дата публикации</label>
-                                                    <div class="input-group date" id="kt_datetimepicker_1"
-                                                         data-target-input="nearest">
-                                                        <input type="text" class="form-control datetimepicker-input"
-                                                               placeholder="Дата публикации"
-                                                               value="{{ date('Y-m-d H:i:s', strtotime($item->published_at)) }}"
-                                                               name="published_at" required
-                                                               data-target="#kt_datetimepicker_1"/>
-                                                        <div class="input-group-append"
-                                                             data-target="#kt_datetimepicker_1"
-                                                             data-toggle="datetimepicker">
-                                                    <span class="input-group-text">
-                                                        <i class="ki ki-calendar"></i>
-                                                    </span>
-                                                        </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="exampleSelect2">Ссылка</label>
+                                                <input type="text" name="link" class="form-control" value="{{ $item->link }}"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label>Статус</label>
+                                                <select class="form-control status" id="kt_select2_1" name="status">
+                                                    <option value="1" @if($item->status == true) selected @endif>Активный</option>
+                                                    <option value="0" @if($item->status == false) selected @endif>Неактивный</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label>Дата публикации</label>
+                                                <div class="input-group date" id="kt_datetimepicker_1" data-target-input="nearest">
+                                                    <input type="text" class="form-control datetimepicker-input" placeholder="Дата публикации"
+                                                           value="{{ date('Y-m-d H:i:s', strtotime($item->published_at)) }}" name="published_at" required
+                                                           data-target="#kt_datetimepicker_1"/>
+                                                    <div class="input-group-append" data-target="#kt_datetimepicker_1" data-toggle="datetimepicker">
+                                                        <span class="input-group-text">
+                                                            <i class="ki ki-calendar"></i>
+                                                        </span>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
+                                    
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <label>Текст</label>
+                                        <div style="max-height: 400px; overflow-y: auto;">
+                                            <textarea id="textEditor" name="text">{{ $item->text }}</textarea>
+                                        </div>
                                     </div>
                                 </div>
-                            <div class="form-group">
-                                <label>Текст</label>
-                                <textarea id="textEditor" name="text">{{ $item->text }}</textarea>
-                            </div>
                         </div>
                         <div class="tab-pane fade" id="kt_tab_pane_2_8" role="tabpanel"
                              aria-labelledby="kt_tab_pane_2_8">

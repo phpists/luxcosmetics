@@ -58,17 +58,20 @@
                                   enctype="multipart/form-data">
                                 @csrf
                                 <div class="row">
-                                    <div class="col-8">
+                                    <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="exampleSelect2">Название</label>
                                             <input type="text" name="title" class="form-control" required/>
                                         </div>
+                                    </div>
+                                    <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="exampleSelect2">Ссылка</label>
                                             <input type="text" name="link" class="form-control"/>
                                         </div>
                                     </div>
                                 </div>
+                                
                                 <div class="row">
                                     <div class="col-md-2">
                                         <div class="form-group">
@@ -101,7 +104,9 @@
                                 <div class="row">
                                     <div class="col-md-12">
                                         <label>Текст</label>
-                                        <textarea id="textEditor" name="text"></textarea>
+                                        <div style="max-height: 400px; overflow-y: auto;">
+                                            <textarea id="textEditor" name="text"></textarea>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
