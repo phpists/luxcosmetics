@@ -11,7 +11,7 @@
                 <!--begin::Breadcrumb-->
                 <ul class="breadcrumb breadcrumb-transparent breadcrumb-dot font-weight-bold p-0 my-2 font-size-sm">
                     <li class="breadcrumb-item">
-                        <a href="{{ route('admin.categories') }}" class="text-muted">Категорії</a>
+                        <a href="{{ route('admin.categories') }}" class="text-muted">Категории</a>
                     </li>
                     <li class="breadcrumb-item">
                         <a href="{{ route('admin.category.show', $category->id) }}"
