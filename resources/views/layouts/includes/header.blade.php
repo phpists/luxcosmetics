@@ -44,7 +44,7 @@
                 </a>
                 <ul class="navigation__menu">
                     @php
-                      $menu_categories = \App\Models\Category::query()->with('subcategories')->whereNull('category_id')->where('status', 1)->get();
+                      $menu_categories = \App\Models\Category::query()->with('subcategories')->whereNull('category_id')->where('status', 1)->orderBy('position')->get();
                     @endphp
                     @foreach($menu_categories as $menu_category)
                         <li><a href="/categories/{{$menu_category->alias}}">{{$menu_category->name}} <svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#arrow')}}"></use></svg></a>
