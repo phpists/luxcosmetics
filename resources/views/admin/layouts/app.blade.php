@@ -172,6 +172,20 @@
                                     </li>
                                 </ul>
                             </div>
+                            <div class="menu-submenu" style="" kt-hidden-height="160">
+                                <i class="menu-arrow"></i>
+                                <ul class="menu-subnav">
+                                    <li class="menu-item {{ request()->routeIs('admin.properties.index') ? 'menu-item-active' : '' }}"
+                                        aria-haspopup="true">
+                                        <a href="{{route('admin.properties.index')}}" class="menu-link">
+                                            <i class="menu-bullet menu-bullet-dot">
+                                                <span></span>
+                                            </i>
+                                            <span class="menu-text">Характеристики</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
 
 
 {{--                            <div class="menu-submenu" style="" kt-hidden-height="160">--}}
@@ -235,7 +249,7 @@
                                 <span class="menu-text">Новости</span>
                             </a>
                         </li>
-                        
+
                         <li class="menu-item  menu-item-submenu {{  request()->routeIs('admin.settings.contacts') || request()->routeIs('admin.settings.socials') ? 'menu-item-open' : '' }}"
                             aria-haspopup="true" data-menu-toggle="hover">
                             <a href="javascript:;" class="menu-link menu-toggle">

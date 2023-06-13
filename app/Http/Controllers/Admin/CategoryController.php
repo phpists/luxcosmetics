@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Models\PropertyCategory;
 use App\Services\ImageService;
 use App\Services\SiteService;
 use Illuminate\Http\Request;
@@ -59,7 +60,8 @@ class CategoryController extends Controller
     public function edit($id) {
         $categories = Category::query()->get();
         $category = $categories->find($id);
-        return view('admin.categories.edit', compact('category', 'categories'));
+        $properties = PropertyCategory::query()->where('category_id', $category->id)->orderBy('position')->paginate();
+        return view('admin.categories.edit', compact('category', 'categories', 'properties'));
     }
 
     public function update(Request $request){
@@ -114,5 +116,21 @@ class CategoryController extends Controller
             'title' => $title,
             'message' => $message
         ]);
+    }
+
+    public function updatePropertiesPosition(Request $request): \Illuminate\Http\JsonResponse
+    {
+        $positions = $request->post('positions');
+        Log::info(json_encode($positions));
+        if ($positions) {
+            foreach ($positions as $position) {
+                $property_category = PropertyCategory::findOrFail($position['id']);
+                $property_category->position = $position['pos'];
+                $property_category->save();
+            }
+        }
+
+        $property_category = PropertyCategory::pluck('position', 'id');
+        return response()->json($property_category);
     }
 }

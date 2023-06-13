@@ -14,7 +14,7 @@
                         <a href="{{ route('admin.dashboard') }}" class="text-muted">Головна</a>
                     </li>
                     <li class="breadcrumb-item">
-                        <a href="{{ route('admin.categories') }}" class="text-muted">Feedback</a>
+                        <a href="{{ route('admin.chats') }}" class="text-muted">Feedback</a>
                     </li>
                 </ul>
                 <!--end::Breadcrumb-->
@@ -52,16 +52,16 @@
 {{--                                    </span>Видалити--}}
 {{--                                </button>--}}
 {{--                            </div>--}}
+{{--                            <div class="dropdown dropdown-inline mr-2">--}}
+{{--                                <button class="btn btn-success font-weight-bolder activeCategories" data-status="1">--}}
+{{--                                    <span class="svg-icon svg-icon-md">--}}
+{{--                                        <i class="fas fa-toggle-on"></i>--}}
+{{--                                    </span>Активировать--}}
+{{--                                </button>--}}
+{{--                            </div>--}}
                             <div class="dropdown dropdown-inline mr-2">
-                                <button class="btn btn-success font-weight-bolder activeCategories" data-status="1">
-                                    <span class="svg-icon svg-icon-md">
-                                        <i class="fas fa-toggle-on"></i>
-                                    </span>Активувати
-                                </button>
-                            </div>
-                            <div class="dropdown dropdown-inline mr-2">
-                                <button class="btn btn-success font-weight-bolder activeCategories" data-status="0">
-                                    <span class="svg-icon svg-icon-md"><i class="fas fa-toggle-off"></i></span>Деактивувати
+                                <button class="btn btn-success font-weight-bolder deactivateChat" data-status="0">
+                                    <span class="svg-icon svg-icon-md"><i class="fas fa-toggle-off"></i></span>Закрыть
                                 </button>
                             </div>
                         </div>
@@ -163,6 +163,13 @@
     <script src="https://raw.githack.com/SortableJS/Sortable/master/Sortable.js"></script>
     <script src="{{ asset('super_admin/js/category.js') }}"></script>
     <script src="{{ asset('super_admin/js/pages/crud/forms/widgets/select2.js') }}"></script>
+    <script>
+        {{--$('.deactivateChat').on('click', function() {--}}
+        {{--    $.ajax(--}}
+        {{--        url: '{{route('')}}'--}}
+        {{--    )--}}
+        {{--})--}}
+    </script>
 @endsection
 
 
