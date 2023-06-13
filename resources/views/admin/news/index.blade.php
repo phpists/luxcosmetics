@@ -124,7 +124,9 @@
                                             {{ date('m Y, H:i:s', strtotime($item->published_at)) }}
                                         </td>
                                         <td class="text-center pr-0">
-                                            <img src="{{ $item->mainImage() }}" width="100" height="100">
+                                            @foreach (\App\Services\NewsService::getNews() as $item)
+                                            <div class="article__image"><a href="{{ route('index.news', $item->id) }}"><img src="{{asset('images/uploads/news/' . $item->image)}}" alt="" style=" width: 200px;"></a></div> 
+                                            @endforeach
                                         </td>
                                         <td class="text-center pr-0">
                                             <a href="{{ route('admin.news.edit', $item->id) }}"

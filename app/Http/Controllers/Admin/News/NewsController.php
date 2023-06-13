@@ -37,7 +37,7 @@ class NewsController extends Controller
         ]);
 
 
-        return redirect()->route('admin.news')->with('success', 'Дані успішно збережені');
+        return redirect()->route('admin.news')->with('success', 'Данные успешно сохранены');
     }
 
     public function edit($id)
@@ -52,24 +52,24 @@ class NewsController extends Controller
 
     public function update(Request $request)
     {
-
-        $item = NewsItem::findOrFail($request->id);
+        $item = NewsItem::find($request->id);
 
         if ($request->hasFile('image')) {
             $image = ImageService::saveImage('uploads', "news", $request->image);
             $item->image = $image;
+            $item->update(['image' => $image]);
+        }else{
+            $item->update($request->all());
         }
-        
-        $item->update($request->all());
 
-        return redirect()->route('admin.news')->with('success', 'Дані успішно відредаговані');
+        return redirect()->route('admin.news')->with('success', 'Данные успешно отредактированы');
     }
 
     public function delete($id)
     {
-        $item = NewsItem::find($id);
+        $item = NewsItem::findOrFail($id);
         $item->delete();
 
-        return redirect()->route('admin.news')->with('success', 'Дані успішно видалені');
+        return redirect()->route('admin.news')->with('success', 'Данные успешно удалены');
     }
 }

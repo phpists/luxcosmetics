@@ -468,9 +468,9 @@
                 <div class="newsblock__container">
                 @foreach (\App\Services\NewsService::getNews() as $item)   
                     <div class="article article--news">
-                        <div class="article__image"><a href=""><img src="{{asset('images/uploads/news/' . $item->image)}}" alt=""></a></div>
+                        <div class="article__image"><a href="{{ route('index.news', $item->id) }}"><img src="{{asset('images/uploads/news/' . $item->image)}}" alt=""></a></div>
                         <div class="article__date"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#calendar')}}"></use></svg>{{$item->published_at}}</div>
-                        <div class="article__title"><a href="">{{ $item->title }}</a></div>
+                        <div class="article__title"><a href="{{ route('index.news', $item->id) }}">{{ $item->title }}</a></div>
                         <div class="article__intro">{{ Str::limit(strip_tags($item->text), $limit = 30, $end = '...') }}</div>
                     </div>
                 @endforeach    

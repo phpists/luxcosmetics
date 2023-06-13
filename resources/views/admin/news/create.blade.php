@@ -47,31 +47,31 @@
                     </div>
                     
                     <div class="card-toolbar">
-                        <button type="submit" form="news_post" class="btn btn-primary">Сохранить</button>
+                        <button type="submit" form="form1" class="btn btn-primary">Сохранить</button>
                     </div>
                 </div>
                 <div class="card-body">
                     <div class="tab-content">
                         <div class="tab-pane fade show active" id="kt_tab_pane_1_4" role="tabpanel"
                              aria-labelledby="kt_tab_pane_1_4">
-                            <form id="news_post" action="{{ route('admin.news.store') }}" method="POST"
+                            <form id="form1" action="{{ route('admin.news.store') }}" method="POST"
                                   enctype="multipart/form-data">
                                 @csrf
-                                <input type="file" id="imageFile" name="image" style="display: none;"> <!-- Скрытое поле файла -->
-
-
                                 <div class="row">
-                                    <div class="col-8">
+                                    <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="exampleSelect2">Название</label>
                                             <input type="text" name="title" class="form-control" required/>
                                         </div>
+                                    </div>
+                                    <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="exampleSelect2">Ссылка</label>
                                             <input type="text" name="link" class="form-control"/>
                                         </div>
                                     </div>
                                 </div>
+                                
                                 <div class="row">
                                     <div class="col-md-2">
                                         <div class="form-group">
@@ -84,11 +84,11 @@
                                     </div>
                                     <div class="col-md-2">
                                         <div class="form-group">
-                                            <label>Дата публікації</label>
+                                            <label>Дата публикации</label>
                                             <div class="input-group date" id="kt_datetimepicker_1"
                                                  data-target-input="nearest">
                                                 <input type="text" class="form-control datetimepicker-input"
-                                                       placeholder="Дата публікації"
+                                                       placeholder="Дата публікации"
                                                        name="published_at" required
                                                        data-target="#kt_datetimepicker_1"/>
                                                 <div class="input-group-append" data-target="#kt_datetimepicker_1"
@@ -101,8 +101,21 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <label>Текст</label>
+                                        <div style="max-height: 400px; overflow-y: auto;">
+                                            <textarea id="textEditor" name="text"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        <div class="tab-pane fade" id="kt_tab_pane_2_8" role="tabpanel"
+                             aria-labelledby="kt_tab_pane_2_8">
+
                                 <div class="form-group">
-                                    <label>Зображення</label>
+                                    <label>Изображения</label>
                                     <div class="col-auto ml-2">
                                       <div class="image-input image-input-outline" id="createImagePlugin" style="max-height: 700px;">
                                         <div class="image-input-wrapper" id="updateImageBackground"></div>
@@ -113,25 +126,7 @@
                                         </label>
                                       </div>
                                     </div>
-                                  </div>
                                 </div>
-
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <label>Текст</label>
-                                        <textarea id="textEditor" name="text"></textarea>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-
-                        
-                        <div class="tab-pane fade" id="kt_tab_pane_2_8" role="tabpanel"
-                             aria-labelledby="kt_tab_pane_2_8">
-
-                             <form id="imagep" method="post" target="_blank">
-                                @csrf
-                                
                             </form>
                         </div>
                     </div>
