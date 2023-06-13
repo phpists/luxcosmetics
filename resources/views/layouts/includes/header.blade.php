@@ -56,11 +56,7 @@
                                                 <ul class="submenu__menu">
                                                     @foreach($menu_category->subcategories as $subcategory)
                                                         <li><a href="/categories/{{$subcategory->alias}}">{{$subcategory->name}}</a>
-                                                            <ul>
-                                                                @foreach($subcategory->categories as $inner_subcategory)
-                                                                    <li><a href="/categories/{{$inner_subcategory->alias}}">{{$inner_subcategory->name}}</a></li>
-                                                                @endforeach
-                                                            </ul>
+                                                            @include('layouts.parts.submenu', ['category' => $subcategory])
                                                         </li>
                                                     @endforeach
                                                 </ul>

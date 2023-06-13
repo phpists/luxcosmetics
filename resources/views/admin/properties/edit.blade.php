@@ -121,19 +121,21 @@
                                                 </div>
                                             </div>
                                             <div class="row">
-                                                <div class="form-group">
-                                                    <label>Показывать текст</label>
-                                                    <div class="radio-list">
-                                                        <label class="radio">
-                                                            <input type="radio" @if($property->show_text === \App\Models\Property::VERTICAL) checked @endif value="1" name="show_text"/>
-                                                            <span></span>
-                                                            Вертикально
-                                                        </label>
-                                                        <label class="radio">
-                                                            <input type="radio" @if($property->show_text === \App\Models\Property::HORIZONTAL) checked @endif  value="2" name="show_text"/>
-                                                            <span></span>
-                                                            Горизонтально
-                                                        </label>
+                                                <div class="col-12">
+                                                    <div class="form-group">
+                                                        <label>Показывать текст</label>
+                                                        <div class="radio-list">
+                                                            <label class="radio">
+                                                                <input type="radio" @if($property->show_text === \App\Models\Property::VERTICAL) checked @endif value="1" name="show_text"/>
+                                                                <span></span>
+                                                                Вертикально
+                                                            </label>
+                                                            <label class="radio">
+                                                                <input type="radio" @if($property->show_text === \App\Models\Property::HORIZONTAL) checked @endif  value="2" name="show_text"/>
+                                                                <span></span>
+                                                                Горизонтально
+                                                            </label>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>

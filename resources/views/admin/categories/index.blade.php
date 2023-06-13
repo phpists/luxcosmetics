@@ -4,6 +4,31 @@
 @endsection
 
 @section('title')
+    <div class="container-fluid d-flex align-items-center justify-content-between flex-wrap flex-sm-nowrap">
+        <!--begin::Info-->
+        <div class="d-flex align-items-center flex-wrap mr-1">
+            <!--begin::Page Heading-->
+            <div class="d-flex align-items-baseline flex-wrap mr-5">
+                <!--begin::Page Title-->
+                <h5 class="text-dark font-weight-bold my-1 mr-5">Категорії</h5>
+                <!--end::Page Title-->
+                <!--begin::Breadcrumb-->
+                <ul class="breadcrumb breadcrumb-transparent breadcrumb-dot font-weight-bold p-0 my-2 font-size-sm">
+                    <li class="breadcrumb-item">
+                        <a href="{{ route('admin.dashboard') }}" class="text-muted">Головна</a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <a href="{{ route('admin.categories') }}" class="text-muted">Категорії</a>
+                    </li>
+                </ul>
+                <!--end::Breadcrumb-->
+            </div>
+            <!--end::Page Heading-->
+        </div>
+        <!--end::Info-->
+    </div>
+@endsection
+@section('content')
     <style>
 
         .cf:after {
@@ -218,34 +243,7 @@
             background: whitesmoke;
 
         }
-
     </style>
-    <div class="container-fluid d-flex align-items-center justify-content-between flex-wrap flex-sm-nowrap">
-        <!--begin::Info-->
-        <div class="d-flex align-items-center flex-wrap mr-1">
-            <!--begin::Page Heading-->
-            <div class="d-flex align-items-baseline flex-wrap mr-5">
-                <!--begin::Page Title-->
-                <h5 class="text-dark font-weight-bold my-1 mr-5">Категорії</h5>
-                <!--end::Page Title-->
-                <!--begin::Breadcrumb-->
-                <ul class="breadcrumb breadcrumb-transparent breadcrumb-dot font-weight-bold p-0 my-2 font-size-sm">
-                    <li class="breadcrumb-item">
-                        <a href="{{ route('admin.dashboard') }}" class="text-muted">Головна</a>
-                    </li>
-                    <li class="breadcrumb-item">
-                        <a href="{{ route('admin.categories') }}" class="text-muted">Категорії</a>
-                    </li>
-                </ul>
-                <!--end::Breadcrumb-->
-            </div>
-            <!--end::Page Heading-->
-        </div>
-        <!--end::Info-->
-    </div>
-@endsection
-@section('content')
-
     <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
 
         <!--end::Subheader-->
@@ -265,32 +263,32 @@
                         </div>
                         <div class="card-toolbar">
                             <!--begin::Dropdown-->
-                            <div class="dropdown dropdown-inline mr-2">
-                                <button class="btn btn-danger font-weight-bolder deletedCategories">
-                                    <span class="svg-icon svg-icon-md">
-                                        <i class="las la-trash"></i>
-                                    </span>Видалити
-                                </button>
-                            </div>
-                            <div class="dropdown dropdown-inline mr-2">
-                                <button class="btn btn-success font-weight-bolder activeCategories" data-status="1">
-                                    <span class="svg-icon svg-icon-md">
-                                        <i class="fas fa-toggle-on"></i>
-                                    </span>Активувати
-                                </button>
-                            </div>
-                            <div class="dropdown dropdown-inline mr-2">
-                                <button class="btn btn-success font-weight-bolder activeCategories" data-status="0">
-                                    <span class="svg-icon svg-icon-md"><i class="fas fa-toggle-off"></i></span>Деактивувати
-                                </button>
-                            </div>
-                            <div class="dropdown dropdown-inline mr-2">
-                                <button class="btn btn-primary font-weight-bolder">
-                                    <span class="svg-icon svg-icon-md">
-                                        <i class="fas fa-toggle-off"></i>
-                                    </span>Імпортувати
-                                </button>
-                            </div>
+{{--                            <div class="dropdown dropdown-inline mr-2">--}}
+{{--                                <button class="btn btn-danger font-weight-bolder deletedCategories">--}}
+{{--                                    <span class="svg-icon svg-icon-md">--}}
+{{--                                        <i class="las la-trash"></i>--}}
+{{--                                    </span>Видалити--}}
+{{--                                </button>--}}
+{{--                            </div>--}}
+{{--                            <div class="dropdown dropdown-inline mr-2">--}}
+{{--                                <button class="btn btn-success font-weight-bolder activeCategories" data-status="1">--}}
+{{--                                    <span class="svg-icon svg-icon-md">--}}
+{{--                                        <i class="fas fa-toggle-on"></i>--}}
+{{--                                    </span>Активувати--}}
+{{--                                </button>--}}
+{{--                            </div>--}}
+{{--                            <div class="dropdown dropdown-inline mr-2">--}}
+{{--                                <button class="btn btn-success font-weight-bolder activeCategories" data-status="0">--}}
+{{--                                    <span class="svg-icon svg-icon-md"><i class="fas fa-toggle-off"></i></span>Деактивувати--}}
+{{--                                </button>--}}
+{{--                            </div>--}}
+{{--                            <div class="dropdown dropdown-inline mr-2">--}}
+{{--                                <button class="btn btn-primary font-weight-bolder">--}}
+{{--                                    <span class="svg-icon svg-icon-md">--}}
+{{--                                        <i class="fas fa-toggle-off"></i>--}}
+{{--                                    </span>Імпортувати--}}
+{{--                                </button>--}}
+{{--                            </div>--}}
                             <div class="dropdown dropdown-inline mr-2">
                                 <a href="{{ route('admin.category.create') }}"
                                    class="btn btn-success font-weight-bolder">

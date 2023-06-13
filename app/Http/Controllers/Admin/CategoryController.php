@@ -42,6 +42,18 @@ class CategoryController extends Controller
             if (!$category->save()) {
                 redirect()->back()->with('error', 'Не удалось сохранить категорию');
             }
+            if ($data['category_id'] !== null) {
+                $data = PropertyCategory::query()
+                    ->select('category_id', 'property_id', 'position')
+                    ->where('category_id', $data['category_id'])->get();
+
+                $data = $data->map(function ($item, int $key) use ($category) {
+                    $item['category_id'] = $category->id;
+                    return $item;
+                });
+
+                PropertyCategory::query()->insert($data->toArray());
+            }
         }
         else {
             redirect()->back()->with('error', 'Не удалось сохранить изображение');
@@ -80,7 +92,25 @@ class CategoryController extends Controller
                 return redirect()->back()->with('error', 'Не удалось сохранить изображение');
             }
         }
+        $is_same_parent = false;
+        if ($data['category_id'] !== null) {
+            $is_same_parent = ((int)$data['category_id'] === (int)$category->category_id);
+        }
         $category->update($data);
+        if ($data['category_id'] !== null && !$is_same_parent) {
+            $data = PropertyCategory::query()
+                ->select('category_id', 'property_id', 'position')
+                ->where('category_id', $data['category_id'])->get();
+
+            PropertyCategory::query()->where('category_id', $category->id)->delete();
+
+            $data = $data->map(function ($item, int $key) use ($category) {
+                $item['category_id'] = $category->id;
+                return $item;
+            });
+
+            PropertyCategory::query()->insert($data->toArray());
+        }
         return redirect()->route('admin.categories')->with('success', 'Категория успешно отредактирована');
     }
 
@@ -121,26 +151,29 @@ class CategoryController extends Controller
     public function updatePosition(Request $request) {
         foreach ($request->data as $pos => $new_position) {
             $parent_id = array_key_exists('parent_id', $new_position)?$new_position['parent_id']:null;
-            Category::query()->find($new_position['id'])->update([
+            $category = Category::query()->find($new_position['id']);
+            $is_same_parent = false;
+            if ($parent_id !== null) {
+                $is_same_parent = ((int)$parent_id === (int)$category->category_id);
+            }
+            $category->update([
                 'position' => $pos,
                 'category_id' => $parent_id
             ]);
-//            if ($parent_id !== null) {
-//                $data = PropertyCategory::query()
-//                    ->select('category_id', 'property_id', 'position')
-//                    ->where('category_id', $parent_id)->get();
-//
-//                $data = $data->map(function ($item, int $key) use ($new_position) {
-//                    $item['category_id'] = $new_position['id'];
-//                    return $item;
-//                });
-//
-//                PropertyCategory::query()->where('category_id', $new_position['id'])->delete();
-//
-//                PropertyCategory::query()->insert($data);
-//
-//                Log::info(json_encode($data->toArray()));
-//            }
+            if ($parent_id !== null && !$is_same_parent) {
+                $data = PropertyCategory::query()
+                    ->select('category_id', 'property_id', 'position')
+                    ->where('category_id', $parent_id)->get();
+
+                $data = $data->map(function ($item, int $key) use ($new_position) {
+                    $item['category_id'] = $new_position['id'];
+                    return $item;
+                });
+
+                PropertyCategory::query()->where('category_id', $new_position['id'])->delete();
+
+                PropertyCategory::query()->insert($data->toArray());
+            }
         }
         return response()->json(['status' => 'ok']);
     }
