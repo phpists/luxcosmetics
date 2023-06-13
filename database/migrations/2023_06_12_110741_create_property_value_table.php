@@ -7,13 +7,13 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration
 {
     /**
-     * Run the migrations.
+     * Таблиця для значень характеристик
      */
     public function up(): void
     {
         Schema::create('property_value', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('property_id')->constrained('properties');
+            $table->integer('property_id');
             $table->string('value');
         });
     }

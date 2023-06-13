@@ -6,19 +6,19 @@
             <!--begin::Page Heading-->
             <div class="d-flex align-items-baseline flex-wrap mr-5">
                 <!--begin::Page Title-->
-                <h5 class="text-dark font-weight-bold my-1 mr-5">Головна</h5>
+                <h5 class="text-dark font-weight-bold my-1 mr-5">Редактирование категории</h5>
                 <!--end::Page Title-->
                 <!--begin::Breadcrumb-->
                 <ul class="breadcrumb breadcrumb-transparent breadcrumb-dot font-weight-bold p-0 my-2 font-size-sm">
                     <li class="breadcrumb-item">
-                        <a href="{{ route('admin.categories') }}" class="text-muted">Категорії</a>
+                        <a href="{{ route('admin.home') }}" class="text-muted">Главная</a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <a href="{{ route('admin.categories') }}" class="text-muted">Категории</a>
                     </li>
                     <li class="breadcrumb-item">
                         <a href="{{ route('admin.category.edit', $category->id) }}"
-                           class="text-muted">{{ $category->title }}</a>
-                    </li>
-                    <li class="breadcrumb-item">
-                        <a href="#" class="text-muted">Редагування</a>
+                           class="text-muted">{{ $category->name }}</a>
                     </li>
                 </ul>
                 <!--end::Breadcrumb-->
@@ -41,17 +41,17 @@
                         <ul class="nav nav-tabs nav-bold nav-tabs-line">
                             <li class="nav-item">
                                 <a class="nav-link active" data-toggle="tab" href="#kt_tab_pane_1_4">
-                                    <span class="nav-text">Редактирование</span>
+                                    <span class="nav-text">Основное</span>
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" data-toggle="tab" href="#kt_tab_pane_2_4">
-                                    <span class="nav-text">Редактирование SEO</span>
+                                    <span class="nav-text">SEO</span>
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" data-toggle="tab" href="#kt_tab_pane_3_4">
-                                    <span class="nav-text">Редактирование Характеристик</span>
+                                    <span class="nav-text">Характеристики</span>
                                 </a>
                             </li>
                         </ul>

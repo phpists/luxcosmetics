@@ -34,13 +34,12 @@
                                         </span>
                 </td>
                 <td class="text-center pr-0">
-                    <form action="{{ route('admin.faq.delete') }}" method="POST">
+                    <form action="{{ route('admin.properties.delete', $property->id) }}" method="POST">
                         <a href="{{route('admin.properties.edit', $property->id)}}" class="btn btn-sm btn-clean btn-icon">
                             <i class="las la-edit"></i>
                         </a>
                         @csrf
                         @method('DELETE')
-                        <input type="hidden" name="id" value="{{ $property->id }}">
                         <button type="submit" class="btn btn-sm btn-clean btn-icon btn_delete"
                                 onclick="return confirm('Ви впевнені, що хочете видалити питання \'{{ $property->name }}\'?')"
                                 title="Delete"><i class="las la-trash"></i>

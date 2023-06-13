@@ -30,9 +30,9 @@
                             </div>
                         </div>
                         <div class="col-auto">
-                            <button data-toggle="modal" data-target="#createFaqModal" class="btn btn-primary font-weight-bold">
+                            <a href="{{route('admin.properties.create')}}" class="btn btn-primary font-weight-bold">
                                 <i class="fas fa-plus mr-2"></i>Додати
-                            </button>
+                            </a>
                         </div>
                     </div>
 

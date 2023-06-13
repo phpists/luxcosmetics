@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('property_category', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('property_id')->constrained('properties');
-            $table->foreignId('category_id')->constrained('categories');
-            $table->unsignedBigInteger('position');
+            $table->integer('property_id');
+            $table->integer('category_id');
+            $table->unsignedInteger('position');
         });
     }
 

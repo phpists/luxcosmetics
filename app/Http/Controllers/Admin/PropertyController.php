@@ -52,7 +52,7 @@ class PropertyController extends Controller
 
     public function create() {
         $categories = Category::query()->get();
-        return view('properties.create', compact('categories'));
+        return view('admin.properties.create', compact('categories'));
     }
 
     public function edit(Request $request, $id) {
@@ -63,8 +63,8 @@ class PropertyController extends Controller
 
     public function update(Request $request, $id) {
         $data = $request->all();
-        $data['show_in_filter'] = $data['show_in_filter'] === 'on' ? 1 : 0;
-        $data['show_in_catalog'] = $data['show_in_catalog'] === 'on' ? 1 : 0;
+        $data['show_in_filter'] = array_key_exists('show_in_filter', $data)? 1 : 0;
+        $data['show_in_catalog'] = array_key_exists('show_in_catalog', $data)? 1 : 0;
         $property = Property::query()->findOrFail($id);
         if ($property->update($data)) {
             $old_cats = $property->category_idx();
@@ -96,6 +96,11 @@ class PropertyController extends Controller
             }
         }
         return redirect()->route('admin.properties.index')->with('success', 'Характеристика успешно отредактрована');
+    }
+
+    public function delete(Request $request, $id) {
+        PropertyCategory::query()->where('property_id', $id)->delete();
+        Property::query()->where('id', $id)->delete();
     }
 
 //    public function removePropertyCategory(Request $request, $id) {
