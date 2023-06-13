@@ -19,7 +19,7 @@
                                 <div class="if-close"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#search')}}"></use></svg></div>
                                 <div class="if-open"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#close')}}"></use></svg></div>
                             </button>
-                            
+
                             <ul data-block-content="user">
                                 <li>
                                     <a href="{{route('profile')}}" class="header__link header__link--auth"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#user')}}"></use></svg></a>
@@ -43,88 +43,8 @@
                     Каталог товаров
                 </a>
                 <ul class="navigation__menu">
-                    <li><a href="{{route('brands')}}">Бренды <svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#arrow')}}"></use></svg></a>
-                        <div class="submenu">
-                            <div class="container">
-                                <div class="row">
-                                    <div class="col-lg-12">
-                                        <div class="submenu__wrapper">
-                                            <ul class="submenu__menu">
-                                                <li><a href="">Категория 1</a>
-                                                    <ul>
-                                                        <li><a href="">Новинки</a></li>
-                                                        <li><a href="">Бестселлеры</a></li>
-                                                        <li><a href="">Естественная красота</a></li>
-                                                        <li><a href="">Подарочные наборы</a></li>
-                                                        <li><a href="">Защита от солнца</a></li>
-                                                        <li><a href="">Устройства для лица</a></li>
-                                                        <li><a href="">ход за кожей для мужчин</a></li>
-                                                    </ul>
-                                                </li>
-                                                <li><a href="">Категория 2</a>
-                                                    <ul>
-                                                        <li><a href="">Новинки</a></li>
-                                                        <li><a href="">Бестселлеры</a></li>
-                                                        <li><a href="">Естественная красота</a></li>
-                                                        <li><a href="">Подарочные наборы</a></li>
-                                                        <li><a href="">Защита от солнца</a></li>
-                                                        <li><a href="">Устройства для лица</a></li>
-                                                        <li><a href="">ход за кожей для мужчин</a></li>
-                                                    </ul>
-                                                </li>
-                                                <li><a href="">Категория 3</a>
-                                                    <ul>
-                                                        <li><a href="">Новинки</a></li>
-                                                        <li><a href="">Бестселлеры</a></li>
-                                                        <li><a href="">Естественная красота</a></li>
-                                                        <li><a href="">Подарочные наборы</a></li>
-                                                        <li><a href="">Защита от солнца</a></li>
-                                                        <li><a href="">Устройства для лица</a></li>
-                                                        <li><a href="">ход за кожей для мужчин</a></li>
-                                                    </ul>
-                                                </li>
-                                                <li><a href="">Категория 4</a>
-                                                    <ul>
-                                                        <li><a href="">Новинки</a></li>
-                                                        <li><a href="">Бестселлеры</a></li>
-                                                        <li><a href="">Естественная красота</a></li>
-                                                        <li><a href="">Подарочные наборы</a></li>
-                                                        <li><a href="">Защита от солнца</a></li>
-                                                        <li><a href="">Устройства для лица</a></li>
-                                                        <li><a href="">ход за кожей для мужчин</a></li>
-                                                    </ul>
-                                                </li>
-                                                <li><a href="">Категория 5</a>
-                                                    <ul>
-                                                        <li><a href="">Новинки</a></li>
-                                                        <li><a href="">Бестселлеры</a></li>
-                                                        <li><a href="">Естественная красота</a></li>
-                                                        <li><a href="">Подарочные наборы</a></li>
-                                                        <li><a href="">Защита от солнца</a></li>
-                                                        <li><a href="">Устройства для лица</a></li>
-                                                        <li><a href="">ход за кожей для мужчин</a></li>
-                                                    </ul>
-                                                </li>
-                                                <li><a href="">Категория 6</a>
-                                                    <ul>
-                                                        <li><a href="">Новинки</a></li>
-                                                        <li><a href="">Бестселлеры</a></li>
-                                                        <li><a href="">Естественная красота</a></li>
-                                                        <li><a href="">Подарочные наборы</a></li>
-                                                        <li><a href="">Защита от солнца</a></li>
-                                                        <li><a href="">Устройства для лица</a></li>
-                                                        <li><a href="">ход за кожей для мужчин</a></li>
-                                                    </ul>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
                     @php
-                      $menu_categories = \App\Models\Category::query()->with('subcategories')->where('add_to_top_menu', true)->get()
+                      $menu_categories = \App\Models\Category::query()->with('subcategories')->whereNull('category_id')->where('status', 1)->get();
                     @endphp
                     @foreach($menu_categories as $menu_category)
                         <li><a href="/categories/{{$menu_category->alias}}">{{$menu_category->name}} <svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#arrow')}}"></use></svg></a>

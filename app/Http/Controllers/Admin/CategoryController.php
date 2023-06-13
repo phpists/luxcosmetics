@@ -15,7 +15,7 @@ use Nette\Utils\Image;
 class CategoryController extends Controller
 {
     public function index() {
-        $categories = Category::query()->paginate(10);
+        $categories = Category::query()->whereNull('category_id')->with('subcategories')->get();
         return view('admin.categories.index', compact('categories'));
     }
     public function show(Request $request, string $alias) {
@@ -118,10 +118,36 @@ class CategoryController extends Controller
         ]);
     }
 
+    public function updatePosition(Request $request) {
+        foreach ($request->data as $pos => $new_position) {
+            $parent_id = array_key_exists('parent_id', $new_position)?$new_position['parent_id']:null;
+            Category::query()->find($new_position['id'])->update([
+                'position' => $pos,
+                'category_id' => $parent_id
+            ]);
+//            if ($parent_id !== null) {
+//                $data = PropertyCategory::query()
+//                    ->select('category_id', 'property_id', 'position')
+//                    ->where('category_id', $parent_id)->get();
+//
+//                $data = $data->map(function ($item, int $key) use ($new_position) {
+//                    $item['category_id'] = $new_position['id'];
+//                    return $item;
+//                });
+//
+//                PropertyCategory::query()->where('category_id', $new_position['id'])->delete();
+//
+//                PropertyCategory::query()->insert($data);
+//
+//                Log::info(json_encode($data->toArray()));
+//            }
+        }
+        return response()->json(['status' => 'ok']);
+    }
+
     public function updatePropertiesPosition(Request $request): \Illuminate\Http\JsonResponse
     {
         $positions = $request->post('positions');
-        Log::info(json_encode($positions));
         if ($positions) {
             foreach ($positions as $position) {
                 $property_category = PropertyCategory::findOrFail($position['id']);
