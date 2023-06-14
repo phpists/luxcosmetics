@@ -161,7 +161,6 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function 
     Route::post('_delete-posts', [\App\Http\Controllers\Admin\News\NewsController::class, 'deletePosts']);
     Route::post('_active-posts', [\App\Http\Controllers\Admin\News\NewsController::class, 'activePosts']);
 
-<<<<<<< HEAD
     /* Blog */
     Route::get('blogs', [\App\Http\Controllers\Admin\Blog\BlogController::class, 'index'])->name('admin.blog');
     Route::get('blog', [\App\Http\Controllers\Admin\Blog\BlogController::class, 'create'])->name('admin.blog.create');
@@ -175,7 +174,6 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function 
     Route::post('_delete-posts', [\App\Http\Controllers\Admin\Blog\BlogController::class, 'deletePosts']);
     Route::post('_active-posts', [\App\Http\Controllers\Admin\Blog\BlogController::class, 'activePosts']);
 
-=======
     // Properties
     Route::get('properties', [\App\Http\Controllers\Admin\PropertyController::class, 'index'])->name('admin.properties.index');
     Route::get('properties/create', [\App\Http\Controllers\Admin\PropertyController::class, 'create'])->name('admin.properties.create');
@@ -183,15 +181,10 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function 
     Route::get('properties/{id}/edit', [\App\Http\Controllers\Admin\PropertyController::class, 'edit'])->name('admin.properties.edit');
     Route::put('properties/{id}', [\App\Http\Controllers\Admin\PropertyController::class, 'update'])->name('admin.properties.update');
     Route::delete('properties/{id}', [\App\Http\Controllers\Admin\PropertyController::class, 'delete'])->name('admin.properties.delete');
->>>>>>> 70dba167ac6540ad3ed2e6885c7ddf26db7e7b72
 
 });
 
 Route::get('/news/new/{id}', [\App\Http\Controllers\NewsController::class, 'show'])->name('index.news');
 Route::get('/blog/blog/{id}', [\App\Http\Controllers\BlogController::class, 'show'])->name('index.blog');
-
-Route::get('/ff', function(){
-    return dd(Phone::all());
-});
 
 Route::get('/user/home', [App\Http\Controllers\HomeController::class, 'home'])->name('user.home');
