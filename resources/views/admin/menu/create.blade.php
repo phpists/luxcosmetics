@@ -11,10 +11,10 @@
                 <!--begin::Breadcrumb-->
                 <ul class="breadcrumb breadcrumb-transparent breadcrumb-dot font-weight-bold p-0 my-2 font-size-sm">
                     <li class="breadcrumb-item">
-                        <a href="{{ route('admin.categories') }}" class="text-muted">Категории</a>
+                        <a href="{{ route('admin.categories') }}" class="text-muted">Меню</a>
                     </li>
                     <li class="breadcrumb-item">
-                        <a href="{{ route('admin.category.create') }}" class="text-muted">Создание категории</a>
+                        <a href="{{ route('admin.category.create') }}" class="text-muted">Создание меню</a>
                     </li>
                 </ul>
                 <!--end::Breadcrumb-->
@@ -34,7 +34,7 @@
             <div class="card card-custom">
                 <div class="card-header">
                     <h3 class="card-title">
-                        Создание Категории
+                        Создание Меню
                     </h3>
                     <div class="card-toolbar">
                         <div class="example-tools justify-content-center">
@@ -44,76 +44,59 @@
                     </div>
                 </div>
                 <!--begin::Form-->
-                <form action="{{ route('admin.category.store') }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('admin.menu.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
+                    <input type="hidden" name="type" value="{{$menu_type}}">
+                    <input type="hidden" name="position" value="{{$pos}}">
                     <div class="card-body">
                         <div class="row">
                             <div class="col-8">
                                 <div class="row">
+{{--                                    <div class="col-6">--}}
+{{--                                        <div class="form-group">--}}
+{{--                                            <label>Тип меню</label>--}}
+{{--                                            <select class="form-control status" id="kt_select2_1" name="type">--}}
+{{--                                                <option value="{{\App\Models\Menu::TOP_MENU}}">{{\App\Services\SiteService::getMenuType(\App\Models\Menu::TOP_MENU)}}</option>--}}
+{{--                                                <option value="{{\App\Models\Menu::FOOTER_MENU}}">{{\App\Services\SiteService::getMenuType(\App\Models\Menu::FOOTER_MENU)}}</option>--}}
+{{--                                            </select>--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
                                     <div class="col-6">
                                         <div class="form-group">
-                                            <label>Статус</label>
-                                            <select class="form-control status" id="kt_select2_1" name="status">
-                                                <option value="1">Активний</option>
-                                                <option value="0">Неактивний</option>
-                                            </select>
+                                            <label>Ссылка</label>
+                                            <input type="text" name="link" class="form-control" required/>
                                         </div>
                                     </div>
                                     <div class="col-6">
                                         <div class="form-group">
-                                            <label>Alias</label>
-                                            <input type="text" name="alias" class="form-control"/>
+                                            <label>Родительская категория</label>
+                                            <select class="form-control select2" id="cat_select" name="parent_id">
+                                                <option></option>
+                                                @foreach($menu_items as $item)
+                                                    <option value="{{ $item->id }}">{{ $item->title }}</option>
+                                                @endforeach
+                                            </select>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-12">
                                         <div class="form-group">
-                                            <label>Назва</label>
-                                            <input type="text" name="name" class="form-control" required/>
+                                            <label>Название</label>
+                                            <input type="text" name="title" class="form-control" required/>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-8">
-                                        <div class="form-group">
-                                            <label>Родительская категория</label>
-                                            <select class="form-control select2" id="cat_select" name="category_id">
-                                                <option></option>
-                                                @foreach($categories as $category)
-                                                    <option value="{{ $category->id }}">{{ $category->name }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    </div>
                                     <div class="col-4">
                                         <div class="form-group">
-                                            <label for="add_to_top_menu">Добавить к верхнему меню</label>
-                                            <div class="checkbox-list">
+                                            <div class="checkbox-inline">
                                                 <label class="checkbox">
-                                                    <input type="checkbox" name="add_to_top_menu" id="add_to_top_menu">
+                                                    <input type="checkbox" @if($item->is_active) checked @endif name="is_active" id="updateActive">
                                                     <span></span>
+                                                    Показать на сайте
                                                 </label>
                                             </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-4">
-                                <div class="form-group">
-                                    <label>ИЗОБРАЖЕНИЕ</label>
-                                    <div class="col-auto ml-2">
-                                        <div class="image-input  image-input-outline" id="createImagePlugin"
-                                             style="max-height: 700px;">
-                                            <div class="image-input-wrapper" id="updateImageBackground"></div>
-                                            <label
-                                                class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
-                                                data-action="change" data-toggle="tooltip"
-                                                data-original-title="Change avatar">
-                                                <i class="fa fa-pen icon-sm text-muted"></i>
-                                                <input type="file" name="image" required accept="image/*"/>
-                                                <input type="hidden" name="image_remove"/>
-                                            </label>
                                         </div>
                                     </div>
                                 </div>
@@ -152,9 +135,6 @@
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
-
-            var createImagePlugin = new KTImageInput('createImagePlugin');
-            var createPageImagePlugin = new KTImageInput('createPageImagePlugin');
         });
     </script>
 @endsection

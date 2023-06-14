@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Enums\AvailableOptions;
+use App\Models\Menu;
 
 class SiteService
 {
@@ -36,11 +37,20 @@ class SiteService
         return 'Не действительная';
     }
 
-    static public function getChatStatus(int $status) {
+    static public function getChatStatus(int $status): string
+    {
         return match ($status) {
             1 => 'Новый',
             2 => 'Просмотрен',
             3 => 'Закрыт',
+        };
+    }
+
+    static public function getMenuType(int $menu_type): string
+    {
+        return match ($menu_type) {
+            Menu::TOP_MENU => 'Верхнее меню',
+            Menu::FOOTER_MENU => 'Нижнее меню'
         };
     }
 }

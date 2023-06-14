@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\MenuController;
 use App\Http\Controllers\Admin\Settings\SettingController;
 use App\Http\Controllers\CategoryController;
 use Illuminate\Support\Facades\Auth;
@@ -66,13 +67,15 @@ Route::get('admin', [AdminController::class, 'index'])->name('admin.home');
 Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function () {
 
     /* Menu */
-    Route::get('menu', [MenuController::class, 'index'])->name('admin.menu');
-    Route::get('menu/show-all-parents', [MenuController::class, 'showAllParents'])->name('admin.menu.show_all_parents');
-    Route::post('menu/store', [MenuController::class, 'storeMenu'])->name('admin.menu.store');
-    Route::get('menu/show', [MenuController::class, 'showMenu'])->name('admin.menu.show');
-    Route::post('menu/update', [MenuController::class, 'updateMenu'])->name('admin.menu.update');
-    Route::delete('menu/delete', [MenuController::class, 'deleteMenu'])->name('admin.menu.delete');
-    Route::post('menu/update-positions', [MenuController::class, 'updatePositionMenu']);
+    Route::get('menu/{menu_type}', [MenuController::class, 'index'])->name('admin.menu');
+//    Route::get('menu/show-all-parents', [MenuController::class, 'showAllParents'])->name('admin.menu.show_all_parents');
+    Route::post('menu/store', [MenuController::class, 'store'])->name('admin.menu.store');
+    Route::get('menu/create/{menu_type}', [MenuController::class, 'create'])->name('admin.menu.create');
+    Route::get('menu/edit/{id}', [MenuController::class, 'edit'])->name('admin.menu.edit');
+//    Route::get('menu/show', [MenuController::class, 'showMenu'])->name('admin.menu.show');
+    Route::put('menu/update/{id}', [MenuController::class, 'update'])->name('admin.menu.update');
+    Route::get('menu/delete/{id}', [MenuController::class, 'delete'])->name('admin.menu.delete');
+    Route::post('menu/update-positions', [MenuController::class, 'updatePosition'])->name('admin.menu.updatePosition');
 
 
     /* Menu Category */

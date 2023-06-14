@@ -125,7 +125,7 @@
                             aria-haspopup="true">
                             <a href="{{route('admin.dashboard')}}" class="menu-link">
                                 <i class="fas fa-th menu-icon"></i>
-                                <span class="menu-text">Головна</span>
+                                <span class="menu-text">Главная</span>
                             </a>
                         </li>
 
@@ -232,12 +232,43 @@
                                 <span class="menu-text">FAQ</span>
                             </a>
                         </li>
-                        <li class="menu-item {{ request()->routeIs('admin.menu') ? 'menu-item-active' : '' }}"
-                            aria-haspopup="true">
-                            <a href="{{ route('admin.menu') }}" class="menu-link">
+                        <li class="menu-item menu-item-submenu"
+                            aria-haspopup="true" data-menu-toggle="hover">
+                            <a href="javascript:;" class="menu-link menu-toggle">
                                 <i class="fas flaticon2-copy menu-icon"></i>
                                 <span class="menu-text">Меню</span>
+                                <i class="menu-arrow"></i>
                             </a>
+                            <div class="menu-submenu" style="" kt-hidden-height="160">
+                                <i class="menu-arrow"></i>
+                                <ul class="menu-subnav">
+                                    <li class="menu-item {{ request()->routeIs('admin.menu') ? 'menu-item-active' : '' }}"
+                                        aria-haspopup="true">
+                                        <a href="{{ route('admin.menu', \App\Models\Menu::TOP_MENU) }}" class="menu-link">
+                                            <i class="fas flaticon2-copy menu-icon"></i>
+                                            <span class="menu-text">Верхнее меню</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+
+
+                            {{--                            <div class="menu-submenu" style="" kt-hidden-height="160">--}}
+                            {{--                                <i class="menu-arrow"></i>--}}
+                            {{--                                <ul class="menu-subnav">--}}
+                            {{--                                    <li class="menu-item {{ request()->routeIs('admin.sale.index') || request()->routeIs('admin.sale.edit') ? 'menu-item-active' : '' }}"--}}
+                            {{--                                        aria-haspopup="true">--}}
+                            {{--                                        <a href="{{route('admin.sale.index')}}" class="menu-link">--}}
+                            {{--                                            <i class="menu-bullet menu-bullet-dot">--}}
+                            {{--                                                <span></span>--}}
+                            {{--                                            </i>--}}
+                            {{--                                            <span class="menu-text">Розпродажі</span>--}}
+                            {{--                                        </a>--}}
+                            {{--                                    </li>--}}
+                            {{--                                </ul>--}}
+                            {{--                            </div>--}}
+
+
                         </li>
 
                         <li class="menu-item {{ request()->routeIs('admin.news') || request()->routeIs('admin.news.edit') ? 'menu-item-active' : '' }}"

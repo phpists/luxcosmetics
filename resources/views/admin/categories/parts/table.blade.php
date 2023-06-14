@@ -22,7 +22,7 @@
                         <div class="dd3-content">
                             <span>{{$subcategory->name}}</span>
                             <span>
-                                <a href="{{ route('admin.category.delete', $category->id) }}"
+                                <a href="{{ route('admin.category.delete', $subcategory->id) }}"
                                    class="btn btn-sm btn-clean btn-icon"
                                    onclick="return confirm('Вы уверенны, что хотите удалить запись?')">
                                     <i class="las la-trash"></i>
