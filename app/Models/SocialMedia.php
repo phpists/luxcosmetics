@@ -11,16 +11,20 @@ class SocialMedia extends Model
 {
     use HasFactory;
 
+    protected $table = 'social_medias';
+
     const TYPE_NETWORK = 1;
     const TYPE_MESSENGER = 2;
+    const TYPE_NUMBER = 3;
 
     const ALL_TYPES = [
         self::TYPE_NETWORK => 'Соціальна мережа',
-        self::TYPE_MESSENGER => 'Месенджер'
+        self::TYPE_MESSENGER => 'Месенджер',
+        self::TYPE_MESSENGER => 'Мобільний'
     ];
 
 
-    protected $fillable = ['id', 'type_id', 'pos', 'icon', 'link', 'is_active_in_contacts', 'is_active_in_footer'];
+    protected $fillable = ['id', 'telephone', 'type_id', 'pos', 'icon', 'link', 'is_active_in_contacts', 'is_active_in_footer'];
 
     public static function boot() {
         parent::boot();

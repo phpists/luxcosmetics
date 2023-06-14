@@ -9,7 +9,9 @@ class Phone extends Model
 {
     use HasFactory;
 
+    protected $table = 'social_media';
+
     protected $fillable = [
-        'id', 'number',
+        'id', 'telephone',
     ];
 }

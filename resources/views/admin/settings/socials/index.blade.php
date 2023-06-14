@@ -241,7 +241,6 @@
                         <!--end::Body-->
                     </div>
                     <br>
-                    
                     <div class="card card-custom text-center">
                         <div class="card-header">
                             <div class="card-title">
@@ -250,21 +249,23 @@
                                 </span>
                                 @foreach ($phone as $item)
                                 <h3 class="card-label">
-                                    Ваш номер: {{$item->number}}
+                                    Ваш номер: {{$item->telephone}}
                                 </h3>
+                                @endforeach
                             </div>
                             <div class="card-toolbar">
-                                <form action="{{ route('admin.settings.telephone.edit') }}">
+                                <form action="{{ route('admin.settings.telephone.edit')}}" method="POST">
+                                    @csrf
                                     <a href="javascript:;" class="btn btn-sm btn-clean btn-icon editSocial"
                                        data-toggle="modal" data-target="#telephonModal"
-                                       data-id="{{ $item->number }}">
+                                       data-id="">
                                         <i class="las la-edit"></i>
                                     </a>
                                 </form>
                             </div>
-                            @endforeach       
                         </div>
                     </div>
+                    
                     
                     <!--end::Card-->
                 </div>

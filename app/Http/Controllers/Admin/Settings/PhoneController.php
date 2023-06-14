@@ -8,8 +8,10 @@ use Illuminate\Http\Request;
 
 class PhoneController extends Controller
 {
-    public function edit($number)
+    public function edit()
     {
+        $data = Phone::all();
+        dd($data);
         $phone = Phone::findOrFail($number);
         return view('admin.settings.telephone.update', compact('phone'));
     }
@@ -23,7 +25,6 @@ class PhoneController extends Controller
            $phone->update(['number' => $data]);
         }
     
-        return redirect()->route('admin.settings.socials');
         return redirect()->route('admin.settings.socials');
    
     }
