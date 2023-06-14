@@ -172,6 +172,20 @@
                                     </li>
                                 </ul>
                             </div>
+                            <div class="menu-submenu" style="" kt-hidden-height="160">
+                                <i class="menu-arrow"></i>
+                                <ul class="menu-subnav">
+                                    <li class="menu-item {{ request()->routeIs('admin.properties.index') ? 'menu-item-active' : '' }}"
+                                        aria-haspopup="true">
+                                        <a href="{{route('admin.properties.index')}}" class="menu-link">
+                                            <i class="menu-bullet menu-bullet-dot">
+                                                <span></span>
+                                            </i>
+                                            <span class="menu-text">Характеристики</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
 
 
 {{--                            <div class="menu-submenu" style="" kt-hidden-height="160">--}}
@@ -245,8 +259,21 @@
                             </a>
                         </li>
 
+<<<<<<< HEAD
                         
                         
+=======
+                        <li class="menu-item {{ request()->routeIs('admin.news') || request()->routeIs('admin.news.edit') ? 'menu-item-active' : '' }}"
+                            aria-haspopup="true">
+                            <a href="{{route('admin.news')}}" class="menu-link">
+                                <i class="menu-bullet menu-bullet-dot">
+                                    <span></span>
+                                </i>
+                                <span class="menu-text">Новости</span>
+                            </a>
+                        </li>
+
+>>>>>>> 70dba167ac6540ad3ed2e6885c7ddf26db7e7b72
                         <li class="menu-item  menu-item-submenu {{  request()->routeIs('admin.settings.contacts') || request()->routeIs('admin.settings.socials') ? 'menu-item-open' : '' }}"
                             aria-haspopup="true" data-menu-toggle="hover">
                             <a href="javascript:;" class="menu-link menu-toggle">

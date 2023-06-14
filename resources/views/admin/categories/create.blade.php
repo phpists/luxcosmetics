@@ -11,10 +11,10 @@
                 <!--begin::Breadcrumb-->
                 <ul class="breadcrumb breadcrumb-transparent breadcrumb-dot font-weight-bold p-0 my-2 font-size-sm">
                     <li class="breadcrumb-item">
-                        <a href="{{ route('admin.categories') }}" class="text-muted">Категорії</a>
+                        <a href="{{ route('admin.categories') }}" class="text-muted">Категории</a>
                     </li>
                     <li class="breadcrumb-item">
-                        <a href="{{ route('admin.category.create') }}" class="text-muted">Створення категорії</a>
+                        <a href="{{ route('admin.category.create') }}" class="text-muted">Создание категории</a>
                     </li>
                 </ul>
                 <!--end::Breadcrumb-->
@@ -34,7 +34,7 @@
             <div class="card card-custom">
                 <div class="card-header">
                     <h3 class="card-title">
-                        Створення категорії
+                        Создание Категории
                     </h3>
                     <div class="card-toolbar">
                         <div class="example-tools justify-content-center">

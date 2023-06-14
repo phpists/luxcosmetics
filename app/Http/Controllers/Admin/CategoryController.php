@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Models\PropertyCategory;
 use App\Services\ImageService;
 use App\Services\SiteService;
 use Illuminate\Http\Request;
@@ -14,7 +15,7 @@ use Nette\Utils\Image;
 class CategoryController extends Controller
 {
     public function index() {
-        $categories = Category::query()->paginate(10);
+        $categories = Category::query()->whereNull('category_id')->with('subcategories')->get();
         return view('admin.categories.index', compact('categories'));
     }
     public function show(Request $request, string $alias) {
@@ -41,6 +42,18 @@ class CategoryController extends Controller
             if (!$category->save()) {
                 redirect()->back()->with('error', 'Не удалось сохранить категорию');
             }
+            if ($data['category_id'] !== null) {
+                $data = PropertyCategory::query()
+                    ->select('category_id', 'property_id', 'position')
+                    ->where('category_id', $data['category_id'])->get();
+
+                $data = $data->map(function ($item, int $key) use ($category) {
+                    $item['category_id'] = $category->id;
+                    return $item;
+                });
+
+                PropertyCategory::query()->insert($data->toArray());
+            }
         }
         else {
             redirect()->back()->with('error', 'Не удалось сохранить изображение');
@@ -59,7 +72,8 @@ class CategoryController extends Controller
     public function edit($id) {
         $categories = Category::query()->get();
         $category = $categories->find($id);
-        return view('admin.categories.edit', compact('category', 'categories'));
+        $properties = PropertyCategory::query()->where('category_id', $category->id)->orderBy('position')->paginate();
+        return view('admin.categories.edit', compact('category', 'categories', 'properties'));
     }
 
     public function update(Request $request){
@@ -78,7 +92,25 @@ class CategoryController extends Controller
                 return redirect()->back()->with('error', 'Не удалось сохранить изображение');
             }
         }
+        $is_same_parent = false;
+        if ($data['category_id'] !== null) {
+            $is_same_parent = ((int)$data['category_id'] === (int)$category->category_id);
+        }
         $category->update($data);
+        if ($data['category_id'] !== null && !$is_same_parent) {
+            $data = PropertyCategory::query()
+                ->select('category_id', 'property_id', 'position')
+                ->where('category_id', $data['category_id'])->get();
+
+            PropertyCategory::query()->where('category_id', $category->id)->delete();
+
+            $data = $data->map(function ($item, int $key) use ($category) {
+                $item['category_id'] = $category->id;
+                return $item;
+            });
+
+            PropertyCategory::query()->insert($data->toArray());
+        }
         return redirect()->route('admin.categories')->with('success', 'Категория успешно отредактирована');
     }
 
@@ -114,5 +146,50 @@ class CategoryController extends Controller
             'title' => $title,
             'message' => $message
         ]);
+    }
+
+    public function updatePosition(Request $request) {
+        foreach ($request->data as $pos => $new_position) {
+            $parent_id = array_key_exists('parent_id', $new_position)?$new_position['parent_id']:null;
+            $category = Category::query()->find($new_position['id']);
+            $is_same_parent = false;
+            if ($parent_id !== null) {
+                $is_same_parent = ((int)$parent_id === (int)$category->category_id);
+            }
+            $category->update([
+                'position' => $pos,
+                'category_id' => $parent_id
+            ]);
+            if ($parent_id !== null && !$is_same_parent) {
+                $data = PropertyCategory::query()
+                    ->select('category_id', 'property_id', 'position')
+                    ->where('category_id', $parent_id)->get();
+
+                $data = $data->map(function ($item, int $key) use ($new_position) {
+                    $item['category_id'] = $new_position['id'];
+                    return $item;
+                });
+
+                PropertyCategory::query()->where('category_id', $new_position['id'])->delete();
+
+                PropertyCategory::query()->insert($data->toArray());
+            }
+        }
+        return response()->json(['status' => 'ok']);
+    }
+
+    public function updatePropertiesPosition(Request $request): \Illuminate\Http\JsonResponse
+    {
+        $positions = $request->post('positions');
+        if ($positions) {
+            foreach ($positions as $position) {
+                $property_category = PropertyCategory::findOrFail($position['id']);
+                $property_category->position = $position['pos'];
+                $property_category->save();
+            }
+        }
+
+        $property_category = PropertyCategory::pluck('position', 'id');
+        return response()->json($property_category);
     }
 }

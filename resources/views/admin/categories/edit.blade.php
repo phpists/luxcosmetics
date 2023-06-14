@@ -6,19 +6,19 @@
             <!--begin::Page Heading-->
             <div class="d-flex align-items-baseline flex-wrap mr-5">
                 <!--begin::Page Title-->
-                <h5 class="text-dark font-weight-bold my-1 mr-5">Головна</h5>
+                <h5 class="text-dark font-weight-bold my-1 mr-5">Редактирование категории</h5>
                 <!--end::Page Title-->
                 <!--begin::Breadcrumb-->
                 <ul class="breadcrumb breadcrumb-transparent breadcrumb-dot font-weight-bold p-0 my-2 font-size-sm">
                     <li class="breadcrumb-item">
-                        <a href="{{ route('admin.categories') }}" class="text-muted">Категорії</a>
+                        <a href="{{ route('admin.home') }}" class="text-muted">Главная</a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <a href="{{ route('admin.categories') }}" class="text-muted">Категории</a>
                     </li>
                     <li class="breadcrumb-item">
                         <a href="{{ route('admin.category.edit', $category->id) }}"
-                           class="text-muted">{{ $category->title }}</a>
-                    </li>
-                    <li class="breadcrumb-item">
-                        <a href="#" class="text-muted">Редагування</a>
+                           class="text-muted">{{ $category->name }}</a>
                     </li>
                 </ul>
                 <!--end::Breadcrumb-->
@@ -41,12 +41,17 @@
                         <ul class="nav nav-tabs nav-bold nav-tabs-line">
                             <li class="nav-item">
                                 <a class="nav-link active" data-toggle="tab" href="#kt_tab_pane_1_4">
-                                    <span class="nav-text">Редагування</span>
+                                    <span class="nav-text">Основное</span>
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" data-toggle="tab" href="#kt_tab_pane_2_4">
-                                    <span class="nav-text">Редагування SEO</span>
+                                    <span class="nav-text">SEO</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#kt_tab_pane_3_4">
+                                    <span class="nav-text">Характеристики</span>
                                 </a>
                             </li>
                         </ul>
@@ -199,6 +204,75 @@
 {{--                                    <button type="submit" class="btn btn-primary mr-2">Сохранить</button>--}}
 {{--                                </div>--}}
 {{--                            </form>--}}
+                        </div>
+                        <div class="tab-pane fade show" id="kt_tab_pane_3_4" role="tabpanel"
+                             aria-labelledby="kt_tab_pane_3_4">
+                            <div class="table-responsive">
+                                <table class="table table-head-custom table-vertical-center">
+                                    <thead>
+                                    <tr>
+                                        <th class="pl-0 text-center">
+                                            #
+                                        </th>
+                                        <th class="pl-0 text-center">
+                                            ID
+                                        </th>
+                                        <th class="pr-0 text-center">
+                                            Позиция
+                                        </th>
+                                        <th class="text-center pr-0">
+                                            Название
+                                        </th>
+                                        <th class="pr-0 text-center">
+                                            Действия
+                                        </th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="properties-table">
+                                    @foreach($properties as $property)
+                                        <tr data-id="{{ $property->id }}">
+                                            <td class="handle text-center pl-0" style="cursor: pointer">
+                                                <i class="flaticon2-sort"></i>
+                                            </td>
+                                            <td class="text-center pl-0">
+                                                {{ $property->id }}
+                                            </td>
+                                            <td class="text-center position">
+                                        <span class="text-dark-75 d-block font-size-lg sort_col">
+                                            {{ $property->position }}
+                                        </span>
+                                            </td>
+                                            <td class="text-center">
+                                        <span class="text-dark-75 d-block font-size-lg">
+                                            {{ $property->name }}
+                                        </span>
+                                            </td>
+                                            <td class="text-center pr-0">
+                                                <a href="{{route('admin.properties.edit', $property->property->id)}}" class="btn btn-sm btn-clean btn-icon updateFaq">
+                                                    <i class="las la-edit"></i>
+                                                </a>
+{{--                                                <form action="{{ route('admin.faq.delete') }}" method="POST">--}}
+{{--                                                    <a href="javascript:;" class="btn btn-sm btn-clean btn-icon updateFaq"--}}
+{{--                                                       data-toggle="modal" data-target="#updateFaqModal"--}}
+{{--                                                       data-id="{{ $property->id }}">--}}
+{{--                                                        <i class="las la-edit"></i>--}}
+{{--                                                    </a>--}}
+{{--                                                    @csrf--}}
+{{--                                                    @method('DELETE')--}}
+{{--                                                    <input type="hidden" name="id" value="{{ $property->id }}">--}}
+{{--                                                    <button type="submit" class="btn btn-sm btn-clean btn-icon btn_delete"--}}
+{{--                                                            onclick="return confirm('Ви впевнені, що хочете видалити питання \'{{ $property->name }}\'?')"--}}
+{{--                                                            title="Delete"><i class="las la-trash"></i>--}}
+{{--                                                    </button>--}}
+{{--                                                </form>--}}
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!--end::Table-->
+                            {{ $properties->links('vendor.pagination.super_admin_pagination') }}
                         </div>
                     </div>
                 </div>

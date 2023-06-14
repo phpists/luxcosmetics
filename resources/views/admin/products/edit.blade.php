@@ -50,12 +50,17 @@
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" data-toggle="tab" href="#kt_tab_pane_2_4">
-                                    <span class="nav-text">Редактировать изображения</span>
+                                    <span class="nav-text">Изображения</span>
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" data-toggle="tab" href="#kt_tab_pane_3_4">
-                                    <span class="nav-text">Редактировать модификации</span>
+                                    <span class="nav-text">Модификации</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#kt_tab_pane_4_4">
+                                    <span class="nav-text">Характеристики</span>
                                 </a>
                             </li>
                         </ul>
@@ -76,13 +81,13 @@
                                 <div class="row">
                                     <div class="col-8">
                                         <div class="form-group">
-                                            <label for="exampleSelect2">Назва</label>
+                                            <label for="exampleSelect2">Название</label>
                                             <input type="text" name="title" class="form-control" value="{{$product->title}}" required/>
                                         </div>
                                         <div class="row">
                                             <div class="col-md-8">
                                                 <div class="form-group">
-                                                    <label>Категорії</label>
+                                                    <label>Категории</label>
                                                     <select class="form-control select2" id="kt_select2_4"
                                                             name="category_id" required>
                                                         @foreach($categories as $category)
@@ -93,7 +98,7 @@
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="form-group">
-                                                    <label>Alias</label>
+                                                    <label>ЧПУ</label>
                                                     <input type="text" name="alias" value="{{$product->alias}}" class="form-control" required/>
                                                 </div>
                                             </div>
@@ -101,7 +106,7 @@
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <div class="form-group">
-                                                    <label>Brand</label>
+                                                    <label>Бренд</label>
                                                     <select class="form-control select2" id="kt_select2_3"
                                                             name="brand_id">
                                                         @foreach($brands as $brand)
@@ -111,11 +116,11 @@
                                                 </div>
                                             </div>
                                             <div class="col-md-3">
-                                                <label for="exampleSelect2">Ціна</label>
+                                                <label for="exampleSelect2">Цена</label>
                                                 <input type="number" step="any" name="price" value="{{$product->price}}" class="form-control" required/>
                                             </div>
                                             <div class="col-md-3">
-                                                <label for="exampleSelect2">Знижка</label>
+                                                <label for="exampleSelect2">Скидка</label>
                                                 <input type="number" step="any" name="discount_price" value="{{$product->discount_price}}" class="form-control"/>
                                             </div>
                                         </div>
@@ -201,7 +206,7 @@
                                                 ГЛАВНОЕ
                                             </th>
                                             <th class="pr-0 text-center">
-                                                Дії
+                                                Действия
                                             </th>
                                         </tr>
                                         </thead>
@@ -323,6 +328,38 @@
 
                             </div>
                         </div>
+                        <div class="tab-pane fade" id="kt_tab_pane_4_4" role="tabpanel"
+                             aria-labelledby="kt_tab_pane_2_4">
+                            <div class="row mb-5">
+                                <div class="col">
+                                    <div class="mb-7">
+                                        <h3>Редактировать модификации</h3>
+                                    </div>
+                                </div>
+                                <div class="col-auto">
+                                    <button data-toggle="modal" data-target="#createProductVariationModal"
+                                            class="btn btn-primary font-weight-bold">
+                                        <i class="fas fa-plus mr-2"></i>
+                                        Добавить
+                                    </button>
+                                </div>
+                            </div>
+                            <div>
+                                <!--begin::Table-->
+                                @foreach($product->category->properties as $property)
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="form-group">
+                                                <h2>{{$property->name}}</h2>
+                                                <select class="form-control select2 property_values" id="prop_{{$property->id}}" name="availability">
+
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -347,6 +384,12 @@
         $('#kt_select2_4').select2({
             allowClear: true
         });
+        $('.select2.property_values').each((idx, el) => {
+            console.log(el);
+           $('#'+el.id).select2({
+               allowClear: true
+           });
+        });
         Promise.allSettled = Promise.allSettled || ((promises) => Promise.all(
             promises.map(p => p
                 .then(value => ({
@@ -362,7 +405,7 @@
 
         tinymce.init({
             selector: '.textEditor',
-            plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed linkchecker a11ychecker tinymcespellchecker permanentpen powerpaste advtable advcode editimage tinycomments tableofcontents footnotes mergetags autocorrect typography inlinecss',
+            plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount',
             toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
             tinycomments_mode: 'embedded',
             tinycomments_author: 'Author name',
