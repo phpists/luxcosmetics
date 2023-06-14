@@ -24,9 +24,12 @@
 <div class="overlay"></div>
 <div id="page" class="wrapper @yield('wrapper_class')">
     @yield('before_content')
-    @include('layouts.includes.header')
+    @php
+        $menu_items = \App\Models\Menu::query()->where('is_active', 1)->orderBy('position')->get();
+    @endphp
+    @include('layouts.includes.header', ['menu_items' => $menu_items])
     @yield('content')
-    @include('layouts.includes.footer')
+    @include('layouts.includes.footer', ['menu_items' => $menu_items])
 </div>
 @yield('after_content')
 @yield('scripts')

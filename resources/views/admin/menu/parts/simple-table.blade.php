@@ -45,7 +45,7 @@
                     {{ $item->title }}
                 </td>
                 <td class="text-center pr-0 status">
-                    {{ $item->link }}
+                    <a href="{{ $item->link }}">{{ $item->link }}</a>
                 </td>
                 <td class="text-center pr-0 status">
                     {{ \App\Services\SiteService::getStatus($item->is_active) }}

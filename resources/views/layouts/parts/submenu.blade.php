@@ -1,6 +1,6 @@
 <ul>
-    @foreach($category->categories as $subcategory)
-        <li><a href="/categories/{{$subcategory->alias}}">{{$subcategory->name}}</a></li>
-        @include('layouts.parts.submenu', ['category' => $subcategory])
+    @foreach($menu_item->getChildren($menu_items) as $submenu)
+        <li><a href="{{$submenu->link}}">{{$submenu->title}}</a></li>
+        @include('layouts.parts.submenu', ['menu_item' => $submenu, 'items' => $menu_items])
     @endforeach
 </ul>

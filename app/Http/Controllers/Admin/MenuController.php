@@ -9,12 +9,12 @@ use Illuminate\Http\Request;
 class MenuController extends Controller
 {
     public function index($menu_type) {
-        $menu_items = Menu::query()->get();
+        $menu_items = Menu::query()->where('type', $menu_type)->get();
         return view('admin.menu.index', compact('menu_items', 'menu_type'));
     }
 
     public function create(Request $request, $menu_type) {
-        $menu_items = Menu::query()->get();
+        $menu_items = Menu::query()->where('type', $menu_type)->get();
         $pos = 1;
         if ($menu_items) {
             $pos = $menu_items->max(function ($item) {
@@ -29,13 +29,16 @@ class MenuController extends Controller
         $data['is_active'] = array_key_exists('is_active', $data)? 1 : 0;
         $menu = Menu::query()->findOrFail($id);
         if($menu->update($data))
-            return redirect()->route('admin.menu')->with('success', 'Меню успешно обновлено');
+            return redirect()->route('admin.menu', $menu->type)->with('success', 'Меню успешно обновлено');
         return redirect()->back()->with('error', 'Ну удалось обновить запись');
     }
 
     public function edit($id) {
-        $menu_items = Menu::query()->with('subchildren')->get();
-        $item = $menu_items->find($id);
+        $item = Menu::query()->find($id);
+        if (!$item) {
+            abort('404');
+        }
+        $menu_items = Menu::query()->where('type', $item->type)->whereNot('id', $item->id)->get();
         return view('admin.menu.edit', compact('item', 'menu_items'));
     }
 
@@ -44,7 +47,7 @@ class MenuController extends Controller
         $data['is_active'] = array_key_exists('is_active', $data)? 1 : 0;
         $menu = new Menu($data);
         if ($menu->save()) {
-            return redirect()->route('admin.menu')->with('success', 'Меню удачно создано');
+            return redirect()->route('admin.menu', $data['type'])->with('success', 'Меню удачно создано');
         }
         return redirect()->back('error', 'Не удалось сохранить запис');
     }

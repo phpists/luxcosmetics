@@ -264,7 +264,7 @@
                                    class="btn btn-success font-weight-bolder">
                                     <span class="svg-icon svg-icon-md">
                                         <i class="fas fa-plus"></i>
-                                    </span>Добавить Меню
+                                    </span>Добавить пункт меню
                                 </a>
                             </div>
                         </div>
@@ -274,12 +274,12 @@
                             <ul class="nav nav-tabs nav-bold nav-tabs-line">
                                 <li class="nav-item">
                                     <a class="nav-link active" data-toggle="tab" href="#kt_tab_pane_1_4">
-                                        <span class="nav-text">Дерево</span>
+                                        <span class="nav-text">Таблица</span>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" data-toggle="tab" href="#kt_tab_pane_2_4">
-                                        <span class="nav-text">Таблица</span>
+                                        <span class="nav-text">Дерево</span>
                                     </a>
                                 </li>
                             </ul>
@@ -291,19 +291,19 @@
                                  aria-labelledby="kt_tab_pane_1_4">
                                 <div class="row">
                                     <div class="col-12">
+                                        @include('admin.menu.parts.simple-table', ['items' => $menu_items])
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="kt_tab_pane_2_4" role="tabpanel"
+                                 aria-labelledby="kt_tab_pane_2_4">
+                                <div class="row">
+                                    <div class="col-12">
                                         <div class="dd w-100" id="nestable3">
                                             <ol class="dd-list">
                                                 @include('admin.menu.parts.table', ['items' => $menu_items])
                                             </ol>
                                         </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="tab-pane fade" id="kt_tab_pane_2_4" role="tabpanel"
-                                 aria-labelledby="kt_tab_pane_1_4">
-                                <div class="row">
-                                    <div class="col-12">
-                                        @include('admin.menu.parts.simple-table', ['items' => $menu_items])
                                     </div>
                                 </div>
                             </div>

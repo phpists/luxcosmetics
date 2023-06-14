@@ -43,20 +43,17 @@
                     Каталог товаров
                 </a>
                 <ul class="navigation__menu">
-                    @php
-                      $menu_categories = \App\Models\Category::query()->with('subcategories')->whereNull('category_id')->where('status', 1)->orderBy('position')->get();
-                    @endphp
-                    @foreach($menu_categories as $menu_category)
-                        <li><a href="/categories/{{$menu_category->alias}}">{{$menu_category->name}} <svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#arrow')}}"></use></svg></a>
+                    @foreach($menu_items->whereNull('parent_id')->where('type', \App\Models\Menu::TOP_MENU) as $menu_item)
+                        <li><a href="{{$menu_item->link}}">{{$menu_item->title}} <svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#arrow')}}"></use></svg></a>
                             <div class="submenu">
                                 <div class="container">
                                     <div class="row">
                                         <div class="col-lg-12">
                                             <div class="submenu__wrapper">
                                                 <ul class="submenu__menu">
-                                                    @foreach($menu_category->subcategories as $subcategory)
-                                                        <li><a href="/categories/{{$subcategory->alias}}">{{$subcategory->name}}</a>
-                                                            @include('layouts.parts.submenu', ['category' => $subcategory])
+                                                    @foreach($menu_item->getChildren($menu_items) as $submenu)
+                                                        <li><a href="{{$submenu->link}}">{{$submenu->title}}</a>
+                                                            @include('layouts.parts.submenu', ['menu_item' => $submenu, 'items' => $menu_items])
                                                         </li>
                                                     @endforeach
                                                 </ul>

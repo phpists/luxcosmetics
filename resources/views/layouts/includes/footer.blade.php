@@ -15,32 +15,16 @@
             </div>
             <div class="col-lg-7  colmenu">
                 <div class="footer__menublock">
-                    <div class="footer__menu">
-                        <h4 class="footer__menutitle">Категории <svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#arrow')}}"></use></svg></h4>
-                        <ul>
-                            <li><a href="">Бренды</a></li>
-                            <li><a href="">Ароматы</a></li>
-                            <li><a href="">Макияж</a></li>
-                            <li><a href="">Уход за кожей</a></li>
-                            <li><a href="">Уход за телом</a></li>
-                            <li><a href="">Уход за волосами</a></li>
-                            <li><a href="">Подарки</a></li>
-                            <li><a href="">Эксклюзивно онлайн</a></li>
-                            <li><a href="">Акции</a></li>
-                        </ul>
-                    </div>
-                    <div class="footer__menu">
-                        <h4 class="footer__menutitle">Бренды <svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#arrow')}}"></use></svg></h4>
-                        <ul>
-                            <li><a href="">CHANEL</a></li>
-                            <li><a href="">Dior</a></li>
-                            <li><a href="">Giorgio Armani</a></li>
-                            <li><a href="">Yves Saint Laurent</a></li>
-                            <li><a href="">Lancôme</a></li>
-                            <li><a href="">Givenchy</a></li>
-                            <li><a href="">Смотреть все</a></li>
-                        </ul>
-                    </div>
+                    @foreach($menu_items->whereNull('parent_id')->where('type', \App\Models\Menu::FOOTER_MENU) as $menu_item)
+                        <div class="footer__menu">
+                            <h4 class="footer__menutitle">{{$menu_item->title}} <svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#arrow')}}"></use></svg></h4>
+                            <ul>
+                                @foreach($menu_item->getChildren($menu_items) as $sub_item)
+                                    <li><a href="{{$sub_item->link}}">{{$sub_item->title}}</a></li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endforeach
                     <div class="footer__menu">
                         <h4 class="footer__menutitle">Помощь <svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#arrow')}}"></use></svg></h4>
                         <ul>
@@ -54,14 +38,14 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="col-lg-2 col-md-4 col-sm-4 col-6 colcontacts">
                 <div class="footer__contacts">
                     <div class="footer__phone"><a href="">+7 495 152 85 44</a></div>
                     <a href="#modal-form" class="btn btn--accent popup-with-form">Заказать звонок <svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#circle-arrow')}}"></use></svg></a>
                 </div>
             </div>
-        
+
             <div class="col-lg-12 colcopyright">
                 <div class="footer__logomobile">
                     <img src="{{asset('images/dist/logo.svg')}}" alt="">

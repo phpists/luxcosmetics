@@ -16,6 +16,9 @@ class CategoryController extends Controller
         $query = Category::query();
         $query->where('alias', $alias);
         $category = $query->with('subcategories')->first();
+        if (!$category) {
+            abort('404');
+        }
         $category_ids = [$category->id];
         foreach ($category->subcategories as $subcategory) {
             $category_ids[] = $subcategory->id;

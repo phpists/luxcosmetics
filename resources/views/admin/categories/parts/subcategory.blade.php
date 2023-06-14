@@ -1,7 +1,7 @@
 <li class="dd-item dd3-item" data-id="{{$category->id}}">
     <div class="dd-handle dd3-handle">Drag</div>
     <div class="dd3-content">
-        <span>{{$category->title}}</span>
+        <span>{{$category->name}}</span>
         <span>
             <a href="{{ route('admin.category.delete', $category->id) }}"
                class="btn btn-sm btn-clean btn-icon"
