@@ -11,9 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('phones', function (Blueprint $table) {
+        Schema::create('blog_items', function (Blueprint $table) {
             $table->id();
-            $table->string('number')->default('null')->comment('Номер телефону');
+            $table->string('image');
+            $table->string('title');
+            $table->mediumText('text');
+            $table->string('link');
+            $table->smallInteger('status');
+            $table->dateTime('published_at');
             $table->timestamps();
         });
     }
@@ -23,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('phones');
+        Schema::dropIfExists('blog_items');
     }
 };

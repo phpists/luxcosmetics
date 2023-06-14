@@ -3,7 +3,7 @@
     <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="updateModalTitle">Редактировать номер телефона</h5>
+                <h5 class="modal-title" id="updateModalTitle">Оновить ваш номер телефона</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <i aria-hidden="true" class="ki ki-close"></i>
                 </button>
@@ -12,13 +12,13 @@
             <div class="modal-body">
                 <div class="row justify-content-center">
                     <div class="col-sm-12">
-                        <form action="{{ route('admin.settings.telephone.update', $item->number) }}" method="POST" enctype="multipart/form-data">
+                        <form action="{{ route('admin.settings.telephone.update') }}" method="POST" enctype="multipart/form-data">
                             @csrf
-                            @method('PATCH')
+                            @method('PUT')
                             <input id="updateId" type="hidden" name="id">
                             <div class="form-group">
                                 <label for="updateLink" class="col-form-label font-weight-bold">Ваш номер телефона</label>
-                                <input placeholder="Ваш номер" value="{{$item->number}}" type="text" class="form-control" id="updateLink" name="link" required>
+                                <input placeholder="Ваш номер" type="text" class="form-control" name="telephone" id="telephone" required>
                             </div>
                             <div class="modal-fade">
                                 <button type="submit" class="btn btn-lg btn-primary mr-2">Сохранить</button>

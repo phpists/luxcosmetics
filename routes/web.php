@@ -8,8 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\FaqController;
 use Illuminate\Support\Facades\Route;
 use \App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
-use App\Http\Controllers\NewsController;
-use App\Models\NewsItem;
+use App\Models\Phone;
 
 /* Socialize */
 Auth::routes();
@@ -125,8 +124,8 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function 
     Route::post('settings/social/update-positions', [\App\Http\Controllers\Admin\Settings\SocialMediaController::class, 'updates_positions'])->name('admin.settings.social.update_positions');
 
 //     Telephone
-    Route::get('settings/telephone/edit', [App\Http\Controllers\Admin\Settings\PhoneController::class, 'edit'])->name('admin.settings.telephone.edit');
-    Route::patch('settings/telephone/update/{number}', [App\Http\Controllers\Admin\Settings\PhoneController::class, 'update'])->name('admin.settings.telephone.update');
+    Route::get('settings/telephone/edit/', [App\Http\Controllers\Admin\Settings\SocialMediaController::class, 'edit'])->name('admin.settings.telephone.edit');
+    Route::put('settings/telephone/update/', [App\Http\Controllers\Admin\Settings\SocialMediaController::class, 'updateTelephone'])->name('admin.settings.telephone.update');
 
     Route::get('clear-cache', [SettingController::class, 'clearCache'])->name('admin.clear.cache');
     Route::post('logout')->name('logout');
@@ -151,6 +150,7 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function 
     // Feedback Chat
     Route::get('chats', [\App\Http\Controllers\Admin\FeedbackController::class, 'index'])->name('admin.chats');
     Route::get('chats/{id}/edit', [\App\Http\Controllers\Admin\FeedbackController::class, 'edit'])->name('admin.chats.edit');
+    
     /* News */
     Route::get('newses', [\App\Http\Controllers\Admin\News\NewsController::class, 'index'])->name('admin.news');
     Route::get('news', [\App\Http\Controllers\Admin\News\NewsController::class, 'create'])->name('admin.news.create');
@@ -164,6 +164,19 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function 
     Route::post('_delete-posts', [\App\Http\Controllers\Admin\News\NewsController::class, 'deletePosts']);
     Route::post('_active-posts', [\App\Http\Controllers\Admin\News\NewsController::class, 'activePosts']);
 
+    /* Blog */
+    Route::get('blogs', [\App\Http\Controllers\Admin\Blog\BlogController::class, 'index'])->name('admin.blog');
+    Route::get('blog', [\App\Http\Controllers\Admin\Blog\BlogController::class, 'create'])->name('admin.blog.create');
+    Route::post('blog', [\App\Http\Controllers\Admin\Blog\BlogController::class, 'store'])->name('admin.blog.store');
+    Route::get('blog/edit/{id}', [\App\Http\Controllers\Admin\Blog\BlogController::class, 'edit'])->name('admin.blog.edit');
+    Route::post('blog/update', [\App\Http\Controllers\Admin\Blog\BlogController::class, 'update'])->name('admin.blog.update');
+    Route::post('blog/update/seo', [\App\Http\Controllers\Admin\Blog\BlogController::class, 'updateSeo'])->name('admin.blog.update.seo');
+    Route::get('blog/delete/{id}', [\App\Http\Controllers\Admin\Blog\BlogController::class, 'delete'])->name('admin.blog.delete');
+
+    /* Blog Operation */
+    Route::post('_delete-posts', [\App\Http\Controllers\Admin\Blog\BlogController::class, 'deletePosts']);
+    Route::post('_active-posts', [\App\Http\Controllers\Admin\Blog\BlogController::class, 'activePosts']);
+
     // Properties
     Route::get('properties', [\App\Http\Controllers\Admin\PropertyController::class, 'index'])->name('admin.properties.index');
     Route::get('properties/create', [\App\Http\Controllers\Admin\PropertyController::class, 'create'])->name('admin.properties.create');
@@ -175,5 +188,6 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function 
 });
 
 Route::get('/news/new/{id}', [\App\Http\Controllers\NewsController::class, 'show'])->name('index.news');
+Route::get('/blog/blog/{id}', [\App\Http\Controllers\BlogController::class, 'show'])->name('index.blog');
 
 Route::get('/user/home', [App\Http\Controllers\HomeController::class, 'home'])->name('user.home');

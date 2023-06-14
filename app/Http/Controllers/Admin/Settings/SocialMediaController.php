@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Storage;
 class SocialMediaController extends Controller
 {
 
-    public function index()
+    public function index(Request $request)
     {
         $networks = SocialMedia::network()->orderBy('pos')->get();
         $network_next_pos = SocialMedia::network()->max('pos');
@@ -20,8 +20,8 @@ class SocialMediaController extends Controller
         $messengers = SocialMedia::messenger()->orderBy('pos')->get();
         $messenger_next_pos = SocialMedia::messenger()->max('pos');
         $messenger_next_pos = $messenger_next_pos ? $messenger_next_pos + 1 : 1;
-
-        $phone = Phone::all();
+        
+        $phone = SocialMedia::all();
 
         return view('admin.settings.socials.index', compact('networks', 'network_next_pos',
             'messengers', 'messenger_next_pos', 'phone'));
@@ -77,6 +77,32 @@ class SocialMediaController extends Controller
         } else {
             return redirect()->back()->with('error', 'Не вдалось відредагувати ' .  ($social->type_id == SocialMedia::TYPE_NETWORK ? 'соц.мережу' : 'месенджер'));
         }
+    }
+
+    public function editTelephone(Request $request, $telephone)
+    {
+        $telephone = $request->input('telephone');
+        return view('admin.settings.telephone.update', compact('telephone'));
+    }
+
+
+    public function updateTelephone(Request $request)
+    {
+        $telephone = $request->input('telephone');
+
+    if ($telephone != $telephone) {
+        $social = new SocialMedia(['telephone' => $request->input('telephone')]);
+        $social->save();
+
+        $update = new SocialMedia(['message' => 'Номер телефона был изменен']);
+        $social->updates()->save($update);
+    } else {
+        $social = SocialMedia::first();        
+            $social->telephone = $telephone;
+            $social->save();
+    }
+
+    return redirect()->route('admin.settings.socials');
     }
 
     public function change_status(Request $request)

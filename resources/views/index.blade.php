@@ -304,39 +304,59 @@
             </div>
         </div>
     </section>
+    {{-- @foreach (\App\Services\NewsService::getNews() as $item)   
+                    <div class="article article--news">
+                        <div class="article__image"><a href="{{ route('index.news', $item->id) }}"><img src="{{asset('images/uploads/news/' . $item->image)}}" alt=""></a></div>
+                        <div class="article__date"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#calendar')}}"></use></svg>{{$item->published_at}}</div>
+                        <div class="article__title"><a href="{{ route('index.news', $item->id) }}">{{ $item->title }}</a></div>
+                        <div class="article__intro">{{ Str::limit(strip_tags($item->text), $limit = 30, $end = '...') }}</div>
+                    </div>
+                @endforeach    --}}
     <section class="maincategory">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
                     <div class="maincategory__grid">
+                        @php 
+                            $item = \App\Services\BlogService::getBlog();
+                            
+                        @endphp 
+                        @if($item[0] != null)
                         <div class="maincategory__item">
                             <div class="category">
-                                <div class="category__image" style="background-image: url(images/dist/catbanners/1.jpg);"></div>
-                                <div class="category__title"><a href="">Бестселлеры</a></div>
-                                <div class="category__subtitle">Популярные и востребованные товары, которые заслужили любовь и доверие покупателей</div>
+                                <div class="category__image" style="background-image: url({{asset('images/uploads/blog/' . $item[0]->image)}});"></div>
+                                <div class="category__title"><a href="{{ route('index.blog', $item[0]->id) }}">{{ $item[0]->title  }}</a></div>
+                                <div class="category__subtitle">{{ Str::limit(strip_tags($item[0]->text), $limit = 30, $end = '...') }}</div>
                             </div>
                         </div>
+                        @endif
+                        @if($item[1] != null)
                         <div class="maincategory__item">
                             <div class="category">
-                                <div class="category__image" style="background-image: url(images/dist/catbanners/2.jpg);"></div>
-                                <div class="category__title"><a href="">Мейкап</a></div>
-                                <div class="category__subtitle">Широкий выбор декоративной косметики для создания разнообразных образов: туши, тени, румяна, помады и многое другое</div>
+                                <div class="category__image" style="background-image: url({{asset('images/uploads/blog/' . $item[1]->image)}});"></div>
+                                <div class="category__title"><a href="{{ route('index.blog', $item[1]->id) }}">{{ $item[1]->title  }}</a></div>
+                                <div class="category__subtitle">{{ Str::limit(strip_tags($item[1]->text), $limit = 30, $end = '...') }}</div>
                             </div>
                         </div>
+                        @endif
+                        @if($item[2] != null)
                         <div class="maincategory__item">
                             <div class="category">
-                                <div class="category__image" style="background-image: url(images/dist/catbanners/3.jpg);"></div>
-                                <div class="category__title"><a href="">Волосы и ногти</a></div>
-                                <div class="category__subtitle">Косметические средства и аксессуары для ухода за волосами и ногтями: шампунь, кондиционер, лак для ногтей</div>
+                                <div class="category__image" style="background-image: url({{asset('images/uploads/blog/' . $item[2]->image)}});"></div>
+                                <div class="category__title"><a href="{{ route('index.blog', $item[2]->id) }}">{{ $item[2]->title  }}</a></div>
+                                <div class="category__subtitle">{{ Str::limit(strip_tags($item[2]->text), $limit = 30, $end = '...') }}</div>
                             </div>
                         </div>
+                        @endif
+                        @if($item[3] != null)
                         <div class="maincategory__item">
                             <div class="category">
-                                <div class="category__image" style="background-image: url(images/dist/catbanners/4.jpg);"></div>
-                                <div class="category__title"><a href="">Уход за кожей</a></div>
-                                <div class="category__subtitle">Продукты для очищения, увлажнения и питания кожи лица и тела: кремы, маски, скрабы, сыворотки и другие средства</div>
+                                <div class="category__image" style="background-image: url({{asset('images/uploads/blog/' . $item[3]->image)}});"></div>
+                                <div class="category__title"><a href="{{ route('index.blog', $item[3]->id) }}">{{ $item[3]->title  }}</a></div>
+                                <div class="category__subtitle">{{ Str::limit(strip_tags($item[3]->text), $limit = 30, $end = '...') }}</div>
                             </div>
                         </div>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -477,8 +497,7 @@
                 </div>
             </div>
         </div>
-    </section>   
-  
+    </section>
     <section class="mailing">
         <div class="container">
             <div class="row">

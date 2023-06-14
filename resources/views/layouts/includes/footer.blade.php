@@ -54,12 +54,14 @@
                     </div>
                 </div>
             </div>
+            
             <div class="col-lg-2 col-md-4 col-sm-4 col-6 colcontacts">
                 <div class="footer__contacts">
                     <div class="footer__phone"><a href="">+7 495 152 85 44</a></div>
-                    <a href="addproduct" class="btn btn--accent popup-with-form">Заказать звонок <svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#circle-arrow')}}"></use></svg></a>
+                    <a href="#modal-form" class="btn btn--accent popup-with-form">Заказать звонок <svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#circle-arrow')}}"></use></svg></a>
                 </div>
             </div>
+        
             <div class="col-lg-12 colcopyright">
                 <div class="footer__logomobile">
                     <img src="{{asset('images/dist/logo.svg')}}" alt="">
