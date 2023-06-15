@@ -29,4 +29,10 @@ class Property extends Model
     {
         return $this->hasMany(PropertyCategory::class, 'property_id');
     }
+
+    public function values()
+    {
+        return $this->hasMany(PropertyValue::class);
+    }
+
 }

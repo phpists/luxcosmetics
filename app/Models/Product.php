@@ -53,4 +53,10 @@ class Product extends Model
     {
         return $this->hasMany(ProductVariation::class);
     }
+
+    public function values()
+    {
+        return $this->belongsToMany(PropertyValue::class, 'product_property_values');
+    }
+
 }
