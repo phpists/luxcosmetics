@@ -247,11 +247,11 @@
                                 <span class="card-icon">
                                     <i class="flaticon-network text-primary"></i>
                                 </span>
-                                @foreach ($phone as $item)
+                                
                                 <h3 class="card-label">
-                                    Ваш номер: {{$item->telephone}}
+                                    Ваш номер:@foreach ($phone as $item) {{$item->telephone}} @endforeach
                                 </h3>
-                                @endforeach
+                               
                             </div>
                             <div class="card-toolbar">
                                 <form action="{{ route('admin.settings.telephone.edit')}}" method="POST">
