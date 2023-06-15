@@ -34,6 +34,27 @@
 @yield('after_content')
 @yield('scripts')
 <script src="{{asset('/js/app.min.js')}}"></script>
+<script>
+    document.getElementById('header_search').addEventListener('input', function (ev) {
+        let results_container = document.getElementById('search_results');
+        if (ev.target.value !== '') {
+            fetch('{{route('search_prompt')}}?search='+ev.target.value).then(async (resp) => {
+                let result = await resp.json();
+                results_container.innerHTML = "";
+                for (const resultKey in result) {
+                    let div = document.createElement('div');
+                    let title = result[resultKey].title;
+                    let link = 'products/' + result[resultKey].alias;
+                    div.innerHTML = `<a href="${link}">${title}</a>`;
+                    results_container.appendChild(div);
+                }
+            })
+        }
+        else {
+            results_container.innerHTML = "";
+        }
+    })
+</script>
 </body>
 
 </html>

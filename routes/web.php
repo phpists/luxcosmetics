@@ -20,6 +20,8 @@ Route::get('/', [\App\Http\Controllers\HomeController::class, 'index'])->name('h
 // Categories
 Route::get('categories', [CategoryController::class, 'index'])->name('categories');
 Route::get('categories/{alias}', [CategoryController::class, 'show'])->name('categories.show');
+// Search
+Route::get('/search_prompt', [\App\Http\Controllers\SearchController::class, 'search_prompt'])->name('search_prompt');
 // Products
 Route::get('products/{alias}', [\App\Http\Controllers\ProductController::class, 'show'])->name('products.product');
 Route::get('products/{alias}/{variation_id}', [\App\Http\Controllers\ProductController::class, 'show'])->name('products.product');
@@ -150,7 +152,7 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function 
     // Feedback Chat
     Route::get('chats', [\App\Http\Controllers\Admin\FeedbackController::class, 'index'])->name('admin.chats');
     Route::get('chats/{id}/edit', [\App\Http\Controllers\Admin\FeedbackController::class, 'edit'])->name('admin.chats.edit');
-    
+
     /* News */
     Route::get('newses', [\App\Http\Controllers\Admin\News\NewsController::class, 'index'])->name('admin.news');
     Route::get('news', [\App\Http\Controllers\Admin\News\NewsController::class, 'create'])->name('admin.news.create');

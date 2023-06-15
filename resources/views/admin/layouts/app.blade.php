@@ -364,21 +364,6 @@
                                 <i class="menu-arrow"></i>
                                 <ul class="menu-subnav">
                                     <li class="menu-item  menu-item-parent" aria-haspopup="true">
-                                        <span class="menu-link"><span class="menu-text">Общие</span></span>
-                                    </li>
-                                    <li class="menu-item  {{ request()->routeIs('admin.settings.translations') ? 'menu-item-active' : '' }}"
-                                        aria-haspopup="true">
-                                        <a href="" class="menu-link">
-                                            <i class="menu-bullet menu-bullet-dot"><span></span></i>
-                                            <span class="menu-text">Переводы</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="menu-submenu ">
-                                <i class="menu-arrow"></i>
-                                <ul class="menu-subnav">
-                                    <li class="menu-item  menu-item-parent" aria-haspopup="true">
                                         <span class="menu-link"><span class="menu-text">Загальні</span></span>
                                     </li>
                                     <li class="menu-item {{ request()->routeIs('admin.sitemap') ? 'menu-item-active' : '' }}"
@@ -407,19 +392,11 @@
                             </div>
                         </li>
 
-                        <li class="menu-item {{ request()->routeIs('admin.languages') ? 'menu-item-active' : '' }}"
-                            aria-haspopup="true">
-                            <a href="" class="menu-link">
-                                <i class="fas fa-flag menu-icon"></i>
-                                <span class="menu-text">Мови</span>
-                            </a>
-                        </li>
-
                         <li class="menu-item {{ request()->routeIs('admin.currencies') ? 'menu-item-active' : '' }}"
                             aria-haspopup="true">
                             <a href="" class="menu-link">
                                 <i class="fas fa-dollar-sign menu-icon"></i>
-                                <span class="menu-text">Валюти</span>
+                                <span class="menu-text">Валюты</span>
                             </a>
                         </li>
 
@@ -427,7 +404,7 @@
                             aria-haspopup="true">
                             <a href="" class="menu-link">
                                 <i class="fas fa-user-lock menu-icon"></i>
-                                <span class="menu-text">Ролі</span>
+                                <span class="menu-text">Роли</span>
                             </a>
                         </li>
 

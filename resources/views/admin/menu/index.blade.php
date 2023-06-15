@@ -10,7 +10,6 @@
             <!--begin::Page Heading-->
             <div class="d-flex align-items-baseline flex-wrap mr-5">
                 <!--begin::Page Title-->
-                <h5 class="text-dark font-weight-bold my-1 mr-5">Меню</h5>
                 <!--end::Page Title-->
                 <!--begin::Breadcrumb-->
                 <ul class="breadcrumb breadcrumb-transparent breadcrumb-dot font-weight-bold p-0 my-2 font-size-sm">
@@ -18,7 +17,7 @@
                         <a href="{{ route('admin.dashboard') }}" class="text-muted">Главная</a>
                     </li>
                     <li class="breadcrumb-item">
-                        <a href="{{ route('admin.categories') }}" class="text-muted">Меню</a>
+                        <a href="{{ route('admin.categories') }}" class="text-muted">{{\App\Services\SiteService::getMenuType($menu_type)}}</a>
                     </li>
                 </ul>
                 <!--end::Breadcrumb-->
@@ -256,7 +255,7 @@
                 <div class="card card-custom">
                     <div class="card-header flex-wrap border-0 pt-6 pb-0">
                         <div class="card-title">
-                            <h3 class="card-label">Меню</h3>
+                            <h3 class="card-label">{{\App\Services\SiteService::getMenuType($menu_type)}}</h3>
                         </div>
                         <div class="card-toolbar">
                             <div class="dropdown dropdown-inline mr-2">
