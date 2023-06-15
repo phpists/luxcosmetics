@@ -24,7 +24,7 @@ class PropertyController extends Controller
     public function store(Request $request) {
         $data = $request->all();
         $data['show_in_filter'] = array_key_exists('show_in_filter', $data)? 1 : 0;
-        $data['show_in_catalog'] = array_key_exists('show_in_catalog', $data)? 1 : 0;
+        $data['show_in_product'] = array_key_exists('show_in_product', $data)? 1 : 0;
         $property = new Property($data);
         if ($property->save()) {
             $sql = 'category_id in ('.implode(',', $data['category_id']).')';
@@ -64,7 +64,7 @@ class PropertyController extends Controller
     public function update(Request $request, $id) {
         $data = $request->all();
         $data['show_in_filter'] = array_key_exists('show_in_filter', $data)? 1 : 0;
-        $data['show_in_catalog'] = array_key_exists('show_in_catalog', $data)? 1 : 0;
+        $data['show_in_product'] = array_key_exists('show_in_product', $data)? 1 : 0;
         $property = Property::query()->findOrFail($id);
         if ($property->update($data)) {
             $old_cats = $property->category_idx();

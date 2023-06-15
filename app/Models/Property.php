@@ -15,7 +15,7 @@ class Property extends Model
 
     protected $table = 'properties';
 
-    protected $fillable = ['name', 'measure', 'show_in_filter', 'show_in_catalog', 'show_text'];
+    protected $fillable = ['name', 'measure', 'show_in_filter', 'show_in_product', 'show_text'];
 
     const HORIZONTAL = 2;
     const VERTICAL = 1;

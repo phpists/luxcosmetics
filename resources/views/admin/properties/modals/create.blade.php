@@ -65,7 +65,7 @@
                                 <label for="add_to_top_menu">Добавить к каталогу</label>
                                 <div class="checkbox-list">
                                     <label class="checkbox">
-                                        <input type="checkbox" name="show_in_catalog" id="show_in_catalog">
+                                        <input type="checkbox" name="show_in_product" id="show_in_product">
                                         <span></span>
                                     </label>
                                 </div>

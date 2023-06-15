@@ -102,12 +102,12 @@
                                                             <label class="checkbox">
                                                                 <input type="checkbox" @if($property->show_in_filter) checked @endif name="show_in_filter" id="updateShowInFilter">
                                                                 <span></span>
-                                                                Добавить к фильтру
+                                                                Показать в фильтре
                                                             </label>
                                                             <label class="checkbox">
-                                                                <input type="checkbox" @if($property->show_in_catalog) checked @endif name="show_in_catalog" id="updateShowInCatalog">
+                                                                <input type="checkbox" @if($property->show_in_product) checked @endif name="show_in_product" id="updateShowInCatalog">
                                                                 <span></span>
-                                                                Добавить к каталогу
+                                                                Показать в товаре
                                                             </label>
                                                         </div>
 {{--                                                        <label for="add_to_top_menu">Добавить к фильтру</label>--}}

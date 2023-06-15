@@ -344,21 +344,18 @@
                                     </button>
                                 </div>
                             </div>
-                            <div>
-                                <!--begin::Table-->
-                                @foreach($product->category->properties as $property)
-                                    <div class="row">
-                                        <div class="col-12">
-                                            <div class="form-group">
-                                                <h2>{{$property->name}}</h2>
-                                                <select class="form-control select2 property_values" id="prop_{{$property->id}}" name="availability">
-
-                                                </select>
-                                            </div>
+                            @foreach($product->category->properties as $property)
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="form-group props-select">
+                                            <label>{{$property->name}}</label>
+                                            <select class="form-control select2 property_values" multiple="multiple" id="prop_{{$property->id}}" name="availability">
+                                                <option>Выберете или добавьте значение</option>
+                                            </select>
                                         </div>
                                     </div>
-                                @endforeach
-                            </div>
+                                </div>
+                            @endforeach
                         </div>
                     </div>
                 </div>
@@ -384,12 +381,21 @@
         $('#kt_select2_4').select2({
             allowClear: true
         });
-        $('.select2.property_values').each((idx, el) => {
-            console.log(el);
-           $('#'+el.id).select2({
-               allowClear: true
-           });
+
+        $(document).ready(function () {
+            $('.select2.property_values').select2({
+                width: 'resolve',
+                allowClear: true
+            });
+            $('.props-select .select2-search__field').keyup(function (ev) {
+                if(ev.key === 'Enter') {
+                    console.log(this.value)
+                }
+            });
         });
+        // $('property_values').on('keyup', function() {
+        //     console.log(this.value)
+        // })
         Promise.allSettled = Promise.allSettled || ((promises) => Promise.all(
             promises.map(p => p
                 .then(value => ({
