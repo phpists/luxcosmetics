@@ -89,17 +89,14 @@ class SocialMediaController extends Controller
     public function updateTelephone(Request $request)
     {
         $telephone = $request->input('telephone');
+        $social = SocialMedia::first();
 
-    if ($telephone != $telephone) {
-        $social = new SocialMedia(['telephone' => $request->input('telephone')]);
+    if ($social == null) {
+        $phone = new SocialMedia(['telephone' => $request->input('telephone')]);
+        $phone->save();
+    } else {        
+        $social->telephone = $telephone;
         $social->save();
-
-        $update = new SocialMedia(['message' => 'Номер телефона был изменен']);
-        $social->updates()->save($update);
-    } else {
-        $social = SocialMedia::first();        
-            $social->telephone = $telephone;
-            $social->save();
     }
 
     return redirect()->route('admin.settings.socials');
