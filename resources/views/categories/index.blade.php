@@ -46,7 +46,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    @foreach($category->properties as $category_property)
+                                    @foreach($category->filter_properties as $category_property)
                                     <div class="filters__item filter">
                                         <div class="filter__title">{{ $category_property->name }} ({{ $category_property->measure }}) <svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#arrow')}}"></use></svg></div>
                                         <div class="filter__block">

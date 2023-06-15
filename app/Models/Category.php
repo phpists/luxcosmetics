@@ -36,4 +36,11 @@ class Category extends Model
             ->whereHas('values')
             ->orderBy('property_category.position');
     }
+
+    public function filter_properties()
+    {
+        return $this->properties()
+            ->where('show_in_filter', 1);
+    }
+
 }
