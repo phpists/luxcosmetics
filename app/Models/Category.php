@@ -33,13 +33,13 @@ class Category extends Model
     public function properties()
     {
         return $this->belongsToMany(Property::class, 'property_category', 'category_id', 'property_id')
-            ->whereHas('values')
             ->orderBy('property_category.position');
     }
 
     public function filter_properties()
     {
         return $this->properties()
+            ->whereHas('values')
             ->where('show_in_filter', 1);
     }
 

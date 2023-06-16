@@ -16,6 +16,10 @@ class PropertyValueController extends Controller
 
         $property_value = PropertyValue::create(compact('property_id', 'value'));
 
+        if ($request->ajax()) {
+            return response()->json($property_value);
+        }
+
         return back()->with('success', 'Значение успешно сохранено');
     }
 
