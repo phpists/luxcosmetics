@@ -206,7 +206,7 @@
                             <!--begin::Body-->
                             <div class="card-body">
                                 <!--begin::Scroll-->
-                                <div class="scroll scroll-pull ps ps--active-y" data-mobile-height="350" style="height: 410px; overflow: hidden;">
+                                <div class="scroll scroll-pull overflow-scroll" data-mobile-height="350" style="height: 410px; overflow-y: scroll;">
                                     <!--begin::Messages-->
                                     <div class="messages">
                                         <!--begin::Message In-->

@@ -7,8 +7,8 @@
             <div class="row">
                 <div class="col-lg-12">
                     <ol class="crumbs__list">
-                        <li class="crumbs__item"><a href="">Главная</a></li>
-                        <li class="crumbs__item">{{$category->name}}</li>
+                        <li class="crumbs__item"><a href="/">Главная</a></li>
+                        <li class="crumbs__item">Поиск</li>
                     </ol>
                 </div>
             </div>
@@ -18,7 +18,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
-                    <div class="title-h1">{{$category->name}}</div>
+                    <div class="title-h1">Результаты поиска по запросу {{$search}}</div>
                     <div class="category-page__container">
                         <aside class="category-page__aside">
                             <div class="filters" id="filters">
@@ -46,24 +46,24 @@
                                             </div>
                                         </div>
                                     </div>
-                                    @foreach($category->filter_properties as $category_property)
-                                    <div class="filters__item filter">
-                                        <div class="filter__title">{{ $category_property->name }} ({{ $category_property->measure }}) <svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#arrow')}}"></use></svg></div>
-                                        <div class="filter__block">
-                                            <div class="filter__wrap filter__scroll">
-                                                @foreach($category_property->values as $property_value)
-                                                <label class="checkbox">
-                                                    <input type="checkbox" value="{{ $property_value->id }}" />
-                                                    <div class="checkbox__text">{{ $property_value->value }}</div>
-                                                </label>
-                                                @endforeach
-                                            </div>
-                                            @if($category_property->values->count() > 3)
-                                                <button class="filter__all">Показать все</button>
-                                            @endif
-                                        </div>
-                                    </div>
-                                    @endforeach
+{{--                                    @foreach($category->filter_properties as $category_property)--}}
+{{--                                    <div class="filters__item filter">--}}
+{{--                                        <div class="filter__title">{{ $category_property->name }} ({{ $category_property->measure }}) <svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#arrow')}}"></use></svg></div>--}}
+{{--                                        <div class="filter__block">--}}
+{{--                                            <div class="filter__wrap filter__scroll">--}}
+{{--                                                @foreach($category_property->values as $property_value)--}}
+{{--                                                <label class="checkbox">--}}
+{{--                                                    <input type="checkbox" value="{{ $property_value->id }}" />--}}
+{{--                                                    <div class="checkbox__text">{{ $property_value->value }}</div>--}}
+{{--                                                </label>--}}
+{{--                                                @endforeach--}}
+{{--                                            </div>--}}
+{{--                                            @if($category_property->values->count() > 3)--}}
+{{--                                                <button class="filter__all">Показать все</button>--}}
+{{--                                            @endif--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
+{{--                                    @endforeach--}}
                                 </div>
                                 <div class="filters__ftr">
                                     <button class="filters__btn">Показать</button>
@@ -75,16 +75,16 @@
                             <div class="category-page__image"><img src="" alt=""></div>
                         </aside>
                         <main class="category-page__main">
-                            <ul class="category-page__subcategories">
-                                @foreach($category->subcategories as $subcategory)
-                                    <li>
-                                        <a href="/c/{{$subcategory->alias}}" class="category-page__subcategory">
-                                            <span class="category-page__subcategory-image"><img src="{{asset('images/uploads/categories/'.$subcategory->image)}}" alt=""></span>
-                                            <span class="category-page__subcategory-title">{{$subcategory->name}}</span>
-                                        </a>
-                                    </li>
-                                @endforeach
-                            </ul>
+{{--                            <ul class="category-page__subcategories">--}}
+{{--                                @foreach($category->subcategories as $subcategory)--}}
+{{--                                    <li>--}}
+{{--                                        <a href="/c/{{$subcategory->alias}}" class="category-page__subcategory">--}}
+{{--                                            <span class="category-page__subcategory-image"><img src="{{asset('images/uploads/categories/'.$subcategory->image)}}" alt=""></span>--}}
+{{--                                            <span class="category-page__subcategory-title">{{$subcategory->name}}</span>--}}
+{{--                                        </a>--}}
+{{--                                    </li>--}}
+{{--                                @endforeach--}}
+{{--                            </ul>--}}
                             <div class="category-page__sortblock sortblock">
                                 <div class="sortblock__total">Показано <b>12 из 178</b></div>
                                 <div class="sortblock__sort sort">
@@ -209,7 +209,7 @@
                 if(is_disabled === 'false') {
                     let nextPage = parseInt($('.pagination__item--active').attr('aria-current')) + 1;
                     $.ajax({
-                        url: '{{route('categories.show', $category->alias)}}?page='+nextPage,
+                        url: '{{route('show_search')}}?page='+nextPage,
                         success: function (response) {
                             $('.category-page__products').append(response['data']);
                             let next_link = document.querySelector('.pagination__item--next');

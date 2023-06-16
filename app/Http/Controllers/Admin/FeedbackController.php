@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\FeedbackChat;
+use App\Services\SiteService;
 use Illuminate\Http\Request;
 
 class FeedbackController extends Controller
@@ -18,5 +19,16 @@ class FeedbackController extends Controller
         $chat->update(['status' => 2]);
         $chat->save();
         return view('admin.chats.chat', compact('chat'));
+    }
+
+    public function updateStatus(Request $request) {
+        $chat_ids = $request->checkbox;
+        $chat = FeedbackChat::query()->whereIn('id', $chat_ids)->update([
+            'status' => $request->status
+        ]);
+        return response()->json([
+           'message' => 'Статус успешно обновлен',
+            'title' => SiteService::getChatStatus($request->status)
+        ]);
     }
 }

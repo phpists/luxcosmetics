@@ -20,6 +20,11 @@ class FeedbackChat extends Model
         'assignee_id'
     ];
 
+    const NEW = 1;
+
+    const VIEWED = 2;
+    const CLOSED = 3;
+
     public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(User::class);

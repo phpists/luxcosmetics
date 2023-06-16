@@ -38,7 +38,12 @@
     document.getElementById('header_search').addEventListener('input', function (ev) {
         let results_container = document.getElementById('search_results');
         if (ev.target.value !== '') {
-            fetch('{{route('search_prompt')}}?search='+ev.target.value).then(async (resp) => {
+            fetch('{{route('search_prompt')}}?search='+ev.target.value, {
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'Content-Type': 'application/json'
+                },
+            }).then(async (resp) => {
                 let result = await resp.json();
                 results_container.innerHTML = "";
                 for (const resultKey in result) {

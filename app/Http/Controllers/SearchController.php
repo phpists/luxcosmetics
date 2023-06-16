@@ -31,6 +31,34 @@ class SearchController extends Controller
 
         return response()->json($products);
     }
+
+    public function showResultsPage(Request $request) {
+        $search = $request->get('search');
+        $products = $this->search($request);
+        $products = $products
+            ->select('products.*', 'images.path as image')
+            ->join('images', 'products.image_print_id', 'images.id')
+            ->where('images.table_name', 'products')
+            ->with('brand')
+            ->paginate(12);
+        $products_id = [];
+        foreach ($products as $product) {
+            $products_id[] = $product->id;
+        }
+        $variations = Product::getVariations($products_id);
+        $products_list = view('categories.parts.products', compact('products', 'variations'))->render();
+
+        if ($request->ajax()) {
+            return response()->json([
+                'data' => $products_list,
+                'next_link' => $products->nextPageUrl(),
+                'current_page' => $products->currentPage()
+            ]);
+        }
+        $last_page_url = $products->url($products->lastPage());
+        $pagination = view('categories.parts.pagination', compact('products', 'last_page_url'))->render();
+        return view('search', compact('products', 'pagination', 'products_list', 'search'));
+    }
     public function search_prompt(Request $request): JsonResponse
     {
         $products = $this->search($request)

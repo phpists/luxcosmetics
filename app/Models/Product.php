@@ -70,4 +70,19 @@ class Product extends Model
         return $this->belongsToMany(PropertyValue::class, 'product_property_values');
     }
 
+    static function getVariations($product_ids): \Illuminate\Database\Eloquent\Collection|array
+    {
+        if (sizeof($product_ids) > 0) {
+            return Product::query()
+                ->select('products.*', 'images.path as image', 'product_variations.product_id as parent_id')
+                ->join('images', 'products.image_print_id', 'images.id')
+                ->join('product_variations', 'product_variations.variation_id', 'products.id')
+                ->whereIn('product_variations.product_id', $product_ids)
+                ->where('images.table_name', 'products')
+                ->with('brand')
+                ->get();
+        }
+        return [];
+    }
+
 }

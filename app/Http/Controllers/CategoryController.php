@@ -34,17 +34,7 @@ class CategoryController extends Controller
         foreach ($products as $product) {
             $products_id[] = $product->id;
         }
-        $variations = [];
-        if (sizeof($products_id) > 0) {
-            $variations = Product::query()
-                ->select('products.*', 'images.path as image', 'product_variations.product_id as parent_id')
-                ->join('images', 'products.image_print_id', 'images.id')
-                ->join('product_variations', 'product_variations.variation_id', 'products.id')
-                ->whereIn('product_variations.product_id', $products_id)
-                ->where('images.table_name', 'products')
-                ->with('brand')
-                ->get();
-        }
+        $variations = Product::getVariations($products_id);
         $products_list = view('categories.parts.products', compact('products', 'variations'))->render();
 
         if ($request->ajax()) {

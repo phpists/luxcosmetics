@@ -22,7 +22,8 @@ Route::get('c', [CategoryController::class, 'index'])->name('categories');
 Route::get('c/{alias}', [CategoryController::class, 'show'])->name('categories.show');
 // Search
 Route::get('/search_prompt', [\App\Http\Controllers\SearchController::class, 'search_prompt'])->name('search_prompt');
-Route::get('/search', [\App\Http\Controllers\SearchController::class, 'index'])->name('search_products');
+Route::get('/api/search', [\App\Http\Controllers\SearchController::class, 'index'])->name('search_products');
+Route::get('/search', [\App\Http\Controllers\SearchController::class, 'showResultsPage'])->name('show_search');
 // Products
 Route::get('products/{alias}', [\App\Http\Controllers\ProductController::class, 'show'])->name('products.product');
 //Route::get('products/{alias}/{variation_id}', [\App\Http\Controllers\ProductController::class, 'show'])->name('products.product');
@@ -153,6 +154,7 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function 
     // Feedback Chat
     Route::get('chats', [\App\Http\Controllers\Admin\FeedbackController::class, 'index'])->name('admin.chats');
     Route::get('chats/{id}/edit', [\App\Http\Controllers\Admin\FeedbackController::class, 'edit'])->name('admin.chats.edit');
+    Route::post('chats/update_status', [\App\Http\Controllers\Admin\FeedbackController::class, 'updateStatus'])->name('admin.chats.updateStatus');
 
     /* News */
     Route::get('newses', [\App\Http\Controllers\Admin\News\NewsController::class, 'index'])->name('admin.news');

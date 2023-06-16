@@ -32,7 +32,14 @@
                                 </div>
                                 <a href="">16 отзывов</a>
                             </div>
-                            <div class="product-page__available"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#check')}}"></use></svg> В наличии</div>
+                            <div class="product-page__available"><svg class="icon">
+                                    @if(\App\Enums\AvailableOptions::AVAILABLE->value === $product->availability)
+                                        <use xlink:href="{{asset('images/dist/sprite.svg#check')}}"></use>
+                                    @else
+                                        <use xlink:href="{{asset('images/dist/sprite.svg#close')}}"></use>
+                                    @endif
+                                </svg>
+                                {{\App\Services\SiteService::getProductStatus($product->availability)}}</div>
                         </div>
                     </div>
                     @php
@@ -73,7 +80,14 @@
                                 </div>
                                 <a href="">16 отзывов</a>
                             </div>
-                            <div class="product-page__available"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#check')}}"></use></svg> В наличии</div>
+                            <div class="product-page__available"><svg class="icon">
+                                    @if(\App\Enums\AvailableOptions::AVAILABLE->value === $product->availability)
+                                        <use xlink:href="{{asset('images/dist/sprite.svg#check')}}"></use>
+                                    @else
+                                        <use xlink:href="{{asset('images/dist/sprite.svg#close')}}"></use>
+                                    @endif
+                                </svg>
+                                {{\App\Services\SiteService::getProductStatus($product->availability)}}</div>
                         </div>
                     </div>
                     <div class="product-page__options">

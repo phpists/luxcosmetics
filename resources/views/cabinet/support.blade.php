@@ -8,7 +8,7 @@
             @csrf
             <div class="form__fieldset">
                 <legend class="form__label">Причина обращения *</legend>
-                <select name="feedbacks_reason_id" id="" class="selectCustom">
+                <select required name="feedbacks_reason_id" id="" class="selectCustom">
                     @foreach($feedback_reasons as $reason)
                         <option value="{{$reason->id}}">{{$reason->reason}}</option>
                     @endforeach
@@ -18,19 +18,19 @@
                 <div class="form__col form__col--50">
                     <div class="form__fieldset">
                         <legend class="form__label">Адрес электронной почты *</legend>
-                        <input type="text" name="email" class="form__input">
+                        <input type="text" required name="email" class="form__input">
                     </div>
                 </div>
                 <div class="form__col form__col--50">
                     <div class="form__fieldset">
                         <legend class="form__label">Номер телефона *</legend>
-                        <input type="text" name="phone" class="form__input">
+                        <input type="text" required name="phone" class="form__input">
                     </div>
                 </div>
             </div>
             <div class="form__fieldset">
                 <legend class="form__label">Номер заказа *</legend>
-                <input type="text" name="order_number" class="form__input">
+                <input required type="text" name="order_number" class="form__input">
             </div>
             <div class="form__fieldset">
                 <legend class="form__label">Тема обращения</legend>

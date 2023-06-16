@@ -4,9 +4,9 @@
             <div class="col-lg-12">
                 <div class="header__container">
                     <div class="header__logo"><a href="{{route('home')}}"><img src="{{asset('images/dist/logo.svg')}}" alt=""></a></div>
-                    <form action="" class="header__search search">
+                    <form action="{{route('show_search')}}" class="header__search search">
                         <div id="header-container" style="position: relative">
-                            <input type="text" id="header_search" class="search__input" placeholder="Поиск по каталогу">
+                            <input type="text" minlength="2" name="search" id="header_search" class="search__input" placeholder="Поиск по каталогу">
                             <div id="search_results" style="position: absolute; background: whitesmoke; z-index: 2; width: 100%"></div>
                         </div>
                         <button class="search__btn"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#search')}}"></use></svg></button>
