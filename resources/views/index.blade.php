@@ -452,21 +452,6 @@
             </div>
         </div>
     </section>
-    <section class="maincategory maincategory--threecol">
-        <div class="container">
-            <div class="row">
-                @foreach (\App\Services\SaleService::getSale() as $item)                    
-                <div class="col-lg-4 col-md-4 col-sm-4">
-                    <div class="category">
-                        <div class="category__image" style="background-image: url({{asset('images/uploads/sale/' . $item->image)}});"></div>
-                        <div class="category__title"><a href="{{ route('index.sale', $item->id) }}">{{ $item->title }}</a></div>
-                        <div class="category__subtitle">{{ Str::limit(strip_tags($item->text), $limit = 30, $end = '...') }}</div>
-                    </div>
-                </div>
-                @endforeach
-            </div>
-        </div>
-    </section>
     <section class="newsblock">
         <div class="container">
             <div class="row">
