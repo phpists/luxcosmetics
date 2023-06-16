@@ -9,7 +9,7 @@ class ProductVariation extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['size', 'price', 'product_id', 'discount_price'];
+    protected $fillable = ['product_id', 'variation_id'];
 
     public $timestamps = false;
 }

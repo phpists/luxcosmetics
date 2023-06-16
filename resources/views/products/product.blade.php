@@ -40,8 +40,7 @@
                     @endphp
                     <div class="product-page__galleryblock">
                         <div class="product-page__gallery">
-
-                            <div class="gallery ">
+                            <div class="gallery" id="product_gallery">
                                 @foreach($images as $image)
                                     <div class="gallery__item"><a href="{{asset('images/uploads/products/'.$image->path)}}"><img src="{{asset('images/uploads/products/'.$image->path)}}" alt=""></a></div>
                                 @endforeach
@@ -77,17 +76,19 @@
                             <div class="product-page__available"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#check')}}"></use></svg> В наличии</div>
                         </div>
                     </div>
-                    @if(sizeof($product->product_variations))
-                        <div class="product-page__options">
-                            <div class="product-page__options-title">Выбранный размер: <b>{{$selected_variation->size}}</b></div>
-                            @foreach($product->product_variations as $product_variation)
-                                <label class="volume">
-                                    <input type="radio" name="volume"/>
-                                    <div class="volume__text"><b>{{$product_variation->size}}</b> {{$product_variation->discount_price?? $product_variation->price}} ₽ </div>
-                                </label>
-                            @endforeach
-                        </div>
-                    @endif
+                    <div class="product-page__options">
+                        <div class="product-page__options-title">Выбранный размер: <b>{{$product->size}}</b></div>
+                        <label class="volume">
+                            <input type="radio" class="variation__select" checked value="{{$product->alias}}" name="volume"/>
+                            <div class="volume__text"><b>{{$product->size}}</b> {{$product->discount_price?? $product->price}} ₽ </div>
+                        </label>
+                        @foreach($product_variations as $product_variation)
+                            <label class="volume">
+                                <input class="variation__select" type="radio" value="{{$product_variation->alias}}" name="volume"/>
+                                <div class="volume__text"><b>{{$product_variation->size}}</b> {{$product_variation->discount_price?? $product_variation->price}} ₽ </div>
+                            </label>
+                        @endforeach
+                    </div>
                     <div class="product-page__options">
                         <div class="product-page__options-title">Выбранный цвет: <b>Red</b></div>
                         <label class="color">
@@ -109,8 +110,10 @@
                     </div>
                     <div class="product-page__priceblock">
                         <div class="product-page__prices">
-                            <div class="product-page__price">{{$selected_variation->discount_price??$selected_variation->price}} ₽ </div>
-                            <del class="product-page__oldprice">{{$selected_variation->price}} ₽ </del>
+                            <div class="product-page__price">{{$product->discount_price??$product->price}} ₽ </div>
+                            @isset($product->discount_price)
+                                <del class="product-page__oldprice">{{$product->price}} ₽ </del>
+                            @endisset
                         </div>
                         <div class="product-page__points"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#warning')}}"></use></svg><a href=""> Заработайте 345 баллов</a></div>
                     </div>
@@ -1855,6 +1858,33 @@
             <div class="done-window__subtitle">Наш менеджер свяжется с Вами в течении 15 минут</div>
         </div>
     </div>
+@endsection
+
+@section('scripts')
+    <script>
+        document.querySelectorAll('.variation__select').forEach(function (el) {
+            el.addEventListener('change', function () {
+                window.location = '/products/'+el.value;
+                {{--fetch('/products/'+el.value, {--}}
+                {{--    method: 'GET',--}}
+                {{--    headers: {--}}
+                {{--        'credentials': 'same-origin',--}}
+                {{--        'X-Requested-With': 'XMLHttpRequest',--}}
+                {{--        'Content-Type': 'application/json'--}}
+                {{--    },--}}
+                {{--}).then(async (resp) => {--}}
+                {{--    let data = await resp.json();--}}
+                {{--    let images = '';--}}
+                {{--    for (const id in data['images']) {--}}
+                {{--        images += '<div class="gallerythumb__item"><img src="{{asset('images/uploads/products/')}}/'+data['images'][id]['image_path']+'" alt=""></div>';--}}
+                {{--    }--}}
+                {{--    console.log(images)--}}
+                {{--    document.getElementById('product_gallery').innerHTML = images;--}}
+
+                {{--})--}}
+            })
+        })
+    </script>
 @endsection
 
 

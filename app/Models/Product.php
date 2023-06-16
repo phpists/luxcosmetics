@@ -28,7 +28,11 @@ class Product extends Model
         'description_3',
         'availability',
         'created_at',
-        'updated_at'
+        'updated_at',
+        'show_in_discount',
+        'show_in_popular',
+        'show_in_new',
+        'size'
     ];
 
     public function getImages(): Collection
@@ -52,5 +56,12 @@ class Product extends Model
     public function product_variations()
     {
         return $this->hasMany(ProductVariation::class);
+    }
+
+    public function filterVariations($variations) {
+        if (sizeof($variations) > 0) {
+            return $variations->where('parent_id', $this->id);
+        }
+        return $variations;
     }
 }

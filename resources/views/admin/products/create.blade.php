@@ -77,6 +77,12 @@
                                                 @endforeach
                                             </select>
                                         </div>
+                                        <div class="form-group" id="variations_container">
+                                            <label>Модификации</label>
+                                            <select class="form-control select2" id="variations_select"
+                                                    name="variations_id[]" multiple>
+                                            </select>
+                                        </div>
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <div class="form-group">
@@ -90,12 +96,16 @@
                                                 </div>
                                             </div>
                                             <div class="col-md-2">
-                                                <label for="exampleSelect2">Ціна</label>
+                                                <label for="exampleSelect2">Цена</label>
                                                 <input type="number" step="any" name="price" class="form-control" required/>
                                             </div>
                                             <div class="col-md-2">
-                                                <label for="exampleSelect2">Знижка</label>
+                                                <label for="exampleSelect2">Скидка</label>
                                                 <input type="number" step="any" name="discount_price" class="form-control"/>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <label>Размер</label>
+                                                <input type="text" name="size" required class="form-control"/>
                                             </div>
                                         </div>
                                     </div>
@@ -151,15 +161,39 @@
                                         </div>
                                     </div>
                                 </div>
-
                                 <div class="row">
-                                    <div class="col-md-12 mb-5">
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <div class="checkbox-inline">
+                                                <label class="checkbox">
+                                                    <input type="checkbox" name="show_in_popular"/>
+                                                    <span></span>
+                                                    Добавить в популярные
+                                                </label>
+                                                <label class="checkbox">
+                                                    <input type="checkbox" name="show_in_discount"/>
+                                                    <span></span>
+                                                    Добавить в товары со скидкой
+                                                </label>
+                                                <label class="checkbox">
+                                                    <input type="checkbox" name="show_in_new"/>
+                                                    <span></span>
+                                                    Добавить в новинки
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12 mb-5">
                                         <label>Описание товара</label>
                                         <textarea class="textEditor" name="description_1"></textarea>
                                     </div>
-                                    <div class="col-md-12 mb-5">
-                                        <label>Как использовать</label>
-                                        <textarea class="textEditor" name="description_2"></textarea>
+                                    <div class="col-12 mb-5">
+                                        <div class="form-group">
+                                            <label>Как использовать</label>
+                                            <textarea class="textEditor form-control" name="description_2"></textarea>
+                                        </div>
                                     </div>
                                     <div class="col-md-12 mb-5">
                                         <label>Доп. описание</label>
@@ -250,9 +284,37 @@
     <script src="https://cdn.tiny.cloud/1/3h27q9hxq81txaaz86zvgxqs5cuixqt8167b543rwzusizui/tinymce/6/tinymce.min.js"
             referrerpolicy="origin"></script>
     <script>
-        $('#kt_select2_4').select2({
-            allowClear: true
-        });
+        $('#kt_select2_4').select2();
+        $(document).ready(function () {
+            let variations_select = $('#variations_select');
+            variations_select.select2({
+                allowClear: true,
+                ajax: {
+                    url: '{{route('search_products')}}',
+                    data: function (params) {
+                        var query = {
+                            search: params.term,
+                            type: 'public'
+                        }
+
+                        // Query parameters will be ?search=[term]&type=public
+                        return query;
+                    },
+                    processResults: function (data) {
+                        data = data.map((x) => {
+                            return {
+                                text: x.title, id: x.id
+                            }
+                        })
+                        // Transforms the top-level key of the response object from 'items' to 'results'
+                        return {
+                            results: data
+                        };
+                    }
+                },
+                minimumInputLength: 1
+            });
+        })
         Promise.allSettled = Promise.allSettled || ((promises) => Promise.all(
             promises.map(p => p
                 .then(value => ({
@@ -268,7 +330,7 @@
 
         tinymce.init({
             selector: '.textEditor',
-            plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed linkchecker a11ychecker tinymcespellchecker permanentpen powerpaste advtable advcode editimage tinycomments tableofcontents footnotes mergetags autocorrect typography inlinecss',
+            plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount',
             toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
             tinycomments_mode: 'embedded',
             tinycomments_author: 'Author name',

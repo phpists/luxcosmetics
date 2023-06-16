@@ -18,13 +18,14 @@ Route::get('/', [\App\Http\Controllers\HomeController::class, 'index'])->name('h
 
 
 // Categories
-Route::get('categories', [CategoryController::class, 'index'])->name('categories');
-Route::get('categories/{alias}', [CategoryController::class, 'show'])->name('categories.show');
+Route::get('c', [CategoryController::class, 'index'])->name('categories');
+Route::get('c/{alias}', [CategoryController::class, 'show'])->name('categories.show');
 // Search
 Route::get('/search_prompt', [\App\Http\Controllers\SearchController::class, 'search_prompt'])->name('search_prompt');
+Route::get('/search', [\App\Http\Controllers\SearchController::class, 'index'])->name('search_products');
 // Products
 Route::get('products/{alias}', [\App\Http\Controllers\ProductController::class, 'show'])->name('products.product');
-Route::get('products/{alias}/{variation_id}', [\App\Http\Controllers\ProductController::class, 'show'])->name('products.product');
+//Route::get('products/{alias}/{variation_id}', [\App\Http\Controllers\ProductController::class, 'show'])->name('products.product');
 Route::get('faq', [FaqController::class, 'index'])->name('faq');
 Route::get('brands', [\App\Http\Controllers\BrandController::class, 'index'])->name('brands');
 Route::get('favourites', [\App\Http\Controllers\FavouritesController::class, 'index'])->name('favourites');

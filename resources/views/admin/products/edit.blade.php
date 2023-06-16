@@ -79,10 +79,18 @@
                                 @method('PUT')
 
                                 <div class="row">
-                                    <div class="col-8">
-                                        <div class="form-group">
-                                            <label for="exampleSelect2">Название</label>
-                                            <input type="text" name="title" class="form-control" value="{{$product->title}}" required/>
+                                    <div class="col-12">
+                                        <div class="row">
+                                            <div class="col-md-10">
+                                                <div class="form-group">
+                                                    <label for="exampleSelect2">Название</label>
+                                                    <input type="text" name="title" class="form-control" value="{{$product->title}}" required/>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <label>Размер</label>
+                                                <input type="text" name="size" class="form-control" required value="{{$product->size}}"/>
+                                            </div>
                                         </div>
                                         <div class="row">
                                             <div class="col-md-8">
@@ -149,6 +157,40 @@
                                         <div class="form-group">
                                             <label for="exampleSelect2">Артикул 1C</label>
                                             <input type="text" name="code_1c" value="{{$product->code_1c}}" class="form-control" required/>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="form-group" id="variations_container">
+                                            <label>Модификации</label>
+                                            <select class="form-control select2" id="variations_select"
+                                                    name="variations_id[]" multiple>
+                                                @foreach($product_variations as $variation)
+                                                    <option value="{{$variation->id}}" selected>{{$variation->title}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <div class="checkbox-inline">
+                                                <label class="checkbox">
+                                                    <input type="checkbox" @if($product->show_in_popular) checked @endif name="show_in_popular"/>
+                                                    <span></span>
+                                                    Добавить в популярные
+                                                </label>
+                                                <label class="checkbox">
+                                                    <input type="checkbox" @if($product->show_in_discount) checked @endif name="show_in_discount"/>
+                                                    <span></span>
+                                                    Добавить в товары со скидкой
+                                                </label>
+                                                <label class="checkbox">
+                                                    <input type="checkbox" @if($product->show_in_new) checked @endif name="show_in_new"/>
+                                                    <span></span>
+                                                    Добавить в новинки
+                                                </label>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -391,6 +433,34 @@
                 if(ev.key === 'Enter') {
                     console.log(this.value)
                 }
+            });
+            let variations_select = $('#variations_select');
+            variations_select.select2({
+                allowClear: true,
+                ajax: {
+                    url: '{{route('search_products')}}',
+                    data: function (params) {
+                        var query = {
+                            search: params.term,
+                            type: 'public'
+                        }
+
+                        // Query parameters will be ?search=[term]&type=public
+                        return query;
+                    },
+                    processResults: function (data) {
+                        data = data.map((x) => {
+                            return {
+                                text: x.title, id: x.id
+                            }
+                        })
+                        // Transforms the top-level key of the response object from 'items' to 'results'
+                        return {
+                            results: data
+                        };
+                    }
+                },
+                minimumInputLength: 1
             });
         });
         // $('property_values').on('keyup', function() {

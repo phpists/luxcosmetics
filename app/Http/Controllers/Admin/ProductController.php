@@ -30,7 +30,14 @@ class ProductController extends Controller
     }
 
     public function store(Request $request) {
-        $product = new Product($request->all());
+        $request->validate([
+           'alias' => 'unique:products'
+        ]);
+        $data = $request->all();
+        $data['show_in_discount'] = array_key_exists('show_in_discount', $data)? 1: 0;
+        $data['show_in_popular'] = array_key_exists('show_in_popular', $data)? 1: 0;
+        $data['show_in_new'] = array_key_exists('show_in_new', $data)? 1: 0;
+        $product = new Product($data);
         if ($product->save()) {
             $image_path = ImageService::saveImage('uploads', "products", $request->image);
             if ($image_path !== false) {
@@ -43,6 +50,15 @@ class ProductController extends Controller
                     'image_print_id' => $image_id
                 ]);
             }
+            $variations_id = $request->variations_id??[];
+            $product_variations = [];
+            foreach ($variations_id as $variation_id) {
+                $product_variations[] = [
+                    'variation_id' => $variation_id,
+                    'product_id' => $product->id
+                ];
+            }
+            ProductVariation::query()->insert($product_variations);
         }
         return redirect()->route('admin.products')->with('success', 'Товар успешно добавлен');
     }
@@ -66,13 +82,32 @@ class ProductController extends Controller
             ->where('record_id', $product->id)
             ->where('table_name', 'products')
             ->get();
-        return view('admin.products.edit', compact('product', 'categories', 'brands', 'product_images'));
+        $product_variations = Product::query()
+            ->select('products.id as id', 'products.title as title')
+            ->join('product_variations', 'product_variations.variation_id', 'products.id')
+            ->where('product_variations.product_id', $product->id)
+            ->get();
+        return view('admin.products.edit', compact('product', 'categories', 'brands', 'product_images', 'product_variations'));
     }
 
     public function update(Request $request, $id)
     {
         $product = Product::query()->findOrFail($id);
-        $product->update($request->all());
+        $data = $request->all();
+        $data['show_in_discount'] = array_key_exists('show_in_discount', $data)? 1: 0;
+        $data['show_in_popular'] = array_key_exists('show_in_popular', $data)? 1: 0;
+        $data['show_in_new'] = array_key_exists('show_in_new', $data)? 1: 0;
+        $product->update($data);
+        $variations_id = $request->variations_id??[];
+        $product_variations = [];
+        foreach ($variations_id as $variation_id) {
+            $product_variations[] = [
+                'variation_id' => $variation_id,
+                'product_id' => $product->id
+            ];
+        }
+        ProductVariation::query()->where('product_id', $product->id)->delete();
+        ProductVariation::query()->insert($product_variations);
         return redirect()->route('admin.products')->with('success', 'Товар успешно обновлен');
     }
 
