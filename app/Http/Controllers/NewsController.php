@@ -6,9 +6,9 @@ use App\Models\NewsItem;
 
 class NewsController extends Controller
 {
-    public function show($id)
+    public function show($link)
     {
-        $item = NewsItem::findOrFail($id);
+        $item = NewsItem::where('link', $link)->firstOrFail();
         return view('news', compact('item'));
     }
 }

@@ -6,9 +6,9 @@ use App\Models\BlogItem;
 
 class BlogController extends Controller
 {
-    public function show($id)
+    public function show($link)
     {
-        $item = BlogItem::findOrFail($id);
+        $item = BlogItem::where('link', $link)->firstOrFail();
         return view('blog', compact('item'));
     }
 }

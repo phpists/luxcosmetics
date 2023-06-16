@@ -67,7 +67,7 @@
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label for="exampleSelect2">Ссылка</label>
+                                                <label for="exampleSelect2">Слаг</label>
                                                 <input type="text" name="link" class="form-control" value="{{ $item->link }}"/>
                                             </div>
                                         </div>
@@ -103,7 +103,7 @@
                                     <div class="col-md-12">
                                         <label>Текст</label>
                                         <div style="max-height: 400px; overflow-y: auto;">
-                                            <textarea id="textEditor" name="text">{{ $item->text }}</textarea>
+                                            <textarea id="textEditor" name="text" required>{{ $item->text }}</textarea>
                                         </div>
                                     </div>
                                 </div>

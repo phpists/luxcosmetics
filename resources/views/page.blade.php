@@ -1,8 +1,10 @@
 @extends('layouts.app')
 
-@section('title', $title)
+@section('title', $page->title)
 @section('content')
-    <h1>{{$title}}</h1>
-    {!! $content !!}
-    {{}}
+<div class="container">
+    <h1>{{$page->title}}</h1>
+    {!! $page->content !!}
+</div>
+
 @endsection

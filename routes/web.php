@@ -8,7 +8,6 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\FaqController;
 use Illuminate\Support\Facades\Route;
 use \App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
-use App\Models\Phone;
 
 /* Socialize */
 Auth::routes();
@@ -20,6 +19,8 @@ Route::get('/', [\App\Http\Controllers\HomeController::class, 'index'])->name('h
 // Categories
 Route::get('c', [CategoryController::class, 'index'])->name('categories');
 Route::get('c/{alias}', [CategoryController::class, 'show'])->name('categories.show');
+// Static pages
+Route::get('/pages/{alias}', [\App\Http\Controllers\PagesController::class, 'show'])->name('pages.show');
 // Search
 Route::get('/search_prompt', [\App\Http\Controllers\SearchController::class, 'search_prompt'])->name('search_prompt');
 Route::get('/api/search', [\App\Http\Controllers\SearchController::class, 'index'])->name('search_products');
@@ -201,9 +202,19 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function 
     Route::put('/brands/update', [\App\Http\Controllers\Admin\BrandController::class, 'update'])->name('admin.brands.update');
     Route::delete('/brands/delete', [\App\Http\Controllers\Admin\BrandController::class, 'delete'])->name('admin.brands.delete');
     Route::get('/brands/show', [\App\Http\Controllers\Admin\BrandController::class, 'show'])->name('admin.brands.show');
+    // Product Property Values
+    Route::post('product-property-values/store', [\App\Http\Controllers\Admin\ProductPropertyValueController::class, 'store'])->name('admin.product-property-values.store');
+    // Pages
+    Route::get('/pages', [\App\Http\Controllers\Admin\PagesController::class, 'index'])->name('admin.pages.index');
+    Route::get('/pages/{id}/edit', [\App\Http\Controllers\Admin\PagesController::class, 'edit'])->name('admin.pages.edit');
+    Route::post('/pages', [\App\Http\Controllers\Admin\PagesController::class, 'store'])->name('admin.pages.store');
+    Route::get('/pages/create', [\App\Http\Controllers\Admin\PagesController::class, 'create'])->name('admin.pages.create');
+    Route::put('/pages/update', [\App\Http\Controllers\Admin\PagesController::class, 'update'])->name('admin.pages.update');
+    Route::delete('/pages/{id}/delete', [\App\Http\Controllers\Admin\PagesController::class, 'delete'])->name('admin.pages.delete');
 });
 
-Route::get('/news/new/{id}', [\App\Http\Controllers\NewsController::class, 'show'])->name('index.news');
-Route::get('/blog/blog/{id}', [\App\Http\Controllers\BlogController::class, 'show'])->name('index.blog');
+Route::get('/news/{link}', [\App\Http\Controllers\NewsController::class, 'show'])->name('index.news');
+Route::get('/blog/{link}', [\App\Http\Controllers\BlogController::class, 'show'])->name('index.blog');
+
 
 Route::get('/user/home', [App\Http\Controllers\HomeController::class, 'home'])->name('user.home');

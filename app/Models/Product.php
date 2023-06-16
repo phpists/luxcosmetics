@@ -67,7 +67,7 @@ class Product extends Model
 
     public function values()
     {
-        return $this->belongsToMany(PropertyValue::class, 'product_property_values');
+        return $this->belongsToMany(PropertyValue::class, 'product_property_values', 'product_id', 'property_value_id');
     }
 
     static function getVariations($product_ids): \Illuminate\Database\Eloquent\Collection|array

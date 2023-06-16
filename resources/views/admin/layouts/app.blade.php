@@ -225,7 +225,7 @@
                             aria-haspopup="true" data-menu-toggle="hover">
                             <a href="javascript:;" class="menu-link menu-toggle">
                                 <i class="fas flaticon2-copy menu-icon"></i>
-                                <span class="menu-text">Сторінки</span>
+                                <span class="menu-text">Страницы</span>
                                 <i class="menu-arrow"></i>
                             </a>
                             <div class="menu-submenu" style="" kt-hidden-height="160">
@@ -249,13 +249,22 @@
                                             <span class="menu-text">Блог</span>
                                         </a>
                                     </li>
+                                    <li class="menu-item {{ request()->routeIs('admin.pages.index') ? 'menu-item-active' : '' }}"
+                                        aria-haspopup="true">
+                                        <a href="{{route('admin.pages.index')}}" class="menu-link">
+                                            <i class="menu-bullet menu-bullet-dot">
+                                                <span></span>
+                                            </i>
+                                            <span class="menu-text">Статические</span>
+                                        </a>
+                                    </li>
                                 </ul>
                             </div>
 
                         </li>
 
                         <li class="menu-section ">
-                            <h4 class="menu-text">Налаштування</h4>
+                            <h4 class="menu-text">Настройки</h4>
                             <i class="menu-icon ki ki-bold-more-hor icon-md"></i>
                         </li>
                         <li class="menu-item {{ request()->routeIs('admin.faqs') ? 'menu-item-active' : '' }}"

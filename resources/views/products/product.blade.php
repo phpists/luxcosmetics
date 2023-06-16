@@ -165,6 +165,16 @@
                                 </dd>
                             </dl>
                             <dl>
+                                <dt>Характеристики</dt>
+                                <dd style="display: none;">
+                                    @forelse($product->values as $value)
+                                        <p style="padding: 0 15px">{{ $value->property->name ?? 'UNDEFINED' }}: <b style="font-weight: bolder">{{ $value->value . ' ' . $value->property->measure }}</b></p><hr>
+                                    @empty
+                                         <h4>Нету характеристик</h4>
+                                    @endforelse
+                                </dd>
+                            </dl>
+                            <dl>
                                 <dt>Как использовать <svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#arrow')}}"></use></svg></dt>
                                 <dd style="display: none;">
                                     {!! $product->description_2 !!}

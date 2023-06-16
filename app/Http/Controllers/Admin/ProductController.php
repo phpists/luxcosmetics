@@ -92,6 +92,7 @@ class ProductController extends Controller
 
     public function update(Request $request, $id)
     {
+        dd($request->all());
         $product = Product::query()->findOrFail($id);
         $data = $request->all();
         $data['show_in_discount'] = array_key_exists('show_in_discount', $data)? 1: 0;
