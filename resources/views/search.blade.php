@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Категория')
+@section('title', 'Поиск')
 @section('content')
     <section class="crumbs">
         <div class="container">

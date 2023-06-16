@@ -72,4 +72,15 @@ class User extends Authenticatable
         );
     }
 
+    public function chats(): Attribute
+    {
+        return Attribute::make(
+            get: fn() => FeedbackChat::query()
+                ->select('feedback_chats.*')
+                ->join('feedback_message', 'feedback_chats.id', 'feedback_message.chat_id')
+                ->where('feedback_message.user_id', $this->id)
+                ->get()
+        );
+    }
+
 }

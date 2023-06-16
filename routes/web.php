@@ -195,6 +195,12 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function 
     Route::post('property-values/update', [\App\Http\Controllers\Admin\PropertyValueController::class, 'update'])->name('admin.property-values.update');
     Route::post('property-values/drop', [\App\Http\Controllers\Admin\PropertyValueController::class, 'drop'])->name('admin.property-values.drop');
 
+    // Brands
+    Route::get('/brands', [\App\Http\Controllers\Admin\BrandController::class, 'index'])->name('admin.brands.index');
+    Route::post('/brands', [\App\Http\Controllers\Admin\BrandController::class, 'store'])->name('admin.brands.store');
+    Route::put('/brands/update', [\App\Http\Controllers\Admin\BrandController::class, 'update'])->name('admin.brands.update');
+    Route::delete('/brands/delete', [\App\Http\Controllers\Admin\BrandController::class, 'delete'])->name('admin.brands.delete');
+    Route::get('/brands/show', [\App\Http\Controllers\Admin\BrandController::class, 'show'])->name('admin.brands.show');
 });
 
 Route::get('/news/new/{id}', [\App\Http\Controllers\NewsController::class, 'show'])->name('index.news');

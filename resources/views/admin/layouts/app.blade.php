@@ -175,6 +175,20 @@
                             <div class="menu-submenu" style="" kt-hidden-height="160">
                                 <i class="menu-arrow"></i>
                                 <ul class="menu-subnav">
+                                    <li class="menu-item {{ request()->routeIs('admin.brands.index') ? 'menu-item-active' : '' }}"
+                                        aria-haspopup="true">
+                                        <a href="{{route('admin.brands.index')}}" class="menu-link">
+                                            <i class="menu-bullet menu-bullet-dot">
+                                                <span></span>
+                                            </i>
+                                            <span class="menu-text">Бренды</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="menu-submenu" style="" kt-hidden-height="160">
+                                <i class="menu-arrow"></i>
+                                <ul class="menu-subnav">
                                     <li class="menu-item {{ request()->routeIs('admin.properties.index') ? 'menu-item-active' : '' }}"
                                         aria-haspopup="true">
                                         <a href="{{route('admin.properties.index')}}" class="menu-link">

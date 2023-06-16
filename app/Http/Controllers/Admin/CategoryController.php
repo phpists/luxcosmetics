@@ -65,6 +65,9 @@ class CategoryController extends Controller
         $category = Category::query()->find($id);
         if ($category->delete()) {
             ImageService::removeImage('uploads', 'categories', $category->image);
+            Category::query()->where('category_id', $category->id)->update([
+                'category_id' => $category->category_id
+            ]);
         }
         return redirect()->back()->with('succcess', 'Категория успешно удалена');
     }
@@ -118,7 +121,15 @@ class CategoryController extends Controller
     {
         $categoriesId = $request->checkbox;
         if ($categoriesId) {
-            Category::whereIn('id', $categoriesId)->delete();
+            $categories = Category::query()->whereIn('id', $categoriesId)->get();
+            foreach ($categories as $category) {
+                if($category->image) {
+                    ImageService::removeImage('uploads', 'categories', $category->image);
+                }
+                Category::query()->where('category_id', $category->id)->whereNotIn('id', $categoriesId)->update([
+                    'category_id' => $category->category_id
+                ]);
+            }
         }
 
         return response()->json([
