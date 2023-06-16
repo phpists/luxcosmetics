@@ -6,6 +6,9 @@
             height: 600px !important;
             width: 100%;
         }
+        .select2-container--default {
+            width: 100% !important;
+        }
     </style>
 @endsection
 
@@ -330,32 +333,24 @@
                         </div>
                         <div class="tab-pane fade" id="kt_tab_pane_4_4" role="tabpanel"
                              aria-labelledby="kt_tab_pane_2_4">
-                            <div class="row mb-5">
-                                <div class="col">
-                                    <div class="mb-7">
-                                        <h3>Редактировать модификации</h3>
-                                    </div>
-                                </div>
-                                <div class="col-auto">
-                                    <button data-toggle="modal" data-target="#createProductVariationModal"
-                                            class="btn btn-primary font-weight-bold">
-                                        <i class="fas fa-plus mr-2"></i>
-                                        Добавить
-                                    </button>
-                                </div>
-                            </div>
+                            <div class="row">
                             @foreach($product->category->properties as $property)
-                                <div class="row">
-                                    <div class="col-12">
-                                        <div class="form-group props-select">
-                                            <label>{{$property->name}}</label>
-                                            <select class="form-control select2 property_values" multiple="multiple" id="prop_{{$property->id}}" name="availability">
-                                                <option>Выберете или добавьте значение</option>
+                                    <div class="col-md-4 px-10">
+                                        <div class="form-group row props-select" data-product-id="{{ $product->id }}" data-property-id="{{ $property->id }}">
+                                            <label class="col-form-label text-right col-auto">{{$property->name}}</label>
+                                            <div class="col">
+                                            <select class="form-control select2 property_values" id="prop_{{$property->id}}" name="property[{{ $property->id }}]">
+                                                <option value=""></option>
+                                                @foreach($property->values as $value)
+                                                    <option value="{{ $value->id }}" @if($product->values->contains(function($item, $ket) use ($value) { return $item->id === $value->id; })) selected @endif>{{ $value->value }}</option>
+                                                @endforeach
                                             </select>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
                             @endforeach
+                            </div>
+
                         </div>
                     </div>
                 </div>
@@ -384,9 +379,35 @@
 
         $(document).ready(function () {
             $('.select2.property_values').select2({
-                width: 'resolve',
-                allowClear: true
+                placeholder: 'Выберете или добавьте значение',
+                tags: true,
+            }).on('select2:select', function (e) {
+                let product_id = $(this).parents('div.props-select').data('product-id'),
+                    data = e.params.data;
+
+                console.log(data);
+
+                if (!data.element) {
+                    let property_id = $(this).parents('div.props-select').data('property-id')
+
+                    $.ajax({
+                        type: 'POST',
+                        url: '{{ route('admin.property-values.store') }}',
+                        data: {
+                            property_id: property_id,
+                            value: data.id
+                        },
+                        success: function (response) {
+                            if (response) {
+                                setPropertyValue(product_id, response.id)
+                            }
+                        }
+                    })
+                } else {
+                    setPropertyValue(product_id, data.id)
+                }
             });
+
             $('.props-select .select2-search__field').keyup(function (ev) {
                 if(ev.key === 'Enter') {
                     console.log(this.value)
@@ -477,6 +498,21 @@
                 },
                 error: function (response) {
                     console.log(response)
+                }
+            })
+        }
+
+
+        function setPropertyValue(product_id, property_value_id) {
+            $.ajax({
+                type: 'POST',
+                url: '{{ route('admin.product-property-values.store') }}',
+                data: {
+                    product_id: product_id,
+                    property_value_id: property_value_id
+                },
+                success: function (response) {
+                    console.log('property saved successfully')
                 }
             })
         }

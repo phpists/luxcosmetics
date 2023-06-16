@@ -71,6 +71,7 @@ class ProductController extends Controller
 
     public function update(Request $request, $id)
     {
+        dd($request->all());
         $product = Product::query()->findOrFail($id);
         $product->update($request->all());
         return redirect()->route('admin.products')->with('success', 'Товар успешно обновлен');
