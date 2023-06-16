@@ -64,4 +64,10 @@ class Product extends Model
         }
         return $variations;
     }
+
+    public function values()
+    {
+        return $this->belongsToMany(PropertyValue::class, 'product_property_values');
+    }
+
 }

@@ -155,64 +155,36 @@
                         </div>
                         <div class="tab-pane fade" id="kt_tab_pane_2_4" role="tabpanel"
                              aria-labelledby="kt_tab_pane_2_4">
-{{--                            <form action="{{ route('admin.category.update.seo') }}" method="POST">--}}
-{{--                                @csrf--}}
-{{--                                <input type="hidden" name="category_id" value="{{ $category->id }}">--}}
-{{--                                <div class="row">--}}
-{{--                                    <div class="col-md-12">--}}
-{{--                                        <div class="form-group">--}}
-{{--                                            <label>H1</label>--}}
-{{--                                            <input type="text" name="h1" class="form-control"--}}
-{{--                                                   value="{{ $seo->h1 ?? '' }}"/>--}}
-{{--                                        </div>--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
+                            <div class="col-auto">
+                                <a href="javascript:;" class="btn btn-primary"
+                                   data-toggle="modal" data-target="#createPropertyValueModal">
+                                    <i class="las la-plus me-2"></i>Добавить
+                                </a>
+                            </div>
 
-{{--                                <div class="row">--}}
-{{--                                    <div class="col-md-12">--}}
-{{--                                        <div class="form-group">--}}
-{{--                                            <label>Meta title</label>--}}
-{{--                                            <input type="text" name="meta_title" class="form-control"--}}
-{{--                                                   value="{{ $seo->meta_title ?? '' }}"/>--}}
-{{--                                        </div>--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
+                            <div class="row px-3 py-2 mt-5">
+                                @foreach($property->values as $property_value)
+                                    <div class="item col-md-4 px-6 py-3">
+                                        <div class="row">
+                                            <div class="col pr-0">
+                                                <input readonly class="form-control form-control-sm w-100" type="text" name="value" value="{{ $property_value->value }}">
+                                            </div>
+                                            <div class="col-auto pl-2">
+                                                <button type="button" class="btn btn-sm btn-icon btn-light-warning edit-property-value" data-id="{{ $property_value->id }}">
+                                                    <i class="flaticon-edit"></i>
+                                                </button>
+                                                <button type="button" class="btn btn-sm btn-icon btn-light-success save-property-value d-none" data-id="{{ $property_value->id }}">
+                                                    <i class="flaticon2-checkmark"></i>
+                                                </button>
+                                                <button type="button" class="btn btn-sm btn-icon btn-light-danger drop-property-value" data-id="{{ $property_value->id }}">
+                                                    <i class="flaticon-delete"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
 
-{{--                                <div class="row">--}}
-{{--                                    <div class="col-md-12">--}}
-{{--                                        <div class="form-group">--}}
-{{--                                            <label>Meta robots</label>--}}
-{{--                                            <input type="text" name="meta_robots" class="form-control"--}}
-{{--                                                   value="{{ $seo->meta_robots ?? '' }}"/>--}}
-{{--                                        </div>--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
-
-{{--                                <div class="row">--}}
-{{--                                    <div class="col-md-12">--}}
-{{--                                        <div class="form-group">--}}
-{{--                                            <label>Meta description</label>--}}
-{{--                                            <textarea class="form-control" id="meta_description"--}}
-{{--                                                      name="meta_description">{{ $seo->meta_description ?? '' }}</textarea>--}}
-{{--                                        </div>--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
-
-{{--                                <div class="row">--}}
-{{--                                    <div class="col-md-12">--}}
-{{--                                        <div class="form-group">--}}
-{{--                                            <label>Meta keywords</label>--}}
-{{--                                            <textarea class="form-control" id="meta_keywords"--}}
-{{--                                                      name="meta_keywords">{{ $seo->meta_keywords ?? '' }}</textarea>--}}
-
-{{--                                        </div>--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
-
-{{--                                <div class="card-footer">--}}
-{{--                                    <button type="submit" class="btn btn-primary mr-2">Сохранить</button>--}}
-{{--                                </div>--}}
-{{--                            </form>--}}
                         </div>
                     </div>
                 </div>
@@ -223,8 +195,8 @@
     </div>
     <!--end::Container-->
     <!--end::Entry-->
-{{--    @include('admin.categories.modals.create')--}}
-{{--    @include('admin.categories.modals.update')--}}
+    @include('admin.properties.modals.create_value')
+    @include('admin.properties.modals.update_value')
 
 @endsection
 
@@ -275,6 +247,71 @@
             var createImagePlugin = new KTImageInput('createImagePlugin');
             var createPageImagePlugin = new KTImageInput('createPageImagePlugin');
         });
+
+
+
+
+
+        $(document).on('click', '.edit-property-value', function() {
+            let $edit_button = $(this),
+                $save_button = $edit_button.next('.save-property-value');
+
+            $edit_button.addClass('d-none');
+            $save_button.removeClass('d-none');
+
+            $edit_button.parents('div.item').find('input[name="value"]').attr('readonly', false)
+        })
+
+
+        $(document).on('click', '.save-property-value', function() {
+            let $save_button = $(this),
+                $edit_button = $save_button.prev('.edit-property-value');
+
+            let id = $save_button.data('id'),
+                value = $edit_button.parents('div.item').find('input[name="value"]').val();
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                url: '{{ route('admin.property-values.update') }}',
+                method: "POST",
+                data: {
+                    id: id,
+                    value: value
+                },
+                success: function (data) {
+                    $edit_button.removeClass('d-none');
+                    $save_button.addClass('d-none');
+
+                    $edit_button.parents('div.item').find('input[name="value"]').attr('readonly', true)
+                },
+            })
+        })
+
+
+        $(document).on('click', '.drop-property-value', function(e) {
+            let button = this;
+
+            if (!confirm('Вы уверены, что хотите удалить запись?')) return
+
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                url: '{{ route('admin.property-values.drop') }}',
+                method: "POST",
+                data: {
+                    id: button.dataset.id
+                },
+                success: function (data) {
+                    $(button).parents('div.item').remove()
+                },
+            })
+        })
     </script>
 @endsection
 

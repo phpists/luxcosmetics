@@ -46,98 +46,24 @@
                                             </div>
                                         </div>
                                     </div>
+                                    @foreach($category->filter_properties as $category_property)
                                     <div class="filters__item filter">
-                                        <div class="filter__title">Бренд <svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#arrow')}}"></use></svg></div>
+                                        <div class="filter__title">{{ $category_property->name }} ({{ $category_property->measure }}) <svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#arrow')}}"></use></svg></div>
                                         <div class="filter__block">
                                             <div class="filter__wrap filter__scroll">
+                                                @foreach($category_property->values as $property_value)
                                                 <label class="checkbox">
-                                                    <input type="checkbox" />
-                                                    <div class="checkbox__text">Gucci</div>
+                                                    <input type="checkbox" value="{{ $property_value->id }}" />
+                                                    <div class="checkbox__text">{{ $property_value->value }}</div>
                                                 </label>
-                                                <label class="checkbox">
-                                                    <input type="checkbox" />
-                                                    <div class="checkbox__text">Calvin Klein</div>
-                                                </label>
-                                                <label class="checkbox">
-                                                    <input type="checkbox" />
-                                                    <div class="checkbox__text">Chanel</div>
-                                                </label>
-                                                <label class="checkbox">
-                                                    <input type="checkbox" />
-                                                    <div class="checkbox__text">Dior</div>
-                                                </label>
-                                                <label class="checkbox">
-                                                    <input type="checkbox" />
-                                                    <div class="checkbox__text">Estee Lauder</div>
-                                                </label>
-
+                                                @endforeach
                                             </div>
-                                            <button class="filter__all">Показать все</button>
+                                            @if($category_property->values->count() > 3)
+                                                <button class="filter__all">Показать все</button>
+                                            @endif
                                         </div>
                                     </div>
-                                    <div class="filters__item filter">
-                                        <div class="filter__title is-close">Цвет <svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#arrow')}}"></use></svg></div>
-                                        <div class="filter__block" style="display: none;">
-                                            <div class="filter__wrap filter__scroll">
-                                                <label class="checkbox">
-                                                    <input type="checkbox" />
-                                                    <div class="checkbox__text">Красный</div>
-                                                </label>
-                                                <label class="checkbox">
-                                                    <input type="checkbox" />
-                                                    <div class="checkbox__text">Синий</div>
-                                                </label>
-                                                <label class="checkbox">
-                                                    <input type="checkbox" />
-                                                    <div class="checkbox__text">Зеленый</div>
-                                                </label>
-                                                <label class="checkbox">
-                                                    <input type="checkbox" />
-                                                    <div class="checkbox__text">Красный</div>
-                                                </label>
-                                                <label class="checkbox">
-                                                    <input type="checkbox" />
-                                                    <div class="checkbox__text">Синий</div>
-                                                </label>
-                                                <label class="checkbox">
-                                                    <input type="checkbox" />
-                                                    <div class="checkbox__text">Зеленый</div>
-                                                </label>
-                                                <label class="checkbox">
-                                                    <input type="checkbox" />
-                                                    <div class="checkbox__text">Красный</div>
-                                                </label>
-                                                <label class="checkbox">
-                                                    <input type="checkbox" />
-                                                    <div class="checkbox__text">Синий</div>
-                                                </label>
-                                                <label class="checkbox">
-                                                    <input type="checkbox" />
-                                                    <div class="checkbox__text">Зеленый</div>
-                                                </label>
-                                            </div>
-                                            <button class="filter__all">Показать все</button>
-                                        </div>
-                                    </div>
-                                    <div class="filters__item filter">
-                                        <div class="filter__title is-close">Пол <svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#arrow')}}"></use></svg></div>
-                                        <div class="filter__block" style="display: none;">
-                                            <div class="filter__wrap filter__scroll">
-                                                <label class="checkbox">
-                                                    <input type="checkbox" />
-                                                    <div class="checkbox__text">Для мужчин</div>
-                                                </label>
-                                                <label class="checkbox">
-                                                    <input type="checkbox" />
-                                                    <div class="checkbox__text">Для женщин</div>
-                                                </label>
-                                                <label class="checkbox">
-                                                    <input type="checkbox" />
-                                                    <div class="checkbox__text">Унисекс</div>
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    @endforeach
                                 </div>
                                 <div class="filters__ftr">
                                     <button class="filters__btn">Показать</button>

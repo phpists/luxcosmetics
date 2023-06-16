@@ -30,8 +30,17 @@ class Category extends Model
         return $this->hasMany(Product::class);
     }
 
-    public function properties(): HasMany
+    public function properties()
     {
-        return $this->hasMany(PropertyCategory::class, 'category_id');
+        return $this->belongsToMany(Property::class, 'property_category', 'category_id', 'property_id')
+            ->whereHas('values')
+            ->orderBy('property_category.position');
     }
+
+    public function filter_properties()
+    {
+        return $this->properties()
+            ->where('show_in_filter', 1);
+    }
+
 }

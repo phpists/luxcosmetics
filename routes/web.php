@@ -188,6 +188,11 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function 
     Route::put('properties/{id}', [\App\Http\Controllers\Admin\PropertyController::class, 'update'])->name('admin.properties.update');
     Route::delete('properties/{id}', [\App\Http\Controllers\Admin\PropertyController::class, 'delete'])->name('admin.properties.delete');
 
+    // Property Values
+    Route::post('property-values/store', [\App\Http\Controllers\Admin\PropertyValueController::class, 'store'])->name('admin.property-values.store');
+    Route::post('property-values/update', [\App\Http\Controllers\Admin\PropertyValueController::class, 'update'])->name('admin.property-values.update');
+    Route::post('property-values/drop', [\App\Http\Controllers\Admin\PropertyValueController::class, 'drop'])->name('admin.property-values.drop');
+
 });
 
 Route::get('/news/new/{id}', [\App\Http\Controllers\NewsController::class, 'show'])->name('index.news');
