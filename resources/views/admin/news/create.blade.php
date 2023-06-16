@@ -62,13 +62,14 @@
                                         <div class="form-group">
                                             <label for="exampleSelect2">Название</label>
                                             <input type="text" name="title" class="form-control" required/>
-                                        </div>
+                                        </div>                
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="exampleSelect2">Ссылка</label>
+                                            <label for="exampleSelect2">Слаг</label>
                                             <input type="text" name="link" class="form-control"/>
                                         </div>
+                                        
                                     </div>
                                 </div>
                                 

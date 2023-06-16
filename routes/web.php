@@ -194,7 +194,8 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function 
 
 });
 
-Route::get('/news/new/{id}', [\App\Http\Controllers\NewsController::class, 'show'])->name('index.news');
-Route::get('/blog/blog/{id}', [\App\Http\Controllers\BlogController::class, 'show'])->name('index.blog');
+Route::get('/news/{link}', [\App\Http\Controllers\NewsController::class, 'show'])->name('index.news');
+Route::get('/blog/{link}', [\App\Http\Controllers\BlogController::class, 'show'])->name('index.blog');
+
 
 Route::get('/user/home', [App\Http\Controllers\HomeController::class, 'home'])->name('user.home');

@@ -6,7 +6,7 @@
             <!--begin::Page Heading-->
             <div class="d-flex align-items-baseline flex-wrap mr-5">
                 <!--begin::Page Title-->
-                <h5 class="text-dark font-weight-bold my-1 mr-5">Новости</h5>
+                <h5 class="text-dark font-weight-bold my-1 mr-5">Блог</h5>
                 <!--end::Page Title-->
             </div>
             <!--end::Page Heading-->
@@ -29,7 +29,7 @@
                 <div class="card card-custom">
                     <div class="card-header flex-wrap border-0 pt-6 pb-0">
                         <div class="card-title">
-                            <h3 class="card-label">Новости</h3>
+                            <h3 class="card-label">Блог</h3>
                         </div>
                         <div class="card-toolbar">
                             <!--begin::Dropdown-->

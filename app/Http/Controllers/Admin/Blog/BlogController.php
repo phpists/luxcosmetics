@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\BlogItem;
 use App\Services\ImageService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class BlogController extends Controller
 {
@@ -27,10 +28,16 @@ class BlogController extends Controller
 
     public function store(Request $request)
     {
+        $link = $request->link ?? Str::slug($request->title);
+
+        $validatedData = $request->validate([
+            'text' => 'required',
+        ]);
+
         BlogItem::create([
             'title' => $request->title,
-            'text' => $request->text,
-            'link' => $request->link,
+            'text' => $validatedData['text'],
+            'link' => $link,
             'status' => $request->status,
             'image' => ImageService::saveImage('uploads', "blog", $request->image),
             'published_at' => $request->published_at

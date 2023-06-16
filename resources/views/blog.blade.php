@@ -4,7 +4,7 @@
 
 <br>
 
-
+<a href="{{ route('home') }}"><button type="submit" class="btn btn-primary">Вийти</button></a>
 <div class="container">
     <div class="align-items-center">
             <div class="d-flex justify-content-center">
@@ -14,7 +14,7 @@
                         <svg class="icon">
                             <use xlink:href="{{asset('images/dist/sprite.svg#calendar')}}"></use>
                         </svg>
-                        {{ \Carbon\Carbon::parse($item->published_at)->locale('ru')->format('d F Y') }}
+                        {{ \Carbon\Carbon::parse($item->published_at)->locale('ru')->format('d.F.Y') }}
                     </div>
                     <div class="text-center">
                         <h2>{{ $item->title }}</h2>

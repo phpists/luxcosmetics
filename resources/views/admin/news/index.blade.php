@@ -6,7 +6,7 @@
             <!--begin::Page Heading-->
             <div class="d-flex align-items-baseline flex-wrap mr-5">
                 <!--begin::Page Title-->
-                <h5 class="text-dark font-weight-bold my-1 mr-5">Новости</h5>
+                <h5 class="text-dark font-weight-bold my-1 mr-5">Блог</h5>
                 <!--end::Page Title-->
             </div>
             <!--end::Page Heading-->
@@ -29,7 +29,7 @@
                 <div class="card card-custom">
                     <div class="card-header flex-wrap border-0 pt-6 pb-0">
                         <div class="card-title">
-                            <h3 class="card-label">Новости</h3>
+                            <h3 class="card-label">Блог</h3>
                         </div>
                         <div class="card-toolbar">
                             <!--begin::Dropdown-->
@@ -98,7 +98,7 @@
                                 </tr>
                                 </thead>
                                 <tbody id="table">
-                                @foreach($news as $item)
+                                    @foreach($news as $item)
                                     <tr id="post_{{$item->id}}" data-id="{{ $item->id }}">
                                         <td class="text-center pl-0">
                                             <span style="width: 20px;">
@@ -124,23 +124,21 @@
                                             {{ date('m Y, H:i:s', strtotime($item->published_at)) }}
                                         </td>
                                         <td class="text-center pr-0">
-                                            @foreach (\App\Services\NewsService::getNews() as $item)
-                                            <div class="article__image"><a href="{{ route('index.news', $item->id) }}"><img src="{{asset('images/uploads/news/' . $item->image)}}" alt="" style=" width: 200px;"></a></div> 
-                                            @endforeach
+                                            <div class="article__image"><a href="{{ route('index.news', $item->id) }}"><img src="{{asset('images/uploads/news/' . $item->image)}}" alt="" style=" width: 100px;"></a></div> 
                                         </td>
                                         <td class="text-center pr-0">
-                                            <a href="{{ route('admin.news.edit', $item->id) }}"
-                                               class="btn btn-sm btn-clean btn-icon">
+                                            <a href="{{ route('admin.news.edit', $item->id) }}" class="btn btn-sm btn-clean btn-icon">
                                                 <i class="las la-edit"></i>
                                             </a>
-                                            <a href="{{ route('admin.news.delete', $item->id) }}"
-                                               class="btn btn-sm btn-clean btn-icon"
-                                               onclick="return confirm('Ви впевнені, що хочете видалити цей запис?')">
+                                        </td>
+                                        <td>
+                                            <a href="{{ route('admin.news.delete', $item->id) }}" class="btn btn-sm btn-clean btn-icon" onclick="return confirm('Ви впевнені, що хочете видалити цей запис?')">
                                                 <i class="las la-trash"></i>
                                             </a>
                                         </td>
                                     </tr>
                                 @endforeach
+                                
                                 </tbody>
                             </table>
                         </div>

@@ -325,7 +325,7 @@
                         <div class="maincategory__item">
                             <div class="category">
                                 <div class="category__image" style="background-image: url({{asset('images/uploads/blog/' . $item[0]->image)}});"></div>
-                                <div class="category__title"><a href="{{ route('index.blog', $item[0]->id) }}">{{ $item[0]->title  }}</a></div>
+                                <div class="category__title"><a href="{{ route('index.blog', $item[0]->link) }}">{{ $item[0]->title  }}</a></div>
                                 <div class="category__subtitle">{{ Str::limit(strip_tags($item[0]->text), $limit = 30, $end = '...') }}</div>
                             </div>
                         </div>
@@ -334,7 +334,7 @@
                         <div class="maincategory__item">
                             <div class="category">
                                 <div class="category__image" style="background-image: url({{asset('images/uploads/blog/' . $item[1]->image)}});"></div>
-                                <div class="category__title"><a href="{{ route('index.blog', $item[1]->id) }}">{{ $item[1]->title  }}</a></div>
+                                <div class="category__title"><a href="{{ route('index.blog', $item[1]->link) }}">{{ $item[1]->title  }}</a></div>
                                 <div class="category__subtitle">{{ Str::limit(strip_tags($item[1]->text), $limit = 30, $end = '...') }}</div>
                             </div>
                         </div>
@@ -343,7 +343,7 @@
                         <div class="maincategory__item">
                             <div class="category">
                                 <div class="category__image" style="background-image: url({{asset('images/uploads/blog/' . $item[2]->image)}});"></div>
-                                <div class="category__title"><a href="{{ route('index.blog', $item[2]->id) }}">{{ $item[2]->title  }}</a></div>
+                                <div class="category__title"><a href="{{ route('index.blog', $item[2]->link) }}">{{ $item[2]->title  }}</a></div>
                                 <div class="category__subtitle">{{ Str::limit(strip_tags($item[2]->text), $limit = 30, $end = '...') }}</div>
                             </div>
                         </div>
@@ -352,7 +352,7 @@
                         <div class="maincategory__item">
                             <div class="category">
                                 <div class="category__image" style="background-image: url({{asset('images/uploads/blog/' . $item[3]->image)}});"></div>
-                                <div class="category__title"><a href="{{ route('index.blog', $item[3]->id) }}">{{ $item[3]->title  }}</a></div>
+                                <div class="category__title"><a href="{{ route('index.blog', $item[3]->link) }}">{{ $item[3]->title  }}</a></div>
                                 <div class="category__subtitle">{{ Str::limit(strip_tags($item[3]->text), $limit = 30, $end = '...') }}</div>
                             </div>
                         </div>
@@ -455,27 +455,15 @@
     <section class="maincategory maincategory--threecol">
         <div class="container">
             <div class="row">
+                @foreach (\App\Services\SaleService::getSale() as $item)                    
                 <div class="col-lg-4 col-md-4 col-sm-4">
                     <div class="category">
-                        <div class="category__image" style="background-image: url(images/dist/catbanners/5.jpg);"></div>
-                        <div class="category__title"><a href="">Ароматы</a></div>
-                        <div class="category__subtitle">Изысканный выбор парфюмерии, включая духи, туалетную воду и одеколоны от ведущих мировых брендов</div>
+                        <div class="category__image" style="background-image: url({{asset('images/uploads/sale/' . $item->image)}});"></div>
+                        <div class="category__title"><a href="{{ route('index.sale', $item->id) }}">{{ $item->title }}</a></div>
+                        <div class="category__subtitle">{{ Str::limit(strip_tags($item->text), $limit = 30, $end = '...') }}</div>
                     </div>
                 </div>
-                <div class="col-lg-4 col-md-4 col-sm-4">
-                    <div class="category">
-                        <div class="category__image" style="background-image: url(images/dist/catbanners/6.jpg);"></div>
-                        <div class="category__title"><a href="">Натуральная косметика</a></div>
-                        <div class="category__subtitle">Экологичные и органические продукты для тех, кто предпочитает натуральные ингредиенты и уход без добавок</div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-4 col-sm-4">
-                    <div class="category">
-                        <div class="category__image" style="background-image: url(images/dist/catbanners/7.jpg);"></div>
-                        <div class="category__title"><a href="">Мужская линия</a></div>
-                        <div class="category__subtitle">Специальные товары, разработанные для мужской кожи и ухода за собой: гели для бритья, лосьоны после бритья, кремы...</div>
-                    </div>
-                </div>
+                @endforeach
             </div>
         </div>
     </section>
@@ -488,9 +476,9 @@
                 <div class="newsblock__container">
                 @foreach (\App\Services\NewsService::getNews() as $item)   
                     <div class="article article--news">
-                        <div class="article__image"><a href="{{ route('index.news', $item->id) }}"><img src="{{asset('images/uploads/news/' . $item->image)}}" alt=""></a></div>
+                        <div class="article__image"><a href="{{ route('index.news', $item->link) }}"><img src="{{asset('images/uploads/news/' . $item->image)}}" alt=""></a></div>
                         <div class="article__date"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#calendar')}}"></use></svg>{{$item->published_at}}</div>
-                        <div class="article__title"><a href="{{ route('index.news', $item->id) }}">{{ $item->title }}</a></div>
+                        <div class="article__title"><a href="{{ route('index.news', $item->link) }}">{{ $item->title }}</a></div>
                         <div class="article__intro">{{ Str::limit(strip_tags($item->text), $limit = 30, $end = '...') }}</div>
                     </div>
                 @endforeach    

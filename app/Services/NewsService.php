@@ -17,7 +17,7 @@ class NewsService
             ->paginate();
 
         $news->getCollection()->transform(function ($item) {
-            $item->published_at = Carbon::parse($item->published_at)->formatLocalized('%d %B %Y');
+            $item->published_at = Carbon::parse($item->published_at)->format('d.F.Y');
             return $item;
         });
 
