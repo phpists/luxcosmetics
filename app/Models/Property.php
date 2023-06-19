@@ -32,7 +32,7 @@ class Property extends Model
 
     public function values()
     {
-        return $this->hasMany(PropertyValue::class);
+        return $this->hasMany(PropertyValue::class)->orderBy('value');
     }
 
 }

@@ -18,7 +18,7 @@ class PropertyValue extends Model
 
     public function property()
     {
-        return $this->belongsTo(Property::class)->orderBy('value');
+        return $this->belongsTo(Property::class);
     }
 
 }
