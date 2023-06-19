@@ -21,7 +21,7 @@ class FaqGroupController extends Controller
 
     public function edit(Request $request, $id) {
         $group = FaqGroup::query()->find($id);
-        $faqs = Faq::query()->where('group_id', $group->id)->get();
+        $faqs = Faq::query()->where('group_id', $group->id)->orderBy('position')->get();
         $last_position = Faq::max('position');
         $last_position = $last_position ? $last_position + 1 : 1;
         return response()->view('admin.faqs.edit-group', compact('group', 'faqs', 'last_position'));

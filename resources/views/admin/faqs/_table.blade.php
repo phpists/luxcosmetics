@@ -20,7 +20,7 @@
             </th>
         </tr>
         </thead>
-        <tbody>
+        <tbody class="faq-table">
         @foreach($faqs as $faq)
             <tr data-id="{{ $faq->id }}">
                 <td class="handle text-center pl-0" style="cursor: pointer">

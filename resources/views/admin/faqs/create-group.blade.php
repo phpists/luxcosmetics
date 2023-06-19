@@ -34,7 +34,7 @@
             <div class="card card-custom">
                 <div class="card-header">
                     <h3 class="card-title">
-                        Создание Меню
+                        Создание Группы
                     </h3>
                     <div class="card-toolbar">
                         <div class="example-tools justify-content-center">

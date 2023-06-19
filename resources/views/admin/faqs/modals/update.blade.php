@@ -35,6 +35,19 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="col col-md-3 px-0">
+                            <div class="form-group w-100">
+                                <label for="createFaqPos" class="col-auto col-form-label font-weight-bold">Показывать на сайте</label>
+                                <div class="col-sm-12">
+                                   <span class="switch">
+                                        <label>
+                                            <input id="updateFaqIsActive" checked type="checkbox" name="is_active"/>
+                                            <span></span>
+                                        </label>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
 
                     </div>
 

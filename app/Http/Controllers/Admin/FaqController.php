@@ -7,6 +7,7 @@ use App\Models\Faq;
 use App\Models\FaqLang;
 use App\Services\LanguageService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class FaqController extends Controller
 {
@@ -41,7 +42,7 @@ class FaqController extends Controller
 
         if ($positions) {
             foreach ($positions as $position) {
-
+                Log::info(json_encode($position));
                 $faq = Faq::findOrFail($position['id']);
                 $faq->position = $position['position'];
                 $faq->save();
@@ -75,6 +76,7 @@ class FaqController extends Controller
     public function update(Request $request)
     {
         $data = $request->all();
+        $data['is_active'] = array_key_exists('is_active', $data)?1:0;
         $faq = Faq::query()->findOrFail($data['id']);
         $faq->update($data);
         if ($request->ajax()) {

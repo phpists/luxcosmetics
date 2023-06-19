@@ -258,7 +258,7 @@
 
             KTSummernoteDemo.init();
 
-            let tbody = document.querySelector('tbody')
+            let tbody = document.querySelector('tbody.faq-table')
             new Sortable(tbody, {
                 animation: 150,
                 handle: '.handle',
@@ -266,7 +266,7 @@
                 onEnd: function (/**Event*/ evt) {
                     console.log('drop');
                     var list = [];
-                    $.each($('tbody tr'), function (idx, el) {
+                    $.each($('tbody.faq-table tr'), function (idx, el) {
                         list.push({
                             id: $(el).data('id'),
                             position: idx + 1
@@ -280,7 +280,6 @@
                             positions: list,
                         },
                         success: function (response) {
-                            console.log(response)
                             $.each(response, function(i, item) {
                                 $(`tr[data-id="${i}"]`).find('.position').text(item)
                             })
@@ -305,7 +304,7 @@
                 success: function (response) {
                     $('#updateFaqId').val(id);
 
-                    $('#updateFaqQuestion').val(response.question);
+                    $('#updateFaqQuestion').val(response.title);
                     $('#updateFaqUrl').val(response.url);
                     $('#updateFaqPos').val(response.position);
 
