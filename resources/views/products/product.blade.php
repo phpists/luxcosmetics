@@ -168,7 +168,9 @@
                                 <dt>Характеристики</dt>
                                 <dd style="display: none;">
                                     @forelse($product->values as $value)
-                                        <p style="padding: 0 15px">{{ $value->property->name ?? 'UNDEFINED' }}: <b style="font-weight: bolder">{{ $value->value . ' ' . $value->property->measure }}</b></p><hr>
+                                        @if($value->property->show_in_product)
+                                            <p style="padding: 0 15px">{{ $value->property->name ?? 'UNDEFINED' }}: <b style="font-weight: bolder">{{ $value->value . ' ' . $value->property->measure }}</b></p><hr>
+                                        @endif
                                     @empty
                                          <h4>Нету характеристик</h4>
                                     @endforelse
