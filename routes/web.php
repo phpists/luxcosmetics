@@ -5,7 +5,7 @@ use App\Http\Controllers\Admin\MenuController;
 use App\Http\Controllers\Admin\Settings\SettingController;
 use App\Http\Controllers\CategoryController;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Controllers\FaqController;
+use App\Http\Controllers\QuestionController;
 use Illuminate\Support\Facades\Route;
 use \App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
 
@@ -28,7 +28,10 @@ Route::get('/search', [\App\Http\Controllers\SearchController::class, 'showResul
 // Products
 Route::get('products/{alias}', [\App\Http\Controllers\ProductController::class, 'show'])->name('products.product');
 //Route::get('products/{alias}/{variation_id}', [\App\Http\Controllers\ProductController::class, 'show'])->name('products.product');
-Route::get('faq', [FaqController::class, 'index'])->name('faq');
+Route::get('q/delivery', [QuestionController::class, 'delivery'])->name('questions.delivery');
+Route::get('q/returns', [QuestionController::class, 'returns'])->name('questions.returns');
+Route::get('q/policy', [QuestionController::class, 'policy'])->name('questions.policy');
+Route::get('q/faq', [QuestionController::class, 'index'])->name('questions.faq');
 Route::get('brands', [\App\Http\Controllers\BrandController::class, 'index'])->name('brands');
 Route::get('favourites', [\App\Http\Controllers\FavouritesController::class, 'index'])->name('favourites');
 Route::get('sales', [\App\Http\Controllers\SalesController::class, 'index'])->name('sales');

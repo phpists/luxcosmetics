@@ -27,9 +27,12 @@
     @php
         $menu_items = \App\Models\Menu::query()->where('is_active', 1)->orderBy('position')->get();
     @endphp
+    @php
+        $static_pages = \App\Models\Page::query()->where('is_active', 1)->get();
+    @endphp
     @include('layouts.includes.header', ['menu_items' => $menu_items])
     @yield('content')
-    @include('layouts.includes.footer', ['menu_items' => $menu_items])
+    @include('layouts.includes.footer', ['menu_items' => $menu_items, 'static-pages' => $static_pages])
 </div>
 @yield('after_content')
 @yield('scripts')
