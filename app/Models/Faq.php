@@ -12,6 +12,6 @@ class Faq extends Model
 
     public $timestamps = false;
 
-    protected $fillable = ['position', 'title', 'answer'];
+    protected $fillable = ['position', 'title', 'answer', 'group_id', 'is_active'];
 
 }

@@ -12,7 +12,7 @@
 
             <form action="{{ route('admin.faq.store') }}" method="POST">
                 @csrf
-
+                <input type="hidden" value="{{$group->id}}" name="group_id">
                 <div class="modal-body">
 
                     <div class="row">
@@ -30,6 +30,19 @@
                                 <label for="createFaqPos" class="col-auto col-form-label font-weight-bold">Позиция</label>
                                 <div class="col-sm-12">
                                     <input type="number" class="form-control" id="createFaqPos" name="position" value="{{ $last_position }}" min="1" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col col-md-3 px-0">
+                            <div class="form-group w-100">
+                                <label for="createFaqPos" class="col-auto col-form-label font-weight-bold">Показывать на сайте</label>
+                                <div class="col-sm-12">
+                                   <span class="switch">
+                                        <label>
+                                            <input id="createIsActiveInFooter" checked type="checkbox" name="is_active"/>
+                                            <span></span>
+                                        </label>
+                                    </span>
                                 </div>
                             </div>
                         </div>

@@ -13,44 +13,42 @@
                 Позиция
             </th>
             <th class="text-center pr-0">
-                Вопрос
+                Название
             </th>
-            <th class="pr-0 text-center">
+            <th class="text-center pr-0">
                 Действия
             </th>
         </tr>
         </thead>
         <tbody>
-        @foreach($faqs as $faq)
-            <tr data-id="{{ $faq->id }}">
+        @foreach($faq_groups as $faq_group)
+            <tr data-id="{{ $faq_group->id }}">
                 <td class="handle text-center pl-0" style="cursor: pointer">
                     <i class="flaticon2-sort"></i>
                 </td>
                 <td class="text-center pl-0">
-                    {{ $faq->id }}
+                    {{ $faq_group->id }}
                 </td>
                 <td class="text-center position">
                                         <span class="text-dark-75 d-block font-size-lg">
-                                            {{ $faq->position }}
+                                            {{ $faq_group->position }}
                                         </span>
                 </td>
                 <td class="text-center">
                                         <span class="text-dark-75 d-block font-size-lg">
-                                            {{ $faq->title }}
+                                            {{ $faq_group->name }}
                                         </span>
                 </td>
                 <td class="text-center pr-0">
-                    <form action="{{ route('admin.faq.delete') }}" method="POST">
-                        <a href="javascript:;" class="btn btn-sm btn-clean btn-icon updateFaq"
-                           data-toggle="modal" data-target="#updateFaqModal"
-                           data-id="{{ $faq->id }}">
+                    <form action="{{ route('admin.faq-groups.delete') }}" method="POST">
+                        <a href="{{ route('admin.faq-groups.edit', $faq_group->id) }}" class="btn btn-sm btn-clean btn-icon updateFaq">
                             <i class="las la-edit"></i>
                         </a>
                         @csrf
                         @method('DELETE')
-                        <input type="hidden" name="id" value="{{ $faq->id }}">
+                        <input type="hidden" name="id" value="{{ $faq_group->id }}">
                         <button type="submit" class="btn btn-sm btn-clean btn-icon btn_delete"
-                                onclick="return confirm('Ви впевнені, що хочете видалити питання \'{{ $faq->title }}\'?')"
+                                onclick="return confirm('Вы уверенны что хотите удалить группу  \'{{ $faq_group->title }}\'? Все вопросы надлежащие группе будут также удаленны?')"
                                 title="Delete"><i class="las la-trash"></i>
                         </button>
                     </form>
@@ -61,4 +59,4 @@
     </table>
 </div>
 <!--end::Table-->
-{{--{{ $faqs->links('vendor.pagination.super_admin_pagination') }}--}}
+{{ $faq_groups->links('vendor.pagination.super_admin_pagination') }}

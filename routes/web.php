@@ -145,6 +145,15 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function 
     Route::post('_active-categories', [AdminCategoryController::class, 'activeCategories']);
     /* Product Operation */
     Route::post('_delete-products', [\App\Http\Controllers\Admin\ProductController::class, 'deleteProducts']);
+    // Admin Faq group
+    Route::get('faq-groups', [\App\Http\Controllers\Admin\FaqGroupController::class, 'index'])->name('admin.faq-groups');
+    Route::get('faq-groups/search', [\App\Http\Controllers\Admin\FaqGroupController::class, 'search'])->name('admin.faq-groups.search');
+    Route::post('faq-groups/update-positions', [\App\Http\Controllers\Admin\FaqGroupController::class, 'updates_positions'])->name('admin.faq-groups.update_positions');
+    Route::get('faq-groups/create', [\App\Http\Controllers\Admin\FaqGroupController::class, 'create'])->name('admin.faq-groups.create');
+    Route::get('faq-groups/{id}/edit', [\App\Http\Controllers\Admin\FaqGroupController::class, 'edit'])->name('admin.faq-groups.edit');
+    Route::post('faq-groups/store', [\App\Http\Controllers\Admin\FaqGroupController::class, 'store'])->name('admin.faq-groups.store');
+    Route::post('faq-groups/update', [\App\Http\Controllers\Admin\FaqGroupController::class, 'update'])->name('admin.faq-groups.update');
+    Route::delete('faq-groups/delete', [\App\Http\Controllers\Admin\FaqGroupController::class, 'delete'])->name('admin.faq-groups.delete');
     /* Admin Faq */
     Route::get('faqs', [\App\Http\Controllers\Admin\FaqController::class, 'index'])->name('admin.faqs');
     Route::get('faqs/search', [\App\Http\Controllers\Admin\FaqController::class, 'search'])->name('admin.faqs.search');

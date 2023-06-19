@@ -61,11 +61,15 @@ class FaqController extends Controller
 
     public function store(Request $request)
     {
-        $faq = new Faq($request->all());
+        $data = $request->all();
+
+        $data['is_active'] = array_key_exists('is_active', $data)?1:0;
+
+        $faq = new Faq($data);
 
         $faq->save();
 
-        return redirect()->route('admin.faqs')->with('success', 'Дані збережено');
+        return redirect()->back()->with('success', 'Дані збережено');
     }
 
     public function update(Request $request)
@@ -76,7 +80,7 @@ class FaqController extends Controller
         if ($request->ajax()) {
             return response()->json(true);
         }
-        return redirect()->route('admin.faqs')->with('success', 'Дані збережено');
+        return redirect()->back()->with('success', 'Дані збережено');
     }
 
     public function delete(Request $request)
@@ -85,9 +89,9 @@ class FaqController extends Controller
         $faq = Faq::findOrFail($id);
 
         if ($faq->delete()) {
-            return redirect()->route('admin.faqs')->with('success', 'Питання видалено');
+            return redirect()->back()->with('success', 'Питання видалено');
         } else {
-            return redirect()->route('admin.faqs')->with('warning', 'Не вдалось видалити питання');
+            return redirect()->back()->with('warning', 'Не вдалось видалити питання');
         }
     }
 
