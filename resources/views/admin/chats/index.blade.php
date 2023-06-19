@@ -60,7 +60,7 @@
 {{--                                </button>--}}
 {{--                            </div>--}}
                             <div class="dropdown dropdown-inline mr-2">
-                                <button class="btn btn-success font-weight-bolder deactivateChat" data-status="0">
+                                <button class="btn btn-success font-weight-bolder deactivateChat" data-status="{{\App\Models\FeedbackChat::CLOSED}}">
                                     <span class="svg-icon svg-icon-md"><i class="fas fa-toggle-off"></i></span>Закрыть
                                 </button>
                             </div>
@@ -164,11 +164,38 @@
     <script src="{{ asset('super_admin/js/category.js') }}"></script>
     <script src="{{ asset('super_admin/js/pages/crud/forms/widgets/select2.js') }}"></script>
     <script>
-        {{--$('.deactivateChat').on('click', function() {--}}
-        {{--    $.ajax(--}}
-        {{--        url: '{{route('')}}'--}}
-        {{--    )--}}
-        {{--})--}}
+        $(document).on('click', '.deactivateChat', function (e) {
+
+            let status = $(this).data('status');
+            let csrf = $('meta[name="csrf-token"]').attr('content');
+            let checkbox = $(".checkbox-item:checkbox:checked").map(function () {
+                return $(this).val();
+            }).get();
+
+            $.ajaxSetup({headers: {'X-CSRF-TOKEN': csrf}});
+
+            $.ajax({
+                type: "POST",
+                url: '{{route('admin.chats.updateStatus')}}',
+                data: {
+                    csrf: csrf,
+                    checkbox: checkbox,
+                    status: status,
+                },
+                dataType: "json",
+                success: function (response) {
+                    let title = response.title;
+                    let message = response.message;
+
+                    checkbox.forEach(function (id) {
+                        $('#category_' + id).find('.status').text(title);
+                        $('.checkbox-item').prop('checked', false);
+                    });
+                    toastr.success(message);
+                }
+            });
+
+        });
     </script>
 @endsection
 

@@ -1,6 +1,6 @@
 @extends('admin.layouts.app')
 @section('title')
-    <h5 class="text-dark font-weight-bold mt-2 mb-2 mr-5">Поширені питання</h5>
+    <h5 class="text-dark font-weight-bold mt-2 mb-2 mr-5">FAQ</h5>
 @endsection
 @section('content')
 

@@ -28,10 +28,14 @@ class CategoryController extends Controller
             ->join('images', 'products.image_print_id', 'images.id')
             ->whereIn('category_id', $category_ids)
             ->where('images.table_name', 'products')
-            ->with('product_variations')
             ->with('brand')
             ->paginate(12);
-        $products_list = view('categories.parts.products', compact('products'))->render();
+        $products_id = [];
+        foreach ($products as $product) {
+            $products_id[] = $product->id;
+        }
+        $variations = Product::getVariations($products_id);
+        $products_list = view('categories.parts.products', compact('products', 'variations'))->render();
 
         if ($request->ajax()) {
             return response()->json([

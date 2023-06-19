@@ -64,10 +64,10 @@
                 </div>
                 <div class="col-lg-3 order-lg-1">
                     <ul class="cabmenu">
-                        <li class="is-active"><a href="">FAQ</a></li>
-                        <li><a href="">Доставка</a></li>
-                        <li><a href="">Возврат</a></li>
-                        <li><a href="">Политика конфиденциальности</a></li>
+                        <li class="@if(request()->routeIs('questions.faq')) is-active @endif"><a href="{{route('questions.faq')}}">FAQ</a></li>
+                        <li class="@if(request()->routeIs('questions.delivery')) is-active @endif"><a href="{{route('questions.delivery')}}">Доставка</a></li>
+                        <li class="@if(request()->routeIs('questions.returns')) is-active @endif"><a href="{{route('questions.returns')}}">Возврат</a></li>
+                        <li class="@if(request()->routeIs('questions.policy')) is-active @endif"><a href="{{route('questions.policy')}}">Политика конфиденциальности</a></li>
                     </ul>
                 </div>
             </div>

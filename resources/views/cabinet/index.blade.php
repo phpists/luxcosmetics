@@ -92,5 +92,20 @@
                 </div>
             </div>
         </div>
+        @if($user->role_id !== \App\Models\User::ADMIN)
+            <div class="cabinet-page__group">
+                <h3 class="cabinet-page__subheading subheading">Обратная связь</h3>
+                @foreach($user->chats as $chat)
+                    <div class="cabinet-page__item cabinet-page__item--justify">
+                        <p>Тема обращения: {{$chat->feedback_theme}}</p>
+                        <div class="cabinet-page__data">
+                            @foreach($chat->messages()->whereNot('user_id', $user->id)->get() as $message)
+                                <p><b>{{$message->message}}</b></p>
+                            @endforeach
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+        @endif
     </main>
 @endsection

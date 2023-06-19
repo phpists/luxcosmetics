@@ -175,6 +175,20 @@
                             <div class="menu-submenu" style="" kt-hidden-height="160">
                                 <i class="menu-arrow"></i>
                                 <ul class="menu-subnav">
+                                    <li class="menu-item {{ request()->routeIs('admin.brands.index') ? 'menu-item-active' : '' }}"
+                                        aria-haspopup="true">
+                                        <a href="{{route('admin.brands.index')}}" class="menu-link">
+                                            <i class="menu-bullet menu-bullet-dot">
+                                                <span></span>
+                                            </i>
+                                            <span class="menu-text">Бренды</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="menu-submenu" style="" kt-hidden-height="160">
+                                <i class="menu-arrow"></i>
+                                <ul class="menu-subnav">
                                     <li class="menu-item {{ request()->routeIs('admin.properties.index') ? 'menu-item-active' : '' }}"
                                         aria-haspopup="true">
                                         <a href="{{route('admin.properties.index')}}" class="menu-link">
@@ -211,7 +225,7 @@
                             aria-haspopup="true" data-menu-toggle="hover">
                             <a href="javascript:;" class="menu-link menu-toggle">
                                 <i class="fas flaticon2-copy menu-icon"></i>
-                                <span class="menu-text">Сторінки</span>
+                                <span class="menu-text">Страницы</span>
                                 <i class="menu-arrow"></i>
                             </a>
                             <div class="menu-submenu" style="" kt-hidden-height="160">
@@ -235,6 +249,7 @@
                                             <span class="menu-text">Блог</span>
                                         </a>
                                     </li>
+<<<<<<< HEAD
                                     <li class="menu-item {{ request()->routeIs('admin.article') || request()->routeIs('admin.news.edit') ? 'menu-item-active' : '' }}"
                                         aria-haspopup="true">
                                         <a href="{{route('admin.article')}}" class="menu-link">
@@ -242,6 +257,15 @@
                                                 <span></span>
                                             </i>
                                             <span class="menu-text">Cтатьи</span>
+=======
+                                    <li class="menu-item {{ request()->routeIs('admin.pages.index') ? 'menu-item-active' : '' }}"
+                                        aria-haspopup="true">
+                                        <a href="{{route('admin.pages.index')}}" class="menu-link">
+                                            <i class="menu-bullet menu-bullet-dot">
+                                                <span></span>
+                                            </i>
+                                            <span class="menu-text">Статические</span>
+>>>>>>> b66b771d73f2f034bb3fd39b9dedf258a870bbcb
                                         </a>
                                     </li>
                                 </ul>
@@ -250,7 +274,7 @@
                         </li>
 
                         <li class="menu-section ">
-                            <h4 class="menu-text">Налаштування</h4>
+                            <h4 class="menu-text">Настройки</h4>
                             <i class="menu-icon ki ki-bold-more-hor icon-md"></i>
                         </li>
                         <li class="menu-item {{ request()->routeIs('admin.faqs') ? 'menu-item-active' : '' }}"

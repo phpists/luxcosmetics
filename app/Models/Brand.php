@@ -8,4 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 class Brand extends Model
 {
     use HasFactory;
+
+    protected $fillable = ['name', 'image'];
+
+    public $timestamps = false;
+
+    public function getImageSrcAttribute()
+    {
+        return asset('images/uploads/brands/'.$this->image);
+    }
 }

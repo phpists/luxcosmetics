@@ -5,11 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class ProductVariation extends Model
+class Page extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['product_id', 'variation_id'];
-
     public $timestamps = false;
+
+    protected $fillable = ['title', 'link', 'content', 'is_active'];
 }

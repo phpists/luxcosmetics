@@ -27,9 +27,12 @@
     @php
         $menu_items = \App\Models\Menu::query()->where('is_active', 1)->orderBy('position')->get();
     @endphp
+    @php
+        $static_pages = \App\Models\Page::query()->where('is_active', 1)->get();
+    @endphp
     @include('layouts.includes.header', ['menu_items' => $menu_items])
     @yield('content')
-    @include('layouts.includes.footer', ['menu_items' => $menu_items])
+    @include('layouts.includes.footer', ['menu_items' => $menu_items, 'static-pages' => $static_pages])
 </div>
 @yield('after_content')
 @yield('scripts')
@@ -38,7 +41,12 @@
     document.getElementById('header_search').addEventListener('input', function (ev) {
         let results_container = document.getElementById('search_results');
         if (ev.target.value !== '') {
-            fetch('{{route('search_prompt')}}?search='+ev.target.value).then(async (resp) => {
+            fetch('{{route('search_prompt')}}?search='+ev.target.value, {
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'Content-Type': 'application/json'
+                },
+            }).then(async (resp) => {
                 let result = await resp.json();
                 results_container.innerHTML = "";
                 for (const resultKey in result) {

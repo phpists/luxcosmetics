@@ -28,12 +28,15 @@
                     <div class="footer__menu">
                         <h4 class="footer__menutitle">Помощь <svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#arrow')}}"></use></svg></h4>
                         <ul>
-                            <li><a href="">О компании</a></li>
-                            <li><a href="">Сервис</a></li>
-                            <li><a href="">Доставка и оплата</a></li>
-                            <li><a href="">Возврат</a></li>
-                            <li><a href="">Вакансии</a></li>
-                            <li><a href="">Связаться с нами</a></li>
+                            @foreach($static_pages as $sub_item)
+                                <li><a href="/pages/{{$sub_item->link}}">{{$sub_item->title}}</a></li>
+                            @endforeach
+{{--                            <li><a href="">О компании</a></li>--}}
+{{--                            <li><a href="">Сервис</a></li>--}}
+{{--                            <li><a href="">Доставка и оплата</a></li>--}}
+{{--                            <li><a href="">Возврат</a></li>--}}
+{{--                            <li><a href="">Вакансии</a></li>--}}
+{{--                            <li><a href="">Связаться с нами</a></li>--}}
                         </ul>
                     </div>
                 </div>

@@ -28,7 +28,11 @@ class Product extends Model
         'description_3',
         'availability',
         'created_at',
-        'updated_at'
+        'updated_at',
+        'show_in_discount',
+        'show_in_popular',
+        'show_in_new',
+        'size'
     ];
 
     public function getImages(): Collection
@@ -54,9 +58,31 @@ class Product extends Model
         return $this->hasMany(ProductVariation::class);
     }
 
+    public function filterVariations($variations) {
+        if (sizeof($variations) > 0) {
+            return $variations->where('parent_id', $this->id);
+        }
+        return $variations;
+    }
+
     public function values()
     {
         return $this->belongsToMany(PropertyValue::class, 'product_property_values', 'product_id', 'property_value_id');
+    }
+
+    static function getVariations($product_ids): \Illuminate\Database\Eloquent\Collection|array
+    {
+        if (sizeof($product_ids) > 0) {
+            return Product::query()
+                ->select('products.*', 'images.path as image', 'product_variations.product_id as parent_id')
+                ->join('images', 'products.image_print_id', 'images.id')
+                ->join('product_variations', 'product_variations.variation_id', 'products.id')
+                ->whereIn('product_variations.product_id', $product_ids)
+                ->where('images.table_name', 'products')
+                ->with('brand')
+                ->get();
+        }
+        return [];
     }
 
 }
