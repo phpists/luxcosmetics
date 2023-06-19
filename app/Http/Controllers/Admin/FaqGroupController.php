@@ -22,7 +22,7 @@ class FaqGroupController extends Controller
     public function edit(Request $request, $id) {
         $group = FaqGroup::query()->find($id);
         $faqs = Faq::query()->where('group_id', $group->id)->orderBy('position')->get();
-        $last_position = Faq::max('position');
+        $last_position = Faq::query()->where('group_id', $group->id)->max('position');
         $last_position = $last_position ? $last_position + 1 : 1;
         return response()->view('admin.faqs.edit-group', compact('group', 'faqs', 'last_position'));
     }
@@ -82,11 +82,12 @@ class FaqGroupController extends Controller
     {
         $data = $request->all();
         $faq = FaqGroup::query()->findOrFail($data['id']);
+        $data['is_active'] = array_key_exists('is_active', $data)?1:0;
         $faq->update($data);
         if ($request->ajax()) {
             return response()->json(true);
         }
-        return redirect()->route('admin.faqs')->with('success', 'Успешно обновлено');
+        return redirect()->route('admin.faq-groups')->with('success', 'Успешно обновлено');
     }
 
     public function delete(Request $request)

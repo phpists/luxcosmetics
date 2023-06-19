@@ -42,7 +42,6 @@ class FaqController extends Controller
 
         if ($positions) {
             foreach ($positions as $position) {
-                Log::info(json_encode($position));
                 $faq = Faq::findOrFail($position['id']);
                 $faq->position = $position['position'];
                 $faq->save();

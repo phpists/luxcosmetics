@@ -152,7 +152,7 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function 
     Route::get('faq-groups/create', [\App\Http\Controllers\Admin\FaqGroupController::class, 'create'])->name('admin.faq-groups.create');
     Route::get('faq-groups/{id}/edit', [\App\Http\Controllers\Admin\FaqGroupController::class, 'edit'])->name('admin.faq-groups.edit');
     Route::post('faq-groups/store', [\App\Http\Controllers\Admin\FaqGroupController::class, 'store'])->name('admin.faq-groups.store');
-    Route::post('faq-groups/update', [\App\Http\Controllers\Admin\FaqGroupController::class, 'update'])->name('admin.faq-groups.update');
+    Route::put('faq-groups/update', [\App\Http\Controllers\Admin\FaqGroupController::class, 'update'])->name('admin.faq-groups.update');
     Route::delete('faq-groups/delete', [\App\Http\Controllers\Admin\FaqGroupController::class, 'delete'])->name('admin.faq-groups.delete');
     /* Admin Faq */
     Route::get('faqs', [\App\Http\Controllers\Admin\FaqController::class, 'index'])->name('admin.faqs');

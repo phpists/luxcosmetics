@@ -60,6 +60,7 @@
                                 @csrf
                                 @method('put')
                                 <input type="hidden" name="position" value="{{$group->position}}">
+                                <input type="hidden" name="id" value="{{$group->id}}">
                                 <div class="card-body">
                                     <div class="row">
                                         <div class="col-8">
