@@ -235,6 +235,15 @@
                                             <span class="menu-text">Блог</span>
                                         </a>
                                     </li>
+                                    <li class="menu-item {{ request()->routeIs('admin.article') || request()->routeIs('admin.news.edit') ? 'menu-item-active' : '' }}"
+                                        aria-haspopup="true">
+                                        <a href="{{route('admin.article')}}" class="menu-link">
+                                            <i class="menu-bullet menu-bullet-dot">
+                                                <span></span>
+                                            </i>
+                                            <span class="menu-text">Cтатьи</span>
+                                        </a>
+                                    </li>
                                 </ul>
                             </div>
 

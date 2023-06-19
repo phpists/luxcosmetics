@@ -4,108 +4,130 @@
 @section('content')
     <section class="mainaction">
         <div class="container">
+            {{-- @foreach (\App\Services\NewsService::getNews() as $item)   
+                    <div class="article article--news">
+                        <div class="article__image"><a href="{{ route('index.news', $item->link) }}"><img src="{{asset('images/uploads/news/' . $item->image)}}" alt=""></a></div>
+                        <div class="article__date"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#calendar')}}"></use></svg>{{$item->published_at}}</div>
+                        <div class="article__title"><a href="{{ route('index.news', $item->link) }}">{{ $item->title }}</a></div>
+                        <div class="article__intro">{{ Str::limit(strip_tags($item->text), $limit = 30, $end = '...') }}</div>
+                    </div>
+                @endforeach   --}}
+            @php 
+                $item = \App\Services\ArticleService::getArticle();                
+            @endphp
+            @if($item[0] != null) 
             <div class="row">
                 <div class="col-lg-12">
                     <div class="mainaction__one">
                         <a href="">
                             <picture>
-                                <source  srcset="{{asset('images/dist/banners/banner-big.jpg')}}" media="(min-width: 576px)">
+                                <source  srcset="{{asset('images/uploads/article/' . $item[0]->image)}}" media="(min-width: 576px)">
                                 <source srcset="{{asset('images/dist/banners/banner-big@320.jpg')}}" media="(max-width: 575px)" >
-                                <img src="{{asset('images/dist/banners/banner-big.jpg')}}">
+                                <img src="{{asset('images/uploads/article/' . $item[0]->image)}}">
                             </picture>
                         </a>
                     </div>
                 </div>
             </div>
+            @endif
             <div class="row">
+                @if($item[1] != null)
                 <div class="col-lg-6 col-md-6">
                     <div class="article">
                         <div class="article__wrap">
                             <div class="article__image">
                                 <picture>
-                                    <source  srcset="{{asset('images/dist/banners/banner-medium.jpg')}}" media="(min-width: 768px)">
+                                    <source  srcset="{{asset('images/uploads/article/' . $item[1]->image)}}" media="(min-width: 768px)">
                                     <source srcset="{{asset('images/dist/banners/banner-medium@768.jpg')}}" media="(min-width: 576px) and (max-width: 767px)" >
                                     <source srcset="{{asset('images/dist/banners/banner-medium@320.jpg')}}" media="(max-width: 575px)" >
-                                    <img src="{{asset('images/dist/banners/banner-medium.jpg')}}">
+                                    <img src="{{asset('images/uploads/article/' . $item[1]->image)}}">
                                 </picture>
                             </div>
-                            <div class="article__title"><a href="">Бьюти-Бум</a></div>
-                            <div class="article__intro">Получите скидку 20% на всю декоративную косметику! Только одна неделя – улучшите свой образ с нашими качественными продуктами по выгодным ценам</div>
+                            <div class="article__title"><a href="{{ route('index.news', $item[1]->link) }}">{{ $item[1]->title }}</a></div>
+                            <div class="article__intro">{{ Str::limit(strip_tags($item[1]->text), $limit = 30, $end = '...') }}</div>
                         </div>
                         <a href="" class="article__more">Подробнее</a>
                     </div>
                 </div>
+                @endif
+                @if($item[2] != null)
                 <div class="col-lg-6 col-md-6">
                     <div class="article">
                         <div class="article__wrap">
                             <div class="article__image">
                                 <picture>
-                                    <source  srcset="{{asset('images/dist/banners/banner-medium2.jpg')}}" media="(min-width: 768px)">
+                                    <source  srcset="{{asset('images/uploads/article/' . $item[2]->image)}}" media="(min-width: 768px)">
                                     <source srcset="{{asset('images/dist/banners/banner-medium2@768.jpg')}}" media="(min-width: 576px) and (max-width: 767px)" >
                                     <source srcset="{{asset('images/dist/banners/banner-medium2@320.jpg')}}" media="(max-width: 575px)" >
-                                    <img src="{{asset('images/dist/banners/banner-medium2.jpg')}}">
+                                    <img src="{{asset('images/uploads/article/' . $item[2]->image)}}">
                                 </picture>
                             </div>
-                            <div class="article__title"><a href="">Красота в каждом уголке</a></div>
-                            <div class="article__intro">Распродажа сезонных товаров со скидками до 50%!
-                                Успейте обновить свою косметичку лучшими средствами по суперценам</div>
+                            <div class="article__title"><a href="{{ route('index.news', $item[2]->link) }}">{{ $item[2]->title }}</a></div>
+                            <div class="article__intro">{{ Str::limit(strip_tags($item[2]->text), $limit = 30, $end = '...') }}</div>
                         </div>
                         <a href="" class="article__more">Подробнее</a>
                     </div>
                 </div>
+                @endif
             </div>
             <div class="row">
+                @if($item[3] != null)
                 <div class="col-lg-4 col-md-4">
                     <div class="article article--threecol">
                         <div class="article__wrap">
                             <div class="article__image">
                                 <picture>
-                                    <source  srcset="{{asset('images/dist/banners/banner-small.jpg')}}" media="(min-width: 768px)">
+                                    <source  srcset="{{asset('images/uploads/article/' . $item[3]->image)}}" media="(min-width: 768px)">
                                     <source srcset="{{asset('images/dist/banners/banner-small@768.jpg')}}" media="(min-width: 576px) and (max-width: 767px)" >
                                     <source srcset="{{asset('images/dist/banners/banner-small@320.jpg')}}" media="(max-width: 575px)" >
-                                    <img src="{{asset('images/dist/banners/banner-small.jpg')}}">
+                                    <img src="{{asset('images/uploads/article/' . $item[3]->image)}}">
                                 </picture>
                             </div>
-                            <div class="article__title"><a href="">VIP-день</a></div>
-                            <div class="article__intro">Зарегистрируйтесь на нашем сайте и получите скидку 25% на первую покупку в день вашего рождения. Отметьте свой особенный день вместе с нами.</div>
+                            <div class="article__title"><a href="{{ route('index.news', $item[3]->link) }}">{{ $item[3]->title }}</a></div>
+                            <div class="article__intro">{{ Str::limit(strip_tags($item[3]->text), $limit = 30, $end = '...') }}</div>
                         </div>
                         <a href="" class="article__more">Подробнее</a>
                     </div>
                 </div>
+                @endif
+                @if($item[4] != null)
                 <div class="col-lg-4 col-md-4">
                     <div class="article article--threecol">
                         <div class="article__wrap">
                             <div class="article__image">
                                 <picture>
-                                    <source  srcset="{{asset('images/dist/banners/banner-small2.jpg')}}" media="(min-width: 768px)">
+                                    <source  srcset="{{asset('images/uploads/article/' . $item[4]->image)}}" media="(min-width: 768px)">
                                     <source srcset="{{asset('images/dist/banners/banner-small2@768.jpg')}}" media="(min-width: 576px) and (max-width: 767px)" >
                                     <source srcset="{{asset('images/dist/banners/banner-small2@320.jpg')}}" media="(max-width: 575px)" >
-                                    <img src="{{asset('images/dist/banners/banner-small2.jpg')}}">
+                                    <img src="{{asset('images/uploads/article/' . $item[4]->image)}}">
                                 </picture>
                             </div>
-                            <div class="article__title"><a href="">Студенческие скидки</a></div>
-                            <div class="article__intro">Всем студентам действует постоянная скидка 10% при предъявлении студенческого билета. Ухаживайте за своей красотой и экономьте на покупках с нашей студенческой программой.</div>
+                            <div class="article__title"><a href="{{ route('index.news', $item[4]->link) }}">{{ $item[4]->title }}</a></div>
+                            <div class="article__intro">{{ Str::limit(strip_tags($item[3]->text), $limit = 30, $end = '...') }}</div>
                         </div>
                         <a href="" class="article__more">Подробнее</a>
                     </div>
                 </div>
+                @endif
+                @if($item[4] != null)
                 <div class="col-lg-4 col-md-4">
                     <div class="article article--threecol">
                         <div class="article__wrap">
                             <div class="article__image">
                                 <picture>
-                                    <source  srcset="{{asset('images/dist/banners/banner-small3.jpg')}}" media="(min-width: 768px)">
+                                    <source  srcset="{{asset('images/uploads/article/' . $item[5]->image)}}" media="(min-width: 768px)">
                                     <source srcset="{{asset('images/dist/banners/banner-small3@768.jpg')}}" media="(min-width: 576px) and (max-width: 767px)" >
                                     <source srcset="{{asset('images/dist/banners/banner-small3@320.jpg')}}" media="(max-width: 575px)" >
-                                    <img src="{{asset('images/dist/banners/banner-small3.jpg')}}">
+                                    <img src="{{asset('images/uploads/article/' . $item[5]->image)}}">
                                 </picture>
                             </div>
-                            <div class="article__title"><a href="">Семейные выходные</a></div>
-                            <div class="article__intro">Каждые выходные дни скидка 15% на всю продукцию для детей и мужчин. Проведите время с пользой и радостью, выбирая качественные средства для всей семьи по специальным ценам</div>
+                            <div class="article__title"><a href="{{ route('index.news', $item[4]->link) }}">{{ $item[4]->title }}</a></div>
+                            <div class="article__intro">{{ Str::limit(strip_tags($item[3]->text), $limit = 30, $end = '...') }}</div>
                         </div>
                         <a href="" class="article__more">Подробнее</a>
                     </div>
                 </div>
+                @endif
             </div>
         </div>
     </section>

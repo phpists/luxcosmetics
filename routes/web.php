@@ -179,6 +179,19 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function 
     Route::post('_delete-posts', [\App\Http\Controllers\Admin\Blog\BlogController::class, 'deletePosts']);
     Route::post('_active-posts', [\App\Http\Controllers\Admin\Blog\BlogController::class, 'activePosts']);
 
+    /* Article */
+    Route::get('articles', [\App\Http\Controllers\Admin\Article\ArticleController::class, 'index'])->name('admin.article');
+    Route::get('article', [\App\Http\Controllers\Admin\Article\ArticleController::class, 'create'])->name('admin.article.create');
+    Route::post('article', [\App\Http\Controllers\Admin\Article\ArticleController::class, 'store'])->name('admin.article.store');
+    Route::get('article/edit/{id}', [\App\Http\Controllers\Admin\Article\ArticleController::class, 'edit'])->name('admin.article.edit');
+    Route::post('article/update', [\App\Http\Controllers\Admin\Article\ArticleController::class, 'update'])->name('admin.article.update');
+    Route::post('article/update/seo', [\App\Http\Controllers\Admin\Article\ArticleController::class, 'updateSeo'])->name('admin.article.update.seo');
+    Route::get('article/delete/{id}', [\App\Http\Controllers\Admin\Article\ArticleController::class, 'delete'])->name('admin.article.delete');
+
+    /* Article Operation */
+    Route::post('_delete-posts', [\App\Http\Controllers\Admin\Article\ArticleController::class, 'deletePosts']);
+    Route::post('_active-posts', [\App\Http\Controllers\Admin\Article\ArticleController::class, 'activePosts']);
+
     // Properties
     Route::get('properties', [\App\Http\Controllers\Admin\PropertyController::class, 'index'])->name('admin.properties.index');
     Route::get('properties/create', [\App\Http\Controllers\Admin\PropertyController::class, 'create'])->name('admin.properties.create');
@@ -199,6 +212,7 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function 
 
 Route::get('/news/{link}', [\App\Http\Controllers\NewsController::class, 'show'])->name('index.news');
 Route::get('/blog/{link}', [\App\Http\Controllers\BlogController::class, 'show'])->name('index.blog');
+Route::get('/article/{link}', [\App\Http\Controllers\ArticleController::class, 'show'])->name('index.article');
 
 
 Route::get('/user/home', [App\Http\Controllers\HomeController::class, 'home'])->name('user.home');
