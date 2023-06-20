@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('measure');
             $table->boolean('show_in_filter');
-            $table->boolean('show_in_catalog');
+            $table->boolean('show_in_product');
             $table->smallInteger('show_text');
             $table->text('description')->nullable();
         });
