@@ -88,14 +88,14 @@
                         <div class="signin-page__social">
                             <p>Зарегистрируйтесь через</p>
                             <div class="cart-auth__providers">
-                                <button class="cart-auth__provider">
-                                    <img src="images/dist/icons/google.svg" alt="">
+                                <a href="{{route('login_socialite', ['provider' => 'google'])}}" class="cart-auth__provider">
+                                    <img src="{{asset('images/dist/icons/google.svg')}}" alt="">
                                     <span>Google</span>
-                                </button>
-                                <button class="cart-auth__provider">
-                                    <img src="images/dist/icons/fb.svg" alt="">
+                                </a>
+                                <a href="{{route('login_socialite', ['provider' => 'facebook'])}}" class="cart-auth__provider">
+                                    <img src="{{asset('images/dist/icons/fb.svg')}}" alt="">
                                     <span>Facebook</span>
-                                </button>
+                                </a>
                             </div>
                         </div>
                         <p><b>ИЛИ</b></p>

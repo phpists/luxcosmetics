@@ -3,16 +3,31 @@
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\MenuController;
 use App\Http\Controllers\Admin\Settings\SettingController;
+use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\CategoryController;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\QuestionController;
 use Illuminate\Support\Facades\Route;
 use \App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
+use Laravel\Socialite\Facades\Socialite;
 
 /* Socialize */
 Auth::routes();
 
 Route::get('/', [\App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::get('login/{provider}', [LoginController::class, 'redirectToProvider'])->name('login_socialite');
+Route::match(['get', 'post'], 'login/{provider}/callback', [LoginController::class, 'handleProviderCallback']);
+
+Route::get('/auth-facebook/redirect', function () {
+    return Socialite::driver('facebook')->redirect();
+});
+
+Route::get('/auth-facebook/callback', function () {
+    $user = Socialite::driver('facebook')->user();
+
+    // $user->token
+});
 
 
 
@@ -136,7 +151,7 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function 
     Route::put('settings/telephone/update/', [App\Http\Controllers\Admin\Settings\SocialMediaController::class, 'updateTelephone'])->name('admin.settings.telephone.update');
 
     Route::get('clear-cache', [SettingController::class, 'clearCache'])->name('admin.clear.cache');
-    Route::post('logout')->name('logout');
+//    Route::post('logout')->name('logout');
 //    Images
     Route::get('images/show', [\App\Http\Controllers\Admin\ImageController::class, 'show'])->name('admin.image.show');
 

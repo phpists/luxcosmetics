@@ -8,6 +8,7 @@ use App\Providers\RouteServiceProvider;
 use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 
@@ -66,10 +67,17 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        $date = date_create_from_format('Y-m-d', $data['year'].'-'.$data['month'].'-'.$data['day']);
+        Log::info($data);
         $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
+            'surname' => array_key_exists('surname', $data)?$data['surname']:null,
+            'phone' => array_key_exists('phone', $data)?$data['phone']:null,
+            'connection_type' => array_key_exists('connection_type', $data)?$data['connection_type']:null,
+            'is_subscribed' => array_key_exists('newsletter', $data)?1:0,
+            'birthday' => $date,
         ]);
 
 //        Mail::to($user->email)->send(new RegistrationConfirmation($user));

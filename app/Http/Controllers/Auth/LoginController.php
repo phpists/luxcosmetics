@@ -8,6 +8,10 @@ use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
+use Laravel\Socialite\Facades\Socialite;
 
 class LoginController extends Controller
 {
@@ -42,6 +46,60 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
+    public function redirectToProvider($provider)
+    {
+        return Socialite::driver($provider)->redirect();
+    }
+
+    public function handleProviderCallback($provider)
+    {
+        Log::info('provider' . $provider);
+
+        $socialiteUser = Socialite::driver($provider)->user();
+
+        switch ($provider) {
+            case 'google':
+                $data['name'] = $socialiteUser->user['given_name'];
+                $data['surname'] = $socialiteUser->user['family_name'];
+                $data['email'] = $socialiteUser->user['email'];
+                break;
+            case 'facebook':
+                $data['name'] = $socialiteUser->user['name'];
+                $data['surname'] = '';
+                $data['email'] = array_key_exists('email', $socialiteUser->user)?$socialiteUser->user['email']:'';
+                $data['phone'] = array_key_exists('phone', $socialiteUser->user)?$socialiteUser->user['phone']:'';
+                break;
+        }
+
+        $user = User::whereEmail($data['email'])->first();
+//        $user->updateLastActive();
+
+        if (!$user) {
+            $data['password'] = Str::random(8);
+
+            $user = User::create([
+                'role_id' => User::USER,
+                'name' => $data['name'],
+                'email' => $data['email'],
+                'password' => Hash::make($data['password']),
+            ]);
+
+            Auth::loginUsingId($user->id);
+
+            return redirect(app()->getLocale() . '/profile');
+        } else {
+//            $check = $user->checkUserStatus();
+//            if ($check['status']) {
+//                return redirect()->route('login', app()->getLocale())->with('error_user_status', $check['msg']);
+//            }
+
+
+            Auth::loginUsingId($user->id);
+
+            return redirect('/profile');
+        }
+    }
+
     public function authenticated(Request $request, $user)
     {
         $previous = url()->previous();
@@ -49,7 +107,7 @@ class LoginController extends Controller
         if ($user->role_id == User::ADMIN && str_contains($previous, '/admin')) {
             return redirect()->route('admin.dashboard');
         } else {
-            return redirect()->to($previous);
+            return redirect()->to(route('profile'));
         }
     }
 
