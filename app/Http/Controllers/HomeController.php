@@ -12,7 +12,8 @@ class HomeController extends Controller
     public function index(): View|\Illuminate\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\Foundation\Application
     {
         $product_discounts = Product::query()
-            ->select('products.*', 'images.path as image')
+            ->selectRaw('products.*, images.path as image, case when user_favorite_products.product_id is null then FALSE else TRUE end as is_favourite')
+            ->leftJoin('user_favorite_products', 'user_favorite_products.product_id', 'products.id')
             ->join('images', 'products.image_print_id', 'images.id')
             ->where('images.table_name', 'products')
             ->whereHas('product_variations', function ($query) {
@@ -21,13 +22,16 @@ class HomeController extends Controller
             ->orWhereNotNull('products.discount_price')
             ->with('brand')
             ->with('product_variations')
+            ->groupBy('products.id')
             ->limit(12)->get();
         $new_products = Product::query()
-            ->select('products.*', 'images.path as image')
+            ->selectRaw('products.*, images.path as image, case when user_favorite_products.product_id is null then FALSE else TRUE end as is_favourite')
+            ->leftJoin('user_favorite_products', 'user_favorite_products.product_id', 'products.id')
             ->join('images', 'products.image_print_id', 'images.id')
             ->where('images.table_name', 'products')
             ->with('brand')
             ->with('product_variations')
+            ->groupBy('products.id')
             ->orderBy('created_at')->limit(12)->get();
         return view('index', compact('product_discounts', 'new_products'));
     }

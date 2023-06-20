@@ -4,10 +4,10 @@
 @section('content')
     <section class="mainaction">
         <div class="container">
-            @php 
-                $item = \App\Services\ArticleService::getArticle();                
+            @php
+                $item = \App\Services\ArticleService::getArticle();
             @endphp
-            @if($item[0] != null) 
+            @if($item[0] != null)
             <div class="row">
                 <div class="col-lg-12">
                     <div class="mainaction__one">
@@ -142,7 +142,7 @@
                                                 <div class="product__label product__label--green">Хит продаж</div>
                                             </div>
                                             <a href="products/{{$new_product->alias}}{{$selected_variation !== null?'/'.$selected_variation->id:''}}"><img src="{{asset('images/uploads/products/'.$new_product->image)}}" alt=""></a>
-                                            <button class="product__fav"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#heart')}}"></use></svg></button>
+                                            <button class="product__fav product_favourite" data-label=@if($new_product->is_favourite) "1" @else "0" @endif data-value="{{$new_product->id}}"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#heart')}}"></use></svg></button>
                                         </div>
                                         <div class="product__title"><a href="">{{$new_product->brand->name}}</a></div>
                                         <div class="product__subtitle">{{$new_product->title}}</div>
@@ -247,7 +247,7 @@
                                                 <div class="product__label product__label--green">Хит продаж</div>
                                             </div>
                                             <a href="products/{{$new_product->alias}}{{$selected_variation !== null?'/'.$selected_variation->id:''}}"><img src="{{asset('images/uploads/products/'.$new_product->image)}}" alt=""></a>
-                                            <button class="product__fav"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#heart')}}"></use></svg></button>
+                                            <button class="product__fav product_favourite" data-label=@if($new_product->is_favourite) "1" @else "0" @endif data-value="{{$new_product->id}}"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#heart')}}"></use></svg></button>
                                         </div>
                                         <div class="product__title"><a href="">{{$new_product->brand->name}}</a></div>
                                         <div class="product__subtitle">{{$new_product->title}}</div>
@@ -324,10 +324,10 @@
                 <div class="col-lg-12">
                     <h2 class="title-h2">Блог</h2>
                     <div class="maincategory__grid">
-                        @php 
+                        @php
                             $item = \App\Services\BlogService::getBlog();
-                            
-                        @endphp 
+
+                        @endphp
                         @if($item[0] != null)
                         <div class="maincategory__item">
                             <div class="category">
@@ -388,7 +388,7 @@
                                                 <div class="product__label product__label--green">Хит продаж</div>
                                             </div>
                                             <a href="products/{{$product->alias}}{{$selected_variation !== null?'/'.$selected_variation->id:''}}"><img src="{{asset('images/uploads/products/'.$product->image)}}" alt=""></a>
-                                            <button class="product__fav"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#heart')}}"></use></svg></button>
+                                            <button class="product__fav product_favourite" data-label=@if($product->is_favourite) "1" @else "0" @endif data-value="{{$product->id}}"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#heart')}}"></use></svg></button>
                                         </div>
                                         <div class="product__title"><a href="">{{$product->brand->name}}</a></div>
                                         <div class="product__subtitle">{{$product->title}}</div>
@@ -466,14 +466,14 @@
                     <h2 class="title-h2">Новости</h2>
                 </div>
                 <div class="newsblock__container">
-                @foreach (\App\Services\NewsService::getNews() as $item)   
+                @foreach (\App\Services\NewsService::getNews() as $item)
                     <div class="article article--news">
                         <div class="article__image"><a href="{{ route('index.news', $item->link) }}"><img src="{{asset('images/uploads/news/' . $item->image)}}" alt=""></a></div>
                         <div class="article__date"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#calendar')}}"></use></svg>{{$item->published_at}}</div>
                         <div class="article__title"><a href="{{ route('index.news', $item->link) }}">{{ $item->title }}</a></div>
                         <div class="article__intro">{{ Str::limit(strip_tags($item->text), $limit = 30, $end = '...') }}</div>
                     </div>
-                @endforeach    
+                @endforeach
                 </div>
             </div>
         </div>
@@ -519,6 +519,11 @@
             <div class="done-window__subtitle">Наш менеджер свяжется с Вами в течении 15 минут</div>
         </div>
     </div>
+@endsection
+
+@section('scripts')
+    <script src="{{asset('/js/app.min.js')}}"></script>
+    <script src="{{asset('/js/favourites.js')}}"></script>
 @endsection
 
 
