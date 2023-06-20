@@ -48,8 +48,11 @@ Route::get('q/returns', [QuestionController::class, 'returns'])->name('questions
 Route::get('q/policy', [QuestionController::class, 'policy'])->name('questions.policy');
 Route::get('q/faq', [QuestionController::class, 'index'])->name('questions.faq');
 Route::get('brands', [\App\Http\Controllers\BrandController::class, 'index'])->name('brands');
-Route::get('favourites', [\App\Http\Controllers\FavouritesController::class, 'index'])->name('favourites');
 Route::get('sales', [\App\Http\Controllers\SalesController::class, 'index'])->name('sales');
+// Favourite Products
+Route::get('favourites', [\App\Http\Controllers\FavoriteProductController::class, 'index'])->name('favourites');
+Route::post('favourites', [\App\Http\Controllers\FavoriteProductController::class, 'add'])->name('favourites.add');
+Route::delete('favourites', [\App\Http\Controllers\FavoriteProductController::class, 'remove'])->name('favourites.remove');
 Route::group(['middleware' => 'auth'], function () {
     Route::post('create-chat', [\App\Http\Controllers\FeedbackController::class, 'store'])->name('create-chat');
     Route::put('update-chat/{id}', [\App\Http\Controllers\FeedbackController::class, 'update'])->name('update-chat');

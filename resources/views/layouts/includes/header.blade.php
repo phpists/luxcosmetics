@@ -72,9 +72,9 @@
 {{--                    <li><a href="">Уход за кожей <svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#arrow')}}"></use></svg></a></li>--}}
 {{--                    <li><a href="">Уход за телом <svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#arrow')}}"></use></svg></a></li>--}}
 {{--                    <li><a href="">Уход за волосами <svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#arrow')}}"></use></svg></a></li>--}}
-                    <li><a href="">Подарки <svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#arrow')}}"></use></svg></a></li>
-                    <li><a href="">Эксклюзивно онлайн <svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#arrow')}}"></use></svg></a></li>
-                    <li><a href="{{route('sales')}}">Акции <svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#arrow')}}"></use></svg></a></li>
+{{--                    <li><a href="">Подарки <svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#arrow')}}"></use></svg></a></li>--}}
+{{--                    <li><a href="">Эксклюзивно онлайн <svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#arrow')}}"></use></svg></a></li>--}}
+{{--                    <li><a href="{{route('sales')}}">Акции <svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#arrow')}}"></use></svg></a></li>--}}
                 </ul>
             </div>
         </div>

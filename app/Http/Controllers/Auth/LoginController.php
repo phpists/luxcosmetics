@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
+use App\Services\FavoriteProductsService;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -86,7 +87,14 @@ class LoginController extends Controller
 
             Auth::loginUsingId($user->id);
 
-            return redirect(app()->getLocale() . '/profile');
+            try {
+                FavoriteProductsService::migrateIntoDb($user->id);
+            }
+            catch (\Error $error) {
+                Log::error($error->getMessage());
+            }
+
+            return redirect('/profile');
         } else {
 //            $check = $user->checkUserStatus();
 //            if ($check['status']) {

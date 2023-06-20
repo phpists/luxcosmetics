@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Mail\RegistrationConfirmation;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
+use App\Services\FavoriteProductsService;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
@@ -80,6 +81,12 @@ class RegisterController extends Controller
         ]);
 
 //        Mail::to($user->email)->send(new RegistrationConfirmation($user));
+        try {
+            FavoriteProductsService::migrateIntoDb($user->id);
+        }
+        catch (\Error $error) {
+            Log::error($error->getMessage());
+        }
         return $user;
     }
 }
