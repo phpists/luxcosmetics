@@ -68,7 +68,6 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
         $date = date_create_from_format('Y-m-d', $data['year'].'-'.$data['month'].'-'.$data['day']);
-        Log::info($data);
         $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
