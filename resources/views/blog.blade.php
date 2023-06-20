@@ -4,7 +4,7 @@
 
 <br>
 
-<a href="{{ route('home') }}"><button type="submit" class="btn btn-primary">Вийти</button></a>
+<a href="{{ route('home') }}"><button type="submit" class="btn btn-primary">Назад</button></a>
 <div class="container">
     <div class="align-items-center">
             <div class="d-flex justify-content-center">
