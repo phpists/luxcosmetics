@@ -8,7 +8,7 @@
     <div class="align-items-center">
         <div class="d-flex justify-content-center">
             <div class="article__image">
-                <a><img src="{{asset('images/uploads/news/' . $item->image)}}" alt="" style="width: 700px;"></a>
+                <a><img src="{{asset('images/uploads/article/' . $item->image)}}" alt="" style="width: 700px;"></a>
                     <div class="article__date">
                         <svg class="icon">
                             <use xlink:href="{{asset('images/dist/sprite.svg#calendar')}}"></use>

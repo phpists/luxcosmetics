@@ -4,14 +4,6 @@
 @section('content')
     <section class="mainaction">
         <div class="container">
-            {{-- @foreach (\App\Services\NewsService::getNews() as $item)   
-                    <div class="article article--news">
-                        <div class="article__image"><a href="{{ route('index.news', $item->link) }}"><img src="{{asset('images/uploads/news/' . $item->image)}}" alt=""></a></div>
-                        <div class="article__date"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#calendar')}}"></use></svg>{{$item->published_at}}</div>
-                        <div class="article__title"><a href="{{ route('index.news', $item->link) }}">{{ $item->title }}</a></div>
-                        <div class="article__intro">{{ Str::limit(strip_tags($item->text), $limit = 30, $end = '...') }}</div>
-                    </div>
-                @endforeach   --}}
             @php 
                 $item = \App\Services\ArticleService::getArticle();                
             @endphp
@@ -43,10 +35,10 @@
                                     <img src="{{asset('images/uploads/article/' . $item[1]->image)}}">
                                 </picture>
                             </div>
-                            <div class="article__title"><a href="{{ route('index.news', $item[1]->link) }}">{{ $item[1]->title }}</a></div>
+                            <div class="article__title"><a href="{{ route('index.article', $item[1]->link) }}">{{ $item[1]->title }}</a></div>
                             <div class="article__intro">{{ Str::limit(strip_tags($item[1]->text), $limit = 30, $end = '...') }}</div>
                         </div>
-                        <a href="" class="article__more">Подробнее</a>
+                        <a href="{{ route('index.article', $item[1]->link) }}" class="article__more">Подробнее</a>
                     </div>
                 </div>
                 @endif
@@ -62,10 +54,10 @@
                                     <img src="{{asset('images/uploads/article/' . $item[2]->image)}}">
                                 </picture>
                             </div>
-                            <div class="article__title"><a href="{{ route('index.news', $item[2]->link) }}">{{ $item[2]->title }}</a></div>
+                            <div class="article__title"><a href="{{ route('index.article', $item[2]->link) }}">{{ $item[2]->title }}</a></div>
                             <div class="article__intro">{{ Str::limit(strip_tags($item[2]->text), $limit = 30, $end = '...') }}</div>
                         </div>
-                        <a href="" class="article__more">Подробнее</a>
+                        <a href="{{ route('index.article', $item[2]->link) }}" class="article__more">Подробнее</a>
                     </div>
                 </div>
                 @endif
@@ -83,10 +75,10 @@
                                     <img src="{{asset('images/uploads/article/' . $item[3]->image)}}">
                                 </picture>
                             </div>
-                            <div class="article__title"><a href="{{ route('index.news', $item[3]->link) }}">{{ $item[3]->title }}</a></div>
+                            <div class="article__title"><a href="{{ route('index.article', $item[3]->link) }}">{{ $item[3]->title }}</a></div>
                             <div class="article__intro">{{ Str::limit(strip_tags($item[3]->text), $limit = 30, $end = '...') }}</div>
                         </div>
-                        <a href="" class="article__more">Подробнее</a>
+                        <a href="{{ route('index.article', $item[3]->link) }}" class="article__more">Подробнее</a>
                     </div>
                 </div>
                 @endif
@@ -102,10 +94,10 @@
                                     <img src="{{asset('images/uploads/article/' . $item[4]->image)}}">
                                 </picture>
                             </div>
-                            <div class="article__title"><a href="{{ route('index.news', $item[4]->link) }}">{{ $item[4]->title }}</a></div>
+                            <div class="article__title"><a href="{{ route('index.article', $item[4]->link) }}">{{ $item[4]->title }}</a></div>
                             <div class="article__intro">{{ Str::limit(strip_tags($item[3]->text), $limit = 30, $end = '...') }}</div>
                         </div>
-                        <a href="" class="article__more">Подробнее</a>
+                        <a href="{{ route('index.article', $item[3]->link) }}" class="article__more">Подробнее</a>
                     </div>
                 </div>
                 @endif
@@ -121,10 +113,10 @@
                                     <img src="{{asset('images/uploads/article/' . $item[5]->image)}}">
                                 </picture>
                             </div>
-                            <div class="article__title"><a href="{{ route('index.news', $item[4]->link) }}">{{ $item[4]->title }}</a></div>
+                            <div class="article__title"><a href="{{ route('index.article', $item[4]->link) }}">{{ $item[4]->title }}</a></div>
                             <div class="article__intro">{{ Str::limit(strip_tags($item[3]->text), $limit = 30, $end = '...') }}</div>
                         </div>
-                        <a href="" class="article__more">Подробнее</a>
+                        <a href="{{ route('index.article', $item[3]->link) }}" class="article__more">Подробнее</a>
                     </div>
                 </div>
                 @endif
@@ -326,18 +318,11 @@
             </div>
         </div>
     </section>
-    {{-- @foreach (\App\Services\NewsService::getNews() as $item)   
-                    <div class="article article--news">
-                        <div class="article__image"><a href="{{ route('index.news', $item->id) }}"><img src="{{asset('images/uploads/news/' . $item->image)}}" alt=""></a></div>
-                        <div class="article__date"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#calendar')}}"></use></svg>{{$item->published_at}}</div>
-                        <div class="article__title"><a href="{{ route('index.news', $item->id) }}">{{ $item->title }}</a></div>
-                        <div class="article__intro">{{ Str::limit(strip_tags($item->text), $limit = 30, $end = '...') }}</div>
-                    </div>
-                @endforeach    --}}
     <section class="maincategory">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
+                    <h2 class="title-h2">Блог</h2>
                     <div class="maincategory__grid">
                         @php 
                             $item = \App\Services\BlogService::getBlog();

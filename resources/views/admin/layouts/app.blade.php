@@ -249,7 +249,6 @@
                                             <span class="menu-text">Блог</span>
                                         </a>
                                     </li>
-<<<<<<< HEAD
                                     <li class="menu-item {{ request()->routeIs('admin.article') || request()->routeIs('admin.news.edit') ? 'menu-item-active' : '' }}"
                                         aria-haspopup="true">
                                         <a href="{{route('admin.article')}}" class="menu-link">
@@ -257,7 +256,6 @@
                                                 <span></span>
                                             </i>
                                             <span class="menu-text">Cтатьи</span>
-=======
                                     <li class="menu-item {{ request()->routeIs('admin.pages.index') ? 'menu-item-active' : '' }}"
                                         aria-haspopup="true">
                                         <a href="{{route('admin.pages.index')}}" class="menu-link">
@@ -265,7 +263,6 @@
                                                 <span></span>
                                             </i>
                                             <span class="menu-text">Статические</span>
->>>>>>> b66b771d73f2f034bb3fd39b9dedf258a870bbcb
                                         </a>
                                     </li>
                                 </ul>
