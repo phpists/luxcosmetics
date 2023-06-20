@@ -274,9 +274,9 @@
                             <h4 class="menu-text">Настройки</h4>
                             <i class="menu-icon ki ki-bold-more-hor icon-md"></i>
                         </li>
-                        <li class="menu-item {{ request()->routeIs('admin.faqs') ? 'menu-item-active' : '' }}"
+                        <li class="menu-item {{ request()->routeIs('admin.faq-groups') ? 'menu-item-active' : '' }}"
                             aria-haspopup="true">
-                            <a href="{{ route('admin.faqs') }}" class="menu-link">
+                            <a href="{{ route('admin.faq-groups') }}" class="menu-link">
                                 <i class="far fa-question-circle menu-icon"></i>
                                 <span class="menu-text">FAQ</span>
                             </a>

@@ -2,13 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Faq;
+use App\Models\FaqGroup;
 use App\Models\Page;
 use Illuminate\Http\Request;
 
 class QuestionController extends Controller
 {
     public function index() {
-        return view('questions.faq');
+        $faq_groups = FaqGroup::all()->where('is_active', true);
+        return view('questions.faq', [
+            'faq_groups' => $faq_groups
+        ]);
     }
 
     public function delivery() {
