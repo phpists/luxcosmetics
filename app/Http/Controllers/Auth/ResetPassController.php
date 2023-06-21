@@ -16,7 +16,7 @@ class ResetPassController extends Controller
         $user = User::query()->where('email', $request->input('email'))->first();
 
         if ($user) {
-            $password = Str::password(length: 15);
+            $password = Str::password(length: 6);
             $user->update([
                 'password' => Hash::make($password)
             ]);
