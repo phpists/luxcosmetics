@@ -29,6 +29,8 @@ Route::get('/auth-facebook/callback', function () {
     // $user->token
 });
 
+Route::post('/reset-password', [\App\Http\Controllers\Auth\ResetPassController::class, 'reset'])->name('password.reset-password');
+
 
 
 // Categories

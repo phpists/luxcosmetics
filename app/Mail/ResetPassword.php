@@ -10,15 +10,16 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class RegistrationConfirmation extends Mailable
+class ResetPassword extends Mailable
 {
     use Queueable, SerializesModels;
 
     public $user;
 
-    public function __construct(User $user)
+    public function __construct(string $password, string $name)
     {
-        $this->user = $user;
+        $this->password = $password;
+        $this->name = $name;
     }
 
 //    public function build()
@@ -33,7 +34,7 @@ class RegistrationConfirmation extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Подтверждение регистрации',
+            subject: 'Востановление пароля',
         );
     }
 
@@ -43,9 +44,10 @@ class RegistrationConfirmation extends Mailable
     public function content(): Content
     {
         return new Content(
-            markdown: 'emails.registration_confirmation',
+            markdown: 'emails.reset-password',
             with: [
-                'userName' => $this->user->name,
+                'password' => $this->password,
+                'userName' => $this->name,
             ],
         );
     }

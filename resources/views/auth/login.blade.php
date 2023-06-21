@@ -139,10 +139,11 @@
         <div class="popupform" id="fgt-password">
             <div class="subheading">Восстановление пароля</div>
             <p>Укажите адрес электронной почты своей учетной записи, чтобы получить электронное письмо для сброса пароля.</p>
-            <form action="" class="form form--box">
+            <form  method="POST" action="{{ route('password.reset-password') }}" class="form form--box">
+                @csrf
                 <div class="form__fieldset">
                     <legend class="form__label">Ваш e-mail</legend>
-                    <input type="text" class="form__input">
+                    <input type="text" name="email" required class="form__input">
                 </div>
                 <button class="btn btn--accent">Отправить</button>
             </form>

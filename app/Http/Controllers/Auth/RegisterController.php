@@ -80,8 +80,10 @@ class RegisterController extends Controller
             'birthday' => $date,
         ]);
 
-//        Mail::to($user->email)->send(new RegistrationConfirmation($user));
         try {
+            // Send email
+            Mail::to($user->email)->send(new RegistrationConfirmation($user));
+            // Write favourites products to db
             FavoriteProductsService::migrateIntoDb($user->id);
         }
         catch (\Error $error) {

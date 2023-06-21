@@ -133,7 +133,7 @@ class ProductController extends Controller
         DB::table('product_images')->where('id', $request->image_id)->update([
             'is_active' => $request->is_active
         ]);
-        Log::info($request->is_main);
+
         if ($request->is_main == 1) {
             DB::table('products')->where('id', $request->product_id)->update([
                 'image_print_id' => $request->image_id
