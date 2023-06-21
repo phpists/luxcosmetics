@@ -45,7 +45,6 @@
                             </li>
                         </ul>
                     </div>
-                    
                     <div class="card-toolbar">
                         <button type="submit" form="form1" class="btn btn-primary">Сохранить</button>
                     </div>
@@ -54,7 +53,7 @@
                     <div class="tab-content">
                         <div class="tab-pane fade show active" id="kt_tab_pane_1_4" role="tabpanel"
                              aria-labelledby="kt_tab_pane_1_4">
-                            <form id="form1" action="{{ route('admin.article.update') }}" method="POST"
+                            <form id="form1" action="{{ route('admin.banner.update') }}" method="POST"
                                   enctype="multipart/form-data">
                                 @csrf
                                 <input type="hidden" name="id" value="{{ $item->id }}">
@@ -67,7 +66,7 @@
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label for="exampleSelect2">Слаг</label>
+                                                <label for="exampleSelect2">Ссылка</label>
                                                 <input type="text" name="link" class="form-control" value="{{ $item->link }}"/>
                                             </div>
                                         </div>
@@ -80,6 +79,18 @@
                                                     <option value="1" @if($item->status == true) selected @endif>Активный</option>
                                                     <option value="0" @if($item->status == false) selected @endif>Неактивный</option>
                                                 </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label>Позиция баннера</label>
+                                            <select class="form-control status" name="position">
+                                                <option value="first">Первая позиция</option>
+                                                <option value="second">Вторая позиция</option>
+                                                <option value="third">Третяя позиция</option>
+                                                <option value="fourth">Четвертая позиция</option>
+                                                <option value="fifth">П'ятая позиция</option>
+                                            </select>
                                             </div>
                                         </div>
                                         <div class="col-md-2">
@@ -97,41 +108,39 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <label>Текст</label>
-                                        <div style="max-height: 400px; overflow-y: auto;">
-                                            <textarea id="textEditor" name="text" required>{{ $item->text }}</textarea>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label>Текст</label>
+                                            <div style="max-height: 400px; overflow-y: auto;">
+                                                <textarea id="textEditor" name="text" required>{{ $item->text }}</textarea>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                        </div>
-                        <div class="tab-pane fade" id="kt_tab_pane_2_8" role="tabpanel"
-                             aria-labelledby="kt_tab_pane_2_8">
-                             <div class="form-group">
-                                <label>Изображения</label>
-                                <div class="col-auto ml-2">
-                                    <div class="image-input image-input-outline" id="createImagePlugin" style="background-image: url('{{ asset('uploads/article/' . $item->image) }}')">
-                                        <div class="image-input-wrapper" id="updateImageBackground"></div>
-                                        <label class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="change" data-toggle="tooltip" data-original-title="Change avatar">
-                                            <i class="fa fa-pen icon-sm text-muted"></i>
-                                            <input type="file" name="image" accept="image/*"/>
-                                            <input type="hidden" name="image_remove"/>
-                                        </label>
+                                <div class="tab-pane fade" id="kt_tab_pane_2_8" role="tabpanel"
+                                    aria-labelledby="kt_tab_pane_2_8">
+                                    <div class="form-group">
+                                        <label>Изображения</label>
+                                        <div class="col-auto ml-2">
+                                            <div class="image-input image-input-outline" id="createImagePlugin" style="background-image: url('{{ asset('uploads/banner/' . $item->image) }}')">
+                                                <div class="image-input-wrapper" id="updateImageBackground"></div>
+                                                <label class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="change" data-toggle="tooltip" data-original-title="Change avatar">
+                                                    <i class="fa fa-pen icon-sm text-muted"></i>
+                                                    <input type="file" name="image" accept="image/*"/>
+                                                    <input type="hidden" name="image_remove"/>
+                                                </label>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
+                                </form>
                             </div>
-                            
-                            </form>
                         </div>
                     </div>
                 </div>
             </div>
+            <!--end::Container-->
         </div>
-        <!--end::Container-->
-    </div>
 @endsection
 
 @section('js_after')

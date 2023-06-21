@@ -5,118 +5,126 @@
     <section class="mainaction">
         <div class="container">
             @php 
-                $item = \App\Services\ArticleService::getArticle();                
+                $item = \App\Services\BannerService::getBanner();
+                $positionIds = [];
+                foreach ($item as $banner) {
+                    $position = $banner->position;
+                    if (!isset($positionIds[$position])) {
+                        $positionIds[$position] = [];
+                    }
+                    $positionIds[$position][] = $banner->id;
+                }
             @endphp
-            @if($item[0] != null) 
             <div class="row">
+                @if ($selectedItem = $item->find($positionIds['first'][0]))
                 <div class="col-lg-12">
                     <div class="mainaction__one">
-                        <a href="">
+                        <a href="{{ route('index.banner', $selectedItem->link) }}">
                             <picture>
-                                <source  srcset="{{asset('images/uploads/article/' . $item[0]->image)}}" media="(min-width: 576px)">
+                                <source  srcset="{{asset('images/uploads/banner/' . $selectedItem->image)}}" media="(min-width: 576px)">
                                 <source srcset="{{asset('images/dist/banners/banner-big@320.jpg')}}" media="(max-width: 575px)" >
-                                <img src="{{asset('images/uploads/article/' . $item[0]->image)}}">
+                                <img src="{{asset('images/uploads/banner/' . $selectedItem->image)}}">
                             </picture>
                         </a>
                     </div>
                 </div>
+                @endif
             </div>
-            @endif
+            @if ($selectedItem = $item->find($positionIds['second'][0]))
             <div class="row">
-                @if($item[1] != null)
                 <div class="col-lg-6 col-md-6">
                     <div class="article">
                         <div class="article__wrap">
                             <div class="article__image">
                                 <picture>
-                                    <source  srcset="{{asset('images/uploads/article/' . $item[1]->image)}}" media="(min-width: 768px)">
+                                    <source  srcset="{{asset('images/uploads/banner/' . $selectedItem->image)}}" media="(min-width: 768px)">
                                     <source srcset="{{asset('images/dist/banners/banner-medium@768.jpg')}}" media="(min-width: 576px) and (max-width: 767px)" >
                                     <source srcset="{{asset('images/dist/banners/banner-medium@320.jpg')}}" media="(max-width: 575px)" >
-                                    <img src="{{asset('images/uploads/article/' . $item[1]->image)}}">
+                                    <img src="{{asset('images/uploads/banner/' . $selectedItem->image)}}">
                                 </picture>
                             </div>
-                            <div class="article__title"><a href="{{ route('index.article', $item[1]->link) }}">{{ $item[1]->title }}</a></div>
-                            <div class="article__intro">{{ Str::limit(strip_tags($item[1]->text), $limit = 30, $end = '...') }}</div>
+                            <div class="article__title"><a href="{{ route('index.banner', $selectedItem->link) }}">{{ $selectedItem->title }}</a></div>
+                            <div class="article__intro">{{ Str::limit(strip_tags($selectedItem->text), $limit = 120, $end = '...') }}</div>
                         </div>
-                        <a href="{{ route('index.article', $item[1]->link) }}" class="article__more">Подробнее</a>
+                        <a href="{{ route('index.banner', $selectedItem->link) }}" class="article__more">Подробнее</a>
                     </div>
                 </div>
                 @endif
-                @if($item[2] != null)
+                @if($selectedItem = $item->find($positionIds['second'][1]))
                 <div class="col-lg-6 col-md-6">
                     <div class="article">
                         <div class="article__wrap">
                             <div class="article__image">
                                 <picture>
-                                    <source  srcset="{{asset('images/uploads/article/' . $item[2]->image)}}" media="(min-width: 768px)">
+                                    <source  srcset="{{asset('images/uploads/banner/' . $selectedItem->image)}}" media="(min-width: 768px)">
                                     <source srcset="{{asset('images/dist/banners/banner-medium2@768.jpg')}}" media="(min-width: 576px) and (max-width: 767px)" >
                                     <source srcset="{{asset('images/dist/banners/banner-medium2@320.jpg')}}" media="(max-width: 575px)" >
-                                    <img src="{{asset('images/uploads/article/' . $item[2]->image)}}">
+                                    <img src="{{asset('images/uploads/banner/' . $selectedItem->image)}}">
                                 </picture>
                             </div>
-                            <div class="article__title"><a href="{{ route('index.article', $item[2]->link) }}">{{ $item[2]->title }}</a></div>
-                            <div class="article__intro">{{ Str::limit(strip_tags($item[2]->text), $limit = 30, $end = '...') }}</div>
+                            <div class="article__title"><a href="{{ route('index.banner', $selectedItem->link) }}">{{ $selectedItem->title }}</a></div>
+                            <div class="article__intro">{{ Str::limit(strip_tags($selectedItem->text), $limit = 120, $end = '...') }}</div>
                         </div>
-                        <a href="{{ route('index.article', $item[2]->link) }}" class="article__more">Подробнее</a>
+                        <a href="{{ route('index.banner', $selectedItem->link) }}" class="article__more">Подробнее</a>
                     </div>
                 </div>
                 @endif
             </div>
             <div class="row">
-                @if($item[3] != null)
+                @if($selectedItem = $item->find($positionIds['third'][0]))
                 <div class="col-lg-4 col-md-4">
                     <div class="article article--threecol">
                         <div class="article__wrap">
                             <div class="article__image">
                                 <picture>
-                                    <source  srcset="{{asset('images/uploads/article/' . $item[3]->image)}}" media="(min-width: 768px)">
+                                    <source  srcset="{{asset('images/uploads/banner/' . $selectedItem->image)}}" media="(min-width: 768px)">
                                     <source srcset="{{asset('images/dist/banners/banner-small@768.jpg')}}" media="(min-width: 576px) and (max-width: 767px)" >
                                     <source srcset="{{asset('images/dist/banners/banner-small@320.jpg')}}" media="(max-width: 575px)" >
-                                    <img src="{{asset('images/uploads/article/' . $item[3]->image)}}">
+                                    <img src="{{asset('images/uploads/banner/' . $selectedItem->image)}}">
                                 </picture>
                             </div>
-                            <div class="article__title"><a href="{{ route('index.article', $item[3]->link) }}">{{ $item[3]->title }}</a></div>
-                            <div class="article__intro">{{ Str::limit(strip_tags($item[3]->text), $limit = 30, $end = '...') }}</div>
+                            <div class="article__title"><a href="{{ route('index.banner', $selectedItem->link) }}">{{ $selectedItem->title }}</a></div>
+                            <div class="article__intro">{{ Str::limit(strip_tags($selectedItem->text), $limit = 120, $end = '...') }}</div>
                         </div>
-                        <a href="{{ route('index.article', $item[3]->link) }}" class="article__more">Подробнее</a>
+                        <a href="{{ route('index.banner', $selectedItem->link) }}" class="article__more">Подробнее</a>
                     </div>
                 </div>
                 @endif
-                @if($item[4] != null)
+                @if($selectedItem = $item->find($positionIds['third'][1]))
                 <div class="col-lg-4 col-md-4">
                     <div class="article article--threecol">
                         <div class="article__wrap">
                             <div class="article__image">
                                 <picture>
-                                    <source  srcset="{{asset('images/uploads/article/' . $item[4]->image)}}" media="(min-width: 768px)">
+                                    <source  srcset="{{asset('images/uploads/banner/' . $selectedItem->image)}}" media="(min-width: 768px)">
                                     <source srcset="{{asset('images/dist/banners/banner-small2@768.jpg')}}" media="(min-width: 576px) and (max-width: 767px)" >
                                     <source srcset="{{asset('images/dist/banners/banner-small2@320.jpg')}}" media="(max-width: 575px)" >
-                                    <img src="{{asset('images/uploads/article/' . $item[4]->image)}}">
+                                    <img src="{{asset('images/uploads/banner/' . $selectedItem->image)}}">
                                 </picture>
                             </div>
-                            <div class="article__title"><a href="{{ route('index.article', $item[4]->link) }}">{{ $item[4]->title }}</a></div>
-                            <div class="article__intro">{{ Str::limit(strip_tags($item[3]->text), $limit = 30, $end = '...') }}</div>
+                            <div class="article__title"><a href="{{ route('index.banner', $selectedItem->link) }}">{{ $selectedItem->title }}</a></div>
+                            <div class="article__intro">{{ Str::limit(strip_tags($selectedItem->text), $limit = 120, $end = '...') }}</div>
                         </div>
-                        <a href="{{ route('index.article', $item[3]->link) }}" class="article__more">Подробнее</a>
+                        <a href="{{ route('index.banner', $selectedItem->link) }}" class="article__more">Подробнее</a>
                     </div>
                 </div>
                 @endif
-                @if($item[4] != null)
+                @if($selectedItem = $item->find($positionIds['third'][2]))
                 <div class="col-lg-4 col-md-4">
                     <div class="article article--threecol">
                         <div class="article__wrap">
                             <div class="article__image">
                                 <picture>
-                                    <source  srcset="{{asset('images/uploads/article/' . $item[5]->image)}}" media="(min-width: 768px)">
+                                    <source  srcset="{{asset('images/uploads/banner/' . $selectedItem->image)}}" media="(min-width: 768px)">
                                     <source srcset="{{asset('images/dist/banners/banner-small3@768.jpg')}}" media="(min-width: 576px) and (max-width: 767px)" >
                                     <source srcset="{{asset('images/dist/banners/banner-small3@320.jpg')}}" media="(max-width: 575px)" >
-                                    <img src="{{asset('images/uploads/article/' . $item[5]->image)}}">
+                                    <img src="{{asset('images/uploads/banner/' . $selectedItem->image)}}">
                                 </picture>
                             </div>
-                            <div class="article__title"><a href="{{ route('index.article', $item[4]->link) }}">{{ $item[4]->title }}</a></div>
-                            <div class="article__intro">{{ Str::limit(strip_tags($item[3]->text), $limit = 30, $end = '...') }}</div>
+                            <div class="article__title"><a href="{{ route('index.banner', $selectedItem->link) }}">{{ $selectedItem->title }}</a></div>
+                            <div class="article__intro">{{ Str::limit(strip_tags($selectedItem->text), $limit = 120, $end = '...') }}</div>
                         </div>
-                        <a href="{{ route('index.article', $item[3]->link) }}" class="article__more">Подробнее</a>
+                        <a href="{{ route('index.banner', $selectedItem->link) }}" class="article__more">Подробнее</a>
                     </div>
                 </div>
                 @endif
@@ -322,45 +330,40 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
-                    <h2 class="title-h2">Блог</h2>
                     <div class="maincategory__grid">
-                        @php 
-                            $item = \App\Services\BlogService::getBlog();
-                            
-                        @endphp 
-                        @if($item[0] != null)
+                        @if($selectedItem = $item->find($positionIds['fourth'][0]))
                         <div class="maincategory__item">
                             <div class="category">
-                                <div class="category__image" style="background-image: url({{asset('images/uploads/blog/' . $item[0]->image)}});"></div>
-                                <div class="category__title"><a href="{{ route('index.blog', $item[0]->link) }}">{{ $item[0]->title  }}</a></div>
-                                <div class="category__subtitle">{{ Str::limit(strip_tags($item[0]->text), $limit = 30, $end = '...') }}</div>
+                                <div class="category__image" style="background-image: url({{asset('images/uploads/banner/' . $selectedItem->image)}});"></div>
+                                <div class="category__title"><a href="{{ route('index.banner', $selectedItem->link) }}">{{ $selectedItem->title }}</a></div>
+                                <div class="category__subtitle">{{ Str::limit(strip_tags($selectedItem->text), $limit = 120, $end = '...') }}</div>
                             </div>
                         </div>
                         @endif
-                        @if($item[1] != null)
+                        @if($selectedItem = $item->find($positionIds['fourth'][1]))
                         <div class="maincategory__item">
                             <div class="category">
-                                <div class="category__image" style="background-image: url({{asset('images/uploads/blog/' . $item[1]->image)}});"></div>
-                                <div class="category__title"><a href="{{ route('index.blog', $item[1]->link) }}">{{ $item[1]->title  }}</a></div>
-                                <div class="category__subtitle">{{ Str::limit(strip_tags($item[1]->text), $limit = 30, $end = '...') }}</div>
+                                <div class="category__image" style="background-image: url({{asset('images/uploads/banner/' . $selectedItem->image)}});"></div>
+                                <div class="category__title"><a href="{{ route('index.banner', $selectedItem->link) }}">{{ $selectedItem->title }}</a></div>
+                                <div class="category__subtitle">{{ Str::limit(strip_tags($selectedItem->text), $limit = 120, $end = '...') }}</div>
                             </div>
                         </div>
                         @endif
-                        @if($item[2] != null)
+                        @if($selectedItem = $item->find($positionIds['fourth'][2]))
                         <div class="maincategory__item">
                             <div class="category">
-                                <div class="category__image" style="background-image: url({{asset('images/uploads/blog/' . $item[2]->image)}});"></div>
-                                <div class="category__title"><a href="{{ route('index.blog', $item[2]->link) }}">{{ $item[2]->title  }}</a></div>
-                                <div class="category__subtitle">{{ Str::limit(strip_tags($item[2]->text), $limit = 30, $end = '...') }}</div>
+                                <div class="category__image" style="background-image: url({{asset('images/uploads/banner/' . $selectedItem->image)}});"></div>
+                                <div class="category__title"><a href="{{ route('index.banner', $selectedItem->link) }}">{{ $selectedItem->title }}</a></div>
+                                <div class="category__subtitle">{{ Str::limit(strip_tags($selectedItem->text), $limit = 120, $end = '...') }}</div>
                             </div>
                         </div>
                         @endif
-                        @if($item[3] != null)
+                        @if($selectedItem = $item->find($positionIds['fourth'][3]))
                         <div class="maincategory__item">
                             <div class="category">
-                                <div class="category__image" style="background-image: url({{asset('images/uploads/blog/' . $item[3]->image)}});"></div>
-                                <div class="category__title"><a href="{{ route('index.blog', $item[3]->link) }}">{{ $item[3]->title  }}</a></div>
-                                <div class="category__subtitle">{{ Str::limit(strip_tags($item[3]->text), $limit = 30, $end = '...') }}</div>
+                                <div class="category__image" style="background-image: url({{asset('images/uploads/banner/' . $selectedItem->image)}});"></div>
+                                <div class="category__title"><a href="{{ route('index.banner', $selectedItem->link) }}">{{ $selectedItem->title }}</a></div>
+                                <div class="category__subtitle">{{ Str::limit(strip_tags($selectedItem->text), $limit = 120, $end = '...') }}</div>
                             </div>
                         </div>
                         @endif
@@ -459,6 +462,39 @@
             </div>
         </div>
     </section>
+    <section class="maincategory maincategory--threecol">
+        <div class="container">
+            <div class="row">
+                @if($selectedItem = $item->find($positionIds['fifth'][0]))
+                <div class="col-lg-4 col-md-4 col-sm-4">
+                    <div class="category">
+                        <div class="category__image" style="background-image: url({{asset('images/uploads/banner/' . $selectedItem->image)}});"></div>
+                        <div class="category__title"><a href="{{ route('index.banner', $selectedItem->link) }}">{{ $selectedItem->title }}</a></div>
+                        <div class="category__subtitle">{{ Str::limit(strip_tags($selectedItem->text), $limit = 120, $end = '...') }}</div>
+                    </div>
+                </div>
+                @endif
+                @if($selectedItem = $item->find($positionIds['fifth'][1]))
+                <div class="col-lg-4 col-md-4 col-sm-4">
+                    <div class="category">
+                        <div class="category__image" style="background-image: url({{asset('images/uploads/banner/' . $selectedItem->image)}});"></div>
+                        <div class="category__title"><a href="{{ route('index.banner', $selectedItem->link) }}">{{ $selectedItem->title }}</a></div>
+                        <div class="category__subtitle">{{ Str::limit(strip_tags($selectedItem->text), $limit = 120, $end = '...') }}</div>
+                    </div>
+                </div>
+                @endif
+                @if($selectedItem = $item->find($positionIds['fifth'][2]))
+                <div class="col-lg-4 col-md-4 col-sm-4">
+                    <div class="category">
+                        <div class="category__image" style="background-image: url({{asset('images/uploads/banner/' . $selectedItem->image)}});"></div>
+                        <div class="category__title"><a href="{{ route('index.banner', $selectedItem->link) }}">{{ $selectedItem->title }}</a></div>
+                        <div class="category__subtitle">{{ Str::limit(strip_tags($selectedItem->text), $limit = 120, $end = '...') }}</div>
+                    </div>
+                </div>
+                @endif
+            </div>
+        </div>
+    </section>
     <section class="newsblock">
         <div class="container">
             <div class="row">
@@ -469,7 +505,7 @@
                 @foreach (\App\Services\NewsService::getNews() as $item)   
                     <div class="article article--news">
                         <div class="article__image"><a href="{{ route('index.news', $item->link) }}"><img src="{{asset('images/uploads/news/' . $item->image)}}" alt=""></a></div>
-                        <div class="article__date"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#calendar')}}"></use></svg>{{$item->published_at}}</div>
+                        <div class="article__date"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#calendar')}}"></use></svg>{{ \Carbon\Carbon::parse($item->published_at)->locale('ru')->isoFormat('D.MMMM.YYYY') }}</div>
                         <div class="article__title"><a href="{{ route('index.news', $item->link) }}">{{ $item->title }}</a></div>
                         <div class="article__intro">{{ Str::limit(strip_tags($item->text), $limit = 30, $end = '...') }}</div>
                     </div>
@@ -492,6 +528,22 @@
                             <button class="mailing__button"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#circle-arrow')}}"></use></svg></button>
                         </div>
                     </form>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="brands">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h2 class="title-h2">Бренды</h2>
+                    @foreach (\App\Services\BrandService::getBrand() as $item)                        
+                    <div class="brands-slider">
+                        <div class="brands-slider__item">
+                            <div class="brand"><img src="{{asset('images/uploads/brands/' . $item->image)}}" alt=""></div>
+                        </div>
+                    </div>
+                    @endforeach
                 </div>
             </div>
         </div>

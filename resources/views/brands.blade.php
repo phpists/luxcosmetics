@@ -78,5 +78,27 @@
                 </div>
             </div>
         </div>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script>
+            $(document).ready(function() {
+              var selectedLetter = null;
+          
+              $('.brands-page__letter').click(function() {
+                var currentLetter = $(this).text().trim().toLowerCase();
+          
+                if (selectedLetter === currentLetter) {
+                    $('.brands-page__title, .brands-page__brand').show();
+                    selectedLetter = null;
+                } else {
+                    $('.brands-page__title, .brands-page__brand').hide();
+                    $('#' + currentLetter).find('.brands-page__title, .brands-page__brand').show();
+                    selectedLetter = currentLetter;
+                }
+                return false;
+              });
+            });
+          </script> 
     </section>
 @endsection
+
+  

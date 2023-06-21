@@ -13,13 +13,13 @@
                         <svg class="icon">
                             <use xlink:href="{{asset('images/dist/sprite.svg#calendar')}}"></use>
                         </svg>
-                        {{ \Carbon\Carbon::parse($item->published_at)->locale('ru')->format('d.F.Y') }}
+                        {{ \Carbon\Carbon::parse($item->published_at)->locale('ru')->isoFormat('D.MMMM.YYYY') }}
                     </div>
                     <div class="text-center">
                         <h2>{{ $item->title }}</h2>
                     </div>
                     <div>
-                        <h3>{{ Str::limit(strip_tags($item->text)) }}</h3>
+                        <h3>{{ strip_tags($item->text) }}</h3>
                     </div>
             </div>
         </div>

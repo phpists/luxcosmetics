@@ -1,4 +1,4 @@
-@foreach($article as $item)
+@foreach($banner as $item)
     <tr id="post_{{$item->id}}" data-id="{{ $item->id }}">
         <td class="text-center pl-0">
             <span style="width: 20px;">
@@ -27,11 +27,11 @@
             <img src="{{ $item->mainImage() }}" width="100" height="100">
         </td>
         <td class="text-center pr-0">
-            <a href="{{ route('admin.article.edit', $item->id) }}"
+            <a href="{{ route('admin.banner.edit', $item->id) }}"
                class="btn btn-sm btn-clean btn-icon">
                 <i class="las la-edit"></i>
             </a>
-            <a href="{{ route('admin.article.delete', $item->id) }}"
+            <a href="{{ route('admin.banner.delete', $item->id) }}"
                class="btn btn-sm btn-clean btn-icon"
                onclick="return confirm('Ви впевнені, що хочете видалити цей запис?')">
                 <i class="las la-trash"></i>

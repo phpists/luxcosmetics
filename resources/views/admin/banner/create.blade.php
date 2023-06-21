@@ -16,7 +16,7 @@
             <!--begin::Page Heading-->
             <div class="d-flex align-items-baseline flex-wrap mr-5">
                 <!--begin::Page Title-->
-                <h5 class="text-dark font-weight-bold my-1 mr-5">Создание блога</h5>
+                <h5 class="text-dark font-weight-bold my-1 mr-5">Создание баннера</h5>
                 <!--end::Page Title-->
             </div>
             <!--end::Page Heading-->
@@ -45,7 +45,6 @@
                             </li>
                         </ul>
                     </div>
-                    
                     <div class="card-toolbar">
                         <button type="submit" form="form1" class="btn btn-primary">Сохранить</button>
                     </div>
@@ -54,7 +53,7 @@
                     <div class="tab-content">
                         <div class="tab-pane fade show active" id="kt_tab_pane_1_4" role="tabpanel"
                              aria-labelledby="kt_tab_pane_1_4">
-                            <form id="form1" action="{{ route('admin.blog.store') }}" method="POST"
+                            <form id="form1" action="{{ route('admin.banner.store') }}" method="POST"
                                   enctype="multipart/form-data">
                                 @csrf
                                 <div class="row">
@@ -66,12 +65,11 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="exampleSelect2">Слаг</label>
+                                            <label for="exampleSelect2">Ссылка</label>
                                             <input type="text" name="link" class="form-control"/>
                                         </div>
                                     </div>
                                 </div>
-                                
                                 <div class="row">
                                     <div class="col-md-2">
                                         <div class="form-group">
@@ -80,6 +78,18 @@
                                                 <option value="1">Активный</option>
                                                 <option value="0">Неактивный</option>
                                             </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <label>Позиция баннера</label>
+                                        <select class="form-control status" name="position">
+                                            <option value="first">Первая позиция</option>
+                                            <option value="second">Вторая позиция</option>
+                                            <option value="third">Третяя позиция</option>
+                                            <option value="fourth">Четвертая позиция</option>
+                                            <option value="fifth">П'ятая позиция</option>
+                                        </select>
                                         </div>
                                     </div>
                                     <div class="col-md-2">
@@ -110,33 +120,30 @@
                                     </div>
                                 </div>
                             </div>
-
-                        <div class="tab-pane fade" id="kt_tab_pane_2_8" role="tabpanel"
-                             aria-labelledby="kt_tab_pane_2_8">
-
-                                <div class="form-group">
-                                    <label>Изображения</label>
-                                    <div class="col-auto ml-2">
-                                      <div class="image-input image-input-outline" id="createImagePlugin" style="max-height: 700px;">
-                                        <div class="image-input-wrapper" id="updateImageBackground"></div>
-                                        <label class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="change" data-toggle="tooltip" data-original-title="Change avatar">
-                                          <i class="fa fa-pen icon-sm text-muted"></i>
-                                          <input type="file" id="imageInput" name="image" required accept="image/*">
-                                          <input type="hidden" name="image_remove">
-                                        </label>
-                                      </div>
+                            <div class="tab-pane fade" id="kt_tab_pane_2_8" role="tabpanel"
+                                aria-labelledby="kt_tab_pane_2_8">
+                                    <div class="form-group">
+                                        <label>Изображения</label>
+                                        <div class="col-auto ml-2">
+                                        <div class="image-input image-input-outline" id="createImagePlugin" style="max-height: 700px;">
+                                            <div class="image-input-wrapper" id="updateImageBackground"></div>
+                                            <label class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="change" data-toggle="tooltip" data-original-title="Change avatar">
+                                            <i class="fa fa-pen icon-sm text-muted"></i>
+                                            <input type="file" id="imageInput" name="image" required accept="image/*">
+                                            <input type="hidden" name="image_remove">
+                                            </label>
+                                        </div>
+                                        </div>
                                     </div>
-                                </div>
-                            </form>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+            <!--end::Container-->
         </div>
-        <!--end::Container-->
-    </div>
-@endsection
-
+    @endsection
 @section('js_after')
     <script src="{{ asset('super_admin/js/pages/crud/forms/widgets/select2.js') }}"></script>
     <script src="{{ asset('super_admin/js/pages/crud/ktdatatable/base/html-table.js') }}"></script>
