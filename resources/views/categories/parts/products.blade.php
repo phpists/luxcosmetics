@@ -8,9 +8,9 @@
                         <div class="product__label product__label--green">Хит продаж</div>
                     </div>
                     <a href="/products/{{$product->alias}}">
-                        <img src="{{asset('images/uploads/products/'.$product->image)}}" alt="">
+                        <img src="{{asset('images/uploads/products/'.$product->main_image)}}" alt="">
                     </a>
-                    <button class="product__fav"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#heart')}}"></use></svg></button>
+                    <button class="product__fav product_favourite" data-label=@if($product->is_favourite) "1" @else "0" @endif data-value="{{$product->id}}"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#heart')}}"></use></svg></button>
                 </div>
                 <div class="product__title"><a href="/products/{{$product->alias}}">{{$product->brand->name}}</a></div>
                 <div class="product__subtitle">{{$product->title}}</div>

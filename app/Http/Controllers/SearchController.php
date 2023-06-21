@@ -36,9 +36,8 @@ class SearchController extends Controller
         $search = $request->get('search');
         $products = $this->search($request);
         $products = $products
-            ->select('products.*', 'images.path as image')
-            ->join('images', 'products.image_print_id', 'images.id')
-            ->where('images.table_name', 'products')
+            ->select('products.*', 'product_images.path as main_image')
+            ->join('product_images', 'products.image_print_id', 'product_images.id')
             ->with('brand')
             ->paginate(12);
         $products_id = [];

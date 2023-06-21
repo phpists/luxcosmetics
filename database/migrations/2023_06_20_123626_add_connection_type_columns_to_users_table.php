@@ -11,8 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('product_images', function (Blueprint $table) {
-            $table->boolean('is_active')->default(true);
+        Schema::table('users', function (Blueprint $table) {
+            $table->smallInteger('connection_type')->nullable()->comment('Тип связи');
         });
     }
 
@@ -21,8 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('product_images', function (Blueprint $table) {
-            //
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropColumn('connection_type');
         });
     }
 };

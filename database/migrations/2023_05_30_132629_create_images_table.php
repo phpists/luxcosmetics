@@ -11,9 +11,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('images', function (Blueprint $table) {
+        Schema::create('product_images', function (Blueprint $table) {
             $table->id();
-            $table->string('table_name')->comment('Назва таблиці');
             $table->bigInteger('record_id')->comment('Id запису');
             $table->string('path')->comment('Шлях');
         });
@@ -24,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('images');
+        Schema::dropIfExists('product_images');
     }
 };

@@ -73,7 +73,7 @@
             </div>
             <div class="form__fieldset">
                 <label class="checkbox checkbox--mailer">
-                    <input name="is_subscribed" type="checkbox"/>
+                    <input name="is_subscribed" @if($user->is_subscribed) checked @endif type="checkbox"/>
                     <div class="checkbox__text">Подписаться на рассылку</div>
                 </label>
                 <button class="btn btn--accent">Сохранить изменения</button>

@@ -31,7 +31,7 @@
                         </div>
                         <div class="col-auto">
                             <a href="{{route('admin.pages.create')}}" class="btn btn-primary font-weight-bold">
-                                <i class="fas fa-plus mr-2"></i>Додати
+                                <i class="fas fa-plus mr-2"></i>Добавить
                             </a>
                         </div>
                     </div>

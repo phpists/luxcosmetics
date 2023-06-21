@@ -3,16 +3,33 @@
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\MenuController;
 use App\Http\Controllers\Admin\Settings\SettingController;
+use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\CategoryController;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\QuestionController;
 use Illuminate\Support\Facades\Route;
 use \App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
+use Laravel\Socialite\Facades\Socialite;
 
 /* Socialize */
 Auth::routes();
 
 Route::get('/', [\App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::get('login/{provider}', [LoginController::class, 'redirectToProvider'])->name('login_socialite');
+Route::match(['get', 'post'], 'login/{provider}/callback', [LoginController::class, 'handleProviderCallback']);
+
+Route::get('/auth-facebook/redirect', function () {
+    return Socialite::driver('facebook')->redirect();
+});
+
+Route::get('/auth-facebook/callback', function () {
+    $user = Socialite::driver('facebook')->user();
+
+    // $user->token
+});
+
+Route::post('/reset-password', [\App\Http\Controllers\Auth\ResetPassController::class, 'reset'])->name('password.reset-password');
 
 
 
@@ -33,8 +50,11 @@ Route::get('q/returns', [QuestionController::class, 'returns'])->name('questions
 Route::get('q/policy', [QuestionController::class, 'policy'])->name('questions.policy');
 Route::get('q/faq', [QuestionController::class, 'index'])->name('questions.faq');
 Route::get('brands', [\App\Http\Controllers\BrandController::class, 'index'])->name('brands');
-Route::get('favourites', [\App\Http\Controllers\FavouritesController::class, 'index'])->name('favourites');
 Route::get('sales', [\App\Http\Controllers\SalesController::class, 'index'])->name('sales');
+// Favourite Products
+Route::get('favourites', [\App\Http\Controllers\FavoriteProductController::class, 'index'])->name('favourites');
+Route::post('favourites', [\App\Http\Controllers\FavoriteProductController::class, 'add'])->name('favourites.add');
+Route::delete('favourites', [\App\Http\Controllers\FavoriteProductController::class, 'remove'])->name('favourites.remove');
 Route::group(['middleware' => 'auth'], function () {
     Route::post('create-chat', [\App\Http\Controllers\FeedbackController::class, 'store'])->name('create-chat');
     Route::put('update-chat/{id}', [\App\Http\Controllers\FeedbackController::class, 'update'])->name('update-chat');
@@ -136,7 +156,7 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function 
     Route::put('settings/telephone/update/', [App\Http\Controllers\Admin\Settings\SocialMediaController::class, 'updateTelephone'])->name('admin.settings.telephone.update');
 
     Route::get('clear-cache', [SettingController::class, 'clearCache'])->name('admin.clear.cache');
-    Route::post('logout')->name('logout');
+//    Route::post('logout')->name('logout');
 //    Images
     Route::get('images/show', [\App\Http\Controllers\Admin\ImageController::class, 'show'])->name('admin.image.show');
 

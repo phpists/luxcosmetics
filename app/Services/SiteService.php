@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Enums\AvailableOptions;
+use App\Enums\ConnectionOptions;
 use App\Models\Menu;
 
 class SiteService
@@ -51,6 +52,16 @@ class SiteService
         return match ($menu_type) {
             Menu::TOP_MENU => 'Верхнее меню',
             Menu::FOOTER_MENU => 'Нижнее меню'
+        };
+    }
+
+    static public function getConnectionOption(int $connection_option): string
+    {
+        return match ($connection_option) {
+            ConnectionOptions::EMAIL->value => 'Почта',
+            ConnectionOptions::SMS->value => 'SMS',
+            ConnectionOptions::PHONE->value => 'Телефон',
+            ConnectionOptions::WHATSAPP->value => 'Whatsapp'
         };
     }
 }

@@ -26,7 +26,7 @@
                             <div class="form__col form__col--50">
                                 <div class="form__fieldset">
                                     <legend class="form__label">Фамилия  *</legend>
-                                    <input name="surname" type="text" class="form__input" >
+                                    <input name="surname" type="text" class="form__input">
                                 </div>
                             </div>
                         </div>
@@ -34,7 +34,7 @@
                             <div class="form__col form__col--50">
                                 <div class="form__fieldset">
                                     <legend class="form__label">Телефон *</legend>
-                                    <input type="text" name="phone" class="form__input">
+                                    <input type="tel" name="phone" class="form__input">
                                 </div>
                             </div>
                             <div class="form__col form__col--50">
@@ -71,37 +71,55 @@
                         <div class="form__fieldset">
                             <legend class="form__label">Дата рождения</legend>
                             <div class="form__row">
-                                <div class="form__col form__col--33">
-                                    <div class="form__fieldset"><input type="text" class="form__input" placeholder="День"></div>
+                                <div class="form__col form__col--33"><input type="number" max="31" min="1" name="day" class="form__input" value="10">
                                 </div>
                                 <div class="form__col form__col--33">
-                                    <div class="form__fieldset"><input type="text" class="form__input" placeholder="Месяц"></div>
+                                    <select class="form__input" name="month" style="background: white">
+                                        <option value="1">Январь</option>
+                                        <option value="2">Февраль</option>
+                                        <option value="3">Март</option>
+                                        <option value="4">Апрель</option>
+                                        <option value="5">Май</option>
+                                        <option value="6">Июнь</option>
+                                        <option value="7">Июль</option>
+                                        <option value="8">Август</option>
+                                        <option value="9">Сентябрь</option>
+                                        <option value="10">Октябрь</option>
+                                        <option value="11">Ноябрь</option>
+                                        <option value="12">Декабрь</option>
+                                    </select>
                                 </div>
                                 <div class="form__col form__col--33">
-                                    <div class="form__fieldset"><input type="text" class="form__input" placeholder="Год"></div>
+                                    <input type="number" name="year" class="form__input" min="1900" value='{{date("Y")}}' max="{{date("Y")}}">
                                 </div>
                             </div>
                         </div>
                         <div class="form__fieldset">
                             <legend class="form__label">Выберите предпочтительный способ связи
                             </legend>
+                            @foreach(\App\Models\User::getConnectionOptions() as $option)
+                                <label class="checkbox">
+                                    <input type="radio" value="{{$option}}" name="connection_type" />
+                                    <div class="checkbox__text">{{\App\Services\SiteService::getConnectionOption($option)}}</div>
+                                </label>
+                            @endforeach
 
-                            <label class="checkbox">
-                                <input type="checkbox" name="communications[]" />
-                                <div class="checkbox__text">Электронная почта</div>
-                            </label>
-                            <label class="checkbox">
-                                <input type="checkbox" name="communications[]" />
-                                <div class="checkbox__text">SMS</div>
-                            </label>
-                            <label class="checkbox">
-                                <input type="checkbox" name="communications[]" />
-                                <div class="checkbox__text">Телефон</div>
-                            </label>
-                            <label class="checkbox">
-                                <input type="checkbox" name="communications[]" />
-                                <div class="checkbox__text">WhatsApp</div>
-                            </label>
+{{--                            <label class="checkbox">--}}
+{{--                                <input type="checkbox" name="communications[]" />--}}
+{{--                                <div class="checkbox__text">Электронная почта</div>--}}
+{{--                            </label>--}}
+{{--                            <label class="checkbox">--}}
+{{--                                <input type="checkbox" name="communications[]" />--}}
+{{--                                <div class="checkbox__text">SMS</div>--}}
+{{--                            </label>--}}
+{{--                            <label class="checkbox">--}}
+{{--                                <input type="checkbox" name="communications[]" />--}}
+{{--                                <div class="checkbox__text">Телефон</div>--}}
+{{--                            </label>--}}
+{{--                            <label class="checkbox">--}}
+{{--                                <input type="checkbox" name="communications[]" />--}}
+{{--                                <div class="checkbox__text">WhatsApp</div>--}}
+{{--                            </label>--}}
                         </div>
                         <div class="form__fieldset">
                             <label class="checkbox">

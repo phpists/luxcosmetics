@@ -88,14 +88,14 @@
                         <div class="signin-page__social">
                             <p>Зарегистрируйтесь через</p>
                             <div class="cart-auth__providers">
-                                <button class="cart-auth__provider">
-                                    <img src="images/dist/icons/google.svg" alt="">
+                                <a href="{{route('login_socialite', ['provider' => 'google'])}}" class="cart-auth__provider">
+                                    <img src="{{asset('images/dist/icons/google.svg')}}" alt="">
                                     <span>Google</span>
-                                </button>
-                                <button class="cart-auth__provider">
-                                    <img src="images/dist/icons/fb.svg" alt="">
+                                </a>
+                                <a href="{{route('login_socialite', ['provider' => 'facebook'])}}" class="cart-auth__provider">
+                                    <img src="{{asset('images/dist/icons/fb.svg')}}" alt="">
                                     <span>Facebook</span>
-                                </button>
+                                </a>
                             </div>
                         </div>
                         <p><b>ИЛИ</b></p>
@@ -139,10 +139,11 @@
         <div class="popupform" id="fgt-password">
             <div class="subheading">Восстановление пароля</div>
             <p>Укажите адрес электронной почты своей учетной записи, чтобы получить электронное письмо для сброса пароля.</p>
-            <form action="" class="form form--box">
+            <form  method="POST" action="{{ route('password.reset-password') }}" class="form form--box">
+                @csrf
                 <div class="form__fieldset">
                     <legend class="form__label">Ваш e-mail</legend>
-                    <input type="text" class="form__input">
+                    <input type="text" name="email" required class="form__input">
                 </div>
                 <button class="btn btn--accent">Отправить</button>
             </form>

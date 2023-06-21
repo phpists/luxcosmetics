@@ -26,7 +26,9 @@ class User extends Authenticatable
         'password',
         'surname',
         'phone',
-        'birthday'
+        'birthday',
+        'is_subscribed',
+        'connection_type'
     ];
 
     /**
@@ -81,6 +83,11 @@ class User extends Authenticatable
                 ->where('feedback_message.user_id', $this->id)
                 ->get()
         );
+    }
+
+    static public function getConnectionOptions(): array
+    {
+        return array_column(\App\Enums\ConnectionOptions::cases(), 'value');
     }
 
 }

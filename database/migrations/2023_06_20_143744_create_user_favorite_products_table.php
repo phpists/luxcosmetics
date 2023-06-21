@@ -11,8 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('properties', function (Blueprint $table) {
-            $table->renameColumn('show_in_catalog', 'show_in_product');
+        Schema::create('user_favorite_products', function (Blueprint $table) {
+            $table->id();
+            $table->integer('user_id');
+            $table->integer('product_id');
+            $table->timestamps();
         });
     }
 
@@ -21,8 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('properties', function (Blueprint $table) {
-            $table->renameColumn('show_in_product', 'show_in_catalog');
-        });
+        Schema::dropIfExists('user_favorite_products');
     }
 };
