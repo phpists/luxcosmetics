@@ -37,11 +37,25 @@ class Product extends Model
 
     public function getImages(): Collection
     {
-        return DB::table('images')
+        return DB::table('product_images')
             ->select('path')
             ->where('record_id', $this->id)
-            ->where('table_name', 'products')->get();
+            ->get();
     }
+
+    public function images(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(ProductImage::class, 'record_id');
+    }
+
+//    public function main_image()
+//    {
+//        $image = ProductImage::query()->where('images.id', $this->image_print_id)->first();
+//        if ($image) {
+//            return $image->path;
+//        }
+//        return null;
+//    }
 
     public function category()
     {
@@ -74,11 +88,10 @@ class Product extends Model
     {
         if (sizeof($product_ids) > 0) {
             return Product::query()
-                ->select('products.*', 'images.path as image', 'product_variations.product_id as parent_id')
-                ->join('images', 'products.image_print_id', 'images.id')
+                ->select('products.*', 'product_images.path as image', 'product_variations.product_id as parent_id')
+                ->join('product_images', 'products.image_print_id', 'product_images.id')
                 ->join('product_variations', 'product_variations.variation_id', 'products.id')
                 ->whereIn('product_variations.product_id', $product_ids)
-                ->where('images.table_name', 'products')
                 ->with('brand')
                 ->get();
         }

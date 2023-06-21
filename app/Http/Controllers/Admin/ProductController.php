@@ -41,9 +41,8 @@ class ProductController extends Controller
         if ($product->save()) {
             $image_path = ImageService::saveImage('uploads', "products", $request->image);
             if ($image_path !== false) {
-                $image_id = DB::table('images')->insertGetId([
+                $image_id = DB::table('product_images')->insertGetId([
                     'path' => $image_path,
-                    'table_name' => 'products',
                     'record_id' => $product->id
                 ]);
                 $product->update([
@@ -65,12 +64,9 @@ class ProductController extends Controller
 
     public function edit(Request $request, string $id) {
         $product = Product::query()
-            ->select('products.*', 'images.path as image')
-            ->leftJoin('images', 'products.image_print_id', 'images.id')
-            ->where(function ($query) {
-                $query->where('images.table_name', 'products')
-                    ->orWhereNull('images.table_name');
-            })->find($id);
+            ->select('products.*', 'product_images.path as image')
+            ->leftJoin('product_images', 'products.image_print_id', 'product_images.id')
+            ->find($id);
 
         $categories = Category::query()
             ->select('id', 'name')
@@ -78,9 +74,8 @@ class ProductController extends Controller
         $brands = Brand::query()
             ->select('id', 'name')
             ->get();
-        $product_images = DB::table('images')
+        $product_images = DB::table('product_images')
             ->where('record_id', $product->id)
-            ->where('table_name', 'products')
             ->get();
         $product_variations = Product::query()
             ->select('products.id as id', 'products.title as title')
@@ -115,10 +110,9 @@ class ProductController extends Controller
     public function storeImage(Request $request) {
         $image_path = ImageService::saveImage('uploads', "products", $request->image);
         if($image_path) {
-            $imageId = DB::table('images')->insertGetId([
+            $imageId = DB::table('product_images')->insertGetId([
                 'path' => $image_path,
                 'record_id' => $request->product_id,
-                'table_name' => 'products',
                 'is_active' => $request->is_active
             ]);
             if ($request->is_main == 1) {
@@ -131,12 +125,12 @@ class ProductController extends Controller
     }
 
     public function deleteImage($id) {
-        DB::table('images')->where('id', $id)->delete();
+        DB::table('product_images')->where('id', $id)->delete();
         return redirect()->route('admin.products')->with('success', 'Изображение удалено');
     }
 
     public function updateImage(Request $request) {
-        DB::table('images')->where('id', $request->image_id)->update([
+        DB::table('product_images')->where('id', $request->image_id)->update([
             'is_active' => $request->is_active
         ]);
         Log::info($request->is_main);

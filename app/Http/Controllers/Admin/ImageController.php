@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\DB;
 class ImageController extends Controller
 {
     public function show(Request $request) {
-        $image = DB::table('images')->find($request->id);
+        $image = DB::table('product_images')->find($request->id);
         $image->is_main = 0;
         $product = DB::table('products')->find($image->record_id);
         if ($product) {

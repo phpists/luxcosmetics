@@ -14,10 +14,9 @@ class ProductController extends Controller
         $product = Product::query();
         $product = $product->where('alias', $alias)->firstOrFail();
         if ($request->ajax()) {
-            $images = DB::table('images')
+            $images = DB::table('product_images')
                 ->select('path as image_path')
                 ->where('record_id', $product->id)
-                ->where('table_name', 'products')
                 ->get();
             return response()->json([
                 'product' => $product,

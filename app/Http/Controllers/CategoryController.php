@@ -24,11 +24,10 @@ class CategoryController extends Controller
             $category_ids[] = $subcategory->id;
         }
         $products = Product::query()
-            ->selectRaw('products.*, images.path as image, case when user_favorite_products.product_id is null then FALSE else TRUE end as is_favourite')
+            ->selectRaw('products.*, product_images.path as main_image, case when user_favorite_products.product_id is null then FALSE else TRUE end as is_favourite')
             ->leftJoin('user_favorite_products', 'user_favorite_products.product_id', 'products.id')
-            ->join('images', 'products.image_print_id', 'images.id')
+            ->join('product_images', 'products.image_print_id', 'product_images.id')
             ->whereIn('category_id', $category_ids)
-            ->where('images.table_name', 'products')
             ->with('brand')
             ->groupBy('products.id')
             ->paginate(12);
