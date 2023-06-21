@@ -8,7 +8,7 @@
 </p>
 <p style="background: black; color: white; padding: 10px">{{$password}}</p>
 
-<x-mail::button :url="url()->route('home')">
+<x-mail::button :url="url()->route('login')">
     Посетить сайт
 </x-mail::button>
 

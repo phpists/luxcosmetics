@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <section class="signin-page">
+    <section class="signin-page mt-3">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
