@@ -4,7 +4,6 @@
 @section('content')
     <section class="mainaction">
         <div class="container">
-<<<<<<< HEAD
             @php 
                 $item = \App\Services\BannerService::getBanner();
                 $positionIds = [];
@@ -16,12 +15,6 @@
                     $positionIds[$position][] = $banner->id;
                 }
             @endphp
-=======
-            @php
-                $item = \App\Services\ArticleService::getArticle();
-            @endphp
-            @if($item[0] != null)
->>>>>>> aa7e20a849cb499e0cd48eae239ea6c22612f857
             <div class="row">
                 @if ($selectedItem = $item->find($positionIds['first'][0]))
                 <div class="col-lg-12">
@@ -157,7 +150,7 @@
                                                 <div class="product__label product__label--green">Хит продаж</div>
                                             </div>
                                             <a href="products/{{$new_product->alias}}{{$selected_variation !== null?'/'.$selected_variation->id:''}}"><img src="{{asset('images/uploads/products/'.$new_product->image)}}" alt=""></a>
-                                            <button class="product__fav product_favourite" data-label=@if($new_product->is_favourite) "1" @else "0" @endif data-value="{{$new_product->id}}"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#heart')}}"></use></svg></button>
+                                            <button class="product__fav"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#heart')}}"></use></svg></button>
                                         </div>
                                         <div class="product__title"><a href="">{{$new_product->brand->name}}</a></div>
                                         <div class="product__subtitle">{{$new_product->title}}</div>
@@ -262,7 +255,7 @@
                                                 <div class="product__label product__label--green">Хит продаж</div>
                                             </div>
                                             <a href="products/{{$new_product->alias}}{{$selected_variation !== null?'/'.$selected_variation->id:''}}"><img src="{{asset('images/uploads/products/'.$new_product->image)}}" alt=""></a>
-                                            <button class="product__fav product_favourite" data-label=@if($new_product->is_favourite) "1" @else "0" @endif data-value="{{$new_product->id}}"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#heart')}}"></use></svg></button>
+                                            <button class="product__fav"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#heart')}}"></use></svg></button>
                                         </div>
                                         <div class="product__title"><a href="">{{$new_product->brand->name}}</a></div>
                                         <div class="product__subtitle">{{$new_product->title}}</div>
@@ -338,15 +331,7 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="maincategory__grid">
-<<<<<<< HEAD
                         @if($selectedItem = $item->find($positionIds['fourth'][0]))
-=======
-                        @php
-                            $item = \App\Services\BlogService::getBlog();
-
-                        @endphp
-                        @if($item[0] != null)
->>>>>>> aa7e20a849cb499e0cd48eae239ea6c22612f857
                         <div class="maincategory__item">
                             <div class="category">
                                 <div class="category__image" style="background-image: url({{asset('images/uploads/banner/' . $selectedItem->image)}});"></div>
@@ -406,7 +391,7 @@
                                                 <div class="product__label product__label--green">Хит продаж</div>
                                             </div>
                                             <a href="products/{{$product->alias}}{{$selected_variation !== null?'/'.$selected_variation->id:''}}"><img src="{{asset('images/uploads/products/'.$product->image)}}" alt=""></a>
-                                            <button class="product__fav product_favourite" data-label=@if($product->is_favourite) "1" @else "0" @endif data-value="{{$product->id}}"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#heart')}}"></use></svg></button>
+                                            <button class="product__fav"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#heart')}}"></use></svg></button>
                                         </div>
                                         <div class="product__title"><a href="">{{$product->brand->name}}</a></div>
                                         <div class="product__subtitle">{{$product->title}}</div>
@@ -517,14 +502,14 @@
                     <h2 class="title-h2">Новости</h2>
                 </div>
                 <div class="newsblock__container">
-                @foreach (\App\Services\NewsService::getNews() as $item)
+                @foreach (\App\Services\NewsService::getNews() as $item)   
                     <div class="article article--news">
                         <div class="article__image"><a href="{{ route('index.news', $item->link) }}"><img src="{{asset('images/uploads/news/' . $item->image)}}" alt=""></a></div>
                         <div class="article__date"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#calendar')}}"></use></svg>{{ \Carbon\Carbon::parse($item->published_at)->locale('ru')->isoFormat('D.MMMM.YYYY') }}</div>
                         <div class="article__title"><a href="{{ route('index.news', $item->link) }}">{{ $item->title }}</a></div>
                         <div class="article__intro">{{ Str::limit(strip_tags($item->text), $limit = 30, $end = '...') }}</div>
                     </div>
-                @endforeach
+                @endforeach    
                 </div>
             </div>
         </div>
@@ -552,13 +537,38 @@
             <div class="row">
                 <div class="col-lg-12">
                     <h2 class="title-h2">Бренды</h2>
-                    @foreach (\App\Services\BrandService::getBrand() as $item)                        
                     <div class="brands-slider">
                         <div class="brands-slider__item">
-                            <div class="brand"><img src="{{asset('images/uploads/brands/' . $item->image)}}" alt=""></div>
+                            <div class="brand"><img src="images/dist/brands/1.jpg" alt=""></div>
+                        </div>
+                        <div class="brands-slider__item">
+                            <div class="brand"><img src="images/dist/brands/2.jpg" alt=""></div>
+                        </div>
+                        <div class="brands-slider__item">
+                            <div class="brand"><img src="images/dist/brands/3.jpg" alt=""></div>
+                        </div>
+                        <div class="brands-slider__item">
+                            <div class="brand"><img src="images/dist/brands/04.jpg" alt=""></div>
+                        </div>
+                        <div class="brands-slider__item">
+                            <div class="brand"><img src="images/dist/brands/5.jpg" alt=""></div>
+                        </div>
+                        <div class="brands-slider__item">
+                            <div class="brand"><img src="images/dist/brands/6.jpg" alt=""></div>
+                        </div>
+                        <div class="brands-slider__item">
+                            <div class="brand"><img src="images/dist/brands/3.jpg" alt=""></div>
+                        </div>
+                        <div class="brands-slider__item">
+                            <div class="brand"><img src="images/dist/brands/04.jpg" alt=""></div>
+                        </div>
+                        <div class="brands-slider__item">
+                            <div class="brand"><img src="images/dist/brands/5.jpg" alt=""></div>
+                        </div>
+                        <div class="brands-slider__item">
+                            <div class="brand"><img src="images/dist/brands/6.jpg" alt=""></div>
                         </div>
                     </div>
-                    @endforeach
                 </div>
             </div>
         </div>
@@ -586,11 +596,6 @@
             <div class="done-window__subtitle">Наш менеджер свяжется с Вами в течении 15 минут</div>
         </div>
     </div>
-@endsection
-
-@section('scripts')
-    <script src="{{asset('/js/app.min.js')}}"></script>
-    <script src="{{asset('/js/favourites.js')}}"></script>
 @endsection
 
 
