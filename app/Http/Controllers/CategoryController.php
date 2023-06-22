@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Product;
+use Illuminate\Database\Query\Builder;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class CategoryController extends Controller
 {
@@ -28,8 +31,8 @@ class CategoryController extends Controller
             ->leftJoin('user_favorite_products', 'user_favorite_products.product_id', 'products.id')
             ->join('product_images', 'products.image_print_id', 'product_images.id')
             ->whereIn('category_id', $category_ids)
+            ->distinct(['products.id'])
             ->with('brand')
-            ->groupBy('products.id')
             ->paginate(12);
         $products_id = [];
         foreach ($products as $product) {

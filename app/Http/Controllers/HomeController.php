@@ -21,7 +21,7 @@ class HomeController extends Controller
             ->orWhereNotNull('products.discount_price')
             ->with('brand')
             ->with('product_variations')
-            ->groupBy('products.id')
+            ->distinct(['products.id'])
             ->limit(12)->get();
         $new_products = Product::query()
             ->selectRaw('products.*, product_images.path as image, case when user_favorite_products.product_id is null then FALSE else TRUE end as is_favourite')
@@ -29,7 +29,7 @@ class HomeController extends Controller
             ->join('product_images', 'products.image_print_id', 'product_images.id')
             ->with('brand')
             ->with('product_variations')
-            ->groupBy('products.id')
+            ->distinct(['products.id'])
             ->orderBy('created_at')->limit(12)->get();
         return view('index', compact('product_discounts', 'new_products'));
     }
