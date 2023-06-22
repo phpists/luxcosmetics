@@ -16,7 +16,7 @@
                 }
             @endphp
             <div class="row">
-                @if ($selectedItem = $item->find($positionIds['first'][0]))
+                @if (isset($positionIds['first'][0]) && $selectedItem = $item->find($positionIds['first'][0]))
                 <div class="col-lg-12">
                     <div class="mainaction__one">
                         <a href="{{ route('index.banner', $selectedItem->link) }}">
@@ -30,7 +30,8 @@
                 </div>
                 @endif
             </div>
-            @if ($selectedItem = $item->find($positionIds['second'][0]))
+            
+            @if (isset($positionIds['second'][0]) && $selectedItem = $item->find($positionIds['second'][0]))
             <div class="row">
                 <div class="col-lg-6 col-md-6">
                     <div class="article">
@@ -44,13 +45,13 @@
                                 </picture>
                             </div>
                             <div class="article__title"><a href="{{ route('index.banner', $selectedItem->link) }}">{{ $selectedItem->title }}</a></div>
-                            <div class="article__intro">{{ Str::limit(strip_tags($selectedItem->text), $limit = 120, $end = '...') }}</div>
+                            <div class="article__intro">{{ Str::limit(strip_tags($selectedItem->text), $limit = 130, $end = '...') }}</div>
                         </div>
                         <a href="{{ route('index.banner', $selectedItem->link) }}" class="article__more">Подробнее</a>
                     </div>
                 </div>
                 @endif
-                @if($selectedItem = $item->find($positionIds['second'][1]))
+                @if(isset($positionIds['second'][1]) && $selectedItem = $item->find($positionIds['second'][1]))
                 <div class="col-lg-6 col-md-6">
                     <div class="article">
                         <div class="article__wrap">
@@ -63,7 +64,7 @@
                                 </picture>
                             </div>
                             <div class="article__title"><a href="{{ route('index.banner', $selectedItem->link) }}">{{ $selectedItem->title }}</a></div>
-                            <div class="article__intro">{{ Str::limit(strip_tags($selectedItem->text), $limit = 120, $end = '...') }}</div>
+                            <div class="article__intro">{{ Str::limit(strip_tags($selectedItem->text), $limit = 130, $end = '...') }}</div>
                         </div>
                         <a href="{{ route('index.banner', $selectedItem->link) }}" class="article__more">Подробнее</a>
                     </div>
@@ -71,7 +72,7 @@
                 @endif
             </div>
             <div class="row">
-                @if($selectedItem = $item->find($positionIds['third'][0]))
+                @if(isset($positionIds['third'][0]) && $selectedItem = $item->find($positionIds['third'][0]))
                 <div class="col-lg-4 col-md-4">
                     <div class="article article--threecol">
                         <div class="article__wrap">
@@ -84,13 +85,13 @@
                                 </picture>
                             </div>
                             <div class="article__title"><a href="{{ route('index.banner', $selectedItem->link) }}">{{ $selectedItem->title }}</a></div>
-                            <div class="article__intro">{{ Str::limit(strip_tags($selectedItem->text), $limit = 120, $end = '...') }}</div>
+                            <div class="article__intro">{{ Str::limit(strip_tags($selectedItem->text), $limit = 150, $end = '...') }}</div>
                         </div>
                         <a href="{{ route('index.banner', $selectedItem->link) }}" class="article__more">Подробнее</a>
                     </div>
                 </div>
                 @endif
-                @if($selectedItem = $item->find($positionIds['third'][1]))
+                @if(isset($positionIds['third'][1]) && $selectedItem = $item->find($positionIds['third'][1]))
                 <div class="col-lg-4 col-md-4">
                     <div class="article article--threecol">
                         <div class="article__wrap">
@@ -103,13 +104,13 @@
                                 </picture>
                             </div>
                             <div class="article__title"><a href="{{ route('index.banner', $selectedItem->link) }}">{{ $selectedItem->title }}</a></div>
-                            <div class="article__intro">{{ Str::limit(strip_tags($selectedItem->text), $limit = 120, $end = '...') }}</div>
+                            <div class="article__intro">{{ Str::limit(strip_tags($selectedItem->text), $limit = 150, $end = '...') }}</div>
                         </div>
                         <a href="{{ route('index.banner', $selectedItem->link) }}" class="article__more">Подробнее</a>
                     </div>
                 </div>
                 @endif
-                @if($selectedItem = $item->find($positionIds['third'][2]))
+                @if(isset($positionIds['third'][2]) && $selectedItem = $item->find($positionIds['third'][2]))
                 <div class="col-lg-4 col-md-4">
                     <div class="article article--threecol">
                         <div class="article__wrap">
@@ -122,7 +123,7 @@
                                 </picture>
                             </div>
                             <div class="article__title"><a href="{{ route('index.banner', $selectedItem->link) }}">{{ $selectedItem->title }}</a></div>
-                            <div class="article__intro">{{ Str::limit(strip_tags($selectedItem->text), $limit = 120, $end = '...') }}</div>
+                            <div class="article__intro">{{ Str::limit(strip_tags($selectedItem->text), $limit = 150, $end = '...') }}</div>
                         </div>
                         <a href="{{ route('index.banner', $selectedItem->link) }}" class="article__more">Подробнее</a>
                     </div>
@@ -331,7 +332,7 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="maincategory__grid">
-                        @if($selectedItem = $item->find($positionIds['fourth'][0]))
+                        @if(isset($positionIds['fourth'][0]) && $selectedItem = $item->find($positionIds['fourth'][0]))
                         <div class="maincategory__item">
                             <div class="category">
                                 <div class="category__image" style="background-image: url({{asset('images/uploads/banner/' . $selectedItem->image)}});"></div>
@@ -340,7 +341,7 @@
                             </div>
                         </div>
                         @endif
-                        @if($selectedItem = $item->find($positionIds['fourth'][1]))
+                        @if(isset($positionIds['fourth'][1]) && $selectedItem = $item->find($positionIds['fourth'][1]))
                         <div class="maincategory__item">
                             <div class="category">
                                 <div class="category__image" style="background-image: url({{asset('images/uploads/banner/' . $selectedItem->image)}});"></div>
@@ -349,7 +350,7 @@
                             </div>
                         </div>
                         @endif
-                        @if($selectedItem = $item->find($positionIds['fourth'][2]))
+                        @if(isset($positionIds['fourth'][2]) && $selectedItem = $item->find($positionIds['fourth'][2]))
                         <div class="maincategory__item">
                             <div class="category">
                                 <div class="category__image" style="background-image: url({{asset('images/uploads/banner/' . $selectedItem->image)}});"></div>
@@ -358,7 +359,7 @@
                             </div>
                         </div>
                         @endif
-                        @if($selectedItem = $item->find($positionIds['fourth'][3]))
+                        @if(isset($positionIds['fourth'][3]) && $selectedItem = $item->find($positionIds['fourth'][3]))
                         <div class="maincategory__item">
                             <div class="category">
                                 <div class="category__image" style="background-image: url({{asset('images/uploads/banner/' . $selectedItem->image)}});"></div>
@@ -465,7 +466,7 @@
     <section class="maincategory maincategory--threecol">
         <div class="container">
             <div class="row">
-                @if($selectedItem = $item->find($positionIds['fifth'][0]))
+                @if(isset($positionIds['fifth'][0]) && $selectedItem = $item->find($positionIds['fifth'][0]))
                 <div class="col-lg-4 col-md-4 col-sm-4">
                     <div class="category">
                         <div class="category__image" style="background-image: url({{asset('images/uploads/banner/' . $selectedItem->image)}});"></div>
@@ -474,7 +475,7 @@
                     </div>
                 </div>
                 @endif
-                @if($selectedItem = $item->find($positionIds['fifth'][1]))
+                @if(isset($positionIds['fifth'][1]) && $selectedItem = $item->find($positionIds['fifth'][1]))
                 <div class="col-lg-4 col-md-4 col-sm-4">
                     <div class="category">
                         <div class="category__image" style="background-image: url({{asset('images/uploads/banner/' . $selectedItem->image)}});"></div>
@@ -483,7 +484,7 @@
                     </div>
                 </div>
                 @endif
-                @if($selectedItem = $item->find($positionIds['fifth'][2]))
+                @if(isset($positionIds['fifth'][2]) && $selectedItem = $item->find($positionIds['fifth'][2]))
                 <div class="col-lg-4 col-md-4 col-sm-4">
                     <div class="category">
                         <div class="category__image" style="background-image: url({{asset('images/uploads/banner/' . $selectedItem->image)}});"></div>
@@ -507,7 +508,7 @@
                         <div class="article__image"><a href="{{ route('index.news', $item->link) }}"><img src="{{asset('images/uploads/news/' . $item->image)}}" alt=""></a></div>
                         <div class="article__date"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#calendar')}}"></use></svg>{{ \Carbon\Carbon::parse($item->published_at)->locale('ru')->isoFormat('D.MMMM.YYYY') }}</div>
                         <div class="article__title"><a href="{{ route('index.news', $item->link) }}">{{ $item->title }}</a></div>
-                        <div class="article__intro">{{ Str::limit(strip_tags($item->text), $limit = 30, $end = '...') }}</div>
+                        <div class="article__intro">{{ Str::limit(strip_tags($item->text), $limit = 90, $end = '...') }}</div>
                     </div>
                 @endforeach    
                 </div>
@@ -538,36 +539,11 @@
                 <div class="col-lg-12">
                     <h2 class="title-h2">Бренды</h2>
                     <div class="brands-slider">
+                        @foreach(\App\Models\Brand::query()->selectRaw('brands.*')->get() as $item)
                         <div class="brands-slider__item">
-                            <div class="brand"><img src="images/dist/brands/1.jpg" alt=""></div>
+                            <div class="brand"><img src="{{asset('images/uploads/brands/' . $item->image)}}" alt=""></div>
                         </div>
-                        <div class="brands-slider__item">
-                            <div class="brand"><img src="images/dist/brands/2.jpg" alt=""></div>
-                        </div>
-                        <div class="brands-slider__item">
-                            <div class="brand"><img src="images/dist/brands/3.jpg" alt=""></div>
-                        </div>
-                        <div class="brands-slider__item">
-                            <div class="brand"><img src="images/dist/brands/04.jpg" alt=""></div>
-                        </div>
-                        <div class="brands-slider__item">
-                            <div class="brand"><img src="images/dist/brands/5.jpg" alt=""></div>
-                        </div>
-                        <div class="brands-slider__item">
-                            <div class="brand"><img src="images/dist/brands/6.jpg" alt=""></div>
-                        </div>
-                        <div class="brands-slider__item">
-                            <div class="brand"><img src="images/dist/brands/3.jpg" alt=""></div>
-                        </div>
-                        <div class="brands-slider__item">
-                            <div class="brand"><img src="images/dist/brands/04.jpg" alt=""></div>
-                        </div>
-                        <div class="brands-slider__item">
-                            <div class="brand"><img src="images/dist/brands/5.jpg" alt=""></div>
-                        </div>
-                        <div class="brands-slider__item">
-                            <div class="brand"><img src="images/dist/brands/6.jpg" alt=""></div>
-                        </div>
+                        @endforeach
                     </div>
                 </div>
             </div>

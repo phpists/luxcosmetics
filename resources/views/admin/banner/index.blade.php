@@ -91,7 +91,7 @@
                                 </thead>
                                 <tbody id="table">
                                     @foreach($banner as $item)
-                                    <tr id="post_{{$item->id}}" data-id="{{ $item->id }}">
+                                    <tr id="banner_{{$item->id}}" data-id="{{ $item->id }}">
                                         <td class="text-center pl-0">
                                             <span style="width: 20px;">
                                                 <label class="checkbox checkbox-single">
