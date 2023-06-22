@@ -240,22 +240,13 @@
                                             <span class="menu-text">Новости</span>
                                         </a>
                                     </li>
-                                    <li class="menu-item {{ request()->routeIs('admin.blog') || request()->routeIs('admin.news.edit') ? 'menu-item-active' : '' }}"
+                                    <li class="menu-item {{ request()->routeIs('admin.banner') || request()->routeIs('admin.news.edit') ? 'menu-item-active' : '' }}"
                                         aria-haspopup="true">
-                                        <a href="{{route('admin.blog')}}" class="menu-link">
+                                        <a href="{{route('admin.banner')}}" class="menu-link">
                                             <i class="menu-bullet menu-bullet-dot">
                                                 <span></span>
                                             </i>
-                                            <span class="menu-text">Блог</span>
-                                        </a>
-                                    </li>
-                                    <li class="menu-item {{ request()->routeIs('admin.article') || request()->routeIs('admin.news.edit') ? 'menu-item-active' : '' }}"
-                                        aria-haspopup="true">
-                                        <a href="{{route('admin.article')}}" class="menu-link">
-                                            <i class="menu-bullet menu-bullet-dot">
-                                                <span></span>
-                                            </i>
-                                            <span class="menu-text">Cтатьи</span>
+                                            <span class="menu-text">Баннеры</span>
                                     <li class="menu-item {{ request()->routeIs('admin.pages.index') ? 'menu-item-active' : '' }}"
                                         aria-haspopup="true">
                                         <a href="{{route('admin.pages.index')}}" class="menu-link">

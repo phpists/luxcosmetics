@@ -6,7 +6,7 @@
             <!--begin::Page Heading-->
             <div class="d-flex align-items-baseline flex-wrap mr-5">
                 <!--begin::Page Title-->
-                <h5 class="text-dark font-weight-bold my-1 mr-5">Блог</h5>
+                <h5 class="text-dark font-weight-bold my-1 mr-5">Баннеры</h5>
                 <!--end::Page Title-->
             </div>
             <!--end::Page Heading-->
@@ -22,22 +22,16 @@
         <div class="d-flex flex-column-fluid">
             <!--begin::Container-->
             <div class="container-fluid">
-                <div class="card gutter-b col-lg-12 ml-0">
-                    @include('admin.blog.parts.filter')
-                </div>
                 @include('admin.layouts.includes.messages')
                 <div class="card card-custom">
                     <div class="card-header flex-wrap border-0 pt-6 pb-0">
                         <div class="card-title">
-                            <h3 class="card-label">Блог</h3>
+                            <h3 class="card-label">Баннеры</h3>
                         </div>
                         <div class="card-toolbar">
-                            <!--begin::Dropdown-->
                             <div class="dropdown dropdown-inline mr-2">
-                                <button class="btn btn-danger font-weight-bolder deletedPosts">
-                                    <span class="svg-icon svg-icon-md">
-                                        <i class="las la-trash"></i>
-                                    </span>Удалить
+                                <button class="btn btn-danger font-weight-bolder activePost" data-status="0">
+                                    <span class="svg-icon svg-icon-md"><i class="fas fa-toggle-off"></i></span>Деактивировать
                                 </button>
                             </div>
                             <div class="dropdown dropdown-inline mr-2">
@@ -48,12 +42,7 @@
                                 </button>
                             </div>
                             <div class="dropdown dropdown-inline mr-2">
-                                <button class="btn btn-success font-weight-bolder activePost" data-status="0">
-                                    <span class="svg-icon svg-icon-md"><i class="fas fa-toggle-off"></i></span>Деактивировать
-                                </button>
-                            </div>
-                            <div class="dropdown dropdown-inline mr-2">
-                                <a href="{{ route('admin.blog.create') }}"
+                                <a href="{{ route('admin.banner.create') }}"
                                    class="btn btn-success font-weight-bolder">
                                     <span class="svg-icon svg-icon-md"><i class="fas fa-plus mr-2"></i></span>Добавить
                                 </a>
@@ -83,23 +72,26 @@
                                     <th class="pr-0 text-center">
                                         Создано
                                     </th>
-                                    <td class="pr-0 text-center">
+                                    <th class="pr-0 text-center">
                                         Статус
-                                    </td>
-                                    <td class="pr-0 text-center">
+                                    </th>
+                                    <th class="pr-0 text-center">
+                                        Позиция
+                                    </th>
+                                    <th class="pr-0 text-center">
                                         Дата публикации
-                                    </td>
-                                    <td class="pr-0 text-center">
+                                    </th>
+                                    <th class="pr-0 text-center">
                                         Изображения
-                                    </td>
+                                    </th>
                                     <th class="pr-0 text-center">
                                         Действия
                                     </th>
                                 </tr>
                                 </thead>
                                 <tbody id="table">
-                                    @foreach($blog as $item)
-                                    <tr id="post_{{$item->id}}" data-id="{{ $item->id }}">
+                                    @foreach($banner as $item)
+                                    <tr id="banner_{{$item->id}}" data-id="{{ $item->id }}">
                                         <td class="text-center pl-0">
                                             <span style="width: 20px;">
                                                 <label class="checkbox checkbox-single">
@@ -121,18 +113,21 @@
                                             {{ \App\Services\SiteService::getStatus($item->status) }}
                                         </td>
                                         <td class="text-center pr-0">
+                                            {{ $item->position }}
+                                        </td>
+                                        <td class="text-center pr-0">
                                             {{ date('m Y, H:i:s', strtotime($item->published_at)) }}
                                         </td>
                                         <td class="text-center pr-0">
-                                            <div class="article__image"><a href="{{ route('index.blog', $item->id) }}"><img src="{{asset('images/uploads/blog/' . $item->image)}}" alt="" style=" width: 100px;"></a></div> 
+                                            <div class="banner__image"><a href="{{ route('index.banner', $item->id) }}"><img src="{{asset('images/uploads/banner/' . $item->image)}}" alt="" style=" width: 100px;"></a></div> 
                                         </td>
                                         <td class="text-center pr-0">
-                                            <a href="{{ route('admin.blog.edit', $item->id) }}" class="btn btn-sm btn-clean btn-icon">
+                                            <a href="{{ route('admin.banner.edit', $item->id) }}" class="btn btn-sm btn-clean btn-icon">
                                                 <i class="las la-edit"></i>
                                             </a>
                                         </td>
                                         <td>
-                                            <a href="{{ route('admin.blog.delete', $item->id) }}" class="btn btn-sm btn-clean btn-icon" onclick="return confirm('Ви впевнені, що хочете видалити цей запис?')">
+                                            <a href="{{ route('admin.banner.delete', $item->id) }}" class="btn btn-sm btn-clean btn-icon" onclick="return confirm('Ви впевнені, що хочете видалити цей запис?')">
                                                 <i class="las la-trash"></i>
                                             </a>
                                         </td>
@@ -143,7 +138,7 @@
                             </table>
                         </div>
                         <div id="pagination">
-                            {{ $blog->appends(request()->all())->links('vendor.pagination.product_pagination') }}
+                            {{ $banner->appends(request()->all())->links('vendor.pagination.product_pagination') }}
                         </div>
                         <!--end::Table-->
                     </div>
@@ -160,6 +155,6 @@
 
 @section('js_after')
     <script src="https://raw.githack.com/SortableJS/Sortable/master/Sortable.js"></script>
-    <script src="{{ asset('super_admin/js/blog.js') }}"></script>
+    <script src="{{ asset('super_admin/js/banner.js') }}"></script>
     <script src="{{ asset('super_admin/js/pages/crud/forms/widgets/select2.js') }}"></script>
 @endsection

@@ -5,23 +5,22 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class BlogItem extends Model
+class Banner extends Model
 {
     use HasFactory;
-
-    protected $table = 'blog_items';
 
     protected $fillable = [
         'title',
         'text',
         'link',
         'status',
+        'position',
         'image',
         'published_at',
     ];
 
     public function mainImage()
     {
-        return asset("/uploads/blog/$this->image");
+        return asset("/uploads/banner/$this->image");
     }
 }

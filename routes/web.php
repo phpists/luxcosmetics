@@ -202,31 +202,18 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function 
     Route::post('_delete-posts', [\App\Http\Controllers\Admin\News\NewsController::class, 'deletePosts']);
     Route::post('_active-posts', [\App\Http\Controllers\Admin\News\NewsController::class, 'activePosts']);
 
-    /* Blog */
-    Route::get('blogs', [\App\Http\Controllers\Admin\Blog\BlogController::class, 'index'])->name('admin.blog');
-    Route::get('blog', [\App\Http\Controllers\Admin\Blog\BlogController::class, 'create'])->name('admin.blog.create');
-    Route::post('blog', [\App\Http\Controllers\Admin\Blog\BlogController::class, 'store'])->name('admin.blog.store');
-    Route::get('blog/edit/{id}', [\App\Http\Controllers\Admin\Blog\BlogController::class, 'edit'])->name('admin.blog.edit');
-    Route::post('blog/update', [\App\Http\Controllers\Admin\Blog\BlogController::class, 'update'])->name('admin.blog.update');
-    Route::post('blog/update/seo', [\App\Http\Controllers\Admin\Blog\BlogController::class, 'updateSeo'])->name('admin.blog.update.seo');
-    Route::get('blog/delete/{id}', [\App\Http\Controllers\Admin\Blog\BlogController::class, 'delete'])->name('admin.blog.delete');
 
-    /* Blog Operation */
-    Route::post('_delete-posts', [\App\Http\Controllers\Admin\Blog\BlogController::class, 'deletePosts']);
-    Route::post('_active-posts', [\App\Http\Controllers\Admin\Blog\BlogController::class, 'activePosts']);
+    /* Banners */
+    Route::get('banners', [\App\Http\Controllers\Admin\Banner\BannerController::class, 'index'])->name('admin.banner');
+    Route::get('banner', [\App\Http\Controllers\Admin\Banner\BannerController::class, 'create'])->name('admin.banner.create');
+    Route::post('banner', [\App\Http\Controllers\Admin\Banner\BannerController::class, 'store'])->name('admin.banner.store');
+    Route::get('banner/edit/{id}', [\App\Http\Controllers\Admin\Banner\BannerController::class, 'edit'])->name('admin.banner.edit');
+    Route::post('banner/update', [\App\Http\Controllers\Admin\Banner\BannerController::class, 'update'])->name('admin.banner.update');
+    Route::post('banner/update/seo', [\App\Http\Controllers\Admin\Banner\BannerController::class, 'updateSeo'])->name('admin.banner.update.seo');
+    Route::get('banner/delete/{id}', [\App\Http\Controllers\Admin\Banner\BannerController::class, 'delete'])->name('admin.banner.delete');
 
-    /* Article */
-    Route::get('articles', [\App\Http\Controllers\Admin\Article\ArticleController::class, 'index'])->name('admin.article');
-    Route::get('article', [\App\Http\Controllers\Admin\Article\ArticleController::class, 'create'])->name('admin.article.create');
-    Route::post('article', [\App\Http\Controllers\Admin\Article\ArticleController::class, 'store'])->name('admin.article.store');
-    Route::get('article/edit/{id}', [\App\Http\Controllers\Admin\Article\ArticleController::class, 'edit'])->name('admin.article.edit');
-    Route::post('article/update', [\App\Http\Controllers\Admin\Article\ArticleController::class, 'update'])->name('admin.article.update');
-    Route::post('article/update/seo', [\App\Http\Controllers\Admin\Article\ArticleController::class, 'updateSeo'])->name('admin.article.update.seo');
-    Route::get('article/delete/{id}', [\App\Http\Controllers\Admin\Article\ArticleController::class, 'delete'])->name('admin.article.delete');
-
-    /* Article Operation */
-    Route::post('_delete-posts', [\App\Http\Controllers\Admin\Article\ArticleController::class, 'deletePosts']);
-    Route::post('_active-posts', [\App\Http\Controllers\Admin\Article\ArticleController::class, 'activePosts']);
+    /* Banners Operation */
+    Route::post('_active-posts', [\App\Http\Controllers\Admin\Banner\BannerController::class, 'activePosts']);
 
     // Properties
     Route::get('properties', [\App\Http\Controllers\Admin\PropertyController::class, 'index'])->name('admin.properties.index');
@@ -258,9 +245,10 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function 
     Route::delete('/pages/{id}/delete', [\App\Http\Controllers\Admin\PagesController::class, 'delete'])->name('admin.pages.delete');
 });
 
+// General Pages
 Route::get('/news/{link}', [\App\Http\Controllers\NewsController::class, 'show'])->name('index.news');
 Route::get('/blog/{link}', [\App\Http\Controllers\BlogController::class, 'show'])->name('index.blog');
-Route::get('/article/{link}', [\App\Http\Controllers\ArticleController::class, 'show'])->name('index.article');
+Route::get('/banner/{link}', [\App\Http\Controllers\BannerController::class, 'show'])->name('index.banner');
 
 
 Route::get('/user/home', [App\Http\Controllers\HomeController::class, 'home'])->name('user.home');
