@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('relative_products', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('product_id')->comment('Товар')->constrained('products');
-            $table->foreignId('product_related_id')->comment('Варіація товару')->constrained('products');
+            $table->bigInteger('product_id')->comment('Товар');
+            $table->bigInteger('product_related_id')->comment('Связанный товар');
             $table->smallInteger('relation_type');
         });
     }

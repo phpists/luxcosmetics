@@ -12,7 +12,6 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('product_variations', function (Blueprint $table) {
-            $table->dropForeign('product_variations_product_id_foreign');
             $table->dropColumn('product_id');
             $table->dropColumn('size');
             $table->dropColumn('price');
@@ -27,7 +26,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('product_variations', function (Blueprint $table) {
-            $table->foreignId('product_id')->constrained();
+            $table->bigInteger('product_id');
             $table->dropColumn('variation_id');
             $table->string('size')->comment("Об'єм");
             $table->float('price')->comment('Ціна');

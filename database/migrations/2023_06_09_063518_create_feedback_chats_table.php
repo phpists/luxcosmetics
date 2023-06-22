@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('feedback_chats', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('feedbacks_reason_id')->constrained();
+            $table->bigInteger('feedbacks_reason_id');
             $table->smallInteger('status')->comment('Статус тикета');
-            $table->foreignId('user_id')->constrained();
+            $table->bigInteger('user_id');
             $table->string('email');
             $table->string('phone', 20);
             $table->string('order_number');
