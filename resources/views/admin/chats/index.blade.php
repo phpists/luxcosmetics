@@ -35,7 +35,7 @@
             <!--begin::Container-->
             <div class="container-fluid">
                 <div class="card gutter-b col-lg-12 ml-0">
-                    @include('admin.categories.parts.filter')
+                    @include('admin.chats.parts.filter')
                 </div>
                 @include('admin.layouts.includes.messages')
                 <div class="card card-custom">
@@ -68,84 +68,10 @@
                     </div>
                     <div class="card-body pb-3">
                         <!--begin::Table-->
-                        <div class="table-responsive">
-                            <table class="table table-head-custom table-vertical-center">
-                                <thead>
-                                <tr>
-                                    <th class="pl-0 text-center">
-                                    <span style="width: 20px;">
-                                        <label class="checkbox checkbox-single checkbox-all">
-                                            <input id="checkbox-all" type="checkbox"
-                                                   name="checkbox[]">&nbsp;<span></span>
-                                        </label>
-                                    </span>
-                                    </th>
-                                    <th class="pl-0 text-center">
-                                        #
-                                    </th>
-                                    <th class="pr-0 text-center">
-                                        Навзва
-                                    </th>
-                                    <th class="pr-0 text-center">
-                                        Пользователь
-                                    </th>
-                                    <td class="text-center pr-0">
-                                        Оновлено
-                                    </td>
-                                    <td class="text-center pr-0">
-                                        Статус
-                                    </td>
-                                    <th class="pr-0 text-center">
-                                        Дія
-                                    </th>
-                                </tr>
-                                </thead>
-                                <tbody id="table">
-                                @foreach($chats as $chat)
-                                    <tr id="category_{{$chat->id}}" data-id="{{ $chat->id }}">
-                                        <td class="text-center pl-0">
-                                            <span style="width: 20px;">
-                                                <label class="checkbox checkbox-single">
-                                                    <input class="checkbox-item" type="checkbox" name="checkbox[]"
-                                                           value="{{ $chat->id }}">&nbsp;<span></span>
-                                                </label>
-                                            </span>
-                                        </td>
-                                        <td class="text-center pl-0">
-                                            {{ $chat->id }}
-                                        </td>
-                                        <td class="text-center pr-0">
-                                            {{ $chat->feedback_theme }}
-                                        </td>
-                                        <td class="text-center pr-0">
-                                            {{ $chat->user->name }}
-                                        </td>
-                                        <td class="text-center pr-0">
-                                            {{ $chat->updated_at->format('m Y, H:i:s') }}
-                                        </td>
-                                        <td class="text-center pr-0 status">
-                                            {{ \App\Services\SiteService::getChatStatus($chat->status) }}
-                                        </td>
-                                        <td class="text-center pr-0">
-{{--                                            <i class="handle flaticon2-sort" style="cursor:pointer;"></i>--}}
-                                            <a href="{{ route('admin.chats.edit', $chat->id) }}"
-                                               class="btn btn-sm btn-clean btn-icon">
-                                                <i class="las la-edit"></i>
-                                            </a>
-{{--                                            <a href="{{ route('admin.category.delete', $category->id) }}"--}}
-{{--                                               class="btn btn-sm btn-clean btn-icon"--}}
-{{--                                               onclick="return confirm('Ви впевнені, що хочете видалити цей запис?')">--}}
-{{--                                                <i class="las la-trash"></i>--}}
-{{--                                            </a>--}}
-                                        </td>
-                                    </tr>
-                                @endforeach
-                                </tbody>
-                            </table>
+                        @include('admin.chats.parts.table', ['chats' => $chats])
+                        <div id="pagination">
+                            {{$chats->links('vendor.pagination.super_admin_pagination')}}
                         </div>
-{{--                        <div id="pagination">--}}
-{{--                            {{ $categories->appends(request()->all())->links('vendor.pagination.category_pagination') }}--}}
-{{--                        </div>--}}
                         <!--end::Table-->
                     </div>
                 </div>
@@ -194,7 +120,52 @@
                     toastr.success(message);
                 }
             });
+        });
+        function numberSelected() {
 
+            var data = $('#chats_form').serializeArray();
+
+            var counts = [];
+
+            data.forEach(function (element) {
+                if (!counts[element.name]) {
+                    counts[element.name] = 0;
+                }
+                counts[element.name] += 1;
+            });
+        }
+
+        function request(url) {
+
+            numberSelected();
+
+            if (typeof url === 'undefined') {
+                url = $('#filterUrl').data('url') + '?' + $('#chats_form').serialize();
+            }
+
+            $.ajax({
+                type: "GET",
+                url: url,
+                dataType: "json",
+                success: function (response) {
+                    $('#table').html(response.productsHtml);
+                    $('#pagination').html(response.paginateHtml);
+
+                    window.history.pushState(null, null, url);
+                }
+            });
+
+        }
+
+        $(document).ready(function () {
+            $(document).on('change', '#chats_form', function (e) {
+                e.preventDefault();
+                request();
+            });
+            $(document).on('keyup', '#feedback_theme', function (e) {
+                e.preventDefault();
+                request();
+            });
         });
     </script>
 @endsection

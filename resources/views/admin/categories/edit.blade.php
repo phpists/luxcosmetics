@@ -54,6 +54,11 @@
                                     <span class="nav-text">Характеристики</span>
                                 </a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#kt_tab_pane_4_4">
+                                    <span class="nav-text">Теги</span>
+                                </a>
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -274,6 +279,89 @@
                             <!--end::Table-->
                             {{ $properties->links('vendor.pagination.super_admin_pagination') }}
                         </div>
+                        <div class="tab-pane fade show" id="kt_tab_pane_4_4" role="tabpanel"
+                             aria-labelledby="kt_tab_pane_4_4">
+                            <div class="row mb-5">
+                                <div class="col">
+                                    <div class="mb-7">
+                                        <h3>Теги</h3>
+                                    </div>
+                                </div>
+                                <div class="col-auto">
+                                    <button data-toggle="modal" data-target="#createTagModal"
+                                            class="btn btn-primary font-weight-bold">
+                                        <i class="fas fa-plus mr-2"></i>
+                                        Добавить
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table table-head-custom table-vertical-center">
+                                    <thead>
+                                    <tr>
+                                        <th class="pl-0 text-center">
+                                            #
+                                        </th>
+                                        <th class="pl-0 text-center">
+                                            ID
+                                        </th>
+                                        <th class="pr-0 text-center">
+                                            Позиция
+                                        </th>
+                                        <th class="text-center pr-0">
+                                            Название
+                                        </th>
+                                        <th class="pr-0 text-center">
+                                            Действия
+                                        </th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="properties-table">
+                                    @foreach($properties as $property)
+                                        <tr data-id="{{ $property->id }}">
+                                            <td class="handle text-center pl-0" style="cursor: pointer">
+                                                <i class="flaticon2-sort"></i>
+                                            </td>
+                                            <td class="text-center pl-0">
+                                                {{ $property->id }}
+                                            </td>
+                                            <td class="text-center position">
+                                        <span class="text-dark-75 d-block font-size-lg sort_col">
+                                            {{ $property->position }}
+                                        </span>
+                                            </td>
+                                            <td class="text-center">
+                                        <span class="text-dark-75 d-block font-size-lg">
+                                            {{ $property->name }}
+                                        </span>
+                                            </td>
+                                            <td class="text-center pr-0">
+                                                <a href="{{route('admin.properties.edit', $property->property->id)}}" class="btn btn-sm btn-clean btn-icon updateFaq">
+                                                    <i class="las la-edit"></i>
+                                                </a>
+                                                {{--                                                <form action="{{ route('admin.faq.delete') }}" method="POST">--}}
+                                                {{--                                                    <a href="javascript:;" class="btn btn-sm btn-clean btn-icon updateFaq"--}}
+                                                {{--                                                       data-toggle="modal" data-target="#updateFaqModal"--}}
+                                                {{--                                                       data-id="{{ $property->id }}">--}}
+                                                {{--                                                        <i class="las la-edit"></i>--}}
+                                                {{--                                                    </a>--}}
+                                                {{--                                                    @csrf--}}
+                                                {{--                                                    @method('DELETE')--}}
+                                                {{--                                                    <input type="hidden" name="id" value="{{ $property->id }}">--}}
+                                                {{--                                                    <button type="submit" class="btn btn-sm btn-clean btn-icon btn_delete"--}}
+                                                {{--                                                            onclick="return confirm('Ви впевнені, що хочете видалити питання \'{{ $property->name }}\'?')"--}}
+                                                {{--                                                            title="Delete"><i class="las la-trash"></i>--}}
+                                                {{--                                                    </button>--}}
+                                                {{--                                                </form>--}}
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!--end::Table-->
+                            {{ $properties->links('vendor.pagination.super_admin_pagination') }}
+                        </div>
                     </div>
                 </div>
             </div>
@@ -283,7 +371,7 @@
     </div>
     <!--end::Container-->
     <!--end::Entry-->
-{{--    @include('admin.categories.modals.create')--}}
+    @include('admin.categories.modals.create-tag')
 {{--    @include('admin.categories.modals.update')--}}
 
 @endsection

@@ -36,28 +36,6 @@ $(document).ready(function () {
 
     }
 
-    function request(url) {
-
-        numberSelected();
-
-        if (typeof url === 'undefined') {
-            url = $('#filterUrl').data('url') + '?' + $('#categories_form').serialize();
-        }
-
-        $.ajax({
-            type: "GET",
-            url: url,
-            dataType: "json",
-            success: function (response) {
-                $('#table').html(response.productsHtml);
-                $('#pagination').html(response.paginateHtml);
-
-                window.history.pushState(null, null, url);
-            }
-        });
-
-    }
-
     /* Форма */
     $(document).on('change', '#categories_form', function (e) {
         e.preventDefault();
