@@ -84,15 +84,16 @@
                                         <div class="col-md-2">
                                             <div class="form-group">
                                                 <label>Позиция баннера</label>
-                                            <select class="form-control status" name="position">
-                                                <option value="first">Первая позиция</option>
-                                                <option value="second">Вторая позиция</option>
-                                                <option value="third">Третяя позиция</option>
-                                                <option value="fourth">Четвертая позиция</option>
-                                                <option value="fifth">П'ятая позиция</option>
-                                            </select>
+                                                <select class="form-control status" name="position">
+                                                    <option value="first" {{ $item->position === 'first' ? 'selected' : '' }}>Первая позиция</option>
+                                                    <option value="second" {{ $item->position === 'second' ? 'selected' : '' }}>Вторая позиция</option>
+                                                    <option value="third" {{ $item->position === 'third' ? 'selected' : '' }}>Третья позиция</option>
+                                                    <option value="fourth" {{ $item->position === 'fourth' ? 'selected' : '' }}>Четвертая позиция</option>
+                                                    <option value="fifth" {{ $item->position === 'fifth' ? 'selected' : '' }}>П'ятая позиция</option>
+                                                </select>
                                             </div>
                                         </div>
+                                        
                                         <div class="col-md-2">
                                             <div class="form-group">
                                                 <label>Дата публикации</label>

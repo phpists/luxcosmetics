@@ -8,8 +8,9 @@
                 <div class="footer__social social">
                     <div class="social__title">Мы в социальных сетях</div>
                     <div class="social__items">
-                        <a href="" class="social__item"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#insta')}}"></use></svg></a>
-                        <a href="" class="social__item"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#vk')}}"></use></svg></a>
+                        @foreach (\App\Models\SocialMedia::query()->select('social_medias.*')->get() as $item)
+                                <div style="margin: 5px; display: inline-block;"><a href="{{ $item->link }}"><img src="{{asset('images/uploads/social/' . $item->icon)}}" alt=""></div>
+                        @endforeach
                     </div>
                 </div>
             </div>
@@ -44,8 +45,10 @@
 
             <div class="col-lg-2 col-md-4 col-sm-4 col-6 colcontacts">
                 <div class="footer__contacts">
-                    <div class="footer__phone"><a href="">+7 495 152 85 44</a></div>
-                    <a href="#modal-form" class="btn btn--accent popup-with-form">Заказать звонок <svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#circle-arrow')}}"></use></svg></a>
+                    @foreach (\App\Models\SocialMedia::query()->select('social_medias.telephone')->get() as $item)
+                        <div class="footer__phone">{{ $item->telephone }}</a></div>
+                    @endforeach
+                        <a href="#modal-form" class="btn btn--accent popup-with-form">Заказать звонок <svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#circle-arrow')}}"></use></svg></a>
                 </div>
             </div>
 

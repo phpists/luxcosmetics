@@ -13,10 +13,13 @@
                     </form>
                     <div class="header__contacts">
                         <div class="header__social social">
-                            <a href="" class="social__item"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#insta')}}"></use></svg></a>
-                            <a href="" class="social__item"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#vk')}}"></use></svg></a>
-                        </div>
-                        <div class="header__phone"><a href="">+7 495 152 85 44</a></div>
+                            @foreach (\App\Models\SocialMedia::query()->select('social_medias.*')->get() as $item)
+                                <div style="margin: 5px; display: inline-block;"><a href="{{ $item->link }}"><img src="{{asset('images/uploads/social/' . $item->icon)}}" alt=""></div>
+                            @endforeach
+                            </div>
+                        @foreach (\App\Models\SocialMedia::query()->select('social_medias.telephone')->get() as $item)
+                            <div class="header__phone"><a href="">{{ $item->telephone }}</a></div>
+                        @endforeach
                         <div class="header__links">
                             <button class="header__link header__link--search">
                                 <div class="if-close"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#search')}}"></use></svg></div>
