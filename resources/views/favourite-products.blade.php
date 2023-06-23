@@ -42,7 +42,9 @@
                             <div class="category-page__products">
                                 @include('categories.parts.products', ['products' => $products, 'variations' => $variations])
                             </div>
-                            @include('categories.parts.pagination')
+                            <div id="paginate">
+                                @include('categories.parts.pagination')
+                            </div>
 {{--                            <div class="category-page__pagination pagination">--}}
 {{--                                <button class="pagination__more">Показать еще <span>12 товаров</span>--}}
 {{--                                    <svg class="icon">--}}
@@ -108,5 +110,44 @@
 
 @section('scripts')
     <script src="{{asset('/js/app.min.js')}}"></script>
-    <script src="{{asset('/js/favourites.js')}}"></script>
+    <script>
+        $(document).ready(function () {
+            $(function () {
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+            })
+// Add to favourites
+            $('.product_favourite').on('click', function () {
+                let id = this.getAttribute('data-value');
+                let heart = document.getElementById('header__linkcount');
+                if(id !== null) {
+                    $.ajax({
+                        url: '/favourites',
+                        method: 'DELETE',
+                        data: {
+                            id: id,
+                            refresh: true
+                        },
+                        success: function (response) {
+                            if (heart) {
+                                if (response.count > 0) {
+                                    heart.classList.remove('hidden');
+                                    heart.innerText = response.count;
+                                }
+                                else {
+                                    heart.classList.add('hidden')
+                                }
+                            }
+                            document.getElementById('paginate').innerHTML = response.paginateHtml;
+                            document.querySelector('.category-page__products').innerHTML = response.productsHtml;
+                        }
+                    })
+                }
+            })
+        });
+
+    </script>
 @endsection

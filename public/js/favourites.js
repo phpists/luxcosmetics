@@ -23,7 +23,13 @@ $(document).ready(function () {
                 success: function (response) {
                     el.setAttribute('data-label', new_action);
                     if (heart) {
-                        heart.innerText = response;
+                        if (response > 0) {
+                            heart.classList.remove('hidden');
+                            heart.innerText = response;
+                        }
+                        else {
+                            heart.classList.add('hidden')
+                        }
                     }
                 }
             })

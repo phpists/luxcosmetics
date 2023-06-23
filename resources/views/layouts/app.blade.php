@@ -35,7 +35,6 @@
     @include('layouts.includes.footer', ['menu_items' => $menu_items, 'static-pages' => $static_pages])
 </div>
 @yield('after_content')
-@yield('scripts')
 <script src="{{asset('/js/app.min.js')}}"></script>
 <script>
     document.getElementById('header_search').addEventListener('input', function (ev) {
@@ -63,6 +62,7 @@
         }
     })
 </script>
+@yield('scripts')
 </body>
 
 </html>

@@ -65,6 +65,9 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/order-history', [\App\Http\Controllers\ProfileController::class, 'order_history'])->name('profile.order-history');
         Route::get('/subscriptions', [\App\Http\Controllers\ProfileController::class, 'subscriptions'])->name('profile.subscriptions');
         Route::get('/addresses', [\App\Http\Controllers\ProfileController::class, 'addresses'])->name('profile.addresses');
+        Route::get('/address', [\App\Http\Controllers\ProfileController::class, 'show'])->name('profile.addresses.show');
+        Route::delete('/addresses', [\App\Http\Controllers\ProfileController::class, 'deleteAddress'])->name('profile.addresses.delete');
+        Route::put('/addresses', [\App\Http\Controllers\ProfileController::class, 'updateAddress'])->name('profile.addresses.update');
         Route::get('/payment-methods', [\App\Http\Controllers\ProfileController::class, 'payment_methods'])->name('profile.payment-methods');
         Route::get('/gift-cards', [\App\Http\Controllers\ProfileController::class, 'gift_cards'])->name('profile.gift-cards');
         Route::get('/bonuses', [\App\Http\Controllers\ProfileController::class, 'bonuses'])->name('profile.bonuses');
