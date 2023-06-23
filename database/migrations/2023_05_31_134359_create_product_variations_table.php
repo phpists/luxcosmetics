@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('product_variations', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('product_id')->constrained();
+            $table->bigInteger('product_id');
             $table->string('size')->comment("Об'єм");
             $table->float('price')->comment('Ціна');
             $table->float('discount_price')->nullable()->comment('Ціна зі знижкою');

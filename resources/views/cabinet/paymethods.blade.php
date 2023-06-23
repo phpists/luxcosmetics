@@ -42,7 +42,7 @@
                     <div class="form__col form__col--50">
                         <div class="form__fieldset">
                             <legend class="form__label">Номер карты</legend>
-                            <input type="text" name="card_number" maxlength="16" minlength="16" class="form__input" required>
+                            <input type="text" name="card_number" maxlength="16" id="card_inp" minlength="16" class="form__input" required>
                         </div>
                         <div class="form__fieldset">
                             <legend class="form__label">Срок действия</legend>
@@ -65,7 +65,7 @@
                             <legend class="form__label">CVV</legend>
                             <div class="form__row">
                                 <div class="form__col form__col--33">
-                                    <input type="text" class="form__input" name="cvv" required>
+                                    <input type="text" class="form__input" id="cvv_inp" name="cvv" required>
                                 </div>
                             </div>
                         </div>
@@ -81,4 +81,16 @@
             </form>
         </div>
     </div>
+@endsection
+
+@section('scripts')
+    <script src="{{ asset('js/jquery.min.js') }}"></script>
+    <script src="{{ asset('js/inputmask/inputmask.js') }}"></script>
+    <script src="{{ asset('js/inputmask/jquery.inputmask.js') }}"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            Inputmask("9999999999999999").mask('#card_inp');
+            Inputmask("999").mask('#cvv_inp');
+        });
+    </script>
 @endsection

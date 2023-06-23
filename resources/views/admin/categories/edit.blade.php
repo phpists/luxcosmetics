@@ -54,6 +54,11 @@
                                     <span class="nav-text">Характеристики</span>
                                 </a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#kt_tab_pane_4_4">
+                                    <span class="nav-text">Теги</span>
+                                </a>
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -274,6 +279,88 @@
                             <!--end::Table-->
                             {{ $properties->links('vendor.pagination.super_admin_pagination') }}
                         </div>
+                        <div class="tab-pane fade show" id="kt_tab_pane_4_4" role="tabpanel"
+                             aria-labelledby="kt_tab_pane_4_4">
+                            <div class="row mb-5">
+                                <div class="col">
+                                    <div class="mb-7">
+                                        <h3>Теги</h3>
+                                    </div>
+                                </div>
+                                <div class="col-auto">
+                                    <button data-toggle="modal" data-target="#createTagModal"
+                                            class="btn btn-primary font-weight-bold">
+                                        <i class="fas fa-plus mr-2"></i>
+                                        Добавить
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table table-head-custom table-vertical-center">
+                                    <thead>
+                                    <tr>
+                                        <th class="pl-0 text-center">
+                                            ID
+                                        </th>
+                                        <th class="pr-0 text-center">
+                                            Изображение
+                                        </th>
+                                        <th class="text-center pr-0">
+                                            Название
+                                        </th>
+                                        <th class="pr-0 text-center">
+                                            Ссылка
+                                        </th>
+                                        <th class="pr-0 text-center">
+                                            Действия
+                                        </th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="properties-table">
+                                    @foreach($tags as $tag)
+                                        <tr data-id="{{ $tag->id }}">
+                                            <td class="text-center pl-0">
+                                                {{ $tag->id }}
+                                            </td>
+                                            <td class="text-center position">
+                                                <div class="mx-auto rounded-circle overflow-hidden" style="width: fit-content">
+                                                    <img src="{{ $tag->getImageSrcAttribute() }}" width="50" height="50" alt="">
+                                                </div>
+                                            </td>
+                                            <td class="text-center position">
+                                                <span class="text-dark-75 d-block font-size-lg sort_col">
+                                                    {{ $tag->name }}
+                                                </span>
+                                            </td>
+                                            <td class="text-center">
+                                                <span class="text-dark-75 d-block font-size-lg">
+                                                    {{ $tag->link }}
+                                                </span>
+                                            </td>
+                                            <td class="text-center pr-0">
+                                                    <form action="{{ route('admin.tag.delete') }}" method="POST">
+                                                        <a href="javascript:;" class="btn btn-sm btn-clean btn-icon updateTag"
+                                                           data-toggle="modal" data-target="#updateFaqModal"
+                                                           data-id="{{ $tag->id }}">
+                                                            <i class="las la-edit"></i>
+                                                        </a>
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <input type="hidden" name="id" value="{{ $tag->id }}">
+                                                        <button type="submit" class="btn btn-sm btn-clean btn-icon btn_delete"
+                                                                onclick="return confirm('Ви впевнені, що хочете видалити питання \'{{ $tag->name }}\'?')"
+                                                                title="Delete"><i class="las la-trash"></i>
+                                                        </button>
+                                                    </form>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!--end::Table-->
+                            {{ $tags->links('vendor.pagination.super_admin_pagination') }}
+                        </div>
                     </div>
                 </div>
             </div>
@@ -283,8 +370,8 @@
     </div>
     <!--end::Container-->
     <!--end::Entry-->
-{{--    @include('admin.categories.modals.create')--}}
-{{--    @include('admin.categories.modals.update')--}}
+    @include('admin.categories.modals.create-tag')
+    @include('admin.categories.modals.update-tag')
 
 @endsection
 
@@ -310,6 +397,35 @@
 
             var createImagePlugin = new KTImageInput('createImagePlugin');
             var createPageImagePlugin = new KTImageInput('createPageImagePlugin');
+
+            $(document).on('click', '.updateTag', loadTag);
+
+            function loadTag() {
+                let id = $(this).data('id');
+
+                $.ajax({
+                    url: '{{ route('admin.tag.show') }}',
+                    data: {
+                        'id': id
+                    },
+                    success: function (response) {
+                        $('#updateTagId').val(id);
+
+                        $(`#addToTop option[value="${response.add_to_top}"]`).attr('selected','selected');
+                        $('#updateName').val(response.name);
+                        $('#updateLink').val(response.link);
+                        $('#imageWindow').css({
+                            'background-image': 'url({{asset('/')}}images/uploads/tags/' +response.image_path + ')'
+                        });
+
+                        // document.getElementById('updateFaqIsActive').checked = (response.is_active == 1)
+
+                        // $('#updateFaqAnswer').summernote('code', response.answer)
+                    }, error: function (response) {
+                        console.log(response)
+                    }
+                });
+            }
         });
     </script>
 @endsection

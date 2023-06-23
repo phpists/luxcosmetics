@@ -4,7 +4,7 @@
 @section('content')
     <section class="mainaction">
         <div class="container">
-            @php 
+            @php
                 $item = \App\Services\BannerService::getBanner();
                 $positionIds = [];
                 foreach ($item as $banner) {
@@ -30,7 +30,7 @@
                 </div>
                 @endif
             </div>
-            
+
             @if (isset($positionIds['second'][0]) && $selectedItem = $item->find($positionIds['second'][0]))
             <div class="row">
                 <div class="col-lg-6 col-md-6">
@@ -151,7 +151,7 @@
                                                 <div class="product__label product__label--green">Хит продаж</div>
                                             </div>
                                             <a href="products/{{$new_product->alias}}{{$selected_variation !== null?'/'.$selected_variation->id:''}}"><img src="{{asset('images/uploads/products/'.$new_product->image)}}" alt=""></a>
-                                            <button class="product__fav"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#heart')}}"></use></svg></button>
+                                            <button class="product__fav product_favourite" data-label=@if($new_product->is_favourite && \App\Services\FavoriteProductsService::checkByIdForAnonym($new_product->id)) "1" @else "0" @endif data-value="{{$new_product->id}}"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#heart')}}"></use></svg></button>
                                         </div>
                                         <div class="product__title"><a href="">{{$new_product->brand->name}}</a></div>
                                         <div class="product__subtitle">{{$new_product->title}}</div>
@@ -256,7 +256,7 @@
                                                 <div class="product__label product__label--green">Хит продаж</div>
                                             </div>
                                             <a href="products/{{$new_product->alias}}{{$selected_variation !== null?'/'.$selected_variation->id:''}}"><img src="{{asset('images/uploads/products/'.$new_product->image)}}" alt=""></a>
-                                            <button class="product__fav"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#heart')}}"></use></svg></button>
+                                            <button class="product__fav product_favourite" data-label=@if($new_product->is_favourite && \App\Services\FavoriteProductsService::checkByIdForAnonym($new_product->id)) "1" @else "0" @endif data-value="{{$new_product->id}}"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#heart')}}"></use></svg></button>
                                         </div>
                                         <div class="product__title"><a href="">{{$new_product->brand->name}}</a></div>
                                         <div class="product__subtitle">{{$new_product->title}}</div>
@@ -392,7 +392,7 @@
                                                 <div class="product__label product__label--green">Хит продаж</div>
                                             </div>
                                             <a href="products/{{$product->alias}}{{$selected_variation !== null?'/'.$selected_variation->id:''}}"><img src="{{asset('images/uploads/products/'.$product->image)}}" alt=""></a>
-                                            <button class="product__fav"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#heart')}}"></use></svg></button>
+                                            <button class="product__fav product_favourite" data-label=@if($product->is_favourite && \App\Services\FavoriteProductsService::checkByIdForAnonym($product->id)) "1" @else "0" @endif data-value="{{$product->id}}"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#heart')}}"></use></svg></button>
                                         </div>
                                         <div class="product__title"><a href="">{{$product->brand->name}}</a></div>
                                         <div class="product__subtitle">{{$product->title}}</div>
@@ -503,14 +503,14 @@
                     <h2 class="title-h2">Новости</h2>
                 </div>
                 <div class="newsblock__container">
-                @foreach (\App\Services\NewsService::getNews() as $item)   
+                @foreach (\App\Services\NewsService::getNews() as $item)
                     <div class="article article--news">
                         <div class="article__image"><a href="{{ route('index.news', $item->link) }}"><img src="{{asset('images/uploads/news/' . $item->image)}}" alt=""></a></div>
                         <div class="article__date"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#calendar')}}"></use></svg>{{ \Carbon\Carbon::parse($item->published_at)->locale('ru')->isoFormat('D.MMMM.YYYY') }}</div>
                         <div class="article__title"><a href="{{ route('index.news', $item->link) }}">{{ $item->title }}</a></div>
                         <div class="article__intro">{{ Str::limit(strip_tags($item->text), $limit = 90, $end = '...') }}</div>
                     </div>
-                @endforeach    
+                @endforeach
                 </div>
             </div>
         </div>
@@ -572,6 +572,10 @@
             <div class="done-window__subtitle">Наш менеджер свяжется с Вами в течении 15 минут</div>
         </div>
     </div>
+@endsection
+
+@section('scripts')
+    <script src="{{asset('/js/favourites.js')}}"></script>
 @endsection
 
 

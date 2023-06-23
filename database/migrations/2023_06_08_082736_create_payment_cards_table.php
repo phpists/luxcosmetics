@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('payment_cards', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id');
+            $table->bigInteger('user_id');
             $table->string('full_name');
             $table->string('valid_date')->comment('Срок действия карты');
             $table->string('card_number')->comment('Номер карты');

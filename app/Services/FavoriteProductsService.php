@@ -85,6 +85,13 @@ class FavoriteProductsService
         return self::getTotalCount();
     }
 
+    public static function checkByIdForAnonym($product_id) {
+        if (Auth::check()) {
+            return true;
+        }
+        return in_array($product_id, session()->get('favorite_products', []));
+    }
+
     public static function checkById($product_id)
     {
         if ($user_id = Auth::id())

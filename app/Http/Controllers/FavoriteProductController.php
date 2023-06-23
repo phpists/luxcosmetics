@@ -22,7 +22,7 @@ class FavoriteProductController extends Controller
                 ->join('product_images', 'products.image_print_id', 'product_images.id')
                 ->with('brand')
                 ->whereIn('products.id', FavoriteProductsService::getAllIds())
-                ->groupBy('products.id')
+                ->distinct(['products.id'])
                 ->paginate(12);
 
             $products_id = [];

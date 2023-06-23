@@ -22,8 +22,8 @@ return new class extends Migration
             $table->float('price')->comment('Ціна');
             $table->bigInteger('image_print_id')->nullable()->comment('ГЛАВНОЕ ИЗОБРАЖЕНИЕ');
             $table->float('discount_price')->nullable()->comment('Ціна зі знижкою');
-            $table->foreignId('category_id')->comment('Головна категорія')->constrained('categories');
-            $table->foreignId('brand_id')->comment('Бренд')->constrained();
+            $table->bigInteger('category_id')->comment('Головна категорія');
+            $table->integer('brand_id')->comment('Бренд');
             $table->text('description_1')->comment('Опис 1');
             $table->text('description_2')->nullable()->comment('Опис 2');
             $table->text('description_3')->nullable()->comment('Опис 3');

@@ -12,6 +12,7 @@ $(document).ready(function () {
         let action = this.getAttribute('data-label')  === '1'? 'DELETE': 'POST';
         let new_action = this.getAttribute('data-label')  === '1'? '0': '1';
         let el = this;
+        let heart = document.getElementById('header__linkcount');
         if(id !== null) {
             $.ajax({
                 url: '/favourites',
@@ -21,6 +22,9 @@ $(document).ready(function () {
                 },
                 success: function (response) {
                     el.setAttribute('data-label', new_action);
+                    if (heart) {
+                        heart.innerText = response;
+                    }
                 }
             })
         }

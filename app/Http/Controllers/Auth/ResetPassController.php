@@ -16,7 +16,7 @@ class ResetPassController extends Controller
         $user = User::query()->where('email', $request->input('email'))->first();
 
         if ($user) {
-            $password = Str::password(length: 6);
+            $password = Str::password(length: 8);
             $user->update([
                 'password' => Hash::make($password)
             ]);
@@ -27,7 +27,7 @@ class ResetPassController extends Controller
             ]);
         }
         else {
-            return redirect()->back()->with('error', 'Пользователь с данной почтой не сушествует');
+            return redirect()->back()->with('error', 'Пользователь с данной почтой не существует');
         }
 
     }

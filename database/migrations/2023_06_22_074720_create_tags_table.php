@@ -11,11 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('relative_products', function (Blueprint $table) {
+        Schema::create('tags', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('product_id')->comment('Товар');
-            $table->bigInteger('product_related_id')->comment('Связанный товар');
-            $table->smallInteger('relation_type');
+            $table->string('name');
+            $table->string('link');
+            $table->string('image_path');
+            $table->bigInteger('category_id');
+            $table->boolean('add_to_top');
         });
     }
 
@@ -24,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('relative_products');
+        Schema::dropIfExists('category_tags');
     }
 };

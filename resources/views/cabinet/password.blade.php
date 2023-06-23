@@ -17,15 +17,15 @@
             @endisset
             <div class="form__fieldset">
                 <legend class="form__label">Текущий пароль *</legend>
-                <input type="password" name="original_password" required class="form__input">
+                <input type="password" pattern=".{8,}" title="Пароль должен содержать минимум 8 символов" name="original_password" required class="form__input">
             </div>
             <div class="form__fieldset">
                 <legend class="form__label">Новый пароль *</legend>
-                <input type="password" name="new_password" required class="form__input">
+                <input type="password" pattern=".{8,}" title="Пароль должен содержать минимум 8 символов" name="new_password" required class="form__input">
             </div>
             <div class="form__fieldset">
                 <legend class="form__label">Повторить новый пароль</legend>
-                <input type="password" class="form__input" name="new_confirm" required>
+                <input type="password" pattern=".{8,}" title="Пароль должен содержать минимум 8 символов" class="form__input" name="new_confirm" required>
             </div>
             <button class="btn btn--accent">Сохранить изменения</button>
         </form>

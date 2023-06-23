@@ -111,6 +111,19 @@ class ProfileController extends Controller
         return redirect()->back();
     }
 
+    public function delete_payment(Request $request) {
+        PaymentCard::query()->where('id', $request->id)->where('user_id', $request->user()->id)->delete();
+        $payment_cards = PaymentCard::query()->where('is_default', '1');
+        $default_count = $payment_cards->count();
+        if($default_count == 0) {
+            $payment_card = PaymentCard::query()->first();
+            $payment_card?->update([
+                'is_default' => 1
+            ]);
+        }
+        return redirect()->back();
+    }
+
     public function gift_cards() {
         return view('cabinet.giftcard');
     }

@@ -59,12 +59,12 @@
                             <use xlink:href="{{asset('images/dist/sprite.svg#book')}}"></use>
                         </svg>
                         Смотреть все адреса</a>
-                    <button class="btn-edit">
+                    <a href="{{route('profile.addresses')}}" class="btn-edit">
                         <svg class="icon">
                             <use xlink:href="{{asset('images/dist/sprite.svg#add')}}"></use>
                         </svg>
                         Добавить новый адрес
-                    </button>
+                    </a>
                 </div>
             </div>
         </div>
@@ -77,18 +77,25 @@
                 @endisset
                 </div>
                 <div class="cabinet-page__btns">
-                    <button class="btn-edit">
-                        <svg class="icon">
-                            <use xlink:href="{{asset('images/dist/sprite.svg#trash')}}"></use>
-                        </svg>
-                        Удалить карту
-                    </button>
-                    <button class="btn-edit">
+                    @isset($user->default_card)
+                        <form action="{{route('profile.payment-method.delete')}}" method="POST">
+                            @method('delete')
+                            @csrf
+                            <input type="hidden" name="id" value="{{$user->default_card->id}}">
+                            <button class="btn-edit">
+                                <svg class="icon">
+                                    <use xlink:href="{{asset('images/dist/sprite.svg#trash')}}"></use>
+                                </svg>
+                                Удалить карту
+                            </button>
+                        </form>
+                    @endisset
+                    <a href="{{route('profile.payment-methods')}}" class="btn-edit">
                         <svg class="icon">
                             <use xlink:href="{{asset('images/dist/sprite.svg#add')}}"></use>
                         </svg>
                         Добавить новую карту
-                    </button>
+                    </a>
                 </div>
             </div>
         </div>

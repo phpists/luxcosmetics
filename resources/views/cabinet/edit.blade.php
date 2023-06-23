@@ -25,7 +25,7 @@
                 <div class="form__col form__col--50">
                     <div class="form__fieldset">
                         <legend class="form__label">Номер телефона *</legend>
-                        <input type="text" value="{{$user->phone}}" name="phone" class="form__input" required>
+                        <input type="text" value="{{$user->phone}}" name="phone" id="phone_inp" class="form__input" required>
                     </div>
                 </div>
                 <div class="form__col form__col--50">
@@ -36,12 +36,6 @@
                 </div>
             </div>
             <div class="form__row">
-                <div class="form__col form__col--50">
-                    <div class="form__fieldset">
-                        <legend class="form__label">Пароль</legend>
-                        <input type="password" name="password" class="form__input">
-                    </div>
-                </div>
                 <div class="form__col form__col--50">
                     <div class="form__fieldset">
                         <legend class="form__label">Дата рождения</legend>
@@ -80,4 +74,15 @@
             </div>
         </form>
     </main>
+@endsection
+
+@section('scripts')
+    <script src="{{ asset('js/jquery.min.js') }}"></script>
+    <script src="{{ asset('js/inputmask/inputmask.js') }}"></script>
+    <script src="{{ asset('js/inputmask/jquery.inputmask.js') }}"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            Inputmask("+7 (999) 999-99-99").mask('#phone_inp');
+        });
+    </script>
 @endsection
