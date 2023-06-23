@@ -45,7 +45,7 @@
                             </li>
                         </ul>
                     </div>
-                    
+
                     <div class="card-toolbar">
                         <button type="submit" form="form1" class="btn btn-primary">Сохранить</button>
                     </div>
@@ -62,17 +62,17 @@
                                         <div class="form-group">
                                             <label for="exampleSelect2">Название</label>
                                             <input type="text" name="title" class="form-control" required/>
-                                        </div>                
+                                        </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="exampleSelect2">Слаг</label>
                                             <input type="text" name="link" class="form-control"/>
                                         </div>
-                                        
+
                                     </div>
                                 </div>
-                                
+
                                 <div class="row">
                                     <div class="col-md-2">
                                         <div class="form-group">
@@ -143,9 +143,6 @@
     <script src="{{ asset('super_admin/js/pages/crud/ktdatatable/base/html-table.js') }}"></script>
     <script src="{{ asset('super_admin/plugins/custom/ckeditor/ckeditor-classic.bundle.js') }} "></script>
     <script src="{{ asset('super_admin/js/pages/crud/forms/widgets/bootstrap-datetimepicker.js') }}"></script>
-
-    <script src="https://cdn.tiny.cloud/1/3h27q9hxq81txaaz86zvgxqs5cuixqt8167b543rwzusizui/tinymce/6/tinymce.min.js"
-            referrerpolicy="origin"></script>
     <script>
         $('#kt_select2_4').select2({
             allowClear: true
@@ -163,15 +160,21 @@
             )
         ));
 
-        tinymce.init({
-            selector: '#textEditor',
-            plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed linkchecker a11ychecker tinymcespellchecker permanentpen powerpaste advtable advcode editimage tinycomments tableofcontents footnotes mergetags autocorrect typography inlinecss grid',
-            toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat | grid',
-            tinycomments_mode: 'embedded',
-            tinycomments_author: 'Author name',
-            language: 'uk',
-            height: "1000"
-        });
+        var KTSummernote = function () {
+            // Private functions
+            var demos = function () {
+                $('#textEditor').summernote($.extend(summernoteDefaultOptions, {
+                    height: 450
+                }));
+            }
+
+            return {
+                // public functions
+                init: function() {
+                    demos();
+                }
+            };
+        }();
 
         $(function () {
             $.ajaxSetup({
@@ -179,6 +182,8 @@
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
+
+            KTSummernote.init();
 
             var createImagePlugin = new KTImageInput('createImagePlugin');
             var createPageImagePlugin = new KTImageInput('createPageImagePlugin');

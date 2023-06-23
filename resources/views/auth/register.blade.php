@@ -1,6 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
+    <style>
+    </style>
     <section class="signin-page reg-page">
         <div class="container">
             <div class="row">
@@ -11,22 +13,26 @@
                     </p>
                     <form method="POST" action="{{ route('register') }}" class="form form--box  typography">
                         @csrf
+                        @if ($errors->any())
+                            <div class="alert alert-danger">
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                        <li style="color: red">{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
                         <div class="form__row">
                             <div class="form__col form__col--50">
                                 <div class="form__fieldset">
                                     <legend class="form__label">Имя  *</legend>
-                                    <input name="name" type="text" class="form__input" >
-                                    @error('name')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                    @enderror
+                                    <input name="name" required type="text" class="form__input" >
                                 </div>
                             </div>
                             <div class="form__col form__col--50">
                                 <div class="form__fieldset">
                                     <legend class="form__label">Фамилия  *</legend>
-                                    <input name="surname" type="text" class="form__input">
+                                    <input name="surname" required type="text" class="form__input">
                                 </div>
                             </div>
                         </div>
@@ -34,18 +40,13 @@
                             <div class="form__col form__col--50">
                                 <div class="form__fieldset">
                                     <legend class="form__label">Телефон *</legend>
-                                    <input type="tel" name="phone" class="form__input">
+                                    <input type="tel" required name="phone" id="phone_inp" class="form__input phone_inp">
                                 </div>
                             </div>
                             <div class="form__col form__col--50">
                                 <div class="form__fieldset">
                                     <legend class="form__label">Электронная почта *</legend>
-                                    <input type="text" name="email" class="form__input">
-                                    @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                    @enderror
+                                    <input type="text" required name="email" class="form__input">
                                 </div>
                             </div>
                         </div>
@@ -53,18 +54,13 @@
                             <div class="form__col form__col--50">
                                 <div class="form__fieldset">
                                     <legend class="form__label">Пароль *</legend>
-                                    <input type="password"  name="password" class="form__input" >
-                                    @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                    @enderror
+                                    <input type="password" name="password" id="password_inp" pattern=".{8,}" title="Пароль должен содержать минимум 8 символов" class="form__input" >
                                 </div>
                             </div>
                             <div class="form__col form__col--50">
                                 <div class="form__fieldset">
                                     <legend class="form__label">Подтвердите пароль *</legend>
-                                    <input type="password" name="password_confirmation"  class="form__input" placeholder="Введите ваш пароль">
+                                    <input type="password" required name="password_confirmation" pattern=".{8,}" title="Пароль должен содержать минимум 8 символов" class="form__input" placeholder="Введите ваш пароль">
                                 </div>
                             </div>
                         </div>
@@ -135,7 +131,7 @@
                         </div>
 
 
-                        <button class="btn btn--accent">Зарегистрироваться</button>
+                        <button id="reg_btn" class="btn btn--accent">Зарегистрироваться</button>
                     </form>
 
                 </div>
@@ -144,84 +140,13 @@
     </section>
 @endsection
 
-{{--@extends('layouts.app')--}}
-
-{{--@section('content')--}}
-{{--<div class="container">--}}
-{{--    <div class="row justify-content-center">--}}
-{{--        <div class="col-md-8">--}}
-{{--            <div class="card">--}}
-{{--                <div class="card-header">{{ __('Register') }}</div>--}}
-
-{{--                <div class="card-body">--}}
-{{--                    <form method="POST" action="{{ route('register') }}">--}}
-{{--                        @csrf--}}
-
-{{--                        <div class="row mb-3">--}}
-{{--                            <label for="name" class="col-md-4 col-form-label text-md-end">{{ __('Name') }}</label>--}}
-
-{{--                            <div class="col-md-6">--}}
-{{--                                <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>--}}
-
-{{--                                @error('name')--}}
-{{--                                    <span class="invalid-feedback" role="alert">--}}
-{{--                                        <strong>{{ $message }}</strong>--}}
-{{--                                    </span>--}}
-{{--                                @enderror--}}
-{{--                            </div>--}}
-{{--                        </div>--}}
-{{--                        <div class="row mb-3">--}}
-{{--                            <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Email Address') }}</label>--}}
-
-{{--                            <div class="col-md-6">--}}
-{{--                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">--}}
-
-{{--                                @error('email')--}}
-{{--                                    <span class="invalid-feedback" role="alert">--}}
-{{--                                        <strong>{{ $message }}</strong>--}}
-{{--                                    </span>--}}
-{{--                                @enderror--}}
-{{--                            </div>--}}
-{{--                        </div>--}}
-
-{{--                        <div class="row mb-3">--}}
-{{--                            <label for="password" class="col-md-4 col-form-label text-md-end">{{ __('Password') }}</label>--}}
-
-{{--                            <div class="col-md-6">--}}
-{{--                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">--}}
-
-{{--                                @error('password')--}}
-{{--                                    <span class="invalid-feedback" role="alert">--}}
-{{--                                        <strong>{{ $message }}</strong>--}}
-{{--                                    </span>--}}
-{{--                                @enderror--}}
-{{--                            </div>--}}
-{{--                        </div>--}}
-
-{{--                        <div class="row mb-3">--}}
-{{--                            <label for="password-confirm" class="col-md-4 col-form-label text-md-end">{{ __('Confirm Password') }}</label>--}}
-
-{{--                            <div class="col-md-6">--}}
-{{--                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">--}}
-{{--                            </div>--}}
-{{--                        </div>--}}
-
-{{--                        <div class="row mb-0">--}}
-{{--                            <div class="col-md-6 offset-md-4">--}}
-{{--                                <button type="submit" class="btn btn-primary">--}}
-{{--                                    {{ __('Register') }}--}}
-{{--                                </button>--}}
-{{--                                <button type="submit" class="btn btn-primary">--}}
-{{--                                    <a href="{{ route('login') }}">--}}
-{{--                                    {{ __('Login') }}--}}
-{{--                                    </a>--}}
-{{--                                </button>--}}
-{{--                            </div>--}}
-{{--                        </div>--}}
-{{--                    </form>--}}
-{{--                </div>--}}
-{{--            </div>--}}
-{{--        </div>--}}
-{{--    </div>--}}
-{{--</div>--}}
-{{--@endsection--}}
+@section('scripts')
+    <script src="{{ asset('js/jquery.min.js') }}"></script>
+    <script src="{{ asset('js/inputmask/inputmask.js') }}"></script>
+        <script src="{{ asset('js/inputmask/jquery.inputmask.js') }}"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            Inputmask("+7 (999) 999-99-99").mask('#phone_inp');
+        });
+    </script>
+@endsection

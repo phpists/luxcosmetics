@@ -280,9 +280,6 @@
     <script src="{{ asset('super_admin/js/pages/crud/ktdatatable/base/html-table.js') }}"></script>
     <script src="{{ asset('super_admin/plugins/custom/ckeditor/ckeditor-classic.bundle.js') }} "></script>
     <script src="{{ asset('super_admin/js/pages/crud/forms/widgets/bootstrap-datetimepicker.js') }}"></script>
-
-    <script src="https://cdn.tiny.cloud/1/3h27q9hxq81txaaz86zvgxqs5cuixqt8167b543rwzusizui/tinymce/6/tinymce.min.js"
-            referrerpolicy="origin"></script>
     <script>
         $('#kt_select2_4').select2();
         $(document).ready(function () {
@@ -328,15 +325,21 @@
             )
         ));
 
-        tinymce.init({
-            selector: '.textEditor',
-            plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount',
-            toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
-            tinycomments_mode: 'embedded',
-            tinycomments_author: 'Author name',
-            language: 'uk',
-            height: "1000"
-        });
+        var KTSummernote = function () {
+            // Private functions
+            var demos = function () {
+                $('.textEditor').summernote($.extend(summernoteDefaultOptions, {
+                    height: 450
+                }));
+            }
+
+            return {
+                // public functions
+                init: function() {
+                    demos();
+                }
+            };
+        }();
 
         $(function () {
             $.ajaxSetup({
@@ -344,6 +347,8 @@
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
+
+            KTSummernote.init();
 
             var createImagePlugin = new KTImageInput('createImagePlugin');
             var createPageImagePlugin = new KTImageInput('createPageImagePlugin');

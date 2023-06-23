@@ -120,8 +120,6 @@
     <script src="{{ asset('super_admin/js/pages/crud/forms/widgets/select2.js') }}"></script>
     <script src="{{ asset('super_admin/js/pages/crud/ktdatatable/base/html-table.js') }}"></script>
     <script src="{{ asset('super_admin/plugins/custom/ckeditor/ckeditor-classic.bundle.js') }} "></script>
-    <script src="https://cdn.tiny.cloud/1/3h27q9hxq81txaaz86zvgxqs5cuixqt8167b543rwzusizui/tinymce/6/tinymce.min.js"
-            referrerpolicy="origin"></script>
 
     <script>
         Promise.allSettled = Promise.allSettled || ((promises) => Promise.all(
