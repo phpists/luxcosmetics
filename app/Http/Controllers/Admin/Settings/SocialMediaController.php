@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin\Settings;
 use App\Http\Controllers\Controller;
 use App\Models\Phone;
 use App\Models\SocialMedia;
+use App\Services\ImageService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -33,10 +34,7 @@ class SocialMediaController extends Controller
         $data['is_active_in_contacts'] = $request->post('is_active_in_contacts') ? 1 : 0;
         $data['is_active_in_footer'] = $request->post('is_active_in_footer') ? 1 : 0;
 
-        Storage::disk('public')->putFile(
-            'uploads/social',
-            $request->file('icon'));
-        $data['icon'] = $request->file('icon')->hashName();
+        $data['icon'] = ImageService::saveImage('uploads', "social", $request->icon);
 
         $social = SocialMedia::create($data);
 
@@ -62,13 +60,12 @@ class SocialMediaController extends Controller
 
         $social = SocialMedia::findOrFail($data['id']);
         
-
         if ($request->hasFile('icon')) {
-            $social->dropIcon();
-            Storage::disk('public')->putFile(
-                'uploads/social',
-                $request->file('icon'));
-            $data['icon'] = $request->file('icon')->hashName();
+            $icon = ImageService::saveImage('uploads', "social", $request->icon);
+            $social->icon = $icon;
+            $social->update(['icon' => $icon]);
+        }else{
+            $social->update($request->all());
         }
 
 
