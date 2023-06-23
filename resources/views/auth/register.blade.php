@@ -46,7 +46,7 @@
                             <div class="form__col form__col--50">
                                 <div class="form__fieldset">
                                     <legend class="form__label">Электронная почта *</legend>
-                                    <input type="text" required name="email" class="form__input">
+                                    <input type="email" required name="email" class="form__input">
                                 </div>
                             </div>
                         </div>

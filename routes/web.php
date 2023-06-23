@@ -245,7 +245,10 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function 
     Route::put('/pages/update', [\App\Http\Controllers\Admin\PagesController::class, 'update'])->name('admin.pages.update');
     Route::delete('/pages/{id}/delete', [\App\Http\Controllers\Admin\PagesController::class, 'delete'])->name('admin.pages.delete');
     // Tags
-//    Route::get('/tags')
+    Route::get('/tag', [\App\Http\Controllers\Admin\TagController::class, 'show'])->name('admin.tag.show');
+    Route::post('/tag', [\App\Http\Controllers\Admin\TagController::class, 'store'])->name('admin.tag.store');
+    Route::put('/tag', [\App\Http\Controllers\Admin\TagController::class, 'update'])->name('admin.tag.update');
+    Route::delete('/tag', [\App\Http\Controllers\Admin\TagController::class, 'delete'])->name('admin.tag.delete');
 });
 
 // General Pages

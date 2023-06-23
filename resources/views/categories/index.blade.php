@@ -76,11 +76,11 @@
                         </aside>
                         <main class="category-page__main">
                             <ul class="category-page__subcategories">
-                                @foreach($category->subcategories as $subcategory)
+                                @foreach($category->tags as $tag)
                                     <li>
-                                        <a href="/c/{{$subcategory->alias}}" class="category-page__subcategory">
-                                            <span class="category-page__subcategory-image"><img src="{{asset('images/uploads/categories/'.$subcategory->image)}}" alt=""></span>
-                                            <span class="category-page__subcategory-title">{{$subcategory->name}}</span>
+                                        <a href="/{{$tag->link}}" class="category-page__subcategory">
+                                            <span class="category-page__subcategory-image"><img src="{{$tag->getImageSrcAttribute()}}" alt=""></span>
+                                            <span class="category-page__subcategory-title">{{$tag->name}}</span>
                                         </a>
                                     </li>
                                 @endforeach

@@ -300,16 +300,16 @@
                                     <thead>
                                     <tr>
                                         <th class="pl-0 text-center">
-                                            #
-                                        </th>
-                                        <th class="pl-0 text-center">
                                             ID
                                         </th>
                                         <th class="pr-0 text-center">
-                                            Позиция
+                                            Изображение
                                         </th>
                                         <th class="text-center pr-0">
                                             Название
+                                        </th>
+                                        <th class="pr-0 text-center">
+                                            Ссылка
                                         </th>
                                         <th class="pr-0 text-center">
                                             Действия
@@ -317,42 +317,41 @@
                                     </tr>
                                     </thead>
                                     <tbody id="properties-table">
-                                    @foreach($properties as $property)
-                                        <tr data-id="{{ $property->id }}">
-                                            <td class="handle text-center pl-0" style="cursor: pointer">
-                                                <i class="flaticon2-sort"></i>
-                                            </td>
+                                    @foreach($tags as $tag)
+                                        <tr data-id="{{ $tag->id }}">
                                             <td class="text-center pl-0">
-                                                {{ $property->id }}
+                                                {{ $tag->id }}
                                             </td>
                                             <td class="text-center position">
-                                        <span class="text-dark-75 d-block font-size-lg sort_col">
-                                            {{ $property->position }}
-                                        </span>
+                                                <div class="mx-auto rounded-circle overflow-hidden" style="width: fit-content">
+                                                    <img src="{{ $tag->getImageSrcAttribute() }}" width="50" height="50" alt="">
+                                                </div>
+                                            </td>
+                                            <td class="text-center position">
+                                                <span class="text-dark-75 d-block font-size-lg sort_col">
+                                                    {{ $tag->name }}
+                                                </span>
                                             </td>
                                             <td class="text-center">
-                                        <span class="text-dark-75 d-block font-size-lg">
-                                            {{ $property->name }}
-                                        </span>
+                                                <span class="text-dark-75 d-block font-size-lg">
+                                                    {{ $tag->link }}
+                                                </span>
                                             </td>
                                             <td class="text-center pr-0">
-                                                <a href="{{route('admin.properties.edit', $property->property->id)}}" class="btn btn-sm btn-clean btn-icon updateFaq">
-                                                    <i class="las la-edit"></i>
-                                                </a>
-                                                                                                <form action="{{ route('admin.faq.delete') }}" method="POST">
-                                                                                                    <a href="javascript:;" class="btn btn-sm btn-clean btn-icon updateFaq"
-                                                                                                       data-toggle="modal" data-target="#updateFaqModal"
-                                                                                                       data-id="{{ $property->id }}">
-                                                                                                        <i class="las la-edit"></i>
-                                                                                                    </a>
-                                                                                                    @csrf
-                                                                                                    @method('DELETE')
-                                                                                                    <input type="hidden" name="id" value="{{ $property->id }}">
-                                                                                                    <button type="submit" class="btn btn-sm btn-clean btn-icon btn_delete"
-                                                                                                            onclick="return confirm('Ви впевнені, що хочете видалити питання \'{{ $property->name }}\'?')"
-                                                                                                            title="Delete"><i class="las la-trash"></i>
-                                                                                                    </button>
-                                                                                                </form>
+                                                    <form action="{{ route('admin.tag.delete') }}" method="POST">
+                                                        <a href="javascript:;" class="btn btn-sm btn-clean btn-icon updateTag"
+                                                           data-toggle="modal" data-target="#updateFaqModal"
+                                                           data-id="{{ $tag->id }}">
+                                                            <i class="las la-edit"></i>
+                                                        </a>
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <input type="hidden" name="id" value="{{ $tag->id }}">
+                                                        <button type="submit" class="btn btn-sm btn-clean btn-icon btn_delete"
+                                                                onclick="return confirm('Ви впевнені, що хочете видалити питання \'{{ $tag->name }}\'?')"
+                                                                title="Delete"><i class="las la-trash"></i>
+                                                        </button>
+                                                    </form>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -360,7 +359,7 @@
                                 </table>
                             </div>
                             <!--end::Table-->
-                            {{ $properties->links('vendor.pagination.super_admin_pagination') }}
+                            {{ $tags->links('vendor.pagination.super_admin_pagination') }}
                         </div>
                     </div>
                 </div>
@@ -372,7 +371,7 @@
     <!--end::Container-->
     <!--end::Entry-->
     @include('admin.categories.modals.create-tag')
-{{--    @include('admin.categories.modals.update')--}}
+    @include('admin.categories.modals.update-tag')
 
 @endsection
 
@@ -398,6 +397,35 @@
 
             var createImagePlugin = new KTImageInput('createImagePlugin');
             var createPageImagePlugin = new KTImageInput('createPageImagePlugin');
+
+            $(document).on('click', '.updateTag', loadTag);
+
+            function loadTag() {
+                let id = $(this).data('id');
+
+                $.ajax({
+                    url: '{{ route('admin.tag.show') }}',
+                    data: {
+                        'id': id
+                    },
+                    success: function (response) {
+                        $('#updateTagId').val(id);
+
+                        $(`#addToTop option[value="${response.add_to_top}"]`).attr('selected','selected');
+                        $('#updateName').val(response.name);
+                        $('#updateLink').val(response.link);
+                        $('#imageWindow').css({
+                            'background-image': 'url({{asset('/')}}images/uploads/tags/' +response.image_path + ')'
+                        });
+
+                        // document.getElementById('updateFaqIsActive').checked = (response.is_active == 1)
+
+                        // $('#updateFaqAnswer').summernote('code', response.answer)
+                    }, error: function (response) {
+                        console.log(response)
+                    }
+                });
+            }
         });
     </script>
 @endsection

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\PropertyCategory;
+use App\Models\Tag;
 use App\Services\ImageService;
 use App\Services\SiteService;
 use Illuminate\Http\Request;
@@ -75,8 +76,9 @@ class CategoryController extends Controller
     public function edit($id) {
         $categories = Category::query()->get();
         $category = $categories->find($id);
+        $tags = Tag::query()->where('category_id', $id)->paginate();
         $properties = PropertyCategory::query()->where('category_id', $category->id)->orderBy('position')->paginate();
-        return view('admin.categories.edit', compact('category', 'categories', 'properties'));
+        return view('admin.categories.edit', compact('category', 'categories', 'properties', 'tags'));
     }
 
     public function update(Request $request){

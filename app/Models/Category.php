@@ -43,4 +43,9 @@ class Category extends Model
             ->where('show_in_filter', 1);
     }
 
+    public function tags(): HasMany
+    {
+        return $this->hasMany(Tag::class);
+    }
+
 }

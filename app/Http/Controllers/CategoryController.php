@@ -18,7 +18,7 @@ class CategoryController extends Controller
     public function show(Request $request, string $alias) {
         $query = Category::query();
         $query->where('alias', $alias);
-        $category = $query->with('subcategories')->first();
+        $category = $query->with('subcategories')->with('tags')->first();
         if (!$category) {
             abort('404');
         }

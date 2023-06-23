@@ -1,16 +1,18 @@
-<div class="modal fade" id="createTagModal" tabindex="-1" role="dialog" aria-labelledby="createTagModal"
+<div class="modal fade" id="updateFaqModal" tabindex="-1" role="dialog" aria-labelledby="updateFaqModal"
      aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="createTagTitle">Новый тег</h5>
+                <h5 class="modal-title" id="createFaqTitle">Новое ИЗОБРАЖЕНИЕ</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <i aria-hidden="true" class="ki ki-close"></i>
                 </button>
             </div>
 
-            <form action="{{ route('admin.tag.store') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('admin.tag.update') }}" method="POST" enctype="multipart/form-data">
                 @csrf
+                @method('put')
+                <input type="hidden" id="updateTagId" name="id">
                 <input type="hidden" name="category_id" value="{{ $category->id }}">
                 <div class="modal-body">
                     <div class="row">
@@ -19,7 +21,7 @@
                                 <div class="mb-lg-0 d-flex flex-column" style="width:95%;">
                                     <label>ИЗОБРАЖЕНИЕ</label>
                                     <div class="image-input image-input-outline" id="kt_image_1">
-                                        <div class="image-input-wrapper"
+                                        <div class="image-input-wrapper" id="imageWindow"
                                              style="width: 100px; height: 100px;  background-image: url()"></div>
                                         <label
                                             class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
@@ -48,7 +50,7 @@
                                 <div class="form-group w-100">
                                     <label for="createSeller" class="col-sm-12 col-form-label font-weight-bold">Отобразить вверху?</label>
                                     <div class="col-sm-12">
-                                        <select class="form-control status" name="add_to_top">
+                                        <select class="form-control status" name="add_to_top" id="addToTop">
                                             <option value="1">Да</option>
                                             <option value="0">Нет</option>
                                         </select>
@@ -64,7 +66,7 @@
                                 <div class="form-group w-100">
                                     <label for="createSeller" class="col-sm-12 col-form-label font-weight-bold">Название</label>
                                     <div class="col-sm-12">
-                                        <input type="text" class="form-control" name="name" required>
+                                        <input type="text" class="form-control" name="name" id="updateName" required>
                                     </div>
                                 </div>
                             </div>
@@ -78,7 +80,7 @@
                                     <label for="createSeller"
                                            class="col-sm-12 col-form-label font-weight-bold">Ссылка</label>
                                     <div class="col-sm-12">
-                                        <input type="text" class="form-control" name="link" required>
+                                        <input type="text" class="form-control" name="link" id="updateLink" required>
                                     </div>
                                 </div>
                             </div>
