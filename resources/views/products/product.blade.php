@@ -768,7 +768,7 @@
                                                         <div class="product__label product__label--green">Хит продаж</div>
                                                     </div>
                                                     <a href=""><img src="{{asset('images/dist/tmp-product.jpg')}}" alt=""></a>
-                                                    <button class="product__fav"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#heart')}}"></use></svg></button>
+                                                    <button class="product__fav product_favourite"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#heart')}}"></use></svg></button>
                                                 </div>
                                                 <div class="product__title"><a href="">ROBERTO CAVALLI</a></div>
                                                 <div class="product__subtitle">Frantic Rose Gold Collection Eau de Parfum 100ml (100ml)</div>
@@ -831,7 +831,7 @@
                                                         <div class="product__label product__label--green">Хит продаж</div>
                                                     </div>
                                                     <a href=""><img src="{{asset('images/dist/tmp-product.jpg')}}" alt=""></a>
-                                                    <button class="product__fav"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#heart')}}"></use></svg></button>
+                                                    <button class="product__fav product_favourite"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#heart')}}"></use></svg></button>
                                                 </div>
                                                 <div class="product__title"><a href="">ROBERTO CAVALLI</a></div>
                                                 <div class="product__subtitle">Frantic Rose Gold Collection Eau de Parfum 100ml (100ml)</div>
@@ -894,7 +894,7 @@
                                                         <div class="product__label product__label--green">Хит продаж</div>
                                                     </div>
                                                     <a href=""><img src="{{asset('images/dist/tmp-product.jpg')}}" alt=""></a>
-                                                    <button class="product__fav"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#heart')}}"></use></svg></button>
+                                                    <button class="product__fav product_favourite"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#heart')}}"></use></svg></button>
                                                 </div>
                                                 <div class="product__title"><a href="">ROBERTO CAVALLI</a></div>
                                                 <div class="product__subtitle">Frantic Rose Gold Collection Eau de Parfum 100ml (100ml)</div>
@@ -957,7 +957,7 @@
                                                         <div class="product__label product__label--green">Хит продаж</div>
                                                     </div>
                                                     <a href=""><img src="{{asset('images/dist/tmp-product.jpg')}}" alt=""></a>
-                                                    <button class="product__fav"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#heart')}}"></use></svg></button>
+                                                    <button class="product__fav product_favourite"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#heart')}}"></use></svg></button>
                                                 </div>
                                                 <div class="product__title"><a href="">ROBERTO CAVALLI</a></div>
                                                 <div class="product__subtitle">Frantic Rose Gold Collection Eau de Parfum 100ml (100ml)</div>
@@ -1020,7 +1020,7 @@
                                                         <div class="product__label product__label--green">Хит продаж</div>
                                                     </div>
                                                     <a href=""><img src="{{asset('images/dist/tmp-product.jpg')}}" alt=""></a>
-                                                    <button class="product__fav"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#heart')}}"></use></svg></button>
+                                                    <button class="product__fav product_favourite"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#heart')}}"></use></svg></button>
                                                 </div>
                                                 <div class="product__title"><a href="">ROBERTO CAVALLI</a></div>
                                                 <div class="product__subtitle">Frantic Rose Gold Collection Eau de Parfum 100ml (100ml)</div>
@@ -1087,7 +1087,7 @@
                                                         <div class="product__label product__label--green">Хит продаж</div>
                                                     </div>
                                                     <a href=""><img src="{{asset('images/dist/tmp-product.jpg')}}" alt=""></a>
-                                                    <button class="product__fav"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#heart')}}"></use></svg></button>
+                                                    <button class="product__fav product_favourite"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#heart')}}"></use></svg></button>
                                                 </div>
                                                 <div class="product__title"><a href="">ROBERTO CAVALLI</a></div>
                                                 <div class="product__subtitle">Frantic Rose Gold Collection Eau de Parfum 100ml (100ml)</div>
@@ -1150,7 +1150,7 @@
                                                         <div class="product__label product__label--green">Хит продаж</div>
                                                     </div>
                                                     <a href=""><img src="{{asset('images/dist/tmp-product.jpg')}}" alt=""></a>
-                                                    <button class="product__fav"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#heart')}}"></use></svg></button>
+                                                    <button class="product__fav product_favourite"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#heart')}}"></use></svg></button>
                                                 </div>
                                                 <div class="product__title"><a href="">ROBERTO CAVALLI</a></div>
                                                 <div class="product__subtitle">Frantic Rose Gold Collection Eau de Parfum 100ml (100ml)</div>
@@ -1213,7 +1213,7 @@
                                                         <div class="product__label product__label--green">Хит продаж</div>
                                                     </div>
                                                     <a href=""><img src="{{asset('images/dist/tmp-product.jpg')}}" alt=""></a>
-                                                    <button class="product__fav"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#heart')}}"></use></svg></button>
+                                                    <button class="product__fav product_favourite"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#heart')}}"></use></svg></button>
                                                 </div>
                                                 <div class="product__title"><a href="">ROBERTO CAVALLI</a></div>
                                                 <div class="product__subtitle">Frantic Rose Gold Collection Eau de Parfum 100ml (100ml)</div>
@@ -1276,7 +1276,7 @@
                                                         <div class="product__label product__label--green">Хит продаж</div>
                                                     </div>
                                                     <a href=""><img src="{{asset('images/dist/tmp-product.jpg')}}" alt=""></a>
-                                                    <button class="product__fav"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#heart')}}"></use></svg></button>
+                                                    <button class="product__fav product_favourite"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#heart')}}"></use></svg></button>
                                                 </div>
                                                 <div class="product__title"><a href="">ROBERTO CAVALLI</a></div>
                                                 <div class="product__subtitle">Frantic Rose Gold Collection Eau de Parfum 100ml (100ml)</div>
@@ -1339,7 +1339,7 @@
                                                         <div class="product__label product__label--green">Хит продаж</div>
                                                     </div>
                                                     <a href=""><img src="{{asset('images/dist/tmp-product.jpg')}}" alt=""></a>
-                                                    <button class="product__fav"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#heart')}}"></use></svg></button>
+                                                    <button class="product__fav product_favourite"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#heart')}}"></use></svg></button>
                                                 </div>
                                                 <div class="product__title"><a href="">ROBERTO CAVALLI</a></div>
                                                 <div class="product__subtitle">Frantic Rose Gold Collection Eau de Parfum 100ml (100ml)</div>
@@ -1406,7 +1406,7 @@
                                                         <div class="product__label product__label--green">Хит продаж</div>
                                                     </div>
                                                     <a href=""><img src="{{asset('images/dist/tmp-product.jpg')}}"  alt=""></a>
-                                                    <button class="product__fav"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#heart')}}"></use></svg></button>
+                                                    <button class="product__fav product_favourite"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#heart')}}"></use></svg></button>
                                                 </div>
                                                 <div class="product__title"><a href="">ROBERTO CAVALLI</a></div>
                                                 <div class="product__subtitle">Frantic Rose Gold Collection Eau de Parfum 100ml (100ml)</div>
@@ -1469,7 +1469,7 @@
                                                         <div class="product__label product__label--green">Хит продаж</div>
                                                     </div>
                                                     <a href=""><img src="{{asset('images/dist/tmp-product.jpg')}}"  alt=""></a>
-                                                    <button class="product__fav"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#heart')}}"></use></svg></button>
+                                                    <button class="product__fav product_favourite"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#heart')}}"></use></svg></button>
                                                 </div>
                                                 <div class="product__title"><a href="">ROBERTO CAVALLI</a></div>
                                                 <div class="product__subtitle">Frantic Rose Gold Collection Eau de Parfum 100ml (100ml)</div>
@@ -1532,7 +1532,7 @@
                                                         <div class="product__label product__label--green">Хит продаж</div>
                                                     </div>
                                                     <a href=""><img src="{{asset('images/dist/tmp-product.jpg')}}"  alt=""></a>
-                                                    <button class="product__fav"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#heart')}}"></use></svg></button>
+                                                    <button class="product__fav product_favourite"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#heart')}}"></use></svg></button>
                                                 </div>
                                                 <div class="product__title"><a href="">ROBERTO CAVALLI</a></div>
                                                 <div class="product__subtitle">Frantic Rose Gold Collection Eau de Parfum 100ml (100ml)</div>
@@ -1595,7 +1595,7 @@
                                                         <div class="product__label product__label--green">Хит продаж</div>
                                                     </div>
                                                     <a href=""><img src="{{asset('images/dist/tmp-product.jpg')}}"  alt=""></a>
-                                                    <button class="product__fav"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#heart')}}"></use></svg></button>
+                                                    <button class="product__fav product_favourite"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#heart')}}"></use></svg></button>
                                                 </div>
                                                 <div class="product__title"><a href="">ROBERTO CAVALLI</a></div>
                                                 <div class="product__subtitle">Frantic Rose Gold Collection Eau de Parfum 100ml (100ml)</div>
@@ -1658,7 +1658,7 @@
                                                         <div class="product__label product__label--green">Хит продаж</div>
                                                     </div>
                                                     <a href=""><img src="{{asset('images/dist/tmp-product.jpg')}}"  alt=""></a>
-                                                    <button class="product__fav"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#heart')}}"></use></svg></button>
+                                                    <button class="product__fav product_favourite"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#heart')}}"></use></svg></button>
                                                 </div>
                                                 <div class="product__title"><a href="">ROBERTO CAVALLI</a></div>
                                                 <div class="product__subtitle">Frantic Rose Gold Collection Eau de Parfum 100ml (100ml)</div>
@@ -1734,7 +1734,7 @@
                                             <div class="product__label product__label--green">Хит продаж</div>
                                         </div>
                                         <a href=""><img src="{{asset('images/dist/tmp-product.jpg')}}" alt=""></a>
-                                        <button class="product__fav"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#heart')}}"></use></svg></button>
+                                        <button class="product__fav product_favourite"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#heart')}}"></use></svg></button>
                                     </div>
                                     <div class="product__title"><a href="">ROBERTO CAVALLI</a></div>
                                     <div class="product__subtitle">Frantic Rose Gold Collection Eau de Parfum 100ml (100ml)</div>
@@ -1796,7 +1796,7 @@
                                             <div class="product__label product__label--green">Хит продаж</div>
                                         </div>
                                         <a href=""><img src="{{asset('/images/dist/tmp-product.jpg')}}" alt=""></a>
-                                        <button class="product__fav"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#heart')}}"></use></svg></button>
+                                        <button class="product__fav product_favourite"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#heart')}}"></use></svg></button>
                                     </div>
                                     <div class="product__title"><a href="">ROBERTO CAVALLI</a></div>
                                     <div class="product__subtitle">Frantic Rose Gold Collection Eau de Parfum 100ml (100ml)</div>
@@ -1887,6 +1887,7 @@
 @endsection
 
 @section('scripts')
+    <script src="{{asset('/js/favourites.js')}}"></script>
     <script>
         document.querySelectorAll('.variation__select').forEach(function (el) {
             el.addEventListener('change', function () {
