@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Database\Query\Builder;
+use Illuminate\Database\Query\JoinClause;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
 class CategoryController extends Controller
@@ -28,11 +30,20 @@ class CategoryController extends Controller
         }
         $products = Product::query()
             ->selectRaw('products.*, product_images.path as main_image, case when user_favorite_products.product_id is null then FALSE else TRUE end as is_favourite')
-            ->leftJoin('user_favorite_products', 'user_favorite_products.product_id', 'products.id')
             ->join('product_images', 'products.image_print_id', 'product_images.id')
             ->whereIn('category_id', $category_ids)
             ->distinct(['products.id'])
-            ->with('brand')
+            ->with('brand');
+        if (Auth::check()) {
+            $favourites = DB::table('user_favorite_products')->select('user_favorite_products.*')->where('user_id', $request->user()->id);
+            $products = $products->leftJoinSub($favourites, 'user_favorite_products', function (JoinClause $join) {
+                $join->on('user_favorite_products.product_id', '=', 'products.id');
+            });
+        }
+        else {
+            $products = $products->leftJoin('user_favorite_products', 'user_favorite_products.product_id', 'products.id');
+        }
+        $products = $products
             ->paginate(12);
         $products_id = [];
         foreach ($products as $product) {

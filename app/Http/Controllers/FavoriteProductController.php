@@ -6,12 +6,12 @@ use App\Http\Controllers\Controller;
 use App\Models\Product;
 use App\Services\FavoriteProductsService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class FavoriteProductController extends Controller
 {
 
-    public function index()
-    {
+    private function getProducts() {
         $products_id = FavoriteProductsService::getAllIds();
         $products = [];
         $variations = [];
@@ -31,6 +31,16 @@ class FavoriteProductController extends Controller
             }
             $variations = Product::getVariations($products_id);
         }
+        return [
+            'products' => $products,
+            'variations' => $variations
+        ];
+    }
+    public function index()
+    {
+        $data = $this->getProducts();
+        $products = $data['products'];
+        $variations = $data['variations'];
         return view('favourite-products', compact('products', 'variations'));
     }
 
@@ -41,7 +51,20 @@ class FavoriteProductController extends Controller
 
     public function remove(Request $request)
     {
-        return FavoriteProductsService::removeById($request->post('id'));
+        $count = FavoriteProductsService::removeById($request->post('id'));
+        if ($request->refresh) {
+            $data = $this->getProducts();
+            $products = $data['products'];
+            $variations = $data['variations'];
+            $productsHtml = view('categories.parts.products', ['products' => $products, 'variations' => $variations])->render();
+            $paginateHtml = view('categories.parts.pagination', ['products' => $products])->render();
+            return response()->json([
+                'productsHtml' => $productsHtml,
+                'paginateHtml' => $paginateHtml,
+                'count' => $count
+            ]);
+        }
+        return $count;
     }
 
 }

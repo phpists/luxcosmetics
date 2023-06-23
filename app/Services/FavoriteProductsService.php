@@ -76,7 +76,11 @@ class FavoriteProductsService
             session(['favorite_products' => $current_products]);
 
             if ($user_id = Auth::id()) {
-                if ($model = UserFavoriteProduct::where(['user_id' => $user_id, 'product_id' => $product_id])->first()) {
+                $model = UserFavoriteProduct::where(['user_id' => $user_id, 'product_id' => $product_id])->first();
+                Log::info($user_id);
+                Log::info($product_id);
+                Log::info(json_encode($model));
+                if ($model) {
                     $model->delete();
                 }
             }

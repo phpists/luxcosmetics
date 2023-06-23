@@ -55,6 +55,21 @@ class ProfileController extends Controller
         ]);
     }
 
+    public function deleteAddress(Request $request) {
+        $address = Address::query()->where('id', $request->id)->where('user_id', $request->user()->id)->first();
+        if (!$address) {
+            abort(404);
+        }
+        $address->delete();
+        if ($address->is_default) {
+            $new_default_address = Address::query()->first();
+            $new_default_address?->update([
+                ['is_default' => 1]
+            ]);
+        }
+        return redirect()->back();
+    }
+
     public function update_default_address(Request $request) {
         Address::query()->where('is_default', 1)->update(['is_default' => 0]);
         $address = Address::query()->find($request->id);
@@ -63,6 +78,24 @@ class ProfileController extends Controller
         }
         $address->update(['is_default' => 1]);
         return response()->json(['status' => true]);
+    }
+
+    public function updateAddress(Request $request) {
+        $address = Address::query()->where('user_id', $request->user()->id)->findOrFail($request->id);
+        $data = $request->all();
+        $address->update($data);
+        return redirect()->back();
+    }
+
+    public function show(Request $request) {
+        $address = Address::query()->where('user_id', $request->user()->id)->find($request->id);
+        if (!$address) {
+            return response()->json([
+                'status' => false,
+                'message' => 'record with id '.$request->id." not found"
+            ]);
+        }
+        return response()->json($address);
     }
 
     public function add_address(Request $request) {
