@@ -16,17 +16,8 @@
             <!--begin::Page Heading-->
             <div class="d-flex align-items-baseline flex-wrap mr-5">
                 <!--begin::Page Title-->
-                <h5 class="text-dark font-weight-bold my-1 mr-5">Главная</h5>
+                <h5 class="text-dark font-weight-bold my-1 mr-5">Создание товара</h5>
                 <!--end::Page Title-->
-                <!--begin::Breadcrumb-->
-                <ul class="breadcrumb breadcrumb-transparent breadcrumb-dot font-weight-bold p-0 my-2 font-size-sm">
-                    <li class="breadcrumb-item">
-                        <a href="{{ route('admin.products') }}" class="text-muted">Товар</a>
-                    </li>
-                    <li class="breadcrumb-item">
-                        <a href="{{ route('admin.product.create') }}" class="text-muted">Создание товара</a>
-                    </li>
-                </ul>
                 <!--end::Breadcrumb-->
             </div>
             <!--end::Page Heading-->
@@ -45,7 +36,7 @@
                         <ul class="nav nav-tabs nav-bold nav-tabs-line">
                             <li class="nav-item">
                                 <a class="nav-link active" data-toggle="tab" href="#kt_tab_pane_1_4">
-                                    <span class="nav-text">Створити</span>
+                                    <span class="nav-text">Создать</span>
                                 </a>
                             </li>
                         </ul>
@@ -65,11 +56,11 @@
                                 <div class="row">
                                     <div class="col-8">
                                         <div class="form-group">
-                                            <label for="exampleSelect2">Назва</label>
+                                            <label for="exampleSelect2">Название</label>
                                             <input type="text" name="title" class="form-control" required/>
                                         </div>
                                         <div class="form-group">
-                                            <label>Категорії</label>
+                                            <label>Категории</label>
                                             <select class="form-control select2" id="kt_select2_4"
                                                     name="category_id" required>
                                                 @foreach($categories as $category)
@@ -111,7 +102,7 @@
                                     </div>
                                     <div class="col-4">
                                         <div class="form-group">
-                                            <label>ИЗОБРАЖЕНИЕ</label>
+                                            <label>Изображение</label>
                                             <div class="col-auto ml-2">
                                                 <div class="image-input  image-input-outline" id="createImagePlugin"
                                                      style="max-height: 700px;">

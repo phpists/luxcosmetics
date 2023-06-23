@@ -88,7 +88,7 @@
                                             <option value="second">Вторая позиция</option>
                                             <option value="third">Третяя позиция</option>
                                             <option value="fourth">Четвертая позиция</option>
-                                            <option value="fifth">П'ятая позиция</option>
+                                            <option value="fifth">Пятая позиция</option>
                                         </select>
                                         </div>
                                     </div>

@@ -6,17 +6,9 @@
             <!--begin::Page Heading-->
             <div class="d-flex align-items-baseline flex-wrap mr-5">
                 <!--begin::Page Title-->
-                <h5 class="text-dark font-weight-bold my-1 mr-5">Категорії</h5>
+                <h5 class="text-dark font-weight-bold my-1 mr-5">Категории</h5>
                 <!--end::Page Title-->
                 <!--begin::Breadcrumb-->
-                <ul class="breadcrumb breadcrumb-transparent breadcrumb-dot font-weight-bold p-0 my-2 font-size-sm">
-                    <li class="breadcrumb-item">
-                        <a href="{{ route('admin.dashboard') }}" class="text-muted">Главная</a>
-                    </li>
-                    <li class="breadcrumb-item">
-                        <a href="{{ route('admin.products') }}" class="text-muted">Категорії</a>
-                    </li>
-                </ul>
                 <!--end::Breadcrumb-->
             </div>
             <!--end::Page Heading-->
@@ -99,19 +91,19 @@
                                         #
                                     </th>
                                     <th class="pr-0 text-center">
-                                        Навзва
+                                        Название
                                     </th>
                                     <th class="pr-0 text-center">
                                         Alias
                                     </th>
                                     <td class="text-center pr-0">
-                                        Оновлено
+                                        Обновлено
                                     </td>
                                     <td class="text-center pr-0">
                                         Статус
                                     </td>
                                     <th class="pr-0 text-center">
-                                        Дія
+                                        Действие
                                     </th>
                                 </tr>
                                 </thead>

@@ -157,7 +157,7 @@
                                             <i class="menu-bullet menu-bullet-dot">
                                                 <span></span>
                                             </i>
-                                            <span class="menu-text">Товари</span>
+                                            <span class="menu-text">Товары</span>
                                         </a>
                                     </li>
                                 </ul>
@@ -170,7 +170,7 @@
                                             <i class="menu-bullet menu-bullet-dot">
                                                 <span></span>
                                             </i>
-                                            <span class="menu-text">Категорії</span>
+                                            <span class="menu-text">Категории</span>
                                         </a>
                                     </li>
                                 </ul>
@@ -372,7 +372,7 @@
                             aria-haspopup="true">
                             <a href="" class="menu-link">
                                 <i class="fas fa-users menu-icon"></i>
-                                <span class="menu-text">Користувачі</span>
+                                <span class="menu-text">Пользователи</span>
                             </a>
                         </li>
 

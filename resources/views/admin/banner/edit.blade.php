@@ -87,9 +87,9 @@
                                                 <select class="form-control status" name="position">
                                                     <option value="first" {{ $item->position === 'first' ? 'selected' : '' }}>Первая позиция</option>
                                                     <option value="second" {{ $item->position === 'second' ? 'selected' : '' }}>Вторая позиция</option>
-                                                    <option value="third" {{ $item->position === 'third' ? 'selected' : '' }}>Третья позиция</option>
+                                                    <option value="third" {{ $item->position === 'third' ? 'selected' : '' }}>Третяя позиция</option>
                                                     <option value="fourth" {{ $item->position === 'fourth' ? 'selected' : '' }}>Четвертая позиция</option>
-                                                    <option value="fifth" {{ $item->position === 'fifth' ? 'selected' : '' }}>П'ятая позиция</option>
+                                                    <option value="fifth" {{ $item->position === 'fifth' ? 'selected' : '' }}>Пятая позиция</option>
                                                 </select>
                                             </div>
                                         </div>

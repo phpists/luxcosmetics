@@ -31,7 +31,7 @@
                                 </span>
                                 <div class="d-flex flex-column text-right">
                                     <span class="text-dark-75 font-weight-bolder font-size-h3">{{ \App\Models\User::all()->count() }}</span>
-                                    <span class="text-muted font-weight-bold mt-2">Кількість користувачів</span>
+                                    <span class="text-muted font-weight-bold mt-2">Количество пользователей</span>
                                 </div>
                             </div>
                             <div id="kt_stats_widget_12_chart" class="card-rounded-bottom" data-color="primary" style="height: 150px"></div>
@@ -44,7 +44,7 @@
                         <div class="card-body p-0">
                             <div class="d-flex align-items-center justify-content-between card-spacer flex-grow-1">
                                 <div class="d-flex flex-column text-right">
-                                    <a href="{{ route('admin.clear.cache') }}" class="btn btn-primary btn-lg btn-block"><i class="icon flaticon-delete"></i> Очистити кеш сайту</a>
+                                    <a href="{{ route('admin.clear.cache') }}" class="btn btn-primary btn-lg btn-block"><i class="icon flaticon-delete"></i> Очистить кэш сайта</a>
                                 </div>
                             </div>
                             <div id="kt_stats_widget_12_chart" class="card-rounded-bottom" data-color="primary" style="height: 150px"></div>

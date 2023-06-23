@@ -76,7 +76,7 @@
                                             </td>
                                             <td class="text-center">
                                                 <span class="text-dark-75 d-block font-size-lg">
-                                                    <img src="{{ $network->iconSrc }}" height="24">
+                                                    <img src="{{asset('images/uploads/social/' . $network->icon)}}" height="24">
                                                 </span>
                                             </td>
                                             <td class="text-center">
