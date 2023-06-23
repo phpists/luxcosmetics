@@ -119,11 +119,12 @@
                     }
                 });
             })
+
 // Add to favourites
-            $('.product_favourite').on('click', function () {
+            function favouriteRemove() {
                 let id = this.getAttribute('data-value');
                 let heart = document.getElementById('header__linkcount');
-                if(id !== null) {
+                if (id !== null) {
                     $.ajax({
                         url: '/favourites',
                         method: 'DELETE',
@@ -136,18 +137,19 @@
                                 if (response.count > 0) {
                                     heart.classList.remove('hidden');
                                     heart.innerText = response.count;
-                                }
-                                else {
+                                } else {
                                     heart.classList.add('hidden')
                                 }
                             }
                             document.getElementById('paginate').innerHTML = response.paginateHtml;
                             document.querySelector('.category-page__products').innerHTML = response.productsHtml;
+                            $('.product_favourite').on('click', favouriteRemove);
                         }
                     })
                 }
-            })
-        });
+            }
+            $('.product_favourite').on('click', favouriteRemove);
+        })
 
     </script>
 @endsection
