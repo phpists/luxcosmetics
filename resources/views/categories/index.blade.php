@@ -22,10 +22,15 @@
                     <div class="category-page__container">
                         <aside class="category-page__aside">
                             <div class="filters" id="filters">
+
+                                <form id="filterForm" action="{{ route('categories.show', ['alias' => $category->alias]) }}">
+
+                                    <input type="hidden" name="sort">
+
                                 <div class="filters__close"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#close')}}"></use></svg></div>
                                 <div class="filters__hdr">
                                     <div class="filters__title">Сортировать по</div>
-                                    <button class="filters__btn">Сбросить все</button>
+                                    <a href="{{ route('categories.show', ['alias' => $category->alias]) }}" class="filters__btn">Сбросить все</a>
                                 </div>
                                 <div class="filters__wrapper">
                                     <div class="filters__item filter">
@@ -36,11 +41,11 @@
                                                 <div class="filter__row">
                                                     <div class="filter__col">
                                                         <span>от</span>
-                                                        <input type="text" class="filter__input" id="amount">
+                                                        <input type="text" name="price[from]" class="filter__input" id="amount" value="{{ request()->input('price.from') ?? \App\Services\CatalogService::PRICE_FROM }}">
                                                     </div>
                                                     <div class="filter__col">
                                                         <span>до</span>
-                                                        <input type="text" class="filter__input" id="amount2">
+                                                        <input type="text" name="price[to]" class="filter__input" id="amount2" value="{{ request()->input('price.to') ?? \App\Services\CatalogService::PRICE_TO }}">
                                                     </div>
                                                 </div>
                                             </div>
@@ -53,7 +58,7 @@
                                             <div class="filter__wrap filter__scroll">
                                                 @foreach($category_property->values as $property_value)
                                                 <label class="checkbox">
-                                                    <input type="checkbox" value="{{ $property_value->id }}" />
+                                                    <input type="checkbox" name="properties[]" value="{{ $property_value->id }}" @if(is_array(request()->input("properties")) && in_array($property_value->id, request()->input("properties"))) checked @endif/>
                                                     <div class="checkbox__text">{{ $property_value->value }}</div>
                                                 </label>
                                                 @endforeach
@@ -66,9 +71,11 @@
                                     @endforeach
                                 </div>
                                 <div class="filters__ftr">
-                                    <button class="filters__btn">Показать</button>
-                                    <button class="filters__btn">Сбросить</button>
+                                    <button type="submit" class="filters__btn">Показать</button>
+                                    <a href="{{ route('categories.show', ['alias' => $category->alias]) }}" class="filters__btn">Сбросить</a>
                                 </div>
+
+                                </form>
 
                             </div>
 
@@ -85,23 +92,11 @@
                                     </li>
                                 @endforeach
                             </ul>
-                            <div class="category-page__sortblock sortblock">
-                                <div class="sortblock__total">Показано <b>12 из 178</b></div>
-                                <div class="sortblock__sort sort">
-                                    <span class="sort__title">Сортировать по</span>
-                                    <select name="" id="" class="sort__select">
-                                        <option value="">Возрастанию цены</option>
-                                        <option value="">Убыванию цены</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="category-page__mobilenav">
-                                <button class="category-page__mobilebtn btnfilters"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#filters')}}"></use></svg> Показать фильтры</button>
-                                <button class="category-page__mobilebtn btnsort"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#arrows')}}"></use></svg> Сортировать по</button>
-                            </div>
-                            <div class="category-page__products">
+
+                            <div id="catalog">
                                 {!! $products_list !!}
                             </div>
+
 {{--                            <div class="category-page__pagination pagination">--}}
 {{--                                <button class="pagination__more">Показать  еще <span>12 товаров</span> <svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#refresh')}}"></use></svg></button>--}}
 {{--                                <ul class="pagination__list">--}}
@@ -233,6 +228,27 @@
                     })
                 }
             })
+
+            $(document).on('change', '#select_sort_preview', function(e) {
+                $('#filterForm input[name="sort"]').val(this.value)
+                $('#filterForm').trigger('change')
+            })
+
+            $(document).on('change', '#filterForm', function(e) {
+                let data = $(this).serializeArray();
+                data.push({
+                    name: "load", value: true
+                });
+
+                $.ajax({
+                    type: 'GET',
+                    data: data,
+                    success: function (response) {
+                        $('#catalog').html(response.html)
+                    }
+                })
+            })
+
         })
     </script>
 @endsection

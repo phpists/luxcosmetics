@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Product;
+use App\Services\CatalogService;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Database\Query\JoinClause;
 use Illuminate\Http\Request;
@@ -13,45 +14,38 @@ use Illuminate\Support\Facades\Log;
 
 class CategoryController extends Controller
 {
+
+    private CatalogService $catalogService;
+
+    public function __construct(Request $request)
+    {
+        $this->catalogService = new CatalogService($request);
+    }
+
     function index() {
         return view('categories.index_archived');
     }
 
     public function show(Request $request, string $alias) {
-        $query = Category::query();
-        $query->where('alias', $alias);
-        $category = $query->with('subcategories')->with('tags')->first();
-        if (!$category) {
-            abort('404');
-        }
-        $category_ids = [$category->id];
-        foreach ($category->subcategories as $subcategory) {
-            $category_ids[] = $subcategory->id;
-        }
-        $products = Product::query()
-            ->selectRaw('products.*, product_images.path as main_image, case when user_favorite_products.product_id is null then FALSE else TRUE end as is_favourite')
-            ->join('product_images', 'products.image_print_id', 'product_images.id')
-            ->whereIn('category_id', $category_ids)
-            ->distinct(['products.id'])
-            ->with('brand');
-        if (Auth::check()) {
-            $favourites = DB::table('user_favorite_products')->select('user_favorite_products.*')->where('user_id', $request->user()->id);
-            $products = $products->leftJoinSub($favourites, 'user_favorite_products', function (JoinClause $join) {
-                $join->on('user_favorite_products.product_id', '=', 'products.id');
-            });
-        }
-        else {
-            $products = $products->leftJoin('user_favorite_products', 'user_favorite_products.product_id', 'products.id');
-        }
-        $products = $products
-            ->paginate(12);
+        $category = $this->catalogService->category;
+        $products = $this->catalogService->getFiltered();
+
         $products_id = [];
         foreach ($products as $product) {
             $products_id[] = $product->id;
         }
         $variations = Product::getVariations($products_id);
-        $products_list = view('categories.parts.products', compact('products', 'variations'))->render();
 
+        if ($request->ajax() && $request->has('page')) {
+            $products_list = view('categories.parts.products', compact('products', 'variations'))->render();
+        } elseif ($request->ajax() && $request->has('load')) {
+            $products_list = view('categories.parts.catalog', compact('products', 'variations'))->render();
+            return response()->json([
+                'html' => $products_list
+            ]);
+        } else {
+            $products_list = view('categories.parts.catalog', compact('products', 'variations'))->render();
+        }
         if ($request->ajax()) {
             return response()->json([
                 'data' => $products_list,

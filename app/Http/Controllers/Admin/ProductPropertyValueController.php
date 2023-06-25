@@ -17,9 +17,14 @@ class ProductPropertyValueController extends Controller
         $property_value_id = $request->post('property_value_id');
 
         $property_value = PropertyValue::find($property_value_id);
-        $all_property_values_ids = $property_value->property->values()->pluck('id')->toArray();
+        $all_property_values_ids = $property_value->property
+            ->values()
+            ->pluck('id')
+            ->toArray();
 
-        ProductPropertyValue::whereIn('property_value_id', $all_property_values_ids)->delete();
+        ProductPropertyValue::where('product_id', $product_id)
+            ->whereIn('property_value_id', $all_property_values_ids)
+            ->delete();
 
         $product_property_value = ProductPropertyValue::create([
             'product_id' => $product_id,
