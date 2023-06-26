@@ -141,7 +141,6 @@
 {{--                                    <li class="pagination__item pagination__item--last"><a href=""><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#last')}}"></use></svg></a></li>--}}
 {{--                                </ul>--}}
 {{--                            </div>--}}
-                            {!! $pagination !!}
                         </main>
                     </div>
                 </div>
@@ -230,33 +229,55 @@
     <script src="{{asset('/js/favourites.js')}}"></script>
     <script>
         $(document).ready(function () {
-            $('.pagination__more').on('click', function () {
+            $(document).on('click', '.pagination__more', function () {
                 let is_disabled = $('.pagination__item--next').attr('aria-disabled')
                 if(is_disabled === 'false') {
-                    let nextPage = parseInt($('.pagination__item--active').attr('aria-current')) + 1;
+                    let url = this.dataset.url
                     $.ajax({
-                        url: '{{route('categories.show', $category->alias)}}?page='+nextPage,
+                        url: url,
+                        data: {
+                            load_more: true
+                        },
                         success: function (response) {
-                            $('.category-page__products').append(response['data']);
-                            let next_link = document.querySelector('.pagination__item--next');
-                            if(response['next_link'] !== null) {
-                                next_link.children[0].href = response['next_link'];
-                            }
-                            else {
-                                next_link.setAttribute('aria-disabled', 'true');
-                                next_link.children[0].href = '#';
-                            }
-                            let active_class = 'pagination__item--active';
-                            document.querySelector(`.${active_class}`).classList.remove(active_class);
-                            let curr_item = document.querySelector(`.pagination__item[data-label="${response['current_page']}"]`);
-                            curr_item.classList.add(active_class);
-                            curr_item.innerHTML = `<span>${nextPage}</span>`;
+                            $('#catalog div.category-page__products').append(response.products)
+                            $('#catalog div.category-page__pagination').remove()
+                            $('#catalog').append(response.pagination)
+                            let currentlyShowedCount = parseInt($('#currentlyShowedCount').text());
+                            $('#currentlyShowedCount').text(currentlyShowedCount + response.new_count)
                         },
                         error: function (response) {
                             console.log(response)
                         }
                     })
                 }
+            })
+
+            $(document).on('click', '.pagination__item', function(e) {
+                e.preventDefault();
+                let url = $(this).find('a').attr('href');
+
+                if (url !== '#') {
+                    $.ajax({
+                        url: url,
+                        data: {
+                            change_page: true
+                        },
+                        beforeSend: function () {
+                            $('#catalog').addClass('loading')
+                        },
+                        success: function (response) {
+                            $('#catalog').html(response.html)
+                        },
+                        error: function (response) {
+                            console.log(response)
+                        },
+                        complete: function () {
+                            $('#catalog').removeClass('loading')
+                        }
+                    })
+                }
+
+                return false
             })
 
             $(document).on('change', '#select_sort_preview', function(e) {

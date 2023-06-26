@@ -1,5 +1,5 @@
 <div class="category-page__sortblock sortblock">
-    <div class="sortblock__total">Показано <b>{{ $products->count() }} из {{ $products->total() }}</b></div>
+    <div class="sortblock__total">Показано <b><span id="currentlyShowedCount">{{ $products->count() }}</span> из {{ $products->total() }}</b></div>
     <div class="sortblock__sort sort">
         <span class="sort__title">Сортировать по</span>
         <select name="" id="select_sort_preview" class="sort__select">
@@ -18,3 +18,7 @@
     @include('categories.parts.products')
 
 </div>
+
+@if(sizeof($products) > 0)
+    {{ $products->links('vendor.pagination.products_pagination') }}
+@endif
