@@ -36,10 +36,20 @@ class CategoryController extends Controller
         }
         $variations = Product::getVariations($products_id);
 
-        if ($request->ajax() && $request->has('page')) {
-            $products_list = view('categories.parts.products', compact('products', 'variations'))->render();
-        } elseif ($request->ajax() && $request->has('load')) {
-            $products_list = view('categories.parts.catalog', compact('products', 'variations'))->render();
+        if ($request->ajax()) {
+            if ($request->has('load_more')) {
+                $products_list = view('categories.parts.products', compact('products', 'variations'))->render();
+                $pagination = view('categories.parts.pagination', compact('products'))->render();
+
+                return response()->json([
+                    'new_count' => $products->count(),
+                    'products' => $products_list,
+                    'pagination' => $pagination
+                ]);
+            } elseif ($request->has('load') || $request->has('change_page')) {
+                $products_list = view('categories.parts.catalog', compact('products', 'variations'))->render();
+            }
+
             return response()->json([
                 'html' => $products_list
             ]);

@@ -1,6 +1,10 @@
 @if ($paginator->hasPages())
     <div class="category-page__pagination pagination">
-        <button class="pagination__more">Показать  еще <span>12 товаров</span> <svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#refresh')}}"></use></svg></button>
+
+        @if ($paginator->hasMorePages())
+        <button class="pagination__more" data-url="{{ $paginator->nextPageUrl() }}">Показать  еще <span>12 товаров</span> <svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#refresh')}}"></use></svg></button>
+        @endif
+
         <ul class="pagination__list">
 
             {{-- Previous Page Link --}}
