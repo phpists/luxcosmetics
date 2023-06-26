@@ -20,6 +20,14 @@ class SiteService
     static public function getStatus(bool $status) {
         return $status?'Активный': 'Не активный';
     }
+    
+    static public function statusBanner(bool $status) {
+        if ($status) {
+            return '<span><i class="las la-eye"></i></span>';
+        } else {
+            return '<span><i class="las la-eye-slash"></i></span>';
+        }
+    }
 
     static public function getIsMain(bool $is_main) {
         return $is_main?"Да":"Нет";

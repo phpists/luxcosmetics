@@ -34,22 +34,20 @@
                     <div class="card-toolbar">
                         <!--begin::Dropdown-->
                         <div class="dropdown dropdown-inline mr-2">
-                            <button class="btn btn-danger font-weight-bolder deletedCares">
-                                <span class="svg-icon svg-icon-md"><i class="las la-trash"></i></span>Удалить
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                <div class="card-body pb-3">
-
-                    <div class="row">
-
-                        <div class="col-auto">
                             <button data-toggle="modal" data-target="#createModal" class="btn btn-primary font-weight-bold">
                                 <i class="fas fa-plus mr-2"></i>Добавить
                             </button>
                         </div>
+                        <div class="dropdown dropdown-inline mr-2">
+                            <button class="btn btn-danger font-weight-bolder deletedCares">
+                                <span class="svg-icon svg-icon-md"><i class="las la-trash"></i></span>Удалить
+                            </button>
+                        </div>
+                        
+                        
                     </div>
+                </div>
+                <div class="card-body pb-3">
                     <!--begin::Table-->
                     <div class="table-responsive">
                         <table class="table table-head-custom table-vertical-center">

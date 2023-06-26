@@ -5,7 +5,7 @@
 
             <div class="row mb-2">
                 <div class="col-lg-3 mb-lg-0 d-flex flex-column">
-                    <label>Назва</label>
+                    <label>Название</label>
                     <div class="input-group">
                         <input type="text" id="name" name="name" class="form-control">
                     </div>
@@ -17,7 +17,7 @@
                     </div>
                 </div>
                 <div class="col-lg-3 mb-lg-0 d-flex flex-column">
-                    <label>Оновлено</label>
+                    <label>Обновлено</label>
                     <div class="input-group">
                         <input type="text" id="date" name="date" class="form-control">
                     </div>
@@ -27,8 +27,8 @@
                     <div class="input-group input-group-sm">
                         <select class="form-control status" name="status">
                             <option></option>
-                            <option value="1">Активний</option>
-                            <option value="0">Неактивний</option>
+                            <option value="1">Активный</option>
+                            <option value="0">Неактивный</option>
                         </select>
                     </div>
                 </div>

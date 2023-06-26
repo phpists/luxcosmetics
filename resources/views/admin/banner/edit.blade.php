@@ -75,7 +75,7 @@
                                         <div class="col-md-2">
                                             <div class="form-group">
                                                 <label>Статус</label>
-                                                <select class="form-control status" id="kt_select2_1" name="status">
+                                                <select class="form-control status" name="status">
                                                     <option value="1" @if($item->status == true) selected @endif>Активный</option>
                                                     <option value="0" @if($item->status == false) selected @endif>Неактивный</option>
                                                 </select>
@@ -90,6 +90,18 @@
                                                     <option value="third" {{ $item->position === 'third' ? 'selected' : '' }}>Третяя позиция</option>
                                                     <option value="fourth" {{ $item->position === 'fourth' ? 'selected' : '' }}>Четвертая позиция</option>
                                                     <option value="fifth" {{ $item->position === 'fifth' ? 'selected' : '' }}>Пятая позиция</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label>Номер баннера</label>
+                                                <select class="form-control status" name="position">
+                                                    <option value="first" {{ $item->position === 'first' ? 'selected' : '' }}>Первый номер</option>
+                                                    <option value="second" {{ $item->position === 'second' ? 'selected' : '' }}>Второй номер</option>
+                                                    <option value="third" {{ $item->position === 'third' ? 'selected' : '' }}>Третий номер</option>
+                                                    <option value="fourth" {{ $item->position === 'fourth' ? 'selected' : '' }}>Четвертый номер</option>
+                                                    <option value="fifth" {{ $item->position === 'fifth' ? 'selected' : '' }}>Пятый номер</option>
                                                 </select>
                                             </div>
                                         </div>

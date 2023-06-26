@@ -217,7 +217,7 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function 
     Route::get('banner/delete/{id}', [\App\Http\Controllers\Admin\Banner\BannerController::class, 'delete'])->name('admin.banner.delete');
 
     /* Banners Operation */
-    Route::post('_active-posts', [\App\Http\Controllers\Admin\Banner\BannerController::class, 'activePosts']);
+    Route::post('_active-posts', [\App\Http\Controllers\Admin\Banner\BannerController::class, 'activePosts'])->name('admin.banner.active');
 
     // Properties
     Route::get('properties', [\App\Http\Controllers\Admin\PropertyController::class, 'index'])->name('admin.properties.index');

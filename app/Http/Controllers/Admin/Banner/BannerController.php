@@ -85,13 +85,16 @@ class BannerController extends Controller
             ]);
         }
 
-        $title = SiteService::getStatus($status);
+
+        $title = SiteService::statusBanner($status);
         $message = $status ? 'Баннер активирован!' : 'Баннер деактивирован!';
 
-        return response()->json([
+        $data= [
             'posts' => $bannerId,
             'title' => $title,
             'message' => $message
-        ]);
+        ];
+
+    return json_encode($data);
     }
 }

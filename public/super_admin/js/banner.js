@@ -16,15 +16,14 @@ $(document).ready(function () {
      */
     
     $(document).on('click', '.activePost', function (e) {
-
         let status = $(this).data('status');
         let csrf = $('meta[name="csrf-token"]').attr('content');
         let checkbox = $(".checkbox-item:checkbox:checked").map(function () {
             return $(this).val();
         }).get();
-
+    
         $.ajaxSetup({headers: {'X-CSRF-TOKEN': csrf}});
-
+    
         $.ajax({
             type: "POST",
             url: '/admin/_active-posts',
@@ -33,21 +32,24 @@ $(document).ready(function () {
                 checkbox: checkbox,
                 status: status,
             },
-            dataType: "json",
+           
             success: function (response) {
                 let posts = response.posts;
-                let title = response.title;
-                let message = response.message;
-
-                posts.forEach(function (id) {
-                    $('#banner_' + id).find('.status').text(title);
-                    $('.checkbox-item').prop('checked', false);
-                });
+                
+                var s = JSON.parse(response);
+                
+                for(i in s) {
+                    var title = s.title;
+                    var message = s.message;
+                    for( k in s.posts ) {
+                        $('#banner_' + k).find('.status').html('<span>'+title+'</span>'); 
+                    }
+                }
                 toastr.success(message);
             }
         });
-
     });
+    
 
 
 });

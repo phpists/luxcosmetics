@@ -48,10 +48,10 @@
                     <form action="" class="brands-page__search form form--box">
                         <legend class="form__label">Найти бренд</legend>
                         <div class="brands-page__search-wrap">
-                            <input type="text" class="form__input">
-                            <button class="btn btn--accent">Искать</button>
+                          <input type="text" class="form__input" id="brand-search-input">
+                          <button class="btn btn--accent" id="brand-search-button">Искать</button>
                         </div>
-                    </form>
+                      </form>
                     @php
                         $letters = range('a', 'z');
                         $start_pos = 0;
@@ -78,27 +78,70 @@
                 </div>
             </div>
         </div>
+</section>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        {{-- Функціонал пошуку бренда по букві--}}
         <script>
             $(document).ready(function() {
-              var selectedLetter = null;
-          
-              $('.brands-page__letter').click(function() {
+            var selectedLetter = null;
+
+            $('.brands-page__letter').click(function() {
                 var currentLetter = $(this).text().trim().toLowerCase();
-          
+
                 if (selectedLetter === currentLetter) {
                     $('.brands-page__title, .brands-page__brand').show();
                     selectedLetter = null;
+                    $('.brands-page__item').show();
                 } else {
                     $('.brands-page__title, .brands-page__brand').hide();
                     $('#' + currentLetter).find('.brands-page__title, .brands-page__brand').show();
                     selectedLetter = currentLetter;
+                    $('.brands-page__item').hide();
+                    $('#' + currentLetter).show();
                 }
                 return false;
-              });
             });
-          </script> 
-    </section>
+            });
+        </script>
+
+
+        {{-- Функціонал форми пошуку бренда --}}
+        <script>
+        
+        $(document).ready(function() {
+    $('#brand-search-input').on('input', function() {
+        var searchKeyword = $(this).val().trim().toLowerCase();
+        $('.brands-page__brand').hide();
+        $('.brands-page__item').hide();
+        if (searchKeyword !== "") {
+            $('.brands-page__brand').each(function() {
+                var brandName = $(this).text().toLowerCase();
+                if (brandName.includes(searchKeyword)) {
+                    $(this).show();
+                    var firstLetter = brandName.charAt(0);
+                    $('.brands-page__title:contains("' + firstLetter + '")').parent().show();
+                    $('.brands-page__title:contains("' + firstLetter + '")').show();
+                } else {
+                }
+            });
+        } else {
+            $('div').removeClass('__active'); 
+            $('.brands-page__item').show();
+            $('.brands-page__brand, .brands-page__title').show();
+        }
+    });
+
+    $('#brand-search-button').click(function(event) {
+        event.preventDefault();
+    });
+});
+    </script>
+
+
+
+
+
+
 @endsection
 
   

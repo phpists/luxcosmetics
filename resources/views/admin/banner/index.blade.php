@@ -49,6 +49,7 @@
                             </div>
                         </div>
                     </div>
+                    
                     <div class="card-body pb-3">
                         <!--begin::Table-->
                         <div class="table-responsive">
@@ -70,16 +71,10 @@
                                         Название
                                     </th>
                                     <th class="pr-0 text-center">
-                                        Создано
-                                    </th>
-                                    <th class="pr-0 text-center">
-                                        Статус
-                                    </th>
-                                    <th class="pr-0 text-center">
                                         Позиция
                                     </th>
                                     <th class="pr-0 text-center">
-                                        Дата публикации
+                                        Сортировка
                                     </th>
                                     <th class="pr-0 text-center">
                                         Изображения
@@ -90,6 +85,7 @@
                                 </tr>
                                 </thead>
                                 <tbody id="table">
+                                    @dd($banner)
                                     @foreach($banner as $item)
                                     <tr id="banner_{{$item->id}}" data-id="{{ $item->id }}">
                                         <td class="text-center pl-0">
@@ -107,20 +103,23 @@
                                             {{ $item->title }}
                                         </td>
                                         <td class="text-center pr-0">
-                                            {{ date('m Y, H:i:s', strtotime($item->created_at)) }}
-                                        </td>
-                                        <td class="text-center pr-0 status">
-                                            {{ \App\Services\SiteService::getStatus($item->status) }}
-                                        </td>
-                                        <td class="text-center pr-0">
                                             {{ $item->position }}
                                         </td>
-                                        <td class="text-center pr-0">
-                                            {{ date('m Y, H:i:s', strtotime($item->published_at)) }}
+                                        
+                                        <td class="text-center pr-0 sort">
                                         </td>
+                                        
                                         <td class="text-center pr-0">
                                             <div class="banner__image"><a href="{{ route('index.banner', $item->id) }}"><img src="{{asset('images/uploads/banner/' . $item->image)}}" alt="" style=" width: 100px;"></a></div> 
                                         </td>
+                                        <td class="text-center pr-0">
+                                            @php
+                                                $statusBanner = \App\Services\SiteService::statusBanner($item->status);
+                                            @endphp
+                                            <a href="{{ route('admin.banner.edit', $item->id) }}" class="btn btn-sm btn-clean btn-icon btn_toggle_status status">  
+                                                <span>{!! \App\Services\SiteService::statusBanner($item->status) !!}</span>
+                                            </a>
+                                          </td>                                          
                                         <td class="text-center pr-0">
                                             <a href="{{ route('admin.banner.edit', $item->id) }}" class="btn btn-sm btn-clean btn-icon">
                                                 <i class="las la-edit"></i>
