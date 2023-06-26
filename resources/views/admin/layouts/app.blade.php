@@ -370,7 +370,7 @@
 
                         <li class="menu-item {{ request()->routeIs('admin.users') ? 'menu-item-active' : '' }}"
                             aria-haspopup="true">
-                            <a href="" class="menu-link">
+                            <a href="{{route('admin.users')}}" class="menu-link">
                                 <i class="fas fa-users menu-icon"></i>
                                 <span class="menu-text">Пользователи</span>
                             </a>

@@ -3,6 +3,8 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -88,6 +90,19 @@ class User extends Authenticatable
     static public function getConnectionOptions(): array
     {
         return array_column(\App\Enums\ConnectionOptions::cases(), 'value');
+    }
+
+    /**
+     * Отримати вік
+     */
+    public function getAge()
+    {
+        $age = '';
+        if ($this->birthday) {
+            $age = Carbon::parse($this->birthday)->diffInYears(Carbon::now());
+        }
+
+        return "({$age} года/лет)";
     }
 
 }

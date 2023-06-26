@@ -17,7 +17,7 @@
                             @method('PUT')
                             <input id="updateId" type="hidden" name="id">
                             <div class="form-group">
-                                <label for="updateLink" class="col-form-label font-weight-bold">Ваш номер телефона</label>
+                                <label for="updateLink" class="col-form-label font-weight-bold">Номер телефона</label>
                                 <input placeholder="Ваш номер" type="text" class="form-control" name="telephone" id="telephone" required>
                             </div>
                             <div class="modal-fade">
