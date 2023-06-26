@@ -38,7 +38,7 @@ class HomeController extends Controller
             ->orderBy('created_at');
 
         if (Auth::check()) {
-            $favourites = DB::table('user_favorite_products')->select('user_favorite_products.*')->where('user_id', $request->user()->id);
+            $favourites = DB::table('user_favorite_products')->select('user_favorite_products.*')->where('user_id', request()->user()->id);
             $product_discounts = $product_discounts->leftJoinSub($favourites, 'user_favorite_products', function (JoinClause $join) {
                 $join->on('user_favorite_products.product_id', '=', 'products.id');
             });

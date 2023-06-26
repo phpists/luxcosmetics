@@ -57,14 +57,11 @@ class CatalogService
 
 
         if ($properties = $this->getProperties()) {
-            $products->whereHas('values', function ($q) use($properties)  {
-                return $q->whereIn('property_value_id', $properties); // TODO: доробити
-//                return $q->where(function ($query) use ($properties) {
-//                    foreach ($properties as $property_id => $property_value_id) {
-//                        $query->whereIn('property_value_id', $property_value_id);
-//                    }
-//                });
-            });
+            foreach ($properties as $property_id => $property_value_id) {
+                $products->whereHas('values', function ($q) use($property_value_id)  {
+                    return $q->whereIn('property_value_id', $property_value_id);
+                });
+            }
         }
 
         if ($sort_column = $this->getSortColumn()) {
@@ -88,7 +85,10 @@ class CatalogService
     {
         if (is_array($this->request->get('properties'))
             && count($this->request->get('properties')) > 0) {
-            return $this->request->get('properties');
+
+            return array_map(function ($item) {
+                return array_unique($item);
+            }, $this->request->get('properties'));
         }
 
         return false;
