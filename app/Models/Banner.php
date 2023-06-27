@@ -15,6 +15,7 @@ class Banner extends Model
         'link',
         'status',
         'position',
+        'number_position',
         'image',
         'published_at',
     ];

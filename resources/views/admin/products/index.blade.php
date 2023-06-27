@@ -97,7 +97,7 @@
                                         Alias
                                     </th>
                                     <td class="text-center pr-0">
-                                        Обновлено
+                                        Артикул
                                     </td>
                                     <td class="text-center pr-0">
                                         Статус
@@ -109,7 +109,7 @@
                                 </thead>
                                 <tbody id="table">
                                 @foreach($products as $product)
-                                    <tr id="product_{{$product->id}}" data-id="{{ $product->id }}">
+                                    <tr id="category_{{$product->id}}" data-id="{{ $product->id }}">
                                         <td class="text-center pl-0">
                                             <span style="width: 20px;">
                                                 <label class="checkbox checkbox-single">
@@ -128,7 +128,7 @@
                                             {{ $product->alias }}
                                         </td>
                                         <td class="text-center pr-0">
-                                            {{ $product->created_at->format('m Y, H:i:s') }}
+                                            {{ $product->code }}
                                         </td>
                                         <td class="text-center pr-0 status">
                                             {{ \App\Services\SiteService::getProductStatus($product->availability) }}
@@ -150,9 +150,9 @@
                                 </tbody>
                             </table>
                         </div>
-{{--                        <div id="pagination">--}}
-{{--                            {{ $products->appends(request()->all())->links('vendor.pagination.product_pagination') }}--}}
-{{--                        </div>--}}
+                       <div id="pagination">
+                           {{ $productAjax->appends(request()->all())->links('vendor.pagination.product_pagination') }}
+                       </div>
                         <!--end::Table-->
                     </div>
                 </div>

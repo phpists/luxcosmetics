@@ -14,9 +14,39 @@ use Illuminate\Support\Facades\Log;
 
 class ProductController extends Controller
 {
-    public function index() {
-        $products = Product::query()->get();
-        return response()->view('admin.products.index', compact('products'));
+    public function index(Request $request) {
+        $products = Product::query()->select('products.*')->get();
+        $query = Product::query();
+        $query->select('products.*');
+
+        if ($request->name) {
+            $query->where('products.title', 'LIKE', '%' . $request->name . '%');
+        }
+        if ($request->alias) {
+            $query->where('products.alias', 'LIKE', '%' . $request->alias . '%');
+        }
+
+        if ($request->code) {
+            $query->where('products.code', 'LIKE', '%' . $request->code . '%');
+        }
+
+        if (isset($request->status)) {
+            $query->where('products.status', $request->status);
+        }
+
+        $productAjax = $query->paginate($request->paginate ?? 100);
+        
+        if ($request->ajax()) {
+            $categoriesAjaxHtml = view('admin.products.parts.table', ['productAjax' => $productAjax])->render();
+            $paginateHtml = view('admin.products.parts.paginate', ['productAjax' => $productAjax, 'params' => $request->all()])->render();
+
+            return response()->json([
+                'categoriesAjaxHtml' => $categoriesAjaxHtml,
+                'paginateHtml' => $paginateHtml,
+            ]);
+        }
+
+        return response()->view('admin.products.index', compact('products','productAjax'));
     }
 
     public function create() {

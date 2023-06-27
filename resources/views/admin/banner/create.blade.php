@@ -74,7 +74,7 @@
                                     <div class="col-md-2">
                                         <div class="form-group">
                                             <label>Статус</label>
-                                            <select class="form-control status" id="kt_select2_1" name="status">
+                                            <select class="form-control status" name="status">
                                                 <option value="1">Активный</option>
                                                 <option value="0">Неактивный</option>
                                             </select>
@@ -83,26 +83,22 @@
                                     <div class="col-md-2">
                                         <div class="form-group">
                                             <label>Позиция баннера</label>
-                                        <select class="form-control status" name="position">
-                                            <option value="first">Первая позиция</option>
-                                            <option value="second">Вторая позиция</option>
-                                            <option value="third">Третяя позиция</option>
-                                            <option value="fourth">Четвертая позиция</option>
-                                            <option value="fifth">Пятая позиция</option>
-                                        </select>
+                                            <select class="form-control status" name="position">
+                                                <option value="first">Первая позиция</option>
+                                                <option value="second">Вторая позиция</option>
+                                                <option value="third">Третяя позиция</option>
+                                                <option value="fourth">Четвертая позиция</option>
+                                                <option value="fifth">Пятая позиция</option>
+                                            </select>
                                         </div>
                                     </div>
                                     <div class="col-md-2">
                                         <div class="form-group">
                                             <label>Дата публикации</label>
-                                            <div class="input-group date" id="kt_datetimepicker_1"
-                                                 data-target-input="nearest">
-                                                <input type="text" class="form-control datetimepicker-input"
-                                                       placeholder="Дата публікации"
-                                                       name="published_at" required
-                                                       data-target="#kt_datetimepicker_1"/>
-                                                <div class="input-group-append" data-target="#kt_datetimepicker_1"
-                                                     data-toggle="datetimepicker">
+                                            <div class="input-group date" id="kt_datetimepicker_1" data-target-input="nearest">
+                                                <input type="text" class="form-control datetimepicker-input" placeholder="Дата публікации"
+                                                    name="published_at" required data-target="#kt_datetimepicker_1"/>
+                                                <div class="input-group-append" data-target="#kt_datetimepicker_1" data-toggle="datetimepicker">
                                                     <span class="input-group-text">
                                                         <i class="ki ki-calendar"></i>
                                                     </span>
@@ -110,7 +106,14 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <label>Номер баннера</label>
+                                            <input type="number" name="number_position" min="1" max="4" step="1" class="form-control">
+                                        </div>
+                                    </div>
                                 </div>
+                                
                                 <div class="row">
                                     <div class="col-md-12">
                                         <label>Текст</label>

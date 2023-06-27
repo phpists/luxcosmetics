@@ -57,71 +57,54 @@
                                   enctype="multipart/form-data">
                                 @csrf
                                 <input type="hidden" name="id" value="{{ $item->id }}">
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label for="exampleSelect2">Название</label>
-                                                <input type="text" name="title" class="form-control" value="{{ $item->title }}" required/>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label for="exampleSelect2">Ссылка</label>
-                                                <input type="text" name="link" class="form-control" value="{{ $item->link }}"/>
-                                            </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="exampleSelect2">Название</label>
+                                            <input type="text" name="title" class="form-control" value="{{ $item->title }}" required/>
                                         </div>
                                     </div>
-                                    <div class="row">
-                                        <div class="col-md-2">
-                                            <div class="form-group">
-                                                <label>Статус</label>
-                                                <select class="form-control status" name="status">
-                                                    <option value="1" @if($item->status == true) selected @endif>Активный</option>
-                                                    <option value="0" @if($item->status == false) selected @endif>Неактивный</option>
-                                                </select>
-                                            </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="exampleSelect2">Ссылка</label>
+                                            <input type="text" name="link" class="form-control" value="{{ $item->link }}"/>
                                         </div>
-                                        <div class="col-md-2">
-                                            <div class="form-group">
-                                                <label>Позиция баннера</label>
-                                                <select class="form-control status" name="position">
-                                                    <option value="first" {{ $item->position === 'first' ? 'selected' : '' }}>Первая позиция</option>
-                                                    <option value="second" {{ $item->position === 'second' ? 'selected' : '' }}>Вторая позиция</option>
-                                                    <option value="third" {{ $item->position === 'third' ? 'selected' : '' }}>Третяя позиция</option>
-                                                    <option value="fourth" {{ $item->position === 'fourth' ? 'selected' : '' }}>Четвертая позиция</option>
-                                                    <option value="fifth" {{ $item->position === 'fifth' ? 'selected' : '' }}>Пятая позиция</option>
-                                                </select>
-                                            </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <label>Статус</label>
+                                            <select class="form-control status" name="status">
+                                                <option value="1" @if($item->status == true) selected @endif>Активный</option>
+                                                <option value="0" @if($item->status == false) selected @endif>Неактивный</option>
+                                            </select>
                                         </div>
-                                        <div class="col-md-2">
-                                            <div class="form-group">
-                                                <label>Номер баннера</label>
-                                                <select class="form-control status" name="position">
-                                                    <option value="first" {{ $item->position === 'first' ? 'selected' : '' }}>Первый номер</option>
-                                                    <option value="second" {{ $item->position === 'second' ? 'selected' : '' }}>Второй номер</option>
-                                                    <option value="third" {{ $item->position === 'third' ? 'selected' : '' }}>Третий номер</option>
-                                                    <option value="fourth" {{ $item->position === 'fourth' ? 'selected' : '' }}>Четвертый номер</option>
-                                                    <option value="fifth" {{ $item->position === 'fifth' ? 'selected' : '' }}>Пятый номер</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        
-                                        <div class="col-md-2">
-                                            <div class="form-group">
-                                                <label>Дата публикации</label>
-                                                <div class="input-group date" id="kt_datetimepicker_1" data-target-input="nearest">
-                                                    <input type="text" class="form-control datetimepicker-input" placeholder="Дата публикации"
-                                                           value="{{ date('Y-m-d H:i:s', strtotime($item->published_at)) }}" name="published_at" required
-                                                           data-target="#kt_datetimepicker_1"/>
-                                                    <div class="input-group-append" data-target="#kt_datetimepicker_1" data-toggle="datetimepicker">
-                                                        <span class="input-group-text">
-                                                            <i class="ki ki-calendar"></i>
-                                                        </span>
-                                                    </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <label>Дата публикации</label>
+                                            <div class="input-group date" id="kt_datetimepicker_1" data-target-input="nearest">
+                                                <input type="text" class="form-control datetimepicker-input" placeholder="Дата публикации"
+                                                    value="{{ date('Y-m-d H:i:s', strtotime($item->published_at)) }}" name="published_at" required
+                                                    data-target="#kt_datetimepicker_1"/>
+                                                <div class="input-group-append" data-target="#kt_datetimepicker_1" data-toggle="datetimepicker">
+                                                    <span class="input-group-text">
+                                                        <i class="ki ki-calendar"></i>
+                                                    </span>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <label>Номер баннера</label>
+                                            <input type="number" value="{{ $item->number_position }}" name="number_position" min="1" max="4" step="1" class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                    
                                     <div class="row">
                                         <div class="col-md-12">
                                             <label>Текст</label>

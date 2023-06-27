@@ -1,5 +1,5 @@
 <div class="tab-content mt-5" id="myTabContent">
-    <input type="hidden" id="filterUrl" data-url="{{ route('admin.categories') }}">
+    <input type="hidden" id="filterUrl" data-url="{{ route('admin.products') }}">
     <form id="categories_form">
         <table class="table table-hover rounded ">
 
@@ -17,9 +17,9 @@
                     </div>
                 </div>
                 <div class="col-lg-3 mb-lg-0 d-flex flex-column">
-                    <label>Обновлено</label>
+                    <label>Артикул</label>
                     <div class="input-group">
-                        <input type="text" id="date" name="date" class="form-control">
+                        <input type="text" id="code" name="code" class="form-control">
                     </div>
                 </div>
                 <div class="col-lg-3 mb-lg-0 d-flex flex-column">
@@ -27,8 +27,8 @@
                     <div class="input-group input-group-sm">
                         <select class="form-control status" name="status">
                             <option></option>
-                            <option value="1">Активный</option>
-                            <option value="0">Неактивный</option>
+                            <option value="1">Есть в наличие</option>
+                            <option value="0">Нету в наличие</option>
                         </select>
                     </div>
                 </div>

@@ -39,6 +39,7 @@ class BannerController extends Controller
             'link' => $request->link,
             'status' => $request->status,
             'position' => $request->position,
+            'number_position' => $request->number_position,
             'image' => ImageService::saveImage('uploads', "banner", $request->image),
             'published_at' => $request->published_at
         ]);

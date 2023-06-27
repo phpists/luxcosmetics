@@ -1,1 +1,1 @@
-{{ $categories->appends(request()->all())->links('vendor.pagination.category_pagination') }}
+{{ $productAjax->appends(request()->all())->links('vendor.pagination.category_pagination') }}

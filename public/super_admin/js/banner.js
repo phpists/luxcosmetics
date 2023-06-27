@@ -46,6 +46,7 @@ $(document).ready(function () {
                     }
                 }
                 toastr.success(message);
+                location.reload();
             }
         });
     });

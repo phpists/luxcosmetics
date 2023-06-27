@@ -2,7 +2,7 @@ $(document).ready(function () {
 
     function numberSelected() {
 
-        var data = $('#product_form').serializeArray();
+        var data = $('#certificate_form').serializeArray();
 
         var counts = [];
 
@@ -12,7 +12,6 @@ $(document).ready(function () {
             }
             counts[element.name] += 1;
         });
-
     }
 
     function request(url) {
@@ -20,7 +19,7 @@ $(document).ready(function () {
         numberSelected();
 
         if (typeof url === 'undefined') {
-            url = $('#filterUrl').data('url') + '?' + $('#product_form').serialize();
+            url = $('#filterUrl').data('url') + '?' + $('#categories_form').serialize();
         }
 
         $.ajax({
@@ -28,7 +27,27 @@ $(document).ready(function () {
             url: url,
             dataType: "json",
             success: function (response) {
-                $('#table').html(response.productsHtml);
+                $('#table').html(response.categoriesAjaxHtml);
+                $('#pagination').html(response.paginateHtml);
+                window.history.pushState(null, null, url);
+            }
+        });
+
+    }
+    function request(url) {
+
+        numberSelected();
+
+        if (typeof url === 'undefined') {
+            url = $('#filterUrl').data('url') + '?' + $('#categories_form').serialize();
+        }
+
+        $.ajax({
+            type: "GET",
+            url: url,
+            dataType: "json",
+            success: function (response) {
+                $('#table').html(response.categoriesAjaxHtml);
                 $('#pagination').html(response.paginateHtml);
 
                 window.history.pushState(null, null, url);
@@ -38,37 +57,25 @@ $(document).ready(function () {
     }
 
     /* Форма */
-    $(document).on('change', '#product_form', function (e) {
+    $(document).on('change', '#categories_form', function (e) {
         e.preventDefault();
         request();
     });
 
-    /* Кнопка */
-    $(document).on('click', '.btn_product_form', function (e) {
-        e.preventDefault();
-        request();
-    });
-
-    /* Поле продуку */
-    $(document).on('keyup', '#product_id', function (e) {
-        e.preventDefault();
-        request();
-    });
-
-    /* Код */
-    $(document).on('keyup', '#code', function (e) {
-        e.preventDefault();
-        request();
-    });
-
-    /* Key */
-    $(document).on('keyup', '#key', function (e) {
-        e.preventDefault();
-        request();
-    });
-
-    /* Name */
+    /* Назва */
     $(document).on('keyup', '#name', function (e) {
+        e.preventDefault();
+        request();
+    });
+
+    /* Аліас */
+    $(document).on('keyup', '#alias', function (e) {
+        e.preventDefault();
+        request();
+    });
+
+    /* Артикул */
+    $(document).on('keyup', '#code', function (e) {
         e.preventDefault();
         request();
     });
@@ -79,21 +86,8 @@ $(document).ready(function () {
         request();
     });
 
-    /* Категорія */
-    $(document).on('keyup', '.category', function (e) {
-        e.preventDefault();
-        request();
-    });
-
-    /* Ціна */
-    $(document).on('keyup', '#price', function (e) {
-        e.preventDefault();
-        request();
-    });
-
     /* Пагінація */
-    $(document).on('change', '#paginate', function (e){
-        console.log('paginate');
+    $(document).on('change', '#paginate', function (e) {
         e.preventDefault();
         request();
     });
@@ -108,9 +102,9 @@ $(document).ready(function () {
         }
     });
 
-    /* Масове видалення товарів */
-    $(document).on('click', '.deletedProducts', function (e) {
-
+    /* Масове видалення категорій */
+    $(document).on('click', '.deletedCategories', function (e) {
+        let lang = $('meta[name="lang"]').attr('content');
         let csrf = $('meta[name="csrf-token"]').attr('content');
         let checkbox = $(".checkbox-item:checkbox:checked").map(function () {
             return $(this).val();
@@ -120,7 +114,7 @@ $(document).ready(function () {
 
         $.ajax({
             type: "POST",
-            url: '/admin/_delete-products',
+            url: '/' + lang + '/admin/_delete-categories',
             data: {
                 csrf: csrf,
                 checkbox: checkbox,
@@ -128,12 +122,12 @@ $(document).ready(function () {
             dataType: "json",
             success: function (response) {
                 let status = response.status;
-                let products = response.products;
+                let categories = response.categories;
                 let message = response.message;
 
                 if (status) {
-                    products.forEach(function (id) {
-                        $('#product_' + id).remove();
+                    categories.forEach(function (id) {
+                        $('#category_' + id).remove();
                     });
 
                     toastr.success(message);
@@ -142,14 +136,13 @@ $(document).ready(function () {
         });
     });
 
-
     /**
-     * Активація/Деактивація товарів
+     * Активація/Деактивація категорій
      */
-    $(document).on('click', '.activeProducts', function (e) {
+    $(document).on('click', '.activeCategories', function (e) {
 
         let status = $(this).data('status');
-
+        let lang = $('meta[name="lang"]').attr('content');
         let csrf = $('meta[name="csrf-token"]').attr('content');
         let checkbox = $(".checkbox-item:checkbox:checked").map(function () {
             return $(this).val();
@@ -159,7 +152,7 @@ $(document).ready(function () {
 
         $.ajax({
             type: "POST",
-            url: '/admin/_active-products',
+            url: '/' + lang + '/admin/_active-categories',
             data: {
                 csrf: csrf,
                 checkbox: checkbox,
@@ -167,12 +160,12 @@ $(document).ready(function () {
             },
             dataType: "json",
             success: function (response) {
-                let products = response.products;
+                let categories = response.categories;
                 let title = response.title;
                 let message = response.message;
 
-                products.forEach(function (id) {
-                    $('#product_' + id).find('.status').text(title);
+                categories.forEach(function (id) {
+                    $('#category_' + id).find('.status').text(title);
                     $('.checkbox-item').prop('checked', false);
                 });
                 toastr.success(message);
@@ -180,6 +173,121 @@ $(document).ready(function () {
         });
 
     });
+
+    /**
+     * Сортування категорій
+     */
+    function sortCtegorties() {
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        let lang = $('meta[name="lang"]').attr('content');
+        let tbody = document.querySelector('tbody')
+        new Sortable(tbody, {
+            animation: 150,
+            handle: '.handle',
+            dragClass: 'table-sortable-drags',
+            onEnd: function () {
+
+                var list = [];
+                $.each($('tbody tr'), function (idx, el) {
+                    list.push({
+                        id: $(el).data('id'),
+                        pos: idx + 1
+                    })
+                });
+
+                $.ajax({
+                    method: 'post',
+                    url: '/' + lang + '/admin/_update-categories-position',
+                    data: {
+                        positions: list,
+                    },
+                    success: function (response) {
+
+                    }
+                });
+            }
+        });
+    }
+
+    sortCtegorties();
+
+
+    function editCategoryImage(data) {
+
+        let id = $(data).data('id');
+        let lang = $('meta[name="lang"]').attr('content');
+        console.log('some', lang);
+        $.ajax({
+            url: '/' + lang + '/admin/_category/show/image',
+            data: {
+                'id': id
+            },
+            success: function (response) {
+                let image = response.category_image
+
+                console.log('sss', image.path);
+                $('#imageId').val(image.id);
+                $('.categoryImage').css('background-image', 'url(' + image.path + ')');
+                $('#is_main').find('option[value="' + image.is_main + '"]').attr("selected", "selected");
+                $('#active').find('option[value="' + image.active + '"]').attr("selected", "selected");
+                $('#title').val(image.title);
+                $('#alt').val(image.alt);
+
+
+            }, error: function (response) {
+                console.log(response)
+            }
+        });
+    };
+
+    $(document).on('click', '.updateCategoryImage', function () {
+        editCategoryImage(this);
+    });
+
+    /**
+     * Сортування зображень категорій
+     */
+    function sortCtegortiesImage() {
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        let lang = $('meta[name="lang"]').attr('content');
+        let tbody = document.querySelector('tbody')
+        new Sortable(tbody, {
+            animation: 150,
+            handle: '.handle_cat_image',
+            dragClass: 'table-sortable-drags',
+            onEnd: function () {
+
+                var list = [];
+                $.each($('tbody tr'), function (idx, el) {
+                    list.push({
+                        id: $(el).data('id'),
+                        pos: idx + 1
+                    })
+                });
+
+                $.ajax({
+                    method: 'post',
+                    url: '/' + lang + '/admin/_update-categories-image-position',
+                    data: {
+                        positions: list,
+                    },
+                    success: function (response) {
+
+                    }
+                });
+            }
+        });
+    }
+
+    sortCtegortiesImage();
 
 
 });

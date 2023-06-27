@@ -74,7 +74,7 @@
                                         Позиция
                                     </th>
                                     <th class="pr-0 text-center">
-                                        Сортировка
+                                        Номер баннера
                                     </th>
                                     <th class="pr-0 text-center">
                                         Изображения
@@ -84,8 +84,19 @@
                                     </th>
                                 </tr>
                                 </thead>
+                                @php
+                                        $value = \App\Services\BannerService::getBanner();
+                                        $positionIds = [];
+                                        foreach ($value as $bann) {
+                                            $position = $bann->position;
+                                        
+                                            if (!isset($positionIds[$position])) {
+                                                $positionIds[$position] = [];
+                                            }
+                                            $positionIds[$position][] = $bann->id;
+                                        }
+                                    @endphp
                                 <tbody id="table">
-                                    @dd($banner)
                                     @foreach($banner as $item)
                                     <tr id="banner_{{$item->id}}" data-id="{{ $item->id }}">
                                         <td class="text-center pl-0">
@@ -107,28 +118,25 @@
                                         </td>
                                         
                                         <td class="text-center pr-0 sort">
+                                            {{ $item->number_position }}
                                         </td>
                                         
                                         <td class="text-center pr-0">
                                             <div class="banner__image"><a href="{{ route('index.banner', $item->id) }}"><img src="{{asset('images/uploads/banner/' . $item->image)}}" alt="" style=" width: 100px;"></a></div> 
                                         </td>
-                                        <td class="text-center pr-0">
-                                            @php
-                                                $statusBanner = \App\Services\SiteService::statusBanner($item->status);
-                                            @endphp
-                                            <a href="{{ route('admin.banner.edit', $item->id) }}" class="btn btn-sm btn-clean btn-icon btn_toggle_status status">  
-                                                <span>{!! \App\Services\SiteService::statusBanner($item->status) !!}</span>
-                                            </a>
-                                          </td>                                          
+                                        
                                         <td class="text-center pr-0">
                                             <a href="{{ route('admin.banner.edit', $item->id) }}" class="btn btn-sm btn-clean btn-icon">
                                                 <i class="las la-edit"></i>
                                             </a>
-                                        </td>
-                                        <td>
-                                            <a href="{{ route('admin.banner.delete', $item->id) }}" class="btn btn-sm btn-clean btn-icon" onclick="return confirm('Ви впевнені, що хочете видалити цей запис?')">
-                                                <i class="las la-trash"></i>
-                                            </a>
+                                        
+                                            @php
+                                                $statusBanner = \App\Services\SiteService::statusBanner($item->status);
+                                            @endphp
+                                                <span>{!! \App\Services\SiteService::statusBanner($item->status) !!}</span>
+                                                <a href="{{ route('admin.banner.delete', $item->id) }}" class="btn btn-sm btn-clean btn-icon" onclick="return confirm('Ви впевнені, що хочете видалити цей запис?')">
+                                                    <i class="las la-trash"></i>
+                                                </a>
                                         </td>
                                     </tr>
                                 @endforeach
