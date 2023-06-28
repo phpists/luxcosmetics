@@ -24,7 +24,7 @@
                 <!--begin::Breadcrumb-->
                 <ul class="breadcrumb breadcrumb-transparent breadcrumb-dot font-weight-bold p-0 my-2 font-size-sm">
                     <li class="breadcrumb-item">
-                        <a href="{{ route('admin.products') }}" class="text-muted">Товар</a>
+                        <a href="{{ route('admin.products') }}" class="text-muted">Товары</a>
                     </li>
                     <li class="breadcrumb-item">
                         <a href="{{ route('admin.product.edit', $product->id) }}" class="text-muted">{{$product->title}}</a>
@@ -143,7 +143,7 @@
                                     <div class="col-md-2">
                                         <div class="form-group">
                                             <label>Статус</label>
-                                            <select class="form-control status" id="kt_select2_1" name="availability">
+                                            <select class="form-control status" name="availability">
                                                 @foreach(array_column(\App\Enums\AvailableOptions::cases(), 'value') as $value)
                                                     <option @if(\App\Services\SiteService::getProductStatus($product->availability) == \App\Services\SiteService::getProductStatus($value)) selected @endif value="{{$value}}">{{\App\Services\SiteService::getProductStatus($value)}}</option>
                                                 @endforeach

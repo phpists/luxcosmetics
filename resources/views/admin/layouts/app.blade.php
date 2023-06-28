@@ -142,7 +142,13 @@
 || request()->routeIs('admin.products.tree') 
 || request()->routeIs('admin.categories') 
 || request()->routeIs('admin.brands.index') 
-|| request()->routeIs('admin.properties.index')) ? 'menu-item-open' : '' }}" 
+|| request()->routeIs('admin.properties.index')
+|| request()->routeIs('admin.product.edit')
+|| request()->routeIs('admin.product.create')
+|| request()->routeIs('admin.category.edit')
+|| request()->routeIs('admin.category.create')
+|| request()->routeIs('admin.properties.edit')
+|| request()->routeIs('admin.properties.create')) ? 'menu-item-open' : '' }}" 
                         aria-haspopup="true" data-menu-toggle="hover">
                             <a href="javascript:;" class="menu-link menu-toggle">
                                 <i class="fas flaticon2-copy menu-icon"></i>
@@ -152,7 +158,7 @@
                             <div class="menu-submenu" style="" kt-hidden-height="160">
                                 <i class="menu-arrow"></i>
                                 <ul class="menu-subnav">
-                                    <li class="menu-item {{ (request()->routeIs('admin.products') || request()->routeIs('admin.products.tree')) ? 'menu-item-active' : '' }}" aria-haspopup="true">
+                                    <li class="menu-item {{ (request()->routeIs('admin.products') || request()->routeIs('admin.products.tree')) || request()->routeIs('admin.product.edit') || request()->routeIs('admin.product.create') ? 'menu-item-active' : '' }}" aria-haspopup="true">
                                         <a href="{{ route('admin.products') }}" class="menu-link">
                                             <i class="menu-bullet menu-bullet-dot">
                                                 <span></span>
@@ -165,7 +171,7 @@
                             <div class="menu-submenu" style="" kt-hidden-height="160">
                                 <i class="menu-arrow"></i>
                                 <ul class="menu-subnav">
-                                    <li class="menu-item {{ request()->routeIs('admin.categories') ? 'menu-item-active' : '' }}" aria-haspopup="true">
+                                    <li class="menu-item {{ request()->routeIs('admin.categories') || request()->routeIs('admin.category.edit') || request()->routeIs('admin.category.create') ? 'menu-item-active' : '' }}" aria-haspopup="true">
                                         <a href="{{ route('admin.categories') }}" class="menu-link">
                                             <i class="menu-bullet menu-bullet-dot">
                                                 <span></span>
@@ -191,7 +197,7 @@
                             <div class="menu-submenu" style="" kt-hidden-height="160">
                                 <i class="menu-arrow"></i>
                                 <ul class="menu-subnav">
-                                    <li class="menu-item {{ request()->routeIs('admin.properties.index') ? 'menu-item-active' : '' }}" aria-haspopup="true">
+                                    <li class="menu-item {{ request()->routeIs('admin.properties.index') || request()->routeIs('admin.properties.edit') || request()->routeIs('admin.properties.create') ? 'menu-item-active' : '' }}" aria-haspopup="true">
                                         <a href="{{ route('admin.properties.index') }}" class="menu-link">
                                             <i class="menu-bullet menu-bullet-dot">
                                                 <span></span>
@@ -226,7 +232,13 @@
                         <li class="menu-item menu-item-submenu 
 {{ (request()->routeIs('admin.news') 
 || request()->routeIs('admin.banner') 
-|| request()->routeIs('admin.pages.index')) ? 'menu-item-open' : '' }}" 
+|| request()->routeIs('admin.pages.index')
+|| request()->routeIs('admin.news.create') 
+|| request()->routeIs('admin.news.edit')
+|| request()->routeIs('admin.banner.create')
+|| request()->routeIs('admin.banner.edit')
+|| request()->routeIs('admin.pages.create')
+|| request()->routeIs('admin.pages.edit')) ? 'menu-item-open' : '' }}" 
                         aria-haspopup="true" data-menu-toggle="hover">
                             <a href="javascript:;" class="menu-link menu-toggle">
                                 <i class="fas flaticon2-copy menu-icon"></i>
@@ -236,7 +248,7 @@
                             <div class="menu-submenu" style="" kt-hidden-height="160">
                                 <i class="menu-arrow"></i>
                                 <ul class="menu-subnav">
-                                    <li class="menu-item {{ (request()->routeIs('admin.news') || request()->routeIs('admin.news.edit')) ? 'menu-item-active' : '' }}" aria-haspopup="true">
+                                    <li class="menu-item {{ (request()->routeIs('admin.news') || request()->routeIs('admin.news.edit') || request()->routeIs('admin.news.create')) ? 'menu-item-active' : '' }}" aria-haspopup="true">
                                         <a href="{{ route('admin.news') }}" class="menu-link">
                                             <i class="menu-bullet menu-bullet-dot">
                                                 <span></span>
@@ -244,7 +256,7 @@
                                             <span class="menu-text">Новости</span>
                                         </a>
                                     </li>
-                                    <li class="menu-item {{ (request()->routeIs('admin.banner') || request()->routeIs('admin.banner.edit')) ? 'menu-item-active' : '' }}" aria-haspopup="true">
+                                    <li class="menu-item {{ (request()->routeIs('admin.banner') || request()->routeIs('admin.banner.edit') || request()->routeIs('admin.banner.create')) ? 'menu-item-active' : '' }}" aria-haspopup="true">
                                         <a href="{{ route('admin.banner') }}" class="menu-link">
                                             <i class="menu-bullet menu-bullet-dot">
                                                 <span></span>
@@ -252,7 +264,7 @@
                                             <span class="menu-text">Баннеры</span>
                                         </a>
                                     </li>
-                                    <li class="menu-item {{ request()->routeIs('admin.pages.index') ? 'menu-item-active' : '' }}" aria-haspopup="true">
+                                    <li class="menu-item {{ request()->routeIs('admin.pages.index') || request()->routeIs('admin.pages.edit') || request()->routeIs('admin.pages.create') ? 'menu-item-active' : '' }}" aria-haspopup="true">
                                         <a href="{{ route('admin.pages.index') }}" class="menu-link">
                                             <i class="menu-bullet menu-bullet-dot">
                                                 <span></span>
@@ -267,14 +279,18 @@
                             <h4 class="menu-text">Настройки</h4>
                             <i class="menu-icon ki ki-bold-more-hor icon-md"></i>
                         </li>
-                        <li class="menu-item {{ request()->routeIs('admin.faq-groups') ? 'menu-item-active' : '' }}"
+                        <li class="menu-item 
+                        {{ request()->routeIs('admin.faq-groups') || request()->routeIs('admin.faq-groups.edit') || request()->routeIs('admin.faq-groups.create') ? 'menu-item-active' : '' }}"
                             aria-haspopup="true">
                             <a href="{{ route('admin.faq-groups') }}" class="menu-link">
                                 <i class="far fa-question-circle menu-icon"></i>
                                 <span class="menu-text">FAQ</span>
                             </a>
                         </li>
-                        <li class="menu-item menu-item-submenu {{ request()->routeIs('admin.menu') ? 'menu-item-open' : '' }}"
+                        <li class="menu-item menu-item-submenu 
+                        {{ request()->routeIs('admin.menu')
+                        || request()->routeIs('admin.menu.create')
+                        || request()->routeIs('admin.menu.edit') ? 'menu-item-open' : '' }}"
                             aria-haspopup="true" data-menu-toggle="hover">
                             <a href="javascript:;" class="menu-link menu-toggle">
                                 <i class="fas flaticon2-copy menu-icon"></i>

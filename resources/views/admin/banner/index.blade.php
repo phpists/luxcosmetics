@@ -84,18 +84,6 @@
                                     </th>
                                 </tr>
                                 </thead>
-                                @php
-                                        $value = \App\Services\BannerService::getBanner();
-                                        $positionIds = [];
-                                        foreach ($value as $bann) {
-                                            $position = $bann->position;
-                                        
-                                            if (!isset($positionIds[$position])) {
-                                                $positionIds[$position] = [];
-                                            }
-                                            $positionIds[$position][] = $bann->id;
-                                        }
-                                    @endphp
                                 <tbody id="table">
                                     @foreach($banner as $item)
                                     <tr id="banner_{{$item->id}}" data-id="{{ $item->id }}">
@@ -129,14 +117,12 @@
                                             <a href="{{ route('admin.banner.edit', $item->id) }}" class="btn btn-sm btn-clean btn-icon">
                                                 <i class="las la-edit"></i>
                                             </a>
-                                        
-                                            @php
-                                                $statusBanner = \App\Services\SiteService::statusBanner($item->status);
-                                            @endphp
+                                            <button class="activePost btn btn-sm btn-clean btn-icon" data-status="{{ !$item->status ? 1 : 0 }}">
                                                 <span>{!! \App\Services\SiteService::statusBanner($item->status) !!}</span>
-                                                <a href="{{ route('admin.banner.delete', $item->id) }}" class="btn btn-sm btn-clean btn-icon" onclick="return confirm('Ви впевнені, що хочете видалити цей запис?')">
-                                                    <i class="las la-trash"></i>
-                                                </a>
+                                            </button>
+                                            <a href="{{ route('admin.banner.delete', $item->id) }}" class="btn btn-sm btn-clean btn-icon" onclick="return confirm('Ви впевнені, що хочете видалити цей запис?')">
+                                                <i class="las la-trash"></i>
+                                            </a>
                                         </td>
                                     </tr>
                                 @endforeach

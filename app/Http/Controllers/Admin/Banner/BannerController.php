@@ -77,25 +77,31 @@ class BannerController extends Controller
     }
 
     public function activePosts(Request $request)
-    {
-        $bannerId = $request->checkbox;
-        $status = $request->status;
-        if ($bannerId) {
-            Banner::whereIn('id', $bannerId)->update([
-                'status' => $status
-            ]);
-        }
+{
+    $id = $request->id;
+    $bannerId = $request->checkbox;
+    $status = $request->status;
 
+    if ($id) {
+        Banner::where('id', $id)->update([
+            'status' => $status
+        ]);
+    } elseif ($bannerId) {
+        Banner::whereIn('id', $bannerId)->update([
+            'status' => $status
+        ]);
+    }
 
-        $title = SiteService::statusBanner($status);
-        $message = $status ? 'Баннер активирован!' : 'Баннер деактивирован!';
+    $title = SiteService::statusBanner($status);
+    $message = $status ? 'Баннер активирован!' : 'Баннер деактивирован!';
 
-        $data= [
-            'posts' => $bannerId,
-            'title' => $title,
-            'message' => $message
-        ];
+    $data = [
+        'posts' => $id ?? $bannerId,
+        'title' => $title,
+        'message' => $message
+    ];
 
     return json_encode($data);
-    }
+}
+
 }

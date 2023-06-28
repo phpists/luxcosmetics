@@ -17,21 +17,23 @@ $(document).ready(function () {
     
     $(document).on('click', '.activePost', function (e) {
         let status = $(this).data('status');
-        let csrf = $('meta[name="csrf-token"]').attr('content');
-        let checkbox = $(".checkbox-item:checkbox:checked").map(function () {
-            return $(this).val();
-        }).get();
-    
-        $.ajaxSetup({headers: {'X-CSRF-TOKEN': csrf}});
-    
-        $.ajax({
-            type: "POST",
-            url: '/admin/_active-posts',
-            data: {
-                csrf: csrf,
-                checkbox: checkbox,
-                status: status,
-            },
+    let csrf = $('meta[name="csrf-token"]').attr('content');
+    let id = $(this).closest('tr').data('id');
+    let checkbox = $(".checkbox-item:checkbox:checked").map(function () {
+        return $(this).val();
+    }).get();
+
+    $.ajaxSetup({headers: {'X-CSRF-TOKEN': csrf}});
+
+    $.ajax({
+        type: "POST",
+        url: '/admin/_active-posts',
+        data: {
+            csrf: csrf,
+            id: id,
+            checkbox: checkbox,
+            status: status,
+        },
            
             success: function (response) {
                 let posts = response.posts;

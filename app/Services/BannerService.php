@@ -14,6 +14,7 @@ class BannerService
 
     $banner = Banner::select('banners.*')
         ->where('status', true)
+        ->orderBy('number_position')
         ->paginate();
 
     $banner->getCollection()->transform(function ($item) {

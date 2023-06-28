@@ -121,7 +121,7 @@
                                         <td class="text-center pl-0">
                                             {{ $product->id }}
                                         </td>
-                                        <td class="text-center pr-0">
+                                        <td class="pr-0">
                                             {{ $product->title }}
                                         </td>
                                         <td class="text-center pr-0">

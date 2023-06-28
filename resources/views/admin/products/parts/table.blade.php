@@ -23,6 +23,15 @@
         <td class="text-center pr-0 status">
             {{ \App\Services\SiteService::getProductStatus($product->status) }}
         </td>
-       
+        <td class="text-center pr-0">
+            <a href="{{ route('admin.product.edit', $product->id) }}" class="btn btn-sm btn-clean btn-icon">
+                <i class="las la-edit"></i>
+            </a>
+            <a href="{{ route('admin.product.delete', $product->id) }}"
+                class="btn btn-sm btn-clean btn-icon"
+                onclick="return confirm('Ви впевнені, що хочете видалити цей запис?')">
+                 <i class="las la-trash"></i>
+            </a>
+        </td>
     </tr>
 @endforeach

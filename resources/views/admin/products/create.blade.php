@@ -126,7 +126,7 @@
                                     <div class="col-md-2">
                                         <div class="form-group">
                                             <label>Статус</label>
-                                            <select class="form-control status" id="kt_select2_1" name="availability">
+                                            <select class="form-control status" name="availability">
                                                 @foreach(array_column(\App\Enums\AvailableOptions::cases(), 'value') as $value)
                                                     <option value="{{$value}}">{{\App\Services\SiteService::getProductStatus($value)}}</option>
                                                 @endforeach
