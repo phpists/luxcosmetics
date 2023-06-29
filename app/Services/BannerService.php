@@ -10,8 +10,6 @@ class BannerService
 {
     public static function getBanner()
 {
-    setlocale(LC_TIME, 'ru_RU.UTF-8');
-
     $banner = Banner::select('banners.*')
         ->where('status', true)
         ->orderBy('number_position')
