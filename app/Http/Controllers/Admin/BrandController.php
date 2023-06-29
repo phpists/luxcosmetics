@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Brand;
 use App\Services\ImageService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
 
 class BrandController extends Controller
 {
@@ -31,14 +31,20 @@ class BrandController extends Controller
         return redirect()->back()->with('success', 'Бренд успешно создан');
     }
 
-    public function store(Request $request) {
+    public function store(Request $request)
+    {
         $image = $request->image;
-        if($image !== null)
+        if ($image !== null) {
             $image = ImageService::saveImage('uploads', 'brands', $image);
+        }
+
         $data = $request->all();
         $data['image'] = $image;
+
         $brand = new Brand($data);
+        $brand->link = Str::slug($brand->name);
         $brand->save();
+
         return redirect()->back()->with('success', 'Бренд успешно создан');
     }
 

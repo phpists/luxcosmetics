@@ -36,6 +36,10 @@
                                         <div class="col-sm-12">
                                             <input type="text" class="form-control" id="createTitle" name="name" required>
                                         </div>
+                                        <label for="createTitle" class="col-auto col-form-label font-weight-bold">Ссылка</label>
+                                        <div class="col-sm-12">
+                                            <input type="text" class="form-control" id="createTitle" name="link">
+                                        </div>
                                     </div>
                                 </div>
                             </div>

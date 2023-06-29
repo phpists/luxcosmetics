@@ -54,14 +54,14 @@
                         <aside class="category-page__aside">
                             <div class="filters" id="filters">
 
-                                <form id="filterForm" action="{{ route('brands.show', ['name' => $brands->name]) }}">
+                                <form id="filterForm" action="{{ route('brands.show', ['link' => $brands->link]) }}">
 
                                     <input type="hidden" name="sort">
 
                                 <div class="filters__close"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#close')}}"></use></svg></div>
                                 <div class="filters__hdr">
                                     <div class="filters__title">Сортировать по</div>
-                                    <a href="{{ route('brands.show', ['name' => $brands->name]) }}" class="filters__btn">Сбросить все</a>
+                                    <a href="{{ route('brands.show', ['link' => $brands->link]) }}" class="filters__btn">Сбросить все</a>
                                 </div>
                                 <div class="filters__wrapper">
                                     <div class="filters__item filter">
@@ -103,7 +103,7 @@
                                 </div>
                                 <div class="filters__ftr">
                                     <button type="submit" class="filters__btn">Показать</button>
-                                    <a href="{{ route('brands.show', ['name' => $brands->name]) }}" class="filters__btn">Сбросить</a>
+                                    <a href="{{ route('brands.show', ['link' => $brands->link]) }}" class="filters__btn">Сбросить</a>
                                 </div>
                                 </form>
                             </div>

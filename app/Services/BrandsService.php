@@ -21,18 +21,18 @@ class BrandsService
     public $request;
     public $category;
     public $brands;
+    public $link;
 
     public function __construct(Request $request)
     {
         $this->request = $request;
 
-        $brands = Brand::where('name', $request->name)->firstOrFail();
+        $brands = Brand::where('link', $request->link)->firstOrFail();
         $category = Category::with(['subcategories', 'tags'])->firstOrFail();
-        
         $this->category = $category;
         $this->brands = $brands;
     }
-
+    
     public function getFiltered()
     {
         $brandId = $this->brands->id;

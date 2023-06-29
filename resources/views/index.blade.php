@@ -541,7 +541,7 @@
                     <div class="brands-slider">
                         @foreach(\App\Models\Brand::query()->selectRaw('brands.*')->get() as $item)
                             <div class="brands-slider__item">
-                                <a href="{{ route('brands.show', ['name' => strtolower($item->name)]) }}">
+                                <a href="{{ route('brands.show', ['link' => strtolower($item->link)]) }}">
                                     <div class="brand">
                                         <img src="{{ asset('images/uploads/brands/' . $item->image) }}" alt="">
                                     </div>

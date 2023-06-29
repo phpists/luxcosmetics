@@ -37,6 +37,10 @@
                                             <div class="col-sm-12">
                                                 <input type="text" class="form-control" id="updateName" name="name" required>
                                             </div>
+                                            <label for="createTitle" class="col-auto col-form-label font-weight-bold">Ссылка</label>
+                                        <div class="col-sm-12">
+                                            <input type="text" class="form-control" value="{{ $brand->link }}" id="createTitle" name="link" required>
+                                        </div>
                                         </div>
                                     </div>
                                 </div>

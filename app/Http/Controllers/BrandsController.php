@@ -20,7 +20,7 @@ class BrandsController extends Controller
         return view('brands.index_archived');
     }
 
-    public function show(Request $request, string $name) {
+    public function show(Request $request, string $link) {
         $brands = $this->brandsService->brands;
         $category = $this->brandsService->category;
         $products = $this->brandsService->getFiltered();

@@ -34,7 +34,7 @@ Route::post('/reset-password', [\App\Http\Controllers\Auth\ResetPassController::
 
 // Pages brand
 Route::get('b', [\App\Http\Controllers\BrandsController::class, 'index'])->name('categories');
-Route::get('b/{name}', [\App\Http\Controllers\BrandsController::class, 'show'])->name('brands.show');
+Route::get('b/{link}', [\App\Http\Controllers\BrandsController::class, 'show'])->name('brands.show');
 
 // Categories
 Route::get('c', [CategoryController::class, 'index'])->name('categories');

@@ -108,13 +108,12 @@
                                 </tr>
                                 </thead>
                                 <tbody id="table">
-                                @foreach($products as $product)
+                                    @foreach($products as $product)
                                     <tr id="category_{{$product->id}}" data-id="{{ $product->id }}">
                                         <td class="text-center pl-0">
                                             <span style="width: 20px;">
                                                 <label class="checkbox checkbox-single">
-                                                    <input class="checkbox-item" type="checkbox" name="checkbox[]"
-                                                           value="{{ $product->id }}">&nbsp;<span></span>
+                                                    <input class="checkbox-item" type="checkbox" name="checkbox[]" value="{{ $product->id }}">&nbsp;<span></span>
                                                 </label>
                                             </span>
                                         </td>
@@ -141,12 +140,13 @@
                                             </a>
                                             <a href="{{ route('admin.product.delete', $product->id) }}"
                                                class="btn btn-sm btn-clean btn-icon"
-                                               onclick="return confirm('Вы уверены,я что хотите удалить запись?')">
+                                               onclick="return confirm('Вы уверены, что хотите удалить запись?')">
                                                 <i class="las la-trash"></i>
                                             </a>
                                         </td>
                                     </tr>
                                 @endforeach
+                                
                                 </tbody>
                             </table>
                         </div>

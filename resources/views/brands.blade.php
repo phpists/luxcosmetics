@@ -64,7 +64,7 @@
                                 @for($idx=$start_pos;$idx < sizeof($brands); $idx++)
                                     @if($brands[$idx]->letter === $letter)
                                         <div class="brands-page__brand">
-                                            <a href="{{ route('brands.show', ['name' => strtolower($brands[$idx]->name)]) }}">
+                                            <a href="{{ route('brands.show', ['link' => strtolower($brands[$idx]->link)]) }}">
                                                 {{$brands[$idx]->name}}
                                             </a>
                                         </div>
