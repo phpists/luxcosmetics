@@ -44,25 +44,26 @@
                                     </span>Удалить
                                 </button>
                             </div>
-{{--                            <div class="dropdown dropdown-inline mr-2">--}}
-{{--                                <button class="btn btn-success font-weight-bolder activeproducts" data-status="1">--}}
-{{--                                    <span class="svg-icon svg-icon-md">--}}
-{{--                                        <i class="fas fa-toggle-on"></i>--}}
-{{--                                    </span>Активувати--}}
-{{--                                </button>--}}
-{{--                            </div>--}}
-{{--                            <div class="dropdown dropdown-inline mr-2">--}}
-{{--                                <button class="btn btn-success font-weight-bolder activeproducts" data-status="0">--}}
-{{--                                    <span class="svg-icon svg-icon-md"><i class="fas fa-toggle-off"></i></span>Деактивувати--}}
-{{--                                </button>--}}
-{{--                            </div>--}}
-{{--                            <div class="dropdown dropdown-inline mr-2">--}}
-{{--                                <button class="btn btn-primary font-weight-bolder">--}}
-{{--                                    <span class="svg-icon svg-icon-md">--}}
-{{--                                        <i class="fas fa-toggle-off"></i>--}}
-{{--                                    </span>Імпортувати--}}
-{{--                                </button>--}}
-{{--                            </div>--}}
+							<!--
+                            <div class="dropdown dropdown-inline mr-2">
+                               <button class="btn btn-success font-weight-bolder activeproducts" data-status="1">
+                                    <span class="svg-icon svg-icon-md">
+                                        <i class="fas fa-toggle-on"></i>
+                                    </span>Активувати
+                               </button>
+                            </div>
+                           <div class="dropdown dropdown-inline mr-2">
+                                <button class="btn btn-success font-weight-bolder activeproducts" data-status="0">
+                                    <span class="svg-icon svg-icon-md"><i class="fas fa-toggle-off"></i></span>Деактивувати
+                                </button>
+                            </div>
+                            <div class="dropdown dropdown-inline mr-2">
+                                <button class="btn btn-primary font-weight-bolder">
+                                    <span class="svg-icon svg-icon-md">
+                                        <i class="fas fa-toggle-off"></i>
+                                    </span>Імпортувати
+                                </button>
+                            </div>-->
                             <div class="dropdown dropdown-inline mr-2">
                                 <a href="{{ route('admin.product.create') }}"
                                    class="btn btn-success font-weight-bolder">
@@ -122,7 +123,7 @@
                                             {{ $product->id }}
                                         </td>
                                         <td class="pr-0">
-                                            {{ $product->title }}
+                                            <a href="{{ route('admin.product.edit', ['id' => $product->id]) }}">{{ $product->title }}</a>
                                         </td>
                                         <td class="text-center pr-0">
                                             {{ $product->alias }}
