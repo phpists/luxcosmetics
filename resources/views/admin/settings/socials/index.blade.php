@@ -249,12 +249,12 @@
                                 </span>
                                 
                                 <h3 class="card-label">
-                                    Ваш номер:@foreach ($phone as $item) {{$item->telephone}} @endforeach
+                                    Ваш номер:@foreach ($phone as $item) {{$item->phone}} @endforeach
                                 </h3>
                                
                             </div>
                             <div class="card-toolbar">
-                                <form action="{{ route('admin.settings.telephone.edit')}}" method="POST">
+                                <form action="{{ route('admin.settings.phone.edit')}}" method="POST">
                                     @csrf
                                     <a href="javascript:;" class="btn btn-sm btn-clean btn-icon editSocial"
                                        data-toggle="modal" data-target="#telephonModal"
@@ -279,7 +279,7 @@
 
 @include('admin.settings.socials.modals.create')
 @include('admin.settings.socials.modals.update')
-@include('admin.settings.socials.modals.telephon')
+@include('admin.settings.socials.modals.phone')
 @endsection
 
 @section('js_after')

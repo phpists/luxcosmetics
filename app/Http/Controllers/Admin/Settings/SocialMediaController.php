@@ -3,11 +3,9 @@
 namespace App\Http\Controllers\Admin\Settings;
 
 use App\Http\Controllers\Controller;
-use App\Models\Phone;
 use App\Models\SocialMedia;
 use App\Services\ImageService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 
 class SocialMediaController extends Controller
 {
@@ -76,23 +74,23 @@ class SocialMediaController extends Controller
         }
     }
 
-    public function editTelephone(Request $request, $telephone)
+    public function editPhone(Request $request, $phone)
     {
-        $telephone = $request->input('telephone');
-        return view('admin.settings.telephone.update', compact('telephone'));
+        $phone = $request->input('phone');
+        return view('admin.settings.phone.update', compact('phone'));
     }
 
 
-    public function updateTelephone(Request $request)
+    public function updatePhone(Request $request)
     {
-        $telephone = $request->input('telephone');
+        $phone = $request->input('phone');
         $social = SocialMedia::first();
 
     if ($social == null) {
-        $phone = new SocialMedia(['telephone' => $request->input('telephone')]);
+        $phone = new SocialMedia(['phone' => $request->input('phone')]);
         $phone->save();
     } else {        
-        $social->telephone = $telephone;
+        $social->phone = $phone;
         $social->save();
     }
 

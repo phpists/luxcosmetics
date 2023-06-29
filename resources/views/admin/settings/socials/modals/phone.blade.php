@@ -12,13 +12,13 @@
             <div class="modal-body">
                 <div class="row justify-content-center">
                     <div class="col-sm-12">
-                        <form action="{{ route('admin.settings.telephone.update') }}" method="POST" enctype="multipart/form-data">
+                        <form action="{{ route('admin.settings.phone.update') }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             @method('PUT')
                             <input id="updateId" type="hidden" name="id">
                             <div class="form-group">
                                 <label for="updateLink" class="col-form-label font-weight-bold">Номер телефона</label>
-                                <input placeholder="Ваш номер" type="text" class="form-control" name="telephone" id="telephone" required>
+                                <input placeholder="Ваш номер" type="text" class="form-control" name="phone" id="phone" required>
                             </div>
                             <div class="modal-fade">
                                 <button type="submit" class="btn btn-lg btn-primary mr-2">Сохранить</button>

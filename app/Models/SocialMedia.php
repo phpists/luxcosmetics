@@ -24,7 +24,7 @@ class SocialMedia extends Model
     ];
 
 
-    protected $fillable = ['id', 'telephone', 'type_id', 'pos', 'icon', 'link', 'is_active_in_contacts', 'is_active_in_footer'];
+    protected $fillable = ['id', 'phone', 'type_id', 'pos', 'icon', 'link', 'is_active_in_contacts', 'is_active_in_footer'];
 
     public static function boot() {
         parent::boot();

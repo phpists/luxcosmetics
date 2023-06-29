@@ -18,7 +18,7 @@ class CreateSocialMediasTable extends Migration
             $table->integer('type_id')->nullable();
             $table->integer('pos')->nullable();
             $table->string('icon')->nullable();
-            $table->string('telephone')->nullable()->comment('Номер телефону');
+            $table->string('phone')->nullable()->comment('Номер телефону');
             $table->string('link')->nullable();
             $table->boolean('is_active_in_contacts')->nullable();
             $table->boolean('is_active_in_footer')->nullable();

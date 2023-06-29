@@ -29,6 +29,7 @@ class BrandsService
 
         $brands = Brand::where('link', $request->link)->firstOrFail();
         $category = Category::with(['subcategories', 'tags'])->firstOrFail();
+        
         $this->category = $category;
         $this->brands = $brands;
     }
