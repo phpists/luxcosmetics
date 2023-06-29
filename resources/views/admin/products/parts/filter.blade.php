@@ -27,8 +27,8 @@
                     <div class="input-group input-group-sm">
                         <select class="form-control status" name="status">
                             <option></option>
-                            <option value="1">Есть в наличие</option>
-                            <option value="0">Нету в наличие</option>
+                            <option value="1">Есть в наличии</option>
+                            <option value="0">Нету в наличии</option>
                         </select>
                     </div>
                 </div>

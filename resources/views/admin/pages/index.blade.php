@@ -1,6 +1,6 @@
 @extends('admin.layouts.app')
 @section('title')
-    <h5 class="text-dark font-weight-bold mt-2 mb-2 mr-5">Страницы</h5>
+    <h5 class="text-dark font-weight-bold mt-2 mb-2 mr-5">Статические страницы</h5>
 @endsection
 @section('content')
 
@@ -37,7 +37,63 @@
                     </div>
 
                     <div id="table_data">
-                    @include('admin.pages._table')
+
+						<!--begin::Table-->
+						<div class="table-responsive">
+							<table class="table table-head-custom table-vertical-center">
+								<thead>
+								<tr>
+									<th class="pl-0 text-center">
+										ID
+									</th>
+									<th class="pr-0 text-center">
+										Название
+									</th>
+									<th class="text-center pr-0">
+										Ссылка
+									</th>
+									<th class="pr-0 text-center">
+										Действия
+									</th>
+								</tr>
+								</thead>
+								<tbody>
+								@foreach($pages as $page)
+									<tr data-id="{{ $page->id }}">
+										<td class="text-center pl-0">
+											{{ $page->id }}
+										</td>
+										<td class="position">
+																<span class="text-dark-75 d-block font-size-lg">
+																	{{ $page->title }}
+																</span>
+										</td>
+										<td class="text-center">
+																<span class="text-dark-75 d-block font-size-lg">
+																	<a href="/pages/{{ $page->link }}">{{ $page->link }}</a>
+																</span>
+										</td>
+										<td class="text-center pr-0">
+											<form action="{{ route('admin.pages.delete', $page->id) }}" method="POST">
+												<a href="{{route('admin.pages.edit', $page->id)}}" class="btn btn-sm btn-clean btn-icon">
+													<i class="las la-edit"></i>
+												</a>
+												@csrf
+												@method('DELETE')
+												<button type="submit" class="btn btn-sm btn-clean btn-icon btn_delete"
+														onclick="return confirm('Ви впевнені, що хочете видалити питання \'{{ $page->name }}\'?')"
+														title="Delete"><i class="las la-trash"></i>
+												</button>
+											</form>
+										</td>
+									</tr>
+								@endforeach
+								</tbody>
+							</table>
+						</div>
+						<!--end::Table-->
+
+
                     </div>
                 </div>
                 <!--end::Body-->
@@ -50,50 +106,5 @@
     <!--end::Entry-->
 @endsection
 
-@section('js_after')
-    <script src="https://raw.githack.com/SortableJS/Sortable/master/Sortable.js"></script>
-    <script>
 
-//        $(document).on('click', '.updateFaq', loadFaq);
-
-        {{--function loadFaq() {--}}
-        {{--    let id = $(this).data('id');--}}
-
-        {{--    $.ajax({--}}
-        {{--        url: '{{ route('admin.faq.show') }}',--}}
-        {{--        data: {--}}
-        {{--            'id': id--}}
-        {{--        },--}}
-        {{--        success: function (response) {--}}
-        {{--            $('#updateFaqId').val(id);--}}
-
-        {{--            $('#updateFaqQuestion').val(response.question);--}}
-        {{--            $('#updateFaqUrl').val(response.url);--}}
-        {{--            $('#updateFaqPos').val(response.position);--}}
-
-        {{--            document.getElementById('updateFaqIsActive').checked = (response.is_active == 1)--}}
-
-        {{--            $('#updateFaqAnswer').summernote('code', response.answer)--}}
-        {{--        }, error: function (response) {--}}
-        {{--            console.log(response)--}}
-        {{--        }--}}
-        {{--    });--}}
-        {{--}--}}
-        {{--$(document).on('keyup', '#search_input', function (e) {--}}
-        {{--    let q = $(this).val()--}}
-
-        {{--    $.ajax({--}}
-        {{--        url: '{{ route('admin.faqs.search') }}',--}}
-        {{--        data: {--}}
-        {{--            'search': q--}}
-        {{--        },--}}
-        {{--        success: function (response) {--}}
-        {{--            $('#table_data').html(response)--}}
-        {{--        }, error: function (response) {--}}
-        {{--            console.log(response)--}}
-        {{--        }--}}
-        {{--    });--}}
-        {{--})--}}
-    </script>
-@endsection
 

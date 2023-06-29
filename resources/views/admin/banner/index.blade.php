@@ -98,8 +98,8 @@
                                         <td class="text-center pl-0">
                                             {{ $item->id }}
                                         </td>
-                                        <td class="text-center pr-0">
-                                            {{ $item->title }}
+                                        <td class="pr-0">
+                                            <a href="{{ route('admin.banner.edit', $item->id) }}">{{ $item->title }}</a>
                                         </td>
                                         <td class="text-center pr-0">
                                             {{ $item->position }}
