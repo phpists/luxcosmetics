@@ -288,34 +288,41 @@
                             </a>
                         </li>
                         <li class="menu-item menu-item-submenu 
-                        {{ request()->routeIs('admin.menu')
-                        || request()->routeIs('admin.menu.create')
-                        || request()->routeIs('admin.menu.edit') ? 'menu-item-open' : '' }}"
-                            aria-haspopup="true" data-menu-toggle="hover">
-                            <a href="javascript:;" class="menu-link menu-toggle">
-                                <i class="fas flaticon2-copy menu-icon"></i>
-                                <span class="menu-text">Меню</span>
-                                <i class="menu-arrow"></i>
-                            </a>
-                            <div class="menu-submenu" style="" kt-hidden-height="160">
-                                <i class="menu-arrow"></i>
-                                <ul class="menu-subnav">
-                                    <li class="menu-item {{ request()->routeIs('admin.menu') && request()->segment(3) == \App\Models\Menu::TOP_MENU ? 'menu-item-active' : '' }}"
-                                        aria-haspopup="true">
-                                        <a href="{{ route('admin.menu', \App\Models\Menu::TOP_MENU) }}" class="menu-link">
-                                            <i class="fas flaticon2-copy menu-icon"></i>
-                                            <span class="menu-text">Верхнее меню</span>
-                                        </a>
-                                    </li>
-                                    <li class="menu-item {{ request()->routeIs('admin.menu') && request()->segment(3) == \App\Models\Menu::FOOTER_MENU ? 'menu-item-active' : '' }}"
-                                        aria-haspopup="true">
-                                        <a href="{{ route('admin.menu', \App\Models\Menu::FOOTER_MENU) }}" class="menu-link">
-                                            <i class="fas flaticon2-copy menu-icon"></i>
-                                            <span class="menu-text">Нижнее меню</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
+    {{ request()->routeIs('admin.menu') || 
+    (request()->routeIs('admin.menu.create') && request()->segment(3) === \App\Models\Menu::TOP_MENU) ||
+    request()->routeIs('admin.menu.edit', \App\Models\Menu::FOOTER_MENU) ||
+    request()->routeIs('admin.menu.create', \App\Models\Menu::TOP_MENU) ||
+    request()->routeIs('admin.menu.edit', \App\Models\Menu::TOP_MENU) ? 'menu-item-open' : '' }}"
+    aria-haspopup="true" data-menu-toggle="hover">
+    <a href="javascript:;" class="menu-link menu-toggle">
+        <i class="fas flaticon2-copy menu-icon"></i>
+        <span class="menu-text">Меню</span>
+        <i class="menu-arrow"></i>
+    </a>
+    <div class="menu-submenu" style="" kt-hidden-height="160">
+        <i class="menu-arrow"></i>
+        <ul class="menu-subnav">
+            <li class="menu-item {{ (request()->routeIs('admin.menu', \App\Models\Menu::TOP_MENU) && request()->segment(3) == \App\Models\Menu::TOP_MENU) || request()->routeIs('admin.menu.create', \App\Models\Menu::TOP_MENU) || request()->routeIs('admin.menu.edit', \App\Models\Menu::TOP_MENU) ? 'menu-item-active' : '' }}"
+                aria-haspopup="true">
+                <a href="{{ route('admin.menu', \App\Models\Menu::TOP_MENU) }}" class="menu-link">
+                    <i class="fas flaticon2-copy menu-icon"></i>
+                    <span class="menu-text">Верхнее меню</span>
+                </a>
+            </li>
+            <li class="menu-item {{ (request()->routeIs('admin.menu', \App\Models\Menu::FOOTER_MENU) && request()->segment(3) == \App\Models\Menu::FOOTER_MENU) || request()->routeIs('admin.menu.create', \App\Models\Menu::FOOTER_MENU) || request()->routeIs('admin.menu.edit', \App\Models\Menu::FOOTER_MENU) ? 'menu-item-active' : '' }}"
+                aria-haspopup="true">
+                <a href="{{ route('admin.menu', \App\Models\Menu::FOOTER_MENU) }}" class="menu-link">
+                    <i class="fas flaticon2-copy menu-icon"></i>
+                    <span class="menu-text">Нижнее меню</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</li>
+
+
+                    
+                    
                         
 
 

@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\QuestionController;
 use Illuminate\Support\Facades\Route;
 use \App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
+use App\Http\Controllers\BrandController;
 use Laravel\Socialite\Facades\Socialite;
 
 /* Socialize */
@@ -31,7 +32,9 @@ Route::get('/auth-facebook/callback', function () {
 
 Route::post('/reset-password', [\App\Http\Controllers\Auth\ResetPassController::class, 'reset'])->name('password.reset-password');
 
-
+// Pages brand
+Route::get('b', [\App\Http\Controllers\BrandsController::class, 'index'])->name('categories');
+Route::get('b/{name}', [\App\Http\Controllers\BrandsController::class, 'show'])->name('brands.show');
 
 // Categories
 Route::get('c', [CategoryController::class, 'index'])->name('categories');

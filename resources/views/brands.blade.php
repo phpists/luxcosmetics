@@ -18,8 +18,8 @@
                 <div class="col-lg-12">
                     <h1 class="title-h1">Бренды</h1>
                     <ul class="brands-page__letters  scroll">
-                        <li class="brands-page__letter"><a href="#a">a</a></li>
-                        <li class="brands-page__letter"><a href="#b">b</a></li>
+                        <li class="brands-page__letter"><a href="">a</a></li>
+                        <li class="brands-page__letter"><a href="">b</a></li>
                         <li class="brands-page__letter"><a href="">c</a></li>
                         <li class="brands-page__letter"><a href="">d</a></li>
                         <li class="brands-page__letter"><a href="">e</a></li>
@@ -57,24 +57,29 @@
                         $start_pos = 0;
                     @endphp
                     @foreach($letters as $letter)
-                        @if($brands[$start_pos]->letter === $letter)
-                            <div class="brands-page__item" id="{{$letter}}">
-                                <div class="brands-page__title">{{$letter}}</div>
-                                <div class="brands-page__brands">
-                                    @for($idx=$start_pos;$idx < sizeof($brands); $idx++)
-                                        @if($brands[$idx]->letter === $letter)
-                                            <div class="brands-page__brand"><a href="">{{$brands[$idx]->name}}</a></div>
-                                        @else
-                                            @php
-                                                $start_pos = $idx;
-                                            @endphp
-                                            @break
-                                        @endif
-                                    @endfor
-                                </div>
+                    @if($brands[$start_pos]->letter === $letter)
+                        <div class="brands-page__item" id="{{$letter}}">
+                            <div class="brands-page__title">{{$letter}}</div>
+                            <div class="brands-page__brands">
+                                @for($idx=$start_pos;$idx < sizeof($brands); $idx++)
+                                    @if($brands[$idx]->letter === $letter)
+                                        <div class="brands-page__brand">
+                                            <a href="{{ route('brands.show', ['name' => strtolower($brands[$idx]->name)]) }}">
+                                                {{$brands[$idx]->name}}
+                                            </a>
+                                        </div>
+                                    @else
+                                        @php
+                                            $start_pos = $idx;
+                                        @endphp
+                                        @break
+                                    @endif
+                                @endfor
                             </div>
-                        @endif
-                    @endforeach
+                        </div>
+                    @endif
+                @endforeach
+                           
                 </div>
             </div>
         </div>
