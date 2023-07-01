@@ -83,7 +83,7 @@
                                     </div>
                                     @foreach($category->filter_properties as $category_property)
                                     <div class="filters__item filter">
-                                        <div class="filter__title">{{ $category_property->name }} ({{ $category_property->measure }}) <svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#arrow')}}"></use></svg></div>
+                                        <div class="filter__title">{{ $category_property->name }} {{ isset($category_property->measure) ? '('.$category_property->measure.')' : '' }} <svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#arrow')}}"></use></svg></div>
                                         <div class="filter__block">
                                             <div class="filter__wrap filter__scroll">
                                                 @foreach($category_property->values as $property_value)
@@ -267,6 +267,7 @@
                         },
                         success: function (response) {
                             $('#catalog').html(response.html)
+                            $("html, body").animate({ scrollTop: 0 }, "slow");
                         },
                         error: function (response) {
                             console.log(response)

@@ -96,9 +96,9 @@
                                             </div>
                                         </div>
                                         <div class="row">
-                                            <div class="col-md-8">
+                                            <div class="col-md-4">
                                                 <div class="form-group">
-                                                    <label>Категории</label>
+                                                    <label>Категория</label>
                                                     <select class="form-control select2" id="kt_select2_4"
                                                             name="category_id" required>
                                                         @foreach($categories as $category)
@@ -108,9 +108,29 @@
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
-                                                <div class="form-group">
-                                                    <label>ЧПУ</label>
-                                                    <input type="text" name="alias" value="{{$product->alias}}" class="form-control" required/>
+                                                <div class="form-group" id="variations_container">
+                                                    <label>Главная характеристика</label>
+                                                    <select class="form-control select2" id="base_property_select_new"
+                                                            name="base_property_id" required>
+{{--                                                        @foreach($product->category->properties as $category_property)--}}
+{{--                                                            <option value="{{ $category_property->id }}" @selected($product->base_property_id === $category_property->id)>{{ $category_property->name }}</option>--}}
+{{--                                                        @endforeach--}}
+
+                                                        @foreach(\App\Models\Product::ALL_TYPES as $id => $name)
+                                                            <option value="{{ $id }}" @selected($product->base_property_id === $id)>{{ $name }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group" id="variations_container">
+                                                    <label>Модификации</label>
+                                                    <select class="form-control select2" id="variations_select"
+                                                            name="variations_id[]" data-property="{{ $product->base_property_id }}" data-product="{{ $product->id }}" multiple>
+                                                        @foreach($product_variations as $variation)
+                                                            <option value="{{$variation->id}}" selected>{{ $variation->title . (isset($variation->base_property_value) ? ' (' . $variation->base_property_value . ($variation->base_property_measure ?? '') . ')' : '' )}}</option>
+                                                        @endforeach
+                                                    </select>
                                                 </div>
                                             </div>
                                         </div>
@@ -126,13 +146,17 @@
                                                     </select>
                                                 </div>
                                             </div>
-                                            <div class="col-md-3">
+                                            <div class="col-md-2">
                                                 <label for="exampleSelect2">Цена</label>
                                                 <input type="number" step="any" name="price" value="{{$product->price}}" class="form-control" required/>
                                             </div>
-                                            <div class="col-md-3">
-                                                <label for="exampleSelect2">Скидка</label>
-                                                <input type="number" step="any" name="discount_price" value="{{$product->discount_price}}" class="form-control"/>
+                                            <div class="col-md-2">
+                                                <label for="exampleSelect2">Старая цена</label>
+                                                <input type="number" step="any" name="old_price" value="{{$product->old_price}}" class="form-control"/>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <label for="exampleSelect2">Скидка в %</label>
+                                                <input type="number" step="any" name="discount" value="{{$product->discount}}" class="form-control"/>
                                             </div>
                                         </div>
                                     </div>
@@ -163,14 +187,9 @@
                                         </div>
                                     </div>
                                     <div class="col-6">
-                                        <div class="form-group" id="variations_container">
-                                            <label>Модификации</label>
-                                            <select class="form-control select2" id="variations_select"
-                                                    name="variations_id[]" multiple>
-                                                @foreach($product_variations as $variation)
-                                                    <option value="{{$variation->id}}" selected>{{$variation->title}}</option>
-                                                @endforeach
-                                            </select>
+                                        <div class="form-group">
+                                            <label>ЧПУ</label>
+                                            <input type="text" name="alias" value="{{$product->alias}}" class="form-control" required/>
                                         </div>
                                     </div>
                                 </div>
@@ -413,9 +432,7 @@
     <script src="{{ asset('super_admin/js/pages/crud/forms/widgets/bootstrap-datetimepicker.js') }}"></script>
 
     <script>
-        $('#kt_select2_4').select2({
-            allowClear: true
-        });
+        $('#kt_select2_4').select2();
 
         $(document).ready(function () {
             $('.select2.property_values').select2({
@@ -457,20 +474,32 @@
             variations_select.select2({
                 allowClear: true,
                 ajax: {
-                    url: '{{route('search_products')}}',
+                    url: '{{route('getProductsByBaseValue')}}',
                     data: function (params) {
                         var query = {
                             search: params.term,
-                            type: 'public'
+                            type: 'public',
+                            property_id: this.data('property'),
+                            product_id: this.data('product'),
                         }
 
                         // Query parameters will be ?search=[term]&type=public
                         return query;
                     },
                     processResults: function (data) {
+                        console.log(data)
                         data = data.map((x) => {
+                            let title = x.title,
+                                sub_title = ` (${x.value}`;
+                            if (x.measure) {
+                                sub_title += `${x.measure})`
+                            } else {
+                                sub_title += ')'
+                            }
+
                             return {
-                                text: x.title, id: x.id
+                                text: title + sub_title,
+                                id: x.id
                             }
                         })
                         // Transforms the top-level key of the response object from 'items' to 'results'
@@ -481,6 +510,33 @@
                 },
                 minimumInputLength: 1
             });
+
+
+
+            $(document).on('change', '#category_select', function(e) {
+                let category_id = this.value
+                if (category_id) {
+                    $.ajax({
+                        url: '{{ route('admin.product.properties') }}',
+                        dataType: 'json',
+                        data: {
+                            category_id: category_id
+                        },
+                        success: function (response) {
+                            $('#base_property_select').html('').prop('disabled', false)
+                            response.forEach(function (item, i) {
+                                $('#base_property_select').append(`<option value="${item.id}">${item.name}</option>`)
+                            })
+                            $('#base_property_select').select2()
+                        }
+                    })
+                }
+            })
+
+            $('#base_property_select_new').select2({
+                minimumResultsForSearch: Infinity,
+            })
+
         });
         // $('property_values').on('keyup', function() {
         //     console.log(this.value)

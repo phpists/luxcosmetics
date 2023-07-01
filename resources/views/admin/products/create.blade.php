@@ -58,15 +58,30 @@
                                         <div class="form-group">
                                             <label for="exampleSelect2">Название</label>
                                             <input type="text" name="title" class="form-control" required/>
-                                        </div>
+                                        </div>                                        <div class="row">
+                                            <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Категории</label>
-                                            <select class="form-control select2" id="kt_select2_4"
+                                            <select class="form-control select2" id="category_select"
                                                     name="category_id" required>
+                                                <option value=""></option>
                                                 @foreach($categories as $category)
                                                     <option value="{{ $category->id }}">{{ $category->name }}</option>
                                                 @endforeach
                                             </select>
+                                        </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group" id="variations_container">
+                                                    <label>Главная характеристика</label>
+                                                    <select class="form-control select2" id="base_property_select_new"
+                                                            name="base_property_id" required>
+                                                        @foreach(\App\Models\Product::ALL_TYPES as $id => $name)
+                                                            <option value="{{ $id }}">{{ $name }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </div>
                                         </div>
                                         <div class="form-group" id="variations_container">
                                             <label>Модификации</label>
@@ -91,8 +106,12 @@
                                                 <input type="number" step="any" name="price" class="form-control" required/>
                                             </div>
                                             <div class="col-md-2">
-                                                <label for="exampleSelect2">Скидка</label>
-                                                <input type="number" step="any" name="discount_price" class="form-control"/>
+                                                <label for="exampleSelect2">Старая цена</label>
+                                                <input type="number" step="any" name="old_price" class="form-control"/>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <label for="exampleSelect2">Скидка в %</label>
+                                                <input type="number" step="any" name="discount" class="form-control"/>
                                             </div>
                                             <div class="col-md-2">
                                                 <label>Размер</label>
@@ -272,7 +291,9 @@
     <script src="{{ asset('super_admin/plugins/custom/ckeditor/ckeditor-classic.bundle.js') }} "></script>
     <script src="{{ asset('super_admin/js/pages/crud/forms/widgets/bootstrap-datetimepicker.js') }}"></script>
     <script>
-        $('#kt_select2_4').select2();
+        $('#category_select').select2({
+            placeholder: "Выбрать...",
+        });
         $(document).ready(function () {
             let variations_select = $('#variations_select');
             variations_select.select2({
@@ -302,6 +323,32 @@
                 },
                 minimumInputLength: 1
             });
+
+
+            $(document).on('change', '#category_select', function(e) {
+                let category_id = this.value
+                if (category_id) {
+                    $.ajax({
+                        url: '{{ route('admin.product.properties') }}',
+                        dataType: 'json',
+                        data: {
+                            category_id: category_id
+                        },
+                        success: function (response) {
+                            $('#base_property_select').html('').prop('disabled', false)
+                            response.forEach(function (item, i) {
+                                $('#base_property_select').append(`<option value="${item.id}">${item.name}</option>`)
+                            })
+                            $('#base_property_select').select2()
+                        }
+                    })
+                }
+            })
+
+            $('#base_property_select_new').select2({
+                minimumResultsForSearch: Infinity,
+            })
+
         })
         Promise.allSettled = Promise.allSettled || ((promises) => Promise.all(
             promises.map(p => p

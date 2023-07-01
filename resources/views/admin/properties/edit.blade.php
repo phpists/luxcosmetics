@@ -77,7 +77,7 @@
                                                     <div class="form-group w-100">
                                                         <label for="createFaqPos" class="col-auto col-form-label font-weight-bold">Ед. измерения</label>
                                                         <div class="col-sm-12">
-                                                            <input type="text" class="form-control" id="updateMeasure" name="measure" value="{{$property->measure}}" required>
+                                                            <input type="text" class="form-control" id="updateMeasure" name="measure" value="{{$property->measure}}">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -167,7 +167,16 @@
                                     <div class="item col-md-4 px-6 py-3">
                                         <div class="row">
                                             <div class="col pr-0">
-                                                <input readonly class="form-control form-control-sm w-100" type="text" name="value" value="{{ $property_value->value }}">
+                                                <div class="form-group">
+                                                    <div class="input-group input-group-sm">
+                                                        @if($property->id === \App\Models\Product::TYPE_COLOR)
+                                                        <div class="input-group-prepend">
+                                                            <input disabled type="color" class="form-control-sm form-control-color" name="color" value="{{ $property_value->color ?? '' }}">
+                                                        </div>
+                                                        @endif
+                                                        <input readonly class="form-control" type="text" name="value" value="{{ $property_value->value }}">
+                                                    </div>
+                                                </div>
                                             </div>
                                             <div class="col-auto pl-2">
                                                 <button type="button" class="btn btn-sm btn-icon btn-light-warning edit-property-value" data-id="{{ $property_value->id }}">
@@ -264,6 +273,7 @@
             $save_button.removeClass('d-none');
 
             $edit_button.parents('div.item').find('input[name="value"]').attr('readonly', false)
+            $edit_button.parents('div.item').find('input[name="color"]').attr('disabled', false)
         })
 
 
@@ -272,7 +282,8 @@
                 $edit_button = $save_button.prev('.edit-property-value');
 
             let id = $save_button.data('id'),
-                value = $edit_button.parents('div.item').find('input[name="value"]').val();
+                value = $edit_button.parents('div.item').find('input[name="value"]').val(),
+                color = $edit_button.parents('div.item').find('input[name="color"]').val();
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -283,13 +294,15 @@
                 method: "POST",
                 data: {
                     id: id,
-                    value: value
+                    value: value,
+                    color: color
                 },
                 success: function (data) {
                     $edit_button.removeClass('d-none');
                     $save_button.addClass('d-none');
 
                     $edit_button.parents('div.item').find('input[name="value"]').attr('readonly', true)
+                    $edit_button.parents('div.item').find('input[name="color"]').attr('disabled', true)
                 },
             })
         })

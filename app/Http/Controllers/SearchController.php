@@ -7,6 +7,7 @@ use App\Services\LanguageService;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
 class SearchController extends Controller
@@ -27,6 +28,25 @@ class SearchController extends Controller
     {
         $products = $this->search($request)
             ->select('id', 'title')
+            ->get();
+
+        return response()->json($products);
+    }
+
+    public function getProductsByBaseValue(Request $request): JsonResponse
+    {
+        $base_property_id = $request->get('property_id');
+        $products = Product::query()
+            ->select(['products.*', 'property_value.value', 'properties.name', 'properties.measure'])
+            ->whereNot('products.id', $request->get('product_id'))
+            ->where('title', 'like', '%'.$request->get('search').'%')
+            ->where('base_property_id', $base_property_id)
+            ->join('product_property_values', function ($join) use ($base_property_id) {
+                $join->on('product_property_values.product_id', '=', 'products.id')
+                    ->where('product_property_values.property_id', '=', DB::raw($base_property_id));
+            })
+            ->join('property_value', 'product_property_values.property_value_id', '=', 'property_value.id')
+            ->join('properties', 'properties.id', '=', DB::raw($base_property_id))
             ->get();
 
         return response()->json($products);

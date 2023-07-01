@@ -28,6 +28,7 @@ class ProductPropertyValueController extends Controller
 
         $product_property_value = ProductPropertyValue::create([
             'product_id' => $product_id,
+            'property_id' => $property_value->property_id,
             'property_value_id' => $property_value_id
         ]);
 

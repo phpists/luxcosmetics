@@ -27,9 +27,11 @@ class PropertyValueController extends Controller
     {
         $id = $request->post('id');
         $value = $request->post('value');
+        $color = $request->post('color');
 
         $property_value = PropertyValue::find($id);
         $property_value->value = $value;
+        $property_value->color = $color;
 
         return $property_value->save();
     }

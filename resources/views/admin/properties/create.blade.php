@@ -68,7 +68,7 @@
                                                     <div class="form-group w-100">
                                                         <label for="createFaqPos" class="col-auto col-form-label font-weight-bold">Ед. измерения</label>
                                                         <div class="col-sm-12">
-                                                            <input type="text" class="form-control" id="updateMeasure" name="measure" required>
+                                                            <input type="text" class="form-control" id="updateMeasure" name="measure">
                                                         </div>
                                                     </div>
                                                 </div>

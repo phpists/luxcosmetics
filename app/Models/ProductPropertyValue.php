@@ -9,6 +9,6 @@ class ProductPropertyValue extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['product_id', 'property_value_id'];
+    protected $fillable = ['product_id', 'property_id', 'property_value_id'];
 
 }

@@ -17,9 +17,9 @@
                                 <div style="margin: 5px; display: inline-block;"><a href="{{ $item->link }}"><img src="{{asset('images/uploads/social/' . $item->icon)}}" alt=""></div>
                             @endforeach
                             </div>
-                        @foreach (\App\Models\SocialMedia::query()->select('social_medias.phone')->get() as $item)
-                            <div class="header__phone"><a href="">{{ $item->phone }}</a></div>
-                        @endforeach
+{{--                        @foreach (\App\Models\SocialMedia::query()->select('social_medias.phone')->get() as $item)--}}
+{{--                            <div class="header__phone"><a href="">{{ $item->phone }}</a></div>--}}
+{{--                        @endforeach--}}
                         <div class="header__links">
                             <button class="header__link header__link--search">
                                 <div class="if-close"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#search')}}"></use></svg></div>

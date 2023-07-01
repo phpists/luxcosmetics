@@ -13,7 +13,7 @@ class PropertyValue extends Model
 
     public $timestamps = false;
 
-    protected $fillable = ['property_id', 'value'];
+    protected $fillable = ['property_id', 'value', 'color'];
 
 
     public function property()

@@ -11,6 +11,14 @@ class Product extends Model
 {
     use HasFactory;
 
+    const TYPE_VOLUME = 1;
+    const TYPE_COLOR = 2;
+
+    const ALL_TYPES = [
+        self::TYPE_VOLUME => 'Объем',
+        self::TYPE_COLOR => 'Цвет'
+    ];
+
     protected $fillable = [
         'title',
         'alias',
@@ -18,10 +26,12 @@ class Product extends Model
         'code_1c',
         'status',
         'price',
-        'discount_price',
+        'old_price',
+        'discount',
         'image_print_id',
         'discount_price',
         'category_id',
+        'base_property_id',
         'brand_id',
         'description_1',
         'description_2',
@@ -82,6 +92,31 @@ class Product extends Model
     public function values()
     {
         return $this->belongsToMany(PropertyValue::class, 'product_property_values', 'product_id', 'property_value_id');
+    }
+
+    public function baseProperty()
+    {
+        return $this->hasOne(Property::class, 'id', 'base_property_id');
+    }
+
+    public function baseValue()
+    {
+        return $this->hasOneThrough(
+            PropertyValue::class,
+            ProductPropertyValue::class,
+            'product_id', // Зовнішній ключ в проміжній таблиці, що посилається на products.id
+            'id', // Зовнішній ключ в моделі PropertyValue, що посилається на product_property_values.property_value_id
+            'base_property_id', // Локальний ключ в таблиці products, який посилається на property_id в проміжній таблиці
+            'property_value_id' // Локальний ключ в проміжній таблиці, який посилається на property_values.id
+        )
+            ->where('property_id', 'products.base_property_id');
+    }
+
+    public function getBaseValueAttribute()
+    {
+        return $this->values()
+            ->where('property_value.property_id', $this->base_property_id)
+            ->first();
     }
 
     static function getVariations($product_ids): \Illuminate\Database\Eloquent\Collection|array

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use App\Services\CatalogService;
 use Faker\Provider\Image;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -23,11 +24,7 @@ class ProductController extends Controller
                 'images' => $images
             ]);
         }
-        $product_variations = Product::query()
-            ->select('products.*')
-            ->join('product_variations', 'product_variations.variation_id', 'products.id')
-            ->where('product_variations.product_id', $product->id)
-            ->get();
+        $product_variations = CatalogService::getProductVariations($product->id, $product->base_property_id);
         return view('products.product', compact('product', 'product_variations'));
     }
 }

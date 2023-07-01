@@ -44,9 +44,10 @@ Route::get('/pages/{alias}', [\App\Http\Controllers\PagesController::class, 'sho
 // Search
 Route::get('/search_prompt', [\App\Http\Controllers\SearchController::class, 'search_prompt'])->name('search_prompt');
 Route::get('/api/search', [\App\Http\Controllers\SearchController::class, 'index'])->name('search_products');
+Route::get('/api/customSearch', [\App\Http\Controllers\SearchController::class, 'getProductsByBaseValue'])->name('getProductsByBaseValue');
 Route::get('/search', [\App\Http\Controllers\SearchController::class, 'showResultsPage'])->name('show_search');
 // Products
-Route::get('products/{alias}', [\App\Http\Controllers\ProductController::class, 'show'])->name('products.product');
+Route::get('p/{alias}', [\App\Http\Controllers\ProductController::class, 'show'])->name('products.product');
 //Route::get('products/{alias}/{variation_id}', [\App\Http\Controllers\ProductController::class, 'show'])->name('products.product');
 Route::get('q/delivery', [QuestionController::class, 'delivery'])->name('questions.delivery');
 Route::get('q/returns', [QuestionController::class, 'returns'])->name('questions.returns');
@@ -137,6 +138,7 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function 
     Route::get('products/create', [\App\Http\Controllers\Admin\ProductController::class, 'create'])->name('admin.product.create');
     Route::get('products/edit/{id}', [\App\Http\Controllers\Admin\ProductController::class, 'edit'])->name('admin.product.edit');
     Route::put('products/{id}', [\App\Http\Controllers\Admin\ProductController::class, 'update'])->name('admin.product.update');
+    Route::get('products/properties', [\App\Http\Controllers\Admin\ProductController::class, 'getProperties'])->name('admin.product.properties');
 //    Categories
     Route::get('categories', [AdminCategoryController::class, 'index'])->name('admin.categories');
     Route::post('categories', [AdminCategoryController::class, 'store'])->name('admin.category.store');

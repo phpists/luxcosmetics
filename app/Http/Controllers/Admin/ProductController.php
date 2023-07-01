@@ -6,8 +6,12 @@ use App\Http\Controllers\Controller;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\ProductPropertyValue;
 use App\Models\ProductVariation;
+use App\Models\PropertyValue;
+use App\Services\CatalogService;
 use App\Services\ImageService;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -35,7 +39,7 @@ class ProductController extends Controller
         }
 
         $productAjax = $query->paginate($request->paginate ?? 100);
-        
+
         if ($request->ajax()) {
             $categoriesAjaxHtml = view('admin.products.parts.table', ['productAjax' => $productAjax])->render();
             $paginateHtml = view('admin.products.parts.paginate', ['productAjax' => $productAjax, 'params' => $request->all()])->render();
@@ -107,11 +111,9 @@ class ProductController extends Controller
         $product_images = DB::table('product_images')
             ->where('record_id', $product->id)
             ->get();
-        $product_variations = Product::query()
-            ->select('products.id as id', 'products.title as title')
-            ->join('product_variations', 'product_variations.variation_id', 'products.id')
-            ->where('product_variations.product_id', $product->id)
-            ->get();
+
+        $product_variations = CatalogService::getProductVariations($product->id, $product->base_property_id);
+
         return view('admin.products.edit', compact('product', 'categories', 'brands', 'product_images', 'product_variations'));
     }
 
@@ -123,17 +125,41 @@ class ProductController extends Controller
         $data['show_in_popular'] = array_key_exists('show_in_popular', $data)? 1: 0;
         $data['show_in_new'] = array_key_exists('show_in_new', $data)? 1: 0;
         $product->update($data);
-        $variations_id = $request->variations_id??[];
-        $product_variations = [];
-        foreach ($variations_id as $variation_id) {
-            $product_variations[] = [
-                'variation_id' => $variation_id,
-                'product_id' => $product->id
-            ];
+
+        $variations_id = $request->variations_id ?? false;
+        if ($variations_id) {
+            $variations_id[] = $product->id;
         }
-        ProductVariation::query()->where('product_id', $product->id)->delete();
-        ProductVariation::query()->insert($product_variations);
-        return redirect()->route('admin.products')->with('success', 'Товар успешно обновлен');
+
+        ProductVariation::query()
+            ->where('product_id', $product->id)
+            ->orWhere('variation_id', $product->id)
+            ->delete();
+
+        if (is_array($variations_id)) {
+            $product_variations = [];
+            foreach ($variations_id as $variation_id) {
+                ProductVariation::query()
+                    ->where('product_id', $variation_id)
+                    ->orWhere('variation_id', $variation_id)
+                    ->delete();
+
+                foreach ($variations_id as $second_variation_id) {
+                    if ($variation_id === $second_variation_id)
+                        continue;
+
+                    $product_variations[] = [
+                        'variation_id' => $variation_id,
+                        'product_id' => $second_variation_id
+                    ];
+                }
+            }
+
+            ProductVariation::query()->insert($product_variations);
+        }
+
+        return back();
+//        return redirect()->route('admin.products')->with('success', 'Товар успешно обновлен');
     }
 
     public function storeImage(Request $request) {
@@ -208,4 +234,13 @@ class ProductController extends Controller
             'message' => 'Товары успешно удалены!'
         ]);
     }
+
+
+    public function getProperties(Request $request)
+    {
+        $category = Category::find($request->get('category_id'));
+
+        return new JsonResponse($category->properties);
+    }
+
 }
