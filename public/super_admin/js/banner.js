@@ -1,5 +1,51 @@
 $(document).ready(function () {
 
+    function numberSelected() {
+
+        var data = $('#certificate_form').serializeArray();
+
+        var counts = [];
+
+        data.forEach(function (element) {
+            if (!counts[element.name]) {
+                counts[element.name] = 0;
+            }
+            counts[element.name] += 1;
+        });
+    }
+
+    function request(url) {
+
+        numberSelected();
+
+        if (typeof url === 'undefined') {
+            url = $('#filterUrl').data('url') + '?' + $('#banner_form').serialize();
+        }
+
+        $.ajax({
+            type: "GET",
+            url: url,
+            dataType: "json",
+            success: function (response) {
+                $('#table').html(response.bannerAjaxHtml);
+                $('#pagination').html(response.paginateHtml);
+                window.history.pushState(null, null, url);
+            }
+        });
+
+    }
+
+    $(document).on('change', '#banner_form', function (e) {
+        e.preventDefault();
+        request();
+    });
+    
+    /* Позиція */
+    $(document).on('change', '#position', function (e) {
+        e.preventDefault();
+        request();
+    });
+
 
     /* Чекбокс */
     $(document).on('click', '#checkbox-all', function (e) {

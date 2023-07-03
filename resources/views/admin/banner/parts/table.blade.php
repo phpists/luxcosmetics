@@ -1,5 +1,5 @@
-@foreach($banner as $item)
-    <tr id="post_{{$item->id}}" data-id="{{ $item->id }}">
+@foreach($bannerAjax as $item)
+    <tr id="banner_{{$item->id}}" data-id="{{ $item->id }}">
         <td class="text-center pl-0">
             <span style="width: 20px;">
                 <label class="checkbox checkbox-single">
@@ -11,20 +11,19 @@
         <td class="text-center pl-0">
             {{ $item->id }}
         </td>
-        <td class="text-center pr-0">
-            {{ $item->title }}
+        <td class="pr-0">
+            <a href="{{ route('admin.banner.edit', $item->id) }}">{{ $item->title }}</a>
         </td>
         <td class="text-center pr-0">
-            {{ date('m Y, H:i:s', strtotime($item->created_at)) }}
+            {{ $item->position }}
         </td>
-        <td class="text-center pr-0 status">
-            {{ \App\Services\SiteService::getStatus($item->status) }}
+        
+        <td class="text-center pr-0 sort">
+            {{ $item->number_position }}
         </td>
+        
         <td class="text-center pr-0">
-            {{ date('m Y, H:i:s', strtotime($item->published_at)) }}
-        </td>
-        <td class="text-center pr-0">
-            <img src="{{ $item->mainImage() }}" width="100" height="100">
+            <div class="banner__image"><a href="{{ route('index.banner', $item->id) }}"><img src="{{asset('images/uploads/banner/' . $item->image)}}" alt="" style=" width: 100px;"></a></div> 
         </td>
         <td class="text-center pr-0">
             <a href="{{ route('admin.banner.edit', $item->id) }}"

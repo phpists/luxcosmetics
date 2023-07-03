@@ -22,6 +22,9 @@
         <div class="d-flex flex-column-fluid">
             <!--begin::Container-->
             <div class="container-fluid">
+                <div class="card gutter-b col-lg-12 ml-0">
+                    @include('admin.banner.parts.filter')
+                </div>
                 @include('admin.layouts.includes.messages')
                 <div class="card card-custom">
                     <div class="card-header flex-wrap border-0 pt-6 pb-0">
@@ -131,7 +134,7 @@
                             </table>
                         </div>
                         <div id="pagination">
-                            {{ $banner->appends(request()->all())->links('vendor.pagination.product_pagination') }}
+                            {{ $bannerAjax->appends(request()->all())->links('vendor.pagination.product_pagination') }}
                         </div>
                         <!--end::Table-->
                     </div>

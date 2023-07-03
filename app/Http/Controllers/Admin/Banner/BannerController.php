@@ -13,13 +13,26 @@ class BannerController extends Controller
 {
     public function index(Request $request)
     {
+        $banner = Banner::query()->select('banners.*')->get();
         $query = Banner::query();
-
         $query->select('banners.*');
 
-        $banner = $query->paginate(15);
+        if (isset($request->position)) {
+            $query->where('banners.position', $request->position);
+        }
+        $bannerAjax = $query->paginate($request->paginate ?? 100);
 
-        return view('admin.banner.index', compact('banner'));
+        if ($request->ajax()) {
+            $bannerAjaxHtml = view('admin.banner.parts.table', ['bannerAjax' => $bannerAjax])->render();
+            $paginateHtml = view('admin.banner.parts.paginate', ['bannerAjax' => $bannerAjax, 'params' => $request->all()])->render();
+
+            return response()->json([
+                'bannerAjaxHtml' => $bannerAjaxHtml,
+                'paginateHtml' => $paginateHtml,
+            ]);
+        }
+
+        return response()->view('admin.banner.index', compact('banner', 'bannerAjax'));
     }
 
     public function create()
@@ -77,31 +90,31 @@ class BannerController extends Controller
     }
 
     public function activePosts(Request $request)
-{
-    $id = $request->id;
-    $bannerId = $request->checkbox;
-    $status = $request->status;
+    {
+        $id = $request->id;
+        $bannerId = $request->checkbox;
+        $status = $request->status;
 
-    if ($id) {
-        Banner::where('id', $id)->update([
-            'status' => $status
-        ]);
-    } elseif ($bannerId) {
-        Banner::whereIn('id', $bannerId)->update([
-            'status' => $status
-        ]);
+        if ($id) {
+            Banner::where('id', $id)->update([
+                'status' => $status
+            ]);
+        } elseif ($bannerId) {
+            Banner::whereIn('id', $bannerId)->update([
+                'status' => $status
+            ]);
+        }
+
+        $title = SiteService::statusBanner($status);
+        $message = $status ? 'Баннер активирован!' : 'Баннер деактивирован!';
+
+        $data = [
+            'posts' => $id ?? $bannerId,
+            'title' => $title,
+            'message' => $message
+        ];
+
+        return json_encode($data);
     }
-
-    $title = SiteService::statusBanner($status);
-    $message = $status ? 'Баннер активирован!' : 'Баннер деактивирован!';
-
-    $data = [
-        'posts' => $id ?? $bannerId,
-        'title' => $title,
-        'message' => $message
-    ];
-
-    return json_encode($data);
-}
 
 }
