@@ -258,6 +258,13 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function 
     Route::put('/tag', [\App\Http\Controllers\Admin\TagController::class, 'update'])->name('admin.tag.update');
     Route::delete('/tag', [\App\Http\Controllers\Admin\TagController::class, 'delete'])->name('admin.tag.delete');
 
+    // Feedback Reasons
+    Route::get('/feedback-reasons', [\App\Http\Controllers\Admin\FeedbackReasonController::class, 'index'])->name('admin.feedback-reason.index');
+    Route::get('/feedback-reason', [\App\Http\Controllers\Admin\FeedbackReasonController::class, 'show'])->name('admin.feedback-reason.show');
+    Route::post('/feedback-reasons', [\App\Http\Controllers\Admin\FeedbackReasonController::class, 'store'])->name('admin.feedback-reason.store');
+    Route::put('/feedback-reason', [\App\Http\Controllers\Admin\FeedbackReasonController::class, 'update'])->name('admin.feedback-reason.update');
+    Route::delete('/feedback-reason', [\App\Http\Controllers\Admin\FeedbackReasonController::class, 'delete'])->name('admin.feedback-reason.delete');
+
      /* Users */
      Route::get('users', [\App\Http\Controllers\Admin\UserController::class, 'index'])->name('admin.users');
      Route::get('user/show/{id}', [\App\Http\Controllers\Admin\UserController::class, 'show'])->name('admin.user.show');

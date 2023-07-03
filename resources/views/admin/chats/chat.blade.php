@@ -14,7 +14,7 @@
                         <a href="{{ route('admin.chats') }}" class="text-muted">Feedback</a>
                     </li>
                     <li class="breadcrumb-item">
-                        <a href="#" class="text-muted">Редактирование</a>
+                        <a href="#" class="text-muted">Чат</a>
                     </li>
                 </ul>
                 <!--end::Breadcrumb-->
@@ -197,7 +197,7 @@
                             <!--begin::Footer-->
                             <div class="card-footer align-items-center">
                                 <!--begin::Compose-->
-                                <textarea id="message" class="form-control border-0 p-0" rows="2" placeholder="Напишите сообщение"></textarea>
+                                <textarea id="message" @if($chat->status === \App\Models\FeedbackChat::CLOSED) disabled @endif class="form-control border-0 p-2" rows="2" placeholder="Напишите сообщение"></textarea>
                                 <div class="d-flex align-items-center justify-content-between mt-5">
                                     <div class="mr-3">
                                         <a href="#" class="btn btn-clean btn-icon btn-md mr-1"><i class="flaticon2-photograph icon-lg"></i></a>
@@ -205,7 +205,7 @@
                                     </div>
                                     <div>
                                         <input type="hidden" id="chat_id" name="{{$chat->id}}">
-                                        <button id="chat_btn" type="button" class="btn btn-primary btn-md text-uppercase font-weight-bold chat-send py-2 px-6">Отправить</button>
+                                        <button id="chat_btn" @if($chat->status === \App\Models\FeedbackChat::CLOSED) disabled @endif type="button" class="btn btn-primary btn-md text-uppercase font-weight-bold chat-send py-2 px-6">Отправить</button>
                                     </div>
                                 </div>
                                 <!--begin::Compose-->
