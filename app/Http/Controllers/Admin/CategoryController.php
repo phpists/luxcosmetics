@@ -42,7 +42,7 @@ class CategoryController extends Controller
         $curr_position = DB::table('categories')->max('position')??0;
         $data['position'] = $curr_position + 1;
         if (!array_key_exists('alias', $data) || $data['alias'] === null) {
-            $data['alias'] = Str::slug($data['name']);
+            $data['alias'] = Str::slug($data['name'], '-');
         }
         $category = new Category($data);
         if (!$category->save()) {
@@ -90,7 +90,7 @@ class CategoryController extends Controller
         $category = Category::query()->find($data['id']);
         $data['add_to_top_menu'] = array_key_exists('add_to_top_menu', $data)? 1: 0;
         if (!array_key_exists('alias', $data) || $data['alias'] === null) {
-            $data['alias'] = Str::slug($data['name']);
+            $data['alias'] = Str::slug($data['name'], '-');
         }
         if(!$category) {
             return redirect()->back()->with('error', 'Категория не найдена');

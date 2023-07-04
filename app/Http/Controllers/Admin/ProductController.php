@@ -73,7 +73,7 @@ class ProductController extends Controller
         $data['show_in_popular'] = array_key_exists('show_in_popular', $data)? 1: 0;
         $data['show_in_new'] = array_key_exists('show_in_new', $data)? 1: 0;
         if (!array_key_exists('alias', $data) || $data['alias'] === null) {
-            $data['alias'] = Str::slug($data['title']);
+            $data['alias'] = Str::slug($data['title'], '-');
         }
         $product = new Product($data);
         if ($product->save()) {
