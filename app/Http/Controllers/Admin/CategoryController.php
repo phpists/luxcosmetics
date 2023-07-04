@@ -96,15 +96,23 @@ class CategoryController extends Controller
         if (!array_key_exists('alias', $data) || $data['alias'] === null) {
             $data['alias'] = Str::slug($data['name'], '-');
         }
-        $count = Category::query()->where('alias', 'like', $data['alias'].'%')->count();
+        $count = Category::query()
+            ->where('alias', 'like', $data['alias'].'%')
+            ->whereNot('id', $request->id)->count();
         if ($count > 0) {
             $data['alias'] = $data['alias'].'_'.$count;
         }
         if(!$category) {
             return redirect()->back()->with('error', 'Категория не найдена');
         }
-        if ($request->hasFile('image')) {
+        if ($request->image_remove === '1') {
+            ImageService::removeImage('uploads', 'categories', $category->image);
+        }
+        else if ($request->hasFile('image')) {
             $image = ImageService::saveImage('uploads', 'categories', $request->image);
+            if ($category->image !== null) {
+                ImageService::removeImage('uploads', 'categories', $category->image);
+            }
             if ($image) {
                 $data['image'] = $image;
             }

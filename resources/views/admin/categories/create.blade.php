@@ -114,6 +114,12 @@
                                                 <input type="file" name="image" accept="image/*"/>
                                                 <input type="hidden" name="image_remove"/>
                                             </label>
+                                            <span class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="cancel" data-toggle="tooltip" title="Cancel avatar">
+                                                <i class="ki ki-bold-close icon-xs text-muted"></i>
+                                            </span>
+                                            <span class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="remove" data-toggle="tooltip" title="Remove avatar">
+                                                <i class="ki ki-bold-close icon-xs text-muted"></i>
+                                            </span>
                                         </div>
                                     </div>
                                 </div>
