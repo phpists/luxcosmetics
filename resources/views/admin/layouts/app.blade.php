@@ -129,14 +129,6 @@
                             </a>
                         </li>
 
-                        <li class="menu-item {{ request()->routeIs('admin.chats') ? 'menu-item-active' : '' }}"
-                            aria-haspopup="true">
-                            <a href="{{route('admin.chats')}}" class="menu-link">
-                                <i class="fas flaticon2-copy menu-icon"></i>
-                                <span class="menu-text">Feedback</span>
-                            </a>
-                        </li>
-
                         <li class="menu-item menu-item-submenu
 {{ (request()->routeIs('admin.products')
 || request()->routeIs('admin.products.tree')
@@ -197,19 +189,6 @@
                             <div class="menu-submenu" style="" kt-hidden-height="160">
                                 <i class="menu-arrow"></i>
                                 <ul class="menu-subnav">
-                                    <li class="menu-item {{ request()->routeIs('admin.feedback-reason.index') ? 'menu-item-active' : '' }}" aria-haspopup="true">
-                                        <a href="{{ route('admin.feedback-reason.index') }}" class="menu-link">
-                                            <i class="menu-bullet menu-bullet-dot">
-                                                <span></span>
-                                            </i>
-                                            <span class="menu-text">Причины обращения</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="menu-submenu" style="" kt-hidden-height="160">
-                                <i class="menu-arrow"></i>
-                                <ul class="menu-subnav">
                                     <li class="menu-item {{ request()->routeIs('admin.properties.index') || request()->routeIs('admin.properties.edit') || request()->routeIs('admin.properties.create') ? 'menu-item-active' : '' }}" aria-haspopup="true">
                                         <a href="{{ route('admin.properties.index') }}" class="menu-link">
                                             <i class="menu-bullet menu-bullet-dot">
@@ -240,7 +219,56 @@
 
                         </li>
 
-
+                        <li class="menu-item menu-item-submenu
+                        {{ (request()->routeIs('admin.chats') || request()->routeIs('admin.feedback-reason.index') || request()->routeIs('admin.users')) ? 'menu-item-open' : '' }}"
+                            aria-haspopup="true" data-menu-toggle="hover">
+                            <a href="javascript:;" class="menu-link menu-toggle">
+                                <i class="fas flaticon2-copy menu-icon"></i>
+                                <span class="menu-text">Обратная связь</span>
+                                <i class="menu-arrow"></i>
+                            </a>
+                            <div class="menu-submenu" style="" kt-hidden-height="160">
+                                <i class="menu-arrow"></i>
+                                <ul class="menu-subnav">
+                                    <li class="menu-item {{ request()->routeIs('admin.feedback-reason.index') ? 'menu-item-active' : '' }}" aria-haspopup="true">
+                                        <a href="{{ route('admin.feedback-reason.index') }}" class="menu-link">
+                                            <i class="menu-bullet menu-bullet-dot">
+                                                <span></span>
+                                            </i>
+                                            <span class="menu-text">Причины обращения</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="menu-submenu" style="" kt-hidden-height="160">
+                                <i class="menu-arrow"></i>
+                                <ul class="menu-subnav">
+                                    <li class="menu-item {{ request()->routeIs('admin.chats') ? 'menu-item-active' : '' }}"
+                                        aria-haspopup="true">
+                                        <a href="{{route('admin.chats')}}" class="menu-link">
+                                            <i class="menu-bullet menu-bullet-dot">
+                                                <span></span>
+                                            </i>
+                                            <span class="menu-text">Тикеты</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="menu-submenu" style="" kt-hidden-height="160">
+                                <i class="menu-arrow"></i>
+                                <ul class="menu-subnav">
+                                    <li class="menu-item {{ request()->routeIs('admin.users') ? 'menu-item-active' : '' }}"
+                                        aria-haspopup="true">
+                                        <a href="{{route('admin.users')}}" class="menu-link">
+                                            <i class="menu-bullet menu-bullet-dot">
+                                                <span></span>
+                                            </i>
+                                            <span class="menu-text">Пользователи</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
 
                         <li class="menu-item menu-item-submenu
 {{ (request()->routeIs('admin.news')
@@ -402,14 +430,6 @@
                                     </li>
                                 </ul>
                             </div>
-                        </li>
-
-                        <li class="menu-item {{ request()->routeIs('admin.users') ? 'menu-item-active' : '' }}"
-                            aria-haspopup="true">
-                            <a href="{{route('admin.users')}}" class="menu-link">
-                                <i class="fas fa-users menu-icon"></i>
-                                <span class="menu-text">Пользователи</span>
-                            </a>
                         </li>
 
                     </ul>
