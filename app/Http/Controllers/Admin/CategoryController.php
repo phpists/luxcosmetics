@@ -11,6 +11,7 @@ use App\Services\SiteService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
 use Nette\Utils\Image;
 
 class CategoryController extends Controller
@@ -36,25 +37,28 @@ class CategoryController extends Controller
         $image = ImageService::saveImage('uploads', 'categories', $request->image);
         if ($image){
             $data['image'] = $image;
-            $data['add_to_top_menu'] = array_key_exists('add_to_top_menu', $data)?1:0;
-            $curr_position = DB::table('categories')->max('position')??0;
-            $data['position'] = $curr_position + 1;
-            $category = new Category($data);
-            if (!$category->save()) {
-                redirect()->back()->with('error', 'Не удалось сохранить категорию');
-            }
-            if ($data['category_id'] !== null) {
-                $data = PropertyCategory::query()
-                    ->select('category_id', 'property_id', 'position')
-                    ->where('category_id', $data['category_id'])->get();
+        }
+        $data['add_to_top_menu'] = array_key_exists('add_to_top_menu', $data)?1:0;
+        $curr_position = DB::table('categories')->max('position')??0;
+        $data['position'] = $curr_position + 1;
+        if (!array_key_exists('alias', $data) || $data['alias'] === null) {
+            $data['alias'] = Str::slug($data['name']);
+        }
+        $category = new Category($data);
+        if (!$category->save()) {
+            redirect()->back()->with('error', 'Не удалось сохранить категорию');
+        }
+        if ($data['category_id'] !== null) {
+            $data = PropertyCategory::query()
+                ->select('category_id', 'property_id', 'position')
+                ->where('category_id', $data['category_id'])->get();
 
-                $data = $data->map(function ($item, int $key) use ($category) {
-                    $item['category_id'] = $category->id;
-                    return $item;
-                });
+            $data = $data->map(function ($item, int $key) use ($category) {
+                $item['category_id'] = $category->id;
+                return $item;
+            });
 
-                PropertyCategory::query()->insert($data->toArray());
-            }
+            PropertyCategory::query()->insert($data->toArray());
         }
         else {
             redirect()->back()->with('error', 'Не удалось сохранить изображение');
@@ -85,6 +89,9 @@ class CategoryController extends Controller
         $data = $request->all();
         $category = Category::query()->find($data['id']);
         $data['add_to_top_menu'] = array_key_exists('add_to_top_menu', $data)? 1: 0;
+        if (!array_key_exists('alias', $data) || $data['alias'] === null) {
+            $data['alias'] = Str::slug($data['name']);
+        }
         if(!$category) {
             return redirect()->back()->with('error', 'Категория не найдена');
         }

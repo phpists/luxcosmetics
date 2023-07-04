@@ -15,6 +15,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
 
 class ProductController extends Controller
 {
@@ -71,6 +72,9 @@ class ProductController extends Controller
         $data['show_in_discount'] = array_key_exists('show_in_discount', $data)? 1: 0;
         $data['show_in_popular'] = array_key_exists('show_in_popular', $data)? 1: 0;
         $data['show_in_new'] = array_key_exists('show_in_new', $data)? 1: 0;
+        if (!array_key_exists('alias', $data) || $data['alias'] === null) {
+            $data['alias'] = Str::slug($data['title']);
+        }
         $product = new Product($data);
         if ($product->save()) {
             $image_path = ImageService::saveImage('uploads', "products", $request->image);
@@ -124,6 +128,9 @@ class ProductController extends Controller
         $data['show_in_discount'] = array_key_exists('show_in_discount', $data)? 1: 0;
         $data['show_in_popular'] = array_key_exists('show_in_popular', $data)? 1: 0;
         $data['show_in_new'] = array_key_exists('show_in_new', $data)? 1: 0;
+        if (!array_key_exists('alias', $data) || $data['alias'] === null) {
+            $data['alias'] = Str::slug($data['title']);
+        }
         $product->update($data);
 
         $variations_id = $request->variations_id ?? false;

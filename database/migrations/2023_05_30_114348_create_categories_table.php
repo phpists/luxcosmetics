@@ -13,11 +13,11 @@ return new class extends Migration
     {
         Schema::create('categories', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('category_id')->nullable()->comment('Батьківська категорія');
+            $table->bigInteger('category_id')->nullable()->comment('Родительская категория');
             $table->string('alias')->unique()->comment('Аліас');
-            $table->string('name')->default('Назва');
-            $table->string('image')->nullable()->comment('ИЗОБРАЖЕНИЕ категорії');
-            $table->bigInteger('position')->comment('Позиція');
+            $table->string('name')->comment('Назва');
+            $table->string('image')->nullable()->comment('Изображение категории');
+            $table->bigInteger('position')->comment('Позиция');
             $table->boolean('status')->default(0)->comment('Статус');
             $table->boolean('add_to_top_menu')->default(0);
             $table->timestamps();
