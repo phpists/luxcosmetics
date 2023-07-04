@@ -111,7 +111,7 @@
                                                 data-action="change" data-toggle="tooltip"
                                                 data-original-title="Change avatar">
                                                 <i class="fa fa-pen icon-sm text-muted"></i>
-                                                <input type="file" name="image" required accept="image/*"/>
+                                                <input type="file" name="image" accept="image/*"/>
                                                 <input type="hidden" name="image_remove"/>
                                             </label>
                                         </div>
