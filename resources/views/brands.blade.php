@@ -57,28 +57,24 @@
                         $start_pos = 0;
                     @endphp
                     @foreach($letters as $letter)
-                    @if($brands[$start_pos]->letter === $letter)
-                        <div class="brands-page__item" id="{{$letter}}">
-                            <div class="brands-page__title">{{$letter}}</div>
-                            <div class="brands-page__brands">
-                                @for($idx=$start_pos;$idx < sizeof($brands); $idx++)
-                                    @if($brands[$idx]->letter === $letter)
-                                        <div class="brands-page__brand">
-                                            <a href="{{ route('brands.show', ['link' => strtolower($brands[$idx]->link)]) }}">
-                                                {{$brands[$idx]->name}}
-                                            </a>
-                                        </div>
-                                    @else
-                                        @php
-                                            $start_pos = $idx;
-                                        @endphp
-                                        @break
-                                    @endif
-                                @endfor
+                        @if($brands[$start_pos]->letter === $letter)
+                            <div class="brands-page__item" id="{{$letter}}">
+                                <div class="brands-page__title">{{$letter}}</div>
+                                <div class="brands-page__brands">
+                                    @for($idx=$start_pos;$idx < sizeof($brands); $idx++)
+                                        @if($brands[$idx]->letter === $letter)
+                                            <div class="brands-page__brand"><a href="{{ route('brands.show', ['link' => $brands[$idx]->link]) }}">{{$brands[$idx]->name}}</a></div>
+                                        @else
+                                            @php
+                                                $start_pos = $idx;
+                                            @endphp
+                                            @break
+                                        @endif
+                                    @endfor
+                                </div>
                             </div>
-                        </div>
-                    @endif
-                @endforeach
+                        @endif
+                    @endforeach
                            
                 </div>
             </div>
@@ -113,34 +109,34 @@
         {{-- Функціонал форми пошуку бренда --}}
         <script>
         
-        $(document).ready(function() {
-    $('#brand-search-input').on('input', function() {
-        var searchKeyword = $(this).val().trim().toLowerCase();
-        $('.brands-page__brand').hide();
-        $('.brands-page__item').hide();
-        if (searchKeyword !== "") {
-            $('.brands-page__brand').each(function() {
-                var brandName = $(this).text().toLowerCase();
-                if (brandName.includes(searchKeyword)) {
-                    $(this).show();
-                    var firstLetter = brandName.charAt(0);
-                    $('.brands-page__title:contains("' + firstLetter + '")').parent().show();
-                    $('.brands-page__title:contains("' + firstLetter + '")').show();
-                } else {
-                }
-            });
-        } else {
-            $('div').removeClass('__active'); 
-            $('.brands-page__item').show();
-            $('.brands-page__brand, .brands-page__title').show();
-        }
+            $(document).ready(function() {
+        $('#brand-search-input').on('input', function() {
+            var searchKeyword = $(this).val().trim().toLowerCase();
+            $('.brands-page__brand').hide();
+            $('.brands-page__item').hide();
+            if (searchKeyword !== "") {
+                $('.brands-page__brand').each(function() {
+                    var brandName = $(this).text().toLowerCase();
+                    if (brandName.includes(searchKeyword)) {
+                        $(this).show();
+                        var firstLetter = brandName.charAt(0);
+                        $('.brands-page__title:contains("' + firstLetter + '")').parent().show();
+                        $('.brands-page__title:contains("' + firstLetter + '")').show();
+                    } else {
+                    }
+                });
+            } else {
+                $('div').removeClass('__active'); 
+                $('.brands-page__item').show();
+                $('.brands-page__brand, .brands-page__title').show();
+            }
+        });
+    
+        $('#brand-search-button').click(function(event) {
+            event.preventDefault();
+        });
     });
-
-    $('#brand-search-button').click(function(event) {
-        event.preventDefault();
-    });
-});
-    </script>
+        </script>
 
 
 

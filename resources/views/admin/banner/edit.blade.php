@@ -102,9 +102,19 @@
                                             <input type="number" value="{{ $item->number_position }}" name="number_position" min="1" max="4" step="1" class="form-control">
                                         </div>
                                     </div>
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <label>Позиция баннера</label>
+                                            <select class="form-control status" name="position">
+                                                <option value="first" {{ $item->position === 'first' ? 'selected' : '' }}>Первая позиция</option>
+                                                <option value="second" {{ $item->position === 'second' ? 'selected' : '' }}>Вторая позиция</option>
+                                                <option value="third" {{ $item->position === 'third' ? 'selected' : '' }}>Третяя позиция</option>
+                                                <option value="fourth" {{ $item->position === 'fourth' ? 'selected' : '' }}>Четвертая позиция</option>
+                                                <option value="fifth" {{ $item->position === 'fifth' ? 'selected' : '' }}>Пятая позиция</option>
+                                            </select>
+                                        </div>
+                                    </div>
                                 </div>
-                                
-                                    
                                     <div class="row">
                                         <div class="col-md-12">
                                             <label>Текст</label>
@@ -119,7 +129,7 @@
                                     <div class="form-group">
                                         <label>Изображения</label>
                                         <div class="col-auto ml-2">
-                                            <div class="image-input image-input-outline" id="createImagePlugin" style="background-image: url('{{ asset('uploads/banner/' . $item->image) }}')">
+                                            <div class="image-input image-input-outline" id="createImagePlugin" style="background-image: url('{{ asset('images/uploads/banner/' . $item->image) }}')">
                                                 <div class="image-input-wrapper" id="updateImageBackground"></div>
                                                 <label class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="change" data-toggle="tooltip" data-original-title="Change avatar">
                                                     <i class="fa fa-pen icon-sm text-muted"></i>
