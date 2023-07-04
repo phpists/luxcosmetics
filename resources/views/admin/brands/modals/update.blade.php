@@ -19,17 +19,18 @@
                         <div class="tab-pane fade show active" id="general_tab" role="tabpanel">
                             <div class="row">
                                 <div class="col-auto ml-2">
-                                    <div class="image-input  image-input-outline" id="updateImagePlugin" style="max-height: 150px;">
+                                    <div class="image-input image-input-outline" id="updateImagePlugin" style="max-height: 150px;">
                                         <div class="image-input-wrapper" id="updateImageBackground"></div>
-
                                         <label class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="change" data-toggle="tooltip" title="" data-original-title="Change avatar">
                                             <i class="fa fa-pen icon-sm text-muted"></i>
                                             <input type="file" name="image" accept="image/*"/>
-{{--                                            <input type="hidden" name="image_remove"/>--}}
                                         </label>
+                                        <label class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" type="button" onclick="deleteImage()" data-toggle="tooltip" title="" data-original-title="Remove avatar">
+                                            <i class="fa fa-trash icon-sm text-muted"></i>
+                                        </label> 
                                     </div>
                                 </div>
-
+                                
                                 <div class="col">
                                     <div class="col">
                                         <div class="form-group w-100">
@@ -38,9 +39,9 @@
                                                 <input type="text" class="form-control" id="updateName" name="name" required>
                                             </div>
                                             <label for="createTitle" class="col-auto col-form-label font-weight-bold">Ссылка</label>
-                                        <div class="col-sm-12">
-                                            <input type="text" class="form-control" value="{{ $brand->link }}" id="createTitle" name="link" required>
-                                        </div>
+                                            <div class="col-sm-12">
+                                                <input type="text" class="form-control" id="updateLink" name="link" required>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

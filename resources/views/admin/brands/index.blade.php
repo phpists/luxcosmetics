@@ -175,6 +175,7 @@
                 success: function (response) {
                     $('#updateId').val(response.id);
                     $('#updateName').val(response.name);
+                    $('#updateLink').val(response.link);
                     let image_url = 'url("{{ asset('images/uploads/brands/') }}/' + response.image + '")';
                     $('#updateImageBackground').css('background-image', image_url);
 
@@ -183,6 +184,27 @@
                 }
             });
         }
+        
+        function deleteImage() {
+            let brandId = $('#updateId').val();
+            console.log(brandId)
+        if (confirm('Вы уверены, что хотите удалить изображение?')) {
+            $.ajax({
+                url: '/admin'+'/brands/' + brandId + '/deleteImage',
+                type: 'DELETE',
+                data: {
+                    _token: '{{ csrf_token() }}'
+                },
+                success: function(response) {
+                    location.reload()
+                    showSuccessMessage('Фотография успешно удалена');
+                },
+                error: function() {
+                    showErrorMessage('Ошибка при удалении фотографии');
+                }
+            });
+        }
+    }
     </script>
     <script src="https://raw.githack.com/SortableJS/Sortable/master/Sortable.js"></script>
     <script src="{{ asset('super_admin/js/care.js') }}"></script>
