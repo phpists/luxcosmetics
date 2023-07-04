@@ -75,6 +75,10 @@ class ProductController extends Controller
         if (!array_key_exists('alias', $data) || $data['alias'] === null) {
             $data['alias'] = Str::slug($data['title'], '-');
         }
+        $count = Product::query()->where('alias', 'like', $data['alias'].'%')->count();
+        if ($count > 0) {
+            $data['alias'] = $data['alias'].'_'.$count;
+        }
         $product = new Product($data);
         if ($product->save()) {
             $image_path = ImageService::saveImage('uploads', "products", $request->image);
@@ -130,6 +134,10 @@ class ProductController extends Controller
         $data['show_in_new'] = array_key_exists('show_in_new', $data)? 1: 0;
         if (!array_key_exists('alias', $data) || $data['alias'] === null) {
             $data['alias'] = Str::slug($data['title'], '-');
+        }
+        $count = Product::query()->where('alias', 'like', $data['alias'].'%')->count();
+        if ($count > 0) {
+            $data['alias'] = $data['alias'].'_'.$count;
         }
         $product->update($data);
 

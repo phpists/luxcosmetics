@@ -44,6 +44,10 @@ class CategoryController extends Controller
         if (!array_key_exists('alias', $data) || $data['alias'] === null) {
             $data['alias'] = Str::slug($data['name'], '-');
         }
+        $count = Category::query()->where('alias', 'like', $data['alias'].'%')->count();
+        if ($count > 0) {
+            $data['alias'] = $data['alias'].'_'.$count;
+        }
         $category = new Category($data);
         if (!$category->save()) {
             redirect()->back()->with('error', 'Не удалось сохранить категорию');
@@ -91,6 +95,10 @@ class CategoryController extends Controller
         $data['add_to_top_menu'] = array_key_exists('add_to_top_menu', $data)? 1: 0;
         if (!array_key_exists('alias', $data) || $data['alias'] === null) {
             $data['alias'] = Str::slug($data['name'], '-');
+        }
+        $count = Category::query()->where('alias', 'like', $data['alias'].'%')->count();
+        if ($count > 0) {
+            $data['alias'] = $data['alias'].'_'.$count;
         }
         if(!$category) {
             return redirect()->back()->with('error', 'Категория не найдена');
