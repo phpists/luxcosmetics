@@ -52,25 +52,25 @@
                         <div class="row">
                             <div class="col-8">
                                 <div class="row">
-{{--                                    <div class="col-6">--}}
-{{--                                        <div class="form-group">--}}
-{{--                                            <label>Тип меню</label>--}}
-{{--                                            <select class="form-control status" id="kt_select2_1" name="type">--}}
-{{--                                                <option value="{{\App\Models\Menu::TOP_MENU}}">{{\App\Services\SiteService::getMenuType(\App\Models\Menu::TOP_MENU)}}</option>--}}
-{{--                                                <option value="{{\App\Models\Menu::FOOTER_MENU}}">{{\App\Services\SiteService::getMenuType(\App\Models\Menu::FOOTER_MENU)}}</option>--}}
-{{--                                            </select>--}}
-{{--                                        </div>--}}
-{{--                                    </div>--}}
                                     <div class="col-6">
-                                        <div class="form-group">
-                                            <label>Ссылка</label>
-                                            <input type="text" name="link" class="form-control" required/>
-                                        </div>
+                                        @if($menu_type == \App\Models\Menu::TOP_MENU)
+                                            <div class="form-group">
+                                                <label>Категория</label>
+                                                <select class="form-control select2" id="cat_select"
+                                                        name="category_id" multiple>
+                                                </select>
+                                            </div>
+                                        @else
+                                            <div class="form-group">
+                                                <label>Ссылка</label>
+                                                <input type="text" name="link" class="form-control" required/>
+                                            </div>
+                                        @endif
                                     </div>
                                     <div class="col-6">
                                         <div class="form-group">
-                                            <label>Родительская категория</label>
-                                            <select class="form-control select2" id="cat_select" name="parent_id">
+                                            <label>Родительский пункт меню</label>
+                                            <select class="form-control" id="menu_select" name="parent_id">
                                                 <option></option>
                                                 @foreach($menu_items as $item)
                                                     <option value="{{ $item->id }}">{{ $item->title }}</option>
@@ -123,9 +123,9 @@
     <script src="{{ asset('super_admin/js/pages/crud/forms/widgets/select2.js') }}"></script>
     <script src="{{ asset('super_admin/js/pages/crud/ktdatatable/base/html-table.js') }}"></script>
     <script>
-        $("#cat_select").select2(
+        $("#menu_select").select2(
             {
-                placeholder: "Категория",
+                placeholder: "Родительский пункт меню",
                 allowClear: true
             }
         );
@@ -136,6 +136,37 @@
                 }
             });
         });
+        $(document).ready(function () {
+            let cat_select = $('#cat_select');
+            cat_select.select2({
+                ajax: {
+                    url: '{{route('admin.categories.search')}}',
+                    data: function (params) {
+                        var query = {
+                            search: params.term,
+                            type: 'public'
+                        }
+
+                        // Query parameters will be ?search=[term]&type=public
+                        return query;
+                    },
+                    processResults: function (data) {
+                        data = data.map((x) => {
+                            return {
+                                text: x.name, id: x.id
+                            }
+                        })
+                        // Transforms the top-level key of the response object from 'items' to 'results'
+                        return {
+                            results: data
+                        };
+                    }
+                },
+                minimumInputLength: 1
+            });
+
+
+        })
     </script>
 @endsection
 

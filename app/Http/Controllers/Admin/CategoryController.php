@@ -20,6 +20,13 @@ class CategoryController extends Controller
         $categories = Category::query()->whereNull('category_id')->with('subcategories')->get();
         return view('admin.categories.index', compact('categories'));
     }
+
+    public function search(Request $request) {
+        return response()->json(Category::query()
+            ->select(['id', 'name'])
+            ->where('name', 'like', '%'.$request->search.'%')->get());
+    }
+
     public function show(Request $request, string $alias) {
         $query = Category::query();
         $query->where('alias', $alias);

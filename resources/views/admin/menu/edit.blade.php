@@ -64,14 +64,29 @@
                                         <div class="col-8">
                                             <div class="row">
                                                 <div class="col-6">
-                                                    <div class="form-group">
-                                                        <label>Ссылка</label>
-                                                        <input type="text" name="link" class="form-control" value="{{$item->link}}" required/>
-                                                    </div>
+                                                    @if($item->type == \App\Models\Menu::TOP_MENU)
+{{--                                                        <div class="form-group">--}}
+{{--                                                            <label for="cat_select">Категория</label>--}}
+{{--                                                            <select name="category_id" id="cat_select" class="form-control" required>--}}
+{{--                                                                <option></option>--}}
+{{--                                                            </select>--}}
+{{--                                                        </div>--}}
+                                                        <div class="form-group">
+                                                            <label>Категория</label>
+                                                            <select class="form-control select2" id="cat_select"
+                                                                    name="category_id" multiple>
+                                                            </select>
+                                                        </div>
+                                                    @else
+                                                        <div class="form-group">
+                                                            <label>Ссылка</label>
+                                                            <input type="text" name="link" class="form-control" required/>
+                                                        </div>
+                                                    @endif
                                                 </div>
                                                 <div class="col-6">
                                                     <div class="form-group">
-                                                        <label>Родительская категория</label>
+                                                        <label>Родительский пункт меню</label>
                                                         <select class="form-control select2" id="parent_select" name="parent_id">
                                                             <option></option>
                                                             @foreach($menu_items as $parent_item)
@@ -195,7 +210,7 @@
 
     <script>
         $('#parent_select').select2({
-            placeholder: "Выберите категорию",
+            placeholder: "Выберите родительский пункт меню",
             allowClear: true
         });
         $(function () {
@@ -205,6 +220,38 @@
                 }
             });
         });
+        $(document).ready(function () {
+            let cat_select = $('#cat_select');
+            cat_select.select2({
+                placeholder: "Выберите категорию",
+                ajax: {
+                    url: '{{route('admin.categories.search')}}',
+                    data: function (params) {
+                        var query = {
+                            search: params.term,
+                            type: 'public'
+                        }
+
+                        // Query parameters will be ?search=[term]&type=public
+                        return query;
+                    },
+                    processResults: function (data) {
+                        data = data.map((x) => {
+                            return {
+                                text: x.name, id: x.id
+                            }
+                        })
+                        // Transforms the top-level key of the response object from 'items' to 'results'
+                        return {
+                            results: data
+                        };
+                    }
+                },
+                minimumInputLength: 1
+            });
+
+
+        })
     </script>
 @endsection
 
