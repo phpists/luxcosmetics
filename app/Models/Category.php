@@ -20,6 +20,11 @@ class Category extends Model
         return $this->hasMany(Category::class);
     }
 
+    public function parent()
+    {
+        return $this->hasOne(Category::class, 'id', 'category_id');
+    }
+
     public function subcategories(): HasMany
     {
         return $this->hasMany(Category::class)->with('categories');
@@ -46,6 +51,18 @@ class Category extends Model
     public function tags(): HasMany
     {
         return $this->hasMany(Tag::class);
+    }
+
+    public function category_banners()
+    {
+        return $this->hasMany(CategoryBanner::class)
+            ->orderBy('pos');
+    }
+
+    public function banners()
+    {
+        return $this->belongsToMany(Banner::class, 'category_banners')
+            ->orderBy('pos');
     }
 
 }

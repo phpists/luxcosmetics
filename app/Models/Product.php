@@ -133,4 +133,35 @@ class Product extends Model
         return [];
     }
 
+    public function product_banners()
+    {
+        return $this->hasMany(ProductBanner::class)
+            ->orderBy('pos');
+    }
+
+    public function banners()
+    {
+        return $this->belongsToMany(Banner::class, 'product_banners')
+            ->orderBy('pos');
+    }
+
+    public function getActualBanners()
+    {
+        $sources = [$this];
+        $category = $this->category;
+        do {
+            if ($category)
+                $sources[] = $category;
+            $category = $category->parent;
+        } while ($category);
+
+        foreach ($sources as $source) {
+            if ($source->banners && $source->banners->count() > 0)
+                return $source->banners;
+        }
+
+        return null;
+    }
+
+
 }
