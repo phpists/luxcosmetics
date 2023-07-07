@@ -142,11 +142,6 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function 
     Route::put('products/{id}', [\App\Http\Controllers\Admin\ProductController::class, 'update'])->name('admin.product.update');
     Route::get('products/properties', [\App\Http\Controllers\Admin\ProductController::class, 'getProperties'])->name('admin.product.properties');
 
-    // Product Banner
-    Route::post('product-banner/store', [\App\Http\Controllers\Admin\ProductBannerController::class, 'store'])->name('admin.product_banner.store');
-    Route::post('product-banner/sort', [\App\Http\Controllers\Admin\ProductBannerController::class, 'sort'])->name('admin.product_banner.sort');
-    Route::delete('product-banner/delete', [\App\Http\Controllers\Admin\ProductBannerController::class, 'delete'])->name('admin.product_banner.delete');
-
 
 //    Categories
     Route::get('categories', [AdminCategoryController::class, 'index'])->name('admin.categories');
@@ -159,10 +154,10 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function 
     Route::post('categories/update-position', [AdminCategoryController::class, 'updatePosition'])->name('admin.categories.updatePosition');
     Route::post('_update-properties-position', [AdminCategoryController::class, 'updatePropertiesPosition'])->name('admin.categories.updatePropsPosition');
 
-    // Category Banner
-    Route::post('category-banner/store', [\App\Http\Controllers\Admin\CategoryBannerController::class, 'store'])->name('admin.category_banner.store');
-    Route::post('category-banner/sort', [\App\Http\Controllers\Admin\CategoryBannerController::class, 'sort'])->name('admin.category_banner.sort');
-    Route::delete('category-banner/delete', [\App\Http\Controllers\Admin\CategoryBannerController::class, 'delete'])->name('admin.category_banner.delete');
+    // Article
+    Route::post('article/store', [\App\Http\Controllers\Admin\ArticleController::class, 'store'])->name('admin.article.store');
+    Route::post('article/sort', [\App\Http\Controllers\Admin\ArticleController::class, 'sort'])->name('admin.article.sort');
+    Route::delete('article/delete', [\App\Http\Controllers\Admin\ArticleController::class, 'delete'])->name('admin.article.delete');
 
 
 //    Dashboard

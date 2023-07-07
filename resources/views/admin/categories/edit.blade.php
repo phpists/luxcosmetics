@@ -409,33 +409,33 @@
                                     </tr>
                                     </thead>
                                     <tbody id="category_banners-table">
-                                    @foreach($category->category_banners as $relation)
-                                        <tr data-id="{{ $relation->id }}">
+                                    @foreach($articles as $article)
+                                        <tr data-id="{{ $article->id }}">
                                             <td class="handle text-center pl-0" style="cursor: pointer">
                                                 <i class="flaticon2-sort"></i>
                                             </td>
                                             <td class="text-center position">
                                                 <div class="mx-auto rounded-circle overflow-hidden" style="width: fit-content">
-                                                    <img src="{{ $relation->banner->mainImage() }}" width="50" height="50" alt="">
+                                                    <img src="{{ $article->getImageSrcAttribute() }}" width="50" height="50" alt="">
                                                 </div>
                                             </td>
                                             <td class="text-center position">
                                                 <span class="text-dark-75 d-block font-size-lg sort_col">
-                                                    <a href="{{ route('admin.banner.edit', ['id' => $relation->banner->id]) }}">{{ $relation->banner->title }}</a>
+                                                    <a href="{{$article->link}}">{{ $article->title }}</a>
                                                 </span>
                                             </td>
                                             <td class="text-center">
                                                 <span class="text-dark-75 d-block font-size-lg">
-                                                    <a href="{{ route('index.banner', ['link' => $relation->banner->link]) }}" target="_blank">{{ $relation->banner->link }}</a>
+                                                    {{$article->link}}
                                                 </span>
                                             </td>
                                             <td class="text-center pr-0">
-                                                    <form action="{{ route('admin.category_banner.delete') }}" method="POST">
+                                                    <form action="{{ route('admin.article.delete') }}" method="POST">
                                                         @csrf
                                                         @method('DELETE')
-                                                        <input type="hidden" name="id" value="{{ $relation->id }}">
+                                                        <input type="hidden" name="id" value="{{ $article->id }}">
                                                         <button type="submit" class="btn btn-sm btn-clean btn-icon btn_delete"
-                                                                onclick="return confirm('Вы уверены, что хотите удалить ссылку на статью \'{{ $relation->banner->title }}\'?')"
+                                                                onclick="return confirm('Вы уверены, что хотите удалить ссылку на статью \'{{ $article->title }}\'?')"
                                                                 title="Delete"><i class="las la-trash"></i>
                                                         </button>
                                                     </form>
@@ -458,7 +458,6 @@
     <!--end::Entry-->
     @include('admin.categories.modals.create-tag')
     @include('admin.categories.modals.update-tag')
-
     @include('admin.categories.modals.create-category_banner')
 
 @endsection
@@ -476,6 +475,21 @@
             placeholder: "Выберите категорию",
             allowClear: true
         });
+        var KTSummernoteDemo = function () {
+            // Private functions
+            var demos = function () {
+                $('.summernote').summernote($.extend(summernoteDefaultOptions, {
+                    height: 250
+                }));
+            }
+
+            return {
+                // public functions
+                init: function() {
+                    demos();
+                }
+            };
+        }();
         $(function () {
             $.ajaxSetup({
                 headers: {
@@ -485,6 +499,9 @@
 
             var createImagePlugin = new KTImageInput('createImagePlugin');
             var createPageImagePlugin = new KTImageInput('createPageImagePlugin');
+            var createArticleImage = new KTImageInput('createArticleImage');
+
+            KTSummernoteDemo.init();
 
             $(document).on('click', '.updateTag', loadTag);
 
@@ -535,7 +552,7 @@
 
                     $.ajax({
                         method: 'post',
-                        url: '{{ route('admin.category_banner.sort') }}',
+                        url: '{{ route('admin.article.sort') }}',
                         data: {
                             positions: list,
                         },

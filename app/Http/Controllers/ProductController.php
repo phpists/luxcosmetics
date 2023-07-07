@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Article;
+use App\Models\Category;
 use App\Models\Product;
 use App\Services\CatalogService;
 use Faker\Provider\Image;
@@ -24,7 +26,21 @@ class ProductController extends Controller
                 'images' => $images
             ]);
         }
+        $articles = Article::query()->where('record_id', $product->id)->where('table_name', 'products')->get();
+        $category = $product->category;
+        while (sizeof($articles) === 0) {
+            $articles = Article::query()->where('record_id', $category->id)->where('table_name', 'categories')->get();
+            if ($category->category_id !== null && sizeof($articles) === 0) {
+                $category = Category::query()->find($category->category_id);
+                if (!$category) {
+                    break;
+                }
+            }
+            else {
+                break;
+            }
+        }
         $product_variations = CatalogService::getProductVariations($product->id, $product->base_property_id);
-        return view('products.product', compact('product', 'product_variations'));
+        return view('products.product', compact('product', 'product_variations', 'articles'));
     }
 }

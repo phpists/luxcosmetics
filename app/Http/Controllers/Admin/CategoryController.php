@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Article;
 use App\Models\Category;
 use App\Models\PropertyCategory;
 use App\Models\Tag;
@@ -92,8 +93,14 @@ class CategoryController extends Controller
         $categories = Category::query()->get();
         $category = $categories->find($id);
         $tags = Tag::query()->where('category_id', $id)->paginate();
+        $articles = Article::query()->where('record_id', $category->id)
+            ->where('table_name', 'categories')
+            ->orderBy('position')
+            ->get();
+        $last_position = $articles->max('position');
+        $last_position = $last_position ? $last_position + 1: 1;
         $properties = PropertyCategory::query()->where('category_id', $category->id)->orderBy('position')->paginate();
-        return view('admin.categories.edit', compact('category', 'categories', 'properties', 'tags'));
+        return view('admin.categories.edit', compact('category', 'categories', 'properties', 'tags', 'last_position', 'articles'));
     }
 
     public function update(Request $request){

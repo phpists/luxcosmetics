@@ -9,7 +9,7 @@
         background-position: center!important;
     }
 </style>
-<div class="modal fade" id="createCategoryBannerModal" tabindex="-1" role="dialog" aria-labelledby="createTagModal"
+<div class="modal fade" id="createArticleModal" tabindex="-1" role="dialog" aria-labelledby="createTagModal"
      aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
@@ -22,8 +22,8 @@
 
             <form action="{{ route('admin.article.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
-                <input type="hidden" name="record_id" value="{{ $category->id }}">
-                <input type="hidden" name="table_name" value="categories">
+                <input type="hidden" name="record_id" value="{{ $product->id }}">
+                <input type="hidden" name="table_name" value="products">
                 <div class="modal-body">
 
                     <div class="row">

@@ -53,16 +53,16 @@ class Category extends Model
         return $this->hasMany(Tag::class);
     }
 
-    public function category_banners()
-    {
-        return $this->hasMany(CategoryBanner::class)
-            ->orderBy('pos');
-    }
-
     public function banners()
     {
         return $this->belongsToMany(Banner::class, 'category_banners')
             ->orderBy('pos');
+    }
+
+    public function articles() {
+        return $this->hasMany(Article::class, 'record_id')
+            ->where('table_name', 'categories')
+            ->orderBy('position');
     }
 
 }

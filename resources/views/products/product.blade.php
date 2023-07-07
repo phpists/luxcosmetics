@@ -189,22 +189,22 @@
                         <p>Доставка в тот же день: заказ до 13:00 в Москве и <a href="">других городах.</a></p>
                         <p>Бесплатная экспресс-доставка для всех заказов на сумму свыше 10 000 ₽ </p>
                     </div>
-                    @if($product->getActualBanners())
+                    @if(sizeof($articles) > 0)
                         <div class="product-page__actions">
-                            @foreach($product->getActualBanners() as $banner)
+                            @foreach($articles->sortBy('position') as $article)
                                 <div class="product-page__action productaction">
-                                    @if($banner->image)
+                                    @if($article->image)
                                     <div class="productaction__image">
-                                        <a href="{{ route('index.banner', ['link' => $banner->link]) }}">
-                                            <img src="{{ $banner->mainImage() }}" alt="" style="width: 40px; height: 40px">
+                                        <a href="{{ $article->link }}">
+                                            <img src="{{ $article->getImageSrcAttribute() }}" alt="" style="width: 40px; height: 40px">
                                         </a>
                                     </div>
                                     @endif
                                     <div class="productaction__wrap">
                                         <div class="productaction__title">
-                                            <a href="{{ route('index.banner', ['link' => $banner->link]) }}">{{ $banner->title }}</a>
+                                            <a href="{{ $article->link }}">{{ $article->title }}</a>
                                         </div>
-                                        <div class="productaction__intro">{{ strip_tags(\Illuminate\Support\Str::limit($banner->text)) }}</div>
+                                        <div class="productaction__intro">{{ strip_tags(\Illuminate\Support\Str::limit($article->description)) }}</div>
                                     </div>
                                 </div>
                             @endforeach

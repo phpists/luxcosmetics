@@ -9,7 +9,7 @@
         background-position: center!important;
     }
 </style>
-<div class="modal fade" id="createCategoryBannerModal" tabindex="-1" role="dialog" aria-labelledby="createTagModal"
+<div class="modal fade" id="updateArticleModal" tabindex="-1" role="dialog" aria-labelledby="createTagModal"
      aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
@@ -87,7 +87,7 @@
 
                     <div class="row">
                         <div class="form-group mb-0">
-                            <label class="col-auto col-form-label" for="createFaqAnswer">Описание</label>
+                            <label class="col-auto col-form-label" for="createFaqAnswer">Ответ</label>
                         </div>
                         <div class="col-12">
                             <textarea name="description" class="summernote" id="createFaqAnswer"></textarea>
