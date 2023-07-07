@@ -37,7 +37,7 @@ class SalesController extends Controller
         $categories = Category::query()
             ->select('categories.*')
             ->join('products', 'products.category_id', 'categories.id')
-            ->where('products.show_in_sales_page', true)
+            ->where($page_column, true)
             ->distinct(['category_id'])
             ->get();
         $products = $this->productService->getProducts($filters);
