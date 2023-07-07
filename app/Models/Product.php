@@ -42,6 +42,9 @@ class Product extends Model
         'show_in_discount',
         'show_in_popular',
         'show_in_new',
+        'show_in_sales_page',
+        'show_in_percent_discount_page',
+        'show_in_new_page',
         'size',
     ];
 

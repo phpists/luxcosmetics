@@ -50,23 +50,37 @@
                     <input type="hidden" name="position" value="{{$pos}}">
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-8">
+                            <div class="col-12">
                                 <div class="row">
-                                    <div class="col-6">
-                                        @if($menu_type == \App\Models\Menu::TOP_MENU)
-                                            <div class="form-group">
-                                                <label>Категория</label>
-                                                <select class="form-control select2" id="cat_select"
-                                                        name="category_id" multiple>
-                                                </select>
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <label class="">Статическая страница?</label>
+                                            <div class="">
+                                                <span class="switch">
+                                                    <label>
+                                                        <input type="checkbox" id="static_check" name="select"/>
+                                                        <span></span>
+                                                    </label>
+                                                </span>
                                             </div>
-                                        @else
-                                            <div class="form-group">
-                                                <label>Ссылка</label>
-                                                <input type="text" name="link" class="form-control" required/>
-                                            </div>
-                                        @endif
+                                        </div>
                                     </div>
+                                    <div class="col-md-5">
+                                        <div class="form-group">
+                                            <label>Категория</label>
+                                            <select class="form-control select2" id="cat_select"
+                                                    name="category_id" required>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-5">
+                                        <div class="form-group">
+                                            <label>Ссылка</label>
+                                            <input type="text" id="link" name="link" class="form-control" disabled/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
                                     <div class="col-6">
                                         <div class="form-group">
                                             <label>Родительский пункт меню</label>
@@ -78,9 +92,7 @@
                                             </select>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-12">
+                                    <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Название</label>
                                             <input type="text" name="title" class="form-control" required/>
@@ -129,6 +141,20 @@
                 allowClear: true
             }
         );
+        $('#static_check').on('change', function (ev) {
+            if (ev.currentTarget.checked) {
+                $('#cat_select').attr('disabled', true)
+                $('#link').attr('disabled', false)
+                $('#cat_select').attr('required', true)
+                $('#link').attr('required', false)
+            }
+            else {
+                $('#cat_select').attr('disabled', false)
+                $('#link').attr('disabled', true)
+                $('#cat_select').attr('required', false)
+                $('#link').attr('required', true)
+            }
+        })
         $(function () {
             $.ajaxSetup({
                 headers: {
@@ -139,6 +165,7 @@
         $(document).ready(function () {
             let cat_select = $('#cat_select');
             cat_select.select2({
+                placeholder: 'Выберите категорию',
                 ajax: {
                     url: '{{route('admin.categories.search')}}',
                     data: function (params) {

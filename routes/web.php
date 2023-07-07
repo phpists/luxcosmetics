@@ -55,6 +55,8 @@ Route::get('q/policy', [QuestionController::class, 'policy'])->name('questions.p
 Route::get('q/faq', [QuestionController::class, 'index'])->name('questions.faq');
 Route::get('brands', [\App\Http\Controllers\BrandController::class, 'index'])->name('brands');
 Route::get('sales', [\App\Http\Controllers\SalesController::class, 'index'])->name('sales');
+Route::get('sales-50', [\App\Http\Controllers\SalesController::class, 'index'])->name('sales-50');
+Route::get('novinki', [\App\Http\Controllers\SalesController::class, 'index'])->name('novinki');
 // Favourite Products
 Route::get('favourites', [\App\Http\Controllers\FavoriteProductController::class, 'index'])->name('favourites');
 Route::post('favourites', [\App\Http\Controllers\FavoriteProductController::class, 'add'])->name('favourites.add');

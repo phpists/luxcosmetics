@@ -198,6 +198,27 @@
                                         <div class="form-group">
                                             <div class="checkbox-inline">
                                                 <label class="checkbox">
+                                                    <input type="checkbox" @if($product->show_in_sales_page) checked @endif name="show_in_sales_page"/>
+                                                    <span></span>
+                                                    Отобразить на странице акции
+                                                </label>
+                                                <label class="checkbox">
+                                                    <input type="checkbox" @if($product->show_in_percent_discount_page) checked @endif name="show_in_percent_discount_page"/>
+                                                    <span></span>
+                                                    Отобразить на странице Товары со скидкой до -50%
+                                                </label>
+                                                <label class="checkbox">
+                                                    <input type="checkbox" @if($product->show_in_new_page) checked @endif name="show_in_new_page"/>
+                                                    <span></span>
+                                                    Отобразить на странице Новинки
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <div class="checkbox-inline">
+                                                <label class="checkbox">
                                                     <input type="checkbox" @if($product->show_in_popular) checked @endif name="show_in_popular"/>
                                                     <span></span>
                                                     Добавить в популярные

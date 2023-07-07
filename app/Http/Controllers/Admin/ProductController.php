@@ -72,6 +72,9 @@ class ProductController extends Controller
         $data['show_in_discount'] = array_key_exists('show_in_discount', $data)? 1: 0;
         $data['show_in_popular'] = array_key_exists('show_in_popular', $data)? 1: 0;
         $data['show_in_new'] = array_key_exists('show_in_new', $data)? 1: 0;
+        $data['show_in_sales_page'] = array_key_exists('show_in_sales_page', $data)? 1: 0;
+        $data['show_in_percent_discount_page'] = array_key_exists('show_in_percent_discount_page', $data)? 1: 0;
+        $data['show_in_new_page'] = array_key_exists('show_in_new_page', $data)? 1: 0;
         if (!array_key_exists('alias', $data) || $data['alias'] === null) {
             $data['alias'] = Str::slug($data['title'], '-');
         }
@@ -132,6 +135,9 @@ class ProductController extends Controller
         $data['show_in_discount'] = array_key_exists('show_in_discount', $data)? 1: 0;
         $data['show_in_popular'] = array_key_exists('show_in_popular', $data)? 1: 0;
         $data['show_in_new'] = array_key_exists('show_in_new', $data)? 1: 0;
+        $data['show_in_sales_page'] = array_key_exists('show_in_sales_page', $data)? 1: 0;
+        $data['show_in_percent_discount_page'] = array_key_exists('show_in_percent_discount_page', $data)? 1: 0;
+        $data['show_in_new_page'] = array_key_exists('show_in_new_page', $data)? 1: 0;
         if (!array_key_exists('alias', $data) || $data['alias'] === null) {
             $data['alias'] = Str::slug($data['title'], '-');
         }
