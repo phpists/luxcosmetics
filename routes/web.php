@@ -37,7 +37,7 @@ Route::get('b', [\App\Http\Controllers\BrandsController::class, 'index'])->name(
 Route::get('b/{link}', [\App\Http\Controllers\BrandsController::class, 'show'])->name('brands.show');
 
 // Categories
-Route::get('c', [CategoryController::class, 'index'])->name('categories');
+Route::get('catalog', [CategoryController::class, 'index'])->name('categories');
 Route::get('c/{alias}', [CategoryController::class, 'show'])->name('categories.show');
 // Static pages
 Route::get('/pages/{alias}', [\App\Http\Controllers\PagesController::class, 'show'])->name('pages.show');
@@ -141,6 +141,13 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function 
     Route::get('products/edit/{id}', [\App\Http\Controllers\Admin\ProductController::class, 'edit'])->name('admin.product.edit');
     Route::put('products/{id}', [\App\Http\Controllers\Admin\ProductController::class, 'update'])->name('admin.product.update');
     Route::get('products/properties', [\App\Http\Controllers\Admin\ProductController::class, 'getProperties'])->name('admin.product.properties');
+
+    // Product Banner
+    Route::post('product-banner/store', [\App\Http\Controllers\Admin\ProductBannerController::class, 'store'])->name('admin.product_banner.store');
+    Route::post('product-banner/sort', [\App\Http\Controllers\Admin\ProductBannerController::class, 'sort'])->name('admin.product_banner.sort');
+    Route::delete('product-banner/delete', [\App\Http\Controllers\Admin\ProductBannerController::class, 'delete'])->name('admin.product_banner.delete');
+
+
 //    Categories
     Route::get('categories', [AdminCategoryController::class, 'index'])->name('admin.categories');
     Route::post('categories', [AdminCategoryController::class, 'store'])->name('admin.category.store');
@@ -151,6 +158,13 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function 
     Route::get('categories/search', [AdminCategoryController::class, 'search'])->name('admin.categories.search');
     Route::post('categories/update-position', [AdminCategoryController::class, 'updatePosition'])->name('admin.categories.updatePosition');
     Route::post('_update-properties-position', [AdminCategoryController::class, 'updatePropertiesPosition'])->name('admin.categories.updatePropsPosition');
+
+    // Category Banner
+    Route::post('category-banner/store', [\App\Http\Controllers\Admin\CategoryBannerController::class, 'store'])->name('admin.category_banner.store');
+    Route::post('category-banner/sort', [\App\Http\Controllers\Admin\CategoryBannerController::class, 'sort'])->name('admin.category_banner.sort');
+    Route::delete('category-banner/delete', [\App\Http\Controllers\Admin\CategoryBannerController::class, 'delete'])->name('admin.category_banner.delete');
+
+
 //    Dashboard
     Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
 

@@ -85,12 +85,6 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="form-group" id="variations_container">
-                                            <label>Модификации</label>
-                                            <select class="form-control select2" id="variations_select"
-                                                    name="variations_id[]" multiple>
-                                            </select>
-                                        </div>
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <div class="form-group">

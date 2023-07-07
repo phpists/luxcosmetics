@@ -37,8 +37,9 @@
             <div class="row">
                 <div class="col-lg-12">
                     <ol class="crumbs__list">
-                        <li class="crumbs__item"><a href="">Главная</a></li>
-                        <li class="crumbs__item">{{$category->name}}</li>
+                        <li class="crumbs__item"><a href="{{ route('home') }}">Главная</a></li>
+                        @include('categories.parts.parent_category')
+                        <li class="crumbs__item">{{ $category->name }}</li>
                     </ol>
                 </div>
             </div>

@@ -11,10 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('products', function (Blueprint $table) {
-            $table->float('old_price')->after('status')->nullable();
-            $table->integer('discount_price')->nullable()->change();
-            $table->renameColumn('discount_price', 'discount');
+        Schema::create('category_banners', function (Blueprint $table) {
+            $table->id();
+            $table->integer('pos')->default(999);
+            $table->foreignIdFor(\App\Models\Category::class);
+            $table->foreignIdFor(\App\Models\Banner::class);
         });
     }
 
@@ -23,8 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('products', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('category_banners');
     }
 };
