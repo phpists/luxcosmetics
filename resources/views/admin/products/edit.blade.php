@@ -69,6 +69,9 @@
                         </ul>
                     </div>
                     <div class="card-toolbar">
+                        <a href="{{ route('products.product', ['alias' => $product->alias]) }}" class="btn btn-primary">Посмотреть продукт</a>
+                    </div>
+                    <div class="card-toolbar">
                         <button type="submit" form="blog_post" class="btn btn-primary">Сохранить</button>
                     </div>
                 </div>
