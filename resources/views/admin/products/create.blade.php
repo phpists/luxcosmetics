@@ -58,18 +58,20 @@
                                         <div class="form-group">
                                             <label for="exampleSelect2">Название</label>
                                             <input type="text" name="title" class="form-control" required/>
-                                        </div>                                        <div class="row">
-                                            <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label>Категории</label>
-                                            <select class="form-control select2" id="category_select"
-                                                    name="category_id" required>
-                                                <option value=""></option>
-                                                @foreach($categories as $category)
-                                                    <option value="{{ $category->id }}">{{ $category->name }}</option>
-                                                @endforeach
-                                            </select>
                                         </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Категории</label>
+                                                    <select class="form-control select2" id="category_select"
+                                                            name="category_id" required>
+                                                        <option value=""></option>
+                                                        @foreach($categories as $category)
+                                                            <option
+                                                                value="{{ $category->id }}">{{ $category->name }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-group" id="variations_container">
@@ -82,12 +84,6 @@
                                                     </select>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="form-group" id="variations_container">
-                                            <label>Модификации</label>
-                                            <select class="form-control select2" id="variations_select"
-                                                    name="variations_id[]" multiple>
-                                            </select>
                                         </div>
                                         <div class="row">
                                             <div class="col-md-6">
@@ -103,7 +99,8 @@
                                             </div>
                                             <div class="col-md-2">
                                                 <label for="exampleSelect2">Цена</label>
-                                                <input type="number" step="any" name="price" class="form-control" required/>
+                                                <input type="number" step="any" name="price" class="form-control"
+                                                       required/>
                                             </div>
                                             <div class="col-md-2">
                                                 <label for="exampleSelect2">Старая цена</label>
@@ -147,7 +144,8 @@
                                             <label>Статус</label>
                                             <select class="form-control status" name="availability">
                                                 @foreach(array_column(\App\Enums\AvailableOptions::cases(), 'value') as $value)
-                                                    <option value="{{$value}}">{{\App\Services\SiteService::getProductStatus($value)}}</option>
+                                                    <option
+                                                        value="{{$value}}">{{\App\Services\SiteService::getProductStatus($value)}}</option>
                                                 @endforeach
                                             </select>
                                         </div>
@@ -172,6 +170,27 @@
                                     </div>
                                 </div>
                                 <div class="row">
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <div class="checkbox-inline">
+                                                <label class="checkbox">
+                                                    <input type="checkbox" name="show_in_sales_page"/>
+                                                    <span></span>
+                                                    Отобразить на странице акции
+                                                </label>
+                                                <label class="checkbox">
+                                                    <input type="checkbox" name="show_in_percent_discount_page"/>
+                                                    <span></span>
+                                                    Отобразить на странице Товары со скидкой до -50%
+                                                </label>
+                                                <label class="checkbox">
+                                                    <input type="checkbox" name="show_in_new_page"/>
+                                                    <span></span>
+                                                    Отобразить на странице Новинки
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <div class="col-12">
                                         <div class="form-group">
                                             <div class="checkbox-inline">
@@ -220,61 +239,61 @@
                         <div class="tab-pane fade" id="kt_tab_pane_3_4" role="tabpanel"
                              aria-labelledby="kt_tab_pane_3_4">
 
-{{--                            <form action="{{ route('admin.blog.update.seo') }}" method="POST">--}}
-{{--                                @csrf--}}
-{{--                                <input type="hidden" name="blog_id">--}}
-{{--                                <div class="row">--}}
-{{--                                    <div class="col-md-12">--}}
-{{--                                        <div class="form-group">--}}
-{{--                                            <label>H1</label>--}}
-{{--                                            <input type="text" name="h1" class="form-control"/>--}}
-{{--                                        </div>--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
+                            {{--                            <form action="{{ route('admin.blog.update.seo') }}" method="POST">--}}
+                            {{--                                @csrf--}}
+                            {{--                                <input type="hidden" name="blog_id">--}}
+                            {{--                                <div class="row">--}}
+                            {{--                                    <div class="col-md-12">--}}
+                            {{--                                        <div class="form-group">--}}
+                            {{--                                            <label>H1</label>--}}
+                            {{--                                            <input type="text" name="h1" class="form-control"/>--}}
+                            {{--                                        </div>--}}
+                            {{--                                    </div>--}}
+                            {{--                                </div>--}}
 
-{{--                                <div class="row">--}}
-{{--                                    <div class="col-md-12">--}}
-{{--                                        <div class="form-group">--}}
-{{--                                            <label>Meta title</label>--}}
-{{--                                            <input type="text" name="meta_title" class="form-control"/>--}}
-{{--                                        </div>--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
+                            {{--                                <div class="row">--}}
+                            {{--                                    <div class="col-md-12">--}}
+                            {{--                                        <div class="form-group">--}}
+                            {{--                                            <label>Meta title</label>--}}
+                            {{--                                            <input type="text" name="meta_title" class="form-control"/>--}}
+                            {{--                                        </div>--}}
+                            {{--                                    </div>--}}
+                            {{--                                </div>--}}
 
-{{--                                <div class="row">--}}
-{{--                                    <div class="col-md-12">--}}
-{{--                                        <div class="form-group">--}}
-{{--                                            <label>Meta robots</label>--}}
-{{--                                            <input type="text" name="meta_robots" class="form-control"/>--}}
-{{--                                        </div>--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
+                            {{--                                <div class="row">--}}
+                            {{--                                    <div class="col-md-12">--}}
+                            {{--                                        <div class="form-group">--}}
+                            {{--                                            <label>Meta robots</label>--}}
+                            {{--                                            <input type="text" name="meta_robots" class="form-control"/>--}}
+                            {{--                                        </div>--}}
+                            {{--                                    </div>--}}
+                            {{--                                </div>--}}
 
-{{--                                <div class="row">--}}
-{{--                                    <div class="col-md-12">--}}
-{{--                                        <div class="form-group">--}}
-{{--                                            <label>Meta description</label>--}}
-{{--                                            <textarea class="form-control" id="meta_description"--}}
-{{--                                                      name="meta_description"></textarea>--}}
-{{--                                        </div>--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
+                            {{--                                <div class="row">--}}
+                            {{--                                    <div class="col-md-12">--}}
+                            {{--                                        <div class="form-group">--}}
+                            {{--                                            <label>Meta description</label>--}}
+                            {{--                                            <textarea class="form-control" id="meta_description"--}}
+                            {{--                                                      name="meta_description"></textarea>--}}
+                            {{--                                        </div>--}}
+                            {{--                                    </div>--}}
+                            {{--                                </div>--}}
 
-{{--                                <div class="row">--}}
-{{--                                    <div class="col-md-12">--}}
-{{--                                        <div class="form-group">--}}
-{{--                                            <label>Meta keywords</label>--}}
-{{--                                            <textarea class="form-control" id="meta_keywords"--}}
-{{--                                                      name="meta_keywords"></textarea>--}}
+                            {{--                                <div class="row">--}}
+                            {{--                                    <div class="col-md-12">--}}
+                            {{--                                        <div class="form-group">--}}
+                            {{--                                            <label>Meta keywords</label>--}}
+                            {{--                                            <textarea class="form-control" id="meta_keywords"--}}
+                            {{--                                                      name="meta_keywords"></textarea>--}}
 
-{{--                                        </div>--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
+                            {{--                                        </div>--}}
+                            {{--                                    </div>--}}
+                            {{--                                </div>--}}
 
-{{--                                <div class="card-footer">--}}
-{{--                                    <button type="submit" class="btn btn-primary mr-2">Сохранить</button>--}}
-{{--                                </div>--}}
-{{--                            </form>--}}
+                            {{--                                <div class="card-footer">--}}
+                            {{--                                    <button type="submit" class="btn btn-primary mr-2">Сохранить</button>--}}
+                            {{--                                </div>--}}
+                            {{--                            </form>--}}
 
                         </div>
                     </div>
@@ -325,7 +344,7 @@
             });
 
 
-            $(document).on('change', '#category_select', function(e) {
+            $(document).on('change', '#category_select', function (e) {
                 let category_id = this.value
                 if (category_id) {
                     $.ajax({
@@ -373,7 +392,7 @@
 
             return {
                 // public functions
-                init: function() {
+                init: function () {
                     demos();
                 }
             };

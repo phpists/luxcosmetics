@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Article;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Product;
@@ -72,6 +73,9 @@ class ProductController extends Controller
         $data['show_in_discount'] = array_key_exists('show_in_discount', $data)? 1: 0;
         $data['show_in_popular'] = array_key_exists('show_in_popular', $data)? 1: 0;
         $data['show_in_new'] = array_key_exists('show_in_new', $data)? 1: 0;
+        $data['show_in_sales_page'] = array_key_exists('show_in_sales_page', $data)? 1: 0;
+        $data['show_in_percent_discount_page'] = array_key_exists('show_in_percent_discount_page', $data)? 1: 0;
+        $data['show_in_new_page'] = array_key_exists('show_in_new_page', $data)? 1: 0;
         if (!array_key_exists('alias', $data) || $data['alias'] === null) {
             $data['alias'] = Str::slug($data['title'], '-');
         }
@@ -122,7 +126,15 @@ class ProductController extends Controller
 
         $product_variations = CatalogService::getProductVariations($product->id, $product->base_property_id);
 
-        return view('admin.products.edit', compact('product', 'categories', 'brands', 'product_images', 'product_variations'));
+        $articles = Article::query()
+            ->where('record_id', $product->id)
+            ->where('table_name', 'products')
+            ->orderBy('position')
+            ->get();
+        $last_position = $articles->max('position');
+        $last_position = $last_position ? $last_position + 1: 1;
+
+        return view('admin.products.edit', compact('product', 'categories', 'brands', 'product_images', 'product_variations', 'last_position', 'articles'));
     }
 
     public function update(Request $request, $id)
@@ -132,10 +144,16 @@ class ProductController extends Controller
         $data['show_in_discount'] = array_key_exists('show_in_discount', $data)? 1: 0;
         $data['show_in_popular'] = array_key_exists('show_in_popular', $data)? 1: 0;
         $data['show_in_new'] = array_key_exists('show_in_new', $data)? 1: 0;
+        $data['show_in_sales_page'] = array_key_exists('show_in_sales_page', $data)? 1: 0;
+        $data['show_in_percent_discount_page'] = array_key_exists('show_in_percent_discount_page', $data)? 1: 0;
+        $data['show_in_new_page'] = array_key_exists('show_in_new_page', $data)? 1: 0;
         if (!array_key_exists('alias', $data) || $data['alias'] === null) {
             $data['alias'] = Str::slug($data['title'], '-');
         }
-        $count = Product::query()->where('alias', 'like', $data['alias'].'%')->count();
+        $count = Product::query()
+            ->where('alias', 'like', $data['alias'].'%')
+            ->whereNot('id', $product->id)
+            ->count();
         if ($count > 0) {
             $data['alias'] = $data['alias'].'_'.$count;
         }
@@ -237,6 +255,11 @@ class ProductController extends Controller
 
     public function delete(Request $request, $id) {
         Product::query()->find($id)->delete();
+        $images = DB::table('product_images')->where('id', $id)->get();
+        foreach ($images as $image) {
+            ImageService::removeImage('uploads', 'products', $image);
+        }
+        DB::table('product_images')->where('id', $id)->delete();
         return redirect()->back()->with('success', 'Товар удален успешно');
     }
 

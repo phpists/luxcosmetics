@@ -150,7 +150,7 @@
                                                 <div class="product__label product__label--brown">-50%</div>
                                                 <div class="product__label product__label--green">Хит продаж</div>
                                             </div>
-                                            <a href="products/{{$new_product->alias}}{{$selected_variation !== null?'/'.$selected_variation->id:''}}"><img src="{{asset('images/uploads/products/'.$new_product->image)}}" alt=""></a>
+                                            <a href="/p/{{$new_product->alias}}{{$selected_variation !== null?'/'.$selected_variation->id:''}}"><img src="{{asset('images/uploads/products/'.$new_product->image)}}" alt=""></a>
                                             <button class="product__fav product_favourite" data-label=@if($new_product->is_favourite && \App\Services\FavoriteProductsService::checkByIdForAnonym($new_product->id)) "1" @else "0" @endif data-value="{{$new_product->id}}"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#heart')}}"></use></svg></button>
                                         </div>
                                         <div class="product__title"><a href="">{{$new_product->brand->name}}</a></div>
@@ -255,7 +255,7 @@
                                                 <div class="product__label product__label--brown">-50%</div>
                                                 <div class="product__label product__label--green">Хит продаж</div>
                                             </div>
-                                            <a href="products/{{$new_product->alias}}{{$selected_variation !== null?'/'.$selected_variation->id:''}}"><img src="{{asset('images/uploads/products/'.$new_product->image)}}" alt=""></a>
+                                            <a href="/p/{{$new_product->alias}}{{$selected_variation !== null?'/'.$selected_variation->id:''}}"><img src="{{asset('images/uploads/products/'.$new_product->image)}}" alt=""></a>
                                             <button class="product__fav product_favourite" data-label=@if($new_product->is_favourite && \App\Services\FavoriteProductsService::checkByIdForAnonym($new_product->id)) "1" @else "0" @endif data-value="{{$new_product->id}}"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#heart')}}"></use></svg></button>
                                         </div>
                                         <div class="product__title"><a href="">{{$new_product->brand->name}}</a></div>
@@ -391,7 +391,7 @@
                                                 <div class="product__label product__label--brown">-50%</div>
                                                 <div class="product__label product__label--green">Хит продаж</div>
                                             </div>
-                                            <a href="products/{{$product->alias}}{{$selected_variation !== null?'/'.$selected_variation->id:''}}"><img src="{{asset('images/uploads/products/'.$product->image)}}" alt=""></a>
+                                            <a href="/p/{{$product->alias}}{{$selected_variation !== null?'/'.$selected_variation->id:''}}"><img src="{{asset('images/uploads/products/'.$product->image)}}" alt=""></a>
                                             <button class="product__fav product_favourite" data-label=@if($product->is_favourite && \App\Services\FavoriteProductsService::checkByIdForAnonym($product->id)) "1" @else "0" @endif data-value="{{$product->id}}"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#heart')}}"></use></svg></button>
                                         </div>
                                         <div class="product__title"><a href="">{{$product->brand->name}}</a></div>

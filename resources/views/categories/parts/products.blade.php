@@ -62,7 +62,7 @@
                             $product_variations = \App\Services\CatalogService::getProductVariations($product->id, $product->base_property_id);
                             $product_variations->push($product)
                         @endphp
-                        @if($product_variations->count() > 0)
+                        @if($product_variations->count() > 1)
                             <div class="product__sizesinfo">Еще {{ $product_variations->count() }} варианта</div>
                             <div class="product__pnl">
                                 <div class="product__optionsblock">
@@ -73,7 +73,7 @@
                                         @foreach($product_variations->sortBy('baseValue.value') as $product_variation)
                                             <label class="volume"
                                                    onclick="window.location.href = '{{ route('products.product', ['alias' => $product_variation->alias]) }}'">
-                                                <input type="radio" name="volume" @checked($product->id === $product_variation->id)/>
+                                                <input type="radio" name="volume" @checked($product->id == $product_variation->id)/>
                                                 <div class="volume__text"><b>{{ ($product_variation->baseValue->value ?? '') . ($product_variation->baseProperty->measure ?? '') }}</b>
                                                     {{ $product_variation->price }} ₽
                                                 </div>

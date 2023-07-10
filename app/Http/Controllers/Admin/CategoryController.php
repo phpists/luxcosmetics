@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Article;
 use App\Models\Category;
 use App\Models\PropertyCategory;
 use App\Models\Tag;
@@ -20,6 +21,13 @@ class CategoryController extends Controller
         $categories = Category::query()->whereNull('category_id')->with('subcategories')->get();
         return view('admin.categories.index', compact('categories'));
     }
+
+    public function search(Request $request) {
+        return response()->json(Category::query()
+            ->select(['id', 'name'])
+            ->where('name', 'like', '%'.$request->search.'%')->get());
+    }
+
     public function show(Request $request, string $alias) {
         $query = Category::query();
         $query->where('alias', $alias);
@@ -85,8 +93,14 @@ class CategoryController extends Controller
         $categories = Category::query()->get();
         $category = $categories->find($id);
         $tags = Tag::query()->where('category_id', $id)->paginate();
+        $articles = Article::query()->where('record_id', $category->id)
+            ->where('table_name', 'categories')
+            ->orderBy('position')
+            ->get();
+        $last_position = $articles->max('position');
+        $last_position = $last_position ? $last_position + 1: 1;
         $properties = PropertyCategory::query()->where('category_id', $category->id)->orderBy('position')->paginate();
-        return view('admin.categories.edit', compact('category', 'categories', 'properties', 'tags'));
+        return view('admin.categories.edit', compact('category', 'categories', 'properties', 'tags', 'last_position', 'articles'));
     }
 
     public function update(Request $request){
@@ -96,15 +110,23 @@ class CategoryController extends Controller
         if (!array_key_exists('alias', $data) || $data['alias'] === null) {
             $data['alias'] = Str::slug($data['name'], '-');
         }
-        $count = Category::query()->where('alias', 'like', $data['alias'].'%')->count();
+        $count = Category::query()
+            ->where('alias', 'like', $data['alias'].'%')
+            ->whereNot('id', $request->id)->count();
         if ($count > 0) {
             $data['alias'] = $data['alias'].'_'.$count;
         }
         if(!$category) {
             return redirect()->back()->with('error', 'Категория не найдена');
         }
-        if ($request->hasFile('image')) {
+        if ($request->image_remove === '1') {
+            ImageService::removeImage('uploads', 'categories', $category->image);
+        }
+        else if ($request->hasFile('image')) {
             $image = ImageService::saveImage('uploads', 'categories', $request->image);
+            if ($category->image !== null) {
+                ImageService::removeImage('uploads', 'categories', $category->image);
+            }
             if ($image) {
                 $data['image'] = $image;
             }

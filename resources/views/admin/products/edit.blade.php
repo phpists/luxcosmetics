@@ -57,13 +57,13 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" data-toggle="tab" href="#kt_tab_pane_3_4">
-                                    <span class="nav-text">Модификации</span>
+                                <a class="nav-link" data-toggle="tab" href="#kt_tab_pane_4_4">
+                                    <span class="nav-text">Характеристики</span>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" data-toggle="tab" href="#kt_tab_pane_4_4">
-                                    <span class="nav-text">Характеристики</span>
+                                <a class="nav-link" data-toggle="tab" href="#banners">
+                                    <span class="nav-text">Статьи</span>
                                 </a>
                             </li>
                         </ul>
@@ -201,6 +201,27 @@
                                         <div class="form-group">
                                             <div class="checkbox-inline">
                                                 <label class="checkbox">
+                                                    <input type="checkbox" @if($product->show_in_sales_page) checked @endif name="show_in_sales_page"/>
+                                                    <span></span>
+                                                    Отобразить на странице акции
+                                                </label>
+                                                <label class="checkbox">
+                                                    <input type="checkbox" @if($product->show_in_percent_discount_page) checked @endif name="show_in_percent_discount_page"/>
+                                                    <span></span>
+                                                    Отобразить на странице Товары со скидкой до -50%
+                                                </label>
+                                                <label class="checkbox">
+                                                    <input type="checkbox" @if($product->show_in_new_page) checked @endif name="show_in_new_page"/>
+                                                    <span></span>
+                                                    Отобразить на странице Новинки
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <div class="checkbox-inline">
+                                                <label class="checkbox">
                                                     <input type="checkbox" @if($product->show_in_popular) checked @endif name="show_in_popular"/>
                                                     <span></span>
                                                     Добавить в популярные
@@ -315,86 +336,6 @@
 
                             </div>
                         </div>
-                        <div class="tab-pane fade" id="kt_tab_pane_3_4" role="tabpanel"
-                             aria-labelledby="kt_tab_pane_2_4">
-                            <div class="row mb-5">
-                                <div class="col">
-                                    <div class="mb-7">
-                                        <h3>Редактировать модификации</h3>
-                                    </div>
-                                </div>
-                                <div class="col-auto">
-                                    <button data-toggle="modal" data-target="#createProductVariationModal"
-                                            class="btn btn-primary font-weight-bold">
-                                        <i class="fas fa-plus mr-2"></i>
-                                        Добавить
-                                    </button>
-                                </div>
-                            </div>
-                            <div>
-                                <!--begin::Table-->
-                                <div class="table-responsive">
-                                    <table class="table table-head-custom table-vertical-center">
-                                        <thead>
-                                        <tr>
-                                            <th class="pl-0 text-center">
-                                                #
-                                            </th>
-                                            <th class="pl-0 text-center">
-                                                Объем
-                                            </th>
-                                            <th class="pr-0 text-center">
-                                                Цена
-                                            </th>
-                                            <th class="pr-0 text-center">
-                                                Скидка
-                                            </th>
-                                            <th class="pr-0 text-center">
-                                                Дії
-                                            </th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        @foreach($product->product_variations as $product_variation)
-                                            <tr data-id="{{ $product_variation->id }}">
-                                                <td class="text-center pl-0">
-                                                    {{ $loop->iteration }}
-                                                </td>
-                                                <td class="text-center pl-0">
-                                                    {{$product_variation->size}}
-                                                </td>
-                                                <td class="text-center pl-0">
-                                                    {{$product_variation->price}}
-                                                </td>
-                                                <td class="text-center pl-0">
-                                                    {{$product_variation->discount_price??"-"}}
-                                                </td>
-                                                <td class="text-center pr-0">
-                                                    <button class="btn btn-sm btn-clean btn-icon">
-                                                        <i class="handle_cat_image flaticon2-sort"
-                                                           style="cursor:pointer;"></i>
-                                                    </button>
-                                                    <a href="javascript:;" data-toggle="modal"
-                                                       data-target="#updateProductVariationModal"
-                                                       data-id="{{ $product_variation->id }}"
-                                                       class="btn btn-sm btn-clean btn-icon updateCategoryImage edit-btn-variation">
-                                                        <i class="las la-edit"></i>
-                                                    </a>
-
-                                                    <a href="{{ route('admin.product.variation.remove', $product_variation->id) }}"
-                                                       class="btn btn-sm btn-clean btn-icon"
-                                                       onclick="return confirm('Ви впевнені, що хочете видалити цей запис?')">
-                                                        <i class="las la-trash"></i>
-                                                    </a>
-                                                </td>
-                                            </tr>
-                                        @endforeach
-                                        </tbody>
-                                    </table>
-                                </div>
-
-                            </div>
-                        </div>
                         <div class="tab-pane fade" id="kt_tab_pane_4_4" role="tabpanel"
                              aria-labelledby="kt_tab_pane_2_4">
                             <div class="row">
@@ -416,6 +357,82 @@
                             </div>
 
                         </div>
+                        <div class="tab-pane fade" id="banners" role="tabpanel"
+                             aria-labelledby="kt_tab_pane_4_4">
+                            <div class="row mb-5">
+                                <div class="col">
+                                    <div class="mb-7">
+                                        <h3>Статьи</h3>
+                                    </div>
+                                </div>
+                                <div class="col-auto">
+                                    <button data-toggle="modal" data-target="#createArticleModal"
+                                            class="btn btn-primary font-weight-bold">
+                                        <i class="fas fa-plus mr-2"></i>
+                                        Добавить
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table table-head-custom table-vertical-center">
+                                    <thead>
+                                    <tr>
+                                        <th class="pl-0 text-center">
+                                            #
+                                        </th>
+                                        <th class="pr-0 text-center">
+                                            Изображение
+                                        </th>
+                                        <th class="text-center pr-0">
+                                            Название
+                                        </th>
+                                        <th class="pr-0 text-center">
+                                            Ссылка
+                                        </th>
+                                        <th class="pr-0 text-center">
+                                            Действия
+                                        </th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="product_banners-table">
+                                    @foreach($articles as $article)
+                                        <tr data-id="{{ $article->id }}">
+                                            <td class="handle text-center pl-0" style="cursor: pointer">
+                                                <i class="flaticon2-sort"></i>
+                                            </td>
+                                            <td class="text-center position">
+                                                <div class="mx-auto rounded-circle overflow-hidden" style="width: fit-content">
+                                                    <img src="{{ $article->getImageSrcAttribute() }}" width="50" height="50" alt="">
+                                                </div>
+                                            </td>
+                                            <td class="text-center position">
+                                                <span class="text-dark-75 d-block font-size-lg sort_col">
+                                                    <a href="{{$article->link}}">{{ $article->title }}</a>
+                                                </span>
+                                            </td>
+                                            <td class="text-center">
+                                                <span class="text-dark-75 d-block font-size-lg">
+                                                    {{$article->link}}
+                                                </span>
+                                            </td>
+                                            <td class="text-center pr-0">
+                                                <form action="{{ route('admin.article.delete') }}" method="POST">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <input type="hidden" name="id" value="{{ $article->id }}">
+                                                    <button type="submit" class="btn btn-sm btn-clean btn-icon btn_delete"
+                                                            onclick="return confirm('Вы уверены, что хотите удалить ссылку на статью \'{{ $article->title }}\'?')"
+                                                            title="Delete"><i class="las la-trash"></i>
+                                                    </button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!--end::Table-->
+                        </div>
                     </div>
                 </div>
             </div>
@@ -426,6 +443,9 @@
     @include('admin.products.modals.update')
     @include('admin.products.modals.create-variation')
     @include('admin.products.modals.update-variation')
+
+    @include('admin.products.modals.create-article')
+
 @endsection
 
 @section('js_after')
@@ -433,6 +453,7 @@
     <script src="{{ asset('super_admin/js/pages/crud/ktdatatable/base/html-table.js') }}"></script>
     <script src="{{ asset('super_admin/plugins/custom/ckeditor/ckeditor-classic.bundle.js') }} "></script>
     <script src="{{ asset('super_admin/js/pages/crud/forms/widgets/bootstrap-datetimepicker.js') }}"></script>
+    <script src="https://raw.githack.com/SortableJS/Sortable/master/Sortable.js"></script>
 
     <script>
         $('#kt_select2_4').select2();
@@ -563,6 +584,9 @@
                 $('.textEditor').summernote($.extend(summernoteDefaultOptions, {
                     height: 1000
                 }));
+                $('.summernote').summernote($.extend(summernoteDefaultOptions, {
+                    height: 350
+                }));
             }
 
             return {
@@ -583,6 +607,36 @@
 
             var createImagePlugin = new KTImageInput('kt_image_1');
             var createPageImagePlugin = new KTImageInput('kt_image_1');
+            var createArticleImage = new KTImageInput('createArticleImage');
+
+
+            $('#product_banner_create_select').select2();
+
+            let benners = document.getElementById('product_banners-table')
+            new Sortable(benners, {
+                animation: 150,
+                handle: '.handle',
+                dragClass: 'table-sortable-drag',
+                onEnd: function (/**Event*/ evt) {
+                    var list = [];
+                    $.each($(benners).find('tr'), function (idx, el) {
+                        list.push({
+                            id: $(el).data('id'),
+                            position: idx + 1
+                        })
+                    });
+
+                    $.ajax({
+                        method: 'post',
+                        url: '{{ route('admin.article.sort') }}',
+                        data: {
+                            positions: list,
+                        },
+                    });
+
+                }
+            });
+
         });
         $(document).on('click', ".edit-btn-img", loadModel);
 

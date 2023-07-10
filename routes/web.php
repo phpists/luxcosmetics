@@ -37,7 +37,7 @@ Route::get('b', [\App\Http\Controllers\BrandsController::class, 'index'])->name(
 Route::get('b/{link}', [\App\Http\Controllers\BrandsController::class, 'show'])->name('brands.show');
 
 // Categories
-Route::get('c', [CategoryController::class, 'index'])->name('categories');
+Route::get('catalog', [CategoryController::class, 'index'])->name('categories');
 Route::get('c/{alias}', [CategoryController::class, 'show'])->name('categories.show');
 // Static pages
 Route::get('/pages/{alias}', [\App\Http\Controllers\PagesController::class, 'show'])->name('pages.show');
@@ -55,6 +55,8 @@ Route::get('q/policy', [QuestionController::class, 'policy'])->name('questions.p
 Route::get('q/faq', [QuestionController::class, 'index'])->name('questions.faq');
 Route::get('brands', [\App\Http\Controllers\BrandController::class, 'index'])->name('brands');
 Route::get('sales', [\App\Http\Controllers\SalesController::class, 'index'])->name('sales');
+Route::get('sales-50', [\App\Http\Controllers\SalesController::class, 'index'])->name('sales-50');
+Route::get('novinki', [\App\Http\Controllers\SalesController::class, 'index'])->name('novinki');
 // Favourite Products
 Route::get('favourites', [\App\Http\Controllers\FavoriteProductController::class, 'index'])->name('favourites');
 Route::post('favourites', [\App\Http\Controllers\FavoriteProductController::class, 'add'])->name('favourites.add');
@@ -139,6 +141,8 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function 
     Route::get('products/edit/{id}', [\App\Http\Controllers\Admin\ProductController::class, 'edit'])->name('admin.product.edit');
     Route::put('products/{id}', [\App\Http\Controllers\Admin\ProductController::class, 'update'])->name('admin.product.update');
     Route::get('products/properties', [\App\Http\Controllers\Admin\ProductController::class, 'getProperties'])->name('admin.product.properties');
+
+
 //    Categories
     Route::get('categories', [AdminCategoryController::class, 'index'])->name('admin.categories');
     Route::post('categories', [AdminCategoryController::class, 'store'])->name('admin.category.store');
@@ -146,8 +150,16 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function 
     Route::put('categories', [AdminCategoryController::class, 'update'])->name('admin.category.update');
     Route::get('categories/edit/{id}', [AdminCategoryController::class, 'edit'])->name('admin.category.edit');
     Route::get('categories/create', [AdminCategoryController::class, 'create'])->name('admin.category.create');
+    Route::get('categories/search', [AdminCategoryController::class, 'search'])->name('admin.categories.search');
     Route::post('categories/update-position', [AdminCategoryController::class, 'updatePosition'])->name('admin.categories.updatePosition');
     Route::post('_update-properties-position', [AdminCategoryController::class, 'updatePropertiesPosition'])->name('admin.categories.updatePropsPosition');
+
+    // Article
+    Route::post('article/store', [\App\Http\Controllers\Admin\ArticleController::class, 'store'])->name('admin.article.store');
+    Route::post('article/sort', [\App\Http\Controllers\Admin\ArticleController::class, 'sort'])->name('admin.article.sort');
+    Route::delete('article/delete', [\App\Http\Controllers\Admin\ArticleController::class, 'delete'])->name('admin.article.delete');
+
+
 //    Dashboard
     Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
 

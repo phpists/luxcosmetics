@@ -7,8 +7,13 @@
             <div class="row">
                 <div class="col-lg-12">
                     <ol class="crumbs__list">
-                        <li class="crumbs__item"><a href="">Главная</a></li>
-                        <li class="crumbs__item">{{$product->category->name}}</li>
+                        <li class="crumbs__item"><a href="{{ route('home') }}">Главная</a></li>
+                        @include('categories.parts.parent_category', ['category' => $product->category])
+                        <li class="crumbs__item"><a href="{{ route('categories.show', ['alias' => $product->category->alias]) }}">
+                                {{ $product->category->name }}</a></li>
+                        <li class="crumbs__item"><a href="{{ route('brands.show', ['link' => $product->brand->link]) }}">
+                                {{ $product->brand->name }}</a></li>
+                        <li class="crumbs__item">{{ $product->title }}</li>
                     </ol>
                 </div>
             </div>
@@ -117,45 +122,47 @@
 
                     @php($product_variations->push($product))
                     @if(isset($product->baseProperty->id))
-                        @if($product->baseProperty->id === \App\Models\Product::TYPE_VOLUME)
-                            <div class="product-page__options">
-                                <div class="product-page__options-title">
-                                    Выбранный {{ mb_strtolower($product->baseProperty->name) }}:
-                                    <b>{{ ($product->baseValue->value ?? '') . ($product->baseProperty->measure ?? '') }}</b>
+                        @if($product_variations->count() > 1)
+                            @if($product->baseProperty->id === \App\Models\Product::TYPE_VOLUME)
+                                <div class="product-page__options">
+                                    <div class="product-page__options-title">
+                                        Выбранный {{ mb_strtolower($product->baseProperty->name) }}:
+                                        <b>{{ ($product->baseValue->value ?? '') . ($product->baseProperty->measure ?? '') }}</b>
+                                    </div>
+                                    @foreach($product_variations->sortBy('baseValue.value') as $product_variation)
+                                        <label class="volume"
+                                               onclick="window.location.href = '{{ route('products.product', ['alias' => $product_variation->alias]) }}'">
+                                            <input class="variation__select" type="radio"
+                                                   value="{{$product_variation->alias}}"
+                                                   name="volume" @checked($product->id === $product_variation->id)/>
+                                            <div class="volume__text">
+                                                <b>{{ ($product_variation->baseValue->value ?? '') . ($product_variation->baseProperty->measure ?? '') }}</b>
+                                                {{ $product_variation->price }} ₽
+                                            </div>
+                                        </label>
+                                    @endforeach
                                 </div>
-                                @foreach($product_variations->sortBy('baseValue.value') as $product_variation)
-                                    <label class="volume"
-                                           onclick="window.location.href = '{{ route('products.product', ['alias' => $product_variation->alias]) }}'">
-                                        <input class="variation__select" type="radio"
-                                               value="{{$product_variation->alias}}"
-                                               name="volume" @checked($product->id === $product_variation->id)/>
-                                        <div class="volume__text">
-                                            <b>{{ ($product_variation->baseValue->value ?? '') . ($product_variation->baseProperty->measure ?? '') }}</b>
-                                            {{ $product_variation->price }} ₽
-                                        </div>
-                                    </label>
-                                @endforeach
-                            </div>
-                        @elseif($product->baseProperty->id === \App\Models\Product::TYPE_COLOR)
-                            <div class="product-page__options">
-                                <div class="product-page__options-title">
-                                    Выбранный {{ mb_strtolower($product->baseProperty->name) }}:
-                                    <b>{{ ($product->baseValue->value ?? '') . ($product->baseProperty->measure ?? '') }}</b>
+                            @elseif($product->baseProperty->id === \App\Models\Product::TYPE_COLOR)
+                                <div class="product-page__options">
+                                    <div class="product-page__options-title">
+                                        Выбранный {{ mb_strtolower($product->baseProperty->name) }}:
+                                        <b>{{ ($product->baseValue->value ?? '') . ($product->baseProperty->measure ?? '') }}</b>
+                                    </div>
+                                    @foreach($product_variations->sortBy('baseValue.value') as $product_variation)
+                                        <label class="color"
+                                               onclick="window.location.href = '{{ route('products.product', ['alias' => $product_variation->alias]) }}'">
+                                            <input type="radio"
+                                                   name="color" @checked($product->id === $product_variation->id)/>
+                                            <div class="color__text"
+                                                 style="background-color: {{ $product_variation->baseValue->color ?? '' }}"></div>
+                                        </label>
+                                    @endforeach
                                 </div>
-                                @foreach($product_variations->sortBy('baseValue.value') as $product_variation)
-                                    <label class="color"
-                                           onclick="window.location.href = '{{ route('products.product', ['alias' => $product_variation->alias]) }}'">
-                                        <input type="radio"
-                                               name="color" @checked($product->id === $product_variation->id)/>
-                                        <div class="color__text"
-                                             style="background-color: {{ $product_variation->baseValue->color ?? '' }}"></div>
-                                    </label>
-                                @endforeach
-                            </div>
+                            @endif
                         @endif
                     @endif
 
-                    <div class="product-page__priceblock">
+                    <div class="product-page__priceblock" @if($product->availability == \App\Enums\AvailableOptions::NOT_AVAILABLE->value) style="opacity: 0.4" @endif>
                         <div class="product-page__prices">
                             <div class="product-page__price">{{ $product->price }} ₽</div>
                             @isset($product->old_price)
@@ -182,30 +189,27 @@
                         <p>Доставка в тот же день: заказ до 13:00 в Москве и <a href="">других городах.</a></p>
                         <p>Бесплатная экспресс-доставка для всех заказов на сумму свыше 10 000 ₽ </p>
                     </div>
-                    <div class="product-page__actions">
-                        <div class="product-page__action productaction">
-                            <div class="productaction__image"><a href=""><img
-                                        src="{{asset('images/dist/tmp-action.jpg')}}" alt=""></a></div>
-                            <div class="productaction__wrap">
-                                <div class="productaction__title"><a href="">Получите кэшбэк в размере 5 000 ₽ </a>
+                    @if(sizeof($articles) > 0)
+                        <div class="product-page__actions">
+                            @foreach($articles->sortBy('position') as $article)
+                                <div class="product-page__action productaction">
+                                    @if($article->image)
+                                    <div class="productaction__image">
+                                        <a href="{{ $article->link }}">
+                                            <img src="{{ $article->getImageSrcAttribute() }}" alt="" style="width: 40px; height: 40px">
+                                        </a>
+                                    </div>
+                                    @endif
+                                    <div class="productaction__wrap">
+                                        <div class="productaction__title">
+                                            <a href="{{ $article->link }}">{{ $article->title }}</a>
+                                        </div>
+                                        <div class="productaction__intro">{{ strip_tags(\Illuminate\Support\Str::limit($article->description)) }}</div>
+                                    </div>
                                 </div>
-                                <div class="productaction__intro">Когда вы тратите 20 000 ₽ на сайте! Применяются
-                                    положения и условия. Подарки автоматически добавляются при оформлении заказа.
-                                </div>
-                            </div>
+                            @endforeach
                         </div>
-                        <div class="product-page__action productaction">
-                            <div class="productaction__image"><a href=""><img
-                                        src="{{asset('images/dist/tmp-action.jpg')}}" alt=""></a></div>
-                            <div class="productaction__wrap">
-                                <div class="productaction__title"><a href="">Получите кэшбэк в размере 5 000 ₽ </a>
-                                </div>
-                                <div class="productaction__intro">Когда вы тратите 20 000 ₽ на сайте! Применяются
-                                    положения и условия. Подарки автоматически добавляются при оформлении заказа.
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    @endif
                 </div>
                 <div class="col-lg-12">
                     <div class="product-page__description">

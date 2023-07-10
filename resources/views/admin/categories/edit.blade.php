@@ -59,6 +59,11 @@
                                     <span class="nav-text">Теги</span>
                                 </a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#banners">
+                                    <span class="nav-text">Статьи</span>
+                                </a>
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -127,9 +132,8 @@
                                             <div class="form-group">
                                                 <label>ИЗОБРАЖЕНИЕ</label>
                                                 <div class="col-auto ml-2">
-                                                    <div class="image-input image-input-outline" id="createImagePlugin"
-                                                         style="background-image: url('{{ asset('images/uploads/categories/' . $category->image) }}')">
-                                                        <div class="image-input-wrapper" id="updateImageBackground"></div>
+                                                    <div class="image-input image-input-outline" id="createImagePlugin">
+                                                        <div class="image-input-wrapper" id="updateImageBackground" style="background-image: url('{{ asset('images/uploads/categories/' . $category->image) }}')"></div>
                                                         <label
                                                             class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
                                                             data-action="change" data-toggle="tooltip"
@@ -138,6 +142,12 @@
                                                             <input type="file" name="image" accept="image/*"/>
                                                             <input type="hidden" name="image_remove"/>
                                                         </label>
+                                                        <span class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="cancel" data-toggle="tooltip" title="Cancel avatar">
+                                                            <i class="ki ki-bold-close icon-xs text-muted"></i>
+                                                        </span>
+                                                        <span class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="remove" data-toggle="tooltip" title="Remove avatar">
+                                                            <i class="ki ki-bold-close icon-xs text-muted"></i>
+                                                        </span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -361,6 +371,82 @@
                             <!--end::Table-->
                             {{ $tags->links('vendor.pagination.super_admin_pagination') }}
                         </div>
+                        <div class="tab-pane fade" id="banners" role="tabpanel"
+                             aria-labelledby="kt_tab_pane_4_4">
+                            <div class="row mb-5">
+                                <div class="col">
+                                    <div class="mb-7">
+                                        <h3>Статьи</h3>
+                                    </div>
+                                </div>
+                                <div class="col-auto">
+                                    <button data-toggle="modal" data-target="#createCategoryBannerModal"
+                                            class="btn btn-primary font-weight-bold">
+                                        <i class="fas fa-plus mr-2"></i>
+                                        Добавить
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table table-head-custom table-vertical-center">
+                                    <thead>
+                                    <tr>
+                                        <th class="pl-0 text-center">
+                                            #
+                                        </th>
+                                        <th class="pr-0 text-center">
+                                            Изображение
+                                        </th>
+                                        <th class="text-center pr-0">
+                                            Название
+                                        </th>
+                                        <th class="pr-0 text-center">
+                                            Ссылка
+                                        </th>
+                                        <th class="pr-0 text-center">
+                                            Действия
+                                        </th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="category_banners-table">
+                                    @foreach($articles as $article)
+                                        <tr data-id="{{ $article->id }}">
+                                            <td class="handle text-center pl-0" style="cursor: pointer">
+                                                <i class="flaticon2-sort"></i>
+                                            </td>
+                                            <td class="text-center position">
+                                                <div class="mx-auto rounded-circle overflow-hidden" style="width: fit-content">
+                                                    <img src="{{ $article->getImageSrcAttribute() }}" width="50" height="50" alt="">
+                                                </div>
+                                            </td>
+                                            <td class="text-center position">
+                                                <span class="text-dark-75 d-block font-size-lg sort_col">
+                                                    <a href="{{$article->link}}">{{ $article->title }}</a>
+                                                </span>
+                                            </td>
+                                            <td class="text-center">
+                                                <span class="text-dark-75 d-block font-size-lg">
+                                                    {{$article->link}}
+                                                </span>
+                                            </td>
+                                            <td class="text-center pr-0">
+                                                    <form action="{{ route('admin.article.delete') }}" method="POST">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <input type="hidden" name="id" value="{{ $article->id }}">
+                                                        <button type="submit" class="btn btn-sm btn-clean btn-icon btn_delete"
+                                                                onclick="return confirm('Вы уверены, что хотите удалить ссылку на статью \'{{ $article->title }}\'?')"
+                                                                title="Delete"><i class="las la-trash"></i>
+                                                        </button>
+                                                    </form>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!--end::Table-->
+                        </div>
                     </div>
                 </div>
             </div>
@@ -372,6 +458,7 @@
     <!--end::Entry-->
     @include('admin.categories.modals.create-tag')
     @include('admin.categories.modals.update-tag')
+    @include('admin.categories.modals.create-category_banner')
 
 @endsection
 
@@ -388,6 +475,21 @@
             placeholder: "Выберите категорию",
             allowClear: true
         });
+        var KTSummernoteDemo = function () {
+            // Private functions
+            var demos = function () {
+                $('.summernote').summernote($.extend(summernoteDefaultOptions, {
+                    height: 250
+                }));
+            }
+
+            return {
+                // public functions
+                init: function() {
+                    demos();
+                }
+            };
+        }();
         $(function () {
             $.ajaxSetup({
                 headers: {
@@ -397,6 +499,9 @@
 
             var createImagePlugin = new KTImageInput('createImagePlugin');
             var createPageImagePlugin = new KTImageInput('createPageImagePlugin');
+            var createArticleImage = new KTImageInput('createArticleImage');
+
+            KTSummernoteDemo.init();
 
             $(document).on('click', '.updateTag', loadTag);
 
@@ -426,6 +531,36 @@
                     }
                 });
             }
+
+
+            $('#category_banner_create_select').select2();
+
+            let benners = document.getElementById('category_banners-table')
+            new Sortable(benners, {
+                animation: 150,
+                handle: '.handle',
+                dragClass: 'table-sortable-drag',
+                onEnd: function (/**Event*/ evt) {
+                    console.log('drop');
+                    var list = [];
+                    $.each($(benners).find('tr'), function (idx, el) {
+                        list.push({
+                            id: $(el).data('id'),
+                            position: idx + 1
+                        })
+                    });
+
+                    $.ajax({
+                        method: 'post',
+                        url: '{{ route('admin.article.sort') }}',
+                        data: {
+                            positions: list,
+                        },
+                    });
+
+                }
+            });
+
         });
     </script>
 @endsection

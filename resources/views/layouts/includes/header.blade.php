@@ -50,7 +50,8 @@
                 </a>
                 <ul class="navigation__menu">
                     @foreach($menu_items->whereNull('parent_id')->where('type', \App\Models\Menu::TOP_MENU) as $menu_item)
-                        <li><a href="{{$menu_item->link}}">{{$menu_item->title}} <svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#arrow')}}"></use></svg></a>
+                        <li><a href="{{$menu_item->link}}">{{$menu_item->title}} @if(sizeof($menu_item->getChildren($menu_items)) > 0)
+                            <svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#arrow')}}"></use></svg></a>
                             <div class="submenu">
                                 <div class="container">
                                     <div class="row">
@@ -68,6 +69,7 @@
                                     </div>
                                 </div>
                             </div>
+                        @endif
                         </li>
                     @endforeach
 {{--                    <li><a href="">Ароматы <svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#arrow')}}"></use></svg></a></li>--}}

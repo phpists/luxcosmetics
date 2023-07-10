@@ -51,7 +51,7 @@
                 for (const resultKey in result) {
                     let div = document.createElement('div');
                     let title = result[resultKey].title;
-                    let link = 'products/' + result[resultKey].alias;
+                    let link = '/p/' + result[resultKey].alias;
                     div.innerHTML = `<a href="${link}">${title}</a>`;
                     results_container.appendChild(div);
                 }

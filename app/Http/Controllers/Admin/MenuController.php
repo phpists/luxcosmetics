@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 use App\Models\Menu;
 use Illuminate\Http\Request;
 
@@ -28,6 +29,10 @@ class MenuController extends Controller
         $data = $request->all();
         $data['is_active'] = array_key_exists('is_active', $data)? 1 : 0;
         $menu = Menu::query()->findOrFail($id);
+        if ($request->category_id !== null) {
+            $category = Category::query()->find($data['category_id']);
+            $data['link'] = route('categories.show', $category->alias, false);
+        }
         if($menu->update($data))
             return redirect()->route('admin.menu', $menu->type)->with('success', 'Меню успешно обновлено');
         return redirect()->back()->with('error', 'Ну удалось обновить запись');
@@ -45,6 +50,10 @@ class MenuController extends Controller
     public function store(Request $request) {
         $data = $request->all();
         $data['is_active'] = array_key_exists('is_active', $data)? 1 : 0;
+        if ($request->category_id !== null) {
+            $category = Category::query()->find($data['category_id']);
+            $data['link'] = route('categories.show', $category->alias, false);
+        }
         $menu = new Menu($data);
         if ($menu->save()) {
             return redirect()->route('admin.menu', $data['type'])->with('success', 'Меню удачно создано');
