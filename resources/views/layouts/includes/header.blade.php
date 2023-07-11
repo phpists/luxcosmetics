@@ -32,7 +32,7 @@
                                 </li>
                             </ul>
                             <a href="{{route('favourites')}}" class="header__link header__link--fav"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#heart')}}"></use></svg> <span class="header__linkcount @if(sizeof(\App\Services\FavoriteProductsService::getAllIds()) === 0) hidden @endif" id="header__linkcount">{{sizeof(\App\Services\FavoriteProductsService::getAllIds())}}</span></a>
-                            <a href="{{route('cart')}}" class="header__link header__link--cart"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#cart')}}"></use></svg> <span class="header__linkcount">2</span></a>
+                            <a href="{{route('cart')}}" class="header__link header__link--cart"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#cart')}}"></use></svg> <span class="header__linkcount" id="cartTotalCount">{{ $cartService->getTotalCount() }}</span></a>
                         </div>
                     </div>
                 </div>

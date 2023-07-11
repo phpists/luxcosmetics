@@ -81,24 +81,24 @@
                                         @endforeach
                                     </div>
                                 </div>
-                                <button class="product__addcart">Добавить в корзину <span>{{ $product->price }} ₽</span>
+                                <button class="product__addcart addToCart @if(isset($product->baseValue->id)) @if($cartService->check($product->id, $product->baseValue->id)) isInCart @endif @endif" data-product="{{ $product->id }}" data-property="{{ $product->baseValue->id ?? '' }}"><span>Добавить в корзину {{ $product->price }} ₽</span>
                                 </button>
                             </div>
                         @else
                             <div class="product__pnl">
-                                <button class="product__addcart">Добавить в корзину <span>{{ $product->price }} ₽</span>
+                                <button class="product__addcart addToCart @if(isset($product->baseValue->id)) @if($cartService->check($product->id, $product->baseValue->id)) isInCart @endif @endif" data-product="{{ $product->id }}" data-property="{{ $product->baseValue->id ?? '' }}"><span>Добавить в корзину {{ $product->price }} ₽</span>
                                 </button>
                             </div>
                         @endif
                     @else
                             <div class="product__pnl">
-                                <button class="product__addcart">Добавить в корзину <span>{{ $product->price }} ₽</span>
+                                <button class="product__addcart addToCart @if(isset($product->baseValue->id)) @if($cartService->check($product->id, $product->baseValue->id)) isInCart @endif @endif" data-product="{{ $product->id }}" data-property="{{ $product->baseValue->id ?? '' }}"><span>Добавить в корзину {{ $product->price }} ₽</span>
                                 </button>
                             </div>
                     @endif
                 @else
                             <div class="product__pnl">
-                                <button class="product__addcart">Добавить в корзину <span>{{ $product->price }} ₽</span>
+                                <button class="product__addcart addToCart @if(isset($product->baseValue->id)) @if($cartService->check($product->id, $product->baseValue->id)) isInCart @endif @endif" data-product="{{ $product->id }}" data-property="{{ $product->baseValue->id ?? '' }}"><span>Добавить в корзину {{ $product->price }} ₽</span>
                                 </button>
                             </div>
                 @endif

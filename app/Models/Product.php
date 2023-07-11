@@ -102,18 +102,18 @@ class Product extends Model
         return $this->hasOne(Property::class, 'id', 'base_property_id');
     }
 
-    public function baseValue()
-    {
-        return $this->hasOneThrough(
-            PropertyValue::class,
-            ProductPropertyValue::class,
-            'product_id', // Зовнішній ключ в проміжній таблиці, що посилається на products.id
-            'id', // Зовнішній ключ в моделі PropertyValue, що посилається на product_property_values.property_value_id
-            'base_property_id', // Локальний ключ в таблиці products, який посилається на property_id в проміжній таблиці
-            'property_value_id' // Локальний ключ в проміжній таблиці, який посилається на property_values.id
-        )
-            ->where('property_id', 'products.base_property_id');
-    }
+//    public function baseValue()
+//    {
+//        return $this->hasOneThrough(
+//            PropertyValue::class,
+//            ProductPropertyValue::class,
+//            'product_id', // Зовнішній ключ в проміжній таблиці, що посилається на products.id
+//            'id', // Зовнішній ключ в моделі PropertyValue, що посилається на product_property_values.property_value_id
+//            'base_property_id', // Локальний ключ в таблиці products, який посилається на property_id в проміжній таблиці
+//            'property_value_id' // Локальний ключ в проміжній таблиці, який посилається на property_values.id
+//        )
+//            ->where('product_property_values.property_id', 'products.base_property_id');
+//    }
 
     public function getBaseValueAttribute()
     {

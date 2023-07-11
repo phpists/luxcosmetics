@@ -178,11 +178,13 @@
                         @endif
                     </div>
                     @if($product->availability == \App\Enums\AvailableOptions::AVAILABLE->value)
-                        <button class="btn btn--accent product-page__addcart">
+                        <button class="btn btn--accent product-page__addcart addToCart @if(isset($product->baseValue->id)) @if($cartService->check($product->id, $product->baseValue->id)) isInCart @endif @endif" data-product="{{ $product->id }}" data-property="{{ $product->baseValue->id ?? '' }}">
+                            <span>
                             <svg class="icon">
                                 <use xlink:href="{{asset('images/dist/sprite.svg#cart')}}"></use>
                             </svg>
                             Добавить в корзину
+                            </span>
                         </button>
                     @endif
                     <div class="product-page__deliveryinfo">

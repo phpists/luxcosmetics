@@ -14,6 +14,7 @@
     <meta name="theme-color" content="#06473A">
 
     <link rel="stylesheet" href="{{ asset('/css/main.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('/css/cart.css') }}">
     @vite(['resources/js/app.js'])
     <![endif]-->
 
@@ -62,6 +63,7 @@
         }
     })
 </script>
+<script src="{{ asset('js/cart.js') }}"></script>
 @yield('scripts')
 </body>
 

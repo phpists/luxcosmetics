@@ -1,0 +1,11 @@
+.product__addcart.isInCart,.product-page__addcart.isInCart {
+    background-color: #614300f2;
+}
+
+.product__addcart.isInCart:after,.product-page__addcart.isInCart:after {
+    content: 'Товар в корзине';
+}
+
+.product__addcart.isInCart span,.product-page__addcart.isInCart span {
+    display: none;
+}
