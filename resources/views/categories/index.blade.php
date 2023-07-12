@@ -159,7 +159,7 @@
                         <div class="seoblock__morecontent">Показать еще</div>
                         @if(sizeof($category->tags) > 0)
                             <div class="seoblock__tags">
-                                @foreach($category->tags->where('add_to_top', true) as $tag)
+                                @foreach($category->tags as $tag)
                                     <a href="{{$tag->link}}" class="seoblock__tag">{{$tag->name}}</a>
                                 @endforeach
                             </div>
