@@ -26,6 +26,7 @@
                     <div class="for-mobile">
                         <div class="product-page__title">{{$product->brand->name}}</div>
                         <div class="product-page__subtitle">{{$product->title}}</div>
+                        <div class="product-page__subtitle">Артикул: {{$product->code}}</div>
                         <div class="product-page__reviewsblock">
                             <div class="product-page__reviews">
                                 <div class="stars">
@@ -92,6 +93,7 @@
                     <div class="for-desktop">
                         <div class="product-page__title">{{$product->brand->name}}</div>
                         <div class="product-page__subtitle">{{$product->title}}</div>
+                        <div class="product-page__subtitle">Артикул: {{$product->code}}</div>
                         <div class="product-page__reviewsblock">
                             <div class="product-page__reviews">
                                 <div class="stars">

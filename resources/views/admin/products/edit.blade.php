@@ -43,7 +43,7 @@
         <div class="container-fluid">
             @include('admin.layouts.includes.messages')
             <div class="card card-custom">
-                <div class="card-header card-header-tabs-line">
+                <div class="card-header card-header-tabs-line" style="gap: 10px">
                     <div class="card-toolbar">
                         <ul class="nav nav-tabs nav-bold nav-tabs-line">
                             <li class="nav-item">
@@ -68,10 +68,8 @@
                             </li>
                         </ul>
                     </div>
-                    <div class="card-toolbar">
-                        <a href="{{ route('products.product', ['alias' => $product->alias]) }}" class="btn btn-primary">Посмотреть товар</a>
-                    </div>
-                    <div class="card-toolbar">
+                    <div class="card-toolbar" style="gap: 10px; margin-bottom: 10px">
+                        <a href="{{ route('products.product', ['alias' => $product->alias]) }}" class="btn btn-primary me-3">Посмотреть товар</a>
                         <button type="submit" form="blog_post" class="btn btn-primary">Сохранить</button>
                     </div>
                 </div>
