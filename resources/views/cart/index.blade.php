@@ -59,7 +59,7 @@
                                                 <div class="cart-product__oldprice">{{ $product->old_price }} ₽ </div>
                                             @endif
                                         </div>
-                                        <div class="cart-product__sum">{{ (int) ($product->price * $product->quantity) }} ₽</div>
+                                        <div class="cart-product__sum">{{ round($product->price * $product->quantity, 2) }} ₽</div>
                                         <button class="cart-product__delete removeFromCart" data-element="div.cart-product:first" data-product="{{ $product->id }}" data-property="{{ $product->baseValue->id ?? '' }}">
                                             <svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#close')}}"></use></svg>
                                         </button>
@@ -134,7 +134,7 @@
                 <div class="cart-aside__points"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#warning')}}"></use></svg> Вы получите 820 баллов</div>
                 <div class="cart-aside__sum">Итого с НДС <span id="totalSum">{{ $cartService->getTotalSum() }}</span> ₽</div>
         </div>
-        <a href="{{route('cart.step1')}}" class="btn btn--accent cart-aside__buy">Перейти к оплате</a>
+        <a href="{{route('cart.delivery')}}" class="btn btn--accent cart-aside__buy">Перейти к доставкe</a>
         <div class="cart-aside__paymethods">
                 <img src="{{asset('images/dist/ico-visa.png')}}" alt="">
                 <img src="{{asset('images/dist/ico-mir.png')}}" alt="">

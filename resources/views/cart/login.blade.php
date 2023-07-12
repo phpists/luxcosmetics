@@ -36,40 +36,42 @@
 							</button>
 						</div>
 						<div class="cart-auth__or">или</div>
-						<form action="" class="form form--box">
+						<form action="{{ route('login') }}" method="POST" class="form form--box">
+                            @csrf
 							<div class="form__fieldset">
 								<legend class="form__label">Электронная почта *</legend>
-								<input type="text" class="form__input" placeholder="Введите ваш email">
+								<input type="text" name="email" class="form__input" placeholder="Введите ваш email">
 							</div>
 							<div class="form__fieldset">
 								<legend class="form__label">Пароль *</legend>
-								<input type="password" class="form__input" placeholder="Введите ваш пароль">
+								<input type="password" name="password" class="form__input" placeholder="Введите ваш пароль">
 							</div>
 							<div class="form__fieldset form__ftr">
 								<label class="checkbox">
-									<input type="checkbox" />
+									<input type="checkbox" name="remember"/>
 									<div class="checkbox__text">Запомнить меня</div>
 								</label>
-								<a href="">Забыли пароль?</a>
+								<a href="{{ route('password.request') }}">Забыли пароль?</a>
 							</div>
-							<button class="btn btn--accent">Авторизоваться</button>
+							<button type="submit" class="btn btn--accent">Авторизоваться</button>
 						</form>
 					</div>
 					<div class="cart-auth__col">
 						<div class="cart-auth__title">Продолжить как гость</div>
 						<div class="cart-auth__subtitle">Продолжить оформление заказа в качестве гостя и создать учетную запись позже</div>
-						<form action="" class="form form--box">
+						<form action="{{ route('fast-register') }}" class="form form--box" method="POST">
+                            @csrf
 							<div class="form__fieldset">
 								<legend class="form__label">Электронная почта *</legend>
-								<input type="text" class="form__input" placeholder="Введите ваш email">
+								<input type="text" name="email" class="form__input" placeholder="Введите ваш email">
 							</div>
 							<div class="form__fieldset">
 								<label class="checkbox">
-									<input type="checkbox" />
+									<input type="checkbox" name="newsletter" />
 									<div class="checkbox__text small">Подпишитесь, чтобы получить эксклюзивне предложения, анонсы новых брендов и советы экспетов по красоте</div>
 								</label>
 							</div>
-							<button class="btn btn--accent btn--full">Продолжить оформление заказа</button>
+							<button type="submit" class="btn btn--accent btn--full">Продолжить оформление заказа</button>
 						</form>
 					</div>
 				</div>

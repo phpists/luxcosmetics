@@ -9,3 +9,9 @@
 .product__addcart.isInCart span,.product-page__addcart.isInCart span {
     display: none;
 }
+
+.cart-aside__buy[disabled] {
+    opacity: 0.4!important;
+    cursor: not-allowed;
+    background-color: #cc9755!important;
+}

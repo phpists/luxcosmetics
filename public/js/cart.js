@@ -62,6 +62,10 @@ $(function () {
         }
     })
 
+    $(document).on('click', '.cartSubmit', function(e) {
+        e.prevendDefault()
+    })
+
 })
 
 

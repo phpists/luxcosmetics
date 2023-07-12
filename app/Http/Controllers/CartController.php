@@ -18,13 +18,20 @@ class CartController extends Controller
         return view('cart.index', compact('cart_products'));
     }
 
-    public function step_first() {
-        return view('cart.pay-step1');
+    public function login() {
+        return view('cart.login');
     }
 
-    public function step_second() {
-        return view('cart.pay-step2');
+    public function delivery()
+    {
+        return view('cart.delivery');
     }
+
+    public function store(Request $request)
+    {
+        dd($request->post());
+    }
+
 
     public function add(Request $request)
     {
