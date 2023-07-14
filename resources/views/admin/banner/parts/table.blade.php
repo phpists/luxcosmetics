@@ -1,5 +1,5 @@
 @foreach($bannerAjax as $item)
-    <tr id="banner_{{$item->id}}" data-id="{{ $item->id }}">
+    <tr id="banner_{{$item->id}}" data-id="{{ $item->id }}" data-label="{{ $item->position }}">
         <td class="text-center pl-0">
             <span style="width: 20px;">
                 <label class="checkbox checkbox-single">
@@ -7,6 +7,9 @@
                            value="{{ $item->id }}">&nbsp;<span></span>
                 </label>
             </span>
+        </td>
+        <td class="handle text-center pl-0" style="cursor: pointer">
+            <i class="flaticon2-sort"></i>
         </td>
         <td class="text-center pl-0">
             {{ $item->id }}
@@ -17,13 +20,13 @@
         <td class="text-center pr-0">
             {{ $item->position }}
         </td>
-        
-        <td class="text-center pr-0 sort">
+
+        <td class="text-center pr-0 sort position">
             {{ $item->number_position }}
         </td>
-        
+
         <td class="text-center pr-0">
-            <div class="banner__image"><a href="{{ route('index.banner', $item->id) }}"><img src="{{asset('images/uploads/banner/' . $item->image)}}" alt="" style=" width: 100px;"></a></div> 
+            <div class="banner__image"><a href="{{ route('index.banner', $item->id) }}"><img src="{{asset('images/uploads/banner/' . $item->image)}}" alt="" style=" width: 100px;"></a></div>
         </td>
         <td class="text-center pr-0">
             <a href="{{ route('admin.banner.edit', $item->id) }}"

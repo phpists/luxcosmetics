@@ -245,6 +245,7 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function 
     Route::post('banner/update', [\App\Http\Controllers\Admin\Banner\BannerController::class, 'update'])->name('admin.banner.update');
     Route::post('banner/update/seo', [\App\Http\Controllers\Admin\Banner\BannerController::class, 'updateSeo'])->name('admin.banner.update.seo');
     Route::get('banner/delete/{id}', [\App\Http\Controllers\Admin\Banner\BannerController::class, 'delete'])->name('admin.banner.delete');
+    Route::post('banner/update-position', [\App\Http\Controllers\Admin\Banner\BannerController::class, 'updatePosition'])->name('admin.banners.update_positions');
 
     /* Banners Operation */
     Route::post('_active-posts', [\App\Http\Controllers\Admin\Banner\BannerController::class, 'activePosts'])->name('admin.banner.active');

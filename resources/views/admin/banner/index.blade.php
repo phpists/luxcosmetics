@@ -52,7 +52,6 @@
                             </div>
                         </div>
                     </div>
-                    
                     <div class="card-body pb-3">
                         <!--begin::Table-->
                         <div class="table-responsive">
@@ -71,6 +70,9 @@
                                         #
                                     </th>
                                     <th class="pr-0 text-center">
+                                        ID
+                                    </th>
+                                    <th class="pr-0 text-center">
                                         Название
                                     </th>
                                     <th class="pr-0 text-center">
@@ -87,9 +89,9 @@
                                     </th>
                                 </tr>
                                 </thead>
-                                <tbody id="table">
+                                <tbody id="table" class="banner-table">
                                     @foreach($banner as $item)
-                                    <tr id="banner_{{$item->id}}" data-id="{{ $item->id }}">
+                                    <tr id="banner_{{$item->id}}" data-id="{{ $item->id }}" data-label="{{ $item->position }}">
                                         <td class="text-center pl-0">
                                             <span style="width: 20px;">
                                                 <label class="checkbox checkbox-single">
@@ -97,6 +99,9 @@
                                                            value="{{ $item->id }}">&nbsp;<span></span>
                                                 </label>
                                             </span>
+                                        </td>
+                                        <td class="handle text-center pl-0" style="cursor: pointer">
+                                            <i class="flaticon2-sort"></i>
                                         </td>
                                         <td class="text-center pl-0">
                                             {{ $item->id }}
@@ -107,15 +112,15 @@
                                         <td class="text-center pr-0">
                                             {{ $item->position }}
                                         </td>
-                                        
-                                        <td class="text-center pr-0 sort">
+
+                                        <td class="text-center pr-0 sort position">
                                             {{ $item->number_position }}
                                         </td>
-                                        
+
                                         <td class="text-center pr-0">
-                                            <div class="banner__image"><a href="{{ route('index.banner', $item->id) }}"><img src="{{asset('images/uploads/banner/' . $item->image)}}" alt="" style=" width: 100px;"></a></div> 
+                                            <div class="banner__image"><a href="{{ route('index.banner', $item->id) }}"><img src="{{asset('images/uploads/banner/' . $item->image)}}" alt="" style=" width: 100px;"></a></div>
                                         </td>
-                                        
+
                                         <td class="text-center pr-0">
                                             <a href="{{ route('admin.banner.edit', $item->id) }}" class="btn btn-sm btn-clean btn-icon">
                                                 <i class="las la-edit"></i>
@@ -129,12 +134,12 @@
                                         </td>
                                     </tr>
                                 @endforeach
-                                
+
                                 </tbody>
                             </table>
                         </div>
                         <div id="pagination">
-                            {{ $bannerAjax->appends(request()->all())->links('vendor.pagination.product_pagination') }}
+                            {{ $banner->appends(request()->all())->links('vendor.pagination.product_pagination') }}
                         </div>
                         <!--end::Table-->
                     </div>
@@ -153,4 +158,46 @@
     <script src="https://raw.githack.com/SortableJS/Sortable/master/Sortable.js"></script>
     <script src="{{ asset('super_admin/js/banner.js') }}"></script>
     <script src="{{ asset('super_admin/js/pages/crud/forms/widgets/select2.js') }}"></script>
+    <script>
+        jQuery(document).ready(function() {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+            let tbody = document.querySelector('tbody')
+            new Sortable(tbody, {
+                animation: 150,
+                handle: '.handle',
+                dragClass: 'table-sortable-drag',
+                onEnd: function (/**Event*/ evt) {
+                    var list = [];
+                    $.each($('tbody.banner-table tr'), function (idx, el) {
+                        list.push({
+                            id: $(el).data('id'),
+                            cat_id: $(el).data('label'),
+                            position: idx + 1
+                        })
+                    });
+
+                    $.ajax({
+                        method: 'post',
+                        url: '{{ route('admin.banners.update_positions') }}',
+                        data: {
+                            positions: list,
+                        },
+                        success: function (response) {
+                            $.each(response, function(i, item) {
+                                let id = item['id'];
+                                let position = item['position'];
+                                $(`tr[data-id="${id}"]`).find('.position').text(position)
+                            })
+                        }
+                    });
+
+                }
+            });
+        });
+    </script>
 @endsection

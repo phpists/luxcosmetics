@@ -7,24 +7,23 @@ use App\Models\Banner;
 use App\Services\ImageService;
 use App\Services\SiteService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
 class BannerController extends Controller
 {
     public function index(Request $request)
     {
-        $banner = Banner::query()->select('banners.*')->get();
-        $query = Banner::query();
-        $query->select('banners.*');
+        $banner = Banner::query();
 
         if (isset($request->position)) {
-            $query->where('banners.position', $request->position);
+            $banner->where('banners.position', $request->position);
         }
-        $bannerAjax = $query->paginate($request->paginate ?? 100);
+        $banner = $banner->paginate($request->paginate ?? 100);
 
         if ($request->ajax()) {
-            $bannerAjaxHtml = view('admin.banner.parts.table', ['bannerAjax' => $bannerAjax])->render();
-            $paginateHtml = view('admin.banner.parts.paginate', ['bannerAjax' => $bannerAjax, 'params' => $request->all()])->render();
+            $bannerAjaxHtml = view('admin.banner.parts.table', ['bannerAjax' => $banner])->render();
+            $paginateHtml = view('admin.banner.parts.paginate', ['bannerAjax' => $banner, 'params' => $request->all()])->render();
 
             return response()->json([
                 'bannerAjaxHtml' => $bannerAjaxHtml,
@@ -32,7 +31,7 @@ class BannerController extends Controller
             ]);
         }
 
-        return response()->view('admin.banner.index', compact('banner', 'bannerAjax'));
+        return response()->view('admin.banner.index', compact('banner'));
     }
 
     public function create()
@@ -117,4 +116,21 @@ class BannerController extends Controller
         return json_encode($data);
     }
 
+    public function updatePosition(Request $request) {
+        $pos_table = [];
+        $positions = $request->positions;
+        foreach ($positions as $key => $position) {
+            if (!array_key_exists($position['cat_id'], $pos_table)) {
+                $pos_table[$position['cat_id']] = 1;
+            }
+            Banner::query()->where('id', $position['id'])
+                ->update([
+                    'number_position' => $pos_table[$position['cat_id']]
+                ]);
+            $positions[$key]['position'] = $pos_table[$position['cat_id']];
+            $pos_table[$position['cat_id']] += 1;
+        }
+
+        return $positions;
+    }
 }
