@@ -30,7 +30,8 @@ class User extends Authenticatable
         'phone',
         'birthday',
         'is_subscribed',
-        'connection_type'
+        'connection_type',
+        'points'
     ];
 
     /**

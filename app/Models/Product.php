@@ -46,6 +46,7 @@ class Product extends Model
         'show_in_percent_discount_page',
         'show_in_new_page',
         'size',
+        'points'
     ];
 
     public function getImages(): Collection

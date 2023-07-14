@@ -114,6 +114,10 @@
                                                 <label>Размер</label>
                                                 <input type="text" name="size" required class="form-control"/>
                                             </div>
+                                            <div class="col-md-2">
+                                                <label>Бонусные баллы</label>
+                                                <input type="number" step="1" min="0" value="0" name="points" required class="form-control"/>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="col-4">

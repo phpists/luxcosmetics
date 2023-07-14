@@ -7,7 +7,7 @@
         <div class="cabinet-page__group">
             <div class="points">
                 <div class="points__title">Ваш баланс</div>
-                <div class="points__sum">450 баллов</div>
+                <div class="points__sum">{{\Illuminate\Support\Facades\Auth::user()->points}} баллов</div>
             </div>
         </div>
         <div class="cabinet-page__group">
@@ -15,7 +15,7 @@
             <div class="chars">
                 <div class="chars__item">
                     <div class="chars__name"><span>Номер телефона</span></div>
-                    <div class="chars__value"><span>+7 495 456 78 96</span></div>
+                    <div class="chars__value"><span>+{{\Illuminate\Support\Facades\Auth::user()->phone}}</span></div>
                 </div>
                 <div class="chars__item">
                     <div class="chars__name"><span>Уровень</span></div>

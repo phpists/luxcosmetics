@@ -5,7 +5,9 @@
                 <div class="product__image">
                     <div class="product__labels">
                         <div class="product__label product__label--brown">-50%</div>
-                        <div class="product__label product__label--green">Хит продаж</div>
+                        @if($product->show_in_popular)
+                            <div class="product__label product__label--green">Хит продаж</div>
+                        @endif
                     </div>
                     <a href="/products/{{$product->alias}}">
                         <img src="{{asset('images/uploads/products/'.$product->main_image)}}" alt="">

@@ -85,7 +85,7 @@
                                 <div class="row">
                                     <div class="col-12">
                                         <div class="row">
-                                            <div class="col-md-10">
+                                            <div class="col-md-8">
                                                 <div class="form-group">
                                                     <label for="exampleSelect2">Название</label>
                                                     <input type="text" name="title" class="form-control" value="{{$product->title}}" required/>
@@ -94,6 +94,10 @@
                                             <div class="col-md-2">
                                                 <label>Размер</label>
                                                 <input type="text" name="size" class="form-control" required value="{{$product->size}}"/>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <label>Бонусные баллы</label>
+                                                <input type="number" step="1" min="0" value="{{$product->points}}" name="points" required class="form-control"/>
                                             </div>
                                         </div>
                                         <div class="row">

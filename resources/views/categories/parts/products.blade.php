@@ -7,7 +7,9 @@
                         @if(isset($product->discount))
                             <div class="product__label product__label--brown">-{{ $product->discount }}%</div>
                         @endif
-                        <div class="product__label product__label--green">Хит продаж</div>
+                        @if($product->show_in_popular)
+                            <div class="product__label product__label--green">Хит продаж</div>
+                        @endif
                     </div>
                     <a href="{{ route('products.product', ['alias' => $product->alias]) }}">
                         <img src="{{asset('images/uploads/products/'.$product->main_image)}}" alt="">

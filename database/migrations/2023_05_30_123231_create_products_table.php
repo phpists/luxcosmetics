@@ -28,6 +28,7 @@ return new class extends Migration
             $table->text('description_2')->nullable()->comment('Опис 2');
             $table->text('description_3')->nullable()->comment('Опис 3');
             $table->smallInteger('availability')->default(AvailableOptions::AVAILABLE->value)->comment('Доступність товару');
+            $table->integer('points')->comment('Бонусные баллы')->default(0);
             $table->timestamps();
         });
     }
