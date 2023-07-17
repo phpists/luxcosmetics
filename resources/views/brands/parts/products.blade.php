@@ -61,7 +61,7 @@
                             </div>
                         </div>
                         @endif
-                        <button class="product__addcart">Добавить в корзину <span>{{$product->discount_price??$product->price}} ₽</span></button>
+                        <button class="product__addcart"><span>Добавить в корзину <span>{{ $product->price }} ₽</span></span></button>
                     </div>
             </div>
 

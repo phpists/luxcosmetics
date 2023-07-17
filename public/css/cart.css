@@ -6,6 +6,17 @@
     content: 'Товар в корзине';
 }
 
+.product__addcart span {
+    border-left: none;
+    padding-left: 0;
+    margin-left: 0;
+}
+
+.product__addcart span span {
+    padding-left: 10px;
+    margin-left: 10px;
+    border-left: 1px solid #fff;
+}
 .product__addcart.isInCart span,.product-page__addcart.isInCart span {
     display: none;
 }
