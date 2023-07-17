@@ -404,6 +404,35 @@
     <script>
         let csrf = $('meta[name="csrf-token"]').attr('content');
         $.ajaxSetup({headers: {'X-CSRF-TOKEN': csrf}});
+        function writeCookie(name,value,hours) {
+            if (hours) {
+                var date = new Date();
+                date.setTime(date.getTime()+(hours*60*60*1000));
+                var expires = "; expires="+date.toGMTString();
+            }
+            else var expires = "";
+            document.cookie = name+"="+value+expires+"; path=/";
+        }
+        function getCookie(name) {
+            var dc = document.cookie;
+            var prefix = name + "=";
+            var begin = dc.indexOf("; " + prefix);
+            if (begin == -1) {
+                begin = dc.indexOf(prefix);
+                if (begin != 0) return null;
+            }
+            else
+            {
+                begin += 2;
+                var end = document.cookie.indexOf(";", begin);
+                if (end == -1) {
+                    end = dc.length;
+                }
+            }
+            // because unescape has been deprecated, replaced with decodeURI
+            //return unescape(dc.substring(begin + prefix.length, end));
+            return decodeURI(dc.substring(begin + prefix.length, end));
+        }
         $('.dd').nestable({
             callback: function(l,e){
                 $.ajax({
@@ -413,15 +442,39 @@
                         data: l.nestable('toArray')
                     },
                     success: function (resp) {
-                        console.log(resp);
+
                     }
                 })
             }
         });
+        function cookieNameGenerator(el) {
+            return 'el_' + el.getAttribute('data-id');
+        }
+        $('.dd-item').each(function (idx, el) {
+            let cookie_name = cookieNameGenerator(el);
+            let val = getCookie(cookie_name);
+            if(val === null) {
+                writeCookie(cookie_name, '1', 24)
+                val = '1';
+            }
+            if (val === '0') {
+                el.classList.add('dd-collapsed')
+            }
+            else {
+                el.classList.remove('dd-collapsed')
+            }
+        })
+        $('.dd-item button').on('click', function(ev) {
+            let el = ev.currentTarget.parentNode;
+            let cookie_name = cookieNameGenerator(el);
+            let val = getCookie(cookie_name);
+            val = val === '1'? '0': '1';
+            writeCookie(cookie_name, val, 24)
+        });
 
     </script>
     <script src="https://raw.githack.com/SortableJS/Sortable/master/Sortable.js"></script>
-    <script src="{{ asset('super_admin/js/category.js') }}"></script>
+{{--    <script src="{{ asset('super_admin/js/category.js') }}"></script>--}}
     <script src="{{ asset('super_admin/js/pages/crud/forms/widgets/select2.js') }}"></script>
 @endsection
 
