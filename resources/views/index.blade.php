@@ -212,7 +212,7 @@
                                                     </label>
                                                 </div>
                                             </div>
-                                            <button class="product__addcart">Добавить в корзину <span>23 878 ₽</span></button>
+                                            <button class="product__addcart"><span>Добавить в корзину <span>{{ $new_product->price }} ₽</span></span></button>
                                         </div>
                                     </div>
 
@@ -319,7 +319,7 @@
                                                     </label>
                                                 </div>
                                             </div>
-                                            <button class="product__addcart">Добавить в корзину <span>23 878 ₽</span></button>
+                                            <button class="product__addcart"><span>Добавить в корзину <span>{{ $new_product->price }} ₽</span></span></button>
                                         </div>
                                     </div>
 
@@ -457,7 +457,7 @@
                                                     </label>
                                                 </div>
                                             </div>
-                                            <button class="product__addcart">Добавить в корзину <span>23 878 ₽</span></button>
+                                            <button class="product__addcart"><span>Добавить в корзину <span>{{ $product->price }} ₽</span></span></button>
                                         </div>
                                     </div>
 
