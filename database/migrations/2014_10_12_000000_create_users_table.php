@@ -18,6 +18,7 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->integer('points')->comment('Бонусные баллы')->default(0);
+            $table->bigInteger('subscription_category_id')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

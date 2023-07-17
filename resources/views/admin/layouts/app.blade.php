@@ -270,6 +270,38 @@
                             </div>
                         </li>
 
+                        <li class="menu-item menu-item-submenu"
+                            aria-haspopup="true" data-menu-toggle="hover">
+                            <a href="javascript:;" class="menu-link menu-toggle">
+                                <i class="fas flaticon2-paper-plane menu-icon"></i>
+                                <span class="menu-text">Подписки</span>
+                                <i class="menu-arrow"></i>
+                            </a>
+                            <div class="menu-submenu" style="" kt-hidden-height="160">
+                                <i class="menu-arrow"></i>
+                                <ul class="menu-subnav">
+                                    <li class="menu-item {{ request()->routeIs('admin.subscribers.index') ? 'menu-item-active' : '' }}"
+                                        aria-haspopup="true">
+                                        <a href="{{route('admin.subscribers.index')}}" class="menu-link">
+                                            <i class="menu-bullet menu-bullet-dot">
+                                                <span></span>
+                                            </i>
+                                            <span class="menu-text">Подписчики</span>
+                                        </a>
+                                    </li>
+                                    <li class="menu-item {{ request()->routeIs('admin.subscription-category.index') ? 'menu-item-active' : '' }}"
+                                        aria-haspopup="true">
+                                        <a href="{{route('admin.subscription-category.index')}}" class="menu-link">
+                                            <i class="menu-bullet menu-bullet-dot">
+                                                <span></span>
+                                            </i>
+                                            <span class="menu-text">Категории</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+
                         <li class="menu-item menu-item-submenu
 {{ (request()->routeIs('admin.news')
 || request()->routeIs('admin.banner')

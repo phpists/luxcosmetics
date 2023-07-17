@@ -31,7 +31,8 @@ class User extends Authenticatable
         'birthday',
         'is_subscribed',
         'connection_type',
-        'points'
+        'points',
+        'subscription_category_id'
     ];
 
     /**

@@ -298,6 +298,19 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function 
      Route::get('user/show/{id}', [\App\Http\Controllers\Admin\UserController::class, 'show'])->name('admin.user.show');
      Route::get('user/edit/{id}', [\App\Http\Controllers\Admin\UserController::class, 'edit'])->name('admin.user.edit');
      Route::post('user/update', [\App\Http\Controllers\Admin\UserController::class, 'update'])->name('admin.user.update');
+
+     /* Subscribers */
+    Route::get('subscribers', [\App\Http\Controllers\Admin\SubscribersController::class, 'index'])->name('admin.subscribers.index');
+    Route::get('subscribers/delete/{id}', [\App\Http\Controllers\Admin\SubscribersController::class, 'delete'])->name('admin.subscriber.delete');
+    Route::post('subscribers/send-newsletter', [\App\Http\Controllers\Admin\SubscribersController::class, 'send_newsletter'])->name('admin.subscribers.send-newsletter');
+
+    /* Subscription Categories */
+    Route::get('subscription-categories', [\App\Http\Controllers\Admin\SubscriptionCategoryController::class, 'index'])->name('admin.subscription-category.index');
+    Route::delete('subscription-categories/delete', [\App\Http\Controllers\Admin\SubscriptionCategoryController::class, 'delete'])->name('admin.subscription-category.delete');
+    Route::get('subscription-categories/show', [\App\Http\Controllers\Admin\SubscriptionCategoryController::class, 'show'])->name('admin.subscription-category.show');
+    Route::post('subscription-categories', [\App\Http\Controllers\Admin\SubscriptionCategoryController::class, 'store'])->name('admin.subscription-category.store');
+    Route::put('subscription-categories/update', [\App\Http\Controllers\Admin\SubscriptionCategoryController::class, 'update'])->name('admin.subscription-category.update');
+
 });
 
 // General Pages
