@@ -4,7 +4,9 @@
 </h1>
 
 <p style="text-align: center">
+<div style="max-width: 800px; margin: 0 auto; padding: 20px;">
 {!! $message !!}
+</div>
 </p>
 
 <x-mail::button :url="url()->route('home')">

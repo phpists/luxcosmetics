@@ -1,7 +1,7 @@
-<div class="popupform" id="addproduct">
+<div class="popupform mfp-hide" id="addproduct">
     <div class="popupform__title">Вы добавили в корзину</div>
     <div class="addprod">
-        <div class="addprod__image"><img src="images/dist/tmp-product2.jpg" alt=""></div>
+        <div class="addprod__image"><img src="{{asset('images/dist/tmp-product2.jpg')}}" alt=""></div>
         <div class="addprod__wrap">
             <div class="addprod__title"><a href="">YVES SAINT LAURENT</a></div>
             <div class="addprod__subtitle">Libre Eau de Parfum (50ml)</div>

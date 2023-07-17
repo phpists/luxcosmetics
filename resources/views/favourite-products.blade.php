@@ -108,6 +108,29 @@
     </div>
 @endsection
 
+@section('after_content')
+    <div class="filters-overlay"></div>
+    <div class="hidden">
+        <!-- <form action="" class="form" id="callback">
+            <h3>Оставить сообщение</h3>
+
+            <input type="text"  name="Имя" placeholder="Ваше имя"  required="required">
+            <input type="text"  name="Телефон" placeholder="Номер телефона" required="required">
+            <input type="text"  name="E-mail" placeholder="E-mail" required="required">
+            <textarea name="Сообщение" placeholder="Сообщение"></textarea>
+            <button class="btn btn-feed">Отправить</button>
+        </form> -->
+        @include('layouts.includes.purchase_modal')
+    </div>
+    <div class="done-w">
+        <div class="done-window">
+            <div class="done-window__icn"></div>
+            <div class="done-window__title">Ваша заявка принята</div>
+            <div class="done-window__subtitle">Наш менеджер свяжется с Вами в течении 15 минут</div>
+        </div>
+    </div>
+@endsection
+
 @section('scripts')
     <script src="{{asset('/js/app.min.js')}}"></script>
     <script>
@@ -149,6 +172,12 @@
                 }
             }
             $('.product_favourite').on('click', favouriteRemove);
+            $('button.product__addcart').magnificPopup({
+                items: {
+                    src: '#addproduct',
+                    type: 'inline'
+                }
+            });
         })
 
     </script>

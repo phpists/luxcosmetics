@@ -328,6 +328,15 @@
                 return false
             })
 
+            $('button.product__addcart').on('click', function () {
+                $.magnificPopup.open({
+                    items: {
+                        src: '#addproduct',
+                        type: 'inline'
+                    }
+                });
+            })
+
         })
     </script>
 @endsection
