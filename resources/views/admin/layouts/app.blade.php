@@ -270,7 +270,8 @@
                             </div>
                         </li>
 
-                        <li class="menu-item menu-item-submenu"
+                        <li class="menu-item menu-item-submenu {{(request()->routeIs('admin.subscribers.index')
+|| request()->routeIs('admin.subscription-category.index')) ? 'menu-item-open' : '' }}"
                             aria-haspopup="true" data-menu-toggle="hover">
                             <a href="javascript:;" class="menu-link menu-toggle">
                                 <i class="fas flaticon2-paper-plane menu-icon"></i>
