@@ -40,7 +40,7 @@ class NewsLetter extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'emails.newsletter',
+            markdown: 'emails.newsletter',
             with: [
                 'message' => $this->message,
                 'userName' => $this->userName
