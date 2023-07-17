@@ -59,7 +59,7 @@
                                                 <div class="cart-product__oldprice">{{ $product->old_price }} ₽ </div>
                                             @endif
                                         </div>
-                                        <div class="cart-product__sum">{{ round($product->price * $product->quantity, 2) }} ₽</div>
+                                        <div class="cart-product__sum"><span class="currentSum">{{ round($product->price * $product->quantity, 2) }}</span> ₽</div>
                                         <button class="cart-product__delete removeFromCart" data-element="div.cart-product:first" data-product="{{ $product->id }}" data-property="{{ $product->baseValue->id ?? '' }}">
                                             <svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#close')}}"></use></svg>
                                         </button>

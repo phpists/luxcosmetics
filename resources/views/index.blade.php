@@ -138,85 +138,9 @@
                 <div class="col-lg-12">
                     <h2 class="title-h2">Новинки</h2>
                     <div class="products-slider">
-                        @foreach($new_products as $new_product)
-                            @php
-                                $selected_variation = $new_product->product_variations->first();
-                            @endphp
+                        @foreach($new_products as $product)
                             <div class="products-slider__item">
-                                <div class="product">
-                                    <div class="product__top">
-                                        <div class="product__image">
-                                            <div class="product__labels">
-                                                <div class="product__label product__label--brown">-50%</div>
-                                                @if($new_product->show_in_popular)
-                                                    <div class="product__label product__label--green">Хит продаж</div>
-                                                @endif
-                                            </div>
-                                            <a href="/p/{{$new_product->alias}}{{$selected_variation !== null?'/'.$selected_variation->id:''}}"><img src="{{asset('images/uploads/products/'.$new_product->image)}}" alt=""></a>
-                                            <button class="product__fav product_favourite" data-label=@if($new_product->is_favourite && \App\Services\FavoriteProductsService::checkByIdForAnonym($new_product->id)) "1" @else "0" @endif data-value="{{$new_product->id}}"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#heart')}}"></use></svg></button>
-                                        </div>
-                                        <div class="product__title"><a href="">{{$new_product->brand->name}}</a></div>
-                                        <div class="product__subtitle">{{$new_product->title}}</div>
-                                    </div>
-                                    <div class="product__btm">
-                                        <div class="product__reviews">
-                                            <div class="stars">
-                                                <span class="stars__item is-active"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#start')}}"></use></svg></span>
-                                                <span class="stars__item is-active"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#start')}}"></use></svg></span>
-                                                <span class="stars__item is-active"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#start')}}"></use></svg></span>
-                                                <span class="stars__item"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#start')}}"></use></svg></span>
-                                                <span class="stars__item"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#start')}}"></use></svg></span>
-                                            </div>
-                                            <a href="">16 отзывов</a>
-                                        </div>
-                                        <div class="product__ftrwrap">
-                                            <div class="product__prices">
-                                                @if($selected_variation != null)
-                                                    <div class="product__price">
-                                                        {{$selected_variation->discount_price??$selected_variation->price}} ₽
-                                                    </div>
-                                                    @isset($selected_variation->discount_price)
-                                                        <del class="product__oldprice">{{$selected_variation->price}} ₽</del>
-                                                    @endisset
-                                                @else
-                                                    <div class="product__price">{{$new_product->discount_price??$new_product->price}} ₽</div>
-                                                    @isset($new_product->discount_price)
-                                                        <del class="product__oldprice">{{$new_product->price}} ₽</del>
-                                                    @endisset
-                                                @endif
-                                            </div>
-                                            <button class="product__mobile-btn"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#cart')}}"></use></svg></button>
-                                        </div>
-                                        <div class="product__sizesinfo">Еще два размера</div>
-
-
-                                        <div class="product__pnl">
-                                            <div class="product__optionsblock">
-                                                <div class="product__optionstitle">Выбранный цвет: <b>Red</b></div>
-                                                <div class="product__options product__colors">
-                                                    <label class="color">
-                                                        <input type="radio" name="color"  checked/>
-                                                        <div class="color__text" style="background-color: #880B0B"></div>
-                                                    </label>
-                                                    <label class="color">
-                                                        <input type="radio" name="color" />
-                                                        <div class="color__text" style="background-color: #188299"></div>
-                                                    </label>
-                                                    <label class="color">
-                                                        <input type="radio" name="color" />
-                                                        <div class="color__text" style="background-color: #AE3A80"></div>
-                                                    </label>
-                                                    <label class="color">
-                                                        <input type="radio" name="color" />
-                                                        <div class="color__text" style="background-color: #99CB47"></div>
-                                                    </label>
-                                                </div>
-                                            </div>
-                                            <button class="product__addcart"><span>Добавить в корзину <span>{{ $new_product->price }} ₽</span></span></button>
-                                        </div>
-                                    </div>
-
-                                </div>
+                                @include('products._card')
                             </div>
                         @endforeach
                     </div>
@@ -237,7 +161,7 @@
                 </div>
             </div>
         </div>
-        <a href="https://www.youtube.com/watch?v=m-4XcLUMYQ4" class="videoblock__video popup-youtube" style="background-image: url(images/dist/video-cover.jpg);"></a>
+        <a href="https://www.youtube.com/watch?v=m-4XcLUMYQ4" class="videoblock__video popup-youtube" style="background-image: url('images/dist/video-cover.jpg');"></a>
     </section>
     <section class="productsblock">
         <div class="container">
@@ -245,85 +169,9 @@
                 <div class="col-lg-12">
                     <h2 class="title-h2">Популярные</h2>
                     <div class="products-slider">
-                        @foreach($new_products as $new_product)
-                            @php
-                                $selected_variation = $new_product->product_variations->first();
-                            @endphp
+                        @foreach($new_products as $product)
                             <div class="products-slider__item">
-                                <div class="product">
-                                    <div class="product__top">
-                                        <div class="product__image">
-                                            <div class="product__labels">
-                                                <div class="product__label product__label--brown">-50%</div>
-                                                @if($new_product->show_in_popular)
-                                                    <div class="product__label product__label--green">Хит продаж</div>
-                                                @endif
-                                            </div>
-                                            <a href="/p/{{$new_product->alias}}{{$selected_variation !== null?'/'.$selected_variation->id:''}}"><img src="{{asset('images/uploads/products/'.$new_product->image)}}" alt=""></a>
-                                            <button class="product__fav product_favourite" data-label=@if($new_product->is_favourite && \App\Services\FavoriteProductsService::checkByIdForAnonym($new_product->id)) "1" @else "0" @endif data-value="{{$new_product->id}}"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#heart')}}"></use></svg></button>
-                                        </div>
-                                        <div class="product__title"><a href="">{{$new_product->brand->name}}</a></div>
-                                        <div class="product__subtitle">{{$new_product->title}}</div>
-                                    </div>
-                                    <div class="product__btm">
-                                        <div class="product__reviews">
-                                            <div class="stars">
-                                                <span class="stars__item is-active"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#start')}}"></use></svg></span>
-                                                <span class="stars__item is-active"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#start')}}"></use></svg></span>
-                                                <span class="stars__item is-active"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#start')}}"></use></svg></span>
-                                                <span class="stars__item"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#start')}}"></use></svg></span>
-                                                <span class="stars__item"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#start')}}"></use></svg></span>
-                                            </div>
-                                            <a href="">16 отзывов</a>
-                                        </div>
-                                        <div class="product__ftrwrap">
-                                            <div class="product__prices">
-                                                @if($selected_variation != null)
-                                                    <div class="product__price">
-                                                        {{$selected_variation->discount_price??$selected_variation->price}} ₽
-                                                    </div>
-                                                    @isset($selected_variation->discount_price)
-                                                        <del class="product__oldprice">{{$selected_variation->price}} ₽</del>
-                                                    @endisset
-                                                @else
-                                                    <div class="product__price">{{$new_product->discount_price??$new_product->price}} ₽</div>
-                                                    @isset($new_product->discount_price)
-                                                        <del class="product__oldprice">{{$new_product->price}} ₽</del>
-                                                    @endisset
-                                                @endif
-                                            </div>
-                                            <button class="product__mobile-btn"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#cart')}}"></use></svg></button>
-                                        </div>
-                                        <div class="product__sizesinfo">Еще два размера</div>
-
-
-                                        <div class="product__pnl">
-                                            <div class="product__optionsblock">
-                                                <div class="product__optionstitle">Выбранный цвет: <b>Red</b></div>
-                                                <div class="product__options product__colors">
-                                                    <label class="color">
-                                                        <input type="radio" name="color"  checked/>
-                                                        <div class="color__text" style="background-color: #880B0B"></div>
-                                                    </label>
-                                                    <label class="color">
-                                                        <input type="radio" name="color" />
-                                                        <div class="color__text" style="background-color: #188299"></div>
-                                                    </label>
-                                                    <label class="color">
-                                                        <input type="radio" name="color" />
-                                                        <div class="color__text" style="background-color: #AE3A80"></div>
-                                                    </label>
-                                                    <label class="color">
-                                                        <input type="radio" name="color" />
-                                                        <div class="color__text" style="background-color: #99CB47"></div>
-                                                    </label>
-                                                </div>
-                                            </div>
-                                            <button class="product__addcart"><span>Добавить в корзину <span>{{ $new_product->price }} ₽</span></span></button>
-                                        </div>
-                                    </div>
-
-                                </div>
+                                @include('products._card')
                             </div>
                         @endforeach
                     </div>
@@ -384,84 +232,8 @@
                     <h2 class="title-h2">Товары со скидкой</h2>
                     <div class="products-slider">
                         @foreach($product_discounts  as $product)
-                            @php
-                                $selected_variation = $product->product_variations->whereNotNull('discount_price')->first();
-                            @endphp
                             <div class="products-slider__item">
-                                <div class="product">
-                                    <div class="product__top">
-                                        <div class="product__image">
-                                            <div class="product__labels">
-                                                <div class="product__label product__label--brown">-50%</div>
-                                                @if($product->show_in_popular)
-                                                    <div class="product__label product__label--green">Хит продаж</div>
-                                                @endif
-                                            </div>
-                                            <a href="/p/{{$product->alias}}{{$selected_variation !== null?'/'.$selected_variation->id:''}}"><img src="{{asset('images/uploads/products/'.$product->image)}}" alt=""></a>
-                                            <button class="product__fav product_favourite" data-label=@if($product->is_favourite && \App\Services\FavoriteProductsService::checkByIdForAnonym($product->id)) "1" @else "0" @endif data-value="{{$product->id}}"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#heart')}}"></use></svg></button>
-                                        </div>
-                                        <div class="product__title"><a href="">{{$product->brand->name}}</a></div>
-                                        <div class="product__subtitle">{{$product->title}}</div>
-                                    </div>
-                                    <div class="product__btm">
-                                        <div class="product__reviews">
-                                            <div class="stars">
-                                                <span class="stars__item is-active"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#start')}}"></use></svg></span>
-                                                <span class="stars__item is-active"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#start')}}"></use></svg></span>
-                                                <span class="stars__item is-active"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#start')}}"></use></svg></span>
-                                                <span class="stars__item"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#start')}}"></use></svg></span>
-                                                <span class="stars__item"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#start')}}"></use></svg></span>
-                                            </div>
-                                            <a href="">16 отзывов</a>
-                                        </div>
-                                        <div class="product__ftrwrap">
-                                            <div class="product__prices">
-                                                @if($selected_variation != null)
-                                                    <div class="product__price">
-                                                        {{$selected_variation->discount_price??$selected_variation->price}} ₽
-                                                    </div>
-                                                    @isset($selected_variation->discount_price)
-                                                        <del class="product__oldprice">{{$selected_variation->price}} ₽</del>
-                                                    @endisset
-                                                @else
-                                                    <div class="product__price">{{$product->discount_price??$product->price}} ₽</div>
-                                                    @isset($product->discount_price)
-                                                        <del class="product__oldprice">{{$product->price}} ₽</del>
-                                                    @endisset
-                                                @endif
-                                            </div>
-                                            <button class="product__mobile-btn"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#cart')}}"></use></svg></button>
-                                        </div>
-                                        <div class="product__sizesinfo">Еще два размера</div>
-
-
-                                        <div class="product__pnl">
-                                            <div class="product__optionsblock">
-                                                <div class="product__optionstitle">Выбранный цвет: <b>Red</b></div>
-                                                <div class="product__options product__colors">
-                                                    <label class="color">
-                                                        <input type="radio" name="color"  checked/>
-                                                        <div class="color__text" style="background-color: #880B0B"></div>
-                                                    </label>
-                                                    <label class="color">
-                                                        <input type="radio" name="color" />
-                                                        <div class="color__text" style="background-color: #188299"></div>
-                                                    </label>
-                                                    <label class="color">
-                                                        <input type="radio" name="color" />
-                                                        <div class="color__text" style="background-color: #AE3A80"></div>
-                                                    </label>
-                                                    <label class="color">
-                                                        <input type="radio" name="color" />
-                                                        <div class="color__text" style="background-color: #99CB47"></div>
-                                                    </label>
-                                                </div>
-                                            </div>
-                                            <button class="product__addcart"><span>Добавить в корзину <span>{{ $product->price }} ₽</span></span></button>
-                                        </div>
-                                    </div>
-
-                                </div>
+                                @include('products._card')
                             </div>
                         @endforeach
                     </div>
@@ -588,14 +360,6 @@
     <script src="{{asset('/js/favourites.js')}}"></script>
     <script>
         $(document).ready(function () {
-            $('button.product__addcart').on('click', function () {
-                $.magnificPopup.open({
-                    items: {
-                        src: '#addproduct',
-                        type: 'inline'
-                    }
-                });
-            })
         })
     </script>
 @endsection

@@ -15,6 +15,7 @@
 
     <link rel="stylesheet" href="{{ asset('/css/main.min.css') }}">
     <link rel="stylesheet" href="{{ asset('/css/cart.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
     @vite(['resources/js/app.js'])
     <![endif]-->
 
@@ -33,10 +34,14 @@
     @endphp
     @include('layouts.includes.header', ['menu_items' => $menu_items])
     @yield('content')
+
+    @include('layouts.includes.purchase_modal')
+
     @include('layouts.includes.footer', ['menu_items' => $menu_items, 'static-pages' => $static_pages])
 </div>
 @yield('after_content')
 <script src="{{asset('/js/app.min.js')}}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
 <script>
     document.getElementById('header_search').addEventListener('input', function (ev) {
         let results_container = document.getElementById('search_results');

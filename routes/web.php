@@ -39,6 +39,8 @@ Route::get('b/{link}', [\App\Http\Controllers\BrandsController::class, 'show'])-
 // Categories
 Route::get('catalog', [CategoryController::class, 'index'])->name('categories');
 Route::get('c/{alias}', [CategoryController::class, 'show'])->name('categories.show');
+// Product card
+Route::get('product/card/{product}', [\App\Http\Controllers\ProductController::class, 'productCard'])->name('product.card');
 // Static pages
 Route::get('/pages/{alias}', [\App\Http\Controllers\PagesController::class, 'show'])->name('pages.show');
 // Search
