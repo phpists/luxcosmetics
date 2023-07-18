@@ -7,15 +7,13 @@ use App\Models\Article;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Product;
-use App\Models\ProductPropertyValue;
 use App\Models\ProductVariation;
-use App\Models\PropertyValue;
+use App\Models\Seo;
 use App\Services\CatalogService;
 use App\Services\ImageService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
 class ProductController extends Controller
@@ -134,7 +132,9 @@ class ProductController extends Controller
         $last_position = $articles->max('position');
         $last_position = $last_position ? $last_position + 1: 1;
 
-        return view('admin.products.edit', compact('product', 'categories', 'brands', 'product_images', 'product_variations', 'last_position', 'articles'));
+        $seo = Seo::query()->select('seo.*')->first();
+
+        return view('admin.products.edit', compact('product', 'categories', 'brands', 'product_images', 'product_variations', 'last_position', 'articles', 'seo'));
     }
 
     public function update(Request $request, $id)
@@ -199,6 +199,29 @@ class ProductController extends Controller
 
         return back();
 //        return redirect()->route('admin.products')->with('success', 'Товар успешно обновлен');
+    }
+
+    public function updateSeo(Request $request)
+    {
+
+        $seo = Seo::where('record_id', $request->id)
+            ->where('table_name', 'products')->first();
+        if ($seo === null) {
+            $seo = new Seo([
+                'record_id' => $request->id,
+                'title' => $request->meta_title,
+                'description' => $request->meta_description,
+                'keywords' => $request->meta_keywords,
+                'table_name' => Seo::PRODUCTS
+            ]);
+            $seo->save();
+        }else{
+            $seo->title = $request->meta_title;
+            $seo->description = $request->meta_description;
+            $seo->keywords = $request->meta_keywords;
+            $seo->update();
+        }
+        return redirect()->back()->with('success', 'Seo обновлено');
     }
 
     public function storeImage(Request $request) {
