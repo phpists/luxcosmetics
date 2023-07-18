@@ -4,9 +4,6 @@
         <thead>
         <tr>
             <th class="pl-0 text-center">
-                #
-            </th>
-            <th class="pl-0 text-center">
                 ID
             </th>
             <th class="pr-0 text-center">
@@ -23,9 +20,6 @@
         <tbody class="faq-table">
         @foreach($blocks as $block)
             <tr data-id="{{ $block->id }}">
-                <td class="handle text-center pl-0" style="cursor: pointer">
-                    <i class="flaticon2-sort"></i>
-                </td>
                 <td class="text-center pl-0">
                     {{ $block->id }}
                 </td>
