@@ -29,15 +29,15 @@ class BrandsService
 
         $brands = Brand::where('link', $request->link)->firstOrFail();
         $category = Category::with(['subcategories', 'tags'])->firstOrFail();
-        
+
         $this->category = $category;
         $this->brands = $brands;
     }
-    
+
     public function getFiltered()
     {
         $brandId = $this->brands->id;
-        
+
         $products = Product::query()
             ->selectRaw('products.*, product_images.path as main_image, case when user_favorite_products.product_id is null then FALSE else TRUE end as is_favourite')
             ->join('product_images', 'products.image_print_id', 'product_images.id')
@@ -65,6 +65,9 @@ class BrandsService
 
         if ($sortColumn = $this->getSortColumn()) {
             $products->orderBy($sortColumn, $this->getSortDirection());
+        }
+        else {
+            $products->orderBy('created_at', 'DESC');
         }
 
         if (Auth::check()) {

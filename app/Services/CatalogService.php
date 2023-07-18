@@ -67,6 +67,9 @@ class CatalogService
         if ($sort_column = $this->getSortColumn()) {
             $products->orderBy($sort_column, $this->getSortDirection());
         }
+        else {
+            $products->orderBy('created_at', 'DESC');
+        }
 
         if (Auth::check()) {
             $favourites = DB::table('user_favorite_products')->select('user_favorite_products.*')->where('user_id', $this->request->user()->id);

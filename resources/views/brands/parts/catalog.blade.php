@@ -3,7 +3,7 @@
     <div class="sortblock__sort sort">
         <span class="sort__title">Сортировать по</span>
         <select name="" id="select_sort_preview" class="sort__select">
-            <option value="" @if(!request()->input('sort')) selected @endif>Стандарту</option>
+            <option value="created_at:desc" @if(!request()->input('sort') || (request()->input('sort') == 'created_at:desc')) selected @endif>Новизне</option>
             <option value="price:asc" @if(request()->input('sort') == 'price:asc') selected @endif>Возрастанию цены</option>
             <option value="price:desc" @if(request()->input('sort') == 'price:desc') selected @endif>Убыванию цены</option>
         </select>
