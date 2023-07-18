@@ -22,9 +22,6 @@
         <div class="d-flex flex-column-fluid">
             <!--begin::Container-->
             <div class="container-fluid">
-                <div class="card gutter-b col-lg-12 ml-0">
-                    @include('admin.news.parts.filter')
-                </div>
                 @include('admin.layouts.includes.messages')
                 <div class="card card-custom">
                     <div class="card-header flex-wrap border-0 pt-6 pb-0">
@@ -124,21 +121,20 @@
                                             {{ date('m Y, H:i:s', strtotime($item->published_at)) }}
                                         </td>
                                         <td class="text-center pr-0">
-                                            <div class="article__image"><a href="{{ route('index.news', $item->id) }}"><img src="{{asset('images/uploads/news/' . $item->image)}}" alt="" style=" width: 100px;"></a></div> 
+                                            <div class="article__image"><a href="{{ route('index.news', $item->id) }}"><img src="{{asset('images/uploads/news/' . $item->image)}}" alt="" style=" width: 100px;"></a></div>
                                         </td>
                                         <td class="text-center pr-0">
                                             <a href="{{ route('admin.news.edit', $item->id) }}" class="btn btn-sm btn-clean btn-icon">
                                                 <i class="las la-edit"></i>
                                             </a>
-                                        </td>
-                                        <td>
                                             <a href="{{ route('admin.news.delete', $item->id) }}" class="btn btn-sm btn-clean btn-icon" onclick="return confirm('Ви впевнені, що хочете видалити цей запис?')">
                                                 <i class="las la-trash"></i>
                                             </a>
                                         </td>
+
                                     </tr>
                                 @endforeach
-                                
+
                                 </tbody>
                             </table>
                         </div>
