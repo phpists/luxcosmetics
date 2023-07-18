@@ -8,5 +8,10 @@
         <div class="addprod__option">Выбранный {{ mb_strtolower($product->baseProperty->name) }}:
             <b>{{ ($product->baseValue->value ?? '') . ($product->baseProperty->measure ?? '') }}</b></div>
     </div>
+    <div class="numbers addprod__numbers">
+        <div class="numbers__minus minus"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#minus')}}"></use></svg></div>
+        <input type="text" class="numbers__input" value="1">
+        <div class="numbers__plus plus"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#plus')}}"></use></svg></div>
+    </div>
     <div class="addprod__price">{{ $product->price }} ₽ </div>
 </div>

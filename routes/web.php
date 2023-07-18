@@ -317,6 +317,9 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function 
     Route::get('main-blocks', [\App\Http\Controllers\MainPageBlockController::class, 'index'])->name('admin.main-block.index');
     Route::get('main-block', [\App\Http\Controllers\MainPageBlockController::class, 'show'])->name('admin.main-block.show');
     Route::post('main-block/update', [\App\Http\Controllers\MainPageBlockController::class, 'update'])->name('admin.main-block.update');
+    /* Settings */
+    Route::get('settings', [\App\Http\Controllers\Admin\SiteConfigController::class, 'index'])->name('admin.settings.index');
+    Route::post('settings', [\App\Http\Controllers\Admin\SiteConfigController::class, 'store'])->name('admin.settings.store');
 });
 
 // General Pages

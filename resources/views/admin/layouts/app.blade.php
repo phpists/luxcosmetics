@@ -474,6 +474,12 @@
                                             <span class="menu-text">Robots.txt</span>
                                         </a>
                                     </li>
+                                    <li class="menu-item {{ request()->routeIs('admin.settings.index') ? 'menu-item-active' : '' }}" aria-haspopup="true">
+                                        <a href="{{ route('admin.settings.index') }}" class="menu-link">
+                                            <i class="menu-bullet menu-bullet-dot"><span></span></i>
+                                            <span class="menu-text">Настройки</span>
+                                        </a>
+                                    </li>
                                 </ul>
                             </div>
                         </li>

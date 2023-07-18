@@ -173,7 +173,7 @@
                 <div class="col-lg-12">
                     <h2 class="title-h2">Популярные</h2>
                     <div class="products-slider">
-                        @foreach($new_products as $product)
+                        @foreach($popular_products as $product)
                             <div class="products-slider__item">
                                 @include('products._card')
                             </div>
