@@ -257,6 +257,33 @@
                                         <textarea class="textEditor" name="description_3">{{$product->description_3}}</textarea>
                                     </div>
                                 </div>
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label for="lengthField">Длина:</label>
+                                            <input type="number" class="form-control" id="lengthField" name="length_product" min="0" max="100" step="1" value="{{ $product->length }}">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label for="widthField">Ширина:</label>
+                                            <input type="number" class="form-control" id="widthField" name="width_product" min="0" max="100" step="1" value="{{ $product->width }}">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label for="heightField">Высота:</label>
+                                            <input type="number" class="form-control" id="heightField" name="height_product" min="0" max="100" step="1" value="{{ $product->height }}">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label for="weightField">Вес:</label>
+                                            <input type="number" class="form-control" id="weightField" name="weight_product" min="0" max="100" step="1" value="{{ $product->weight }}">
+                                        </div>
+                                    </div>
+                                </div>
+
 
 
                                 <div class="card-footer">
@@ -280,7 +307,9 @@
                                     </button>
                                 </div>
                             </div>
+
                             <div>
+
                                 <!--begin::Table-->
                                 <div class="table-responsive">
                                     <table class="table table-head-custom table-vertical-center">

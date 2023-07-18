@@ -147,9 +147,15 @@ class ProductController extends Controller
         $data['show_in_sales_page'] = array_key_exists('show_in_sales_page', $data)? 1: 0;
         $data['show_in_percent_discount_page'] = array_key_exists('show_in_percent_discount_page', $data)? 1: 0;
         $data['show_in_new_page'] = array_key_exists('show_in_new_page', $data)? 1: 0;
+        $product->length_product = $data['length_product'];
+        $product->width_product = $data['width_product'];
+        $product->height_product = $data['height_product'];
+        $product->weight_product = $data['weight_product'];
+
         if (!array_key_exists('alias', $data) || $data['alias'] === null || $data['title'] !== $product->title) {
             $data['alias'] = Str::slug($data['title'], '-');
         }
+
         $count = Product::query()
             ->where('alias', 'like', $data['alias'].'%')
             ->whereNot('id', $product->id)
