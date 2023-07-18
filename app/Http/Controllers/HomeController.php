@@ -20,7 +20,7 @@ class HomeController extends Controller
             $user_statement = ' or user_favorite_products.user_id != '.Auth::user()->id;
         }
         $product_discounts = Product::query()
-            ->selectRaw('products.*, product_images.path as image, case when user_favorite_products.product_id is null then FALSE else TRUE end as is_favourite')
+            ->selectRaw('products.*, product_images.path as main_image, case when user_favorite_products.product_id is null then FALSE else TRUE end as is_favourite')
             ->join('product_images', 'products.image_print_id', 'product_images.id')
             ->whereHas('product_variations', function ($query) {
                 $query->whereNotNull('discount_price');
@@ -31,7 +31,7 @@ class HomeController extends Controller
             ->distinct(['products.id']);
 
         $new_products = Product::query()
-            ->selectRaw('products.*, product_images.path as image, case when user_favorite_products.product_id is null'.$user_statement.' then FALSE else TRUE end as is_favourite')
+            ->selectRaw('products.*, product_images.path as main_image, case when user_favorite_products.product_id is null'.$user_statement.' then FALSE else TRUE end as is_favourite')
             ->join('product_images', 'products.image_print_id', 'product_images.id')
             ->with('brand')
             ->with('product_variations')
