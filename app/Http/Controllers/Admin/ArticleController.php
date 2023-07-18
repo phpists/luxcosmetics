@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Article;
 use App\Models\CategoryBanner;
-use App\Services\ImageService;
+use App\Services\FileService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
@@ -16,7 +16,7 @@ class ArticleController extends Controller
     public function store(Request $request)
     {
         $data = $request->all();
-        $image = ImageService::saveImage('uploads', 'articles', $request->image);
+        $image = FileService::saveFile('uploads', 'articles', $request->image);
         if ($image){
             $data['image'] = $image;
         }
@@ -60,7 +60,7 @@ class ArticleController extends Controller
 
         $article->delete();
 
-        ImageService::removeImage('uploads', 'articles', $article->image);
+        FileService::removeFile('uploads', 'articles', $article->image);
 
         return redirect()->back()->with('success', 'Статья успешно удалена');
     }

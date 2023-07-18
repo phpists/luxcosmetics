@@ -11,7 +11,7 @@ use App\Models\ProductPropertyValue;
 use App\Models\ProductVariation;
 use App\Models\PropertyValue;
 use App\Services\CatalogService;
-use App\Services\ImageService;
+use App\Services\FileService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -85,7 +85,7 @@ class ProductController extends Controller
         }
         $product = new Product($data);
         if ($product->save()) {
-            $image_path = ImageService::saveImage('uploads', "products", $request->image);
+            $image_path = FileService::saveFile('uploads', "products", $request->image);
             if ($image_path !== false) {
                 $image_id = DB::table('product_images')->insertGetId([
                     'path' => $image_path,
@@ -196,7 +196,7 @@ class ProductController extends Controller
     }
 
     public function storeImage(Request $request) {
-        $image_path = ImageService::saveImage('uploads', "products", $request->image);
+        $image_path = FileService::saveFile('uploads', "products", $request->image);
         if($image_path) {
             $imageId = DB::table('product_images')->insertGetId([
                 'path' => $image_path,
@@ -257,7 +257,7 @@ class ProductController extends Controller
         Product::query()->find($id)->delete();
         $images = DB::table('product_images')->where('id', $id)->get();
         foreach ($images as $image) {
-            ImageService::removeImage('uploads', 'products', $image);
+            FileService::removeFile('uploads', 'products', $image);
         }
         DB::table('product_images')->where('id', $id)->delete();
         return redirect()->back()->with('success', 'Товар удален успешно');

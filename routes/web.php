@@ -310,7 +310,10 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function 
     Route::get('subscription-categories/show', [\App\Http\Controllers\Admin\SubscriptionCategoryController::class, 'show'])->name('admin.subscription-category.show');
     Route::post('subscription-categories', [\App\Http\Controllers\Admin\SubscriptionCategoryController::class, 'store'])->name('admin.subscription-category.store');
     Route::put('subscription-categories/update', [\App\Http\Controllers\Admin\SubscriptionCategoryController::class, 'update'])->name('admin.subscription-category.update');
-
+    /* Main Block */
+    Route::get('main-blocks', [\App\Http\Controllers\MainPageBlockController::class, 'index'])->name('admin.main-block.index');
+    Route::get('main-block', [\App\Http\Controllers\MainPageBlockController::class, 'show'])->name('admin.main-block.show');
+    Route::post('main-block/update', [\App\Http\Controllers\MainPageBlockController::class, 'update'])->name('admin.main-block.update');
 });
 
 // General Pages

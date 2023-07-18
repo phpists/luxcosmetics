@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\MainPageBlock;
 use App\Models\Product;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Query\JoinClause;
@@ -53,7 +54,8 @@ class HomeController extends Controller
         }
         $product_discounts = $product_discounts->limit(12)->get();
         $new_products = $new_products->limit(12)->get();
-        return view('index', compact('product_discounts', 'new_products'));
+        $main_block = MainPageBlock::query()->first();
+        return view('index', compact('product_discounts', 'new_products', 'main_block'));
     }
 
 

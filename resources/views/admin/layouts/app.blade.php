@@ -199,6 +199,19 @@
                                     </li>
                                 </ul>
                             </div>
+                            <div class="menu-submenu" style="" kt-hidden-height="160">
+                                <i class="menu-arrow"></i>
+                                <ul class="menu-subnav">
+                                    <li class="menu-item {{ request()->routeIs('admin.main-block.index') ? 'menu-item-active' : '' }}" aria-haspopup="true">
+                                        <a href="{{ route('admin.main-block.index') }}" class="menu-link">
+                                            <i class="menu-bullet menu-bullet-dot">
+                                                <span></span>
+                                            </i>
+                                            <span class="menu-text">Блок на главной странице</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
 
 
 {{--                            <div class="menu-submenu" style="" kt-hidden-height="160">--}}
