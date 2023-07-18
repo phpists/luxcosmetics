@@ -66,6 +66,11 @@
                                     <span class="nav-text">Статьи</span>
                                 </a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#kt_tab_pane_3_4">
+                                    <span class="nav-text">Редактировать SEO</span>
+                                </a>
+                            </li>
                         </ul>
                     </div>
                     <div class="card-toolbar" style="gap: 10px; margin-bottom: 10px">
@@ -257,6 +262,33 @@
                                         <textarea class="textEditor" name="description_3">{{$product->description_3}}</textarea>
                                     </div>
                                 </div>
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label for="lengthField">Длина:</label>
+                                            <input type="number" class="form-control" id="lengthField" name="length_product" min="0" max="100" step="1" value="{{ $product->length }}">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label for="widthField">Ширина:</label>
+                                            <input type="number" class="form-control" id="widthField" name="width_product" min="0" max="100" step="1" value="{{ $product->width }}">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label for="heightField">Высота:</label>
+                                            <input type="number" class="form-control" id="heightField" name="height_product" min="0" max="100" step="1" value="{{ $product->height }}">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label for="weightField">Вес:</label>
+                                            <input type="number" class="form-control" id="weightField" name="weight_product" min="0" max="100" step="1" value="{{ $product->weight }}">
+                                        </div>
+                                    </div>
+                                </div>
+
 
 
                                 <div class="card-footer">
@@ -280,7 +312,9 @@
                                     </button>
                                 </div>
                             </div>
+
                             <div>
+
                                 <!--begin::Table-->
                                 <div class="table-responsive">
                                     <table class="table table-head-custom table-vertical-center">
@@ -434,6 +468,48 @@
                                 </table>
                             </div>
                             <!--end::Table-->
+                        </div>
+
+                        <div class="tab-pane fade" id="kt_tab_pane_3_4" role="tabpanel"
+                             aria-labelledby="kt_tab_pane_3_4">
+
+                            <form action="{{route('admin.product.update.seo')}}" method="POST">
+                                @csrf
+                                <input type="hidden" name="id" value="{{ $product->id }}">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>Meta title</label>
+                                            <input type="text" name="meta_title" class="form-control"
+                                                   value="{{ $seo->title ?? '' }}"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>Meta description</label>
+                                            <textarea class="form-control" id="meta_description"
+                                                      name="meta_description">{{ $seo->description ?? '' }}</textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>Meta keywords</label>
+                                            <textarea class="form-control" id="meta_keywords"
+                                                      name="meta_keywords">{{ $seo->keywords ?? '' }}</textarea>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="card-footer">
+                                    <button type="submit" class="btn btn-primary mr-2">Зберегти</button>
+                                </div>
+                            </form>
+
                         </div>
                     </div>
                 </div>

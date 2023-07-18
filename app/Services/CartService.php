@@ -50,7 +50,7 @@ class CartService
 
         $products->map(function ($item) use ($cart) {
             if (isset($item->baseValue->id))
-                $item->quantity = $cart["{$item->id}:{$item->baseValue->id}"]['quantity'] ?? 1;
+                $item->quantity = $cart[$item->id]['quantity'] ?? 1;
         });
 
         return $products;
@@ -71,7 +71,7 @@ class CartService
 
         $products = $this->getAllProducts();
         $products->map(function ($item) use ($cart) {
-            $item->total_sum = ($cart["{$item->id}:{$item->baseValue->id}"]['quantity'] ?? 1) * $item->price;
+            $item->total_sum = ($cart[$item->id]['quantity'] ?? 1) * $item->price;
         });
         $totalSum = $products->sum('total_sum');
 
@@ -88,57 +88,56 @@ class CartService
         return self::getTotalCount() > 0;
     }
 
-    public function add($product_id, $property_id)
+    public function add($product_id)
     {
         $cart = session()->get(self::SESSION_KEY, []);
-        if (!isset($cart["{$product_id}:{$property_id}"]) && $this->canAdd($product_id)) {
-            $cart["{$product_id}:{$property_id}"] = [
+        if (!isset($cart[$product_id]) && $this->canAdd($product_id)) {
+            $cart[$product_id] = [
                 'product_id' => $product_id,
                 'quantity' => 1,
-                'property_id' => $property_id
             ];
             session([self::SESSION_KEY => $cart]);
         }
     }
 
-    public function remove($product_id, $size_id)
+    public function remove($product_id)
     {
-        if ($product_id && $size_id) {
+        if ($product_id) {
             $cart = session()->get(self::SESSION_KEY, []);
-            if (isset($cart["{$product_id}:{$size_id}"]))
-                unset($cart["{$product_id}:{$size_id}"]);
+            if (isset($cart[$product_id]))
+                unset($cart[$product_id]);
 
             session([self::SESSION_KEY => $cart]);
         }
     }
 
-    public function check($product_id, $property_id)
+    public function check($product_id)
     {
         $cart = session()->get(self::SESSION_KEY, []);
-        return isset($cart["{$product_id}:{$property_id}"]);
+        return isset($cart[$product_id]);
     }
 
-    public function plusQuantity($product_id, $property_id): int
+    public function plusQuantity($product_id): int
     {
         $cart = session()->get(self::SESSION_KEY, []);
         $quantity = 0;
 
-        if (isset($cart["{$product_id}:{$property_id}"])) {
-            $quantity = ++$cart["{$product_id}:{$property_id}"]['quantity'];
+        if (isset($cart[$product_id])) {
+            $quantity = ++$cart[$product_id]['quantity'];
             session([self::SESSION_KEY => $cart]);
         }
 
         return $quantity;
     }
 
-    public function minusQuantity($product_id, $property_id): int
+    public function minusQuantity($product_id): int
     {
         $cart = session()->get(self::SESSION_KEY, []);
         $quantity = 1;
 
-        if (isset($cart["{$product_id}:{$property_id}"])) {
-            if ($cart["{$product_id}:{$property_id}"]['quantity'] > 1) {
-                $quantity = --$cart["{$product_id}:{$property_id}"]['quantity'];
+        if (isset($cart[$product_id])) {
+            if ($cart[$product_id]['quantity'] > 1) {
+                $quantity = --$cart[$product_id]['quantity'];
             }
             session([self::SESSION_KEY => $cart]);
         }

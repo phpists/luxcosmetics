@@ -10,16 +10,15 @@ $(function () {
         e.preventDefault()
 
         let product_id = $(this).data('product'),
-            property_id = $(this).data('property'),
             $this = $(this);
 
-        if (!product_id || !property_id)
+        if (!product_id)
             return
 
         if ($this.hasClass('isInCart')) {
-            removeFromCart(product_id, property_id, $this)
+            removeFromCart(product_id, $this)
         } else {
-            addToCart(product_id, property_id, $this)
+            addToCart(product_id, $this)
         }
     })
 
@@ -27,13 +26,12 @@ $(function () {
         e.preventDefault();
 
         let product_id = $(this).data('product'),
-            property_id = $(this).data('property'),
             $this = $(this);
 
-        if (!product_id || !property_id)
+        if (!product_id)
             return
 
-        removeFromCart(product_id, property_id, $this)
+        removeFromCart(product_id, $this)
     })
 
     $(document).on('click', '.plusQuantity', function (e) {
@@ -42,10 +40,8 @@ $(function () {
         let $item = $(this).parents($(this).data('element'))
 
         if ($item) {
-            let product_id = $item.data('product'),
-                property_id = $item.data('property');
-
-            plusQuantity(product_id, property_id, $(this))
+            let product_id = $item.data('product');
+            plusQuantity(product_id, $(this))
         }
     })
 
@@ -55,10 +51,9 @@ $(function () {
         let $item = $(this).parents($(this).data('element'))
 
         if ($item) {
-            let product_id = $item.data('product'),
-                property_id = $item.data('property');
+            let product_id = $item.data('product');
 
-            minusQuantity(product_id, property_id, $(this))
+            minusQuantity(product_id, $(this))
         }
     })
 
@@ -66,35 +61,51 @@ $(function () {
         e.prevendDefault()
     })
 
+    $(document).on('click', '#addproduct .close', function (e) {
+        $.magnificPopup.close({
+            items: {
+                src: '#addproduct'
+            }
+        });
+    })
+
+    $(document).on('click', '.changeModification', changeModification)
+
 })
 
 
-function addToCart(product_id, property_id, $button) {
+function addToCart(product_id, $button) {
     $.ajax({
         type: 'post',
         url: '/cart/add',
         dataType: 'json',
         data: {
-            product_id: product_id,
-            property_id: property_id
+            product_id: product_id
         },
         success: function (response) {
             if (response) {
                 updateTotalCount(response.total_count)
                 $button.addClass('isInCart')
+                $('#addproduct').find('div.addprod').html(response.product_html)
+                $.magnificPopup.open({
+                    items: {
+                        src: '#addproduct',
+                        type: 'inline',
+                        modal: true
+                    }
+                });
             }
         }
     })
 }
 
-function removeFromCart(product_id, property_id, $button) {
+function removeFromCart(product_id, $button) {
     $.ajax({
         type: 'post',
         url: '/cart/remove',
         dataType: 'json',
         data: {
             product_id: product_id,
-            property_id: property_id
         },
         success: function (response) {
             if (response) {
@@ -111,14 +122,13 @@ function removeFromCart(product_id, property_id, $button) {
     })
 }
 
-function plusQuantity(product_id, property_id, $button) {
+function plusQuantity(product_id, $button) {
     $.ajax({
         type: 'post',
         url: '/cart/plus-quantity',
         dataType: 'json',
         data: {
             product_id: product_id,
-            property_id: property_id
         },
         beforeSend: function () {
             $button.prop('disabled', true)
@@ -128,6 +138,7 @@ function plusQuantity(product_id, property_id, $button) {
                 updateTotalCount(response.total_count)
                 $button.addClass('isInCart')
                 $button.parents($button.data('element')).find('.currentQuantity').val(response.quantity)
+                $button.parents('div.cart-product:first').find('.currentSum').text(response.sum)
                 $('#totalSum').text(response.total_sum)
             }
         },
@@ -137,14 +148,13 @@ function plusQuantity(product_id, property_id, $button) {
     })
 }
 
-function minusQuantity(product_id, property_id, $button) {
+function minusQuantity(product_id, $button) {
     $.ajax({
         type: 'post',
         url: '/cart/minus-quantity',
         dataType: 'json',
         data: {
             product_id: product_id,
-            property_id: property_id
         },
         beforeSend: function () {
             $button.prop('disabled', true)
@@ -154,6 +164,7 @@ function minusQuantity(product_id, property_id, $button) {
                 updateTotalCount(response.total_count)
                 $button.addClass('isInCart')
                 $button.parents($button.data('element')).find('.currentQuantity').val(response.quantity)
+                $button.parents('div.cart-product:first').find('.currentSum').text(response.sum)
                 $('#totalSum').text(response.total_sum)
             }
         },
@@ -165,4 +176,21 @@ function minusQuantity(product_id, property_id, $button) {
 
 function updateTotalCount(count) {
     $('#cartTotalCount').text(count)
+}
+
+
+function changeModification(e) {
+    let $this = $(this),
+        url = $(this).data('url')
+
+    $.ajax({
+        url: url,
+        dataType: 'json',
+        success: function (response) {
+            if (response) {
+                console.log()
+                $this.parents('div.product').after(response.html).remove()
+            }
+        }
+    })
 }

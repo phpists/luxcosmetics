@@ -10,6 +10,7 @@ use Faker\Provider\Image;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class ProductController extends Controller
 {
@@ -43,4 +44,12 @@ class ProductController extends Controller
         $product_variations = CatalogService::getProductVariations($product->id, $product->base_property_id);
         return view('products.product', compact('product', 'product_variations', 'articles'));
     }
+
+    public function productCard(Product $product)
+    {
+        return new JsonResponse([
+            'html' => view('products._card', compact('product'))->render()
+        ]);
+    }
+
 }

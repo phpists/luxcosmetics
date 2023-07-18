@@ -39,6 +39,8 @@ Route::get('b/{link}', [\App\Http\Controllers\BrandsController::class, 'show'])-
 // Categories
 Route::get('catalog', [CategoryController::class, 'index'])->name('categories');
 Route::get('c/{alias}', [CategoryController::class, 'show'])->name('categories.show');
+// Product card
+Route::get('product/card/{product}', [\App\Http\Controllers\ProductController::class, 'productCard'])->name('product.card');
 // Static pages
 Route::get('/pages/{alias}', [\App\Http\Controllers\PagesController::class, 'show'])->name('pages.show');
 // Search
@@ -154,6 +156,7 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function 
     Route::get('products/edit/{id}', [\App\Http\Controllers\Admin\ProductController::class, 'edit'])->name('admin.product.edit');
     Route::put('products/{id}', [\App\Http\Controllers\Admin\ProductController::class, 'update'])->name('admin.product.update');
     Route::get('products/properties', [\App\Http\Controllers\Admin\ProductController::class, 'getProperties'])->name('admin.product.properties');
+    Route::post('products/update/seo', [\App\Http\Controllers\Admin\ProductController::class, 'updateSeo'])->name('admin.product.update.seo');
 
 
 //    Categories
