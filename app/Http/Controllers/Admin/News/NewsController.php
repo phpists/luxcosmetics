@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin\News;
 
 use App\Http\Controllers\Controller;
 use App\Models\NewsItem;
-use App\Services\ImageService;
+use App\Services\FileService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -39,7 +39,7 @@ class NewsController extends Controller
             'text' => $validatedData['text'],
             'link' => $link,
             'status' => $request->status,
-            'image' => ImageService::saveImage('uploads', "news", $request->image),
+            'image' => FileService::saveFile('uploads', "news", $request->image),
             'published_at' => $request->published_at
         ]);
 
@@ -62,7 +62,7 @@ class NewsController extends Controller
         $item = NewsItem::find($request->id);
 
         if ($request->hasFile('image')) {
-            $image = ImageService::saveImage('uploads', "news", $request->image);
+            $image = FileService::saveFile('uploads', "news", $request->image);
             $item->image = $image;
             $item->update(['image' => $image]);
         }else{

@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin\Settings;
 
 use App\Http\Controllers\Controller;
 use App\Models\SocialMedia;
-use App\Services\ImageService;
+use App\Services\FileService;
 use Illuminate\Http\Request;
 
 class SocialMediaController extends Controller
@@ -19,7 +19,7 @@ class SocialMediaController extends Controller
         $messengers = SocialMedia::messenger()->orderBy('pos')->get();
         $messenger_next_pos = SocialMedia::messenger()->max('pos');
         $messenger_next_pos = $messenger_next_pos ? $messenger_next_pos + 1 : 1;
-        
+
         $phone = SocialMedia::all();
 
         return view('admin.settings.socials.index', compact('networks', 'network_next_pos',
@@ -32,7 +32,7 @@ class SocialMediaController extends Controller
         $data['is_active_in_contacts'] = $request->post('is_active_in_contacts') ? 1 : 0;
         $data['is_active_in_footer'] = $request->post('is_active_in_footer') ? 1 : 0;
 
-        $data['icon'] = ImageService::saveImage('uploads', "social", $request->icon);
+        $data['icon'] = FileService::saveFile('uploads', "social", $request->icon);
 
         $social = SocialMedia::create($data);
 
@@ -57,9 +57,9 @@ class SocialMediaController extends Controller
         $data['is_active_in_footer'] = $request->post('is_active_in_footer') ? 1 : 0;
 
         $social = SocialMedia::findOrFail($data['id']);
-        
+
         if ($request->hasFile('icon')) {
-            $icon = ImageService::saveImage('uploads', "social", $request->icon);
+            $icon = FileService::saveFile('uploads', "social", $request->icon);
             $social->icon = $icon;
             $social->update(['icon' => $icon]);
         }else{
@@ -89,7 +89,7 @@ class SocialMediaController extends Controller
     if ($social == null) {
         $phone = new SocialMedia(['phone' => $request->input('phone')]);
         $phone->save();
-    } else {        
+    } else {
         $social->phone = $phone;
         $social->save();
     }

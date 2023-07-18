@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Tag;
-use App\Services\ImageService;
+use App\Services\FileService;
 use Illuminate\Http\Request;
 
 class TagController extends Controller
@@ -17,7 +17,7 @@ class TagController extends Controller
 
     public function store(Request $request) {
         $data = $request->all();
-        $data['image_path'] = ImageService::saveImage('uploads', 'tags', $data['image_path']);
+        $data['image_path'] = FileService::saveFile('uploads', 'tags', $data['image_path']);
         $tag = new Tag($data);
         $tag->save();
 
@@ -39,7 +39,7 @@ class TagController extends Controller
             return redirect()->back()->with('error', 'Записи с id '.$request->id.' не найденно');
         }
         if ($request->hasFile('image_path')) {
-            $image = ImageService::saveImage('uploads', 'categories', $data['image_path']);
+            $image = FileService::saveFile('uploads', 'categories', $data['image_path']);
             if ($image) {
                 $data['image_path'] = $image;
             }
@@ -58,7 +58,7 @@ class TagController extends Controller
             if(!$tag) {
                 return redirect()->back()->with('error', 'Нет записи с id '.$tag->id);
             }
-            ImageService::removeImage('uploads', 'tags', $tag->image_path);
+            FileService::removeFile('uploads', 'tags', $tag->image_path);
             $tag->delete();
             return redirect()->back()->with('success', 'Тег успешно удален');
         }

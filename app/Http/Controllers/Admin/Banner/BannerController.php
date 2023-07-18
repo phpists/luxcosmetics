@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin\Banner;
 
 use App\Http\Controllers\Controller;
 use App\Models\Banner;
-use App\Services\ImageService;
+use App\Services\FileService;
 use App\Services\SiteService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -52,7 +52,7 @@ class BannerController extends Controller
             'status' => $request->status,
             'position' => $request->position,
             'number_position' => $request->number_position,
-            'image' => ImageService::saveImage('uploads', "banner", $request->image),
+            'image' => FileService::saveFile('uploads', "banner", $request->image),
             'published_at' => $request->published_at
         ]);
 
@@ -70,7 +70,7 @@ class BannerController extends Controller
     {
         $item = Banner::find($request->id);
         if ($request->hasFile('image')) {
-            $image = ImageService::saveImage('uploads', "banner", $request->image);
+            $image = FileService::saveFile('uploads', "banner", $request->image);
             $item->image = $image;
             $item->update(['image' => $image]);
         }else{

@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Brand;
-use App\Services\ImageService;
+use App\Services\FileService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -20,8 +20,8 @@ class BrandController extends Controller
         $image = $request->image;
         $data = $request->all();
         if($image !== null) {
-            ImageService::removeImage('uploads', 'brands', $brand->image);
-            $image = ImageService::saveImage('uploads', 'brands', $image);
+            FileService::removeFile('uploads', 'brands', $brand->image);
+            $image = FileService::saveFile('uploads', 'brands', $image);
             $data['image'] = $image;
         }
         else {
@@ -35,7 +35,7 @@ class BrandController extends Controller
     {
         $image = $request->image;
         if ($image !== null) {
-            $image = ImageService::saveImage('uploads', 'brands', $image);
+            $image = FileService::saveFile('uploads', 'brands', $image);
         }
 
         $data = $request->all();
@@ -71,16 +71,16 @@ class BrandController extends Controller
 
         if ($brand->image) {
             $imagePath = public_path('/images/uploads/brands/' . $brand->image);
-            
+
             if (file_exists($imagePath)) {
                 unlink($imagePath);
-            
+
                 $brand->image = null;
                 $brand->save();
                 return response()->json(['success' => true]);
             }
         }
-        return response()->json(['success' => false]);        
+        return response()->json(['success' => false]);
     }
 
 }

@@ -153,15 +153,19 @@
             <div class="row">
                 <div class="col-lg-6 col-md-6">
                     <div class="videoblock__wrapper">
-                        <h2 class="videoblock__title">Мастер-класс от&nbsp;эксперта</h2>
-                        <p>Приобретите косметические продукты на сумму свыше 7000 рублей и получите доступ к эксклюзивному видео-мастер-классу от известного визажиста!</p>
-                        <p>Узнайте секреты профессионалов и научитесь создавать неповторимые образы с помощью наших качественных средств. Ваша красота – в ваших руках!</p>
+                        <h2 class="videoblock__title">{{$main_block->title}}</h2>
+                        {!! $main_block->content !!}
                     </div>
 
                 </div>
             </div>
         </div>
-        <a href="https://www.youtube.com/watch?v=m-4XcLUMYQ4" class="videoblock__video popup-youtube" style="background-image: url('images/dist/video-cover.jpg');"></a>
+        <a class="videoblock__video popup-video" style="background-image: url(images/uploads/main_block/{{$main_block->image_path}});"></a>
+        <div class="mfp-hide" style="max-width: 1049px; margin: 0 auto" id="video_popup">
+            <video width="100%" controls src="{{asset('images/uploads/main_block/'.$main_block->video_path)}}">
+
+            </video>
+        </div>
     </section>
     <section class="productsblock">
         <div class="container">
@@ -360,6 +364,22 @@
     <script src="{{asset('/js/favourites.js')}}"></script>
     <script>
         $(document).ready(function () {
+            $('a.popup-video').on('click', function () {
+                $.magnificPopup.open({
+                    items: {
+                        src: '#video_popup',
+                        type: 'inline'
+                    }
+                });
+            })
+        })
+        $('button.product__addcart').on('click', function () {
+            $.magnificPopup.open({
+                items: {
+                    src: '#addproduct',
+                    type: 'inline'
+                }
+            });
         })
     </script>
 @endsection

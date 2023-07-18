@@ -7,7 +7,7 @@ use App\Models\Article;
 use App\Models\Category;
 use App\Models\PropertyCategory;
 use App\Models\Tag;
-use App\Services\ImageService;
+use App\Services\FileService;
 use App\Services\SiteService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -42,7 +42,7 @@ class CategoryController extends Controller
 
     public function store(Request $request) {
         $data = $request->all();
-        $image = ImageService::saveImage('uploads', 'categories', $request->image);
+        $image = FileService::saveFile('uploads', 'categories', $request->image);
         if ($image){
             $data['image'] = $image;
         }
@@ -81,7 +81,7 @@ class CategoryController extends Controller
     public function delete($id) {
         $category = Category::query()->find($id);
         if ($category->delete()) {
-            ImageService::removeImage('uploads', 'categories', $category->image);
+            FileService::removeFile('uploads', 'categories', $category->image);
             Category::query()->where('category_id', $category->id)->update([
                 'category_id' => $category->category_id
             ]);
@@ -120,12 +120,12 @@ class CategoryController extends Controller
             return redirect()->back()->with('error', 'Категория не найдена');
         }
         if ($request->image_remove === '1') {
-            ImageService::removeImage('uploads', 'categories', $category->image);
+            FileService::removeFile('uploads', 'categories', $category->image);
         }
         else if ($request->hasFile('image')) {
-            $image = ImageService::saveImage('uploads', 'categories', $request->image);
+            $image = FileService::saveFile('uploads', 'categories', $request->image);
             if ($category->image !== null) {
-                ImageService::removeImage('uploads', 'categories', $category->image);
+                FileService::removeFile('uploads', 'categories', $category->image);
             }
             if ($image) {
                 $data['image'] = $image;
@@ -163,7 +163,7 @@ class CategoryController extends Controller
             $categories = Category::query()->whereIn('id', $categoriesId)->get();
             foreach ($categories as $category) {
                 if($category->image) {
-                    ImageService::removeImage('uploads', 'categories', $category->image);
+                    FileService::removeFile('uploads', 'categories', $category->image);
                 }
                 Category::query()->where('category_id', $category->id)->whereNotIn('id', $categoriesId)->update([
                     'category_id' => $category->category_id
