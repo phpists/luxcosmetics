@@ -39,6 +39,7 @@
 
     @include('layouts.includes.footer', ['menu_items' => $menu_items, 'static-pages' => $static_pages])
 </div>
+@include('layouts.parts.mobile-menu', ['menu_items' => $menu_items])
 @yield('after_content')
 <script src="{{asset('/js/app.min.js')}}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
