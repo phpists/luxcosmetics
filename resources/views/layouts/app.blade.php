@@ -4,11 +4,13 @@
 <head>
     <meta charset="utf-8">
     <!-- <base href="/"> -->
-    <meta name="description" content="">
+    <title>@yield('title')</title>
+    <meta name="keywords" content="@yield('keywords')">
+    <meta name="description" content="@yield('description')">
+
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>@yield('title')</title>
-    <link rel="icon" href="{{ asset('/images/favicon.png') }}">
+    <link rel="icon" href="{{ asset('/images/54231.mp3') }}">
     <meta property="og:image" content="{{ asset('/images/dist/preview.jpg') }}">
 
     <meta name="theme-color" content="#06473A">

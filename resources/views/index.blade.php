@@ -153,18 +153,16 @@
             <div class="row">
                 <div class="col-lg-6 col-md-6">
                     <div class="videoblock__wrapper">
-                        <h2 class="videoblock__title">{{$main_block->title}}</h2>
-                        {!! $main_block->content !!}
+                        <h2 class="videoblock__title">{{$main_block->title ?? ''}}</h2>
+                        {!! $main_block->content ?? ''!!}
                     </div>
 
                 </div>
             </div>
         </div>
-        <a class="videoblock__video popup-video" style="background-image: url(images/uploads/main_block/{{$main_block->image_path}});"></a>
+        <a class="videoblock__video popup-video" style="background-image: url(images/uploads/main_block/{{ $main_block->image_path ?? ''}});"></a>
         <div class="mfp-hide" style="max-width: 1049px; margin: 0 auto" id="video_popup">
-            <video width="100%" controls src="{{asset('images/uploads/main_block/'.$main_block->video_path)}}">
-
-            </video>
+            <video width="100%" controls src="{{asset('images/uploads/main_block/'.$main_block->video_path ?? '')}}"></video>
         </div>
     </section>
     <section class="productsblock">

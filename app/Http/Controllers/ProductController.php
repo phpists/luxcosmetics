@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Article;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\Seo;
 use App\Services\CatalogService;
 use Faker\Provider\Image;
 use Illuminate\Http\Request;
@@ -42,7 +43,8 @@ class ProductController extends Controller
             }
         }
         $product_variations = CatalogService::getProductVariations($product->id, $product->base_property_id);
-        return view('products.product', compact('product', 'product_variations', 'articles'));
+        $seo = Product::query()->select('products.*')->first();
+        return view('products.product', compact('product', 'product_variations', 'articles', 'seo'));
     }
 
     public function productCard(Product $product)

@@ -490,7 +490,7 @@
                                         <div class="form-group">
                                             <label>Meta description</label>
                                             <textarea class="form-control" id="meta_description"
-                                                      name="meta_description">{{ $seo->description ?? '' }}</textarea>
+                                                      name="meta_description">{{ $seo->description_meta ?? '' }}</textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -499,7 +499,7 @@
                                         <div class="form-group">
                                             <label>Meta keywords</label>
                                             <textarea class="form-control" id="meta_keywords"
-                                                      name="meta_keywords">{{ $seo->keywords ?? '' }}</textarea>
+                                                      name="meta_keywords">{{ $seo->keywords_meta ?? '' }}</textarea>
 
                                         </div>
                                     </div>

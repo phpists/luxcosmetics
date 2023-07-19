@@ -1,6 +1,9 @@
 @extends('layouts.app')
 
-@section('title', 'Продукт')
+@section('title', $product->title)
+@section('description', $seo->description_meta ?? '')
+@section('keywords', $seo->keywords_meta ?? '')
+
 @section('content')
     <section class="crumbs">
         <div class="container">
