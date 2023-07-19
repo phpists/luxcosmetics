@@ -110,11 +110,9 @@
     <!--end::Container-->
     <!--end::Entry-->
 
-    @include('admin.main_block.modals.update')
 @endsection
 
 @section('js_after')
-    <script src="https://raw.githack.com/SortableJS/Sortable/master/Sortable.js"></script>
     <script>
         var KTSummernoteDemo = function () {
             // Private functions
@@ -134,12 +132,6 @@
 
         // Initialization
         jQuery(document).ready(function() {
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-
             KTSummernoteDemo.init();
             var createImagePlugin = new KTImageInput('updateImagePlugin');
             var createPageImagePlugin = new KTImageInput('updatePageImagePlugin');
