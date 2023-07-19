@@ -1,15 +1,14 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
 use App\Http\Controllers\Admin\MenuController;
 use App\Http\Controllers\Admin\Settings\SettingController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\CategoryController;
-use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\QuestionController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use \App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
-use App\Http\Controllers\BrandController;
 use Laravel\Socialite\Facades\Socialite;
 
 /* Socialize */
@@ -314,9 +313,9 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function 
     Route::post('subscription-categories', [\App\Http\Controllers\Admin\SubscriptionCategoryController::class, 'store'])->name('admin.subscription-category.store');
     Route::put('subscription-categories/update', [\App\Http\Controllers\Admin\SubscriptionCategoryController::class, 'update'])->name('admin.subscription-category.update');
     /* Main Block */
-    Route::get('main-blocks', [\App\Http\Controllers\MainPageBlockController::class, 'index'])->name('admin.main-block.index');
-    Route::get('main-block', [\App\Http\Controllers\MainPageBlockController::class, 'show'])->name('admin.main-block.show');
-    Route::post('main-block/update', [\App\Http\Controllers\MainPageBlockController::class, 'update'])->name('admin.main-block.update');
+    Route::get('main-blocks', [\App\Http\Controllers\Admin\MainPageBlockController::class, 'index'])->name('admin.main-block.index');
+//    Route::get('main-block', [\App\Http\Controllers\Admin\MainPageBlockController::class, 'show'])->name('admin.main-block.show');
+    Route::post('main-block/update', [\App\Http\Controllers\Admin\MainPageBlockController::class, 'update'])->name('admin.main-block.update');
     /* Settings */
     Route::get('settings', [\App\Http\Controllers\Admin\SiteConfigController::class, 'index'])->name('admin.settings.index');
     Route::post('settings', [\App\Http\Controllers\Admin\SiteConfigController::class, 'store'])->name('admin.settings.store');

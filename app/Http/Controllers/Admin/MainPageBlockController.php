@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Models\MainPageBlock;
 use App\Services\FileService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 
 class MainPageBlockController extends Controller
 {
     public function index() {
-        $blocks = MainPageBlock::query()->get();
-        return view('admin.main_block.index', compact('blocks'));
+        $block = MainPageBlock::query()->first();
+        return view('admin.main_block.index', compact('block'));
     }
 
     public function update(Request $request) {
@@ -31,8 +31,8 @@ class MainPageBlockController extends Controller
         return redirect()->back()->with('success', 'Блок успешно обновлен');
     }
 
-    public function show(Request $request) {
-        $block = MainPageBlock::query()->find($request->id);
-        return response()->json($block);
-    }
+//    public function show(Request $request) {
+//        $block = MainPageBlock::query()->find($request->id);
+//        return response()->json($block);
+//    }
 }
