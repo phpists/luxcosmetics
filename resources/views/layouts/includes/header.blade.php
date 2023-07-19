@@ -50,25 +50,30 @@
                 </a>
                 <ul class="navigation__menu">
                     @foreach($menu_items->whereNull('parent_id')->where('type', \App\Models\Menu::TOP_MENU) as $menu_item)
-                        <li><a href="{{$menu_item->link}}">{{$menu_item->title}} @if(sizeof($menu_item->getChildren($menu_items)) > 0)
-                            <svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#arrow')}}"></use></svg></a>
-                            <div class="submenu">
-                                <div class="container">
-                                    <div class="row">
-                                        <div class="col-lg-12">
-                                            <div class="submenu__wrapper">
-                                                <ul class="submenu__menu">
-                                                    @foreach($menu_item->getChildren($menu_items) as $submenu)
-                                                        <li><a href="{{$submenu->link}}">{{$submenu->title}}</a>
-                                                            @include('layouts.parts.submenu', ['menu_item' => $submenu, 'items' => $menu_items])
-                                                        </li>
-                                                    @endforeach
-                                                </ul>
+                        <li>
+                            @if(sizeof($menu_item->getChildren($menu_items)) > 0)
+                                <a href="{{$menu_item->link}}">{{$menu_item->title}}
+                                        <svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#arrow')}}"></use></svg>
+                                </a>
+                                <div class="submenu">
+                                    <div class="container">
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                <div class="submenu__wrapper">
+                                                    <ul class="submenu__menu">
+                                                        @foreach($menu_item->getChildren($menu_items) as $submenu)
+                                                            <li><a href="{{$submenu->link}}">{{$submenu->title}}</a>
+                                                                @include('layouts.parts.submenu', ['menu_item' => $submenu, 'items' => $menu_items])
+                                                            </li>
+                                                        @endforeach
+                                                    </ul>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            @else
+                                <a href="{{$menu_item->link}}">{{$menu_item->title}}</a>
                         @endif
                         </li>
                     @endforeach

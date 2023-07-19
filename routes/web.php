@@ -329,3 +329,9 @@ Route::get('/banner/{link}', [\App\Http\Controllers\BannerController::class, 'sh
 
 
 Route::get('/user/home', [App\Http\Controllers\HomeController::class, 'home'])->name('user.home');
+
+// Front pages - only for admin users
+Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'front'], function () {
+    Route::get('', [\App\Http\Controllers\FrontCardController::class, 'index']);
+    Route::get('/{alias}', [\App\Http\Controllers\FrontCardController::class, 'page']);
+});
