@@ -159,8 +159,8 @@
                         <div class="seoblock__morecontent">Показать еще</div>
                         @if(sizeof($category->tags) > 0)
                             <div class="seoblock__tags">
-                                @foreach($category->tags as $tag)
-                                    <a href="{{$tag->link}}" class="seoblock__tag">{{$tag->name}}</a>
+                                @foreach($category->tags as $idx=>$tag)
+                                    <a href="{{$tag->link}}" class="seoblock__tag @if($idx > 4) is-hidden @endif">{{$tag->name}}</a>
                                 @endforeach
                             </div>
                             <div class="seoblock__moretags">Развернуть</div>
