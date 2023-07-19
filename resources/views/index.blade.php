@@ -132,6 +132,7 @@
             </div>
         </div>
     </section>
+    @if($show_new_products = \App\Services\SiteConfigService::getParam('показывать_блок_новинки')['value'] == 1)
     <section class="productsblock">
         <div class="container">
             <div class="row">
@@ -148,6 +149,8 @@
             </div>
         </div>
     </section>
+    @endif
+    @if($show_new_products = \App\Services\SiteConfigService::getParam('показывать_блок_из_видео')['value'] == 1)
     <section class="videoblock">
         <div class="container">
             <div class="row">
@@ -165,7 +168,9 @@
             <video width="100%" controls src="{{asset('images/uploads/main_block/'.$main_block->video_path ?? '')}}"></video>
         </div>
     </section>
-    <section class="productsblock">
+    @endif
+    @if($show_new_products = \App\Services\SiteConfigService::getParam('показывать_блок_популярные')['value'] == 1)
+        <section class="productsblock">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
@@ -181,6 +186,7 @@
             </div>
         </div>
     </section>
+    @endif
     <section class="maincategory">
         <div class="container">
             <div class="row">
@@ -227,7 +233,8 @@
             </div>
         </div>
     </section>
-    <section class="productsblock">
+    @if($show_new_products = \App\Services\SiteConfigService::getParam('показывать_блок_товары_со_скидкой')['value'] == 1)
+        <section class="productsblock">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
@@ -243,6 +250,7 @@
             </div>
         </div>
     </section>
+    @endif
     <section class="maincategory maincategory--threecol">
         <div class="container">
             <div class="row">
