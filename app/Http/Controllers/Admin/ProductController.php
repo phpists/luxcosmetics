@@ -8,7 +8,6 @@ use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\ProductVariation;
-use App\Models\Seo;
 use App\Services\CatalogService;
 use App\Services\FileService;
 use Illuminate\Http\JsonResponse;
@@ -132,7 +131,7 @@ class ProductController extends Controller
         $last_position = $articles->max('position');
         $last_position = $last_position ? $last_position + 1: 1;
 
-        $seo = Seo::query()->select('seo.*')->first();
+        $seo = Product::query()->select('products.*')->find($id);
 
         return view('admin.products.edit', compact('product', 'categories', 'brands', 'product_images', 'product_variations', 'last_position', 'articles', 'seo'));
     }
@@ -203,26 +202,25 @@ class ProductController extends Controller
 
     public function updateSeo(Request $request)
     {
+        $seo = Product::query()->select('products.*')->first();
 
-        $seo = Seo::where('record_id', $request->id)
-            ->where('table_name', 'products')->first();
         if ($seo === null) {
-            $seo = new Seo([
-                'record_id' => $request->id,
+            $seo = new Product([
                 'title' => $request->meta_title,
-                'description' => $request->meta_description,
-                'keywords' => $request->meta_keywords,
-                'table_name' => Seo::PRODUCTS
+                'meta_description' => $request->meta_description,
+                'meta_keywords' => $request->meta_keywords,
             ]);
             $seo->save();
-        }else{
+        } else {
             $seo->title = $request->meta_title;
-            $seo->description = $request->meta_description;
-            $seo->keywords = $request->meta_keywords;
-            $seo->update();
+            $seo->description_meta = $request->meta_description;
+            $seo->keywords_meta = $request->meta_keywords;
+            $seo->save();
         }
+
         return redirect()->back()->with('success', 'Seo обновлено');
     }
+
 
     public function storeImage(Request $request) {
         $image_path = FileService::saveFile('uploads', "products", $request->image);

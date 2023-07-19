@@ -29,6 +29,8 @@ return new class extends Migration
             $table->text('description_3')->nullable()->comment('Опис 3');
             $table->smallInteger('availability')->default(AvailableOptions::AVAILABLE->value)->comment('Доступність товару');
             $table->integer('points')->comment('Бонусные баллы')->default(0);
+            $table->text('description_meta')->comment('Для seo');
+            $table->text('keywords_meta')->comment('Для seo');
             $table->integer('height_product')->nullable()->comment('Высота');
             $table->integer('width_product')->nullable()->comment('Ширина');
             $table->integer('length_product')->nullable()->comment('Длина');
