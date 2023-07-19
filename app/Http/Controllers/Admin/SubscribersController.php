@@ -38,4 +38,17 @@ class SubscribersController extends Controller
         }
         return redirect()->back()->with('success', 'Рассылка успешно отправлена');
     }
+
+    public function update_category(Request $request) {
+        $checkbox_ids = $request->checkbox;
+        foreach ($checkbox_ids as $id) {
+            $subscriber = User::query()->find($id);
+            if ($subscriber) {
+                $subscriber->update([
+                   'subscription_category_id' => $request->category_id
+                ]);
+            }
+        }
+        return response()->json(['status' => true]);
+    }
 }

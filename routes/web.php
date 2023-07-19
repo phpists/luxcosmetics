@@ -305,6 +305,7 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function 
     Route::get('subscribers', [\App\Http\Controllers\Admin\SubscribersController::class, 'index'])->name('admin.subscribers.index');
     Route::get('subscribers/delete/{id}', [\App\Http\Controllers\Admin\SubscribersController::class, 'delete'])->name('admin.subscriber.delete');
     Route::post('subscribers/send-newsletter', [\App\Http\Controllers\Admin\SubscribersController::class, 'send_newsletter'])->name('admin.subscribers.send-newsletter');
+    Route::post('subscribers/update-category', [\App\Http\Controllers\Admin\SubscribersController::class, 'update_category'])->name('admin.subscribers.update_category');
 
     /* Subscription Categories */
     Route::get('subscription-categories', [\App\Http\Controllers\Admin\SubscriptionCategoryController::class, 'index'])->name('admin.subscription-category.index');

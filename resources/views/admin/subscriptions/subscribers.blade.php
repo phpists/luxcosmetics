@@ -46,6 +46,32 @@
                     </div>
                     <div class="card-body pb-3">
                         <div class="tab-content">
+                            <div class="row mb-10 mt-10">
+                                <div class="col-md-12">
+                                    <form>
+                                        <div class="row">
+                                            <div class="col-12 mb-4">
+                                                <h3>Обновить категорию подписки</h3>
+                                            </div>
+                                            <div class="col-4">
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <label class="input-group-text" for="">Категория подписки</label>
+                                                    </div>
+                                                    <select class="form-control" name="subscriber_category_id" id="subscriber_category_id">
+                                                        @foreach($subscription_categories as $s_category)
+                                                            <option value="{{$s_category->id}}">{{$s_category->name}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col">
+                                                <button class="btn btn-primary" id="updCat">Обновить</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
                             <div class="tab-pane fade show active" id="kt_tab_pane_1_4" role="tabpanel"
                                  aria-labelledby="kt_tab_pane_1_4">
                                 <!--begin::Table-->
@@ -53,14 +79,14 @@
                                     <table class="table table-head-custom table-vertical-center">
                                         <thead>
                                         <tr>
-                                            {{--                                    <th class="pl-0 text-center">--}}
-                                            {{--                                    <span style="width: 20px;">--}}
-                                            {{--                                        <label class="checkbox checkbox-single checkbox-all">--}}
-                                            {{--                                            <input id="checkbox-all" type="checkbox"--}}
-                                            {{--                                                   name="checkbox[]">&nbsp;<span></span>--}}
-                                            {{--                                        </label>--}}
-                                            {{--                                    </span>--}}
-                                            {{--                                    </th>--}}
+                                            <th class="pl-0 text-center">
+                                            <span style="width: 20px;">
+                                                <label class="checkbox checkbox-single checkbox-all">
+                                                    <input id="checkbox-all" type="checkbox"
+                                                           name="checkbox[]">&nbsp;<span></span>
+                                                </label>
+                                            </span>
+                                            </th>
                                             <th class="pl-0 text-center">
                                                 #
                                             </th>
@@ -75,18 +101,21 @@
                                         <tbody id="table">
                                         @foreach($subscribers as $subscriber)
                                             <tr id="subscriber_{{$subscriber->id}}" data-id="{{ $subscriber->id }}">
-                                                {{--                                        <td class="text-center pl-0">--}}
-                                                {{--                                            <span style="width: 20px;">--}}
-                                                {{--                                                <label class="checkbox checkbox-single">--}}
-                                                {{--                                                    <input class="checkbox-item" type="checkbox" name="checkbox[]" value="{{ $product->id }}">&nbsp;<span></span>--}}
-                                                {{--                                                </label>--}}
-                                                {{--                                            </span>--}}
-                                                {{--                                        </td>--}}
+                                                <td class="text-center pl-0">
+                                                    <span style="width: 20px;">
+                                                        <label class="checkbox checkbox-single">
+                                                            <input class="checkbox-item" type="checkbox" name="checkbox[]" value="{{ $subscriber->id }}">&nbsp;<span></span>
+                                                        </label>
+                                                    </span>
+                                                </td>
                                                 <td class="text-center pl-0">
                                                     {{ $subscriber->id }}
                                                 </td>
                                                 <td class="text-center pr-0">
                                                     {{ $subscriber->email }}
+                                                </td>
+                                                <td class="text-center pr-0">
+                                                    {{ $subscriber->subscription_category_id? $subscription_categories->find($subscriber->subscription_category_id)->name: '-' }}
                                                 </td>
                                                 <td class="text-center pr-0">
                                                     <a href="{{ route('admin.subscriber.delete', ['id' => $subscriber->id]) }}"
@@ -186,6 +215,28 @@
         }();
         $(function () {
             KTSummernoteDemo.init();
+
+            $('#updCat').on('click', function (ev) {
+                ev.preventDefault();
+                let checkbox = Array.prototype.map.call(document.querySelectorAll('.checkbox-item:checked'), function (el, idx) {
+                    return el.value;
+                });
+                if (checkbox.length === 0) {
+                    return false;
+                }
+                $.ajax({
+                    url: '{{route('admin.subscribers.update_category')}}',
+                    method: 'POST',
+                    data: {
+                        checkbox: checkbox,
+                        category_id: document.querySelector('select#subscriber_category_id').value
+                    },
+                    success: function () {
+                        location.href = "";
+                    }
+                })
+                return false;
+            })
         })
     </script>
 @endsection
