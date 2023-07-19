@@ -46,34 +46,34 @@
                     </div>
                     <div class="card-body pb-3">
                         <div class="tab-content">
-                            <div class="row mb-10 mt-10">
-                                <div class="col-md-12">
-                                    <form>
-                                        <div class="row">
-                                            <div class="col-12 mb-4">
-                                                <h3>Обновить категорию подписки</h3>
-                                            </div>
-                                            <div class="col-4">
-                                                <div class="input-group">
-                                                    <div class="input-group-prepend">
-                                                        <label class="input-group-text" for="">Категория подписки</label>
-                                                    </div>
-                                                    <select class="form-control" name="subscriber_category_id" id="subscriber_category_id">
-                                                        @foreach($subscription_categories as $s_category)
-                                                            <option value="{{$s_category->id}}">{{$s_category->name}}</option>
-                                                        @endforeach
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="col">
-                                                <button class="btn btn-primary" id="updCat">Обновить</button>
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
                             <div class="tab-pane fade show active" id="kt_tab_pane_1_4" role="tabpanel"
                                  aria-labelledby="kt_tab_pane_1_4">
+                                <div class="row mb-10 mt-10">
+                                    <div class="col-md-12">
+                                        <form>
+                                            <div class="row">
+                                                <div class="col-12 mb-4">
+                                                    <h3>Обновить категорию подписки</h3>
+                                                </div>
+                                                <div class="col-4">
+                                                    <div class="input-group">
+                                                        <div class="input-group-prepend">
+                                                            <label class="input-group-text" for="">Категория подписки</label>
+                                                        </div>
+                                                        <select class="form-control" name="subscriber_category_id" id="subscriber_category_id">
+                                                            @foreach($subscription_categories as $s_category)
+                                                                <option value="{{$s_category->id}}">{{$s_category->name}}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col">
+                                                    <button class="btn btn-primary" id="updCat">Обновить</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
                                 <!--begin::Table-->
                                 <div class="table-responsive">
                                     <table class="table table-head-custom table-vertical-center">
@@ -92,6 +92,9 @@
                                             </th>
                                             <th class="pr-0 text-center">
                                                 Email
+                                            </th>
+                                            <th class="pr-0 text-center">
+                                                Категории
                                             </th>
                                             <th class="pr-0 text-center">
                                                 Действие
@@ -215,6 +218,10 @@
         }();
         $(function () {
             KTSummernoteDemo.init();
+
+            $('#checkbox-all').on('click', function (ev) {
+                $('.checkbox-item')
+            })
 
             $('#updCat').on('click', function (ev) {
                 ev.preventDefault();
