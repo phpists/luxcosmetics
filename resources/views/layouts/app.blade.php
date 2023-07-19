@@ -42,6 +42,18 @@
     @include('layouts.includes.footer', ['menu_items' => $menu_items, 'static-pages' => $static_pages])
 </div>
 @include('layouts.parts.mobile-menu', ['menu_items' => $menu_items])
+<div class="hidden">
+    <div class="popupform form" id="callback">
+        <div class="popupform__title">Оставить сообщение</div>
+        <div class="form__fieldset">
+            <input type="text"  class="form__input" name="Имя" placeholder="Ваше имя"  required="required">
+        </div>
+        <div class="form__fieldset">
+            <input type="text"  class="form__input" name="Телефон" placeholder="Номер телефона" required="required">
+        </div>
+        <button class="btn btn--accent">Отправить</button>
+    </div>
+</div>
 @yield('after_content')
 <script src="{{asset('/js/app.min.js')}}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>

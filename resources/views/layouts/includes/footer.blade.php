@@ -48,8 +48,11 @@
 {{--                    @foreach (\App\Models\SocialMedia::query()->select('social_medias.phone')->get() as $item)--}}
 {{--                        <div class="footer__phone">{{ $item->phone }}</a></div>--}}
 {{--                    @endforeach--}}
-                        <a href="#modal-form" class="btn btn--accent popup-with-form">Заказать звонок <svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#circle-arrow')}}"></use></svg></a>
-                </div>
+                    <a href="#callback" class="btn btn--accent popup-with-form">Заказать звонок
+                        <svg class="icon">
+                            <use xlink:href="{{asset('images/dist/sprite.svg#circle-arrow')}}"></use>
+                        </svg>
+                    </a>                </div>
             </div>
 
             <div class="col-lg-12 colcopyright">
