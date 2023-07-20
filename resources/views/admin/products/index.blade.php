@@ -134,7 +134,10 @@
                                             {{ \App\Services\SiteService::getProductStatus($product->availability) }}
                                         </td>
                                         <td class="text-center pr-0">
-                                            <i class="handle flaticon2-sort" style="cursor:pointer;"></i>
+                                            <a href="{{ route('products.product', ['alias' => $product->alias]) }}"
+                                               class="btn btn-sm btn-clean btn-icon">
+                                                <i class="las la-eye"></i>
+                                            </a>
                                             <a href="{{ route('admin.product.edit', ['id' => $product->id]) }}"
                                                class="btn btn-sm btn-clean btn-icon">
                                                 <i class="las la-edit"></i>
@@ -147,7 +150,7 @@
                                         </td>
                                     </tr>
                                 @endforeach
-                                
+
                                 </tbody>
                             </table>
                         </div>
@@ -173,6 +176,37 @@
     <script src="https://raw.githack.com/SortableJS/Sortable/master/Sortable.js"></script>
     <script src="{{ asset('super_admin/js/product.js') }}"></script>
     <script src="{{ asset('super_admin/js/pages/crud/forms/widgets/select2.js') }}"></script>
+    <script>
+        let variations_select = $('#cat_select');
+        variations_select.select2({
+            allowClear: true,
+            placeholder: 'Выьерите категорию',
+            ajax: {
+                url: '{{route('admin.categories.search')}}',
+                data: function (params) {
+                    var query = {
+                        search: params.term,
+                    }
+
+                    // Query parameters will be ?search=[term]&type=public
+                    return query;
+                },
+                processResults: function (data) {
+                    data = data.map((x) => {
+                        return {
+                            text: x.name,
+                            id: x.id
+                        }
+                    })
+                    // Transforms the top-level key of the response object from 'items' to 'results'
+                    return {
+                        results: data
+                    };
+                }
+            },
+            minimumInputLength: 1
+        });
+    </script>
 @endsection
 
 

@@ -33,6 +33,10 @@ class ProductController extends Controller
             $query->where('products.code', 'LIKE', '%' . $request->code . '%');
         }
 
+        if ($request->category_id) {
+            $query->where('products.category_id', '=', $request->category_id);
+        }
+
         if (isset($request->status)) {
             $query->where('products.status', $request->status);
         }

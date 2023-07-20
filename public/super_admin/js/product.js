@@ -86,6 +86,12 @@ $(document).ready(function () {
         request();
     });
 
+    /* Категория */
+    $(document).on('change', '#cat_select', function (e) {
+        e.preventDefault();
+        request();
+    });
+
     /* Пагінація */
     $(document).on('change', '#paginate', function (e) {
         e.preventDefault();
