@@ -114,7 +114,7 @@
                         </aside>
                         <main class="category-page__main">
                             <ul class="category-page__subcategories">
-                                @foreach($category->tags->where('add_to_top', true) as $tag)
+                                @foreach($category->tags->where('add_to_top', true)->sortBy('position') as $tag)
                                     <li>
                                         <a href="/{{$tag->link}}" class="category-page__subcategory">
                                             <span class="category-page__subcategory-image"><img src="{{$tag->getImageSrcAttribute()}}" alt=""></span>
@@ -157,9 +157,12 @@
                         <div class="seoblock__content">Забота о красоте и здоровье вашей кожи становится приятным и эффективным с нашим широким ассортиментом продуктов для ухода за телом. В нашем интернет-магазине косметики вы найдете все необходимые средства для ежедневного ухода и специальных процедур, которые подарят вашей коже мягкость, увлажнение и сияние. Откройте для себя мир натуральной косметики, разработанной с использованием последних инноваций и проверенных временем рецептов.</div>
                         <div class="seoblock__content is-hidden" id="seohidden">Забота о красоте и здоровье вашей кожи становится приятным и эффективным с нашим широким ассортиментом продуктов для ухода за телом. В нашем интернет-магазине косметики вы найдете все необходимые средства для ежедневного ухода и специальных процедур, которые подарят вашей коже мягкость, увлажнение и сияние. Откройте для себя мир натуральной косметики, разработанной с использованием последних инноваций и проверенных временем рецептов.</div>
                         <div class="seoblock__morecontent">Показать еще</div>
-                        @if(sizeof($category->tags) > 0)
+                        @php
+                            $bottom_tags = $category->tags->where('add_to_top', false);
+                        @endphp
+                        @if(sizeof($bottom_tags) > 0)
                             <div class="seoblock__tags">
-                                @foreach($category->tags as $idx=>$tag)
+                                @foreach($bottom_tags->sortBy('position') as $idx=>$tag)
                                     <a href="{{$tag->link}}" class="seoblock__tag @if($idx > 4) is-hidden @endif">{{$tag->name}}</a>
                                 @endforeach
                             </div>
@@ -220,6 +223,16 @@
     <script src="{{asset('/js/favourites.js')}}"></script>
     <script>
         $(document).ready(function () {
+            let tagHidden = document.querySelectorAll('.seoblock__tag.is-hidden');
+
+            $(".seoblock__moretags").click(function() {
+                $(this).text(function(i, text){
+                    return text === "Свернуть" ? "Развернуть" : "Свернуть";
+                })
+                for (let i = 0; i < tagHidden.length; i++) {
+                    tagHidden[i].classList.toggle("is-hidden");
+                }
+            });
             $(document).on('click', '.pagination__more', function () {
                 let is_disabled = $('.pagination__item--next').attr('aria-disabled')
                 if(is_disabled === 'false') {

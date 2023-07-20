@@ -48,11 +48,11 @@
                         <div class="col">
                             <div class="row d-flex justify-content-around">
                                 <div class="form-group w-100">
-                                    <label for="createSeller" class="col-sm-12 col-form-label font-weight-bold">Отобразить вверху?</label>
+                                    <label for="createSeller" class="col-sm-12 col-form-label font-weight-bold">Область отображения</label>
                                     <div class="col-sm-12">
                                         <select class="form-control status" name="add_to_top" id="addToTop">
-                                            <option value="1">Да</option>
-                                            <option value="0">Нет</option>
+                                            <option value="1">Вверху</option>
+                                            <option value="0">Снизу</option>
                                         </select>
                                     </div>
                                 </div>
