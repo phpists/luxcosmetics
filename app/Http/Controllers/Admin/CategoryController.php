@@ -111,10 +111,10 @@ class CategoryController extends Controller
             $data['alias'] = Str::slug($data['name'], '-');
         }
         $count = Category::query()
-            ->where('alias', 'like', $data['alias'].'%')
+            ->where('alias', 'like', $data['alias'].'[0-9]*')
             ->whereNot('id', $request->id)->count();
         if ($count > 0) {
-            $data['alias'] = $data['alias'].'_'.$count;
+            $data['alias'] = $data['alias'].$count;
         }
         if(!$category) {
             return redirect()->back()->with('error', 'Категория не найдена');
