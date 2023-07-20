@@ -22,6 +22,9 @@ return new class extends Migration
             $table->boolean('add_to_top_menu')->default(0);
             $table->text('description_meta')->comment('Для seo');
             $table->text('keywords_meta')->comment('Для seo');
+            $table->string('bottom_title')->default('test');
+            $table->text('bottom_text');
+            $table->string('breadcrumb')->default('test');
             $table->timestamps();
         });
     }

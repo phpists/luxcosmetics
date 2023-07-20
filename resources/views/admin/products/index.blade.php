@@ -180,7 +180,7 @@
         let variations_select = $('#cat_select');
         variations_select.select2({
             allowClear: true,
-            placeholder: 'Выьерите категорию',
+            placeholder: 'Выберите категорию',
             ajax: {
                 url: '{{route('admin.categories.search')}}',
                 data: function (params) {

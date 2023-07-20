@@ -127,6 +127,20 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <label>Заголовок внизу категории</label>
+                                                        <input value="{{$category->bottom_title}}" type="text" class="form-control" name="bottom_title" required>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <label>Хлебные крошки</label>
+                                                        <input value="{{$category->breadcrumb}}" type="text" class="form-control" name="breadcrumb" required>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                         <div class="col-4">
                                             <div class="form-group">
@@ -150,6 +164,14 @@
                                                         </span>
                                                     </div>
                                                 </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="form-group">
+                                                <label>Текст внизу категории</label>
+                                                <textarea name="bottom_text" class="summernote-lg" required>{{$category->bottom_text}}</textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -558,6 +580,21 @@
                 }
             };
         }();
+        var KTSummernoteLg = function () {
+            // Private functions
+            var demos = function () {
+                $('.summernote-lg').summernote($.extend(summernoteDefaultOptions, {
+                    height: 450
+                }));
+            }
+
+            return {
+                // public functions
+                init: function() {
+                    demos();
+                }
+            };
+        }();
         $(function () {
             $.ajaxSetup({
                 headers: {
@@ -570,6 +607,8 @@
             var createArticleImage = new KTImageInput('createArticleImage');
 
             KTSummernoteDemo.init();
+
+            KTSummernoteLg.init();
 
             $(document).on('click', '.updateTag', loadTag);
 
