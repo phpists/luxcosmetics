@@ -151,7 +151,7 @@ class ProductController extends Controller
         $product->height_product = $data['height_product'];
         $product->weight_product = $data['weight_product'];
 
-        if (!array_key_exists('alias', $data) || $data['alias'] === null || $data['title'] !== $product->title) {
+        if (!array_key_exists('alias', $data) || $data['alias'] === null) {
             $data['alias'] = Str::slug($data['title'], '-');
         }
 
