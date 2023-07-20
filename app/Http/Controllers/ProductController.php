@@ -43,8 +43,7 @@ class ProductController extends Controller
             }
         }
         $product_variations = CatalogService::getProductVariations($product->id, $product->base_property_id);
-        $seo = Product::query()->select('products.*')->first();
-        return view('products.product', compact('product', 'product_variations', 'articles', 'seo'));
+        return view('products.product', compact('product', 'product_variations', 'articles'));
     }
 
     public function productCard(Product $product)

@@ -20,6 +20,10 @@ return new class extends Migration
             $table->smallInteger('status');
             $table->enum('position', ['first', 'second', 'third', 'fourth', 'fifth']);
             $table->dateTime('published_at');
+            $table->text('description_meta')->comment('Для seo');
+            $table->text('keywords_meta')->comment('Для seo');
+            $table->text('og_description_meta')->comment('Для микро seo');
+            $table->text('og_title_meta')->comment('Для микро seo');
             $table->timestamps();
         });
     }

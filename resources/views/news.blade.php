@@ -1,5 +1,12 @@
 @extends('layouts.app')
-@section('title', 'Главная')
+
+@section('title', $item->title)
+@section('description', $item->description_meta ?? '')
+@section('keywords', $item->keywords_meta ?? '')
+@section('og:title', $item->og_title_meta ?? '')
+@section('og:description', $item->og_description_meta ?? '')
+@section('og:url', request()->url())
+
 @section('content')
 
 <br>
@@ -24,7 +31,7 @@
             </div>
         </div>
     </div>
-            
+
 </div>
 </div>
 </div>

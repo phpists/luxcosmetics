@@ -303,7 +303,8 @@
             </div>
         </div>
     </section>
-    <section class="mailing">
+    @if($show_new_products = \App\Services\SiteConfigService::getParam('показывать_блок_подписаться_на_рассылку')['value'] == 1)
+        <section class="mailing">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
@@ -322,6 +323,8 @@
             </div>
         </div>
     </section>
+    @endif
+    @if($show_new_products = \App\Services\SiteConfigService::getParam('показывать_слайдер-блок_бренды')['value'] == 1)
     <section class="brands">
         <div class="container">
             <div class="row">
@@ -342,6 +345,7 @@
             </div>
         </div>
     </section>
+    @endif
 @endsection
 
 @section('after_content')

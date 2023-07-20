@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Enums\AvailableOptions;
 use App\Enums\ConnectionOptions;
 use App\Models\Menu;
+use Illuminate\Support\Facades\Log;
 
 class SiteService
 {
@@ -20,8 +21,17 @@ class SiteService
     static public function getStatus(bool $status) {
         return $status?'Активный': 'Не активный';
     }
-    
+
     static public function statusBanner(bool $status) {
+        Log::alert($status);
+        if ($status) {
+            return '<span><i class="las la-eye"></i></span>';
+        } else {
+            return '<span><i class="las la-eye-slash"></i></span>';
+        }
+    }
+    static public function statusNews(bool $status) {
+        Log::alert($status);
         if ($status) {
             return '<span><i class="las la-eye"></i></span>';
         } else {

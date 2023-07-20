@@ -1,6 +1,12 @@
 @extends('layouts.app')
 
-@section('title', 'Категория')
+@section('title', $category->title_meta)
+@section('description', $category->description_meta ?? '')
+@section('keywords', $category->keywords_meta ?? '')
+@section('og:title', $category->og_title_meta ?? '')
+@section('og:description', $category->og_description_meta ?? '')
+@section('og:url', request()->url())
+
 @section('content')
     <section class="crumbs">
         <div class="container">

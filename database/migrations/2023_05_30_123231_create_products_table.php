@@ -31,6 +31,8 @@ return new class extends Migration
             $table->integer('points')->comment('Бонусные баллы')->default(0);
             $table->text('description_meta')->comment('Для seo');
             $table->text('keywords_meta')->comment('Для seo');
+            $table->text('og_title_meta')->comment('Для микро seo');
+            $table->text('og_description_meta')->comment('Для микро seo');
             $table->integer('height_product')->nullable()->comment('Высота');
             $table->integer('width_product')->nullable()->comment('Ширина');
             $table->integer('length_product')->nullable()->comment('Длина');

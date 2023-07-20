@@ -1,8 +1,10 @@
 @extends('layouts.app')
-
 @section('title', $product->title)
-@section('description', $seo->description_meta ?? '')
-@section('keywords', $seo->keywords_meta ?? '')
+@section('description', $product->description_meta ?? '')
+@section('keywords', $product->keywords_meta ?? '')
+@section('og:title', $product->og_title_meta ?? '')
+@section('og:description', $product->og_description_meta ?? '')
+@section('og:url', request()->url())
 
 @section('content')
     <section class="crumbs">
@@ -27,9 +29,9 @@
             <div class="row">
                 <div class="col-lg-7">
                     <div class="for-mobile">
+                        <div class="product-page__article">Артикул: {{$product->code}}</div>
                         <div class="product-page__title">{{$product->brand->name}}</div>
                         <div class="product-page__subtitle">{{$product->title}}</div>
-                        <div class="product-page__subtitle">Артикул: {{$product->code}}</div>
                         <div class="product-page__reviewsblock">
                             <div class="product-page__reviews">
                                 <div class="stars">
@@ -94,9 +96,9 @@
                 </div>
                 <div class="col-lg-5">
                     <div class="for-desktop">
+                        <div class="product-page__article">Артикул: {{$product->code}}</div>
                         <div class="product-page__title">{{$product->brand->name}}</div>
                         <div class="product-page__subtitle">{{$product->title}}</div>
-                        <div class="product-page__subtitle">Артикул: {{$product->code}}</div>
                         <div class="product-page__reviewsblock">
                             <div class="product-page__reviews">
                                 <div class="stars">

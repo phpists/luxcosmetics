@@ -3,6 +3,9 @@
 @section('title', $product->title)
 @section('description', $product->description_meta ?? '')
 @section('keywords', $product->keywords_meta ?? '')
+@section('og:title', $product->og_title_meta ?? '')
+@section('og:description', $product->og_description_meta ?? '')
+@section('og:url', request()->url())
 
 @section('content')
     <section class="crumbs">
