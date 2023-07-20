@@ -299,13 +299,14 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
-                    <form action="" class="mailing__form">
+                    <form action="{{route('subscribe')}}" class="mailing__form" method="POST">
+                        @csrf
                         <div class="mailing__left">
                             <h2 class="mailing__title">Подписаться на&nbsp;рассылку</h2>
                             <div class="mailing__subtitle">Узнавайте первыми о новых поступлениях, акциях и мероприятиях в магазине</div>
                         </div>
                         <div class="mailing__right">
-                            <input type="text" class="mailing__input" placeholder="Введите ваш e-mail">
+                            <input required type="email" class="mailing__input" name="email" placeholder="Введите ваш e-mail">
                             <button class="mailing__button"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#circle-arrow')}}"></use></svg></button>
                         </div>
                     </form>
