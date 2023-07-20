@@ -287,6 +287,7 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function 
     Route::post('/tag', [\App\Http\Controllers\Admin\TagController::class, 'store'])->name('admin.tag.store');
     Route::put('/tag', [\App\Http\Controllers\Admin\TagController::class, 'update'])->name('admin.tag.update');
     Route::delete('/tag', [\App\Http\Controllers\Admin\TagController::class, 'delete'])->name('admin.tag.delete');
+    Route::post('/tag/update-position', [\App\Http\Controllers\Admin\TagController::class, 'updatePosition'])->name('admin.tag.update_position');
 
     // Feedback Reasons
     Route::get('/feedback-reasons', [\App\Http\Controllers\Admin\FeedbackReasonController::class, 'index'])->name('admin.feedback-reason.index');

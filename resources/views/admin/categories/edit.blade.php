@@ -310,6 +310,9 @@
                                     <thead>
                                     <tr>
                                         <th class="pl-0 text-center">
+                                            #
+                                        </th>
+                                        <th class="pl-0 text-center">
                                             ID
                                         </th>
                                         <th class="pr-0 text-center">
@@ -322,13 +325,22 @@
                                             Ссылка
                                         </th>
                                         <th class="pr-0 text-center">
+                                            Позиция
+                                        </th>
+                                        <th class="pr-0 text-center">
                                             Действия
                                         </th>
                                     </tr>
                                     </thead>
-                                    <tbody id="properties-table">
-                                    @foreach($tags as $tag)
-                                        <tr data-id="{{ $tag->id }}">
+                                    <tbody id="top_menu" class="tag-table" data-value="1">
+                                    <tr>
+                                        <th colspan="5">Верхние теги</th>
+                                    </tr>
+                                    @foreach($tags->where('add_to_top', true)->sortBy('position') as $tag)
+                                        <tr class="s-item" id="tag_{{ $tag->id }}" data-id="{{ $tag->id }}">
+                                            <td class="handle text-center pl-0" style="cursor: pointer">
+                                                <i class="flaticon2-sort"></i>
+                                            </td>
                                             <td class="text-center pl-0">
                                                 {{ $tag->id }}
                                             </td>
@@ -347,6 +359,11 @@
                                                     {{ $tag->link }}
                                                 </span>
                                             </td>
+                                            <td class="text-center">
+                                                <span class="text-dark-75 d-block font-size-lg pos_tag">
+                                                    {{ $tag->position }}
+                                                </span>
+                                            </td>
                                             <td class="text-center pr-0">
                                                     <form action="{{ route('admin.tag.delete') }}" method="POST">
                                                         <a href="javascript:;" class="btn btn-sm btn-clean btn-icon updateTag"
@@ -362,6 +379,57 @@
                                                                 title="Delete"><i class="las la-trash"></i>
                                                         </button>
                                                     </form>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                    </tbody>
+                                    <tbody id="bt_menu" class="tag-table" data-value="0">
+                                    <tr>
+                                        <th colspan="5">Нижние теги</th>
+                                    </tr>
+                                    @foreach($tags->where('add_to_top', false)->sortBy('position') as $tag)
+                                        <tr class="s-item" id="tag_{{ $tag->id }}" data-id="{{ $tag->id }}">
+                                            <td class="handle text-center pl-0" style="cursor: pointer">
+                                                <i class="flaticon2-sort"></i>
+                                            </td>
+                                            <td class="text-center pl-0">
+                                                {{ $tag->id }}
+                                            </td>
+                                            <td class="text-center position">
+                                                <div class="mx-auto rounded-circle overflow-hidden" style="width: fit-content">
+                                                    <img src="{{ $tag->getImageSrcAttribute() }}" width="50" height="50" alt="">
+                                                </div>
+                                            </td>
+                                            <td class="text-center position">
+                                                <span class="text-dark-75 d-block font-size-lg sort_col">
+                                                    {{ $tag->name }}
+                                                </span>
+                                            </td>
+                                            <td class="text-center">
+                                                <span class="text-dark-75 d-block font-size-lg">
+                                                    {{ $tag->link }}
+                                                </span>
+                                            </td>
+                                            <td class="text-center">
+                                                <span class="text-dark-75 d-block font-size-lg pos_tag">
+                                                    {{ $tag->position }}
+                                                </span>
+                                            </td>
+                                            <td class="text-center pr-0">
+                                                <form action="{{ route('admin.tag.delete') }}" method="POST">
+                                                    <a href="javascript:;" class="btn btn-sm btn-clean btn-icon updateTag"
+                                                       data-toggle="modal" data-target="#updateFaqModal"
+                                                       data-id="{{ $tag->id }}">
+                                                        <i class="las la-edit"></i>
+                                                    </a>
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <input type="hidden" name="id" value="{{ $tag->id }}">
+                                                    <button type="submit" class="btn btn-sm btn-clean btn-icon btn_delete"
+                                                            onclick="return confirm('Ви впевнені, що хочете видалити питання \'{{ $tag->name }}\'?')"
+                                                            title="Delete"><i class="las la-trash"></i>
+                                                    </button>
+                                                </form>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -535,7 +603,52 @@
 
             $('#category_banner_create_select').select2();
 
+            function updateTagsPos(/**Event*/ evt) {
+                var list = [];
+                var idxs = {};
+                $.each($('.tag-table').find('tr.s-item'), function (idx, el) {
+                    let label = $(el).parent().data('value');
+                    if (!idxs.hasOwnProperty(label)) {
+                        idxs[label] = 0;
+                    }
+                    idxs[label] = idxs[label] + 1;
+                    list.push({
+                        id: $(el).data('id'),
+                        position: idxs[label],
+                        add_to_top: $(el).parent().data('value')
+                    })
+                });
+
+                $.ajax({
+                    method: 'post',
+                    url: '{{ route('admin.tag.update_position') }}',
+                    data: {
+                        positions: list,
+                    },
+                    success: function (res) {
+                        list.forEach(function (el) {
+                            $('#tag_'+el['id']).find('.pos_tag')[0].innerText = el['position'];
+                        })
+                    }
+                });
+
+            }
+
             let benners = document.getElementById('category_banners-table')
+            let top_menu = document.getElementById('top_menu');
+            let bt_menu = document.getElementById('bt_menu');
+            new Sortable(top_menu, {
+                group: 'shared', // set both lists to same group
+                animation: 150,
+                draggable: '.s-item',
+                onEnd: updateTagsPos
+            });
+            new Sortable(bt_menu, {
+                group: 'shared', // set both lists to same group
+                animation: 150,
+                draggable: '.s-item',
+                onEnd: updateTagsPos
+            });
             new Sortable(benners, {
                 animation: 150,
                 handle: '.handle',

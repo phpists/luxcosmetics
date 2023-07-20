@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('image_path');
             $table->bigInteger('category_id');
             $table->boolean('add_to_top');
+            $table->integer('position')->default(0);
         });
     }
 

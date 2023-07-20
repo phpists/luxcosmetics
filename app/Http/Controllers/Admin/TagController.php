@@ -52,6 +52,19 @@ class TagController extends Controller
         return redirect()->back()->with('success', 'Тег успешно создан');
     }
 
+    public function updatePosition(Request $request){
+        $data = $request->positions;
+        foreach ($data as $element) {
+            Tag::query()->where('id', $element['id'])->update([
+                'position' => $element['position'],
+                'add_to_top' => $element['add_to_top']
+            ]);
+        }
+        return response()->json([
+            'status' => true
+        ]);
+    }
+
     public function delete(Request $request) {
         try {
             $tag = Tag::query()->find($request->id);

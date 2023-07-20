@@ -11,7 +11,7 @@ class Tag extends Model
 
     public $timestamps = false;
 
-    protected $fillable = ['name', 'link', 'image_path', 'category_id', 'add_to_top'];
+    protected $fillable = ['name', 'link', 'image_path', 'category_id', 'add_to_top', 'position'];
     public function getImageSrcAttribute()
     {
         return asset('images/uploads/tags/'.$this->image_path);
