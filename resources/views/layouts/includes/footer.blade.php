@@ -45,9 +45,9 @@
 
             <div class="col-lg-2 col-md-4 col-sm-4 col-6 colcontacts">
                 <div class="footer__contacts">
-{{--                    @foreach (\App\Models\SocialMedia::query()->select('social_medias.phone')->get() as $item)--}}
-{{--                        <div class="footer__phone">{{ $item->phone }}</a></div>--}}
-{{--                    @endforeach--}}
+                    @foreach (\App\Models\SocialMedia::query()->select('social_medias.phone')->get() as $item)
+                        <div class="footer__phone">{{ $item->phone ?? ''}}</a></div>
+                    @endforeach
                     <a href="#callback" class="btn btn--accent popup-with-form">Заказать звонок
                         <svg class="icon">
                             <use xlink:href="{{asset('images/dist/sprite.svg#circle-arrow')}}"></use>

@@ -100,7 +100,8 @@ class CategoryController extends Controller
         $last_position = $articles->max('position');
         $last_position = $last_position ? $last_position + 1: 1;
         $properties = PropertyCategory::query()->where('category_id', $category->id)->orderBy('position')->paginate();
-        return view('admin.categories.edit', compact('category', 'categories', 'properties', 'tags', 'last_position', 'articles'));
+        $seo = Category::query()->select('categories.*')->find($id);
+        return view('admin.categories.edit', compact('category', 'categories', 'properties', 'tags', 'last_position', 'articles', 'seo'));
     }
 
     public function update(Request $request){
@@ -154,6 +155,40 @@ class CategoryController extends Controller
             PropertyCategory::query()->insert($data->toArray());
         }
         return redirect()->route('admin.categories')->with('success', 'Категория успешно отредактирована');
+    }
+
+    public function updateSeo(Request $request)
+    {
+        $productId = $request->input('id');
+
+        $seo = Category::find($productId);
+
+        if ($seo === null) {
+            return redirect()->back()->with('error', 'Продукт не найден.');
+        }
+        $seo->title_meta = $request->title_meta;
+        $seo->description_meta = $request->description_meta;
+        $seo->keywords_meta = $request->keywords_meta;
+        $seo->save();
+
+        return redirect()->back()->with('success', 'Seo обновлено');
+    }
+
+    public function updateMicroSeo(Request $request)
+    {
+        $productId = $request->input('id');
+
+        $microSeo = Category::find($productId);
+
+        if ($microSeo === null) {
+            return redirect()->back()->with('error', 'Продукт не найден.');
+        }
+
+        $microSeo->og_title_meta = $request->og_title_meta;
+        $microSeo->og_description_meta = $request->og_description_meta;
+        $microSeo->save();
+
+        return redirect()->back()->with('success', 'Seo обновлено');
     }
 
     public function deleteCategories(Request $request)

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin\News;
 use App\Http\Controllers\Controller;
 use App\Models\NewsItem;
 use App\Services\FileService;
+use App\Services\SiteService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -49,12 +50,9 @@ class NewsController extends Controller
 
     public function edit($id)
     {
-
-        $data['item'] = NewsItem::select('news_item.*')
-            ->where('news_item.id', $id)
-            ->first();
-
-        return view('admin.news.edit', $data);
+        $data['item'] = NewsItem::select('news_item.*')->where('news_item.id', $id)->first();
+        $seo = NewsItem::query()->select('news_item.*')->find($id);
+        return view('admin.news.edit', $data, compact('seo'));
     }
 
     public function update(Request $request)
@@ -68,8 +66,41 @@ class NewsController extends Controller
         }else{
             $item->update($request->all());
         }
-
         return redirect()->route('admin.news')->with('success', 'Данные успешно отредактированы');
+    }
+
+    public function updateSeo(Request $request)
+    {
+        $productId = $request->input('id');
+
+        $seo = NewsItem::find($productId);
+
+        if ($seo === null) {
+            return redirect()->back()->with('error', 'Продукт не найден.');
+        }
+
+        $seo->description_meta = $request->description_meta;
+        $seo->keywords_meta = $request->keywords_meta;
+        $seo->save();
+
+        return redirect()->back()->with('success', 'Seo обновлено');
+    }
+
+    public function updateMicroSeo(Request $request)
+    {
+        $productId = $request->input('id');
+
+        $microSeo = NewsItem::find($productId);
+
+        if ($microSeo === null) {
+            return redirect()->back()->with('error', 'Продукт не найден.');
+        }
+
+        $microSeo->og_title_meta = $request->og_title_meta;
+        $microSeo->og_description_meta = $request->og_description_meta;
+        $microSeo->save();
+
+        return redirect()->back()->with('success', 'Seo обновлено');
     }
 
     public function delete($id)
@@ -78,5 +109,33 @@ class NewsController extends Controller
         $item->delete();
 
         return redirect()->route('admin.news')->with('success', 'Данные успешно удалены');
+    }
+
+    public function activePosts(Request $request)
+    {
+        $id = $request->id;
+        $newsId = $request->checkbox;
+        $status = $request->status;
+
+        if ($id) {
+            NewsItem::where('id', $id)->update([
+                'status' => $status
+            ]);
+        } elseif ($newsId) {
+            NewsItem::whereIn('id', $newsId)->update([
+                'status' => $status
+            ]);
+        }
+
+        $title = SiteService::statusNews($status);
+        $message = $status ? 'Новость активирована!' : 'Новость деактивирована!';
+
+        $data = [
+            'posts' => $id ?? $newsId,
+            'title' => $title,
+            'message' => $message
+        ];
+
+        return json_encode($data);
     }
 }

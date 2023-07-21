@@ -8,10 +8,15 @@
     <meta name="keywords" content="@yield('keywords')">
     <meta name="description" content="@yield('description')">
 
+    <meta property="og:title" content="@yield('og:title')">
+    <meta property="og:description" content="@yield('og:description')">
+    <meta property="og:image" content="{{ asset('/images/dist/preview.jpg') }}">
+    <meta property="og:url" content="@yield('og:url')"/>
+    <meta property="og:type" content="website">
+
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="icon" href="{{ asset('/images/54231.mp3') }}">
-    <meta property="og:image" content="{{ asset('/images/dist/preview.jpg') }}">
 
     <meta name="theme-color" content="#06473A">
 

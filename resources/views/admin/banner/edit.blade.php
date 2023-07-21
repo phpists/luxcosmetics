@@ -16,7 +16,7 @@
             <!--begin::Page Heading-->
             <div class="d-flex align-items-baseline flex-wrap mr-5">
                 <!--begin::Page Title-->
-                <h5 class="text-dark font-weight-bold my-1 mr-5">Редактирования новость</h5>
+                <h5 class="text-dark font-weight-bold my-1 mr-5">Редактирования Баннер</h5>
                 <!--end::Page Title-->
             </div>
             <!--end::Page Heading-->
@@ -43,8 +43,19 @@
                                     <span class="nav-text">Изображения</span>
                                 </a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#kt_tab_pane_3_4">
+                                    <span class="nav-text">Редактировать Seo</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#kt_tab_pane_3_8">
+                                    <span class="nav-text">Микро разметка SEO</span>
+                                </a>
+                            </li>
                         </ul>
                     </div>
+
                     <div class="card-toolbar">
                         <button type="submit" form="form1" class="btn btn-primary">Сохранить</button>
                     </div>
@@ -86,8 +97,8 @@
                                             <label>Дата публикации</label>
                                             <div class="input-group date" id="kt_datetimepicker_1" data-target-input="nearest">
                                                 <input type="text" class="form-control datetimepicker-input" placeholder="Дата публикации"
-                                                    value="{{ date('Y-m-d H:i:s', strtotime($item->published_at)) }}" name="published_at" required
-                                                    data-target="#kt_datetimepicker_1"/>
+                                                       value="{{ date('Y-m-d H:i:s', strtotime($item->published_at)) }}" name="published_at" required
+                                                       data-target="#kt_datetimepicker_1"/>
                                                 <div class="input-group-append" data-target="#kt_datetimepicker_1" data-toggle="datetimepicker">
                                                     <span class="input-group-text">
                                                         <i class="ki ki-calendar"></i>
@@ -115,38 +126,96 @@
                                         </div>
                                     </div>
                                 </div>
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <label>Текст</label>
-                                            <div style="max-height: 400px; overflow-y: auto;">
-                                                <textarea id="textEditor" name="text" required>{{ $item->text }}</textarea>
-                                            </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <label>Текст</label>
+                                        <div style="max-height: 400px; overflow-y: auto;">
+                                            <textarea id="textEditor" name="text" required>{{ $item->text }}</textarea>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="tab-pane fade" id="kt_tab_pane_2_8" role="tabpanel"
-                                    aria-labelledby="kt_tab_pane_2_8">
-                                    <div class="form-group">
-                                        <label>Изображения</label>
-                                        <div class="col-auto ml-2">
-                                            <div class="image-input image-input-outline" id="createImagePlugin" style="background-image: url('{{ asset('images/uploads/banner/' . $item->image) }}')">
-                                                <div class="image-input-wrapper" id="updateImageBackground"></div>
-                                                <label class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="change" data-toggle="tooltip" data-original-title="Change avatar">
-                                                    <i class="fa fa-pen icon-sm text-muted"></i>
-                                                    <input type="file" name="image" accept="image/*"/>
-                                                    <input type="hidden" name="image_remove"/>
-                                                </label>
-                                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="kt_tab_pane_2_8" role="tabpanel"
+                             aria-labelledby="kt_tab_pane_2_8">
+                            <div class="form-group">
+                                <label>Изображения</label>
+                                <div class="col-auto ml-2">
+                                    <div class="image-input image-input-outline" id="createImagePlugin" style="background-image: url('{{ asset('images/uploads/banner/' . $item->image) }}')">
+                                        <div class="image-input-wrapper" id="updateImageBackground"></div>
+                                        <label class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="change" data-toggle="tooltip" data-original-title="Change avatar">
+                                            <i class="fa fa-pen icon-sm text-muted"></i>
+                                            <input type="file" name="image" accept="image/*"/>
+                                            <input type="hidden" name="image_remove"/>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            </form>
+                        </div>
+                        <div class="tab-pane fade" id="kt_tab_pane_3_8" role="tabpanel" aria-labelledby="kt_tab_pane_3_8">
+                            <form action="{{route('admin.banner.update.micro-seo')}}" method="POST">
+                                @csrf
+                                <input type="hidden" name="id" value="{{ $item->id }}">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>Meta:og Title</label>
+                                            <input type="text" name="og_title_meta" class="form-control" value="{{ $seo->og_title_meta ?? '' }}"/>
                                         </div>
                                     </div>
-                                </form>
-                            </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>Meta:og Description</label>
+                                            <textarea class="form-control" id="meta_description" name="og_description_meta">{{ $seo->og_description_meta ?? '' }}</textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-primary mr-2">Сохранить</button>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="tab-pane fade" id="kt_tab_pane_3_4" role="tabpanel" aria-labelledby="kt_tab_pane_3_4">
+                            <form action="{{route('admin.banner.update.seo')}}" method="POST">
+                                @csrf
+                                <input type="hidden" name="id" value="{{ $item->id }}">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>Meta title</label>
+                                            <input type="text" name="meta_title" class="form-control" value="{{ $seo->title ?? '' }}"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>Meta description</label>
+                                            <textarea class="form-control" id="meta_description" name="description_meta">{{ $seo->description_meta ?? '' }}</textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>Meta keywords</label>
+                                            <textarea class="form-control" id="meta_keywords" name="keywords_meta">{{ $seo->keywords_meta ?? '' }}</textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-primary mr-2">Сохранить</button>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
             </div>
-            <!--end::Container-->
         </div>
+        <!--end::Container-->
+    </div>
 @endsection
 
 @section('js_after')
@@ -154,6 +223,7 @@
     <script src="{{ asset('super_admin/js/pages/crud/ktdatatable/base/html-table.js') }}"></script>
     <script src="{{ asset('super_admin/plugins/custom/ckeditor/ckeditor-classic.bundle.js') }} "></script>
     <script src="{{ asset('super_admin/js/pages/crud/forms/widgets/bootstrap-datetimepicker.js') }}"></script>
+
     <script>
         $('#kt_select2_4').select2({
             allowClear: true

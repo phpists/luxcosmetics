@@ -163,10 +163,12 @@
                 </div>
             </div>
         </div>
+        @if($main_block)
         <a class="videoblock__video popup-video" style="background-image: url(images/uploads/main_block/{{ $main_block->image_path ?? ''}});"></a>
         <div class="mfp-hide" style="max-width: 1049px; margin: 0 auto" id="video_popup">
             <video width="100%" controls src="{{asset('images/uploads/main_block/'.$main_block->video_path ?? '')}}"></video>
         </div>
+        @endif
     </section>
     @endif
     @if($show_new_products = \App\Services\SiteConfigService::getParam('показывать_блок_популярные')['value'] == 1)
@@ -303,7 +305,8 @@
             </div>
         </div>
     </section>
-    <section class="mailing">
+    @if($show_new_products = \App\Services\SiteConfigService::getParam('показывать_блок_подписаться_на_рассылку')['value'] == 1)
+        <section class="mailing">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
@@ -322,6 +325,8 @@
             </div>
         </div>
     </section>
+    @endif
+    @if($show_new_products = \App\Services\SiteConfigService::getParam('показывать_слайдер-блок_бренды')['value'] == 1)
     <section class="brands">
         <div class="container">
             <div class="row">
@@ -342,6 +347,7 @@
             </div>
         </div>
     </section>
+    @endif
 @endsection
 
 @section('after_content')

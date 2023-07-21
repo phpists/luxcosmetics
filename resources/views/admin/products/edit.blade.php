@@ -71,6 +71,11 @@
                                     <span class="nav-text">Редактировать SEO</span>
                                 </a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#kt_tab_pane_3_8">
+                                    <span class="nav-text">Микро разметка SEO</span>
+                                </a>
+                            </li>
                         </ul>
                     </div>
                     <div class="card-toolbar" style="gap: 10px; margin-bottom: 10px">
@@ -469,10 +474,37 @@
                             </div>
                             <!--end::Table-->
                         </div>
+                        <div class="tab-pane fade" id="kt_tab_pane_3_8" role="tabpanel"
+                             aria-labelledby="kt_tab_pane_3_4">
+                            <form action="{{route('admin.product.update.micro-seo')}}" method="POST">
+                                @csrf
+                                <input type="hidden" name="id" value="{{ $product->id }}">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>Meta:og Title</label>
+                                            <input type="text" name="og_title_meta" class="form-control"
+                                                   value="{{ $seo->og_title_meta ?? '' }}"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>Meta:og Description</label>
+                                            <textarea class="form-control" id="meta_description"
+                                                      name="og_description_meta">{{ $seo->og_description_meta ?? '' }}</textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-footer">
+                                    <button type="submit" class="btn btn-primary mr-2">Сохранить</button>
+                                </div>
+                            </form>
+                        </div>
 
                         <div class="tab-pane fade" id="kt_tab_pane_3_4" role="tabpanel"
                              aria-labelledby="kt_tab_pane_3_4">
-
                             <form action="{{route('admin.product.update.seo')}}" method="POST">
                                 @csrf
                                 <input type="hidden" name="id" value="{{ $product->id }}">
@@ -490,7 +522,7 @@
                                         <div class="form-group">
                                             <label>Meta description</label>
                                             <textarea class="form-control" id="meta_description"
-                                                      name="meta_description">{{ $seo->description_meta ?? '' }}</textarea>
+                                                      name="description_meta">{{ $seo->description_meta ?? '' }}</textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -499,17 +531,15 @@
                                         <div class="form-group">
                                             <label>Meta keywords</label>
                                             <textarea class="form-control" id="meta_keywords"
-                                                      name="meta_keywords">{{ $seo->keywords_meta ?? '' }}</textarea>
-
+                                                      name="keywords_meta">{{ $seo->keywords_meta ?? '' }}</textarea>
                                         </div>
                                     </div>
                                 </div>
 
                                 <div class="card-footer">
-                                    <button type="submit" class="btn btn-primary mr-2">Зберегти</button>
+                                    <button type="submit" class="btn btn-primary mr-2">Сохранить</button>
                                 </div>
                             </form>
-
                         </div>
                     </div>
                 </div>

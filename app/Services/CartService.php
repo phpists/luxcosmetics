@@ -2,38 +2,31 @@
 
 namespace App\Services;
 
-use App\Mail\CertificateMail;
-use App\Mail\CertificateUserEmail;
-use App\Mail\OrderUserMail;
-use App\Models\ActionProduct;
-use App\Models\Certificate;
-use App\Models\CertificatesUser;
-use App\Models\Currency;
 use App\Models\Order;
 use App\Models\OrderProduct;
 use App\Models\Product;
-use App\Models\ProductStore;
-use App\Models\Promocode;
-use App\Models\PropertyData;
-use App\Models\User;
-use App\Services\CurrencyService;
-use App\Services\LanguageService;
-use App\Services\Payment\LiqPay\LiqPay;
-use App\Services\Payment\Portmone\Portmone;
-use App\Services\SalesDoubler\SalesDoublerService;
-use App\Services\Soap\CertificateService;
-use Illuminate\Support\Collection;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Session;
 
 class CartService
 {
 
     const SESSION_KEY = 'cart';
+    const DELIVERY_KEY = 'delivery_type';
+    const ADDRESS_KEY = 'address_id';
+    const GIFT_BOX_KEY = 'gift_box';
+    const AS_DELIVERY_ADDRESS_KEY = 'as_delivery_address';
+    const CARD_KEY = 'card_id';
+
+
+    const ALL_KEYS = [
+        self::DELIVERY_KEY => 'Способ доставки',
+        self::ADDRESS_KEY => 'Адрес',
+        self::GIFT_BOX_KEY => 'Подарочная коробка',
+        self::AS_DELIVERY_ADDRESS_KEY => 'Использовать как адрес доставки',
+        self::CARD_KEY => 'Карта для оплаты'
+    ];
+
 
     public function getAllItems()
     {
@@ -63,6 +56,11 @@ class CartService
         }, self::getAllItems());
 
         return $product_id;
+    }
+
+    public function getProduct($product_id)
+    {
+        return Product::findOrFail($product_id);
     }
 
     public function getTotalSum()
@@ -162,6 +160,54 @@ class CartService
     public function clear()
     {
         session([self::SESSION_KEY => []]);
+    }
+
+
+    public function setProperty($name, $value)
+    {
+        session([$name => $value]);
+    }
+
+    public function getProperty($name)
+    {
+        return session()->get($name) ?? null;
+    }
+
+
+
+    public function store(): ?int
+    {
+        if (!self::isNotEmpty())
+            return null;
+
+        $order_data = Arr::mapWithKeys(self::ALL_KEYS, function ($title, $name) {
+            return [$name => $this->getProperty($name)];
+        });
+        $order_data['user_id'] = Auth::id();
+        $order_data['total_sum'] = self::getTotalSum();
+
+        try {
+            $order = Order::create($order_data);
+
+            foreach (self::getAllItems() as $item) {
+                $product = self::getProduct($item['product_id']);
+                OrderProduct::create([
+                    'order_id' => $order->id,
+                    'product_id' => $item['product_id'],
+                    'quantity' => $item['quantity'],
+                    'price' => $product->price,
+                    'old_price' => $product->old_price
+                ]);
+            }
+
+            session()->forget(self::SESSION_KEY);
+            session()->forget(self::ALL_KEYS);
+
+            return $order->id;
+        } catch (\Exception $exception) {
+            session()->flash('error', $exception->getMessage());
+            return null;
+        }
     }
 
 }

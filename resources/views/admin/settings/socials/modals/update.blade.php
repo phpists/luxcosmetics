@@ -14,7 +14,7 @@
                 @csrf
 
                 <input id="updateId" type="hidden" name="id">
-                
+
 
                 <div class="modal-body">
 
@@ -40,39 +40,6 @@
                             </div>
                         </div>
                     </div>
-
-
-                    <div class="row row-cols-1 row-cols-md-2">
-                        <div class="col">
-                            <div class="form-group row mb-0">
-                                <label class="col-auto col-form-label" for="updateIsActiveInContacts">Страница "Контакты"</label>
-                                <div class="col-3">
-                                    <span class="switch">
-                                        <label>
-                                            <input id="updateIsActiveInContacts" checked type="checkbox" name="is_active_in_contacts"/>
-                                            <span></span>
-                                        </label>
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="form-group row mb-0">
-                                <label class="col-auto col-form-label" for="updateIsActiveInFooter">Активная в футере</label>
-                                <div class="col-3">
-                                    <span class="switch">
-                                        <label>
-                                            <input id="updateIsActiveInFooter" checked type="checkbox" name="is_active_in_footer"/>
-                                            <span></span>
-                                        </label>
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-
-
                 </div>
 
                 <div class="modal-footer">
@@ -88,7 +55,7 @@
     </div>
 </div>
 <script>
-    
 
-    
+
+
 </script>

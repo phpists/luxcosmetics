@@ -127,6 +127,9 @@
                                             <a href="{{ route('admin.news.edit', $item->id) }}" class="btn btn-sm btn-clean btn-icon">
                                                 <i class="las la-edit"></i>
                                             </a>
+                                            <button class="activePost btn btn-sm btn-clean btn-icon" data-status="{{ !$item->status ? 1 : 0 }}">
+                                                <span>{!! \App\Services\SiteService::statusNews($item->status) !!}</span>
+                                            </button>
                                             <a href="{{ route('admin.news.delete', $item->id) }}" class="btn btn-sm btn-clean btn-icon" onclick="return confirm('Ви впевнені, що хочете видалити цей запис?')">
                                                 <i class="las la-trash"></i>
                                             </a>

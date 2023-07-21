@@ -13,6 +13,7 @@ use App\Services\FileService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
 class ProductController extends Controller
@@ -206,24 +207,38 @@ class ProductController extends Controller
 
     public function updateSeo(Request $request)
     {
-        $seo = Product::query()->select('products.*')->first();
+        $productId = $request->input('id');
+
+        $seo = Product::find($productId);
 
         if ($seo === null) {
-            $seo = new Product([
-                'title' => $request->meta_title,
-                'meta_description' => $request->meta_description,
-                'meta_keywords' => $request->meta_keywords,
-            ]);
-            $seo->save();
-        } else {
-            $seo->title = $request->meta_title;
-            $seo->description_meta = $request->meta_description;
-            $seo->keywords_meta = $request->meta_keywords;
-            $seo->save();
+            return redirect()->back()->with('error', 'Продукт не найден.');
         }
+
+        $seo->description_meta = $request->description_meta;
+        $seo->keywords_meta = $request->keywords_meta;
+        $seo->save();
 
         return redirect()->back()->with('success', 'Seo обновлено');
     }
+
+    public function updateMicroSeo(Request $request)
+    {
+        $productId = $request->input('id');
+
+        $microSeo = Product::find($productId);
+
+        if ($microSeo === null) {
+            return redirect()->back()->with('error', 'Продукт не найден.');
+        }
+
+        $microSeo->og_title_meta = $request->og_title_meta;
+        $microSeo->og_description_meta = $request->og_description_meta;
+        $microSeo->save();
+
+        return redirect()->back()->with('success', 'Seo обновлено');
+    }
+
 
 
     public function storeImage(Request $request) {

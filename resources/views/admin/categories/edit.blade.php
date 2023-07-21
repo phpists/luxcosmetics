@@ -45,11 +45,6 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" data-toggle="tab" href="#kt_tab_pane_2_4">
-                                    <span class="nav-text">SEO</span>
-                                </a>
-                            </li>
-                            <li class="nav-item">
                                 <a class="nav-link" data-toggle="tab" href="#kt_tab_pane_3_4">
                                     <span class="nav-text">Характеристики</span>
                                 </a>
@@ -62,6 +57,16 @@
                             <li class="nav-item">
                                 <a class="nav-link" data-toggle="tab" href="#banners">
                                     <span class="nav-text">Статьи</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#kt_tab_pane_2_4">
+                                    <span class="nav-text">Редактировать SEO</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#kt_tab_pane_7_4">
+                                    <span class="nav-text">Микро разметка SEO</span>
                                 </a>
                             </li>
                         </ul>
@@ -181,67 +186,7 @@
                                 </div>
                             </form>
                         </div>
-                        <div class="tab-pane fade" id="kt_tab_pane_2_4" role="tabpanel"
-                             aria-labelledby="kt_tab_pane_2_4">
-{{--                            <form action="{{ route('admin.category.update.seo') }}" method="POST">--}}
-{{--                                @csrf--}}
-{{--                                <input type="hidden" name="category_id" value="{{ $category->id }}">--}}
-{{--                                <div class="row">--}}
-{{--                                    <div class="col-md-12">--}}
-{{--                                        <div class="form-group">--}}
-{{--                                            <label>H1</label>--}}
-{{--                                            <input type="text" name="h1" class="form-control"--}}
-{{--                                                   value="{{ $seo->h1 ?? '' }}"/>--}}
-{{--                                        </div>--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
 
-{{--                                <div class="row">--}}
-{{--                                    <div class="col-md-12">--}}
-{{--                                        <div class="form-group">--}}
-{{--                                            <label>Meta title</label>--}}
-{{--                                            <input type="text" name="meta_title" class="form-control"--}}
-{{--                                                   value="{{ $seo->meta_title ?? '' }}"/>--}}
-{{--                                        </div>--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
-
-{{--                                <div class="row">--}}
-{{--                                    <div class="col-md-12">--}}
-{{--                                        <div class="form-group">--}}
-{{--                                            <label>Meta robots</label>--}}
-{{--                                            <input type="text" name="meta_robots" class="form-control"--}}
-{{--                                                   value="{{ $seo->meta_robots ?? '' }}"/>--}}
-{{--                                        </div>--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
-
-{{--                                <div class="row">--}}
-{{--                                    <div class="col-md-12">--}}
-{{--                                        <div class="form-group">--}}
-{{--                                            <label>Meta description</label>--}}
-{{--                                            <textarea class="form-control" id="meta_description"--}}
-{{--                                                      name="meta_description">{{ $seo->meta_description ?? '' }}</textarea>--}}
-{{--                                        </div>--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
-
-{{--                                <div class="row">--}}
-{{--                                    <div class="col-md-12">--}}
-{{--                                        <div class="form-group">--}}
-{{--                                            <label>Meta keywords</label>--}}
-{{--                                            <textarea class="form-control" id="meta_keywords"--}}
-{{--                                                      name="meta_keywords">{{ $seo->meta_keywords ?? '' }}</textarea>--}}
-
-{{--                                        </div>--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
-
-{{--                                <div class="card-footer">--}}
-{{--                                    <button type="submit" class="btn btn-primary mr-2">Сохранить</button>--}}
-{{--                                </div>--}}
-{{--                            </form>--}}
-                        </div>
                         <div class="tab-pane fade show" id="kt_tab_pane_3_4" role="tabpanel"
                              aria-labelledby="kt_tab_pane_3_4">
                             <div class="table-responsive">
@@ -536,6 +481,71 @@
                                 </table>
                             </div>
                             <!--end::Table-->
+                        </div>
+                        <div class="tab-pane fade" id="kt_tab_pane_7_4" role="tabpanel"
+                             aria-labelledby="kt_tab_pane_7_4">
+                            <form action="{{route('admin.categories.update.micro-seo')}}" method="POST">
+                                @csrf
+                                <input type="hidden" name="id" value="{{ $category->id }}">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>Meta:og Title</label>
+                                            <input type="text" name="og_title_meta" class="form-control"
+                                                   value="{{ $seo->og_title_meta ?? '' }}"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>Meta:og Description</label>
+                                            <textarea class="form-control" id="meta_description"
+                                                      name="og_description_meta">{{ $seo->og_description_meta ?? '' }}</textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-footer">
+                                    <button type="submit" class="btn btn-primary mr-2">Сохранить</button>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="tab-pane fade" id="kt_tab_pane_2_4" role="tabpanel"
+                             aria-labelledby="kt_tab_pane_2_4">
+                            <form action="{{route('admin.categories.update.seo')}}" method="POST">
+                                @csrf
+                                <input type="hidden" name="id" value="{{ $category->id }}">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>Meta title</label>
+                                            <input type="text" name="title_meta" class="form-control"
+                                                   value="{{ $seo->title_meta ?? '' }}"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>Meta description</label>
+                                            <textarea class="form-control" id="meta_description"
+                                                      name="description_meta">{{ $seo->description_meta ?? '' }}</textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>Meta keywords</label>
+                                            <textarea class="form-control" id="meta_keywords"
+                                                      name="keywords_meta">{{ $seo->keywords_meta ?? '' }}</textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-footer">
+                                    <button type="submit" class="btn btn-primary mr-2">Сохранить</button>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>

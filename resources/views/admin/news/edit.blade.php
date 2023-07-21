@@ -43,6 +43,16 @@
                                     <span class="nav-text">Изображения</span>
                                 </a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#kt_tab_pane_3_4">
+                                    <span class="nav-text">Редактировать Seo</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#kt_tab_pane_3_8">
+                                    <span class="nav-text">Микро разметка SEO</span>
+                                </a>
+                            </li>
                         </ul>
                     </div>
 
@@ -124,6 +134,64 @@
                                 </div>
                             </div>
 
+                            </form>
+                        </div>
+                        <div class="tab-pane fade" id="kt_tab_pane_3_8" role="tabpanel" aria-labelledby="kt_tab_pane_3_8">
+                            <form action="{{route('admin.news.update.micro-seo')}}" method="POST">
+                                @csrf
+                                <input type="hidden" name="id" value="{{ $item->id }}">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>Meta:og Title</label>
+                                            <input type="text" name="og_title_meta" class="form-control" value="{{ $seo->og_title_meta ?? '' }}"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>Meta:og Description</label>
+                                            <textarea class="form-control" id="meta_description" name="og_description_meta">{{ $seo->og_description_meta ?? '' }}</textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-primary mr-2">Сохранить</button>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="tab-pane fade" id="kt_tab_pane_3_4" role="tabpanel" aria-labelledby="kt_tab_pane_3_4">
+                            <form action="{{route('admin.news.update.seo')}}" method="POST">
+                                @csrf
+                                <input type="hidden" name="id" value="{{ $item->id }}">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>Meta title</label>
+                                            <input type="text" name="meta_title" class="form-control" value="{{ $seo->title ?? '' }}"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>Meta description</label>
+                                            <textarea class="form-control" id="meta_description" name="description_meta">{{ $seo->description_meta ?? '' }}</textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>Meta keywords</label>
+                                            <textarea class="form-control" id="meta_keywords" name="keywords_meta">{{ $seo->keywords_meta ?? '' }}</textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-primary mr-2">Сохранить</button>
+                                </div>
                             </form>
                         </div>
                     </div>

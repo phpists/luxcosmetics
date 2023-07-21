@@ -88,13 +88,19 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('/add-address', [\App\Http\Controllers\ProfileController::class, 'add_address'])->name('profile.add-address');
         Route::post('/update-default-address', [\App\Http\Controllers\ProfileController::class, 'update_default_address'])->name('profile.update-default-address');
         Route::post('/reset-password', [\App\Http\Controllers\ProfileController::class, 'reset_password'])->name('profile.reset-password');
-
-        // Cart
-        Route::get('cart/delivery', [\App\Http\Controllers\CartController::class, 'delivery'])->name('cart.delivery');
     });
+
+    // Cart
+    Route::get('cart/delivery', [\App\Http\Controllers\CartController::class, 'delivery'])->name('cart.delivery');
+    Route::post('cart/delivery', [\App\Http\Controllers\CartController::class, 'deliveryStore'])->name('cart.delivery.store');
+    Route::get('cart/payment', [\App\Http\Controllers\CartController::class, 'payment'])->name('cart.payment');
+    Route::post('cart/checkout', [\App\Http\Controllers\CartController::class, 'checkoutStore'])->name('cart.checkout.store');
+    Route::get('cart/success/{order}', [\App\Http\Controllers\CartController::class, 'success'])->name('cart.success');
+    Route::get('cart/error', [\App\Http\Controllers\CartController::class, 'error'])->name('cart.error');
 });
 // Cart
 Route::get('cart', [\App\Http\Controllers\CartController::class, 'index'])->name('cart');
+Route::post('cart', [\App\Http\Controllers\CartController::class, 'indexStore'])->name('cart.store');
 Route::post('cart/add', [\App\Http\Controllers\CartController::class, 'add'])->name('cart.add');
 Route::post('cart/remove', [\App\Http\Controllers\CartController::class, 'remove'])->name('cart.remove');
 Route::post('cart/plus-quantity', [\App\Http\Controllers\CartController::class, 'plusQuantity'])->name('cart.plus-quantity');
@@ -103,7 +109,7 @@ Route::get('cart/clear', [\App\Http\Controllers\CartController::class, 'clear'])
 Route::get('cart/login', [\App\Http\Controllers\CartController::class, 'login'])->name('cart.login')->middleware('guest');
 Route::post('fast-register', [\App\Http\Controllers\Auth\FastRegisterController::class, 'store'])
     ->name('fast-register')->middleware('guest');
-Route::post('cart', [\App\Http\Controllers\CartController::class, 'store'])->name('cart.store');
+
 
 // Cart
 Route::get('cart/step1', [\App\Http\Controllers\CartController::class, 'step_first'])->name('cart.step1');
@@ -156,6 +162,7 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function 
     Route::put('products/{id}', [\App\Http\Controllers\Admin\ProductController::class, 'update'])->name('admin.product.update');
     Route::get('products/properties', [\App\Http\Controllers\Admin\ProductController::class, 'getProperties'])->name('admin.product.properties');
     Route::post('products/update/seo', [\App\Http\Controllers\Admin\ProductController::class, 'updateSeo'])->name('admin.product.update.seo');
+    Route::post('products/update/micro-seo', [\App\Http\Controllers\Admin\ProductController::class, 'updateMicroSeo'])->name('admin.product.update.micro-seo');
 
 
 //    Categories
@@ -168,6 +175,8 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function 
     Route::get('categories/search', [AdminCategoryController::class, 'search'])->name('admin.categories.search');
     Route::post('categories/update-position', [AdminCategoryController::class, 'updatePosition'])->name('admin.categories.updatePosition');
     Route::post('_update-properties-position', [AdminCategoryController::class, 'updatePropertiesPosition'])->name('admin.categories.updatePropsPosition');
+    Route::post('categories/update/seo', [AdminCategoryController::class, 'updateSeo'])->name('admin.categories.update.seo');
+    Route::post('categories/update/micro-seo', [AdminCategoryController::class, 'updateMicroSeo'])->name('admin.categories.update.micro-seo');
 
     // Article
     Route::post('article/store', [\App\Http\Controllers\Admin\ArticleController::class, 'store'])->name('admin.article.store');
@@ -187,7 +196,7 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function 
     Route::post('settings/social/change_status', [\App\Http\Controllers\Admin\Settings\SocialMediaController::class, 'change_status'])->name('admin.settings.social.change_status');
     Route::post('settings/social/update-positions', [\App\Http\Controllers\Admin\Settings\SocialMediaController::class, 'updates_positions'])->name('admin.settings.social.update_positions');
 
-//     Phone
+//     Phone Social Media
     Route::get('settings/phone/edit/', [App\Http\Controllers\Admin\Settings\SocialMediaController::class, 'edit'])->name('admin.settings.phone.edit');
     Route::put('settings/phone/update/', [App\Http\Controllers\Admin\Settings\SocialMediaController::class, 'updatePhone'])->name('admin.settings.phone.update');
 
@@ -233,10 +242,9 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function 
     Route::post('news/update', [\App\Http\Controllers\Admin\News\NewsController::class, 'update'])->name('admin.news.update');
     Route::post('news/update/seo', [\App\Http\Controllers\Admin\News\NewsController::class, 'updateSeo'])->name('admin.news.update.seo');
     Route::get('news/delete/{id}', [\App\Http\Controllers\Admin\News\NewsController::class, 'delete'])->name('admin.news.delete');
-
-    /* News Operation */
-    Route::post('_delete-posts', [\App\Http\Controllers\Admin\News\NewsController::class, 'deletePosts']);
-    Route::post('_active-posts', [\App\Http\Controllers\Admin\News\NewsController::class, 'activePosts']);
+    Route::post('_active-posts-news', [\App\Http\Controllers\Admin\News\NewsController::class, 'activePosts'])->name('admin.news.active');
+    Route::post('news/update/seo', [\App\Http\Controllers\Admin\News\NewsController::class, 'updateSeo'])->name('admin.news.update.seo');
+    Route::post('news/update/micro-seo', [\App\Http\Controllers\Admin\News\NewsController::class, 'updateMicroSeo'])->name('admin.news.update.micro-seo');
 
 
     /* Banners */
@@ -245,9 +253,10 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function 
     Route::post('banner', [\App\Http\Controllers\Admin\Banner\BannerController::class, 'store'])->name('admin.banner.store');
     Route::get('banner/edit/{id}', [\App\Http\Controllers\Admin\Banner\BannerController::class, 'edit'])->name('admin.banner.edit');
     Route::post('banner/update', [\App\Http\Controllers\Admin\Banner\BannerController::class, 'update'])->name('admin.banner.update');
-    Route::post('banner/update/seo', [\App\Http\Controllers\Admin\Banner\BannerController::class, 'updateSeo'])->name('admin.banner.update.seo');
     Route::get('banner/delete/{id}', [\App\Http\Controllers\Admin\Banner\BannerController::class, 'delete'])->name('admin.banner.delete');
     Route::post('banner/update-position', [\App\Http\Controllers\Admin\Banner\BannerController::class, 'updatePosition'])->name('admin.banners.update_positions');
+    Route::post('banner/update/seo', [\App\Http\Controllers\Admin\Banner\BannerController::class, 'updateSeo'])->name('admin.banner.update.seo');
+    Route::post('banner/update/micro-seo', [\App\Http\Controllers\Admin\Banner\BannerController::class, 'updateMicroSeo'])->name('admin.banner.update.micro-seo');
 
     /* Banners Operation */
     Route::post('_active-posts', [\App\Http\Controllers\Admin\Banner\BannerController::class, 'activePosts'])->name('admin.banner.active');

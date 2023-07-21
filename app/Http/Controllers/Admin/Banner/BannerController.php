@@ -63,7 +63,8 @@ class BannerController extends Controller
     public function edit($id)
     {
         $data['item'] = Banner::select('banners.*')->where('banners.id', $id)->first();
-        return view('admin.banner.edit', $data);
+        $seo = Banner::query()->select('banners.*')->find($id);
+        return view('admin.banner.edit', $data, compact('seo'));
     }
 
     public function update(Request $request)
@@ -78,6 +79,40 @@ class BannerController extends Controller
         }
 
         return redirect()->route('admin.banner')->with('success', 'Данные успешно отредактированы');
+    }
+
+    public function updateSeo(Request $request)
+    {
+        $productId = $request->input('id');
+
+        $seo = Banner::find($productId);
+
+        if ($seo === null) {
+            return redirect()->back()->with('error', 'Продукт не найден.');
+        }
+
+        $seo->description_meta = $request->description_meta;
+        $seo->keywords_meta = $request->keywords_meta;
+        $seo->save();
+
+        return redirect()->back()->with('success', 'Seo обновлено');
+    }
+
+    public function updateMicroSeo(Request $request)
+    {
+        $productId = $request->input('id');
+
+        $microSeo = Banner::find($productId);
+
+        if ($microSeo === null) {
+            return redirect()->back()->with('error', 'Продукт не найден.');
+        }
+
+        $microSeo->og_title_meta = $request->og_title_meta;
+        $microSeo->og_description_meta = $request->og_description_meta;
+        $microSeo->save();
+
+        return redirect()->back()->with('success', 'Seo обновлено');
     }
 
     public function delete($id)

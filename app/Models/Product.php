@@ -47,8 +47,11 @@ class Product extends Model
         'show_in_new_page',
         'size',
         'points',
+
         'description_meta',
         'keywords_meta',
+        'og_title_meta',
+        'og_description_meta',
 
         'height_product',
         'width_product',
