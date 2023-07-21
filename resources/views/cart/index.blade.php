@@ -85,14 +85,22 @@
 								<div class="cart-product__sum cart-product__sum--free">Бесплатно</div>
 							</div>
 						</div>
-						<div class="cart-page__giftbox">
-							<h3 class="cart-page__subheading subheading"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#gift')}}"></use></svg> Подарочная коробка</h3>
-							<label class="checkbox">
-								<input type="checkbox" />
-								<div class="checkbox__text">Добавить подарочную коробку</div>
-							</label>
-							<p><em>Подарочная коробка доступна только для заказов, которые доставляются на&nbsp;месте. Ваш счет будет отправлен вам по электронной почте.</em></p>
-						</div>
+
+
+                        <form action="{{ route('cart.store') }}" method="POST" id="indexForm">
+                            @csrf
+                            <div class="cart-page__giftbox">
+                                <h3 class="cart-page__subheading subheading"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#gift')}}"></use></svg> Подарочная коробка</h3>
+                                <label class="checkbox">
+                                    <input type="checkbox" name="gift_box"/>
+                                    <div class="checkbox__text">Добавить подарочную коробку</div>
+                                </label>
+                                <p><em>Подарочная коробка доступна только для заказов, которые доставляются на&nbsp;месте. Ваш счет будет отправлен вам по электронной почте.</em></p>
+                            </div>
+                        </form>
+
+
+
 					</main>
 					<aside class="cart-page__aside">
 						<div class="cart-aside">
@@ -134,7 +142,7 @@
                 <div class="cart-aside__points"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#warning')}}"></use></svg> Вы получите 820 баллов</div>
                 <div class="cart-aside__sum">Итого с НДС <span id="totalSum">{{ $cartService->getTotalSum() }}</span> ₽</div>
         </div>
-        <a href="{{route('cart.delivery')}}" class="btn btn--accent cart-aside__buy">Перейти к доставкe</a>
+        <button type="submit" form="indexForm" class="btn btn--accent cart-aside__buy" @disabled(!$cartService->isNotEmpty())>Перейти к доставкe</button>
         <div class="cart-aside__paymethods">
                 <img src="{{asset('images/dist/ico-visa.png')}}" alt="">
                 <img src="{{asset('images/dist/ico-mir.png')}}" alt="">

@@ -24,4 +24,16 @@ class Address extends Model
         'address',
         'is_default',
     ];
+
+
+    public function getFullNameAttribute()
+    {
+        return $this->name . ' ' . $this->surname;
+    }
+
+    public function getFullAddressAttribute()
+    {
+        return $this->region . ', ' . $this->city . ', ' . $this->address;
+    }
+
 }

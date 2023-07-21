@@ -163,10 +163,12 @@
                 </div>
             </div>
         </div>
+        @if($main_block)
         <a class="videoblock__video popup-video" style="background-image: url(images/uploads/main_block/{{ $main_block->image_path ?? ''}});"></a>
         <div class="mfp-hide" style="max-width: 1049px; margin: 0 auto" id="video_popup">
             <video width="100%" controls src="{{asset('images/uploads/main_block/'.$main_block->video_path ?? '')}}"></video>
         </div>
+        @endif
     </section>
     @endif
     @if($show_new_products = \App\Services\SiteConfigService::getParam('показывать_блок_популярные')['value'] == 1)
