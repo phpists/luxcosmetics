@@ -18,6 +18,12 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->integer('points')->comment('Бонусные баллы')->default(0);
+            $table->smallInteger('connection_type')->nullable()->comment('Тип связи');
+            $table->string('surname')->nullable();
+            $table->string('phone', 20)->nullable();
+            $table->date('birthday')->nullable();
+            $table->boolean('is_subscribed')->default(false)->comment('Подписан на рассылку');
+            $table->bigInteger('role_id')->default(2)->after('id')->comment('Role id');
             $table->rememberToken();
             $table->timestamps();
         });

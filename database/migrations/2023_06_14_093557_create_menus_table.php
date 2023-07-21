@@ -18,6 +18,7 @@ return new class extends Migration
             $table->smallInteger('type');
             $table->string('title');
             $table->integer('parent_id')->nullable();
+            $table->boolean('is_active')->default(true);
         });
     }
 

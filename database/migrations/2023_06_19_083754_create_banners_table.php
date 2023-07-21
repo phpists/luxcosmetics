@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('link');
             $table->smallInteger('status');
             $table->enum('position', ['first', 'second', 'third', 'fourth', 'fifth']);
+            $table->integer('number_position')->nullable();
             $table->dateTime('published_at');
             $table->text('description_meta')->comment('Для seo');
             $table->text('keywords_meta')->comment('Для seo');

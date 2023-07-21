@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->integer('property_id');
             $table->string('value');
+            $table->string('color')->nullable();
         });
     }
 

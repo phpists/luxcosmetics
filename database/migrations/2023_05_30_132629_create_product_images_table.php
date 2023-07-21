@@ -9,10 +9,13 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
+    public function up()
     {
-        Schema::table('product_images', function (Blueprint $table) {
+        Schema::create('product_images', function (Blueprint $table) {
+            $table->id();
+            $table->bigInteger('record_id')->comment('Id запису');
             $table->boolean('is_active')->default(true);
+            $table->string('path')->comment('Шлях');
         });
     }
 
@@ -21,8 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('product_images', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('product_images');
     }
 };

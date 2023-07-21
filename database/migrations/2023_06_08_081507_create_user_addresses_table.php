@@ -18,8 +18,8 @@ return new class extends Migration
             $table->string('surname');
             $table->string('phone', 20);
             $table->string('email');
-            $table->string('city')->comment('Город');
-            $table->string('region')->comment('Область');
+            $table->string('city')->nullable()->change()->comment('Город');
+            $table->string('region')->nullable()->change()->comment('Область');
             $table->string('address')->comment('Адрес');
             $table->boolean('is_default')->comment('Адрес по умолчанию');
         });
