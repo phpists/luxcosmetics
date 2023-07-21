@@ -16,6 +16,8 @@
                         <input type="text" id="alias" name="alias" class="form-control">
                     </div>
                 </div>
+            </div>
+            <div class="row mt-5 mb-3">
                 <div class="col-lg-4 mb-lg-0 d-flex flex-column">
                     <label>Артикул</label>
                     <div class="input-group">

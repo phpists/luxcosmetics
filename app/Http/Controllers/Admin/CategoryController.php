@@ -234,7 +234,7 @@ class CategoryController extends Controller
         if ($positions) {
             foreach ($positions as $position) {
                 $property_category = PropertyCategory::findOrFail($position['id']);
-                $property_category->position = $position['pos'];
+                $property_category->position = $position['position'];
                 $property_category->save();
             }
         }

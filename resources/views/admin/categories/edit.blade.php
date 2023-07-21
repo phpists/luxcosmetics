@@ -274,7 +274,7 @@
                                             <td class="text-center pl-0">
                                                 {{ $property->id }}
                                             </td>
-                                            <td class="text-center position">
+                                            <td class="text-center position" id="prop_{{ $property->id }}">
                                         <span class="text-dark-75 d-block font-size-lg sort_col">
                                             {{ $property->position }}
                                         </span>
@@ -676,6 +676,7 @@
             let benners = document.getElementById('category_banners-table')
             let top_menu = document.getElementById('top_menu');
             let bt_menu = document.getElementById('bt_menu');
+            let properties_table = document.getElementById('properties-table');
             new Sortable(top_menu, {
                 group: 'shared', // set both lists to same group
                 animation: 150,
@@ -712,7 +713,32 @@
 
                 }
             });
-
+            new Sortable(properties_table, {
+                animation: 150,
+                handle: '.handle',
+                dragClass: 'table-sortable-drag',
+                onEnd: function (/**Event*/ evt) {
+                    var list = [];
+                    $.each($(properties_table).find('tr'), function (idx, el) {
+                        list.push({
+                            id: $(el).data('id'),
+                            position: idx + 1
+                        })
+                    });
+                    $.ajax({
+                        method: 'post',
+                        url: '{{ route('admin.categories.updatePropsPosition') }}',
+                        data: {
+                            positions: list,
+                        },
+                        success: function () {
+                            list.forEach(function (el) {
+                                $('#prop_'+el['id']).find('.sort_col')[0].innerText = el['position'];
+                            })
+                        }
+                    });
+                }
+            });
         });
     </script>
 @endsection
