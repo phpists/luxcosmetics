@@ -16,6 +16,8 @@ return new class extends Migration
             $table->integer('position');
             $table->string('title');
             $table->text('answer');
+            $table->integer('group_id')->comment('Група вопросов');
+            $table->boolean('is_active')->comment('Показывать на сайте');
         });
     }
 

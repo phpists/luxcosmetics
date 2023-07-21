@@ -19,6 +19,7 @@ return new class extends Migration
             $table->boolean('show_in_product');
             $table->smallInteger('show_text');
             $table->text('description')->nullable();
+            $table->string('measure')->nullable()->change();
         });
     }
 

@@ -14,7 +14,8 @@ return new class extends Migration
         Schema::create('brands', function (Blueprint $table) {
             $table->id();
             $table->string('name')->comment('Назва бренду');
-            $table->string('image')->nullable()->comment('ИЗОБРАЖЕНИЕ бренду');
+            $table->string('image')->nullable()->comment('Изображения бренду');
+            $table->string('link')->nullable()->comment('Ссылка бренда');
         });
     }
 

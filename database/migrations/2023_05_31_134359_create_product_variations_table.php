@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\AvailableOptions;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -17,6 +18,12 @@ return new class extends Migration
             $table->string('size')->comment("Об'єм");
             $table->float('price')->comment('Ціна');
             $table->float('discount_price')->nullable()->comment('Ціна зі знижкою');
+            $table->bigInteger('variation_id');
+            $table->bigInteger('product_id');
+            $table->unique(['product_id', 'variation_id']);
+            $table->smallInteger('availability')
+                ->default(AvailableOptions::AVAILABLE->value)
+                ->comment('Доступність товару');
         });
     }
 
