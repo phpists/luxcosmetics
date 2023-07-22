@@ -206,6 +206,34 @@
             },
             minimumInputLength: 1
         });
+        $('#brand_select').select2({
+            allowClear: true,
+            placeholder: 'Выберите Бренд',
+            ajax: {
+                url: '{{route('admin.brands.search')}}',
+                data: function (params) {
+                    var query = {
+                        search: params.term,
+                    }
+
+                    // Query parameters will be ?search=[term]&type=public
+                    return query;
+                },
+                processResults: function (data) {
+                    data = data.map((x) => {
+                        return {
+                            text: x.name,
+                            id: x.id
+                        }
+                    })
+                    // Transforms the top-level key of the response object from 'items' to 'results'
+                    return {
+                        results: data
+                    };
+                }
+            },
+            minimumInputLength: 1
+        });
     </script>
 @endsection
 

@@ -15,6 +15,12 @@ class BrandController extends Controller
         return view('admin.brands.index', compact('brands'));
     }
 
+    public function search(Request $request) {
+        return response()->json(Brand::query()
+            ->select(['id', 'name'])
+            ->where('name', 'like', '%'.$request->search.'%')->get());
+    }
+
     public function update(Request $request) {
         $brand = Brand::query()->findOrFail($request->id);
         $image = $request->image;

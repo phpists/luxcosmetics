@@ -4,30 +4,37 @@
         <table class="table table-hover rounded ">
 
             <div class="row mb-2">
-                <div class="col-lg-6 mb-lg-0 d-flex flex-column">
+                <div class="col-lg-4 mb-lg-0 d-flex flex-column">
                     <label>Название</label>
                     <div class="input-group">
                         <input type="text" id="name" name="name" class="form-control">
                     </div>
                 </div>
-                <div class="col-lg-6 mb-lg-0 d-flex flex-column">
+                <div class="col-lg-4 mb-lg-0 d-flex flex-column">
                     <label>Alias</label>
                     <div class="input-group">
                         <input type="text" id="alias" name="alias" class="form-control">
                     </div>
                 </div>
-            </div>
-            <div class="row mt-5 mb-3">
                 <div class="col-lg-4 mb-lg-0 d-flex flex-column">
                     <label>Артикул</label>
                     <div class="input-group">
                         <input type="text" id="code" name="code" class="form-control">
                     </div>
                 </div>
+            </div>
+            <div class="row mt-5 mb-3">
                 <div class="col-lg-4 mb-lg-0 d-flex flex-column">
                     <label>Категория</label>
                     <div class="input-group input-group-sm">
                         <select class="form-control status" id="cat_select" name="category_id">
+                        </select>
+                    </div>
+                </div>
+                <div class="col-lg-4 mb-lg-0 d-flex flex-column">
+                    <label>Бренд</label>
+                    <div class="input-group input-group-sm">
+                        <select class="form-control status" id="brand_select" name="brand_id">
                         </select>
                     </div>
                 </div>

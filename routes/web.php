@@ -166,7 +166,6 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function 
     Route::post('products/update/seo', [\App\Http\Controllers\Admin\ProductController::class, 'updateSeo'])->name('admin.product.update.seo');
     Route::post('products/update/micro-seo', [\App\Http\Controllers\Admin\ProductController::class, 'updateMicroSeo'])->name('admin.product.update.micro-seo');
 
-
 //    Categories
     Route::get('categories', [AdminCategoryController::class, 'index'])->name('admin.categories');
     Route::post('categories', [AdminCategoryController::class, 'store'])->name('admin.category.store');
@@ -283,6 +282,7 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function 
     Route::delete('/brands/delete', [\App\Http\Controllers\Admin\BrandController::class, 'delete'])->name('admin.brands.delete');
     Route::get('/brands/show', [\App\Http\Controllers\Admin\BrandController::class, 'show'])->name('admin.brands.show');
     Route::delete('/brands/{id}/deleteImage', [\App\Http\Controllers\Admin\BrandController::class, 'deleteImage'])->name('admin.brands.deleteImage');
+    Route::get(' brands/search', [\App\Http\Controllers\Admin\BrandController::class, 'search'])->name('admin.brands.search');
 
     // Product Property Values
     Route::post('product-property-values/store', [\App\Http\Controllers\Admin\ProductPropertyValueController::class, 'store'])->name('admin.product-property-values.store');

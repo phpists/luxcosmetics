@@ -38,6 +38,10 @@ class ProductController extends Controller
             $query->where('products.category_id', '=', $request->category_id);
         }
 
+        if ($request->brand_id) {
+            $query->where('products.category_id', '=', $request->category_id);
+        }
+
         if (isset($request->status) && gettype($request->status) === 'string') {
             $query->where('products.status', $request->status);
         }
