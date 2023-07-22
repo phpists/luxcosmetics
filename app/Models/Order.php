@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -18,7 +19,7 @@ class Order extends Model
 
 
     protected $fillable = ['status_id', 'user_id', 'address_id', 'card_id', 'total_sum', 'delivery_type', 'gift_box',
-        'as_delivery_address'];
+        'as_delivery_address', 'full_name', 'phone', 'city', 'region', 'address'];
 
 
     public function orderProducts()
@@ -31,14 +32,21 @@ class Order extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function address()
-    {
-        return $this->belongsTo(Address::class);
-    }
-
     public function card()
     {
         return $this->belongsTo(PaymentCard::class);
+    }
+
+
+
+    public function getStatusTitleAttribute()
+    {
+        return 'Новый'; // TODO: створити сутність статусів
+    }
+
+    public function getPrettyCreatedAtAttribute()
+    {
+        return Carbon::parse($this->created_at)->format('d.m.Y');
     }
 
 

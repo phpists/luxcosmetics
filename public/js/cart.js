@@ -156,6 +156,7 @@ function plusQuantity(product_id, $button) {
                 $button.parents($button.data('element')).find('.currentQuantity').val(response.quantity)
                 $button.parents('div.cart-product:first').find('.currentSum').text(response.sum)
                 $('#totalSum').text(response.total_sum)
+                $('#modalCurrentProductSum').text(response.sum)
             }
         },
         complete: function () {
@@ -182,6 +183,7 @@ function minusQuantity(product_id, $button) {
                 $button.parents($button.data('element')).find('.currentQuantity').val(response.quantity)
                 $button.parents('div.cart-product:first').find('.currentSum').text(response.sum)
                 $('#totalSum').text(response.total_sum)
+                $('#modalCurrentProductSum').text(response.sum)
             }
         },
         complete: function () {

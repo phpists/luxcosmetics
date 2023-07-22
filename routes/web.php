@@ -69,7 +69,9 @@ Route::group(['middleware' => 'auth'], function () {
     // Profile
     Route::group(['prefix' => 'profile'], function () {
         Route::get('/', [\App\Http\Controllers\ProfileController::class, 'index'])->name('profile');
-        Route::get('/order-history', [\App\Http\Controllers\ProfileController::class, 'order_history'])->name('profile.order-history');
+        Route::get('/orders', [\App\Http\Controllers\User\OrderController::class, 'index'])->name('profile.orders.index');
+        Route::get('/order/{order}', [\App\Http\Controllers\User\OrderController::class, 'show'])->name('profile.orders.show');
+        Route::get('/order/{order}/repeat', [\App\Http\Controllers\User\OrderController::class, 'repeat'])->name('profile.orders.repeat');
         Route::get('/subscriptions', [\App\Http\Controllers\ProfileController::class, 'subscriptions'])->name('profile.subscriptions');
         Route::get('/addresses', [\App\Http\Controllers\ProfileController::class, 'addresses'])->name('profile.addresses');
         Route::get('/address', [\App\Http\Controllers\ProfileController::class, 'show'])->name('profile.addresses.show');
@@ -330,6 +332,13 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function 
     /* Settings */
     Route::get('settings', [\App\Http\Controllers\Admin\SiteConfigController::class, 'index'])->name('admin.settings.index');
     Route::post('settings', [\App\Http\Controllers\Admin\SiteConfigController::class, 'store'])->name('admin.settings.store');
+
+    // Orders
+    Route::resource('orders', \App\Http\Controllers\Admin\OrderController::class, ['as' => 'admin']);
+    Route::delete('/order-product/destroy/{orderProduct}', [\App\Http\Controllers\Admin\OrderProductController::class, 'destroy'])->name('admin.order_products.destroy');
+    Route::post('/order-product/add', [\App\Http\Controllers\Admin\OrderProductController::class, 'add'])->name('admin.order_products.add');
+    Route::post('/order-product/refresh', [\App\Http\Controllers\Admin\OrderProductController::class, 'refresh'])->name('admin.order_products.refresh');
+
 });
 
 // General Pages

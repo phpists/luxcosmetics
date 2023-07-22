@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\PropertyValue;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Database\Query\JoinClause;
 use Illuminate\Http\Request;
@@ -132,6 +133,12 @@ class CatalogService
             ->join('property_value', 'product_property_values.property_value_id', '=', 'property_value.id')
             ->join('properties', 'properties.id', '=', DB::raw($base_property_id))
             ->get();
+    }
+
+
+    public static function getProduct($id)
+    {
+        return Product::find($id);
     }
 
 

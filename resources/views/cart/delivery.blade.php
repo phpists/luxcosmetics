@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title', 'Доставка')
+
 @section('content')
 <section class="crumbs">
 	<div class="container">
@@ -30,11 +32,11 @@
                             <h3 class="cart-page__subheading subheading">Способ доставки</h3>
                             <div class="cart-page__deliverymethods">
                                 <label class="radio">
-                                    <input type="radio" name="delivery_type" value="{{ \App\Models\Order::DELIVERY_TYPE_STANDARD }}" required/>
+                                    <input type="radio" name="delivery_type" value="{{ \App\Models\Order::DELIVERY_TYPE_STANDARD }}" @checked($cartService->getProperty(\App\Services\CartService::DELIVERY_KEY) == \App\Models\Order::DELIVERY_TYPE_STANDARD) required/>
                                     <div class="radio__text">Стандартная доставка <small>2-3 дня в ваш город</small></div>
                                 </label>
                                 <label class="radio">
-                                    <input type="radio" name="delivery_type" value="{{ \App\Models\Order::DELIVERY_TYPE_EXPRESS }}" required/>
+                                    <input type="radio" name="delivery_type" value="{{ \App\Models\Order::DELIVERY_TYPE_EXPRESS }}" @checked($cartService->getProperty(\App\Services\CartService::DELIVERY_KEY) == \App\Models\Order::DELIVERY_TYPE_EXPRESS) required/>
                                     <div class="radio__text">Экспресс доставка</div>
                                 </label>
                             </div>
@@ -48,7 +50,7 @@
 								<div class="my-add__title">{{ $address->name . ' ' . $address->surname }}</div>
 								<div class="my-add__wrap">
 									<label class="radio">
-										<input type="radio" name="address_id" value="{{ $address->id }}" required/>
+										<input type="radio" name="address_id" value="{{ $address->id }}" @checked($cartService->getProperty(\App\Services\CartService::ADDRESS_KEY) == $address->id) required/>
 										<div class="radio__text">{{ $address->region . ', ' . $address->city . ', ' . $address->address }}
                                             <br>{{ $address->phone }}</div>
 									</label>

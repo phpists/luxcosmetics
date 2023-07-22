@@ -42,8 +42,7 @@ class CartService
             ->get();
 
         $products->map(function ($item) use ($cart) {
-            if (isset($item->baseValue->id))
-                $item->quantity = $cart[$item->id]['quantity'] ?? 1;
+            $item->quantity = $cart[$item->id]['quantity'] ?? 1;
         });
 
         return $products;
@@ -86,13 +85,13 @@ class CartService
         return self::getTotalCount() > 0;
     }
 
-    public function add($product_id)
+    public function add($product_id, $quantity = 1)
     {
         $cart = session()->get(self::SESSION_KEY, []);
         if (!isset($cart[$product_id]) && $this->canAdd($product_id)) {
             $cart[$product_id] = [
                 'product_id' => $product_id,
-                'quantity' => 1,
+                'quantity' => $quantity,
             ];
             session([self::SESSION_KEY => $cart]);
         }
