@@ -28,7 +28,7 @@
                                             <use xlink:href="{{asset('images/dist/sprite.svg#user')}}"></use>
                                         </svg>
                                         Мой профиль</a></li>
-                                <li><a href="{{route('profile.order-history')}}">
+                                <li><a href="{{route('profile.orders.index')}}">
                                         <svg class="icon">
                                             <use xlink:href="{{asset('images/dist/sprite.svg#bug')}}"></use>
                                         </svg>

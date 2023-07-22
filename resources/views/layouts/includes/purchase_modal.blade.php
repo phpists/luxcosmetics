@@ -8,7 +8,11 @@
 {{--        </div>--}}
     </div>
     <div class="popupform__btns">
+<<<<<<< Updated upstream
         <button class="btn btn--border-main close">Продолжить покупки</button>
+=======
+        <button class="btn btn--border-main">Продолжить покупки</button>
+>>>>>>> Stashed changes
         <a href="{{ route('cart') }}" class="btn btn--accent">Оформить заказ</a>
     </div>
 </div>

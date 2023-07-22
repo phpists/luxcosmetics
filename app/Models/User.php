@@ -106,4 +106,10 @@ class User extends Authenticatable
         return "({$age} года/лет)";
     }
 
+
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
+    }
+
 }

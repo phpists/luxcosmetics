@@ -132,7 +132,7 @@
             </div>
         </div>
     </section>
-    @if($show_new_products = \App\Services\SiteConfigService::getParam('показывать_блок_новинки')['value'] == 1)
+    @if($show_new_products = \App\Services\SiteConfigService::getParam('показывать_блок_новинки')['value'] ?? false == 1)
     <section class="productsblock">
         <div class="container">
             <div class="row">
@@ -150,7 +150,7 @@
         </div>
     </section>
     @endif
-    @if($show_new_products = \App\Services\SiteConfigService::getParam('показывать_блок_из_видео')['value'] == 1)
+    @if($show_new_products = \App\Services\SiteConfigService::getParam('показывать_блок_из_видео')['value'] ?? false == 1)
     <section class="videoblock">
         <div class="container">
             <div class="row">
@@ -171,14 +171,18 @@
         @endif
     </section>
     @endif
-    @if($show_new_products = \App\Services\SiteConfigService::getParam('показывать_блок_популярные')['value'] == 1)
+    @if($show_new_products = \App\Services\SiteConfigService::getParam('показывать_блок_популярные')['value'] ?? false == 1)
         <section class="productsblock">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
                     <h2 class="title-h2">Популярные</h2>
                     <div class="products-slider">
+<<<<<<< Updated upstream
                         @foreach($popular_products as $product)
+=======
+                        @foreach($new_products as $product)
+>>>>>>> Stashed changes
                             <div class="products-slider__item">
                                 @include('products._card')
                             </div>
@@ -235,7 +239,7 @@
             </div>
         </div>
     </section>
-    @if($show_new_products = \App\Services\SiteConfigService::getParam('показывать_блок_товары_со_скидкой')['value'] == 1)
+    @if($show_new_products = \App\Services\SiteConfigService::getParam('показывать_блок_товары_со_скидкой')['value'] ?? false == 1)
         <section class="productsblock">
         <div class="container">
             <div class="row">
@@ -305,7 +309,7 @@
             </div>
         </div>
     </section>
-    @if($show_new_products = \App\Services\SiteConfigService::getParam('показывать_блок_подписаться_на_рассылку')['value'] == 1)
+    @if($show_new_products = \App\Services\SiteConfigService::getParam('показывать_блок_подписаться_на_рассылку')['value'] ?? false == 1)
         <section class="mailing">
         <div class="container">
             <div class="row">
@@ -326,7 +330,7 @@
         </div>
     </section>
     @endif
-    @if($show_new_products = \App\Services\SiteConfigService::getParam('показывать_слайдер-блок_бренды')['value'] == 1)
+    @if($show_new_products = \App\Services\SiteConfigService::getParam('показывать_слайдер-блок_бренды')['value'] ?? false == 1)
     <section class="brands">
         <div class="container">
             <div class="row">

@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title', 'Корзина')
+
 @section('content')
 <section class="crumbs">
 	<div class="container">
@@ -39,10 +41,12 @@
                                                 <a href="{{ route('products.product', ['alias' => $product->alias]) }}">{{ $product->brand->name }}</a>
                                             </div>
                                             <div class="cart-product__subtitle">{{ $product->title }}</div>
+                                            @if($product->baseProperty)
                                             <div class="cart-product__options">
                                                 <div class="cart-product__option">Выбранный {{ mb_strtolower($product->baseProperty->name) }}:
                                                     <b>{{ ($product->baseValue->value ?? '') . ($product->baseProperty->measure ?? '') }}</b></div>
                                             </div>
+                                            @endif
                                         </div>
                                         <div class="cart-product__numbers">
                                             <div class="numbers">
@@ -92,7 +96,7 @@
                             <div class="cart-page__giftbox">
                                 <h3 class="cart-page__subheading subheading"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#gift')}}"></use></svg> Подарочная коробка</h3>
                                 <label class="checkbox">
-                                    <input type="checkbox" name="gift_box"/>
+                                    <input type="checkbox" name="gift_box" @checked($cartService->getProperty(\App\Services\CartService::GIFT_BOX_KEY))/>
                                     <div class="checkbox__text">Добавить подарочную коробку</div>
                                 </label>
                                 <p><em>Подарочная коробка доступна только для заказов, которые доставляются на&nbsp;месте. Ваш счет будет отправлен вам по электронной почте.</em></p>

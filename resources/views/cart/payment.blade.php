@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title', 'Оплата')
+
 @section('content')
 <section class="crumbs">
 	<div class="container">
@@ -30,7 +32,7 @@
                         <div class="cart-page__group">
                             <h3 class="cart-page__subheading subheading">Адрес для выставления счета</h3>
                             <label class="checkbox">
-                                <input type="checkbox" name="as_delivery_address" />
+                                <input type="checkbox" name="as_delivery_address" @checked($cartService->getProperty(\App\Services\CartService::AS_DELIVERY_ADDRESS_KEY))/>
                                 <div class="checkbox__text">Использовать как адрес доставки</div>
                             </label>
                             <div class="typography addressblock">
@@ -47,7 +49,7 @@
                                     <div class="my-add__title">{{ $card->full_name }}</div>
                                     <div class="my-add__wrap">
                                         <label class="radio">
-                                            <input type="radio" name="card_id" value="{{ $card->id }}" required/>
+                                            <input type="radio" name="card_id" value="{{ $card->id }}" @checked($cartService->getProperty(\App\Services\CartService::CARD_KEY) == $card->id) required/>
                                             <div class="radio__text">{{ \App\Services\SiteService::displayCardNumber($card->card_number) }}
                                                 <br>{{ $card->valid_date }}</div>
                                         </label>

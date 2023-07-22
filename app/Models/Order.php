@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -39,6 +40,18 @@ class Order extends Model
     public function card()
     {
         return $this->belongsTo(PaymentCard::class);
+    }
+
+
+
+    public function getStatusTitleAttribute()
+    {
+        return 'Новый'; // TODO: створити сутність статусів
+    }
+
+    public function getPrettyCreatedAtAttribute()
+    {
+        return Carbon::parse($this->created_at)->format('d.m.Y');
     }
 
 
