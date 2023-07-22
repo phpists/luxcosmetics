@@ -86,7 +86,6 @@ function addToCart(product_id, $button) {
             if (response) {
                 updateTotalCount(response.total_count)
                 $button.addClass('isInCart')
-<<<<<<< Updated upstream
                 $('#addproduct').find('div.addprod').html(response.product_html)
                 $.magnificPopup.open({
                     items: {
@@ -111,11 +110,6 @@ function addToCart(product_id, $button) {
                     $input.change();
                     return false;
                 });
-=======
-                $('#addproduct').magnificPopup({
-                    modal: true
-                })
->>>>>>> Stashed changes
             }
         }
     })

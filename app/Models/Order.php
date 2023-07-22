@@ -19,7 +19,7 @@ class Order extends Model
 
 
     protected $fillable = ['status_id', 'user_id', 'address_id', 'card_id', 'total_sum', 'delivery_type', 'gift_box',
-        'as_delivery_address'];
+        'as_delivery_address', 'full_name', 'phone', 'city', 'region', 'address'];
 
 
     public function orderProducts()
@@ -30,11 +30,6 @@ class Order extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
-    }
-
-    public function address()
-    {
-        return $this->belongsTo(Address::class);
     }
 
     public function card()

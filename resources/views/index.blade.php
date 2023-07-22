@@ -178,11 +178,7 @@
                 <div class="col-lg-12">
                     <h2 class="title-h2">Популярные</h2>
                     <div class="products-slider">
-<<<<<<< Updated upstream
                         @foreach($popular_products as $product)
-=======
-                        @foreach($new_products as $product)
->>>>>>> Stashed changes
                             <div class="products-slider__item">
                                 @include('products._card')
                             </div>

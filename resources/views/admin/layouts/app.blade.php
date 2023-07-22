@@ -129,6 +129,14 @@
                             </a>
                         </li>
 
+                        <li class="menu-item {{ Str::is('admin.orders.*', request()->route()->getName()) ? 'menu-item-active' : '' }}"
+                            aria-haspopup="true">
+                            <a href="{{ route('admin.orders.index') }}" class="menu-link">
+                                <i class="fas fa-th menu-icon"></i>
+                                <span class="menu-text">Заказы</span>
+                            </a>
+                        </li>
+
                         <li class="menu-item menu-item-submenu
 {{ (request()->routeIs('admin.products')
 || request()->routeIs('admin.products.tree')

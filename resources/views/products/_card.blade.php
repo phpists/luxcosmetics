@@ -66,21 +66,12 @@
                     <div class="product__sizesinfo">Еще {{ ($product_variations->count() - 1) }} варианта</div>
                     <div class="product__pnl">
                         <div class="product__optionsblock">
-<<<<<<< Updated upstream
                             <div class="product__optionstitle">Выбранный {{ mb_strtolower($product->baseProperty->name) }}:
-=======
-                            <div class="product__optionstitle">Выбранный объем:
->>>>>>> Stashed changes
                                 <b>{{ ($product->baseValue->value ?? '') . ($product->baseProperty->measure ?? '') }}</b>
                             </div>
                             <div class="product__options product__volume">
                                 @foreach($product_variations->sortBy('baseValue.value') as $product_variation)
-<<<<<<< Updated upstream
                                     <label class="volume changeModification" data-url="{{ route('product.card', $product_variation->id) }}">
-=======
-                                    <label class="volume"
-                                           onclick="window.location.href = '{{ route('products.product', ['alias' => $product_variation->alias]) }}'">
->>>>>>> Stashed changes
                                         <input type="radio" name="volume" @checked($product->id == $product_variation->id)/>
                                         <div class="volume__text"><b>{{ ($product_variation->baseValue->value ?? '') . ($product_variation->baseProperty->measure ?? '') }}</b>
                                             {{ $product_variation->price }} ₽
@@ -107,11 +98,7 @@
                             <b>{{ ($product->baseValue->value ?? '') }}</b></div>
                         <div class="product__options product__colors">
                             @foreach($product_variations->sortBy('baseValue.value') as $product_variation)
-<<<<<<< Updated upstream
                             <label class="color changeModification" data-url="{{ route('product.card', $product_variation->id) }}">
-=======
-                            <label class="color">
->>>>>>> Stashed changes
                                 <input type="radio" name="color" @checked($product->id == $product_variation->id)/>
                                 <div class="color__text" style="background-color: {{ $product_variation->baseValue->color }}"></div>
                             </label>

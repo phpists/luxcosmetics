@@ -19,11 +19,11 @@
                             </div>
                             <div class="chars__item">
                                 <div class="chars__name"><span>Ваше имя</span></div>
-                                <div class="chars__value"><span>{{ $order->address->full_name }}</span></div>
+                                <div class="chars__value"><span>{{ $order->full_name }}</span></div>
                             </div>
                             <div class="chars__item">
                                 <div class="chars__name"><span>Телефон</span></div>
-                                <div class="chars__value"><span>{{ $order->address->phone }}</span></div>
+                                <div class="chars__value"><span>{{ $order->phone }}</span></div>
                             </div>
                             <div class="chars__item">
                                 <div class="chars__name"><span>E-mail</span></div>

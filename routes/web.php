@@ -332,6 +332,13 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function 
     /* Settings */
     Route::get('settings', [\App\Http\Controllers\Admin\SiteConfigController::class, 'index'])->name('admin.settings.index');
     Route::post('settings', [\App\Http\Controllers\Admin\SiteConfigController::class, 'store'])->name('admin.settings.store');
+
+    // Orders
+    Route::resource('orders', \App\Http\Controllers\Admin\OrderController::class, ['as' => 'admin']);
+    Route::delete('/order-product/destroy/{orderProduct}', [\App\Http\Controllers\Admin\OrderProductController::class, 'destroy'])->name('admin.order_products.destroy');
+    Route::post('/order-product/add', [\App\Http\Controllers\Admin\OrderProductController::class, 'add'])->name('admin.order_products.add');
+    Route::post('/order-product/refresh', [\App\Http\Controllers\Admin\OrderProductController::class, 'refresh'])->name('admin.order_products.refresh');
+
 });
 
 // General Pages

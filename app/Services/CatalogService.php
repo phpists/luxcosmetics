@@ -136,4 +136,10 @@ class CatalogService
     }
 
 
+    public static function getProduct($id)
+    {
+        return Product::find($id);
+    }
+
+
 }
