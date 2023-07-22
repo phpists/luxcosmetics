@@ -20,6 +20,9 @@ return new class extends Migration
             $table->bigInteger('position')->comment('Позиция');
             $table->boolean('status')->default(0)->comment('Статус');
             $table->boolean('add_to_top_menu')->default(0);
+            $table->string('bottom_title')->default('test');
+            $table->text('bottom_text');
+            $table->string('breadcrumb')->default('test');
             $table->text('description_meta')->comment('Для seo');
             $table->text('keywords_meta')->comment('Для seo');
             $table->timestamps();
