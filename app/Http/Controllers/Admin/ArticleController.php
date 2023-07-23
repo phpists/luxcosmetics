@@ -38,6 +38,22 @@ class ArticleController extends Controller
             return response()->json($brand);
         }
     }
+    public function update(Request $request, $id)
+    {
+        $data = $request->all();
+        $article = Article::findOrFail($id);
+
+        if ($request->hasFile('image')) {
+            $image = FileService::saveFile('uploads', 'articles', $request->file('image'));
+            if ($image) {
+                $data['image'] = $image;
+            }
+        }
+        $data['is_active'] = $request->has('is_active') ? 1 : 0;
+        $article->update($data);
+        return redirect()->back();
+    }
+
 
     public function sort(Request $request)
     {

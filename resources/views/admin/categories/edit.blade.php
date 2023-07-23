@@ -456,7 +456,7 @@
                                             </td>
                                             <td class="text-center position">
                                                 <span class="text-dark-75 d-block font-size-lg sort_col">
-                                                    <a href="{{$article->link}}">{{ $article->title }}</a>
+                                                    <a href="#">{{ $article->title }}</a>
                                                 </span>
                                             </td>
                                             <td class="text-center">
@@ -464,16 +464,24 @@
                                                     {{$article->link}}
                                                 </span>
                                             </td>
-                                            <td class="text-center pr-0">
-                                                    <form action="{{ route('admin.article.delete') }}" method="POST">
+                                            <td class="text-center">
+                                                <div class="btn-group" role="group" aria-label="Действия со статьей">
+                                                    <a href="javascript:" class="btn btn-sm btn-clean btn-icon editSocial"
+                                                       data-toggle="modal" data-target="#updateArticleModal"
+                                                       data-id="{{$article->id}}">
+                                                        <i class="las la-edit"></i>
+                                                    </a>
+                                                    <form action="{{ route('admin.article.delete') }}" method="POST" class="d-inline-block">
                                                         @csrf
                                                         @method('DELETE')
                                                         <input type="hidden" name="id" value="{{ $article->id }}">
                                                         <button type="submit" class="btn btn-sm btn-clean btn-icon btn_delete"
                                                                 onclick="return confirm('Вы уверены, что хотите удалить ссылку на статью \'{{ $article->title }}\'?')"
-                                                                title="Delete"><i class="las la-trash"></i>
+                                                                title="Удалить">
+                                                            <i class="las la-trash"></i>
                                                         </button>
                                                     </form>
+                                                </div>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -551,6 +559,7 @@
                 </div>
             </div>
         </div>
+        <meta name="csrf-token" content="{{ csrf_token() }}">
 
         <!--end::Container-->
     </div>
@@ -559,6 +568,7 @@
     @include('admin.categories.modals.create-tag')
     @include('admin.categories.modals.update-tag')
     @include('admin.categories.modals.create-category_banner')
+    @include('admin.categories.modals.update_article')
 
 @endsection
 

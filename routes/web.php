@@ -181,6 +181,7 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function 
 
     // Article
     Route::post('article/store', [\App\Http\Controllers\Admin\ArticleController::class, 'store'])->name('admin.article.store');
+    Route::put('article/update/{id}', [\App\Http\Controllers\Admin\ArticleController::class, 'update'])->name('admin.article.update');
     Route::post('article/sort', [\App\Http\Controllers\Admin\ArticleController::class, 'sort'])->name('admin.article.sort');
     Route::delete('article/delete', [\App\Http\Controllers\Admin\ArticleController::class, 'delete'])->name('admin.article.delete');
 

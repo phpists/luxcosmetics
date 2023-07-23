@@ -25,6 +25,11 @@ return new class extends Migration
             $table->string('breadcrumb')->default('test');
             $table->text('description_meta')->comment('Для seo');
             $table->text('keywords_meta')->comment('Для seo');
+            $table->text('og_title_meta')->comment('Для микро seo');
+            $table->text('og_description_meta')->comment('Для микро seo');
+            $table->text('bottom_title')->comment('');
+            $table->text('bottom_text')->comment('');
+            $table->text('breadcrumb')->comment('');
             $table->timestamps();
         });
     }
