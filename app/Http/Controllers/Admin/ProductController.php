@@ -259,12 +259,12 @@ class ProductController extends Controller
                 ]);
             }
         }
-        return redirect()->route('admin.products')->with('success', 'Изображение создано');
+        return redirect()->back()->with('success', 'Изображение создано');
     }
 
     public function deleteImage($id) {
         DB::table('product_images')->where('id', $id)->delete();
-        return redirect()->route('admin.products')->with('success', 'Изображение удалено');
+        return redirect()->back()->with('success', 'Изображение удалено');
     }
 
     public function updateImage(Request $request) {
