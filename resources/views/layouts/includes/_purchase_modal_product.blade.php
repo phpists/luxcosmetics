@@ -1,4 +1,6 @@
-<div class="addprod__image"><img src="{{ asset('images/uploads/products/'.$product->main_image) }}" alt=""></div>
+<div class="addprod__image">
+    <img src="{{asset('images/uploads/products/'.$product->main_image)}}" alt="">
+</div>
 <div class="addprod__wrap" data-product="{{ $product->id }}" >
     <div class="addprod__title">
         <a href="{{ route('products.product', ['alias' => $product->alias]) }}">{{ $product->brand->name }}</a>

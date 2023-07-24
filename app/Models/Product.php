@@ -81,6 +81,15 @@ class Product extends Model
 //        return null;
 //    }
 
+    public function getMainImageAttribute()
+    {
+        $image = ProductImage::query()->where('id', $this->image_print_id)->first();
+        if ($image) {
+            return $image->path;
+        }
+        return null;
+    }
+
     public function category()
     {
         return $this->belongsTo(Category::class);
