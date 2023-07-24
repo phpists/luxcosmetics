@@ -80,8 +80,3 @@
         </div>
     </div>
 </div>
-
-
-<div class="card-footer d-flex justify-content-end">
-    <button type="submit" class="btn btn-primary">Сохранить</button>
-</div>

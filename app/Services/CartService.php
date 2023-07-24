@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\Address;
 use App\Models\Order;
 use App\Models\OrderProduct;
 use App\Models\Product;
@@ -184,6 +185,14 @@ class CartService
         });
         $order_data['user_id'] = Auth::id();
         $order_data['total_sum'] = self::getTotalSum();
+        $address_id = $order_data['address_id'];
+        unset($order_data['address_id']);
+        $address = Address::find($address_id);
+        $order_data['full_name'] = $address['name'] . ' ' . $address['surname'];
+        $order_data['phone'] = $address['phone'];
+        $order_data['city'] = $address['city'];
+        $order_data['region'] = $address['region'];
+        $order_data['address'] = $address['address'];
 
         try {
             $order = Order::create($order_data);
