@@ -39,7 +39,7 @@ class TagController extends Controller
             return redirect()->back()->with('error', 'Записи с id '.$request->id.' не найденно');
         }
         if ($request->hasFile('image_path')) {
-            $image = FileService::saveFile('uploads', 'categories', $data['image_path']);
+            $image = FileService::saveFile('uploads', 'tags', $data['image_path']);
             if ($image) {
                 $data['image_path'] = $image;
             }

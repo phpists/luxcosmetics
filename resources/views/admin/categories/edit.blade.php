@@ -625,6 +625,7 @@
             var createImagePlugin = new KTImageInput('createImagePlugin');
             var createPageImagePlugin = new KTImageInput('createPageImagePlugin');
             var createArticleImage = new KTImageInput('createArticleImage');
+            var updateTagImage = new KTImageInput('updateImageTag');
 
             KTSummernoteDemo.init();
 
