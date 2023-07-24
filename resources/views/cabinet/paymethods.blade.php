@@ -19,12 +19,23 @@
                                 <div class="mycard__notice">{{\App\Services\SiteService::checkCardAvailability($payment_card->valid_date)}}</div>
                             </div>
                         </div>
-                        <button class="btn-edit">
-                            <svg class="icon">
-                                <use xlink:href="{{asset('images/dist/sprite.svg#trash')}}"></use>
-                            </svg>
-                            Удалить карту
-                        </button>
+                        <form action="{{route('profile.payment-method.delete')}}" method="POST">
+                            @method('delete')
+                            @csrf
+                            <input type="hidden" name="id" value="{{\Illuminate\Support\Facades\Auth::user()->default_card->id}}">
+                            <button class="btn-edit">
+                                <svg class="icon">
+                                    <use xlink:href="{{asset('images/dist/sprite.svg#trash')}}"></use>
+                                </svg>
+                                Удалить карту
+                            </button>
+                        </form>
+{{--                        <button class="btn-edit">--}}
+{{--                            <svg class="icon">--}}
+{{--                                <use xlink:href="{{asset('images/dist/sprite.svg#trash')}}"></use>--}}
+{{--                            </svg>--}}
+{{--                            Удалить карту--}}
+{{--                        </button>--}}
                     </div>
                 @endforeach
             </div>

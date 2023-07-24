@@ -16,9 +16,10 @@ class RegistrationConfirmation extends Mailable
 
     public $user;
 
-    public function __construct(User $user)
+    public function __construct(User $user, $password=null)
     {
         $this->user = $user;
+        $this->password = $password;
     }
 
 //    public function build()
@@ -46,6 +47,8 @@ class RegistrationConfirmation extends Mailable
             markdown: 'emails.registration_confirmation',
             with: [
                 'userName' => $this->user->name,
+                'email' => $this->user->email,
+                'password' => $this->password
             ],
         );
     }

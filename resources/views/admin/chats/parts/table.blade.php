@@ -14,7 +14,7 @@
                 #
             </th>
             <th class="pr-0 text-center">
-                Тема тикета
+                Причина обращения
             </th>
             <th class="pr-0 text-center">
                 Пользователь
@@ -45,10 +45,10 @@
                     {{ $chat->id }}
                 </td>
                 <td class="text-center pr-0">
-                    {{ $chat->feedback_theme }}
+                    {{ $themes->find($chat->feedbacks_reason_id)->first()->reason }}
                 </td>
                 <td class="text-center pr-0">
-                    {{ $chat->user->name }}
+                    {{ $chat->user? $chat->user->name: '<Пользователь удален>' }}
                 </td>
                 <td class="text-center pr-0">
                     {{ $chat->updated_at->format('m Y, H:i:s') }}

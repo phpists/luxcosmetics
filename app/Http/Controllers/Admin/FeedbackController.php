@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\FeedbackChat;
+use App\Models\FeedbackReason;
 use App\Models\ProductImage;
 use App\Services\SiteService;
 use Illuminate\Http\Request;
@@ -16,14 +17,16 @@ class FeedbackController extends Controller
         if ($status_filter !== null) {
             $chats = $chats->where('status', $status_filter);
         }
-        if ($request->feedback_theme) {
+        if ($request->feedbacks_reason_id) {
 
-            $chats->where('feedback_theme', 'LIKE', '%' . $request->feedback_theme . '%');
+            $chats->where('feedback_theme', $request->feedbacks_reason_id);
         }
+
+        $themes = FeedbackReason::query()->get();
 
         $chats = $chats->paginate(15);
         if ($request->ajax()) {
-            $productsHtml = view('admin.chats.parts.table', ['chats' => $chats])->render();
+            $productsHtml = view('admin.chats.parts.table', ['chats' => $chats, 'themes' => $themes])->render();
             $paginateHtml = view('admin.chats.parts.pagination', ['chats' => $chats, 'params' => $request->all()])->render();
 
             return response()->json([
@@ -31,7 +34,7 @@ class FeedbackController extends Controller
                 'paginateHtml' => $paginateHtml,
             ]);
         }
-        return view('admin.chats.index', compact('chats'));
+        return view('admin.chats.index', compact('chats', 'themes'));
     }
 
     public function edit(Request $request, $id) {

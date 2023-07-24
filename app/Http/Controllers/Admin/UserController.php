@@ -13,7 +13,7 @@ class UserController extends Controller
     {
         $query = User::query();
         $info = Address::all();
-        
+
         if ($request->id) {
             $query->where('id', $request->id);
         }
@@ -98,5 +98,13 @@ class UserController extends Controller
         }
 
         return redirect()->route('admin.user.show', ['id' => $request->id])->with('success', 'Дані успішно оновлені');
+    }
+
+    public function delete(Request $request)
+    {
+
+        User::query()->where('id', $request->id)->delete();
+
+        return redirect()->back()->with('success', 'Пользователь успешно удален');
     }
 }

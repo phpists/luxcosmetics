@@ -29,8 +29,8 @@
                 </div>
             </div>
             <div class="form__fieldset">
-                <legend class="form__label">Номер заказа *</legend>
-                <input required type="text" name="order_number" class="form__input">
+                <legend class="form__label">Номер заказа</legend>
+                <input type="text" name="order_number" class="form__input">
             </div>
             <div class="form__fieldset">
                 <legend class="form__label">Тема обращения</legend>

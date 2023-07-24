@@ -68,7 +68,7 @@
                     </div>
                     <div class="card-body pb-3">
                         <!--begin::Table-->
-                        @include('admin.chats.parts.table', ['chats' => $chats])
+                        @include('admin.chats.parts.table', ['chats' => $chats, 'themes' => $themes])
                         <div id="pagination">
                             {{$chats->links('vendor.pagination.super_admin_pagination')}}
                         </div>
@@ -162,7 +162,7 @@
                 e.preventDefault();
                 request();
             });
-            $(document).on('keyup', '#feedback_theme', function (e) {
+            $(document).on('change', '#feedbacks_reason_id', function (e) {
                 e.preventDefault();
                 request();
             });

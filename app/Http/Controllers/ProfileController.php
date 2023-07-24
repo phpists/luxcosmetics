@@ -56,7 +56,10 @@ class ProfileController extends Controller
     }
 
     public function deleteAddress(Request $request) {
-        $address = Address::query()->where('id', $request->id)->where('user_id', $request->user()->id)->first();
+        $address = Address::query()
+            ->where('id', $request->id)
+            ->where('user_id', $request->user()->id)
+            ->first();
         if (!$address) {
             abort(404);
         }
@@ -101,7 +104,9 @@ class ProfileController extends Controller
     public function add_address(Request $request) {
         $data = $request->all();
         $data['is_default'] = $request->is_default !== null? 1: 0;
-        $addresses = Address::query()->where('is_default', '1');
+        $addresses = Address::query()
+            ->where('user_id', $request->user()->id)
+            ->where('is_default', '1');
         $default_count = $addresses->count();
         if($default_count > 0 && $data['is_default']) {
             $addresses->update([
@@ -111,6 +116,7 @@ class ProfileController extends Controller
         elseif ($default_count === 0 && !$data['is_default']) {
             $data['is_default'] = 1;
         }
+        echo $default_count;
         $data['user_id'] = $request->user()->id;
         $address = new Address($data);
         $address->save();
@@ -129,7 +135,9 @@ class ProfileController extends Controller
         $data['valid_date'] = $data['month'].'/'.$data['year'];
         $data['cvv'] = Hash::make($data['cvv']);
         $data['is_default'] = $request->is_default !== null? 1: 0;
-        $payment_cards = PaymentCard::query()->where('is_default', '1');
+        $payment_cards = PaymentCard::query()
+            ->where('user_id', $request->user()->id)
+            ->where('is_default', '1');
         $default_count = $payment_cards->count();
         if($default_count > 0 && $data['is_default']) {
             $payment_cards->update([

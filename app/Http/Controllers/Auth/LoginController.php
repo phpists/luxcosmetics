@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use App\Services\FavoriteProductsService;
+use App\Services\MailService;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -88,6 +89,7 @@ class LoginController extends Controller
 
             try {
                 FavoriteProductsService::migrateIntoDb($user->id);
+                MailService::sendRegistrationMessage($user, $data['password']);
             }
             catch (\Error $error) {
                 Log::error($error->getMessage());

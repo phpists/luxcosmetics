@@ -18,7 +18,7 @@ return new class extends Migration
             $table->bigInteger('user_id');
             $table->string('email');
             $table->string('phone', 20);
-            $table->string('order_number');
+            $table->string('order_number')->nullable();
             $table->string('feedback_theme');
             $table->bigInteger('assignee_id')->nullable()->comment('Id администратора');
             $table->timestamps();

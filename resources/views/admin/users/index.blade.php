@@ -26,7 +26,7 @@
 
             <!--begin::Container-->
             <div class="container-fluid">
-                
+
                 @include('admin.layouts.includes.messages')
                 <div class="card card-custom">
                     <div class="card-header flex-wrap border-0 pt-6 pb-0">
@@ -61,7 +61,7 @@
                                     <td class="text-center pr-0">
                                         Дата создания
                                     </td>
-                                    <th class="pr-0 text-center">
+                                    <th class="pr-0 text-center" style="min-width: 300px">
                                         Действия
                                     </th>
                                 </tr>
@@ -91,6 +91,14 @@
                                             {{ date('H:i | d.m.y', strtotime($user->created_at)) }}
                                         </td>
                                         <td class="text-center pr-0">
+                                            <form action="{{route('admin.user.delete', $user->id)}}" method="POST">
+                                                @csrf
+                                                @method('delete')
+                                                <input type="hidden" name="id" value="{{$user->id}}">
+                                                <button type="submit" class="btn">
+                                                    <i class="las la-trash"></i>
+                                                </button>
+                                            </form>
                                             <a href="{{ route('admin.user.show', $user->id) }}"
                                                class="btn btn-sm btn-clean btn-icon">
                                                 <i class="las la-eye"></i>

@@ -5,8 +5,13 @@
             <div class="row mb-2">
                 <div class="col-lg-3 mb-lg-0 d-flex flex-column">
                     <label>Тема тикета</label>
-                    <div class="input-group">
-                        <input type="text" id="feedback_theme" name="feedback_theme" class="form-control">
+                    <div class="input-group input-group-sm">
+                        <select id="feedbacks_reason_id" name="feedbacks_reason_id" class="form-control">
+                            <option></option>
+                           @foreach($themes as $theme)
+                                <option value="{{$theme->id}}">{{$theme->reason}}</option>
+                           @endforeach
+                        </select>
                     </div>
                 </div>
                 <div class="col-lg-3 mb-lg-0 d-flex flex-column">
