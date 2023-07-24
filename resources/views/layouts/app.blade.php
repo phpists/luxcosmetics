@@ -63,29 +63,42 @@
 <script src="{{asset('/js/app.min.js')}}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
 <script>
-    document.getElementById('header_search').addEventListener('input', function (ev) {
+    document.addEventListener('DOMContentLoaded', function (ev) {
         let results_container = document.getElementById('search_results');
-        if (ev.target.value !== '') {
-            fetch('{{route('search_prompt')}}?search='+ev.target.value, {
-                headers: {
-                    'X-Requested-With': 'XMLHttpRequest',
-                    'Content-Type': 'application/json'
-                },
-            }).then(async (resp) => {
-                let result = await resp.json();
+
+        let header_search = document.getElementById('header_search');
+
+        header_search.addEventListener("focus", (event) => {
+            results_container.style.display = "block";
+        });
+
+        header_search.addEventListener("blur", (event) => {
+            results_container.style.display = "none";
+        });
+
+        header_search.addEventListener('input', function (ev) {
+            if (ev.target.value !== '') {
+                fetch('{{route('search_prompt')}}?search='+ev.target.value, {
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest',
+                        'Content-Type': 'application/json'
+                    },
+                }).then(async (resp) => {
+                    let result = await resp.json();
+                    results_container.innerHTML = "";
+                    for (const resultKey in result) {
+                        let div = document.createElement('div');
+                        let title = result[resultKey].title;
+                        let link = '/p/' + result[resultKey].alias;
+                        div.innerHTML = `<a href="${link}">${title}</a>`;
+                        results_container.appendChild(div);
+                    }
+                })
+            }
+            else {
                 results_container.innerHTML = "";
-                for (const resultKey in result) {
-                    let div = document.createElement('div');
-                    let title = result[resultKey].title;
-                    let link = '/p/' + result[resultKey].alias;
-                    div.innerHTML = `<a href="${link}">${title}</a>`;
-                    results_container.appendChild(div);
-                }
-            })
-        }
-        else {
-            results_container.innerHTML = "";
-        }
+            }
+        })
     })
 </script>
 <script src="{{ asset('js/cart.js') }}"></script>

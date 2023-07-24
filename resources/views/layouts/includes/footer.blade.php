@@ -68,8 +68,10 @@
     </div>
 </footer>
 <div class="mobilenav">
-    <a href="#menu" class="header__link header__link--cat"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#menu')}}"></use></svg></a>
-    <a href="{{route('profile')}}" class="header__link header__link--auth"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#user')}}"></use></svg></a>
-    <a href="{{route('favourites')}}" class="header__link header__link--fav"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#heart')}}"></use></svg> <span id="mobile__linkcount" class="header__linkcount @if(sizeof(\App\Services\FavoriteProductsService::getAllIds()) === 0) hidden @endif">{{sizeof(\App\Services\FavoriteProductsService::getAllIds())}}</span></a>
-    <a href="{{route('cart')}}" class="header__link header__link--cart"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#cart')}}"></use></svg> <span class="header__linkcount">{{ $cartService->getTotalCount() }}</span></a>
+
+    <a href="/" class="header__link header__link--cat"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#home')}}"></use></svg> <b>Главная</b></a>
+    <a href="#menu" class="header__link header__link--cat"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#menu')}}"></use></svg><b>Главная</b></a>
+    <a href="{{route('profile')}}" class="header__link header__link--auth"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#user')}}"></use></svg><b>Каталог</b></a>
+    <a href="{{route('favourites')}}" class="header__link header__link--fav"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#heart')}}"></use></svg> <span id="mobile__linkcount" class="header__linkcount @if(sizeof(\App\Services\FavoriteProductsService::getAllIds()) === 0) hidden @endif">{{sizeof(\App\Services\FavoriteProductsService::getAllIds())}}</span><b>Избранное</b></a>
+    <a href="{{route('cart')}}" class="header__link header__link--cart"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#cart')}}"></use></svg> <span class="header__linkcount">{{ $cartService->getTotalCount() }}</span><b>Корзина</b></a>
 </div>
