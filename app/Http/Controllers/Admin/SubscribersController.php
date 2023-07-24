@@ -13,8 +13,20 @@ use Illuminate\Support\Facades\Mail;
 class SubscribersController extends Controller
 {
     public function index(Request $request) {
-        $subscribers = Subscriber::query()->paginate(30);
+        $subscribers = Subscriber::query();
+        if ($request->email) {
+            $subscribers->where('email', 'LIKE', '%'.$request->email.'%');
+        }
+        $subscribers = $subscribers->paginate(30);
         $subscription_categories = SubscriptionCategory::query()->get();
+        if ($request->ajax()) {
+            $tableHtml = view('admin.subscriptions.parts.subscribers_table', ['subscribers' => $subscribers, 'subscription_categories' => $subscription_categories])->render();
+            $paginationHtml = view('admin.subscriptions.parts.subscribers_pagination', ['subscribers' => $subscribers])->render();
+            return response()->json([
+                'tableHtml' => $tableHtml,
+                'paginationHtml' => $paginationHtml
+            ]);
+        }
         return view('admin.subscriptions.subscribers', compact('subscribers', 'subscription_categories'));
     }
 

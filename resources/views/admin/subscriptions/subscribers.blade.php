@@ -74,73 +74,33 @@
                                         </form>
                                     </div>
                                 </div>
+                                <div class="row mb-10">
+                                    <input type="hidden" id="filterUrl" data-url="{{ route('admin.subscribers.index') }}">
+                                    <form id="subscribers_form" class="w-100">
+                                        <table class="table table-hover rounded ">
+                                            <div class="row mb-2">
+{{--                                                <div class="col-lg-3 mb-lg-0 d-flex flex-column">--}}
+{{--                                                    <label>Имя</label>--}}
+{{--                                                    <div class="input-group input-group-sm">--}}
+{{--                                                        <input type="text" id="username_filter" name="name" class="form-control">--}}
+{{--                                                    </div>--}}
+{{--                                                </div>--}}
+                                                <div class="col-lg-3 mb-lg-0 d-flex flex-column">
+                                                    <label>Email</label>
+                                                    <div class="input-group input-group-sm">
+                                                        <input type="text" id="email_filter" name="email" class="form-control">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </table>
+                                    </form>
+                                </div>
                                 <!--begin::Table-->
-                                <div class="table-responsive">
-                                    <table class="table table-head-custom table-vertical-center">
-                                        <thead>
-                                        <tr>
-                                            <th class="pl-0 text-center">
-                                            <span style="width: 20px;">
-                                                <label class="checkbox checkbox-single checkbox-all">
-                                                    <input id="checkbox-all" type="checkbox"
-                                                           name="checkbox[]">&nbsp;<span></span>
-                                                </label>
-                                            </span>
-                                            </th>
-                                            <th class="pl-0 text-center">
-                                                #
-                                            </th>
-                                            <th class="pr-0 text-center">
-                                                Email
-                                            </th>
-                                            <th class="pr-0 text-center">
-                                                Категории
-                                            </th>
-                                            <th class="pr-0 text-center">
-                                                Действие
-                                            </th>
-                                        </tr>
-                                        </thead>
-                                        <tbody id="table">
-                                        @foreach($subscribers as $subscriber)
-                                            <tr id="subscriber_{{$subscriber->id}}" data-id="{{ $subscriber->id }}">
-                                                <td class="text-center pl-0">
-                                                    <span style="width: 20px;">
-                                                        <label class="checkbox checkbox-single">
-                                                            <input class="checkbox-item" type="checkbox" name="checkbox[]" value="{{ $subscriber->id }}">&nbsp;<span></span>
-                                                        </label>
-                                                    </span>
-                                                </td>
-                                                <td class="text-center pl-0">
-                                                    {{ $subscriber->id }}
-                                                </td>
-                                                <td class="text-center pr-0">
-                                                    {{ $subscriber->email }}
-                                                </td>
-                                                <td class="text-center pr-0">
-                                                    {{ $subscriber->subscription_category_id? $subscription_categories->find($subscriber->subscription_category_id)->name: '-' }}
-                                                </td>
-                                                <td class="text-center pr-0">
-                                                    <a href="{{ route('admin.subscriber.delete', ['id' => $subscriber->id]) }}"
-                                                       class="btn btn-sm btn-clean btn-icon"
-                                                       onclick="return confirm('Вы уверены, что хотите удалить подписчика?')"
-                                                    >
-                                                        <i class="flaticon-delete"></i>
-                                                    </a>
-                                                    {{--                                            <a href="{{ route('admin.product.delete', $product->id) }}"--}}
-                                                    {{--                                               class="btn btn-sm btn-clean btn-icon"--}}
-                                                    {{--                                               onclick="return confirm('Вы уверены, что хотите удалить запись?')">--}}
-                                                    {{--                                                <i class="las la-trash"></i>--}}
-                                                    {{--                                            </a>--}}
-                                                </td>
-                                            </tr>
-                                        @endforeach
-
-                                        </tbody>
-                                    </table>
+                                <div class="table-responsive" id="subscribers_table">
+                                    @include('admin.subscriptions.parts.subscribers_table', ['subscribers' => $subscribers])
                                 </div>
                                 <div id="pagination">
-                                    {{ $subscribers->appends(request()->all())->links('vendor.pagination.product_pagination') }}
+                                    @include('admin.subscriptions.parts.subscribers_pagination', ['subscribers' => $subscribers])
                                 </div>
                                 <!--end::Table-->
                             </div>
@@ -244,7 +204,49 @@
                 })
                 return false;
             })
-        })
+        });
+
+        function numberSelected() {
+
+            var data = $('#subscribers_form').serializeArray();
+
+            var counts = [];
+
+            data.forEach(function (element) {
+                if (!counts[element.name]) {
+                    counts[element.name] = 0;
+                }
+                counts[element.name] += 1;
+            });
+        }
+        function request(url) {
+
+            numberSelected();
+
+            if (typeof url === 'undefined') {
+                url = $('#filterUrl').data('url') + '?' + $('#subscribers_form').serialize();
+            }
+
+            $.ajax({
+                type: "GET",
+                url: url,
+                dataType: "json",
+                success: function (response) {
+                    $('#subscribers_table').html(response.tableHtml);
+                    $('#pagination').html(response.paginateHtml);
+
+                    window.history.pushState(null, null, url);
+                }
+            });
+
+        }
+
+        $(document).ready(function () {
+            $(document).on('keyup', '#email_filter', function (e) {
+                e.preventDefault();
+                request();
+            });
+        });
     </script>
 @endsection
 
