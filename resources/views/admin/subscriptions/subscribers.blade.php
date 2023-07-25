@@ -180,7 +180,7 @@
             KTSummernoteDemo.init();
 
             $('#checkbox-all').on('click', function (ev) {
-                $('.checkbox-item')
+                $('.checkbox-item').attr('checked', ev.currentTarget.checked)
             })
 
             $('#updCat').on('click', function (ev) {
