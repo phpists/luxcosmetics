@@ -4,6 +4,7 @@
 
 @section('page_content')
     <main class="cabinet-page__main">
+        @include('layouts.includes.messages')
         <form action="{{route('profile.reset-password')}}" method="POST" class="form form--box">
             @csrf
             @isset($errors)

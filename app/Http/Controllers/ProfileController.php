@@ -37,7 +37,7 @@ class ProfileController extends Controller
 
         User::query()->find($request->user()->id)->update($data);
 
-        return redirect()->route('profile');
+        return redirect()->route('profile')->with('success', 'Данные успешно обновлены');
     }
 
     public function order_history() {
@@ -70,7 +70,7 @@ class ProfileController extends Controller
                 ['is_default' => 1]
             ]);
         }
-        return redirect()->back();
+        return redirect()->back()->with('success', 'Адрес успешно удалён');
     }
 
     public function update_default_address(Request $request) {
@@ -87,7 +87,7 @@ class ProfileController extends Controller
         $address = Address::query()->where('user_id', $request->user()->id)->findOrFail($request->id);
         $data = $request->all();
         $address->update($data);
-        return redirect()->back();
+        return redirect()->back()->with('success', 'Адрес успешно обновлён');
     }
 
     public function show(Request $request) {
@@ -120,7 +120,7 @@ class ProfileController extends Controller
         $data['user_id'] = $request->user()->id;
         $address = new Address($data);
         $address->save();
-        return redirect()->back();
+        return redirect()->back()->with('success', 'Адрес успешно добавлен');
     }
 
     public function payment_methods(Request $request) {
@@ -149,7 +149,7 @@ class ProfileController extends Controller
         }
         $payment_card = new PaymentCard($data);
         $payment_card->save();
-        return redirect()->back();
+        return redirect()->back()->with('success', 'Карта успешно добавлена');
     }
 
     public function delete_payment(Request $request) {
@@ -162,7 +162,7 @@ class ProfileController extends Controller
                 'is_default' => 1
             ]);
         }
-        return redirect()->back();
+        return redirect()->back()->with('success', 'Карта успешно удалена');
     }
 
     public function gift_cards() {
@@ -190,7 +190,7 @@ class ProfileController extends Controller
             User::query()->find($request->user()->id)->update([
                 'password' => Hash::make($request->new_password)
             ]);
-            return redirect()->route('profile');
+            return redirect()->route('profile')->with('success','Пароль успешно обновлён');
         }
         else {
             $messages = [];

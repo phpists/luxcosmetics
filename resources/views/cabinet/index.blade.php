@@ -3,7 +3,11 @@
 @section('title', 'Мой профиль')
 
 @section('page_content')
+
     <main class="cabinet-page__main">
+        <div style="margin-bottom: 10px;">
+            @include('layouts.includes.messages')
+        </div>
         <div class="cabinet-page__group">
             <h3 class="cabinet-page__subheading subheading">Мой профиль</h3>
             <div class="cabinet-page__item cabinet-page__item--justify">

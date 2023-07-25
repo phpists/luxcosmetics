@@ -53,8 +53,9 @@ class SocialMediaController extends Controller
     public function update(Request $request)
     {
         $data = $request->all();
-        $data['is_active_in_contacts'] = $request->post('is_active_in_contacts') ? 1 : 0;
-        $data['is_active_in_footer'] = $request->post('is_active_in_footer') ? 1 : 0;
+        $data['is_active_in_contacts'] = $request->post('is_active_in_contacts') == 'on' ? 1 : 0;
+        $data['is_active_in_footer'] = $request->post('is_active_in_footer') == 'on' ? 1 : 0;
+        // dd($request->post('is_active_in_contacts'));
 
         $social = SocialMedia::findOrFail($data['id']);
 
@@ -63,7 +64,7 @@ class SocialMediaController extends Controller
             $social->icon = $icon;
             $social->update(['icon' => $icon]);
         }else{
-            $social->update($request->all());
+            $social->update($data);
         }
 
 

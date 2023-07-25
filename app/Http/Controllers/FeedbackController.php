@@ -22,7 +22,7 @@ class FeedbackController extends Controller
         if(!$message->save()) {
             return redirect()->back()->with('error', 'Не удалось создать сообщение');
         }
-        return redirect()->back()->with('success', 'Тикет создан успешно');
+        return redirect()->back()->with('success', 'Тикет успешно создан');
     }
 
     public function update(Request $request, $id) {

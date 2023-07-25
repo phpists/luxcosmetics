@@ -5,6 +5,9 @@
 @section('page_content')
     <main class="cabinet-page__main">
         <div class="cabinet-page__group">
+            <div style="margin-bottom: 10px;">
+                @include('layouts.includes.messages')
+            </div>
             <h3 class="subheading subheading--with-form">Привязанные карты</h3>
             <div class="mycards">
                 @foreach($payment_cards as $payment_card)

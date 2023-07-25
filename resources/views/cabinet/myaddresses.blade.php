@@ -4,6 +4,9 @@
 
 @section('page_content')
     <main class="cabinet-page__main">
+        <div style="margin-bottom: 10px;">
+            @include('layouts.includes.messages')
+        </div>
         <div class="cabinet-page__myadd">
             @foreach($user->addresses as $address)
                 <div class="address">

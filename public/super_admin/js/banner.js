@@ -39,7 +39,7 @@ $(document).ready(function () {
         e.preventDefault();
         request();
     });
-    
+
     /* Позиція */
     $(document).on('change', '#position', function (e) {
         e.preventDefault();
@@ -60,7 +60,7 @@ $(document).ready(function () {
     /**
      * Активація/Деактивація статей
      */
-    
+
     $(document).on('click', '.activePost', function (e) {
         let status = $(this).data('status');
     let csrf = $('meta[name="csrf-token"]').attr('content');
@@ -80,17 +80,17 @@ $(document).ready(function () {
             checkbox: checkbox,
             status: status,
         },
-           
+
             success: function (response) {
                 let posts = response.posts;
-                
+
                 var s = JSON.parse(response);
-                
+
                 for(i in s) {
                     var title = s.title;
                     var message = s.message;
                     for( k in s.posts ) {
-                        $('#banner_' + k).find('.status').html('<span>'+title+'</span>'); 
+                        $('#banner_' + k).find('.status').html('<span>'+title+'</span>');
                     }
                 }
                 toastr.success(message);
@@ -98,7 +98,49 @@ $(document).ready(function () {
             }
         });
     });
-    
 
+    let tbody = document.querySelector('tbody');
+    new Sortable(tbody, {
+        animation: 150,
+        handle: '.handle',
+        dragClass: 'table-sortable-drag',
+        onEnd: function (/**Event*/ evt) {
+            console.log('drop');
+            var list = [];
+            $.each($('tbody tr'), function (idx, el) {
+                list.push({
+                    id: $(el).data('id'),
+                    pos: idx + 1
+                })
+            });
 
+            $('.left-btn').click(function() {
+                var id = $(this).data('id');
+                var pos = $(this).data('pos');
+                pos--;
+                $(this).data('pos', pos).siblings('.number-position').text(pos);
+            });
+
+            $('.right-btn').click(function() {
+                var id = $(this).data('id');
+                var pos = $(this).data('pos');
+                pos++;
+                $(this).data('pos', pos).siblings('.number-position').text(pos);
+            });
+
+            $.ajax({
+                method: 'post',
+                url: '{{ route("admin.banner_method.update_positions") }}',
+                data: {
+                    positions: list,
+                },
+                success: function (response) {
+                    console.log(response)
+                    $.each(response, function(i, item) {
+                        $(`tr[data-id="${i}"]`).find('.position').text(item)
+                    })
+                }
+            });
+        }
+    });
 });
