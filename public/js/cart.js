@@ -57,9 +57,6 @@ $(function () {
         }
     })
 
-    $(document).on('click', '.cartSubmit', function(e) {
-        e.prevendDefault()
-    })
 
     $(document).on('click', '#addproduct .close', function (e) {
         $.magnificPopup.close({
@@ -71,7 +68,92 @@ $(function () {
 
     $(document).on('click', '.changeModification', changeModification)
 
+
+    $(document).on('click', '.toggle-address', function (e) {
+        $(this).next().fadeToggle()
+        $('input[name="address_id"]').prop('checked', false)
+    })
+
+    $(document).on('click', '.toggle-card', function (e) {
+        $(this).next().fadeToggle()
+        $('input[name="card_id"]').prop('checked', false)
+    })
+
+    $(document).on('submit', '#orderForm', function (e) {
+        let data = $(this).serializeArray(),
+            $this = $(this)
+
+        if (findValueByName('address_id', data) === null) {
+            let $submitAddressButton = $('#createAddressForm').find('button[type="submit"]')
+            if (!$submitAddressButton.is(':focusable'))
+                $submitAddressButton.parents('div.toggable').fadeIn();
+
+            if (!validateForm($('#createAddressForm'))) {
+                e.preventDefault()
+                $submitAddressButton.click()
+            } else {
+                let additionalData = $('#createAddressForm').serializeArray();
+
+                additionalData.forEach(function (item, i) {
+                    if (item.name === '_token')
+                        return
+
+                    $('<input>').attr({
+                        type: 'hidden',
+                        name: `address[${item.name}]`,
+                        value: item.value
+                    }).appendTo($this);
+                })
+            }
+        }
+    })
+
+
+    $(document).on('submit', '#checkoutForm', function (e) {
+        let data = $(this).serializeArray(),
+            $this = $(this)
+
+        if (findValueByName('card_id', data) === null) {
+            let $submitAddressButton = $('#createCardForm').find('button[type="submit"]')
+            if (!$submitAddressButton.is(':focusable'))
+                $submitAddressButton.parents('div.toggable').fadeIn();
+
+            if (!validateForm($('#createCardForm'))) {
+                e.preventDefault()
+                $submitAddressButton.click()
+            } else {
+                let additionalData = $('#createCardForm').serializeArray();
+
+                additionalData.forEach(function (item, i) {
+                    if (item.name === '_token')
+                        return
+
+                    $('<input>').attr({
+                        type: 'hidden',
+                        name: `card[${item.name}]`,
+                        value: item.value
+                    }).appendTo($this);
+                })
+            }
+        }
+    })
+
+
 })
+
+
+
+function validateForm(form) {
+    let isEmpty = false;
+    $(form).find('input[required]').each(function() {
+        if ($(this).val() === '' || $(this).val() === undefined) {
+            isEmpty = true;
+            return false; // Зупинити цикл, якщо знайдено порожнє поле
+        }
+    });
+
+    return !isEmpty;
+}
 
 
 function addToCart(product_id, $button) {
@@ -211,4 +293,12 @@ function changeModification(e) {
             }
         }
     })
+}
+
+function findValueByName(name, serializedForm) {
+    for (let i = 0; i < serializedForm.length; i++) {
+        if (serializedForm[i].name === name)
+            return serializedForm[i].value;
+    }
+    return null;
 }

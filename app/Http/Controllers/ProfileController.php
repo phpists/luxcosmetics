@@ -5,10 +5,12 @@ namespace App\Http\Controllers;
 use App\Models\Address;
 use App\Models\PaymentCard;
 use App\Models\User;
+use App\Services\CartService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class ProfileController extends Controller
 {
@@ -120,6 +122,10 @@ class ProfileController extends Controller
         $data['user_id'] = $request->user()->id;
         $address = new Address($data);
         $address->save();
+
+        if (Str::contains(url()->previous(), '/cart/delivery'))
+            (new CartService())->setProperty(CartService::ADDRESS_KEY, $address->id);
+
         return redirect()->back()->with('success', 'Адрес успешно добавлен');
     }
 
@@ -149,6 +155,10 @@ class ProfileController extends Controller
         }
         $payment_card = new PaymentCard($data);
         $payment_card->save();
+
+        if (Str::contains(url()->previous(), '/cart/payment'))
+            (new CartService())->setProperty(CartService::CARD_KEY, $payment_card->id);
+
         return redirect()->back()->with('success', 'Карта успешно добавлена');
     }
 

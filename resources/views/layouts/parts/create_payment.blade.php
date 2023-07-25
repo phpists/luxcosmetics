@@ -1,4 +1,4 @@
-<form action="{{route('profile.add-payment-method')}}" class="form form--box" method="POST">
+<form action="{{route('profile.add-payment-method')}}" id="createCardForm" class="form form--box" method="POST">
     @csrf
     <div class="form__row">
         <div class="form__col form__col--50">
@@ -38,6 +38,6 @@
             <input type="checkbox" name="is_default"/>
             <div class="checkbox__text">Сделать способом оплаты по умолчанию</div>
         </label>
-        <button class="btn btn--accent">Добавить</button>
+        <button type="submit" class="btn btn--accent">Добавить</button>
     </div>
 </form>

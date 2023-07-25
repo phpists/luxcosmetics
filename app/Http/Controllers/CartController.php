@@ -4,9 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\Address;
 use App\Models\Order;
+use App\Models\PaymentCard;
 use App\Models\Product;
 use App\Services\CartService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 class CartController extends Controller
@@ -36,6 +39,9 @@ class CartController extends Controller
 
     public function delivery()
     {
+        if (!$this->cartService->isNotEmpty())
+            return redirect()->route('home');
+
         return view('cart.delivery');
     }
 
@@ -45,6 +51,13 @@ class CartController extends Controller
         $this->cartService->setProperty(CartService::DELIVERY_KEY, $delivery_type);
 
         $address_id = $request->post(CartService::ADDRESS_KEY);
+        if (!$address_id) {
+            $address_data = $request->post('address');
+            $address_data['is_default'] = $request->boolean('address.is_default');
+            $address_data['user_id'] = Auth::id();
+            $address = Address::create($address_data);
+            $address_id = $address->id;
+        }
         $this->cartService->setProperty(CartService::ADDRESS_KEY, $address_id);
 
         return redirect()->route('cart.payment');
@@ -52,6 +65,9 @@ class CartController extends Controller
 
     public function payment()
     {
+        if (!$this->cartService->isNotEmpty())
+            return redirect()->route('home');
+
         $address = Address::findOrFail($this->cartService->getProperty(CartService::ADDRESS_KEY));
 
         return view('cart.payment', compact('address'));
@@ -62,6 +78,18 @@ class CartController extends Controller
         $as_delivery_address = $request->boolean('as_delivery_address');
         $this->cartService->setProperty(CartService::AS_DELIVERY_ADDRESS_KEY, $as_delivery_address);
         $card_id = $request->post('card_id');
+
+        if (!$card_id) {
+            $card_data = $request->post('card');
+            $card_data['card_number'] = trim($card_data['card_number']);
+            $card_data['valid_date'] = $card_data['month'].'/'.$card_data['year'];
+            $card_data['cvv'] = Hash::make($card_data['cvv']);
+            $card_data['is_default'] = $request->boolean('cart.is_default');
+            $card_data['user_id'] = Auth::id();
+            $card = PaymentCard::create($card_data);
+            $card_id = $card->id;
+        }
+
         $this->cartService->setProperty(CartService::CARD_KEY, $card_id);
 
         if ($order_id = $this->cartService->store())
