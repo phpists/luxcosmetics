@@ -66,13 +66,13 @@
                             </div>
                         </div>
                     </div>
-                    <div class="card-body pb-3">
+                    <div class="card-body pb-3" id="table-container">
                         <!--begin::Table-->
                         @include('admin.chats.parts.table', ['chats' => $chats, 'themes' => $themes])
-                        <div id="pagination">
-                            {{$chats->links('vendor.pagination.super_admin_pagination')}}
-                        </div>
                         <!--end::Table-->
+                    </div>
+                    <div id="pagination">
+                        {{$chats->links('vendor.pagination.super_admin_pagination')}}
                     </div>
                 </div>
                 <!--end::Card-->
@@ -148,7 +148,7 @@
                 url: url,
                 dataType: "json",
                 success: function (response) {
-                    $('#table').html(response.productsHtml);
+                    $('#table-container').html(response.productsHtml);
                     $('#pagination').html(response.paginateHtml);
 
                     window.history.pushState(null, null, url);

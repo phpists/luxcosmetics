@@ -66,13 +66,15 @@
     document.addEventListener('DOMContentLoaded', function (ev) {
         let results_container = document.getElementById('search_results');
 
+        let search_field = document.getElementById('search_field_header');
+
         let header_search = document.getElementById('header_search');
 
-        header_search.addEventListener("focus", (event) => {
+        search_field.addEventListener("focus", (event) => {
             results_container.style.display = "block";
-        });
+        }, true);
 
-        header_search.addEventListener("blur", (event) => {
+        search_field.addEventListener("blur", (event) => {
             results_container.style.display = "none";
         });
 

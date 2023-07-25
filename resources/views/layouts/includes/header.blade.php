@@ -4,7 +4,7 @@
             <div class="col-lg-12">
                 <div class="header__container">
                     <div class="header__logo"><a href="{{route('home')}}"><img src="{{asset('images/dist/logo.svg')}}" alt=""></a></div>
-                    <form action="{{route('show_search')}}" class="header__search search">
+                    <form action="{{route('show_search')}}" class="header__search search" id="search_field_header">
                         <input type="text" minlength="2" name="search" id="header_search" class="search__input" placeholder="Поиск по каталогу">
                         <div id="header-container" style="position: relative">
                             <div id="search_results" style="position: absolute; background: whitesmoke; z-index: 2; width: 100%; display: none"></div>
@@ -14,7 +14,7 @@
                     <div class="header__contacts">
                         <div class="header__social social">
                             @foreach (\App\Models\SocialMedia::query()->select('social_medias.*')->get() as $item)
-                                <div style="margin: 5px; display: inline-block;"><a href="{{ $item->link }}"><img src="{{asset('images/uploads/social/' . $item->icon)}}" alt=""></div>
+                                <div style="margin: 5px; display: inline-block;"><a href="{{ $item->link }}"><img src="{{asset('images/uploads/social/' . $item->icon)}}" alt=""></a></div>
                             @endforeach
                             </div>
                         @foreach (\App\Models\SocialMedia::query()->select('social_medias.phone')->get() as $item)

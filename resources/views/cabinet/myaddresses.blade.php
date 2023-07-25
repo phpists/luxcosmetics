@@ -23,17 +23,12 @@
                             </svg>
                             Редактировать
                         </a>
-                        <form action="{{route('profile.addresses.delete')}}" method="POST">
-                            @csrf
-                            @method('delete')
-                            <input type="hidden" name="id" value="{{$address->id}}">
-                            <button class="btn-edit">
-                                <svg class="icon">
-                                    <use xlink:href="{{asset('images/dist/sprite.svg#trash')}}"></use>
-                                </svg>
-                                Удалить
-                            </button>
-                        </form>
+                        <a href="#deleteAddress" class="btn btn-edit popup-with-form del-btn" data-value="{{$address->id}}">
+                            <svg class="icon">
+                                <use xlink:href="{{asset('images/dist/sprite.svg#trash')}}"></use>
+                            </svg>
+                            Удалить
+                        </a>
                     </div>
                 </div>
             @endforeach
@@ -99,6 +94,10 @@
         </div>
     </div>
 
+    <div class="hidden">
+        @include('cabinet.parts.payment_delete_modal')
+    </div>
+
     @include('layouts.parts.edit_address_modal')
 
 @endsection
@@ -150,6 +149,10 @@
                         console.log(resp)
                     }
                 })
+            })
+            $('.del-btn').on('click', function (ev) {
+                let value = ev.currentTarget.getAttribute('data-value');
+                $('#deleteId').val(value);
             })
         })
     </script>

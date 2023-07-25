@@ -19,17 +19,12 @@
                                 <div class="mycard__notice">{{\App\Services\SiteService::checkCardAvailability($payment_card->valid_date)}}</div>
                             </div>
                         </div>
-                        <form action="{{route('profile.payment-method.delete')}}" method="POST">
-                            @method('delete')
-                            @csrf
-                            <input type="hidden" name="id" value="{{\Illuminate\Support\Facades\Auth::user()->default_card->id}}">
-                            <button class="btn-edit">
-                                <svg class="icon">
-                                    <use xlink:href="{{asset('images/dist/sprite.svg#trash')}}"></use>
-                                </svg>
-                                Удалить карту
-                            </button>
-                        </form>
+                        <a href="#deletePayment" class="btn btn-edit popup-with-form del-btn" data-value="{{$payment_card->id}}">
+                            <svg class="icon">
+                                <use xlink:href="{{asset('images/dist/sprite.svg#trash')}}"></use>
+                            </svg>
+                            Удалить
+                        </a>
 {{--                        <button class="btn-edit">--}}
 {{--                            <svg class="icon">--}}
 {{--                                <use xlink:href="{{asset('images/dist/sprite.svg#trash')}}"></use>--}}
@@ -50,6 +45,9 @@
             @include('layouts.parts.create_payment')
         </div>
     </div>
+    <div class="hidden">
+        @include('cabinet.parts.payment_delete_modal')
+    </div>
 @endsection
 
 @section('scripts')
@@ -61,5 +59,32 @@
             Inputmask("9999999999999999").mask('#card_inp');
             Inputmask("999").mask('#cvv_inp');
         });
+        $(document).ready(function () {
+            $('.btn_edit_address').on('click', function(ev) {
+                $.ajax({
+                    url: '{{route('profile.addresses.show')}}',
+                    data: {
+                        id: ev.target.getAttribute('data-value')
+                    },
+                    success: function (response) {
+                        $('#updAddress').val(response.address);
+                        $('#updId').val(response.id);
+                        $('#updName').val(response.name);
+                        $('#updEmail').val(response.email);
+                        $('#updSurName').val(response.surname);
+                        $('#updPhone').val(response.phone);
+                        $('#updCity').val(response.city);
+                        $('#updRegion').val(response.region);
+                    },
+                    error: function (resp) {
+                        console.log(resp)
+                    }
+                })
+            })
+            $('.del-btn').on('click', function (ev) {
+                let value = ev.currentTarget.getAttribute('data-value');
+                $('#deleteId').val(value);
+            })
+        })
     </script>
 @endsection

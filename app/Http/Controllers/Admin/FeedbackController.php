@@ -19,7 +19,7 @@ class FeedbackController extends Controller
         }
         if ($request->feedbacks_reason_id) {
 
-            $chats->where('feedback_theme', $request->feedbacks_reason_id);
+            $chats->where('feedbacks_reason_id', $request->feedbacks_reason_id);
         }
 
         $themes = FeedbackReason::query()->get();

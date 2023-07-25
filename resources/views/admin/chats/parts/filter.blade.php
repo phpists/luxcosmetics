@@ -4,7 +4,7 @@
         <table class="table table-hover rounded ">
             <div class="row mb-2">
                 <div class="col-lg-3 mb-lg-0 d-flex flex-column">
-                    <label>Тема тикета</label>
+                    <label>Причина Обращения</label>
                     <div class="input-group input-group-sm">
                         <select id="feedbacks_reason_id" name="feedbacks_reason_id" class="form-control">
                             <option></option>
