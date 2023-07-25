@@ -95,7 +95,10 @@
                                         Название
                                     </th>
                                     <th class="pr-0 text-center">
-                                        Alias
+                                        Категория
+                                    </th>
+                                    <th class="pr-0 text-center">
+                                        Бренды
                                     </th>
                                     <td class="text-center pr-0">
                                         Артикул
@@ -125,7 +128,10 @@
                                             <a href="{{ route('admin.product.edit', ['id' => $product->id]) }}">{{ $product->title }}</a>
                                         </td>
                                         <td class="text-center pr-0">
-                                            {{ $product->alias }}
+                                            {{ $product->category->name}}
+                                        </td>
+                                        <td class="text-center pr-0">
+                                            {{ $product->brand->name }}
                                         </td>
                                         <td class="text-center pr-0">
                                             {{ $product->code }}
@@ -135,9 +141,11 @@
                                         </td>
                                         <td class="text-center pr-0">
                                             <a href="{{ route('products.product', ['alias' => $product->alias]) }}"
-                                               class="btn btn-sm btn-clean btn-icon">
+                                               class="btn btn-sm btn-clean btn-icon"
+                                               target="_blank">
                                                 <i class="las la-eye"></i>
                                             </a>
+
                                             <a href="{{ route('admin.product.edit', ['id' => $product->id]) }}"
                                                class="btn btn-sm btn-clean btn-icon">
                                                 <i class="las la-edit"></i>

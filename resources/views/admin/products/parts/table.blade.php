@@ -15,7 +15,10 @@
             {{ $product->title }}
         </td>
         <td class="text-center pr-0">
-            {{ $product->alias }}
+            {{ $product->category->name }}
+        </td>
+        <td class="text-center pr-0">
+            {{ $product->brand->name }}
         </td>
         <td class="text-center pr-0">
             {{ $product->code }}

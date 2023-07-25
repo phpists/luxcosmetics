@@ -11,12 +11,6 @@
                     </div>
                 </div>
                 <div class="col-lg-4 mb-lg-0 d-flex flex-column">
-                    <label>Alias</label>
-                    <div class="input-group">
-                        <input type="text" id="alias" name="alias" class="form-control">
-                    </div>
-                </div>
-                <div class="col-lg-4 mb-lg-0 d-flex flex-column">
                     <label>Артикул</label>
                     <div class="input-group">
                         <input type="text" id="code" name="code" class="form-control">
