@@ -45,9 +45,9 @@ class CatalogService
             ->join('product_images', 'products.image_print_id', 'product_images.id')
             ->where(function ($q) use ($category_ids) {
                 $q->whereIn('products.id', function ($query) use ($category_ids) {
-                        $query->select('product_id')
-                            ->from('product_categories')
-                            ->whereIn('category_id', $category_ids);
+                    $query->select('product_id')
+                        ->from('product_categories')
+                        ->whereIn('category_id', $category_ids);
                     })
                     ->orWhereIn('category_id', $category_ids);
             })
@@ -146,6 +146,37 @@ class CatalogService
     public static function getProduct($id)
     {
         return Product::find($id);
+    }
+
+
+    public static function getFilters($category)
+    {
+        $category_ids = [$category->id];
+        foreach ($category->subcategories as $subcategory) {
+            $category_ids[] = $subcategory->id;
+        }
+
+        $product_ids = Product::select('id')
+            ->distinct(['products.id'])
+            ->where(function ($q) use ($category_ids) {
+                $q->whereIn('products.id', function ($query) use ($category_ids) {
+                    $query->select('product_id')
+                        ->from('product_categories')
+                        ->whereIn('category_id', $category_ids);
+                })->orWhereIn('category_id', $category_ids);
+            })
+            ->pluck('id')
+            ->toArray();
+        
+        return $category->filter_properties()
+            ->with('values', function ($query) use ($product_ids) {
+                $query->whereIn('id', function ($query) use ($product_ids) {
+                    return $query->select('property_value_id')
+                        ->from('product_property_values')
+                        ->whereIn('product_id', $product_ids);
+                });
+            })
+            ->get();
     }
 
 
