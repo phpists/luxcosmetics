@@ -70,9 +70,12 @@ class ProfileController extends Controller
             $new_default_address = Address::query()
                 ->where('user_id', $request->user()->id)
                 ->first();
-            $new_default_address?->update([
-                ['is_default' => 1]
-            ]);
+
+            if ($new_default_address) {
+                $new_default_address?->update(
+                    ['is_default' => 1]
+                );
+            }
         }
         return redirect()->back()->with('success', 'Адрес успешно удалён');
     }
