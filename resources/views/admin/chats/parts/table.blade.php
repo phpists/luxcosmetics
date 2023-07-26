@@ -45,7 +45,7 @@
                     {{ $chat->id }}
                 </td>
                 <td class="text-center pr-0">
-                    {{ $themes->find($chat->feedbacks_reason_id)->first()->reason }}
+                    {{ $themes->find($chat->feedbacks_reason_id)?->reason }}
                 </td>
                 <td class="text-center pr-0">
                     {{ $chat->user? $chat->user->name: '<Пользователь удален>' }}
