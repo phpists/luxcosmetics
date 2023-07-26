@@ -102,7 +102,7 @@
     </div>
 
     @include('layouts.parts.edit_address_modal')
-
+    @include('cabinet.parts.address_delete_modal')
 @endsection
 
 @section('scripts')
