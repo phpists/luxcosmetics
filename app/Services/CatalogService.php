@@ -43,14 +43,21 @@ class CatalogService
         $products = Product::query()
             ->selectRaw('products.*, product_images.path as main_image, case when user_favorite_products.product_id is null then FALSE else TRUE end as is_favourite')
             ->join('product_images', 'products.image_print_id', 'product_images.id')
-            ->whereIn('category_id', $category_ids)
+            ->where(function ($q) use ($category_ids) {
+                $q->whereIn('products.id', function ($query) use ($category_ids) {
+                        $query->select('product_id')
+                            ->from('product_categories')
+                            ->whereIn('category_id', $category_ids);
+                    })
+                    ->orWhereIn('category_id', $category_ids);
+            })
             ->distinct(['products.id'])
             ->with('brand')
             ->where(function ($q) {
                 $q->whereBetween('price', [
                     $this->getPriceFrom(),
                     $this->getPriceTo()
-                ])->orWhereBetween('discount_price', [
+                ])->orWhereBetween('old_price', [
                         $this->getPriceFrom(),
                         $this->getPriceTo()
                 ]);

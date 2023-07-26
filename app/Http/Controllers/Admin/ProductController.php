@@ -7,6 +7,7 @@ use App\Models\Article;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\ProductCategory;
 use App\Models\ProductVariation;
 use App\Services\CatalogService;
 use App\Services\FileService;
@@ -110,6 +111,16 @@ class ProductController extends Controller
                 ];
             }
             ProductVariation::query()->insert($product_variations);
+
+            $product_categories = $request->post('product_categories');
+            if (is_array($product_categories)) {
+                foreach ($product_categories as $i => $category_id) {
+                    ProductCategory::create([
+                        'product_id' => $product->id,
+                        'category_id' => $category_id
+                    ]);
+                }
+            }
         }
         return redirect()->route('admin.products')->with('success', 'Товар успешно добавлен');
     }
@@ -203,6 +214,20 @@ class ProductController extends Controller
             }
 
             ProductVariation::query()->insert($product_variations);
+        }
+
+        $product_categories = $request->post('product_categories');
+        if ($product->productCategories->isNotEmpty()) {
+            foreach ($product->productCategories as $productCategory)
+                $productCategory->delete();
+        }
+        if (is_array($product_categories)) {
+            foreach ($product_categories as $i => $category_id) {
+                ProductCategory::create([
+                    'product_id' => $product->id,
+                    'category_id' => $category_id
+                ]);
+            }
         }
 
         return back();

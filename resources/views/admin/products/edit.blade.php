@@ -150,7 +150,18 @@
                                             </div>
                                         </div>
                                         <div class="row">
-                                            <div class="col-md-6">
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label>Другие категории</label>
+                                                    <select class="form-control select2" id="product_categories" multiple="multiple"
+                                                            name="product_categories[]">
+                                                        @foreach($categories as $category)
+                                                            <option @selected($product->productCategories->where('category_id', $category->id)->count()) value="{{ $category->id }}">{{ $category->name }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
                                                 <div class="form-group">
                                                     <label>Бренд</label>
                                                     <select class="form-control select2" id="kt_select2_3"
@@ -169,7 +180,7 @@
                                                 <label for="exampleSelect2">Старая цена</label>
                                                 <input type="number" step="any" name="old_price" value="{{$product->old_price}}" class="form-control"/>
                                             </div>
-                                            <div class="col-md-2">
+                                            <div class="col-md-1">
                                                 <label for="exampleSelect2">Скидка в %</label>
                                                 <input type="number" step="any" name="discount" value="{{$product->discount}}" class="form-control"/>
                                             </div>
@@ -565,6 +576,11 @@
 
     <script>
         $('#kt_select2_4').select2();
+
+        $('#product_categories').select2({
+            placeholder: 'Другие категории',
+            allowClear: true
+        });
 
         $(document).ready(function () {
             $('.select2.property_values').select2({
