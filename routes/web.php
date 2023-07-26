@@ -313,7 +313,7 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function 
      Route::get('user/show/{id}', [\App\Http\Controllers\Admin\UserController::class, 'show'])->name('admin.user.show');
      Route::get('user/edit/{id}', [\App\Http\Controllers\Admin\UserController::class, 'edit'])->name('admin.user.edit');
      Route::post('user/update', [\App\Http\Controllers\Admin\UserController::class, 'update'])->name('admin.user.update');
-     Route::delete('user/delete', [\App\Http\Controllers\Admin\UserController::class, 'delete'])->name('admin.user.delete');
+     Route::get('user/delete/{id}', [\App\Http\Controllers\Admin\UserController::class, 'delete'])->name('admin.user.delete');
 
     /* Subscribers */
     Route::get('subscribers', [\App\Http\Controllers\Admin\SubscribersController::class, 'index'])->name('admin.subscribers.index');
