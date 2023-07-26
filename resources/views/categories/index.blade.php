@@ -87,7 +87,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    @foreach($category->filter_properties as $category_property)
+                                    @foreach(\App\Services\CatalogService::getFilters($category) as $category_property)
                                     <div class="filters__item filter">
                                         <div class="filter__title">{{ $category_property->name }} {{ isset($category_property->measure) ? '('.$category_property->measure.')' : '' }} <svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#arrow')}}"></use></svg></div>
                                         <div class="filter__block">

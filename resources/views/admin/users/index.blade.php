@@ -91,14 +91,10 @@
                                             {{ date('H:i | d.m.y', strtotime($user->created_at)) }}
                                         </td>
                                         <td class="text-center pr-0">
-                                            <form action="{{route('admin.user.delete', $user->id)}}" method="POST">
-                                                @csrf
-                                                @method('delete')
-                                                <input type="hidden" name="id" value="{{$user->id}}">
-                                                <button type="submit" class="btn">
-                                                    <i class="las la-trash"></i>
-                                                </button>
-                                            </form>
+                                            <a href="{{ route('admin.user.delete', $user->id) }}"
+                                               class="btn btn-sm btn-clean btn-icon">
+                                                <i class="las la-trash"></i>
+                                            </a>
                                             <a href="{{ route('admin.user.show', $user->id) }}"
                                                class="btn btn-sm btn-clean btn-icon">
                                                 <i class="las la-eye"></i>

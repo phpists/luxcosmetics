@@ -102,9 +102,7 @@ class UserController extends Controller
 
     public function delete(Request $request)
     {
-
         User::query()->where('id', $request->id)->delete();
-
         return redirect()->back()->with('success', 'Пользователь успешно удален');
     }
 }

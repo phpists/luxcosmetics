@@ -29,27 +29,28 @@
 
                         <form action="{{ route('cart.checkout.store') }}" method="POST" id="checkoutForm">
                             @csrf
-                        <div class="cart-page__group">
-                            <h3 class="cart-page__subheading subheading">Адрес для выставления счета</h3>
-                            <label class="checkbox">
-                                <input type="checkbox" name="as_delivery_address" @checked($cartService->getProperty(\App\Services\CartService::AS_DELIVERY_ADDRESS_KEY))/>
-                                <div class="checkbox__text">Использовать как адрес доставки</div>
-                            </label>
-                            <div class="typography addressblock">
-                                <p>{{ $address->full_name }}</p>
-                                <p>{{ $address->phone }}</p>
-                                <p>{{ $address->full_address }}</p>
-                            </div>
-                        </div>
+{{--                        <div class="cart-page__group">--}}
+{{--                            <h3 class="cart-page__subheading subheading">Адрес для выставления счета</h3>--}}
+{{--                            <label class="checkbox">--}}
+{{--                                <input type="checkbox" name="as_delivery_address" @checked($cartService->getProperty(\App\Services\CartService::AS_DELIVERY_ADDRESS_KEY))/>--}}
+{{--                                <div class="checkbox__text">Использовать как адрес доставки</div>--}}
+{{--                            </label>--}}
+{{--                            <div class="typography addressblock">--}}
+{{--                                <p>{{ $address->full_name }}</p>--}}
+{{--                                <p>{{ $address->phone }}</p>--}}
+{{--                                <p>{{ $address->full_address }}</p>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
 
-						<h3 class="cart-page__heading subheading subheading--with-form">Выберите способ оплаты</h3>
+                            @if($user_has_cards = auth()->user()->cards->isNotEmpty())
+						<h3 class="cart-page__heading subheading subheading--with-form">Выберите свою карту</h3>
                         <div class="cart-page__addresses">
                             @foreach(auth()->user()->cards as $card)
                                 <div class="cart-page__address my-add">
                                     <div class="my-add__title">{{ $card->full_name }}</div>
                                     <div class="my-add__wrap">
                                         <label class="radio">
-                                            <input type="radio" name="card_id" value="{{ $card->id }}" @checked($cartService->getProperty(\App\Services\CartService::CARD_KEY) == $card->id) required/>
+                                            <input type="radio" name="card_id" value="{{ $card->id }}" @checked($cartService->getProperty(\App\Services\CartService::CARD_KEY) == $card->id)/>
                                             <div class="radio__text">{{ \App\Services\SiteService::displayCardNumber($card->card_number) }}
                                                 <br>{{ $card->valid_date }}</div>
                                         </label>
@@ -57,13 +58,16 @@
                                 </div>
                             @endforeach
                         </div>
+                            @endif
 
                         </form>
 
 
 						<div class="cart-page__group">
-                            <h3 class="cart-page__subheading subheading subheading--with-form">Добавить новую карту</h3>
+                            <a href="javascript:;" class="cart-page__subheading subheading subheading--with-form toggle-card">Добавить новую карту</a>
+                            <div class="toggable" @if($user_has_cards) style="display: none" @endif>
                             @include('layouts.parts.create_payment')
+                            </div>
 						</div>
 
 
@@ -122,14 +126,14 @@
                                 в течении 1-2 дней</small></span>
                         <span class="cart-aside__delivery-value">Бесплатно</span>
                 </div>
-                <div class="cart-aside__points"><svg class="icon"><use xlink:href="images/dist/sprite.svg#warning"></use></svg> Вы получите 820 баллов</div>
+                <div class="cart-aside__points"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#warning')}}"></use></svg> Вы получите 820 баллов</div>
                 <div class="cart-aside__sum">Итого с НДС <span>{{ $cartService->getTotalSum() }}</span>₽</div>
         </div>
         <button type="submit" form="checkoutForm" class="btn btn--accent cart-aside__buy">Оформить заказ</button>
         <div class="cart-aside__paymethods">
-                <img src="images/dist/ico-visa.png" alt="">
-                <img src="images/dist/ico-mir.png" alt="">
-                <img src="images/dist/ico-youmoney.png" alt="">
+            <img src="{{asset('images/dist/ico-visa.png')}}" alt="">
+            <img src="{{asset('images/dist/ico-mir.png')}}" alt="">
+            <img src="{{asset('images/dist/ico-youmoney.png')}}" alt="">
         </div>
 </div>
 					</aside>

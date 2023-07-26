@@ -72,9 +72,11 @@
                                     <p>Корзина пустая</p>
                                 @endforelse
 							</div>
+                            @if($cartService->isNotEmpty())
 							<div class="cart-table__ftr">
 								<a href="{{ route('cart.clear') }}" class="btn btn--border-main cart-page__clearcart">Очистить корзину</a>
 							</div>
+                            @endif
 						</div>
 						<div class="cart-page__gifts">
 							<h3 class="cart-page__subheading subheading"> Ваши подарки</h3>

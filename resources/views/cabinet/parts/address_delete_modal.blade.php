@@ -1,5 +1,5 @@
 <div class="popupform mfp-hide" id="deleteAddress" style="max-width: 640px">
-    <div class="popupform__title">Вы дествительно хотите удалить адресс?</div>
+    <div class="popupform__title">Вы действительно хотите удалить адрес?</div>
     <div class="addprod">
         {{--        <div class="numbers addprod__numbers">--}}
         {{--            <div class="numbers__minus minus"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#minus')}}"></use></svg></div>--}}

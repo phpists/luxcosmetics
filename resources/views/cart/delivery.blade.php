@@ -50,7 +50,7 @@
 								<div class="my-add__title">{{ $address->name . ' ' . $address->surname }}</div>
 								<div class="my-add__wrap">
 									<label class="radio">
-										<input type="radio" name="address_id" value="{{ $address->id }}" @checked($cartService->getProperty(\App\Services\CartService::ADDRESS_KEY) == $address->id) required/>
+										<input type="radio" name="address_id" value="{{ $address->id }}" @checked($cartService->getProperty(\App\Services\CartService::ADDRESS_KEY) == $address->id)/>
 										<div class="radio__text">{{ $address->region . ', ' . $address->city . ', ' . $address->address }}
                                             <br>{{ $address->phone }}</div>
 									</label>
@@ -67,8 +67,10 @@
                         @include('layouts.parts.edit_address_modal')
 
 						<div class="cart-page__group">
-							<h3 class="cart-page__subheading subheading subheading--with-form">Добавить адрес</h3>
+							<a href="javascript:;" class="cart-page__subheading subheading subheading--with-form toggle-address">Добавить адрес</a>
+                            <div class="toggable" @if($user_has_addresses) style="display: none" @endif>
 							@include('layouts.parts.create_address')
+                            </div>
 						</div>
 
 
@@ -117,7 +119,7 @@
                 <div class="cart-aside__points"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#warning')}}"></use></svg> Вы получите 820 баллов</div>
                 <div class="cart-aside__sum">Итого с НДС <span>{{ $cartService->getTotalSum() }}</span> ₽</div>
         </div>
-        <button type="submit" form="orderForm" class="btn btn--accent cart-aside__buy cartSubmit" @disabled(!$user_has_addresses)>Перейти к оплате</button>
+        <button type="submit" form="orderForm" class="btn btn--accent cart-aside__buy cartSubmit">Перейти к оплате</button>
         <div class="cart-aside__paymethods">
                 <img src="{{asset('images/dist/ico-visa.png')}}" alt="">
                 <img src="{{asset('images/dist/ico-mir.png')}}" alt="">

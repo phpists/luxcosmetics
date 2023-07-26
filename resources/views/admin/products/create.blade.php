@@ -88,6 +88,17 @@
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <div class="form-group">
+                                                    <label>Другие категории</label>
+                                                    <select class="form-control select2" id="product_categories" multiple="multiple"
+                                                            name="product_categories[]">
+                                                        @foreach($categories as $category)
+                                                            <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
                                                     <label>Brand</label>
                                                     <select class="form-control select2" id="kt_select2_3"
                                                             name="brand_id">
@@ -317,6 +328,13 @@
         $('#category_select').select2({
             placeholder: "Выбрать...",
         });
+
+        $('#product_categories').select2({
+            placeholder: 'Другие категории',
+            allowClear: true
+        });
+
+
         $(document).ready(function () {
             let variations_select = $('#variations_select');
             variations_select.select2({

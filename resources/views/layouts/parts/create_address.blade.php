@@ -1,4 +1,4 @@
-<form action="{{route('profile.add-address')}}" method="POST" class="form form--box">
+<form id="createAddressForm" action="{{route('profile.add-address')}}" method="POST" class="form form--box">
     @csrf
     @php($user = auth()->user())
     <div class="form__row">
@@ -49,7 +49,7 @@
     </div>
     <div class="form__ftr">
         <label class="checkbox">
-            <input type="checkbox" />
+            <input type="checkbox" name="is_default" />
             <div class="checkbox__text">Сделать моим адресом по умолчанию</div>
         </label>
         <div class="form__btns">
