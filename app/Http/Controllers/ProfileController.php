@@ -65,7 +65,9 @@ class ProfileController extends Controller
         }
         $address->delete();
         if ($address->is_default) {
-            $new_default_address = Address::query()->first();
+            $new_default_address = Address::query()
+                ->where('user_id', $request->user()->id)
+                ->first();
             $new_default_address?->update([
                 ['is_default' => 1]
             ]);
