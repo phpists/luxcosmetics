@@ -31,7 +31,8 @@ class User extends Authenticatable
         'birthday',
         'is_subscribed',
         'connection_type',
-        'points'
+        'points',
+        'is_active'
     ];
 
     /**
@@ -110,6 +111,11 @@ class User extends Authenticatable
     public function orders()
     {
         return $this->hasMany(Order::class);
+    }
+
+    public function getStatus(): string
+    {
+        return $this->is_active ? 'Активен': 'Заблокирован';
     }
 
 }

@@ -314,6 +314,7 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function 
      Route::get('user/edit/{id}', [\App\Http\Controllers\Admin\UserController::class, 'edit'])->name('admin.user.edit');
      Route::post('user/update', [\App\Http\Controllers\Admin\UserController::class, 'update'])->name('admin.user.update');
      Route::get('user/delete/{id}', [\App\Http\Controllers\Admin\UserController::class, 'delete'])->name('admin.user.delete');
+     Route::post('user/generate-password', [\App\Http\Controllers\Admin\UserController::class, 'generate_password'])->name('admin.user.generate-password');
 
     /* Subscribers */
     Route::get('subscribers', [\App\Http\Controllers\Admin\SubscribersController::class, 'index'])->name('admin.subscribers.index');

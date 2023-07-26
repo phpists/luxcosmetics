@@ -24,6 +24,7 @@ return new class extends Migration
             $table->date('birthday')->nullable();
             $table->boolean('is_subscribed')->default(false)->comment('Подписан на рассылку');
             $table->bigInteger('role_id')->default(2)->after('id')->comment('Role id');
+            $table->boolean('is_active')->default(true);
             $table->rememberToken();
             $table->timestamps();
         });

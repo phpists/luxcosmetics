@@ -3,9 +3,13 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Mail\ResetPassword;
 use App\Models\Address;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Str;
 
 class UserController extends Controller
 {
@@ -88,9 +92,9 @@ class UserController extends Controller
     public function update(Request $request)
     {
         $user = User::find($request->id);
-
         if ($user) {
             $user->name = $request->name;
+            $user->is_active = ($request->is_active !== null);
             $user->surname = $request->surname;
             $user->phone = $request->phone;
             $user->email = $request->email;
@@ -104,5 +108,22 @@ class UserController extends Controller
     {
         User::query()->where('id', $request->id)->delete();
         return redirect()->back()->with('success', 'Пользователь успешно удален');
+    }
+
+    public function generate_password(Request $request) {
+        $user = User::query()->find($request->id);
+        if (!$user) {
+            abort(404);
+        }
+        $password = Str::password(length: 8);
+        $user->update([
+            'password' => Hash::make($password)
+        ]);
+        try {
+            Mail::to($user->email)->send(new ResetPassword($password, $user->name));
+        } catch (\Exception $exception){
+            return redirect()->back()->with('error', 'Ошибка отправки письма с паролем, повторите еще раз либо обратитесь к разроботчику');
+        }
+        return redirect()->back()->with('success', 'Пароль успешно оновлен');
     }
 }

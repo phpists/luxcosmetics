@@ -101,6 +101,11 @@
                         <p><b>ИЛИ</b></p>
                         <form method="POST" action="{{ route('login') }}" class="form form--box signin-page__form">
                             @csrf
+                            @if (session('error'))
+                                <p class="invalid-feedback" role="alert" style="margin-bottom: 17px; font-size: 18px">
+                                        <strong style="color: red">{{ session('error') }}</strong>
+                                    </p>
+                            @endif
                             <div class="form__fieldset">
                                 <legend class="form__label">Электронная почта *</legend>
                                 <input type="text" name="email" class="form__input" placeholder="Введите ваш email">

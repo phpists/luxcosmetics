@@ -61,6 +61,9 @@
                                     <td class="text-center pr-0">
                                         Дата создания
                                     </td>
+                                    <td class="text-center pr-0">
+                                        Статус
+                                    </td>
                                     <th class="pr-0 text-center" style="min-width: 300px">
                                         Действия
                                     </th>
@@ -91,8 +94,11 @@
                                             {{ date('H:i | d.m.y', strtotime($user->created_at)) }}
                                         </td>
                                         <td class="text-center pr-0">
+                                            {{ $user->getStatus() }}
+                                        </td>
+                                        <td class="text-center pr-0">
                                             <a href="{{ route('admin.user.delete', $user->id) }}"
-                                               class="btn btn-sm btn-clean btn-icon">
+                                               class="btn btn-sm btn-clean btn-icon" onclick="return confirm('Вы уверены, что хотите удалить пользователя?')">
                                                 <i class="las la-trash"></i>
                                             </a>
                                             <a href="{{ route('admin.user.show', $user->id) }}"
@@ -102,6 +108,16 @@
                                             <a href="{{ route('admin.user.edit', $user->id) }}"
                                                class="btn btn-sm btn-clean btn-icon">
                                                 <i class="las la-edit"></i>
+                                            </a>
+                                            <a href="#"
+                                               class="btn btn-sm btn-clean btn-icon" onclick="return confirm('Вы уверены, что хотите поменять пароль?')">
+                                                <form action="{{route('admin.user.generate-password')}}" method="POST">
+                                                    @csrf
+                                                    <input type="hidden" name="id" value="{{$user->id}}">
+                                                    <button class="btn">
+                                                        <i class="las flaticon-multimedia-2"></i>
+                                                    </button>
+                                                </form>
                                             </a>
                                         </td>
                                     </tr>

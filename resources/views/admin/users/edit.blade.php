@@ -24,7 +24,7 @@
             <div class="card card-custom">
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-8">
                             <h2>Основная информация</h2>
                             <form action="{{ route('admin.user.update') }}" method="POST">
                                 @csrf
@@ -67,7 +67,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                
+
                                 <div class="row">
                                     <div class="col-6">
                                         <div class="form-group">
@@ -82,7 +82,22 @@
                                         </div>
                                     </div>
                                 </div>
-                                
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <label class="col-12 col-form-label">Активировать пользователя</label>
+                                            <div class="col-3">
+                                                <span class="switch switch-lg">
+                                                    <label>
+                                                        <input type="checkbox" @if($user->is_active) checked @endif name="is_active"/>
+                                                        <span></span>
+                                                    </label>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
 
                                 <button type="submit" class="btn btn-lg btn-primary mr-2">Сохранить</button>
 

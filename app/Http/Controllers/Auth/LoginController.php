@@ -46,6 +46,7 @@ class LoginController extends Controller
     {
         Auth::logout();
         $this->middleware('guest')->except('logout');
+        $this->middleware('is_active_user')->except('logout');
     }
 
     public function redirectToProvider($provider)

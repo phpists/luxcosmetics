@@ -1,6 +1,6 @@
 $(document).ready(function () {
 
-`    function numberSelected() {
+    function numberSelected() {
 
         var data = $('#certificate_form').serializeArray();
 
@@ -12,28 +12,8 @@ $(document).ready(function () {
             }
             counts[element.name] += 1;
         });
-    }`
-
-    function request(url) {
-
-        numberSelected();
-
-        if (typeof url === 'undefined') {
-            url = $('#filterUrl').data('url') + '?' + $('#categories_form').serialize();
-        }
-
-        $.ajax({
-            type: "GET",
-            url: url,
-            dataType: "json",
-            success: function (response) {
-                $('#table').html(response.categoriesAjaxHtml);
-                $('#pagination').html(response.paginateHtml);
-                window.history.pushState(null, null, url);
-            }
-        });
-
     }
+
     function request(url) {
 
         numberSelected();
