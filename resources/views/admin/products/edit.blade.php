@@ -767,7 +767,7 @@
         function loadModel() {
             let id = $(this).data('id');
             $.ajax({
-                url: '{{ route("admin.image.show", $image->id) }}',
+                url: '{{ route("admin.image.show") }}',
                 data: {
                     id: id
                 },
@@ -796,7 +796,7 @@
         function loadModelVariation() {
             let id = $(this).data('id');
             $.ajax({
-                url: '{{ route("admin.product.variation.show", $image->id) }}',
+                url: '{{ route("admin.product.variation.show") }}',
                 data: {
                     id: id
                 },

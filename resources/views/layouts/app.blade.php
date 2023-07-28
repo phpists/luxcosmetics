@@ -69,14 +69,14 @@
         let search_field = document.getElementById('search_field_header');
 
         let header_search = document.getElementById('header_search');
-
-        search_field.addEventListener("focus", (event) => {
-            results_container.style.display = "block";
-        }, true);
+        //
+        // search_field.addEventListener("focus", (event) => {
+        //     results_container.style.display = "block";
+        // }, true);
 
         search_field.addEventListener("blur", (event) => {
             results_container.style.display = "none";
-        });
+        }, true);
 
         header_search.addEventListener('input', function (ev) {
             if (ev.target.value !== '') {
@@ -94,11 +94,13 @@
                         let link = '/p/' + result[resultKey].alias;
                         div.innerHTML = `<a href="${link}">${title}</a>`;
                         results_container.appendChild(div);
+                        results_container.style.display = "block";
                     }
                 })
             }
             else {
                 results_container.innerHTML = "";
+                results_container.style.display = "none";
             }
         })
     })
