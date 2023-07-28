@@ -42,8 +42,13 @@ class ProductController extends Controller
                 break;
             }
         }
+        $relative_products = Product::query()
+            ->select(['products.*', 'related_products.relation_type'])
+            ->join('related_products', 'related_products.relative_product_id', 'products.id')
+            ->where('related_products.product_id', $product->id)
+            ->get();
         $product_variations = CatalogService::getProductVariations($product->id, $product->base_property_id);
-        return view('products.product', compact('product', 'product_variations', 'articles'));
+        return view('products.product', compact('product', 'product_variations', 'articles', 'relative_products'));
     }
 
     public function productCard(Product $product)

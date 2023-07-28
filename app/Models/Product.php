@@ -161,4 +161,9 @@ class Product extends Model
         return $this->hasMany(ProductCategory::class);
     }
 
+    public function relative_products(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Product::class, 'id', 'relative_product_id');
+    }
+
 }
