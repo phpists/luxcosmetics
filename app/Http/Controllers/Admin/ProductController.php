@@ -9,6 +9,7 @@ use App\Models\Category;
 use App\Models\Product;
 use App\Models\ProductCategory;
 use App\Models\ProductVariation;
+use App\Models\RelatedProduct;
 use App\Services\CatalogService;
 use App\Services\FileService;
 use Illuminate\Http\JsonResponse;
@@ -143,6 +144,8 @@ class ProductController extends Controller
 
         $product_variations = CatalogService::getProductVariations($product->id, $product->base_property_id);
 
+        $related_products = RelatedProduct::query()->where('product_id', $product->id)->get();
+
         $articles = Article::query()
             ->where('record_id', $product->id)
             ->where('table_name', 'products')
@@ -153,7 +156,7 @@ class ProductController extends Controller
 
         $seo = Product::query()->select('products.*')->find($id);
 
-        return view('admin.products.edit', compact('product', 'categories', 'brands', 'product_images', 'product_variations', 'last_position', 'articles', 'seo'));
+        return view('admin.products.edit', compact('product', 'categories', 'brands', 'product_images', 'product_variations', 'last_position', 'articles', 'seo', 'related_products'));
     }
 
     public function update(Request $request, $id)
@@ -173,6 +176,34 @@ class ProductController extends Controller
 
         if (!array_key_exists('alias', $data) || $data['alias'] === null) {
             $data['alias'] = Str::slug($data['title'], '-');
+        }
+
+        $related_products = [];
+
+        RelatedProduct::query()->where('product_id', $product->id)->delete();
+
+        if (array_key_exists('support_item_id', $data)) {
+            foreach ($data['support_item_id'] as $item_id) {
+                $related_products[] = [
+                    'product_id' => $product->id,
+                    'relative_product_id' => $item_id,
+                    'relation_type' => RelatedProduct::SUPPORT_ITEMS
+                ];
+            }
+        }
+
+        if (array_key_exists('similar_item_id', $data)) {
+            foreach ($data['similar_item_id'] as $item_id) {
+                $related_products[] = [
+                    'product_id' => $product->id,
+                    'relative_product_id' => $item_id,
+                    'relation_type' => RelatedProduct::SIMILAR_ITEMS
+                ];
+            }
+        }
+
+        if (sizeof($related_products) > 0) {
+            RelatedProduct::query()->insert($related_products);
         }
 
         $count = Product::query()
@@ -356,4 +387,8 @@ class ProductController extends Controller
         return new JsonResponse($category->properties);
     }
 
+    public function searchProducts(Request $request) {
+        $products = Product::query()->select(['id', 'title'])->where('title', 'LIKE', '%'.$request->search.'%')->get();
+        return response()->json(['products' => $products]);
+    }
 }

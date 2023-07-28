@@ -188,6 +188,30 @@
                                     </div>
                                 </div>
 
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-group" id="support_items_container">
+                                            <label>{{\App\Models\RelatedProduct::getRelationName(\App\Models\RelatedProduct::SUPPORT_ITEMS)}}</label>
+                                            <select class="form-control select2" id="support_items_select"
+                                                    name="support_item_id[]" data-product="{{ $product->id }}" multiple>
+                                                @foreach($related_products->where('relation_type', \App\Models\RelatedProduct::SUPPORT_ITEMS) as $variation)
+                                                    <option value="{{$variation->relative_product_id}}" selected>{{ $variation->related_product->title . (isset($variation->base_property_value) ? ' (' . $variation->base_property_value . ($variation->base_property_measure ?? '') . ')' : '' )}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group" id="similar_items_container">
+                                            <label>{{\App\Models\RelatedProduct::getRelationName(\App\Models\RelatedProduct::SIMILAR_ITEMS)}}</label>
+                                            <select class="form-control select2" id="similar_items_select"
+                                                    name="similar_item_id[]" data-product="{{ $product->id }}" multiple>
+                                                @foreach($related_products->where('relation_type', \App\Models\RelatedProduct::SIMILAR_ITEMS) as $variation)
+                                                    <option value="{{$variation->relative_product_id}}" selected>{{ $variation->related_product->title . (isset($variation->base_property_value) ? ' (' . $variation->base_property_value . ($variation->base_property_measure ?? '') . ')' : '' )}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
 
                                 <div class="row">
                                     <div class="col-md-2">
@@ -828,6 +852,67 @@
                 }
             })
         }
+
+        let support_select = $('#support_items_select');
+        support_select.select2({
+            allowClear: true,
+            ajax: {
+                url: '{{route('admin.products.search')}}',
+                data: function (params) {
+                    var query = {
+                        search: params.term
+                    }
+
+                    // Query parameters will be ?search=[term]&type=public
+                    return query;
+                },
+                processResults: function (data) {
+                    console.log(data)
+                    data = data.products.map((x) => {
+                        let title = x.title
+                        return {
+                            text: title,
+                            id: x.id
+                        }
+                    })
+                    // Transforms the top-level key of the response object from 'items' to 'results'
+                    return {
+                        results: data
+                    };
+                }
+            },
+            minimumInputLength: 1
+        });
+        let similar_select = $('#similar_items_select');
+        similar_select.select2({
+            allowClear: true,
+            ajax: {
+                url: '{{route('admin.products.search')}}',
+                data: function (params) {
+                    var query = {
+                        search: params.term
+                    }
+
+                    // Query parameters will be ?search=[term]&type=public
+                    return query;
+                },
+                processResults: function (data) {
+                    console.log(data)
+                    data = data.products.map((x) => {
+                        let title = x.title
+                        return {
+                            text: title,
+                            id: x.id
+                        }
+                    })
+                    // Transforms the top-level key of the response object from 'items' to 'results'
+                    return {
+                        results: data
+                    };
+                }
+            },
+            minimumInputLength: 1
+        });
     </script>
 
 @endsection
