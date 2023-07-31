@@ -173,6 +173,15 @@ class CartService
         return session()->get($name) ?? null;
     }
 
+    public static function canCheckout(): bool
+    {
+        $min_sum = SiteConfigService::getParamValue('min_checkout_sum');
+        if ($min_sum)
+            return (new self())->getTotalSum() >= $min_sum;
+
+        return true;
+    }
+
 
 
     public function store(): ?int

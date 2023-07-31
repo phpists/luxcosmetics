@@ -22,7 +22,10 @@ class CartController extends Controller
     public function index() {
         $cart_products = $this->cartService->getAllProducts();
 
-        return view('cart.index', compact('cart_products'));
+        if ($cart_products->isNotEmpty())
+            return view('cart.index', compact('cart_products'));
+        else
+            return view('cart.empty');
     }
 
     public function indexStore(Request $request)

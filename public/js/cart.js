@@ -209,7 +209,7 @@ function removeFromCart(product_id, $button) {
             if (response) {
                 updateTotalCount(response.total_count)
                 $button.removeClass('isInCart')
-                $('#totalSum').text(response.total_sum)
+                updateTotalSum(response.total_sum)
 
                 if ($button.data('element') !== undefined) {
                     let selector = $button.data('element')
@@ -237,7 +237,7 @@ function plusQuantity(product_id, $button) {
                 $button.addClass('isInCart')
                 $button.parents($button.data('element')).find('.currentQuantity').val(response.quantity)
                 $button.parents('div.cart-product:first').find('.currentSum').text(response.sum)
-                $('#totalSum').text(response.total_sum)
+                updateTotalSum(response.total_sum)
                 $('#modalCurrentProductSum').text(response.sum)
             }
         },
@@ -264,7 +264,7 @@ function minusQuantity(product_id, $button) {
                 $button.addClass('isInCart')
                 $button.parents($button.data('element')).find('.currentQuantity').val(response.quantity)
                 $button.parents('div.cart-product:first').find('.currentSum').text(response.sum)
-                $('#totalSum').text(response.total_sum)
+                updateTotalSum(response.total_sum)
                 $('#modalCurrentProductSum').text(response.sum)
             }
         },
@@ -288,11 +288,25 @@ function changeModification(e) {
         dataType: 'json',
         success: function (response) {
             if (response) {
-                console.log()
                 $this.parents('div.product').after(response.html).remove()
             }
         }
     })
+}
+
+function updateTotalSum(sum) {
+    $('#totalSum').text(sum)
+    let min_sum = $('#min_sum').val();
+
+    if (min_sum) {
+        if (min_sum <= sum) {
+            $('#submitButton').prop('disabled', false)
+        } else {
+            $('#submitButton').prop('disabled', true)
+        }
+    } else {
+        $('#submitButton').prop('disabled', false)
+    }
 }
 
 function findValueByName(name, serializedForm) {

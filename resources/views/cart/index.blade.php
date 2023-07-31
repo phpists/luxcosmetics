@@ -3,6 +3,8 @@
 @section('title', 'Корзина')
 
 @section('content')
+    <input type="hidden" id="min_sum" value="{{ \App\Services\SiteConfigService::getParamValue('min_checkout_sum') }}">
+
 <section class="crumbs">
 	<div class="container">
 		<div class="row">
@@ -148,7 +150,7 @@
                 <div class="cart-aside__points"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#warning')}}"></use></svg> Вы получите 820 баллов</div>
                 <div class="cart-aside__sum">Итого с НДС <span id="totalSum">{{ $cartService->getTotalSum() }}</span> ₽</div>
         </div>
-        <button type="submit" form="indexForm" class="btn btn--accent cart-aside__buy" @disabled(!$cartService->isNotEmpty())>Перейти к доставкe</button>
+        <button type="submit" form="indexForm" id="submitButton" class="btn btn--accent cart-aside__buy" @disabled(!$cartService->isNotEmpty() || !\App\Services\CartService::canCheckout())>Перейти к доставкe</button>
         <div class="cart-aside__paymethods">
                 <img src="{{asset('images/dist/ico-visa.png')}}" alt="">
                 <img src="{{asset('images/dist/ico-mir.png')}}" alt="">

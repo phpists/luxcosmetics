@@ -93,16 +93,26 @@ Route::group(['middleware' => 'auth'], function () {
     });
 
     // Cart
-    Route::get('cart/delivery', [\App\Http\Controllers\CartController::class, 'delivery'])->name('cart.delivery');
-    Route::post('cart/delivery', [\App\Http\Controllers\CartController::class, 'deliveryStore'])->name('cart.delivery.store');
-    Route::get('cart/payment', [\App\Http\Controllers\CartController::class, 'payment'])->name('cart.payment');
-    Route::post('cart/checkout', [\App\Http\Controllers\CartController::class, 'checkoutStore'])->name('cart.checkout.store');
+    Route::get('cart/delivery', [\App\Http\Controllers\CartController::class, 'delivery'])
+        ->middleware('can-checkout')
+        ->name('cart.delivery');
+    Route::post('cart/delivery', [\App\Http\Controllers\CartController::class, 'deliveryStore'])
+        ->middleware('can-checkout')
+        ->name('cart.delivery.store');
+    Route::get('cart/payment', [\App\Http\Controllers\CartController::class, 'payment'])
+        ->middleware('can-checkout')
+        ->name('cart.payment');
+    Route::post('cart/checkout', [\App\Http\Controllers\CartController::class, 'checkoutStore'])
+        ->middleware('can-checkout')
+        ->name('cart.checkout.store');
     Route::get('cart/success/{order}', [\App\Http\Controllers\CartController::class, 'success'])->name('cart.success');
     Route::get('cart/error', [\App\Http\Controllers\CartController::class, 'error'])->name('cart.error');
 });
 // Cart
 Route::get('cart', [\App\Http\Controllers\CartController::class, 'index'])->name('cart');
-Route::post('cart', [\App\Http\Controllers\CartController::class, 'indexStore'])->name('cart.store');
+Route::post('cart', [\App\Http\Controllers\CartController::class, 'indexStore'])
+    ->middleware('can-checkout')
+    ->name('cart.store');
 Route::post('cart/add', [\App\Http\Controllers\CartController::class, 'add'])->name('cart.add');
 Route::post('cart/remove', [\App\Http\Controllers\CartController::class, 'remove'])->name('cart.remove');
 Route::post('cart/plus-quantity', [\App\Http\Controllers\CartController::class, 'plusQuantity'])->name('cart.plus-quantity');

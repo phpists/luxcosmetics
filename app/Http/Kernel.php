@@ -2,6 +2,7 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\CanCheckout;
 use App\Http\Middleware\EnsureActiveUser;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
@@ -65,6 +66,7 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'admin' => \App\Http\Middleware\Admin::class,
-        'is_active_user' => EnsureActiveUser::class
+        'is_active_user' => EnsureActiveUser::class,
+        'can-checkout' => CanCheckout::class
     ];
 }
