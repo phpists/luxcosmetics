@@ -40,6 +40,9 @@
         $static_pages = \App\Models\Page::query()->where('is_active', 1)->get();
     @endphp
     @include('layouts.includes.header', ['menu_items' => $menu_items])
+
+    @include('layouts.includes.messages')
+
     @yield('content')
 
     @include('layouts.includes.purchase_modal')

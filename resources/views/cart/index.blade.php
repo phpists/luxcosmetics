@@ -31,7 +31,7 @@
 								<div class="cart-table__th cart-table__th--price">Цена</div>
 								<div class="cart-table__th cart-table__th--sum">Сумма</div>
 							</div>
-							<div class="cart-table__body">
+							<div id="cartProductsContainer" class="cart-table__body">
                                 @forelse($cart_products as $product)
                                     <div class="cart-table__item cart-product" data-product="{{ $product->id }}" data-property="{{ $product->baseValue->id ?? '' }}">
                                         <div class="cart-product__image">

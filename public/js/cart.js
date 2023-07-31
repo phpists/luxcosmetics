@@ -215,6 +215,11 @@ function removeFromCart(product_id, $button) {
                     let selector = $button.data('element')
                     $($button).parents(`${selector}`).remove()
                 }
+
+                if (location.pathname === '/cart') {
+                    if ($('#cartProductsContainer div.cart-product').length < 1)
+                        location.reload()
+                }
             }
         }
     })

@@ -7,9 +7,11 @@ use App\Models\Order;
 use App\Models\PaymentCard;
 use App\Models\Product;
 use App\Services\CartService;
+use App\Services\SiteConfigService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Session;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 class CartController extends Controller
@@ -22,10 +24,15 @@ class CartController extends Controller
     public function index() {
         $cart_products = $this->cartService->getAllProducts();
 
-        if ($cart_products->isNotEmpty())
+        if ($cart_products->isNotEmpty()) {
+            $min_sum = SiteConfigService::getParamValue('min_checkout_sum');
+            if ($this->cartService->getTotalSum() < $min_sum)
+                Session::flash('error', "Минимальная сумма для заказа - {$min_sum}");
+
             return view('cart.index', compact('cart_products'));
-        else
+        } else {
             return view('cart.empty');
+        }
     }
 
     public function indexStore(Request $request)

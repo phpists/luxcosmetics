@@ -2,11 +2,12 @@
     .alert {
         display: block;
         padding: 0.5rem 1rem;
-        margin-bottom: 10px;
         border: 1px solid transparent;
-        border-radius: 0;
         font-size: 85%;
         line-height: 1.5;
+        max-width: 1300px;
+        margin: 30px auto 20px auto;
+        border-radius: .5rem;
     }
 
     .alert-success {
@@ -15,8 +16,10 @@
         border-color: #c3e6cb;
     }
 
-    .mb-0 {
-        margin-bottom: 0;
+    .alert-danger {
+        color: #571515;
+        background-color: #edd4d4;
+        border-color: #e6c3c3;
     }
 
     .rounded-0 {
@@ -35,8 +38,13 @@
 </style>
 <div class="validation_messages">
     @if(session()->get('success'))
-        <div class="alert alert-success mb-0 rounded-0 small py-2">
+        <div class="alert alert-success mb-0 small py-2">
             {{ session()->get('success') }}
+        </div>
+    @endif
+    @if(session()->get('error'))
+        <div class="alert alert-danger mb-0 small py-2">
+            {{ session()->get('error') }}
         </div>
     @endif
 
