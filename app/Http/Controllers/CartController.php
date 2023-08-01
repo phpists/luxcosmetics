@@ -2,15 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\CartLetter;
+use App\Mail\OrderLetter;
 use App\Models\Address;
 use App\Models\Order;
 use App\Models\PaymentCard;
 use App\Models\Product;
 use App\Services\CartService;
+use App\Services\MailService;
 use App\Services\SiteConfigService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
@@ -89,6 +93,9 @@ class CartController extends Controller
         $this->cartService->setProperty(CartService::AS_DELIVERY_ADDRESS_KEY, $as_delivery_address);
         $card_id = $request->post('card_id');
 
+        $user = Auth::user();
+        $email = $user->email;
+
         if (!$card_id) {
             $card_data = $request->post('card');
             $card_data['card_number'] = trim($card_data['card_number']);
@@ -102,8 +109,11 @@ class CartController extends Controller
 
         $this->cartService->setProperty(CartService::CARD_KEY, $card_id);
 
-        if ($order_id = $this->cartService->store())
+        if ($order_id = $this->cartService->store()) {
+
+            Mail::to($email)->send(new OrderLetter('Спасибо за оформления заказа'));
             return redirect()->route('cart.success', ['order' => $order_id]);
+        }
 
         return redirect()->route('cart.error');
     }
@@ -123,7 +133,6 @@ class CartController extends Controller
     {
         $this->cartService->add($request->post('product_id'));
         $total_count = $this->cartService->getTotalCount();
-
         return response()->json([
             'total_count' => $total_count,
             'product_html' => view('layouts.includes._purchase_modal_product', [
