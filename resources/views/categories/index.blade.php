@@ -62,8 +62,8 @@
                                 <form id="filterForm" action="{{ route('categories.show', ['alias' => $category->alias]) }}">
 
                                     <input type="hidden" name="sort">
-                                    <input type="hidden" id="filterMinPrice" value="{{ $products->min('price') }}">
-                                    <input type="hidden" id="filterMaxPrice" value="{{ $products->max('price') }}">
+                                    <input type="hidden" id="filterMinPrice" value="{{ $products->min('price') ?? 1 }}">
+                                    <input type="hidden" id="filterMaxPrice" value="{{ $products->max('price') ?? 99999 }}">
 
                                 <div class="filters__close"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#close')}}"></use></svg></div>
                                 <div class="filters__hdr">
