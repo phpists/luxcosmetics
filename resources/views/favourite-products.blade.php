@@ -132,7 +132,6 @@
 @endsection
 
 @section('scripts')
-    <script src="{{asset('/js/app.min.js')}}"></script>
     <script>
         $(document).ready(function () {
             $(function () {

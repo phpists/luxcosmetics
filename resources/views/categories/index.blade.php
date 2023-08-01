@@ -62,6 +62,8 @@
                                 <form id="filterForm" action="{{ route('categories.show', ['alias' => $category->alias]) }}">
 
                                     <input type="hidden" name="sort">
+                                    <input type="hidden" id="filterMinPrice" value="{{ $products->min('price') }}">
+                                    <input type="hidden" id="filterMaxPrice" value="{{ $products->max('price') }}">
 
                                 <div class="filters__close"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#close')}}"></use></svg></div>
                                 <div class="filters__hdr">
@@ -87,10 +89,11 @@
                                             </div>
                                         </div>
                                     </div>
+
                                     @foreach(\App\Services\CatalogService::getFilters($category) as $category_property)
                                     <div class="filters__item filter">
-                                        <div class="filter__title">{{ $category_property->name }} {{ isset($category_property->measure) ? '('.$category_property->measure.')' : '' }} <svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#arrow')}}"></use></svg></div>
-                                        <div class="filter__block">
+                                        <div class="filter__title @if(!$loop->first) is-close @endif">{{ $category_property->name }} {{ isset($category_property->measure) ? '('.$category_property->measure.')' : '' }} <svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#arrow')}}"></use></svg></div>
+                                        <div class="filter__block" @if(!$loop->first) style="display: none" @endif>
                                             <div class="filter__wrap filter__scroll">
                                                 @foreach($category_property->values as $property_value)
                                                 <label class="checkbox">
@@ -224,7 +227,6 @@
 @endsection
 
 @section('scripts')
-    <script src="{{asset('/js/app.min.js')}}"></script>
     <script src="{{asset('/js/favourites.js')}}"></script>
     <script>
         $(document).ready(function () {
