@@ -52,9 +52,6 @@
                                             #
                                         </th>
                                         <th class="pr-0 text-center">
-                                            Иконка
-                                        </th>
-                                        <th class="pr-0 text-center">
                                             Ссылка
                                         </th>
                                         <th class="pr-0 text-center">
@@ -73,11 +70,6 @@
                                         <tr data-id="{{ $network->id }}">
                                             <td class="handle text-center pl-0" style="cursor: pointer">
                                                 <i class="flaticon2-sort"></i>
-                                            </td>
-                                            <td class="text-center">
-                                                <span class="text-dark-75 d-block font-size-lg">
-                                                    <img src="{{asset('images/uploads/social/' . $network->icon)}}" height="24">
-                                                </span>
                                             </td>
                                             <td class="text-center">
                                                 <a href="{{ $network->link }}" target="_blank" class="d-block font-size-lg">
@@ -168,7 +160,7 @@
                                             Ссылка
                                         </th>
                                         <th class="pr-0 text-center">
-                                            Контакты 
+                                            Контакты
                                         </th>
                                         <th class="pr-0 text-center">
                                             Футер
@@ -247,11 +239,11 @@
                                 <span class="card-icon">
                                     <i class="flaticon-network text-primary"></i>
                                 </span>
-                                
+
                                 <h3 class="card-label">
                                     Ваш номер:@foreach ($phone as $item) {{$item->phone}} @endforeach
                                 </h3>
-                               
+
                             </div>
                             <div class="card-toolbar">
                                 <form action="{{ route('admin.settings.phone.edit')}}" method="POST">
@@ -265,8 +257,8 @@
                             </div>
                         </div>
                     </div>
-                    
-                    
+
+
                     <!--end::Card-->
                 </div>
             </div>

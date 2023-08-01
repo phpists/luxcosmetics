@@ -12,12 +12,14 @@
                         <button class="search__btn"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#search')}}"></use></svg></button>
                     </form>
                     <div class="header__contacts">
-                        <div class="header__social social">
-                            @foreach (\App\Models\SocialMedia::query()->select('social_medias.*')->get() as $item)
-                                <div style="margin: 5px; display: inline-block;"><a href="{{ $item->link }}"><img src="{{asset('images/uploads/social/' . $item->icon)}}" alt=""></a></div>
-                            @endforeach
-                            </div>
-                        @foreach (\App\Models\SocialMedia::query()->select('social_medias.phone')->get() as $item)
+                        @foreach($items = \App\Models\SocialMedia::query()->select('social_medias.link')->get() as $item)
+                        @if($item->link !== null)
+                                <a href="{{ $item->link }}" class="social__item" target="_blank">
+                                    <svg class="icon"><use xlink:href="images/dist/sprite.svg#insta"></use></svg>
+                                </a>
+                        @endif
+                        @endforeach
+                    @foreach (\App\Models\SocialMedia::query()->select('social_medias.phone')->get() as $item)
                             <div class="header__phone"><a href="">{{ $item->phone ?? ''}}</a></div>
                         @endforeach
                         <div class="header__links">

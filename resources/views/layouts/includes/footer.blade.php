@@ -8,8 +8,12 @@
                 <div class="footer__social social">
                     <div class="social__title">Мы в социальных сетях</div>
                     <div class="social__items">
-                        @foreach (\App\Models\SocialMedia::query()->select('social_medias.*')->get() as $item)
-                                <div style="margin: 5px; display: inline-block;"><a href="{{ $item->link }}"><img src="{{asset('images/uploads/social/' . $item->icon)}}" alt=""></div>
+                        @foreach($items = \App\Models\SocialMedia::query()->select('social_medias.link')->get() as $item)
+                        @if($item->link !== null)
+                                <a href="{{ $item->link }}" class="social__item" target="_blank">
+                                    <svg class="icon"><use xlink:href="images/dist/sprite.svg#insta"></use></svg>
+                                </a>
+                        @endif
                         @endforeach
                     </div>
                 </div>
@@ -68,10 +72,9 @@
     </div>
 </footer>
 <div class="mobilenav">
-
     <a href="/" class="header__link header__link--cat"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#home')}}"></use></svg> <b>Главная</b></a>
-    <a href="#menu" class="header__link header__link--cat"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#menu')}}"></use></svg><b>Главная</b></a>
-    <a href="{{route('profile')}}" class="header__link header__link--auth"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#user')}}"></use></svg><b>Каталог</b></a>
+    <a href="#menu" class="header__link header__link--cat"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#menu')}}"></use></svg><b>Каталог</b></a>
     <a href="{{route('favourites')}}" class="header__link header__link--fav"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#heart')}}"></use></svg> <span id="mobile__linkcount" class="header__linkcount @if(sizeof(\App\Services\FavoriteProductsService::getAllIds()) === 0) hidden @endif">{{sizeof(\App\Services\FavoriteProductsService::getAllIds())}}</span><b>Избранное</b></a>
     <a href="{{route('cart')}}" class="header__link header__link--cart"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#cart')}}"></use></svg> <span class="header__linkcount">{{ $cartService->getTotalCount() }}</span><b>Корзина</b></a>
+    <a href="{{route('profile')}}" class="header__link header__link--auth"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#user')}}"></use></svg><b>Кабинет</b></a>
 </div>
