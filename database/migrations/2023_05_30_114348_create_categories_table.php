@@ -13,11 +13,11 @@ return new class extends Migration
     {
         Schema::create('categories', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('category_id')->nullable()->comment('Родительская категория');
+            $table->integer('category_id')->nullable()->comment('Родительская категория');
             $table->string('alias')->unique()->comment('Аліас');
             $table->string('name')->comment('Назва');
             $table->string('image')->nullable()->comment('Изображение категории');
-            $table->bigInteger('position')->comment('Позиция');
+            $table->integer('position')->comment('Позиция');
             $table->boolean('status')->default(0)->comment('Статус');
             $table->boolean('add_to_top_menu')->default(0);
             $table->string('bottom_title')->default('test');
@@ -27,9 +27,6 @@ return new class extends Migration
             $table->text('keywords_meta')->comment('Для seo');
             $table->text('og_title_meta')->comment('Для микро seo');
             $table->text('og_description_meta')->comment('Для микро seo');
-            $table->text('bottom_title')->comment('');
-            $table->text('bottom_text')->comment('');
-            $table->text('breadcrumb')->comment('');
             $table->timestamps();
         });
     }

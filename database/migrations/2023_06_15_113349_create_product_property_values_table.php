@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(\App\Models\Product::class);
             $table->foreignIdFor(\App\Models\PropertyValue::class);
-            $table->foreignIdFor(\App\Models\Property::class)->after('product_id');
+            $table->foreignIdFor(\App\Models\Property::class);
             $table->timestamps();
         });
     }

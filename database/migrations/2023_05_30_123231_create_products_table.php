@@ -20,16 +20,16 @@ return new class extends Migration
             $table->string('code_1c', 30)->comment('Код article 1C');
             $table->boolean('status')->default(1)->comment('Статус');
             $table->float('price')->comment('Ціна');
-            $table->bigInteger('image_print_id')->nullable()->comment('ГЛАВНОЕ ИЗОБРАЖЕНИЕ');
+            $table->integer('image_print_id')->nullable()->comment('ГЛАВНОЕ ИЗОБРАЖЕНИЕ');
             $table->float('discount_price')->nullable()->comment('Ціна зі знижкою');
-            $table->bigInteger('category_id')->comment('Головна категорія');
+            $table->integer('category_id')->comment('Головна категорія');
             $table->integer('brand_id')->comment('Бренд');
             $table->text('description_1')->comment('Опис 1');
             $table->text('description_2')->nullable()->comment('Опис 2');
             $table->text('description_3')->nullable()->comment('Опис 3');
-            $table->foreignIdFor(\App\Models\Property::class, 'base_property_id')->after('category_id');
+            $table->foreignIdFor(\App\Models\Property::class, 'base_property_id');
 
-            $table->smallInteger('availability')->default(AvailableOptions::AVAILABLE->value)->comment('Доступність товару');
+            $table->integer('availability')->default(AvailableOptions::AVAILABLE->value)->comment('Доступність товару');
             $table->integer('points')->comment('Бонусные баллы')->default(0);
 
             $table->boolean('show_in_sales_page')->default(false)->comment('Отобразить на странице Акции');
@@ -38,7 +38,7 @@ return new class extends Migration
             $table->string('size');
 
 
-            $table->float('old_price')->after('status')->nullable();
+            $table->float('old_price')->nullable();
             $table->integer('discount_price')->nullable()->change();
             $table->renameColumn('discount_price', 'discount');
 
