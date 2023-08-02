@@ -12,9 +12,7 @@ class MenuController extends Controller
 {
     public function index($menu_type) {
         $menu_items = Menu::query()->where('type', $menu_type)->get();
-        $link = SocialMedia::query()->select('social_medias.link')->get();
-        $phone = SocialMedia::query()->select('social_medias.phone')->get();
-        return view('admin.menu.index', compact('menu_items', 'menu_type', 'link', 'phone'));
+        return view('admin.menu.index', compact('menu_items', 'menu_type'));
     }
 
     public function create(Request $request, $menu_type) {
