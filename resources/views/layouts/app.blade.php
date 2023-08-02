@@ -39,15 +39,16 @@
     @php
         $static_pages = \App\Models\Page::query()->where('is_active', 1)->get();
     @endphp
-    @include('layouts.includes.header', ['menu_items' => $menu_items])
-
+    @php
+        $social = \App\Models\SocialMedia::query()->select('social_medias.*')->get();
+    @endphp
+    @include('layouts.includes.header', ['menu_items' => $menu_items, 'social' => $social])
     @include('layouts.includes.messages')
 
     @yield('content')
 
     @include('layouts.includes.purchase_modal')
-
-    @include('layouts.includes.footer', ['menu_items' => $menu_items, 'static-pages' => $static_pages])
+    @include('layouts.includes.footer', ['menu_items' => $menu_items, 'static-pages' => $static_pages, 'social' => $social])
 </div>
 @include('layouts.parts.mobile-menu', ['menu_items' => $menu_items])
 <div class="hidden">

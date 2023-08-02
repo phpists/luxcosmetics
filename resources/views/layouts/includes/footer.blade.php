@@ -8,7 +8,7 @@
                 <div class="footer__social social">
                     <div class="social__title">Мы в социальных сетях</div>
                     <div class="social__items">
-                        @foreach($items = \App\Models\SocialMedia::query()->select('social_medias.link')->get() as $item)
+                        @foreach($social as $item)
                         @if($item->link !== null)
                                 <a href="{{ $item->link }}" class="social__item" target="_blank">
                                     <svg class="icon"><use xlink:href="images/dist/sprite.svg#insta"></use></svg>
@@ -49,7 +49,7 @@
 
             <div class="col-lg-2 col-md-4 col-sm-4 col-6 colcontacts">
                 <div class="footer__contacts">
-                    @foreach (\App\Models\SocialMedia::query()->select('social_medias.phone')->get() as $item)
+                    @foreach ($social as $item)
                         <div class="footer__phone">{{ $item->phone ?? ''}}</a></div>
                     @endforeach
                     <a href="#callback" class="btn btn--accent popup-with-form">Заказать звонок

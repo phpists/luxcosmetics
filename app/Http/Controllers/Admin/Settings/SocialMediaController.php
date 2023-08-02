@@ -74,21 +74,12 @@ class SocialMediaController extends Controller
             return redirect()->back()->with('error', 'Не вдалось відредагувати ' .  ($social->type_id == SocialMedia::TYPE_NETWORK ? 'соц.мережу' : 'месенджер'));
         }
     }
-
-    public function editPhone(Request $request, $phone)
-    {
-        $phone = $request->input('phone');
-        return view('admin.settings.phone.update', compact('phone'));
-    }
-
-
     public function updatePhone(Request $request)
     {
         $phone = $request->input('phone');
         $social = SocialMedia::first();
 
     if ($social == null) {
-        $phone = new SocialMedia(['phone' => $request->input('phone')]);
         $phone->save();
     } else {
         $social->phone = $phone;
@@ -134,5 +125,4 @@ class SocialMediaController extends Controller
 
         return redirect()->back()->with('success', 'Запис про соціальну медіа видалено');
     }
-
 }
