@@ -148,7 +148,8 @@
 || request()->routeIs('admin.category.edit')
 || request()->routeIs('admin.category.create')
 || request()->routeIs('admin.properties.edit')
-|| request()->routeIs('admin.properties.create')) ? 'menu-item-open' : '' }}"
+|| request()->routeIs('admin.properties.create')
+|| request()->routeIs('admin.main-block.index')) ? 'menu-item-open' : '' }}"
                         aria-haspopup="true" data-menu-toggle="hover">
                             <a href="javascript:;" class="menu-link menu-toggle">
                                 <i class="fas flaticon2-copy menu-icon"></i>
