@@ -42,7 +42,7 @@ class CatalogService
 
         $products = Product::query()
             ->selectRaw('products.*, product_images.path as main_image, case when user_favorite_products.product_id is null then FALSE else TRUE end as is_favourite')
-            ->join('product_images', 'products.image_print_id', 'product_images.id')
+            ->leftJoin('product_images', 'products.image_print_id', 'product_images.id')
             ->where(function ($q) use ($category_ids) {
                 $q->whereIn('products.id', function ($query) use ($category_ids) {
                     $query->select('product_id')
@@ -167,7 +167,7 @@ class CatalogService
             })
             ->pluck('id')
             ->toArray();
-        
+
         return $category->filter_properties()
             ->with('values', function ($query) use ($product_ids) {
                 $query->whereIn('id', function ($query) use ($product_ids) {
