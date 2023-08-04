@@ -92,7 +92,7 @@
 
                                         </td>
                                         <td class="text-center pr-0">
-                                            {{ $order->user->email }}
+                                            {{ $order->user->email ?? '' }}
                                         </td>
                                         <td class="text-center pr-0">
                                             {{ $order->full_name }}
