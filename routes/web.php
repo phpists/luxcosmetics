@@ -211,7 +211,7 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function 
 
 //     Phone Social Media
     Route::get('settings/phone/edit/', [App\Http\Controllers\Admin\Settings\SocialMediaController::class, 'edit'])->name('admin.settings.phone.edit');
-    Route::put('sttings/phone/update/', [App\Http\Controllers\Admin\Settings\SocialMediaController::class, 'updatePhone'])->name('admin.settings.phone.update');
+    Route::put('settings/phone/update/', [App\Http\Controllers\Admin\Settings\SocialMediaController::class, 'updatePhone'])->name('admin.settings.phone.update');
 
     Route::get('clear-cache', [SettingController::class, 'clearCache'])->name('admin.clear.cache');
 //    Route::post('logout')->name('logout');
