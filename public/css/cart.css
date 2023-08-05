@@ -6,6 +6,20 @@
     content: 'Товар в корзине';
 }
 
+.product__addcart.isLoading:after,.product-page__addcart.isLoading:after {
+    content: '';
+    background: transparent url("/images/loading-lite.gif") no-repeat center;
+    background-size: 32px;
+    position: absolute;
+    display: block;
+    height: 48px;
+    width: 48px;
+}
+
+.product__addcart.isLoading span,.product-page__addcart.isLoading span {
+    display: none;
+}
+
 .product__addcart span {
     border-left: none;
     padding-left: 0;

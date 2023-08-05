@@ -157,6 +157,7 @@ function validateForm(form) {
 
 
 function addToCart(product_id, $button) {
+    $button.addClass('isLoading').prop('disabled', true)
     $.ajax({
         type: 'post',
         url: '/cart/add',
@@ -194,6 +195,8 @@ function addToCart(product_id, $button) {
                 });
             }
         }
+    }).done(function () {
+        $button.removeClass('isLoading').prop('disabled', false)
     })
 }
 
