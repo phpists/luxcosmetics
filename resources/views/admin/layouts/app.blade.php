@@ -334,7 +334,8 @@
 || request()->routeIs('admin.banner.create')
 || request()->routeIs('admin.banner.edit')
 || request()->routeIs('admin.pages.create')
-|| request()->routeIs('admin.pages.edit')) ? 'menu-item-open' : '' }}"
+|| request()->routeIs('admin.pages.edit')
+|| request()->routeIs('admin.gif-card')) ? 'menu-item-open' : '' }}"
                         aria-haspopup="true" data-menu-toggle="hover">
                             <a href="javascript:;" class="menu-link menu-toggle">
                                 <i class="fas flaticon2-copy menu-icon"></i>
@@ -366,6 +367,21 @@
                                                 <span></span>
                                             </i>
                                             <span class="menu-text">Статические</span>
+                                        </a>
+
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="menu-submenu" style="" kt-hidden-height="160">
+                                <i class="menu-arrow"></i>
+                                <ul class="menu-subnav">
+                                    <li class="menu-item {{ request()->routeIs('admin.gif-card') ? 'menu-item-active' : '' }}"
+                                        aria-haspopup="true">
+                                        <a href="{{route('admin.gif-card')}}" class="menu-link">
+                                            <i class="menu-bullet menu-bullet-dot">
+                                                <span></span>
+                                            </i>
+                                            <span class="menu-text">Подарочные карты</span>
                                         </a>
                                     </li>
                                 </ul>
