@@ -126,10 +126,11 @@ Route::post('fast-register', [\App\Http\Controllers\Auth\FastRegisterController:
 // Cart
 Route::get('cart/step1', [\App\Http\Controllers\CartController::class, 'step_first'])->name('cart.step1');
 Route::get('cart/step2', [\App\Http\Controllers\CartController::class, 'step_second'])->name('cart.step2');
-// Gift cards
-Route::get('giftcards/create', [\App\Http\Controllers\GiftController::class, 'create'])->name('gift-cards.create');
-Route::get('giftcards/{alias}', [\App\Http\Controllers\GiftController::class, 'show'])->name('gift-cards.show');
 
+// Gift card
+Route::get('gift-card', [\App\Http\Controllers\GiftController::class, 'index'])->name('gif-card.index');
+Route::get('gift-card/create', [\App\Http\Controllers\GiftController::class, 'create'])->name('gif-card.create');
+Route::post('gift-card', [\App\Http\Controllers\GiftController::class, 'store'])->name('gif-card.store');
 
 // Admin
 Route::get('admin', [AdminController::class, 'index'])->name('admin.home');
@@ -196,6 +197,15 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function 
     Route::post('article/sort', [\App\Http\Controllers\Admin\ArticleController::class, 'sort'])->name('admin.article.sort');
     Route::delete('article/delete', [\App\Http\Controllers\Admin\ArticleController::class, 'delete'])->name('admin.article.delete');
 
+    // GIF CARD
+    Route::get('gif-card', [\App\Http\Controllers\Admin\GifCardController::class, 'index'])->name('admin.gif-card');
+    Route::post('gif-card-min', [\App\Http\Controllers\Admin\GifCardController::class, 'storeMinSum'])->name('admin.storeMinSum');
+    Route::post('gif-card-max', [\App\Http\Controllers\Admin\GifCardController::class, 'storeMaxSum'])->name('admin.storeMaxSum');
+    Route::post('gif-card-fix-price', [\App\Http\Controllers\Admin\GifCardController::class, 'storeFixPrice'])->name('admin.fixPrice');
+    Route::put('gif-card-fix-price-update/{id}', [\App\Http\Controllers\Admin\GifCardController::class, 'updateFixPrice'])->name('admin.updateFixPrice');
+    Route::delete('gif-card-fix-price-delete/{id}', [\App\Http\Controllers\Admin\GifCardController::class, 'deleteFixPrice'])->name('admin.deleteFixPrice');
+    Route::post('gif-card-color', [\App\Http\Controllers\Admin\GifCardController::class, 'storeColorCard'])->name('admin.storeColorCard');
+    Route::delete('gif-card-color-delete/{id}', [\App\Http\Controllers\Admin\GifCardController::class, 'deleteColorCard'])->name('admin.deleteColorCard');
 
 //    Dashboard
     Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
