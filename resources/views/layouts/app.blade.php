@@ -78,11 +78,19 @@
         //     results_container.style.display = "block";
         // }, true);
 
-        search_field.addEventListener("blur", (event) => {
-            results_container.style.display = "none";
-        }, true);
+        // document.getElementById('search_field_header').addEventListener("blur", (event) => {
+        //     results_container.style.display = "none";
+        // }, false);
+
+        function clickOutsideInput(ev) {
+            if (ev.target !== search_field && !search_field.contains(ev.target)) {
+                results_container.style.display = "none";
+                document.removeEventListener('click', clickOutsideInput);
+            }
+        }
 
         header_search.addEventListener('input', function (ev) {
+            document.addEventListener('click', clickOutsideInput);
             if (ev.target.value !== '') {
                 fetch('{{route('search_prompt')}}?search='+ev.target.value, {
                     headers: {
