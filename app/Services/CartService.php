@@ -6,6 +6,7 @@ use App\Models\Address;
 use App\Models\Order;
 use App\Models\OrderProduct;
 use App\Models\Product;
+use App\Models\User;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 
@@ -205,9 +206,11 @@ class CartService
 
         try {
             $order = Order::create($order_data);
+            $bonus_points = 0;
 
             foreach (self::getAllItems() as $item) {
                 $product = self::getProduct($item['product_id']);
+                $bonus_points += ($item['quantity'] * $product->points);
                 OrderProduct::create([
                     'order_id' => $order->id,
                     'product_id' => $item['product_id'],
@@ -216,6 +219,10 @@ class CartService
                     'old_price' => $product->old_price
                 ]);
             }
+            $user = Auth::user();
+            $user->update([
+                'points' => ($user->points + $bonus_points)
+            ]);
 
             session()->forget(self::SESSION_KEY);
             session()->forget(self::ALL_KEYS);
