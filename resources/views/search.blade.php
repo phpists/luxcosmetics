@@ -88,7 +88,7 @@
 {{--                                @endforeach--}}
 {{--                            </ul>--}}
                             <div class="category-page__sortblock sortblock">
-                                <div class="sortblock__total">Показано <b><span id="current_items_number">{{$shown_count}}</span> из {{$products->total()}}</b></div>
+                                <div class="sortblock__total">Показано <b><span id="current_items_number">{{$shown_count}}</span> из <span id="total_products">{{$products->total()}}</span></b></div>
                                 <div class="sortblock__sort sort">
                                     <span class="sort__title">Сортировать по</span>
                                     <select name="" id="" class="sort__select">
@@ -256,7 +256,8 @@
                     success: function (response) {
                         document.querySelector('.category-page__products').innerHTML = response['data'];
                         document.getElementById('paginate-container').innerHTML = response['pagination'];
-
+                        document.getElementById('current_items_number').innerText = response.shown_count;
+                        document.getElementById('total_products').innerText = response.total;
                     },
                     complete: function () {
                         $('#catalog').removeClass('loading')

@@ -86,7 +86,6 @@ class SearchController extends Controller
         $shown_count = ($products->currentPage() - 1) * $paginate_count + $products->count();
         $last_page_url = $products->url($products->lastPage());
         $pagination = view('categories.parts.pagination', compact('products', 'last_page_url'))->render();
-        Log::info(json_encode($request->all()));
         if ($request->ajax() && $request->full!=='1') {
             return response()->json([
                 'data' => $products_list,
@@ -99,7 +98,8 @@ class SearchController extends Controller
             return response()->json([
                 'data' => $products_list,
                 'pagination' => $pagination,
-                'shown_count' => $shown_count
+                'shown_count' => $shown_count,
+                'total' => $products->total()
             ]);
         }
         return view('search', compact('products', 'pagination', 'products_list', 'search', 'shown_count'));
