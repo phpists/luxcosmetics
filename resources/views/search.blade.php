@@ -22,6 +22,9 @@
                     <div class="category-page__container">
                         <aside class="category-page__aside">
                             <div class="filters" id="filters">
+                                <input type="hidden" name="sort">
+                                <input type="hidden" id="filterMinPrice" value="{{ $products->min('price') ?? 1 }}">
+                                <input type="hidden" id="filterMaxPrice" value="{{ $products->max('price') ?? 99999 }}">
                                 <div class="filters__close"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#close')}}"></use></svg></div>
                                 <div class="filters__hdr">
                                     <div class="filters__title">Сортировать по</div>
@@ -36,11 +39,11 @@
                                                 <div class="filter__row">
                                                     <div class="filter__col">
                                                         <span>от</span>
-                                                        <input type="text" class="filter__input" id="amount">
+                                                        <input type="number" name="price[from]" class="filter__input" id="amount" value="{{ request()->input('price.from') ?? \App\Services\CatalogService::PRICE_FROM }}">
                                                     </div>
                                                     <div class="filter__col">
                                                         <span>до</span>
-                                                        <input type="text" class="filter__input" id="amount2">
+                                                        <input type="number" name="price[to]" class="filter__input" id="amount2" value="{{ request()->input('price.to') ?? \App\Services\CatalogService::PRICE_TO }}">
                                                     </div>
                                                 </div>
                                             </div>
@@ -86,7 +89,7 @@
 {{--                                @endforeach--}}
 {{--                            </ul>--}}
                             <div class="category-page__sortblock sortblock">
-                                <div class="sortblock__total">Показано <b>12 из 178</b></div>
+                                <div class="sortblock__total">Показано <b><span id="current_items_number">{{$shown_count}}</span> из {{$products->total()}}</b></div>
                                 <div class="sortblock__sort sort">
                                     <span class="sort__title">Сортировать по</span>
                                     <select name="" id="" class="sort__select">
@@ -201,6 +204,7 @@
                                 next_link.setAttribute('aria-disabled', 'true');
                                 next_link.children[0].href = '#';
                             }
+                            document.getElementById('current_items_number').innerHTML = response['shown_count'];
                             let active_class = 'pagination__item--active';
                             document.querySelector(`.${active_class}`).classList.remove(active_class);
                             let curr_item = document.querySelector(`.pagination__item[data-label="${response['current_page']}"]`);

@@ -52,30 +52,32 @@ class SearchController extends Controller
     }
 
     public function showResultsPage(Request $request) {
+        $paginate_count = 12;
         $search = $request->get('search');
         $products = $this->search($request);
         $products = $products
             ->select('products.*', 'product_images.path as main_image')
             ->join('product_images', 'products.image_print_id', 'product_images.id')
             ->with('brand')
-            ->paginate(12);
+            ->paginate($paginate_count);
         $products_id = [];
         foreach ($products as $product) {
             $products_id[] = $product->id;
         }
         $variations = Product::getVariations($products_id);
         $products_list = view('categories.parts.products', compact('products', 'variations'))->render();
-
+        $shown_count = ($products->currentPage() - 1) * $paginate_count + $products->count();
         if ($request->ajax()) {
             return response()->json([
                 'data' => $products_list,
                 'next_link' => $products->nextPageUrl(),
-                'current_page' => $products->currentPage()
+                'current_page' => $products->currentPage(),
+                'shown_count' => $shown_count
             ]);
         }
         $last_page_url = $products->url($products->lastPage());
         $pagination = view('categories.parts.pagination', compact('products', 'last_page_url'))->render();
-        return view('search', compact('products', 'pagination', 'products_list', 'search'));
+        return view('search', compact('products', 'pagination', 'products_list', 'search', 'shown_count'));
     }
     public function search_prompt(Request $request): JsonResponse
     {
