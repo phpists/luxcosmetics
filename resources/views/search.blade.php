@@ -18,6 +18,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
+                    <input type="hidden" id="search_needle" value="{{request()->input('search')}}">
                     <div class="title-h1">Результаты поиска по запросу {{$search}}</div>
                     <div class="category-page__container">
                         <aside class="category-page__aside">
@@ -192,8 +193,9 @@
                 let is_disabled = $('.pagination__item--next').attr('aria-disabled')
                 if(is_disabled === 'false') {
                     let nextPage = parseInt($('.pagination__item--active').attr('aria-current')) + 1;
+                    let search = document.getElementById('search_needle').value;
                     $.ajax({
-                        url: '{{route('show_search')}}?page='+nextPage,
+                        url: '{{route('show_search')}}?page='+nextPage+'&search='+search,
                         success: function (response) {
                             $('.category-page__products').append(response['data']);
                             let next_link = document.querySelector('.pagination__item--next');
