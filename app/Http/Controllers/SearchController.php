@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use App\Services\CatalogService;
 use App\Services\LanguageService;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class SearchController extends Controller
 {
@@ -16,10 +18,25 @@ class SearchController extends Controller
         $search_query = $request->get('search');
         $per_page = $request->get('per-page') ?? 12;
         $sort = $request->get('sort') ?? 'desc';
+        $from_price = ($request->price && array_key_exists('from', $request->price))? $request->price['from']: CatalogService::PRICE_FROM;
+        $to_price = ($request->price && array_key_exists('to', $request->price))? $request->price['to']: CatalogService::PRICE_TO;
         $columns = $request->get('columns') ?? 2;
 
         return Product::query()
-            ->where('title', 'like', '%'.$search_query.'%')
+            ->join('brands', 'brands.id', 'brand_id')
+            ->where(function ($query) use ($search_query) {
+                return $query->where('title', 'like', '%'.$search_query.'%')
+                    ->orWhere('brands.name', 'like', '%'.$search_query.'%');
+            })
+            ->where(function ($q) use ($from_price, $to_price) {
+                $q->whereBetween('price', [
+                    $from_price,
+                    $to_price
+                ])->orWhereBetween('old_price', [
+                    $from_price,
+                    $to_price
+                ]);
+            })
             ->limit($per_page);
     }
 
@@ -67,7 +84,10 @@ class SearchController extends Controller
         $variations = Product::getVariations($products_id);
         $products_list = view('categories.parts.products', compact('products', 'variations'))->render();
         $shown_count = ($products->currentPage() - 1) * $paginate_count + $products->count();
-        if ($request->ajax()) {
+        $last_page_url = $products->url($products->lastPage());
+        $pagination = view('categories.parts.pagination', compact('products', 'last_page_url'))->render();
+        Log::info(json_encode($request->all()));
+        if ($request->ajax() && $request->full!=='1') {
             return response()->json([
                 'data' => $products_list,
                 'next_link' => $products->nextPageUrl(),
@@ -75,8 +95,13 @@ class SearchController extends Controller
                 'shown_count' => $shown_count
             ]);
         }
-        $last_page_url = $products->url($products->lastPage());
-        $pagination = view('categories.parts.pagination', compact('products', 'last_page_url'))->render();
+        elseif ($request->ajax() && $request->full === '1') {
+            return response()->json([
+                'data' => $products_list,
+                'pagination' => $pagination,
+                'shown_count' => $shown_count
+            ]);
+        }
         return view('search', compact('products', 'pagination', 'products_list', 'search', 'shown_count'));
     }
     public function search_prompt(Request $request): JsonResponse
