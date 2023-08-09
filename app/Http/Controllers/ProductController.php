@@ -47,8 +47,9 @@ class ProductController extends Controller
             ->join('related_products', 'related_products.relative_product_id', 'products.id')
             ->where('related_products.product_id', $product->id)
             ->get();
+        $random_products = Product::query()->inRandomOrder()->limit(12)->get();
         $product_variations = CatalogService::getProductVariations($product->id, $product->base_property_id);
-        return view('products.product', compact('product', 'product_variations', 'articles', 'relative_products'));
+        return view('products.product', compact('product', 'product_variations', 'articles', 'relative_products', 'random_products'));
     }
 
     public function productCard(Product $product)
