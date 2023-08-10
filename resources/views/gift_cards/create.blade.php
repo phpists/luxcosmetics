@@ -29,7 +29,7 @@
                                         <div class="giftcard-page__section">
                                             <div class="giftcard-page__cards">
                                                 <label class="giftcardradio giftcard-page__card">
-                                                    <input type="radio" class="card-radio-sum" name="color" value="{{ $item->sum_card }}" required/>
+                                                    <input type="radio" class="card-radio-sum" name="color" value="{{ $item->color_card }}" required/>
                                                     <div class="giftcardradio__text" style="background-color: {{ $item->color_card }}"></div>
                                                 </label>
                                             </div>

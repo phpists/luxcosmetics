@@ -12,6 +12,7 @@ class GiftCard extends Model
     protected $fillable = [
         'sum', 'color',
         'receiver', 'receiver_email',
-        'from_whom', 'description'
+        'from_whom', 'description',
+        'code'
     ];
 }

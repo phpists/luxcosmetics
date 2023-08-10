@@ -24,7 +24,7 @@
         </div>
         <div class="cabinet-page__group giftcardban">
             <div class="giftcardban__title">Нет подарочной карты?</div>
-            <a href="" class="btn btn--accent">Купить сейчас</a>
+            <a href="{{ route('gif-card.index') }}" class="btn btn--accent">Купить сейчас</a>
         </div>
         <div class="cabinet-page__group">
             <h3 class="subheading">Вопросы и ответы</h3>
