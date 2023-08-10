@@ -1094,7 +1094,7 @@
                     <div class="wrapper">
                         <div class="tabs">
                             @if(sizeof($relative_products->where('relation_type', \App\Models\RelatedProduct::SUPPORT_ITEMS)) > 0)
-                                <span class="tab active">Выбрано для вас</span>
+                                <span class="tab">Выбрано для вас</span>
                             @endif
                             @if(sizeof($relative_products->where('relation_type', \App\Models\RelatedProduct::SIMILAR_ITEMS)) > 0)
                                 <span class="tab">Вам также может понравиться</span>
