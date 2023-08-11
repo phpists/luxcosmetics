@@ -370,6 +370,9 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function 
     Route::post('/order-product/add', [\App\Http\Controllers\Admin\OrderProductController::class, 'add'])->name('admin.order_products.add');
     Route::post('/order-product/refresh', [\App\Http\Controllers\Admin\OrderProductController::class, 'refresh'])->name('admin.order_products.refresh');
 
+    // Gift Cards
+    Route::resource('gift_cards', \App\Http\Controllers\Admin\GiftCardController::class, ['as' => 'admin']);
+
 });
 
 // General Pages

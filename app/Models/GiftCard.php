@@ -15,7 +15,8 @@ class GiftCard extends Model
         'from_whom', 'description',
         'code',
         'activated_by',
-        'activated_at'
+        'activated_at',
+        'buyer_id'
     ];
 
     protected $casts = [
@@ -26,9 +27,14 @@ class GiftCard extends Model
 
     public function activator()
     {
-        return $this->hasOne(User::class, 'id', 'activated_by');
+        return $this->belongsTo(User::class, 'activated_by');
     }
 
+
+    public function buyer()
+    {
+        return $this->belongsTo(User::class, 'buyer_id');
+    }
 
 
     public function isActivated()

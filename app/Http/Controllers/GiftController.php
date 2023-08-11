@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Mail\GiftCardEmail;
 use App\Models\GiftCard;
 use App\Models\GiftCardValue;
+use App\Services\GiftCardService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -67,26 +68,27 @@ class GiftController extends Controller
         return redirect()->route('gift_card.create');
     }
 
-    public function cartStore(Request $request)
+    public function cartStore(Request $request, GiftCardService $giftCardService)
     {
         if (!session()->has(self::SESSION_KEY))
             return redirect()->route('gift_card.create');
 
         $data = (array) session()->get(self::SESSION_KEY);
-        $data['code'] = $this->generateCode();
-        $gift = new GiftCard($data);
-        $gift->save();
 
-        Mail::to($gift->receiver_email)->send(new GiftCardEmail($gift));
-
-        return redirect()->route('profile.gift-cards')->with('success', 'Подарочная карта отправлена на указанную почту');
+        if ($giftCardService->store($data)) {
+            session()->forget(self::SESSION_KEY);
+            return redirect()->route('profile.gift-cards')
+                ->with('success', 'Подарочная карта отправлена на указанную почту');
+        } else {
+            return back();
+        }
     }
 
 
 
 
     private function generateCode() {
-        $number = mt_rand(100000000000, 999999999999);
+        $number = mt_rand(1000000000000000, 9999999999999999);
 
         if ($this->codeExists($number))
             return $this->generateCode();
