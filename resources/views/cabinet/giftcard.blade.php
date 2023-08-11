@@ -8,10 +8,11 @@
             <h3 class="subheading">Добавить подарочную карту</h3>
             <p>Введите номер ваучера из полученного вами электронного письма<br> и/или код на
                 обратной стороне физической карты</p>
-            <form action="" class="form form--box">
+            <form action="{{ route('profile.gift-cards.activate') }}" method="POST" class="form form--box">
+                @csrf
                 <div class="form__fieldset">
                     <legend class="form__label">16-ти значный номер штрих-кода</legend>
-                    <input type="password" class="form__input">
+                    <input type="text" name="code" class="form__input">
                 </div>
                 <label class="checkbox checkbox--mailer">
                     <input type="checkbox"/>
@@ -19,7 +20,7 @@
                             свою учетную запись<br> для использования в магазине и интернете</small>
                     </div>
                 </label>
-                <button class="btn btn--accent">Сохранить подарочную карту</button>
+                <button class="btn btn--accent">Активировать подарочную карту</button>
             </form>
         </div>
         <div class="cabinet-page__group giftcardban">

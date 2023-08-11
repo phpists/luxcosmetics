@@ -80,53 +80,8 @@
 
 					</main>
 					<aside class="cart-page__aside">
-						<div class="cart-aside">
-        <div class="cart-aside__accordeon">
-                <dl>
-                        <dt>Использовать промокод <svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#arrow')}}"></use></svg></dt>
-                        <dd>
-                                <form action="" class="form">
-                                        <input type="text" class="form__input" placeholder="Введите промокод">
-                                        <button class="btn btn--accent">Применить</button>
-                                </form>
-                        </dd>
-                </dl>
-                <dl>
-                        <dt>Подарочная карта <svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#arrow')}}"></use></svg></dt>
-                        <dd>
-                                <form action="" class="form">
-                                        <input type="text" class="form__input" placeholder="Введите номер подарочной карты">
-                                        <button class="btn btn--accent">Применить</button>
-                                </form>
-                        </dd>
-                </dl>
-                <dl>
-                        <dt>Использовать баллы <svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#arrow')}}"></use></svg></dt>
-                        <dd>
-                                <form action="" class="form">
-                                        <input type="text" class="form__input" placeholder="Введите количество баллов">
-                                        <button class="btn btn--accent">Применить</button>
-                                </form>
-                        </dd>
-                </dl>
-        </div>
-        <div class="cart-aside__total">
-                <div class="cart-aside__delivery">
-                        <span class="cart-aside__delivery-name">Доставка <small>Бесплатная доставка
-                                в течении 1-2 дней</small></span>
-                        <span class="cart-aside__delivery-value">Бесплатно</span>
-                </div>
-                <div class="cart-aside__points"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#warning')}}"></use></svg> Вы получите 820 баллов</div>
-                <div class="cart-aside__sum">Итого с НДС <span>{{ $cartService->getTotalSum() }}</span> ₽</div>
-        </div>
-        <button type="submit" form="orderForm" class="btn btn--accent cart-aside__buy cartSubmit">Перейти к оплате</button>
-        <div class="cart-aside__paymethods">
-                <img src="{{asset('images/dist/ico-visa.png')}}" alt="">
-                <img src="{{asset('images/dist/ico-mir.png')}}" alt="">
-                <img src="{{asset('images/dist/ico-youmoney.png')}}" alt="">
-        </div>
-</div>
-					</aside>
+                        @include('cart.includes.aside')
+                    </aside>
 				</div>
 			</div>
 		</div>

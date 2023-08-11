@@ -79,6 +79,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::put('/addresses', [\App\Http\Controllers\ProfileController::class, 'updateAddress'])->name('profile.addresses.update');
         Route::get('/payment-methods', [\App\Http\Controllers\ProfileController::class, 'payment_methods'])->name('profile.payment-methods');
         Route::get('/gift-cards', [\App\Http\Controllers\ProfileController::class, 'gift_cards'])->name('profile.gift-cards');
+        Route::post('/gift-cards', [\App\Http\Controllers\GiftController::class, 'activate'])->name('profile.gift-cards.activate');
         Route::get('/bonuses', [\App\Http\Controllers\ProfileController::class, 'bonuses'])->name('profile.bonuses');
         Route::get('/password', [\App\Http\Controllers\ProfileController::class, 'password'])->name('profile.password');
         Route::get('/support', [\App\Http\Controllers\ProfileController::class, 'support'])->name('profile.support');

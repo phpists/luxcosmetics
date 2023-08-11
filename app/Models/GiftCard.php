@@ -13,6 +13,28 @@ class GiftCard extends Model
         'sum', 'color',
         'receiver', 'receiver_email',
         'from_whom', 'description',
-        'code'
+        'code',
+        'activated_by',
+        'activated_at'
     ];
+
+    protected $casts = [
+        'activated_at' => 'datetime'
+    ];
+
+
+
+    public function activator()
+    {
+        return $this->hasOne(User::class, 'id', 'activated_by');
+    }
+
+
+
+    public function isActivated()
+    {
+        return $this->activated_by !== null && $this->activated_at !== null;
+    }
+
+
 }

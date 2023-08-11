@@ -8,6 +8,7 @@ use App\Models\OrderProduct;
 use App\Models\Product;
 use App\Models\User;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 
 class CartService
@@ -28,6 +29,8 @@ class CartService
         self::AS_DELIVERY_ADDRESS_KEY => 'Использовать как адрес доставки',
         self::CARD_KEY => 'Карта для оплаты'
     ];
+
+    public $discount_reasons = [];
 
 
     public function getAllItems()
@@ -75,6 +78,37 @@ class CartService
         $totalSum = $products->sum('total_sum');
 
         return round($totalSum, 2) ?? 0;
+    }
+
+    public function getTotalSumWithDiscounts()
+    {
+        $totalSum = $this->getTotalSum();
+
+        $user = Auth::user();
+        if ($user->hasGiftCardBalance()) {
+            $maxDiscount = min($totalSum, $user->gift_card_balance);
+            $totalSum = $totalSum - $maxDiscount;
+            $this->discount_reasons[] = [
+                'title' => 'Баланс подарочной карты',
+                'name' => 'gift_card_balance',
+                'amount' => $maxDiscount
+            ];
+        }
+
+        return round($totalSum, 2) ?? 0;
+    }
+
+    public function getBonusAmount()
+    {
+        $bonus_points = 0;
+
+        foreach (self::getAllItems() as $item) {
+            $product = self::getProduct($item['product_id']);
+            $bonus_points += ($item['quantity'] * $product->points);
+        }
+
+        $user = Auth::user();
+        return ($user->points + $bonus_points);
     }
 
     public function getTotalCount(): int
@@ -194,7 +228,7 @@ class CartService
             return [$name => $this->getProperty($name)];
         });
         $order_data['user_id'] = Auth::id();
-        $order_data['total_sum'] = self::getTotalSum();
+        $order_data['total_sum'] = self::getTotalSumWithDiscounts();
         $address_id = $order_data['address_id'];
         unset($order_data['address_id']);
         $address = Address::find($address_id);
@@ -206,11 +240,9 @@ class CartService
 
         try {
             $order = Order::create($order_data);
-            $bonus_points = 0;
 
             foreach (self::getAllItems() as $item) {
                 $product = self::getProduct($item['product_id']);
-                $bonus_points += ($item['quantity'] * $product->points);
                 OrderProduct::create([
                     'order_id' => $order->id,
                     'product_id' => $item['product_id'],
@@ -220,8 +252,16 @@ class CartService
                 ]);
             }
             $user = Auth::user();
+
+            $discounts_collection = new Collection($this->discount_reasons);
+            $discount_reasons = $discounts_collection->map(function ($item) {
+                return $item['name'];
+            });
+            if ($discount_reasons->contains('gift_card_balance'))
+                $user->decrement('gift_card_balance', $this->getTotalSum() - $order->total_sum);
+
             $user->update([
-                'points' => ($user->points + $bonus_points)
+                'points' => $this->getBonusAmount()
             ]);
 
             session()->forget(self::SESSION_KEY);
