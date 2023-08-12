@@ -34,9 +34,10 @@
                 </svg>
             </dt>
             <dd>
-                <form action="" class="form">
-                    <input type="text" class="form__input" placeholder="Введите количество баллов">
-                    <button class="btn btn--accent">Применить</button>
+                <form action="{{ route('cart.use-bonuses') }}" method="POST" class="form">
+                    @csrf
+                    <input type="text" class="form__input" placeholder="Введите количество баллов" name="amount" @if($cartService->isUsedBonuses()) value="{{ $cartService->getUsedBonusesDiscount() }}" @endif>
+                    <button type="submit" class="btn btn--accent">Применить</button>
                 </form>
             </dd>
         </dl>
@@ -61,7 +62,7 @@
             <svg class="icon">
                 <use xlink:href="{{asset('images/dist/sprite.svg#warning')}}"></use>
             </svg>
-            У вас на счету есть {{ auth()->user()->gift_card_balance }}Р - которые будут списыватся в первую очередь
+            У вас на счету есть {{ auth()->user()->gift_card_balance }}Р с подарочной карты - которые будут списыватся в первую очередь
         </div>
         @endif
         <div class="cart-aside__sum">Итого с НДС <span>{{ $cartService->getTotalSumWithDiscounts() }}</span> ₽</div>

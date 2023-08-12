@@ -177,11 +177,14 @@
                             @endisset
                         </div>
                         @if($product->availability == \App\Enums\AvailableOptions::AVAILABLE->value)
+                            @if($product->hasBonuses())
                             <div class="product-page__points">
                                 <svg class="icon">
                                     <use xlink:href="{{asset('images/dist/sprite.svg#warning')}}"></use>
                                 </svg>
-                                <a href=""> Заработайте 345 баллов</a></div>
+                                <span> Заработайте {{ $product->points }} баллов</span>
+                            </div>
+                            @endif
                         @endif
                     </div>
                     @if($product->availability == \App\Enums\AvailableOptions::AVAILABLE->value)

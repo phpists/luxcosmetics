@@ -22,6 +22,9 @@ class CartService
     const CARD_KEY = 'card_id';
 
 
+    const BONUSES_KEY = 'cart_bonuses';
+
+
     const ALL_KEYS = [
         self::DELIVERY_KEY => 'Способ доставки',
         self::ADDRESS_KEY => 'Адрес',
@@ -95,6 +98,15 @@ class CartService
             ];
         }
 
+        if ($this->isUsedBonuses()) {
+            $totalSum = $totalSum - $this->getUsedBonusesDiscount();
+            $this->discount_reasons[] = [
+                'title' => 'Бонусные баллы',
+                'name' => 'bonuses',
+                'amount' => $this->getUsedBonusesDiscount()
+            ];
+        }
+
         return round($totalSum, 2) ?? 0;
     }
 
@@ -107,8 +119,9 @@ class CartService
             $bonus_points += ($item['quantity'] * $product->points);
         }
 
-        $user = Auth::user();
-        return ($user->points + $bonus_points);
+//        $user = Auth::user();
+//        return ($user->points + $bonus_points);
+        return $bonus_points;
     }
 
     public function getTotalCount(): int
@@ -253,19 +266,19 @@ class CartService
             }
             $user = Auth::user();
 
-            $discounts_collection = new Collection($this->discount_reasons);
-            $discount_reasons = $discounts_collection->map(function ($item) {
-                return $item['name'];
-            });
-            if ($discount_reasons->contains('gift_card_balance'))
+            if ($this->isUsedGiftCardDiscount())
                 $user->decrement('gift_card_balance', $this->getTotalSum() - $order->total_sum);
 
-            $user->update([
-                'points' => $this->getBonusAmount()
-            ]);
+            if ($this->isUsedBonuses())
+                $user->decrement('points', $this->getUsedBonusesDiscount());
+
+//            $user->update([ // TODO: перенести це на етап, коли замовлення буде позначено як "ЗАВЕРШЕНЕ"
+//                'points' => $this->getBonusAmount()
+//            ]);
 
             session()->forget(self::SESSION_KEY);
-            session()->forget(self::ALL_KEYS);
+            session()->forget(array_keys(self::ALL_KEYS));
+            session()->forget(self::BONUSES_KEY);
 
             return $order->id;
         } catch (\Exception $exception) {
@@ -273,5 +286,43 @@ class CartService
             return null;
         }
     }
+
+
+
+    public function isUsedDiscount($name): bool
+    {
+        $discounts_collection = new Collection($this->discount_reasons);
+        $discount_reasons = $discounts_collection->map(function ($item) {
+            return $item['name'];
+        });
+
+        return $discount_reasons->contains($name);
+    }
+
+    public function isUsedGiftCardDiscount(): bool
+    {
+        return $this->isUsedDiscount('gift_card_balance');
+    }
+
+    public function isUsedBonuses(): bool
+    {
+        return session()->has(self::BONUSES_KEY);
+    }
+
+    public function getUsedBonusesDiscount()
+    {
+        return session()->get(self::BONUSES_KEY, 0);
+    }
+
+    public function useBonuses(float $amount): void
+    {
+        session()->put(self::BONUSES_KEY, $amount);
+    }
+
+    public function dropBonuses(): void
+    {
+        session()->forget(self::BONUSES_KEY);
+    }
+
 
 }

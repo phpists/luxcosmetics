@@ -106,6 +106,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('cart/checkout', [\App\Http\Controllers\CartController::class, 'checkoutStore'])
         ->middleware('can-checkout')
         ->name('cart.checkout.store');
+    Route::post('cart/use-bonuses', [\App\Http\Controllers\CartController::class, 'useBonuses'])
+        ->middleware('can-checkout')
+        ->name('cart.use-bonuses');
     Route::get('cart/success/{order}', [\App\Http\Controllers\CartController::class, 'success'])->name('cart.success');
     Route::get('cart/error', [\App\Http\Controllers\CartController::class, 'error'])->name('cart.error');
 

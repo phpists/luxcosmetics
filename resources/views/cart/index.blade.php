@@ -80,19 +80,21 @@
 							</div>
                             @endif
 						</div>
-						<div class="cart-page__gifts">
-							<h3 class="cart-page__subheading subheading"> Ваши подарки</h3>
-							<div class="cart-product cart-product--gift">
-								<div class="cart-product__image">
-									<a href=""><img src="{{asset('images/dist/tmp-product2.jpg')}}" alt=""></a>
-								</div>
-								<div class="cart-product__desc">
-									<div class="cart-product__title"><a href="">YVES SAINT LAURENT</a></div>
-									<div class="cart-product__subtitle">Libre Eau de Parfum (50ml)</div>
-								</div>
-								<div class="cart-product__sum cart-product__sum--free">Бесплатно</div>
-							</div>
-						</div>
+
+
+{{--						<div class="cart-page__gifts">--}}
+{{--							<h3 class="cart-page__subheading subheading"> Ваши подарки</h3>--}}
+{{--							<div class="cart-product cart-product--gift">--}}
+{{--								<div class="cart-product__image">--}}
+{{--									<a href=""><img src="{{asset('images/dist/tmp-product2.jpg')}}" alt=""></a>--}}
+{{--								</div>--}}
+{{--								<div class="cart-product__desc">--}}
+{{--									<div class="cart-product__title"><a href="">YVES SAINT LAURENT</a></div>--}}
+{{--									<div class="cart-product__subtitle">Libre Eau de Parfum (50ml)</div>--}}
+{{--								</div>--}}
+{{--								<div class="cart-product__sum cart-product__sum--free">Бесплатно</div>--}}
+{{--							</div>--}}
+{{--						</div>--}}
 
 
                         <form action="{{ route('cart.store') }}" method="POST" id="orderForm">
