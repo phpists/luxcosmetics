@@ -32,7 +32,8 @@ class User extends Authenticatable
         'is_subscribed',
         'connection_type',
         'points',
-        'is_active'
+        'is_active',
+        'gift_card_balance'
     ];
 
     /**
@@ -116,6 +117,25 @@ class User extends Authenticatable
     public function getStatus(): string
     {
         return $this->is_active ? 'Активен': 'Заблокирован';
+    }
+
+
+    public function hasGiftCardBalance()
+    {
+        return $this->gift_card_balance > 0;
+    }
+
+
+    public function giftCards()
+    {
+        return $this->hasMany(GiftCard::class, 'activated_by');
+    }
+
+    public function lastGiftCard()
+    {
+        return $this->hasOne(GiftCard::class, 'activated_by')
+            ->limit(1)
+            ->orderBy('id', 'DESC');
     }
 
 }

@@ -8,10 +8,14 @@
             <h3 class="subheading">Добавить подарочную карту</h3>
             <p>Введите номер ваучера из полученного вами электронного письма<br> и/или код на
                 обратной стороне физической карты</p>
-            <form action="" class="form form--box">
+            @if($user->hasGiftCardBalance())
+            <div class="formsuccess formsuccess--big">У вас на аккаунте активирована подарочная карта на сумму <b>{{ $last_gift_card->sum }}</b> <br>ее можно использовать в корзине при покупке <br>Осталось <b>{{ $user->gift_card_balance }}</b></div>
+            @endif
+            <form action="{{ route('profile.gift-cards.activate') }}" method="POST" class="form form--box">
+                @csrf
                 <div class="form__fieldset">
                     <legend class="form__label">16-ти значный номер штрих-кода</legend>
-                    <input type="password" class="form__input">
+                    <input type="text" name="code" class="form__input" required>
                 </div>
                 <label class="checkbox checkbox--mailer">
                     <input type="checkbox"/>
@@ -19,12 +23,12 @@
                             свою учетную запись<br> для использования в магазине и интернете</small>
                     </div>
                 </label>
-                <button class="btn btn--accent">Сохранить подарочную карту</button>
+                <button class="btn btn--accent">Активировать подарочную карту</button>
             </form>
         </div>
         <div class="cabinet-page__group giftcardban">
             <div class="giftcardban__title">Нет подарочной карты?</div>
-            <a href="" class="btn btn--accent">Купить сейчас</a>
+            <a href="{{ route('gif-card.index') }}" class="btn btn--accent">Купить сейчас</a>
         </div>
         <div class="cabinet-page__group">
             <h3 class="subheading">Вопросы и ответы</h3>

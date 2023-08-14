@@ -21,23 +21,15 @@
                 <form action="{{route('gif-card.store')}}" method="post">
                 @csrf
 				<h1 class="title-h1">Подарочная карта</h1>
-                    <div class="swiper-container">
-                        <div class="swiper-wrapper">
+                    <div class="giftcard-page__section">
+                        <h2 class="giftcard-page__title">Выберите дизайн карты</h2>
+                        <div class="giftcard-page__cards">
                             @foreach($items as $item)
-                                @if ($item->color_card !== null)
-                                    <div class="swiper-slide">
-                                        <div class="giftcard-page__section">
-                                            <div class="giftcard-page__cards">
-                                                <label class="giftcardradio giftcard-page__card">
-                                                    <input type="radio" class="card-radio-sum" name="color" value="{{ $item->sum_card }}" required/>
-                                                    <div class="giftcardradio__text" style="background-color: {{ $item->color_card }}"></div>
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="swiper-button-next"></div>
-                                    <div class="swiper-button-prev"></div>
-                                @endif
+                                @continue($item->color_card == null)
+                            <label class="giftcardradio giftcard-page__card">
+                                <input type="radio" name="color" value="{{ $item->color_card }}" required>
+                                <div class="giftcardradio__text" style="background-color: {{ $item->color_card }}"></div>
+                            </label>
                             @endforeach
                         </div>
                     </div>
@@ -49,6 +41,7 @@
 								<h3 class="giftcard-page__subtitle">Выберите сумму</h3>
 								<div class="giftcard-page__sumvariants">
                                     @foreach($items as $item)
+                                        @continue($item->fix_price == null)
 									<label class="sumradio">
 										<input type="radio" name="custom_sum" value="{{$item->fix_price ?? ''}}"/>
 										<div class="sumradio__text">{{$item->fix_price ?? ''}}</div>

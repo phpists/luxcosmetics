@@ -166,4 +166,12 @@ class Product extends Model
         return $this->hasMany(Product::class, 'id', 'relative_product_id');
     }
 
+
+
+    public function hasBonuses()
+    {
+        return $this->points > 0;
+    }
+
+
 }

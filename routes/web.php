@@ -81,6 +81,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::put('/addresses', [\App\Http\Controllers\ProfileController::class, 'updateAddress'])->name('profile.addresses.update');
         Route::get('/payment-methods', [\App\Http\Controllers\ProfileController::class, 'payment_methods'])->name('profile.payment-methods');
         Route::get('/gift-cards', [\App\Http\Controllers\ProfileController::class, 'gift_cards'])->name('profile.gift-cards');
+        Route::post('/gift-cards', [\App\Http\Controllers\GiftController::class, 'activate'])->name('profile.gift-cards.activate');
         Route::get('/bonuses', [\App\Http\Controllers\ProfileController::class, 'bonuses'])->name('profile.bonuses');
         Route::get('/password', [\App\Http\Controllers\ProfileController::class, 'password'])->name('profile.password');
         Route::get('/support', [\App\Http\Controllers\ProfileController::class, 'support'])->name('profile.support');
@@ -107,8 +108,20 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('cart/checkout', [\App\Http\Controllers\CartController::class, 'checkoutStore'])
         ->middleware('can-checkout')
         ->name('cart.checkout.store');
+    Route::post('cart/use-bonuses', [\App\Http\Controllers\CartController::class, 'useBonuses'])
+        ->middleware('can-checkout')
+        ->name('cart.use-bonuses');
     Route::get('cart/success/{order}', [\App\Http\Controllers\CartController::class, 'success'])->name('cart.success');
     Route::get('cart/error', [\App\Http\Controllers\CartController::class, 'error'])->name('cart.error');
+
+
+    // Gift card
+    Route::get('gift-card', [\App\Http\Controllers\GiftController::class, 'index'])->name('gif-card.index');
+    Route::get('gift-card/create', [\App\Http\Controllers\GiftController::class, 'create'])->name('gif-card.create');
+    Route::post('gift-card', [\App\Http\Controllers\GiftController::class, 'store'])->name('gif-card.store');
+    Route::get('gift-card/cart', [\App\Http\Controllers\GiftController::class, 'cart'])->name('gift_card.cart');
+    Route::get('gift-card/cart/clear', [\App\Http\Controllers\GiftController::class, 'cartClear'])->name('gift_card.cart.clear');
+    Route::get('gift-card/cart/store', [\App\Http\Controllers\GiftController::class, 'cartStore'])->name('gift_card.cart.store');
 });
 // Cart
 Route::get('cart', [\App\Http\Controllers\CartController::class, 'index'])->name('cart');
@@ -129,10 +142,7 @@ Route::post('fast-register', [\App\Http\Controllers\Auth\FastRegisterController:
 Route::get('cart/step1', [\App\Http\Controllers\CartController::class, 'step_first'])->name('cart.step1');
 Route::get('cart/step2', [\App\Http\Controllers\CartController::class, 'step_second'])->name('cart.step2');
 
-// Gift card
-Route::get('gift-card', [\App\Http\Controllers\GiftController::class, 'index'])->name('gif-card.index');
-Route::get('gift-card/create', [\App\Http\Controllers\GiftController::class, 'create'])->name('gif-card.create');
-Route::post('gift-card', [\App\Http\Controllers\GiftController::class, 'store'])->name('gif-card.store');
+
 
 // Admin
 Route::get('admin', [AdminController::class, 'index'])->name('admin.home');
@@ -369,6 +379,8 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function 
     Route::get('product_questions', [\App\Http\Controllers\Admin\ProductQuestionController::class, 'index'])->name('admin.product_questions');
     Route::get('product_questions/{id}/edit', [\App\Http\Controllers\Admin\ProductQuestionController::class, 'edit'])->name('admin.product_question.edit');
     Route::post('product_questions/answer', [\App\Http\Controllers\Admin\ProductQuestionController::class, 'answer'])->name('admin.product_question.answer');
+    // Gift Cards
+    Route::resource('gift_cards', \App\Http\Controllers\Admin\GiftCardController::class, ['as' => 'admin']);
 
 });
 

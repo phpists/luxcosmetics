@@ -106,12 +106,6 @@ $(function () {
                 })
             }
         }
-    })
-
-
-    $(document).on('submit', '#checkoutForm', function (e) {
-        let data = $(this).serializeArray(),
-            $this = $(this)
 
         if (findValueByName('card_id', data) === null) {
             let $submitAddressButton = $('#createCardForm').find('button[type="submit"]')
@@ -137,7 +131,6 @@ $(function () {
             }
         }
     })
-
 
 })
 

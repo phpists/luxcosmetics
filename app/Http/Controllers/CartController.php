@@ -190,4 +190,31 @@ class CartController extends Controller
         return back();
     }
 
+
+
+    public function useBonuses(Request $request)
+    {
+        $amount = (float) $request->post('amount', 0);
+        $user = Auth::user();
+
+        if ($user->hasGiftCardBalance())
+            return back()->with('error', 'На этот заказ уже действует подарочная карта');
+
+        if ($user->points < $amount)
+            return back()->with('error', 'У вас на балансе нету столько баллов!');
+
+        $total_cart_sum = $this->cartService->getTotalSum();
+        $half = round($total_cart_sum - ($total_cart_sum / 2), 2);
+        if ($half < $amount)
+            return back()->with('error', 'Не больше 50% от суммы заказа - ' . $half);
+
+        if ($amount > 0)
+            $this->cartService->useBonuses($amount);
+        else
+            $this->cartService->dropBonuses();
+
+        return back();
+    }
+
+
 }

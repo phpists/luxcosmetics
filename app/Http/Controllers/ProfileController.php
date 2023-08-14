@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Address;
+use App\Models\GiftCard;
 use App\Models\PaymentCard;
 use App\Models\User;
 use App\Services\CartService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
@@ -181,7 +183,10 @@ class ProfileController extends Controller
     }
 
     public function gift_cards() {
-        return view('cabinet.giftcard');
+        $user = Auth::user();
+        $last_gift_card = $user->lastGiftCard;
+
+        return view('cabinet.giftcard', compact('user', 'last_gift_card'));
     }
 
     public function bonuses(Request $request) {
