@@ -62,6 +62,8 @@ Route::get('novinki', [\App\Http\Controllers\SalesController::class, 'index'])->
 Route::get('favourites', [\App\Http\Controllers\FavoriteProductController::class, 'index'])->name('favourites');
 Route::post('favourites', [\App\Http\Controllers\FavoriteProductController::class, 'add'])->name('favourites.add');
 Route::delete('favourites', [\App\Http\Controllers\FavoriteProductController::class, 'remove'])->name('favourites.remove');
+// Ask product question
+Route::post('product_question', [\App\Http\Controllers\ProductQuestionController::class, 'createQuestion'])->name('product_question.create');
 Route::group(['middleware' => 'auth'], function () {
     Route::post('create-chat', [\App\Http\Controllers\FeedbackController::class, 'store'])->name('create-chat');
     Route::put('update-chat/{id}', [\App\Http\Controllers\FeedbackController::class, 'update'])->name('update-chat');

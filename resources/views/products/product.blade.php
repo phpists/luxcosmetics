@@ -462,23 +462,25 @@
                             <button class="btn btn--accent">Отправить</button>
                             <div class="product-tabs__formclose">Закрыть</div>
                         </form>
-                        <form action="" class="product-tabs__form form" id="newask-form">
+                        <form action="{{route('product_question.create')}}" class="product-tabs__form form" id="newask-form" method="POST">
+                            @csrf
+                            <input type="hidden" name="product_id" value="{{$product->id}}">
                             <div class="form__title">Задать вопрос</div>
                             <div class="form__fieldset">
                                 <legend class="form__label">Ваш вопрос</legend>
-                                <textarea name="" class="form__textarea"></textarea>
+                                <textarea name="message" class="form__textarea"></textarea>
                             </div>
                             <div class="form__row">
                                 <div class="form__col form__col--50">
                                     <div class="form__fieldset">
                                         <legend class="form__label">Ваше имя</legend>
-                                        <input type="text" class="form__input">
+                                        <input type="text" name="username" class="form__input">
                                     </div>
                                 </div>
                                 <div class="form__col form__col--50">
                                     <div class="form__fieldset">
                                         <legend class="form__label">Электронная почта</legend>
-                                        <input type="text" class="form__input">
+                                        <input type="email" name="email" class="form__input">
                                     </div>
                                 </div>
                             </div>
@@ -839,213 +841,78 @@
                         </div>
                         <div class="product-tabs__tabsitem">
                             <div class="product-tabs__asks">
-                                <div class="review">
-                                    <div class="review__header">
-                                        <div class="review__name">Иван Иванов</div>
-                                        <div class="review__userstatus">Непроверенный покупатель</div>
-                                    </div>
-                                    <div class="review__body">
-                                        <div class="review__content">Какой срок годности у парфюмерной воды Libre от ИВ
-                                            СЕН-ЛОРАН? Можно ли ее использовать после истечения срока годности?
+                                @foreach($questions as $question)
+                                    <div class="review">
+                                        <div class="review__header">
+                                            <div class="review__name">{{$question->messages->first()->username}}</div>
+                                            <div class="review__userstatus">{{$question->messages->first()->user_id !== null?'Проверенный покупатель' : 'Непроверенный покупатель'}}</div>
                                         </div>
-                                        <div class="review__answers">
-                                            <div class="review__answerstotal">Ответ (1)</div>
-                                            <div class="review__answer answer">
-                                                <div class="answer__hdr">
-                                                    <div class="answer__author">Техподдержка</div>
-                                                    <div class="answer__date">
-                                                        <svg class="icon">
-                                                            <use
-                                                                xlink:href="{{asset('images/dist/sprite.svg#calendar')}}"></use>
-                                                        </svg>
-                                                        20.03.2022
+                                        <div class="review__body">
+                                            <div class="review__content">{!! $question->messages->first()->message !!}
+                                            </div>
+                                            @if(sizeof($question->messages) > 1)
+                                                <div class="review__answers">
+                                                    {{--                                                <div class="review__answerstotal">Ответ (1)</div>--}}
+                                                    <div class="review__answer answer">
+                                                        <div class="answer__hdr">
+                                                            <div class="answer__author">Техподдержка</div>
+                                                            <div class="answer__date">
+                                                                <svg class="icon">
+                                                                    <use
+                                                                        xlink:href="{{asset('images/dist/sprite.svg#calendar')}}"></use>
+                                                                </svg>
+                                                                20.03.2022
+                                                            </div>
+                                                        </div>
+                                                        <div class="answer__content">Парфюмерная вода Libre от ИВ СЕН-ЛОРАН
+                                                            обладает уникальным сочетанием цветочных, фруктовых и древесных нот
+                                                        </div>
+                                                    </div>
+                                                    <div class="review__answer answer">
+                                                        <div class="answer__hdr">
+                                                            <div class="answer__author">Техподдержка</div>
+                                                            <div class="answer__date">
+                                                                <svg class="icon">
+                                                                    <use
+                                                                        xlink:href="{{asset('images/dist/sprite.svg#calendar')}}"></use>
+                                                                </svg>
+                                                                20.03.2022
+                                                            </div>
+                                                        </div>
+                                                        <div class="answer__content">Парфюмерная вода Libre от ИВ СЕН-ЛОРАН
+                                                            обладает уникальным сочетанием цветочных, фруктовых и древесных нот
+                                                        </div>
                                                     </div>
                                                 </div>
-                                                <div class="answer__content">Парфюмерная вода Libre от ИВ СЕН-ЛОРАН
-                                                    обладает уникальным сочетанием цветочных, фруктовых и древесных нот
-                                                </div>
-                                            </div>
-                                            <div class="review__answer answer">
-                                                <div class="answer__hdr">
-                                                    <div class="answer__author">Техподдержка</div>
-                                                    <div class="answer__date">
-                                                        <svg class="icon">
-                                                            <use
-                                                                xlink:href="{{asset('images/dist/sprite.svg#calendar')}}"></use>
-                                                        </svg>
-                                                        20.03.2022
-                                                    </div>
-                                                </div>
-                                                <div class="answer__content">Парфюмерная вода Libre от ИВ СЕН-ЛОРАН
-                                                    обладает уникальным сочетанием цветочных, фруктовых и древесных нот
-                                                </div>
-                                            </div>
-                                        </div>
+                                            @endif
 
-                                    </div>
-                                    <div class="review__footer">
-                                        <div class="review__date">
-                                            <svg class="icon">
-                                                <use xlink:href="{{asset('images/dist/sprite.svg#calendar')}}"></use>
-                                            </svg>
-                                            15.03.2022
                                         </div>
-                                        <div class="review__mark markblock">
-                                            <div class="markblock__title">Был ли этот отзыв полезен?</div>
-                                            <button class="markblock__btn">
+                                        <div class="review__footer">
+                                            <div class="review__date">
                                                 <svg class="icon">
-                                                    <use xlink:href="{{asset('images/dist/sprite.svg#like')}}"></use>
+                                                    <use xlink:href="{{asset('images/dist/sprite.svg#calendar')}}"></use>
                                                 </svg>
-                                                2
-                                            </button>
-                                            <button class="markblock__btn">
-                                                <svg class="icon">
-                                                    <use xlink:href="{{asset('images/dist/sprite.svg#dislike')}}"></use>
-                                                </svg>
-                                                0
-                                            </button>
-                                        </div>
-                                    </div>
-
-                                </div>
-                                <div class="review">
-                                    <div class="review__header">
-                                        <div class="review__name">Иван Иванов</div>
-                                        <div class="review__userstatus">Непроверенный покупатель</div>
-                                    </div>
-                                    <div class="review__body">
-                                        <div class="review__content">Какой срок годности у парфюмерной воды Libre от ИВ
-                                            СЕН-ЛОРАН? Можно ли ее использовать после истечения срока годности?
-                                        </div>
-                                        <div class="review__answers">
-                                            <div class="review__answerstotal">Ответ (1)</div>
-                                            <div class="review__answer answer">
-                                                <div class="answer__hdr">
-                                                    <div class="answer__author">Техподдержка</div>
-                                                    <div class="answer__date">
-                                                        <svg class="icon">
-                                                            <use
-                                                                xlink:href="{{asset('images/dist/sprite.svg#calendar')}}"></use>
-                                                        </svg>
-                                                        20.03.2022
-                                                    </div>
-                                                </div>
-                                                <div class="answer__content">Парфюмерная вода Libre от ИВ СЕН-ЛОРАН
-                                                    обладает уникальным сочетанием цветочных, фруктовых и древесных нот
-                                                </div>
+                                                15.03.2022
                                             </div>
-                                            <div class="review__answer answer">
-                                                <div class="answer__hdr">
-                                                    <div class="answer__author">Техподдержка</div>
-                                                    <div class="answer__date">
-                                                        <svg class="icon">
-                                                            <use
-                                                                xlink:href="{{asset('images/dist/sprite.svg#calendar')}}"></use>
-                                                        </svg>
-                                                        20.03.2022
-                                                    </div>
-                                                </div>
-                                                <div class="answer__content">Парфюмерная вода Libre от ИВ СЕН-ЛОРАН
-                                                    обладает уникальным сочетанием цветочных, фруктовых и древесных нот
-                                                </div>
+                                            <div class="review__mark markblock">
+                                                <div class="markblock__title">Был ли этот отзыв полезен?</div>
+                                                <button class="markblock__btn">
+                                                    <svg class="icon">
+                                                        <use xlink:href="{{asset('images/dist/sprite.svg#like')}}"></use>
+                                                    </svg>
+                                                    2
+                                                </button>
+                                                <button class="markblock__btn">
+                                                    <svg class="icon">
+                                                        <use xlink:href="{{asset('images/dist/sprite.svg#dislike')}}"></use>
+                                                    </svg>
+                                                    0
+                                                </button>
                                             </div>
                                         </div>
 
                                     </div>
-                                    <div class="review__footer">
-                                        <div class="review__date">
-                                            <svg class="icon">
-                                                <use xlink:href="{{asset('images/dist/sprite.svg#calendar')}}"></use>
-                                            </svg>
-                                            15.03.2022
-                                        </div>
-                                        <div class="review__mark markblock">
-                                            <div class="markblock__title">Был ли этот отзыв полезен?</div>
-                                            <button class="markblock__btn">
-                                                <svg class="icon">
-                                                    <use xlink:href="{{asset('images/dist/sprite.svg#like')}}"></use>
-                                                </svg>
-                                                2
-                                            </button>
-                                            <button class="markblock__btn">
-                                                <svg class="icon">
-                                                    <use xlink:href="{{asset('images/dist/sprite.svg#dislike')}}"></use>
-                                                </svg>
-                                                0
-                                            </button>
-                                        </div>
-                                    </div>
-
-                                </div>
-                                <div class="review">
-                                    <div class="review__header">
-                                        <div class="review__name">Иван Иванов</div>
-                                        <div class="review__userstatus">Непроверенный покупатель</div>
-                                    </div>
-                                    <div class="review__body">
-                                        <div class="review__content">Какой срок годности у парфюмерной воды Libre от ИВ
-                                            СЕН-ЛОРАН? Можно ли ее использовать после истечения срока годности?
-                                        </div>
-                                        <div class="review__answers">
-                                            <div class="review__answerstotal">Ответ (1)</div>
-                                            <div class="review__answer answer">
-                                                <div class="answer__hdr">
-                                                    <div class="answer__author">Техподдержка</div>
-                                                    <div class="answer__date">
-                                                        <svg class="icon">
-                                                            <use
-                                                                xlink:href="{{asset('images/dist/sprite.svg#calendar')}}"></use>
-                                                        </svg>
-                                                        20.03.2022
-                                                    </div>
-                                                </div>
-                                                <div class="answer__content">Парфюмерная вода Libre от ИВ СЕН-ЛОРАН
-                                                    обладает уникальным сочетанием цветочных, фруктовых и древесных нот
-                                                </div>
-                                            </div>
-                                            <div class="review__answer answer">
-                                                <div class="answer__hdr">
-                                                    <div class="answer__author">Техподдержка</div>
-                                                    <div class="answer__date">
-                                                        <svg class="icon">
-                                                            <use
-                                                                xlink:href="{{asset('images/dist/sprite.svg#calendar')}}"></use>
-                                                        </svg>
-                                                        20.03.2022
-                                                    </div>
-                                                </div>
-                                                <div class="answer__content">Парфюмерная вода Libre от ИВ СЕН-ЛОРАН
-                                                    обладает уникальным сочетанием цветочных, фруктовых и древесных нот
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                    <div class="review__footer">
-                                        <div class="review__date">
-                                            <svg class="icon">
-                                                <use xlink:href="{{asset('images/dist/sprite.svg#calendar')}}"></use>
-                                            </svg>
-                                            15.03.2022
-                                        </div>
-                                        <div class="review__mark markblock">
-                                            <div class="markblock__title">Был ли этот отзыв полезен?</div>
-                                            <button class="markblock__btn">
-                                                <svg class="icon">
-                                                    <use xlink:href="{{asset('images/dist/sprite.svg#like')}}"></use>
-                                                </svg>
-                                                2
-                                            </button>
-                                            <button class="markblock__btn">
-                                                <svg class="icon">
-                                                    <use xlink:href="{{asset('images/dist/sprite.svg#dislike')}}"></use>
-                                                </svg>
-                                                0
-                                            </button>
-                                        </div>
-                                    </div>
-
-                                </div>
+                                @endforeach
                             </div>
                             <div class="pagination">
                                 <button class="pagination__more">Показать еще <span>12 товаров</span>
