@@ -864,23 +864,7 @@
                                                                 20.03.2022
                                                             </div>
                                                         </div>
-                                                        <div class="answer__content">Парфюмерная вода Libre от ИВ СЕН-ЛОРАН
-                                                            обладает уникальным сочетанием цветочных, фруктовых и древесных нот
-                                                        </div>
-                                                    </div>
-                                                    <div class="review__answer answer">
-                                                        <div class="answer__hdr">
-                                                            <div class="answer__author">Техподдержка</div>
-                                                            <div class="answer__date">
-                                                                <svg class="icon">
-                                                                    <use
-                                                                        xlink:href="{{asset('images/dist/sprite.svg#calendar')}}"></use>
-                                                                </svg>
-                                                                20.03.2022
-                                                            </div>
-                                                        </div>
-                                                        <div class="answer__content">Парфюмерная вода Libre от ИВ СЕН-ЛОРАН
-                                                            обладает уникальным сочетанием цветочных, фруктовых и древесных нот
+                                                        <div class="answer__content">{!! $question->messages->get(1)->message !!}
                                                         </div>
                                                     </div>
                                                 </div>

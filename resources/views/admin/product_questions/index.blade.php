@@ -6,7 +6,7 @@
             <!--begin::Page Heading-->
             <div class="d-flex align-items-baseline flex-wrap mr-5">
                 <!--begin::Page Title-->
-                <h5 class="text-dark font-weight-bold my-1 mr-5">Feedback</h5>
+                <h5 class="text-dark font-weight-bold my-1 mr-5">Вопросы по товарам</h5>
                 <!--end::Page Title-->
                 <!--begin::Breadcrumb-->
                 <ul class="breadcrumb breadcrumb-transparent breadcrumb-dot font-weight-bold p-0 my-2 font-size-sm">
@@ -14,7 +14,7 @@
                         <a href="{{ route('admin.dashboard') }}" class="text-muted">Главная</a>
                     </li>
                     <li class="breadcrumb-item">
-                        <a href="{{ route('admin.chats') }}" class="text-muted">Feedback</a>
+                        <a href="{{ route('admin.product_questions') }}" class="text-muted">Вопросы по товарам</a>
                     </li>
                 </ul>
                 <!--end::Breadcrumb-->
@@ -35,7 +35,7 @@
             <!--begin::Container-->
             <div class="container-fluid">
                 <div class="card gutter-b col-lg-12 ml-0">
-                    @include('admin.chats.parts.filter')
+                    @include('admin.product_questions.parts.filter')
                 </div>
                 @include('admin.layouts.includes.messages')
                 <div class="card card-custom">
@@ -72,7 +72,7 @@
                         <!--end::Table-->
                     </div>
                     <div id="pagination">
-                        {{$chats->links('vendor.pagination.super_admin_pagination')}}
+                        {{$questions->links('vendor.pagination.super_admin_pagination')}}
                     </div>
                 </div>
                 <!--end::Card-->

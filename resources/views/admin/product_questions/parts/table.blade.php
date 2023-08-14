@@ -42,17 +42,17 @@
                     {{ $question->id }}
                 </td>
                 <td class="text-center pr-0">
-                    {{ $chat->user? $chat->user->name: '<Пользователь удален>' }}
+                    {{ $question->messages->first()->email }}
                 </td>
                 <td class="text-center pr-0">
-                    {{ $chat->updated_at->format('m Y, H:i:s') }}
+                    {{ $question->updated_at->format('m Y, H:i:s') }}
                 </td>
                 <td class="text-center pr-0 status">
-                    {{ \App\Services\SiteService::getChatStatus($chat->status) }}
+                    {{ \App\Services\SiteService::getChatStatus($question->status) }}
                 </td>
                 <td class="text-center pr-0">
                     {{--                                            <i class="handle flaticon2-sort" style="cursor:pointer;"></i>--}}
-                    <a href="{{ route('admin.chats.edit', $chat->id) }}"
+                    <a href="{{ route('admin.product_question.edit', $question->id) }}"
                        class="btn btn-sm btn-clean btn-icon">
                         <i class="las la-edit"></i>
                     </a>

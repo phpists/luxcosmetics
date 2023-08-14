@@ -11,10 +11,10 @@
                 <!--begin::Breadcrumb-->
                 <ul class="breadcrumb breadcrumb-transparent breadcrumb-dot font-weight-bold p-0 my-2 font-size-sm">
                     <li class="breadcrumb-item">
-                        <a href="{{ route('admin.chats') }}" class="text-muted">Feedback</a>
+                        <a href="{{ route('admin.product_questions') }}" class="text-muted">Вопросы по товарам</a>
                     </li>
                     <li class="breadcrumb-item">
-                        <a href="#" class="text-muted">Чат</a>
+                        <a href="#" class="text-muted">Вопрос</a>
                     </li>
                 </ul>
                 <!--end::Breadcrumb-->
@@ -119,24 +119,14 @@
                                     <!--end::Dropdown Menu-->
                                 </div>
                                 <div class="text-center flex-grow-1">
-                                    <div class="text-dark-75 font-weight-bold font-size-h5">{{$chat->user->name}}</div>
+                                    <div class="text-dark-75 font-weight-bold font-size-h5">{{$question->messages->first()->username}}</div>
 {{--                                    <div>--}}
 {{--                                        <span class="label label-sm label-dot label-success"></span>--}}
 {{--                                        <span class="font-weight-bold text-muted font-size-sm">Active</span>--}}
 {{--                                    </div>--}}
                                 </div>
                                 <div class="text-right flex-grow-1">
-                                    <!--begin::Dropdown Menu-->
-                                    <form action="{{route('admin.chats.updateStatus')}}" method="POST">
-                                        @csrf
-                                        <input name="status" type="hidden" value="{{\App\Models\FeedbackChat::CLOSED}}">
-                                        <input name="checkbox[]" type="hidden" value="{{$chat->id}}">
-                                        @if($chat->status === \App\Models\FeedbackChat::CLOSED)
-                                            <button type="button" class="btn btn-primary" disabled>Тикет закрыт</button>
-                                        @else
-                                            <button class="btn btn-primary">Деактивировать тикет</button>
-                                        @endif
-                                    </form>
+
                                     <!--end::Dropdown Menu-->
                                 </div>
                             </div>
@@ -152,7 +142,7 @@
                                         @php
                                             $admin = \Illuminate\Support\Facades\Auth::user();
                                         @endphp
-                                        @foreach($chat->messages()->get() as $message)
+                                        @foreach($question->messages as $message)
                                             @if($message->user_id === $admin->id)
                                                 <div class="d-flex flex-column mb-5 align-items-end">
                                                     <div class="d-flex align-items-center">
@@ -176,7 +166,7 @@
                                                         </div>
                                                         <div>
                                                             <a href="#" class="text-dark-75 text-hover-primary font-weight-bold font-size-h6">
-                                                                {{$chat->user->name}} {{$chat->user->surname}}
+                                                                    {{$message->username}}
                                                             </a>
                                                             <span class="text-muted font-size-sm">{{$message->created_at}}</span>
                                                         </div>
@@ -195,21 +185,24 @@
                             <!--end::Body-->
 
                             <!--begin::Footer-->
-                            <div class="card-footer align-items-center">
-                                <!--begin::Compose-->
-                                <textarea id="message" @if($chat->status === \App\Models\FeedbackChat::CLOSED) disabled @endif class="form-control border-0 p-2" rows="2" placeholder="Напишите сообщение"></textarea>
-                                <div class="d-flex align-items-center justify-content-between mt-5">
-                                    <div class="mr-3">
-                                        <a href="#" class="btn btn-clean btn-icon btn-md mr-1"><i class="flaticon2-photograph icon-lg"></i></a>
-                                        <a href="#" class="btn btn-clean btn-icon btn-md"><i class="flaticon2-photo-camera  icon-lg"></i></a>
+                            <form action="{{route('admin.product_question.answer')}}" method="POST">
+                                @csrf
+                                <div class="card-footer align-items-center">
+                                    <!--begin::Compose-->
+                                    <textarea name="message" id="message" @if($question->status === \App\Models\FeedbackChat::CLOSED) disabled @endif class="form-control border-0 p-2" rows="2" placeholder="Напишите сообщение"></textarea>
+                                    <div class="d-flex align-items-center justify-content-between mt-5">
+                                        <div class="mr-3">
+                                            <a href="#" class="btn btn-clean btn-icon btn-md mr-1"><i class="flaticon2-photograph icon-lg"></i></a>
+                                            <a href="#" class="btn btn-clean btn-icon btn-md"><i class="flaticon2-photo-camera  icon-lg"></i></a>
+                                        </div>
+                                        <div>
+                                            <input type="hidden" id="question_id" name="question_id" value="{{$question->id}}">
+                                            <button id="chat_btn" @if($question->status === \App\Models\FeedbackChat::CLOSED) disabled @endif type="submit" class="btn btn-primary btn-md text-uppercase font-weight-bold chat-send py-2 px-6">Отправить</button>
+                                        </div>
                                     </div>
-                                    <div>
-                                        <input type="hidden" id="chat_id" name="{{$chat->id}}">
-                                        <button id="chat_btn" @if($chat->status === \App\Models\FeedbackChat::CLOSED) disabled @endif type="button" class="btn btn-primary btn-md text-uppercase font-weight-bold chat-send py-2 px-6">Отправить</button>
-                                    </div>
+                                    <!--begin::Compose-->
                                 </div>
-                                <!--begin::Compose-->
-                            </div>
+                            </form>
                             <!--end::Footer-->
                         </div>
                         <!--end::Card-->
@@ -236,34 +229,6 @@
     <script src="{{ asset('super_admin/js/pages/crud/file-upload/image-input.js') }} "></script>
     <script src="https://raw.githack.com/SortableJS/Sortable/master/Sortable.js"></script>
     <script src="{{ asset('super_admin/js/category.js') }}"></script>
-
-    <script>
-        $(function () {
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-
-            $('#chat_btn').on('click', function () {
-                $.ajax({
-                    url: '{{route('send-message')}}',
-                    method: 'POST',
-                    data: {
-                        message: $('#message').val(),
-                        user_id: {{$admin->id}},
-                        chat_id: {{$chat->id}}
-                    },
-                    success: function (response) {
-                        window.location = "";
-                    },
-                    error: function (response) {
-                        console.log(response);
-                    }
-                })
-            })
-        });
-    </script>
 @endsection
 
 

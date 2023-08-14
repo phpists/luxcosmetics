@@ -3,17 +3,17 @@
     <form id="chats_form">
         <table class="table table-hover rounded ">
             <div class="row mb-2">
-                <div class="col-lg-3 mb-lg-0 d-flex flex-column">
-                    <label>Причина Обращения</label>
-                    <div class="input-group input-group-sm">
-                        <select id="feedbacks_reason_id" name="feedbacks_reason_id" class="form-control">
-                            <option></option>
-                           @foreach($themes as $theme)
-                                <option value="{{$theme->id}}">{{$theme->reason}}</option>
-                           @endforeach
-                        </select>
-                    </div>
-                </div>
+{{--                <div class="col-lg-3 mb-lg-0 d-flex flex-column">--}}
+{{--                    <label>Причина Обращения</label>--}}
+{{--                    <div class="input-group input-group-sm">--}}
+{{--                        <select id="feedbacks_reason_id" name="feedbacks_reason_id" class="form-control">--}}
+{{--                            <option></option>--}}
+{{--                           @foreach($themes as $theme)--}}
+{{--                                <option value="{{$theme->id}}">{{$theme->reason}}</option>--}}
+{{--                           @endforeach--}}
+{{--                        </select>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
                 <div class="col-lg-3 mb-lg-0 d-flex flex-column">
                     <label>Статус</label>
                     <div class="input-group input-group-sm">

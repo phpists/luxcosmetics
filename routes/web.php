@@ -365,6 +365,11 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function 
     Route::post('/order-product/add', [\App\Http\Controllers\Admin\OrderProductController::class, 'add'])->name('admin.order_products.add');
     Route::post('/order-product/refresh', [\App\Http\Controllers\Admin\OrderProductController::class, 'refresh'])->name('admin.order_products.refresh');
 
+    // Product Questions
+    Route::get('product_questions', [\App\Http\Controllers\Admin\ProductQuestionController::class, 'index'])->name('admin.product_questions');
+    Route::get('product_questions/{id}/edit', [\App\Http\Controllers\Admin\ProductQuestionController::class, 'edit'])->name('admin.product_question.edit');
+    Route::post('product_questions/answer', [\App\Http\Controllers\Admin\ProductQuestionController::class, 'answer'])->name('admin.product_question.answer');
+
 });
 
 // General Pages

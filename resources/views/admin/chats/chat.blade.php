@@ -119,7 +119,7 @@
                                     <!--end::Dropdown Menu-->
                                 </div>
                                 <div class="text-center flex-grow-1">
-                                    <div class="text-dark-75 font-weight-bold font-size-h5">{{$chat->user->name}}</div>
+                                    <div class="text-dark-75 font-weight-bold font-size-h5">{{ $question->user? $question->user->name: '<Пользователь удален>' }}</div>
 {{--                                    <div>--}}
 {{--                                        <span class="label label-sm label-dot label-success"></span>--}}
 {{--                                        <span class="font-weight-bold text-muted font-size-sm">Active</span>--}}
@@ -176,7 +176,11 @@
                                                         </div>
                                                         <div>
                                                             <a href="#" class="text-dark-75 text-hover-primary font-weight-bold font-size-h6">
-                                                                {{$chat->user->name}} {{$chat->user->surname}}
+                                                                @if($chat->user)
+                                                                    {{$chat->user->name}} {{$chat->user->surname}}
+                                                                @else
+                                                                    Удаленный пользователь
+                                                                @endif
                                                             </a>
                                                             <span class="text-muted font-size-sm">{{$message->created_at}}</span>
                                                         </div>
