@@ -5,11 +5,13 @@ namespace App\Http\Controllers;
 use App\Mail\GiftCardEmail;
 use App\Models\GiftCard;
 use App\Models\GiftCardValue;
+use App\Models\PaymentCard;
 use App\Services\GiftCardService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 
@@ -73,7 +75,21 @@ class GiftController extends Controller
         if (!session()->has(self::SESSION_KEY))
             return redirect()->route('gift_card.create');
 
+        $card_id = $request->post('card_id');
+
+        if (!$card_id) {
+            $card_data = $request->post('card');
+            $card_data['card_number'] = trim($card_data['card_number']);
+            $card_data['valid_date'] = $card_data['month'].'/'.$card_data['year'];
+            $card_data['cvv'] = Hash::make($card_data['cvv']);
+            $card_data['is_default'] = $request->boolean('cart.is_default');
+            $card_data['user_id'] = Auth::id();
+            $card = PaymentCard::create($card_data);
+            $card_id = $card->id;
+        }
+
         $data = (array) session()->get(self::SESSION_KEY);
+        $data['card_id'] = $card_id;
 
         if ($giftCardService->store($data)) {
             session()->forget(self::SESSION_KEY);

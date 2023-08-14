@@ -16,7 +16,8 @@ class GiftCard extends Model
         'code',
         'activated_by',
         'activated_at',
-        'buyer_id'
+        'buyer_id',
+        'card_id'
     ];
 
     protected $casts = [
