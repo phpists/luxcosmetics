@@ -138,4 +138,9 @@ class User extends Authenticatable
             ->orderBy('id', 'DESC');
     }
 
+    public function comments()
+    {
+        return $this->hasMany(CommentsAction::class);
+    }
+
 }

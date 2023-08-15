@@ -389,6 +389,11 @@ Route::get('/news/{link}', [\App\Http\Controllers\NewsController::class, 'show']
 Route::get('/blog/{link}', [\App\Http\Controllers\BlogController::class, 'show'])->name('index.blog');
 Route::get('/banner/{link}', [\App\Http\Controllers\BannerController::class, 'show'])->name('index.banner');
 
+//Comments
+Route::post('/comment', [App\Http\Controllers\CommentsController::class, 'store'])->name('send.comment');
+Route::post('/comment/like', [App\Http\Controllers\CommentsController::class, 'like'])->name('send.like');
+Route::post('/comment/dislike', [App\Http\Controllers\CommentsController::class, 'dislike'])->name('send.dislike');
+
 
 Route::get('/user/home', [App\Http\Controllers\HomeController::class, 'home'])->name('user.home');
 
