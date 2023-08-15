@@ -13,6 +13,7 @@ class CommentsController extends Controller
 {
     public function store(Request $request)
     {
+        Log::info($request->all());
         $data = $request->all();
         if (Auth::check()) {
             $name = auth()->user()->name;

@@ -293,6 +293,14 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function 
     Route::post('banner/update/seo', [\App\Http\Controllers\Admin\Banner\BannerController::class, 'updateSeo'])->name('admin.banner.update.seo');
     Route::post('banner/update/micro-seo', [\App\Http\Controllers\Admin\Banner\BannerController::class, 'updateMicroSeo'])->name('admin.banner.update.micro-seo');
 
+    // Comments
+    Route::get('comments', [\App\Http\Controllers\Admin\CommentsController::class, 'index'])->name('admin.comment');
+    Route::get('comment', [\App\Http\Controllers\Admin\CommentsController::class, 'create'])->name('admin.comment.create');
+    Route::post('comment', [\App\Http\Controllers\Admin\CommentsController::class, 'store'])->name('admin.comment.store');
+    Route::get('comment/edit/{id}', [\App\Http\Controllers\Admin\CommentsController::class, 'edit'])->name('admin.comment.edit');
+    Route::post('comment/update', [\App\Http\Controllers\Admin\CommentsController::class, 'update'])->name('admin.comment.update');
+    Route::get('comment/delete/{id}', [\App\Http\Controllers\Admin\CommentsController::class, 'delete'])->name('admin.comment.delete');
+
     /* Banners Operation */
     Route::post('_active-posts', [\App\Http\Controllers\Admin\Banner\BannerController::class, 'activePosts'])->name('admin.banner.active');
 

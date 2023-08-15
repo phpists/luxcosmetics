@@ -16,6 +16,7 @@ return new class extends Migration
             $table->boolean('like');
             $table->integer('report_id')->comment('Питання або коментар');
             $table->string('table_name');
+            $table->string('status');
         });
     }
 
