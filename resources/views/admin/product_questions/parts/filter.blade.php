@@ -1,5 +1,5 @@
 <div class="tab-content mt-5" id="myTabContent">
-    <input type="hidden" id="filterUrl" data-url="{{ route('admin.chats') }}">
+    <input type="hidden" id="filterUrl" data-url="{{ route('admin.product_questions') }}">
     <form id="chats_form">
         <table class="table table-hover rounded ">
             <div class="row mb-2">
@@ -19,9 +19,9 @@
                     <div class="input-group input-group-sm">
                         <select class="form-control status" name="status">
                             <option></option>
-                            <option value="{{\App\Models\FeedbackChat::NEW}}">{{\App\Services\SiteService::getChatStatus(\App\Models\FeedbackChat::NEW)}}</option>
-                            <option value="{{\App\Models\FeedbackChat::VIEWED}}">{{\App\Services\SiteService::getChatStatus(\App\Models\FeedbackChat::VIEWED)}}</option>
-                            <option value="{{\App\Models\FeedbackChat::CLOSED}}">{{\App\Services\SiteService::getChatStatus(\App\Models\FeedbackChat::CLOSED)}}</option>
+                            <option value="{{\App\Models\ProductQuestion::NEW}}">{{\App\Services\SiteService::getChatStatus(\App\Models\ProductQuestion::NEW)}}</option>
+                            <option value="{{\App\Models\ProductQuestion::PUBLISHED}}">{{\App\Services\SiteService::getChatStatus(\App\Models\ProductQuestion::PUBLISHED)}}</option>
+                            <option value="{{\App\Models\ProductQuestion::CLOSED}}">{{\App\Services\SiteService::getChatStatus(\App\Models\ProductQuestion::CLOSED)}}</option>
                         </select>
                     </div>
                 </div>

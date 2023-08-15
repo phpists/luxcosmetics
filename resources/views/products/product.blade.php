@@ -467,23 +467,23 @@
                         </form>
                         <form action="{{route('product_question.create')}}" class="product-tabs__form form" id="newask-form" method="POST">
                             @csrf
-                            <input type="hidden" name="product_id" value="{{$product->id}}">
+                            <input type="hidden" name="product_id" id="product_id" value="{{$product->id}}">
                             <div class="form__title">Задать вопрос</div>
                             <div class="form__fieldset">
                                 <legend class="form__label">Ваш вопрос</legend>
-                                <textarea name="message" class="form__textarea"></textarea>
+                                <textarea name="message" required class="form__textarea"></textarea>
                             </div>
                             <div class="form__row">
                                 <div class="form__col form__col--50">
                                     <div class="form__fieldset">
                                         <legend class="form__label">Ваше имя</legend>
-                                        <input type="text" name="username" class="form__input">
+                                        <input type="text" name="username" class="form__input" required value="{{$user? ($user->name." ".$user->surname): null}}">
                                     </div>
                                 </div>
                                 <div class="form__col form__col--50">
                                     <div class="form__fieldset">
                                         <legend class="form__label">Электронная почта</legend>
-                                        <input type="email" name="email" class="form__input">
+                                        <input type="email" name="email" class="form__input" required value="{{$user?->email}}">
                                     </div>
                                 </div>
                             </div>
@@ -843,97 +843,43 @@
                             </div>
                         </div>
                         <div class="product-tabs__tabsitem">
-                            <div class="product-tabs__asks">
-                                @foreach($questions as $question)
-                                    <div class="review">
-                                        <div class="review__header">
-                                            <div class="review__name">{{$question->messages->first()->username}}</div>
-                                            <div class="review__userstatus">{{$question->messages->first()->user_id !== null?'Проверенный покупатель' : 'Непроверенный покупатель'}}</div>
-                                        </div>
-                                        <div class="review__body">
-                                            <div class="review__content">{!! $question->messages->first()->message !!}
-                                            </div>
-                                            @if(sizeof($question->messages) > 1)
-                                                <div class="review__answers">
-                                                    {{--                                                <div class="review__answerstotal">Ответ (1)</div>--}}
-                                                    <div class="review__answer answer">
-                                                        <div class="answer__hdr">
-                                                            <div class="answer__author">Техподдержка</div>
-                                                            <div class="answer__date">
-                                                                <svg class="icon">
-                                                                    <use
-                                                                        xlink:href="{{asset('images/dist/sprite.svg#calendar')}}"></use>
-                                                                </svg>
-                                                                20.03.2022
-                                                            </div>
-                                                        </div>
-                                                        <div class="answer__content">{!! $question->messages->get(1)->message !!}
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            @endif
-
-                                        </div>
-                                        <div class="review__footer">
-                                            <div class="review__date">
-                                                <svg class="icon">
-                                                    <use xlink:href="{{asset('images/dist/sprite.svg#calendar')}}"></use>
-                                                </svg>
-                                                15.03.2022
-                                            </div>
-                                            <div class="review__mark markblock">
-                                                <div class="markblock__title">Был ли этот отзыв полезен?</div>
-                                                <button class="markblock__btn">
-                                                    <svg class="icon">
-                                                        <use xlink:href="{{asset('images/dist/sprite.svg#like')}}"></use>
-                                                    </svg>
-                                                    2
-                                                </button>
-                                                <button class="markblock__btn">
-                                                    <svg class="icon">
-                                                        <use xlink:href="{{asset('images/dist/sprite.svg#dislike')}}"></use>
-                                                    </svg>
-                                                    0
-                                                </button>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                @endforeach
+                            <div class="product-tabs__asks" id="ask_wrapper">
+                                @include('products.product_questions', compact('questions'))
                             </div>
-                            <div class="pagination">
-                                <button class="pagination__more">Показать еще <span>12 товаров</span>
+                            <div class="pagination" id="pagination_question" aria-disabled="{{$has_more_questions? "false": "true"}}">
+                                <input type="hidden" id="question_page" value="2">
+                                <button class="pagination__more" id="show_more_questions">Показать еще <span>{{\App\Models\ProductQuestion::ITEMS_PER_PAGE}} отзыва</span>
                                     <svg class="icon">
                                         <use xlink:href="{{asset('images/dist/sprite.svg#refresh')}}"></use>
                                     </svg>
                                 </button>
-                                <ul class="pagination__list">
-                                    <li class="pagination__item pagination__item--first"><a href="">
-                                            <svg class="icon">
-                                                <use xlink:href="{{asset('images/dist/sprite.svg#first')}}"></use>
-                                            </svg>
-                                        </a></li>
-                                    <li class="pagination__item pagination__item--prev"><a href="">
-                                            <svg class="icon">
-                                                <use xlink:href="{{asset('images/dist/sprite.svg#prev1')}}"></use>
-                                            </svg>
-                                        </a></li>
-                                    <li class="pagination__item pagination__item--active"><span>1</span></li>
-                                    <li class="pagination__item"><a href="">2</a></li>
-                                    <li class="pagination__item"><a href="">3</a></li>
-                                    <li class="pagination__item pagination__item--dots">...</li>
-                                    <li class="pagination__item"><a href="">36</a></li>
-                                    <li class="pagination__item pagination__item--next"><a href="">
-                                            <svg class="icon">
-                                                <use xlink:href="{{asset('images/dist/sprite.svg#next1')}}"></use>
-                                            </svg>
-                                        </a></li>
-                                    <li class="pagination__item pagination__item--last"><a href="">
-                                            <svg class="icon">
-                                                <use xlink:href="{{asset('images/dist/sprite.svg#last')}}"></use>
-                                            </svg>
-                                        </a></li>
-                                </ul>
+{{--                                <ul class="pagination__list">--}}
+{{--                                    <li class="pagination__item pagination__item--first"><a href="">--}}
+{{--                                            <svg class="icon">--}}
+{{--                                                <use xlink:href="{{asset('images/dist/sprite.svg#first')}}"></use>--}}
+{{--                                            </svg>--}}
+{{--                                        </a></li>--}}
+{{--                                    <li class="pagination__item pagination__item--prev"><a href="">--}}
+{{--                                            <svg class="icon">--}}
+{{--                                                <use xlink:href="{{asset('images/dist/sprite.svg#prev1')}}"></use>--}}
+{{--                                            </svg>--}}
+{{--                                        </a></li>--}}
+{{--                                    <li class="pagination__item pagination__item--active"><span>1</span></li>--}}
+{{--                                    <li class="pagination__item"><a href="">2</a></li>--}}
+{{--                                    <li class="pagination__item"><a href="">3</a></li>--}}
+{{--                                    <li class="pagination__item pagination__item--dots">...</li>--}}
+{{--                                    <li class="pagination__item"><a href="">36</a></li>--}}
+{{--                                    <li class="pagination__item pagination__item--next"><a href="">--}}
+{{--                                            <svg class="icon">--}}
+{{--                                                <use xlink:href="{{asset('images/dist/sprite.svg#next1')}}"></use>--}}
+{{--                                            </svg>--}}
+{{--                                        </a></li>--}}
+{{--                                    <li class="pagination__item pagination__item--last"><a href="">--}}
+{{--                                            <svg class="icon">--}}
+{{--                                                <use xlink:href="{{asset('images/dist/sprite.svg#last')}}"></use>--}}
+{{--                                            </svg>--}}
+{{--                                        </a></li>--}}
+{{--                                </ul>--}}
                             </div>
                         </div>
                     </div>
@@ -1047,6 +993,30 @@
                 {{--})--}}
             })
         })
+        $(document).on('click', '#show_more_questions', function () {
+            let is_disabled = $('#pagination_question').attr('aria-disabled')
+            let question_page = $('#question_page').val();
+            if(is_disabled === 'false') {
+                $.ajax({
+                    url: '/load_questions',
+                    data: {
+                        load_more: true,
+                        page: question_page,
+                        product_id: $('#product_id').val()
+                    },
+                    success: function (response) {
+                        $('#ask_wrapper').append(response.htmlBody);
+                        $('#question_page').val(question_page + 1);
+                        let hasMore = response.hasMore? "false": "true";
+                        $('#pagination_question').attr('aria-disabled', hasMore);
+                    },
+                    error: function (response) {
+                        console.log(response)
+                    }
+                })
+            }
+        })
+
     </script>
 @endsection
 

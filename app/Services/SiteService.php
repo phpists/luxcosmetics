@@ -65,6 +65,15 @@ class SiteService
         };
     }
 
+    static public function getProductQuestionStatus(int $status): string
+    {
+        return match ($status) {
+            1 => 'Новый',
+            2 => 'Опубликован',
+            3 => 'Закрыт',
+        };
+    }
+
     static public function getMenuType(int $menu_type): string
     {
         return match ($menu_type) {

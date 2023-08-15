@@ -81,7 +81,7 @@
         </div>
         <!--end::Container-->
         <!--end::Entry-->
-
+        @include('admin.product_questions.modals.update')
     </div>
 @endsection
 
@@ -167,6 +167,23 @@
                 request();
             });
         });
+
+        $('.edit_question').each(function (idx, el) {
+            el.addEventListener('click', function () {
+                var id = this.getAttribute('data-id');
+                $.ajax({
+                    url: '/admin/product_questions/' + id,
+                    data: {
+                        id: id
+                    },
+                    success: function (resp) {
+                        $('#updateQuestionMessage').val(resp.message);
+                        $(`#updateStatus option[value="${resp.status}"]`).attr('selected', true);
+                        $('#question_id').val(resp.id);
+                    }
+                })
+            })
+        })
     </script>
 @endsection
 

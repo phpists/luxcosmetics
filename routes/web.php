@@ -377,8 +377,10 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function 
 
     // Product Questions
     Route::get('product_questions', [\App\Http\Controllers\Admin\ProductQuestionController::class, 'index'])->name('admin.product_questions');
-    Route::get('product_questions/{id}/edit', [\App\Http\Controllers\Admin\ProductQuestionController::class, 'edit'])->name('admin.product_question.edit');
+    Route::get('product_questions/{id}', [\App\Http\Controllers\Admin\ProductQuestionController::class, 'view'])->name('admin.product_question.view');
     Route::post('product_questions/answer', [\App\Http\Controllers\Admin\ProductQuestionController::class, 'answer'])->name('admin.product_question.answer');
+    Route::put('product_questions/update', [\App\Http\Controllers\Admin\ProductQuestionController::class, 'update'])->name('admin.product_question.update');
+    Route::get('product_questions/{id}/delete', [\App\Http\Controllers\Admin\ProductQuestionController::class, 'delete'])->name('admin.product_question.delete');
     // Gift Cards
     Route::resource('gift_cards', \App\Http\Controllers\Admin\GiftCardController::class, ['as' => 'admin']);
 
@@ -388,6 +390,7 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function 
 Route::get('/news/{link}', [\App\Http\Controllers\NewsController::class, 'show'])->name('index.news');
 Route::get('/blog/{link}', [\App\Http\Controllers\BlogController::class, 'show'])->name('index.blog');
 Route::get('/banner/{link}', [\App\Http\Controllers\BannerController::class, 'show'])->name('index.banner');
+Route::get('/load_questions', [\App\Http\Controllers\ProductQuestionController::class, 'loadQuestions'])->name('product_questions.load');
 
 
 Route::get('/user/home', [App\Http\Controllers\HomeController::class, 'home'])->name('user.home');

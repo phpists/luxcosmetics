@@ -10,6 +10,7 @@ use App\Models\Seo;
 use App\Services\CatalogService;
 use Faker\Provider\Image;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -48,10 +49,18 @@ class ProductController extends Controller
             ->join('related_products', 'related_products.relative_product_id', 'products.id')
             ->where('related_products.product_id', $product->id)
             ->get();
-        $questions = ProductQuestion::query()->where('product_id', $product->id)->paginate(12);
+        $questions = ProductQuestion::query()
+            ->where('product_id', $product->id)
+            ->where('status', '>', 1)
+            ->paginate(ProductQuestion::ITEMS_PER_PAGE);
+        $has_more_questions = $questions->hasMorePages();
         $random_products = Product::query()->inRandomOrder()->limit(12)->get();
         $product_variations = CatalogService::getProductVariations($product->id, $product->base_property_id);
-        return view('products.product', compact('product', 'product_variations', 'articles', 'relative_products', 'random_products', 'questions'));
+        $user = null;
+        if (Auth::check()) {
+            $user = $request->user();
+        }
+        return view('products.product', compact('product', 'product_variations', 'articles', 'relative_products', 'random_products', 'questions', 'has_more_questions', 'user'));
     }
 
     public function productCard(Product $product)

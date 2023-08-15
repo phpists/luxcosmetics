@@ -10,6 +10,14 @@ class ProductQuestion extends Model
 {
     use HasFactory;
 
+    const NEW = 1;
+
+    const PUBLISHED = 2;
+
+    const CLOSED = 3;
+
+    const ITEMS_PER_PAGE = 4;
+
     protected $fillable = ['product_id', 'status'];
 
     public function messages(): HasMany

@@ -42,25 +42,30 @@
                     {{ $question->id }}
                 </td>
                 <td class="text-center pr-0">
-                    {{ $question->messages->first()->email }}
+                    {{ $question->messages->first()?->email }}
                 </td>
                 <td class="text-center pr-0">
                     {{ $question->updated_at->format('m Y, H:i:s') }}
                 </td>
                 <td class="text-center pr-0 status">
-                    {{ \App\Services\SiteService::getChatStatus($question->status) }}
+                    {{ \App\Services\SiteService::getProductQuestionStatus($question->status) }}
                 </td>
                 <td class="text-center pr-0">
                     {{--                                            <i class="handle flaticon2-sort" style="cursor:pointer;"></i>--}}
-                    <a href="{{ route('admin.product_question.edit', $question->id) }}"
+                    <a href="{{ route('admin.product_question.view', $question->id) }}"
                        class="btn btn-sm btn-clean btn-icon">
+                        <i class="las la-eye"></i>
+                    </a>
+                    <a href="#"
+                       class="btn btn-sm btn-clean btn-icon edit_question" data-toggle="modal" data-target="#updateProductQuestion"
+                       data-id="{{ $question->id }}">
                         <i class="las la-edit"></i>
                     </a>
-                    {{--                                            <a href="{{ route('admin.category.delete', $category->id) }}"--}}
-                    {{--                                               class="btn btn-sm btn-clean btn-icon"--}}
-                    {{--                                               onclick="return confirm('Ви впевнені, що хочете видалити цей запис?')">--}}
-                    {{--                                                <i class="las la-trash"></i>--}}
-                    {{--                                            </a>--}}
+                    <a href="{{ route('admin.product_question.delete', $question->id) }}"
+                       class="btn btn-sm btn-clean btn-icon"
+                       onclick="return confirm('Ви впевнені, що хочете видалити цей запис?')">
+                        <i class="las la-trash"></i>
+                    </a>
                 </td>
             </tr>
         @endforeach

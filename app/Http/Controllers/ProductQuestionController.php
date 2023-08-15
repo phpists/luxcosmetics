@@ -23,4 +23,16 @@ class ProductQuestionController extends Controller
         $message->save();
         return redirect()->back();
     }
+
+    public function loadQuestions(Request $request) {
+        $questions = ProductQuestion::query()
+            ->where('product_id', $request->product_id)
+            ->where('status', '>', 1)
+            ->paginate(ProductQuestion::ITEMS_PER_PAGE, ['*'], 'page', $request->page);
+        $html = view('products.product_questions', compact('questions'))->render();
+        return response()->json([
+            'htmlBody' => $html,
+            'hasMore' => $questions->hasMorePages()
+        ]);
+    }
 }
