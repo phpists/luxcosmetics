@@ -121,7 +121,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('gift-card', [\App\Http\Controllers\GiftController::class, 'store'])->name('gif-card.store');
     Route::get('gift-card/cart', [\App\Http\Controllers\GiftController::class, 'cart'])->name('gift_card.cart');
     Route::get('gift-card/cart/clear', [\App\Http\Controllers\GiftController::class, 'cartClear'])->name('gift_card.cart.clear');
-    Route::get('gift-card/cart/store', [\App\Http\Controllers\GiftController::class, 'cartStore'])->name('gift_card.cart.store');
+    Route::post('gift-card/cart/store', [\App\Http\Controllers\GiftController::class, 'cartStore'])->name('gift_card.cart.store');
 });
 // Cart
 Route::get('cart', [\App\Http\Controllers\CartController::class, 'index'])->name('cart');
@@ -391,6 +391,11 @@ Route::get('/news/{link}', [\App\Http\Controllers\NewsController::class, 'show']
 Route::get('/blog/{link}', [\App\Http\Controllers\BlogController::class, 'show'])->name('index.blog');
 Route::get('/banner/{link}', [\App\Http\Controllers\BannerController::class, 'show'])->name('index.banner');
 Route::get('/load_questions', [\App\Http\Controllers\ProductQuestionController::class, 'loadQuestions'])->name('product_questions.load');
+
+//Comments
+Route::post('/comment', [App\Http\Controllers\CommentsController::class, 'store'])->name('send.comment');
+Route::post('/comment/like', [App\Http\Controllers\CommentsController::class, 'like'])->name('send.like');
+Route::post('/comment/dislike', [App\Http\Controllers\CommentsController::class, 'dislike'])->name('send.dislike');
 
 
 Route::get('/user/home', [App\Http\Controllers\HomeController::class, 'home'])->name('user.home');

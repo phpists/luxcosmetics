@@ -80,54 +80,59 @@ $(function () {
     })
 
     $(document).on('submit', '#orderForm', function (e) {
-        let data = $(this).serializeArray(),
-            $this = $(this)
+        let $form = $(this),
+            data = $(this).serializeArray();
 
-        if (findValueByName('address_id', data) === null) {
-            let $submitAddressButton = $('#createAddressForm').find('button[type="submit"]')
-            if (!$submitAddressButton.is(':focusable'))
-                $submitAddressButton.parents('div.toggable').fadeIn();
+        if ($form.find('input[name="address_id"]')) {
+            if (findValueByName('address_id', data) === null) {
+                let $submitAddressButton = $('#createAddressForm').find('button[type="submit"]')
+                if (!$submitAddressButton.is(':focusable'))
+                    $submitAddressButton.parents('div.toggable').fadeIn();
 
-            if (!validateForm($('#createAddressForm'))) {
-                e.preventDefault()
-                $submitAddressButton.click()
-            } else {
-                let additionalData = $('#createAddressForm').serializeArray();
+                if (!validateForm($('#createAddressForm'))) {
+                    e.preventDefault()
+                    $submitAddressButton.click()
+                } else {
+                    let additionalData = $('#createAddressForm').serializeArray();
 
-                additionalData.forEach(function (item, i) {
-                    if (item.name === '_token')
-                        return
+                    additionalData.forEach(function (item, i) {
+                        if (item.name === '_token')
+                            return
 
-                    $('<input>').attr({
-                        type: 'hidden',
-                        name: `address[${item.name}]`,
-                        value: item.value
-                    }).appendTo($this);
-                })
+                        $('<input>').attr({
+                            type: 'hidden',
+                            name: `address[${item.name}]`,
+                            value: item.value
+                        }).appendTo($form);
+                    })
+                }
             }
         }
 
-        if (findValueByName('card_id', data) === null) {
-            let $submitAddressButton = $('#createCardForm').find('button[type="submit"]')
-            if (!$submitAddressButton.is(':focusable'))
-                $submitAddressButton.parents('div.toggable').fadeIn();
+        if ($form.find('input[name="card_id"]')) {
+            console.log(data)
+            if (findValueByName('card_id', data) === null) {
+                let $submitAddressButton = $('#createCardForm').find('button[type="submit"]')
+                if (!$submitAddressButton.is(':focusable'))
+                    $submitAddressButton.parents('div.toggable').fadeIn();
 
-            if (!validateForm($('#createCardForm'))) {
-                e.preventDefault()
-                $submitAddressButton.click()
-            } else {
-                let additionalData = $('#createCardForm').serializeArray();
+                if (!validateForm($('#createCardForm'))) {
+                    e.preventDefault()
+                    $submitAddressButton.click()
+                } else {
+                    let additionalData = $('#createCardForm').serializeArray();
 
-                additionalData.forEach(function (item, i) {
-                    if (item.name === '_token')
-                        return
+                    additionalData.forEach(function (item, i) {
+                        if (item.name === '_token')
+                            return
 
-                    $('<input>').attr({
-                        type: 'hidden',
-                        name: `card[${item.name}]`,
-                        value: item.value
-                    }).appendTo($this);
-                })
+                        $('<input>').attr({
+                            type: 'hidden',
+                            name: `card[${item.name}]`,
+                            value: item.value
+                        }).appendTo($form);
+                    })
+                }
             }
         }
     })
@@ -137,15 +142,25 @@ $(function () {
 
 
 function validateForm(form) {
-    let isEmpty = false;
+    let isValid = true;
     $(form).find('input[required]').each(function() {
-        if ($(this).val() === '' || $(this).val() === undefined) {
-            isEmpty = true;
-            return false; // Зупинити цикл, якщо знайдено порожнє поле
+        console.log($(this).attr('type'))
+
+        if ($(this).attr('type') === 'radio') {
+
+            if ($(`input[name=${$(this).attr('name')}:checked`).length < 1) {
+                isValid = false;
+                return false; // Зупинити цикл, якщо знайдено порожнє поле
+            }
+        } else {
+            if ($(this).val() === '' || $(this).val() === undefined) {
+                isValid = false;
+                return false; // Зупинити цикл, якщо знайдено порожнє поле
+            }
         }
     });
 
-    return !isEmpty;
+    return isValid;
 }
 
 

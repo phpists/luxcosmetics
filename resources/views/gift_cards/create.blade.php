@@ -7,8 +7,9 @@
 		<div class="row">
 			<div class="col-lg-12">
 				<ol class="crumbs__list">
-					<li class="crumbs__item"><a href="">Главная</a></li>
-					<li class="crumbs__item">Категория</li>
+					<li class="crumbs__item"><a href="{{ route('home') }}">Главная</a></li>
+					<li class="crumbs__item"><a href="{{ route('gif-card.index') }}">Подарочные карты</a></li>
+					<li class="crumbs__item">Купить</li>
 				</ol>
 			</div>
 		</div>
@@ -62,29 +63,29 @@
 					<h2 class="giftcard-page__title">Персонализируйте подарочную карту</h2>
 						<div class="form__fieldset">
 							<legend class="form__label">Фамилия и имя получателя*</legend>
-							<input type="text" name="receiver" class="form__input" required>
+							<input type="text" name="receiver" class="form__input" value="{{ old('receiver') }}" required>
 						</div>
 						<div class="form__row">
 							<div class="form__col form__col--50">
 								<div class="form__fieldset">
 									<legend class="form__label">Адрес электронной почты *</legend>
-									<input type="email" name="receiver_email" class="form__input" required>
+									<input type="email" name="receiver_email" class="form__input" value="{{ old('receiver_email') }}" required>
 								</div>
 							</div>
 							<div class="form__col form__col--50">
 								<div class="form__fieldset">
 									<legend class="form__label">Повторите адрес электронной почты*</legend>
-									<input type="text" name="receiver_email_confirm" class="form__input" required>
+									<input type="text" name="receiver_email_confirm" class="form__input" value="{{ old('receiver_email_confirm') }}" required>
 								</div>
 							</div>
 						</div>
 						<div class="form__fieldset">
 							<legend class="form__label">От кого*</legend>
-							<input type="text" name="from_whom" class="form__input" required>
+							<input type="text" name="from_whom" class="form__input" value="{{ old('from_whom', auth()->user()->name) }}" required>
 						</div>
 						<div class="form__fieldset">
 							<legend class="form__label">Добавить личное сообщение (необязательно)</legend>
-							<textarea name="description" class="form__textarea"></textarea>
+							<textarea name="description" class="form__textarea">{{ old('description') }}</textarea>
 						</div>
 						<button class="btn btn--accent btn--full">Добавить в корзину</button>
 				</div>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Article;
 use App\Models\Category;
+use App\Models\Comments;
 use App\Models\Product;
 use App\Models\ProductQuestion;
 use App\Models\Seo;
@@ -60,7 +61,10 @@ class ProductController extends Controller
         if (Auth::check()) {
             $user = $request->user();
         }
-        return view('products.product', compact('product', 'product_variations', 'articles', 'relative_products', 'random_products', 'questions', 'has_more_questions', 'user'));
+        $comments = Comments::all();
+        $ratings = Comments::pluck('rating');
+        $averageRating = $ratings->avg();
+        return view('products.product', compact('product', 'product_variations', 'articles', 'relative_products', 'random_products', 'comments', 'averageRating',  'questions', 'has_more_questions', 'user'));
     }
 
     public function productCard(Product $product)
