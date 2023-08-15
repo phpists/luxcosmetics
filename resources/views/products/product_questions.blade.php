@@ -8,6 +8,9 @@
             <div class="review__content">{!! $question->messages->first()->message !!}
             </div>
             @if(sizeof($question->messages) > 1)
+                @php
+                    $reply = $question->messages->get(1);
+                @endphp
                 <div class="review__answers">
                     {{--                                                <div class="review__answerstotal">Ответ (1)</div>--}}
                     <div class="review__answer answer">
@@ -18,10 +21,10 @@
                                     <use
                                         xlink:href="{{asset('images/dist/sprite.svg#calendar')}}"></use>
                                 </svg>
-                                20.03.2022
+                                {{$reply->created_at->format('d.m.Y')}}
                             </div>
                         </div>
-                        <div class="answer__content">{!! $question->messages->get(1)->message !!}
+                        <div class="answer__content">{!! $reply->message !!}
                         </div>
                     </div>
                 </div>
@@ -33,7 +36,7 @@
                 <svg class="icon">
                     <use xlink:href="{{asset('images/dist/sprite.svg#calendar')}}"></use>
                 </svg>
-                15.03.2022
+                {{$question->created_at->format('d.m.Y')}}
             </div>
             <div class="review__mark markblock">
                 <div class="markblock__title">Был ли этот отзыв полезен?</div>
