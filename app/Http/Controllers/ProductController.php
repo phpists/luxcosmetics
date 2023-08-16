@@ -62,7 +62,8 @@ class ProductController extends Controller
             $user = $request->user();
         }
         $comments = Comments::all();
-        $ratings = Comments::pluck('rating');
+
+        $ratings = Comments::where('product_id', $product->id)->pluck('rating');
         $averageRating = $ratings->avg();
         return view('products.product', compact('product', 'product_variations', 'articles', 'relative_products', 'random_products', 'comments', 'averageRating',  'questions', 'has_more_questions', 'user'));
     }

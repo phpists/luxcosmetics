@@ -19,7 +19,7 @@
                 @if (isset($positionIds['first'][0]) && $selectedItem = $item->find($positionIds['first'][0]))
                 <div class="col-lg-12">
                     <div class="mainaction__one">
-                        <a href="{{ route('index.banner', $selectedItem->link) }}">
+                        <a href="{{ $selectedItem->link }}">
                             <picture>
                                 <source  srcset="{{asset('images/uploads/banner/' . $selectedItem->image)}}" media="(min-width: 576px)">
                                 <source srcset="{{asset('images/dist/banners/banner-big@320.jpg')}}" media="(max-width: 575px)" >
@@ -44,10 +44,10 @@
                                     <img src="{{asset('images/uploads/banner/' . $selectedItem->image)}}">
                                 </picture>
                             </div>
-                            <div class="article__title"><a href="{{ route('index.banner', $selectedItem->link) }}">{{ $selectedItem->title }}</a></div>
+                            <div class="article__title"><a href="{{ $selectedItem->link }}">{{ $selectedItem->title }}</a></div>
                             <div class="article__intro">{{ Str::limit(strip_tags($selectedItem->text), $limit = 130, $end = '...') }}</div>
                         </div>
-                        <a href="{{ route('index.banner', $selectedItem->link) }}" class="article__more">Подробнее</a>
+                        <a href="{{ $selectedItem->link }}" class="article__more">Подробнее</a>
                     </div>
                 </div>
                 @endif
@@ -63,10 +63,10 @@
                                     <img src="{{asset('images/uploads/banner/' . $selectedItem->image)}}">
                                 </picture>
                             </div>
-                            <div class="article__title"><a href="{{ route('index.banner', $selectedItem->link) }}">{{ $selectedItem->title }}</a></div>
+                            <div class="article__title"><a href="{{ $selectedItem->link }}">{{ $selectedItem->title }}</a></div>
                             <div class="article__intro">{{ Str::limit(strip_tags($selectedItem->text), $limit = 130, $end = '...') }}</div>
                         </div>
-                        <a href="{{ route('index.banner', $selectedItem->link) }}" class="article__more">Подробнее</a>
+                        <a href="{{ $selectedItem->link }}" class="article__more">Подробнее</a>
                     </div>
                 </div>
                 @endif
@@ -84,10 +84,10 @@
                                     <img src="{{asset('images/uploads/banner/' . $selectedItem->image)}}">
                                 </picture>
                             </div>
-                            <div class="article__title"><a href="{{ route('index.banner', $selectedItem->link) }}">{{ $selectedItem->title }}</a></div>
+                            <div class="article__title"><a href="{{ $selectedItem->link }}">{{ $selectedItem->title }}</a></div>
                             <div class="article__intro">{{ Str::limit(strip_tags($selectedItem->text), $limit = 150, $end = '...') }}</div>
                         </div>
-                        <a href="{{ route('index.banner', $selectedItem->link) }}" class="article__more">Подробнее</a>
+                        <a href="{{ $selectedItem->link }}" class="article__more">Подробнее</a>
                     </div>
                 </div>
                 @endif
@@ -103,10 +103,10 @@
                                     <img src="{{asset('images/uploads/banner/' . $selectedItem->image)}}">
                                 </picture>
                             </div>
-                            <div class="article__title"><a href="{{ route('index.banner', $selectedItem->link) }}">{{ $selectedItem->title }}</a></div>
+                            <div class="article__title"><a href="{{ $selectedItem->link }}">{{ $selectedItem->title }}</a></div>
                             <div class="article__intro">{{ Str::limit(strip_tags($selectedItem->text), $limit = 150, $end = '...') }}</div>
                         </div>
-                        <a href="{{ route('index.banner', $selectedItem->link) }}" class="article__more">Подробнее</a>
+                        <a href="{{ $selectedItem->link }}" class="article__more">Подробнее</a>
                     </div>
                 </div>
                 @endif
@@ -122,10 +122,10 @@
                                     <img src="{{asset('images/uploads/banner/' . $selectedItem->image)}}">
                                 </picture>
                             </div>
-                            <div class="article__title"><a href="{{ route('index.banner', $selectedItem->link) }}">{{ $selectedItem->title }}</a></div>
+                            <div class="article__title"><a href="{{ $selectedItem->link }}">{{ $selectedItem->title }}</a></div>
                             <div class="article__intro">{{ Str::limit(strip_tags($selectedItem->text), $limit = 150, $end = '...') }}</div>
                         </div>
-                        <a href="{{ route('index.banner', $selectedItem->link) }}" class="article__more">Подробнее</a>
+                        <a href="{{ $selectedItem->link }}" class="article__more">Подробнее</a>
                     </div>
                 </div>
                 @endif
@@ -198,7 +198,7 @@
                         <div class="maincategory__item">
                             <div class="category">
                                 <div class="category__image" style="background-image: url({{asset('images/uploads/banner/' . $selectedItem->image)}});"></div>
-                                <div class="category__title"><a href="{{ route('index.banner', $selectedItem->link) }}">{{ $selectedItem->title }}</a></div>
+                                <div class="category__title"><a href="{{ $selectedItem->link }}">{{ $selectedItem->title }}</a></div>
                                 <div class="category__subtitle">{{ Str::limit(strip_tags($selectedItem->text), $limit = 120, $end = '...') }}</div>
                             </div>
                         </div>
@@ -207,7 +207,7 @@
                         <div class="maincategory__item">
                             <div class="category">
                                 <div class="category__image" style="background-image: url({{asset('images/uploads/banner/' . $selectedItem->image)}});"></div>
-                                <div class="category__title"><a href="{{ route('index.banner', $selectedItem->link) }}">{{ $selectedItem->title }}</a></div>
+                                <div class="category__title"><a href="{{ $selectedItem->link }}">{{ $selectedItem->title }}</a></div>
                                 <div class="category__subtitle">{{ Str::limit(strip_tags($selectedItem->text), $limit = 120, $end = '...') }}</div>
                             </div>
                         </div>
@@ -216,7 +216,7 @@
                         <div class="maincategory__item">
                             <div class="category">
                                 <div class="category__image" style="background-image: url({{asset('images/uploads/banner/' . $selectedItem->image)}});"></div>
-                                <div class="category__title"><a href="{{ route('index.banner', $selectedItem->link) }}">{{ $selectedItem->title }}</a></div>
+                                <div class="category__title"><a href="{{ $selectedItem->link }}">{{ $selectedItem->title }}</a></div>
                                 <div class="category__subtitle">{{ Str::limit(strip_tags($selectedItem->text), $limit = 120, $end = '...') }}</div>
                             </div>
                         </div>
@@ -225,7 +225,7 @@
                         <div class="maincategory__item">
                             <div class="category">
                                 <div class="category__image" style="background-image: url({{asset('images/uploads/banner/' . $selectedItem->image)}});"></div>
-                                <div class="category__title"><a href="{{ route('index.banner', $selectedItem->link) }}">{{ $selectedItem->title }}</a></div>
+                                <div class="category__title"><a href="{{ $selectedItem->link }}">{{ $selectedItem->title }}</a></div>
                                 <div class="category__subtitle">{{ Str::limit(strip_tags($selectedItem->text), $limit = 120, $end = '...') }}</div>
                             </div>
                         </div>
@@ -260,7 +260,7 @@
                 <div class="col-lg-4 col-md-4 col-sm-4">
                     <div class="category">
                         <div class="category__image" style="background-image: url({{asset('images/uploads/banner/' . $selectedItem->image)}});"></div>
-                        <div class="category__title"><a href="{{ route('index.banner', $selectedItem->link) }}">{{ $selectedItem->title }}</a></div>
+                        <div class="category__title"><a href="{{ $selectedItem->link }}">{{ $selectedItem->title }}</a></div>
                         <div class="category__subtitle">{{ Str::limit(strip_tags($selectedItem->text), $limit = 120, $end = '...') }}</div>
                     </div>
                 </div>
@@ -269,7 +269,7 @@
                 <div class="col-lg-4 col-md-4 col-sm-4">
                     <div class="category">
                         <div class="category__image" style="background-image: url({{asset('images/uploads/banner/' . $selectedItem->image)}});"></div>
-                        <div class="category__title"><a href="{{ route('index.banner', $selectedItem->link) }}">{{ $selectedItem->title }}</a></div>
+                        <div class="category__title"><a href="{{ $selectedItem->link }}">{{ $selectedItem->title }}</a></div>
                         <div class="category__subtitle">{{ Str::limit(strip_tags($selectedItem->text), $limit = 120, $end = '...') }}</div>
                     </div>
                 </div>
@@ -278,7 +278,7 @@
                 <div class="col-lg-4 col-md-4 col-sm-4">
                     <div class="category">
                         <div class="category__image" style="background-image: url({{asset('images/uploads/banner/' . $selectedItem->image)}});"></div>
-                        <div class="category__title"><a href="{{ route('index.banner', $selectedItem->link) }}">{{ $selectedItem->title }}</a></div>
+                        <div class="category__title"><a href="{{ $selectedItem->link }}">{{ $selectedItem->title }}</a></div>
                         <div class="category__subtitle">{{ Str::limit(strip_tags($selectedItem->text), $limit = 120, $end = '...') }}</div>
                     </div>
                 </div>
