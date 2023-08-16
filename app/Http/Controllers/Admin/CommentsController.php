@@ -22,7 +22,7 @@ class CommentsController extends Controller
             $comment->where('comments.status', $request->status);
         }
 
-        $comment = $comment->paginate($request->paginate ?? 100);
+        $comment = $comment->orderBy('created_at', 'desc')->paginate($request->paginate ?? 100);
 
         if ($request->ajax()) {
             $commentAjaxHtml = view('admin.comments.parts.table', ['commentAjax' => $comment])->render();
@@ -34,7 +34,13 @@ class CommentsController extends Controller
             ]);
         }
 
-        return response()->view('admin.comments.index', compact('comment', ));
+        $statusOptions = [
+            'Новый' => 'Новый',
+            'Опубликовать' => 'Опубликован',
+            'Отменить' => 'Отменён'
+        ];
+
+        return response()->view('admin.comments.index', compact('comment', 'statusOptions'));
     }
     public function edit($id)
     {
@@ -44,12 +50,19 @@ class CommentsController extends Controller
 
     public function update(Request $request)
     {
-        $item = Comments::find($request->id);
-        $item->description = $request->input('text');
-        $item->created_at = $request->input('created_at');
-        $item->status = $request->input('status');
-        $item->save();
-        return redirect()->route('admin.comment')->with('success', 'Комментарий успешно изменён');
+        $itemId = $request->input('item_id');
+        if($itemId == null) {
+            $item = Comments::find($request->id);
+            $item->description = $request->input('text');
+            $item->created_at = $request->input('created_at');
+            $item->status = $request->input('status');
+            $item->save();
+            return redirect()->route('admin.comment')->with('success', 'Комментарий успешно изменён');
+        }
+        $itemAjax = Comments::find($request->input('item_id'));
+        $itemAjax->status = $request->status;
+        $itemAjax->update();
+        return response()->json(['message' => 'Статус успешно сохранен']);
     }
 
     public function delete($id)

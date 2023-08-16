@@ -65,10 +65,15 @@ class ProductController extends Controller
         if (Auth::check()) {
             $user = $request->user();
         }
-        $comments = Comments::all();
+        $comments = Comments::query()
+            ->where('product_id', $product->id)
+            ->where('status', 'Опубликовать')
+            ->orderBy('created_at', 'desc')
+            ->paginate(ProductQuestion::ITEMS_PER_PAGE);
 
         $ratings = Comments::where('product_id', $product->id)->pluck('rating');
         $averageRating = $ratings->avg();
+
         return view('products.product', compact('product', 'product_variations', 'articles', 'relative_products', 'random_products', 'comments', 'averageRating',  'questions', 'has_more_questions', 'user'));
     }
 

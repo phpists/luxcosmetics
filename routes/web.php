@@ -298,7 +298,7 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function 
     Route::get('comment', [\App\Http\Controllers\Admin\CommentsController::class, 'create'])->name('admin.comment.create');
     Route::post('comment', [\App\Http\Controllers\Admin\CommentsController::class, 'store'])->name('admin.comment.store');
     Route::get('comment/edit/{id}', [\App\Http\Controllers\Admin\CommentsController::class, 'edit'])->name('admin.comment.edit');
-    Route::post('comment/update', [\App\Http\Controllers\Admin\CommentsController::class, 'update'])->name('admin.comment.update');
+    Route::post('comment/_update', [\App\Http\Controllers\Admin\CommentsController::class, 'update'])->name('admin.comment.update');
     Route::get('comment/delete/{id}', [\App\Http\Controllers\Admin\CommentsController::class, 'delete'])->name('admin.comment.delete');
 
     /* Banners Operation */
@@ -405,6 +405,7 @@ Route::get('/load_questions', [\App\Http\Controllers\ProductQuestionController::
 Route::post('/comment', [App\Http\Controllers\CommentsController::class, 'store'])->name('send.comment');
 Route::post('/comment/like', [App\Http\Controllers\CommentsController::class, 'like'])->name('send.like');
 Route::post('/comment/dislike', [App\Http\Controllers\CommentsController::class, 'dislike'])->name('send.dislike');
+Route::get('/load_comments', [App\Http\Controllers\CommentsController::class, 'loadComments'])->name('comment.load');
 
 
 Route::get('/user/home', [App\Http\Controllers\HomeController::class, 'home'])->name('user.home');

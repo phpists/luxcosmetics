@@ -14,7 +14,6 @@ class CommentsController extends Controller
 {
     public function store(Request $request)
     {
-        Log::info($request->all());
         $data = $request->all();
         if (Auth::check()) {
             $name = auth()->user()->name;
@@ -32,6 +31,12 @@ class CommentsController extends Controller
         ]);
 
         return redirect()->back()->with('success', 'Спасибо, комментарий отправлен на модерацию');
+    }
+    public function loadComments(Request $request)
+    {
+        $comments = Comments::where('product_id', $request->product_id)->get();
+
+        return view('products.product', ['comments' => $comments]);
     }
     public function like(Request $request)
     {

@@ -46,4 +46,31 @@ $(document).ready(function () {
         request();
     });
 
+    $(document).ready(function() {
+        $('.statusSelect').on('change', function() {
+            const itemId = $(this).data('item-id');
+            const selectedValue = $(this).val();
+            let csrf = $('meta[name="csrf-token"]').attr('content');
+
+            $.ajaxSetup({headers: {'X-CSRF-TOKEN': csrf}});
+
+            $.ajax({
+                url: 'comment/_update',
+                type: 'POST',
+                data: {
+                    item_id: itemId,
+                    status: selectedValue,
+                    csrf: csrf,
+                },
+                success: function(response) {
+                    console.log(response.message);
+                },
+                error: function(error) {
+                    console.error(error);
+                }
+            });
+        });
+    });
+
+
 });

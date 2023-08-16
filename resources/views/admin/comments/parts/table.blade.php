@@ -3,6 +3,12 @@
         <td class="text-center pl-0">
             {{ $item->id }}
         </td>
+        <td class="text-center pr-0">
+            <a href="{{ route('products.product', App\Models\Product::find($item->product_id)->alias) }}"
+               target="_blank">
+                {{ App\Models\Product::find($item->product_id)->title }}
+            </a>
+        </td>
         <td class="pr-0">
             <a href="{{ route('admin.comment.edit', $item->id) }}">{{ $item->description }}</a>
         </td>
