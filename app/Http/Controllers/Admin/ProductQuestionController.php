@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\FeedbackChat;
+use App\Models\Product;
 use App\Models\ProductQuestion;
 use App\Models\ProductQuestionMessage;
 use Illuminate\Http\Request;
@@ -75,5 +76,11 @@ class ProductQuestionController extends Controller
         $question->delete();
         ProductQuestionMessage::query()->where('question_id', $id)->delete();
         return redirect()->back()->with('success', 'Вопрос успешно удален');
+    }
+
+    public function search_products(Request $request) {
+        $products = Product::query()->select('product.title, product.id')
+            ->join('product_questions', 'product_id', 'product.id')
+            ->get();
     }
 }

@@ -528,33 +528,33 @@
                                         </svg>
                                     </button>
                                 </form>
-                                <div class="reviewsfilters__selects">
-                                    <div class="reviewsfilters__select">
-                                        <select name="" class="selectCustom">
-                                            <option value="">Рейтинг</option>
-                                        </select>
-                                    </div>
-                                    <div class="reviewsfilters__select">
-                                        <select name="" class="selectCustom">
-                                            <option value="">Изображения и видео</option>
-                                        </select>
-                                    </div>
-                                    <div class="reviewsfilters__select">
-                                        <select name="" class="selectCustom">
-                                            <option value="">Поглощение</option>
-                                        </select>
-                                    </div>
-                                    <div class="reviewsfilters__select">
-                                        <select name="" class="selectCustom">
-                                            <option value="">Долголетие</option>
-                                        </select>
-                                    </div>
-                                    <div class="reviewsfilters__select">
-                                        <select name="" class="selectCustom">
-                                            <option value="">Силос</option>
-                                        </select>
-                                    </div>
-                                </div>
+{{--                                <div class="reviewsfilters__selects">--}}
+{{--                                    <div class="reviewsfilters__select">--}}
+{{--                                        <select name="" class="selectCustom">--}}
+{{--                                            <option value="">Рейтинг</option>--}}
+{{--                                        </select>--}}
+{{--                                    </div>--}}
+{{--                                    <div class="reviewsfilters__select">--}}
+{{--                                        <select name="" class="selectCustom">--}}
+{{--                                            <option value="">Изображения и видео</option>--}}
+{{--                                        </select>--}}
+{{--                                    </div>--}}
+{{--                                    <div class="reviewsfilters__select">--}}
+{{--                                        <select name="" class="selectCustom">--}}
+{{--                                            <option value="">Поглощение</option>--}}
+{{--                                        </select>--}}
+{{--                                    </div>--}}
+{{--                                    <div class="reviewsfilters__select">--}}
+{{--                                        <select name="" class="selectCustom">--}}
+{{--                                            <option value="">Долголетие</option>--}}
+{{--                                        </select>--}}
+{{--                                    </div>--}}
+{{--                                    <div class="reviewsfilters__select">--}}
+{{--                                        <select name="" class="selectCustom">--}}
+{{--                                            <option value="">Силос</option>--}}
+{{--                                        </select>--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
 
                             </div>
                             <div class="product-tabs__sortblock sortblock">
