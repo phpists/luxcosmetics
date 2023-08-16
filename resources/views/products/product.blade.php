@@ -566,6 +566,7 @@
                             </div>
                             <div class="product-tabs__reviews">
                                 @foreach($comments as $comment)
+                                @if($comment->status === 'Опубликовать')
                                 <div class="review">
                                     <div class="review__header">
                                         <div class="review__name">{{$comment->name}}</div>
@@ -650,6 +651,7 @@
                                         </div>
                                     </div>
                                 </div>
+                                    @endif
                                 @endforeach
                                 <div class="review">
                                     <div class="review__header">

@@ -23,7 +23,6 @@ class SiteService
     }
 
     static public function statusBanner(bool $status) {
-        Log::alert($status);
         if ($status) {
             return '<span><i class="las la-eye"></i></span>';
         } else {
@@ -31,7 +30,6 @@ class SiteService
         }
     }
     static public function statusNews(bool $status) {
-        Log::alert($status);
         if ($status) {
             return '<span><i class="las la-eye"></i></span>';
         } else {

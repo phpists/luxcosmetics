@@ -291,19 +291,7 @@
                                     </li>
                                 </ul>
                             </div>
-                            <div class="menu-submenu" style="" kt-hidden-height="160">
-                                <i class="menu-arrow"></i>
-                                <ul class="menu-subnav">
-                                    <li class="menu-item {{ request()->routeIs('admin.product_questions') ? 'menu-item-active' : '' }}" aria-haspopup="true">
-                                        <a href="{{ route('admin.product_questions') }}" class="menu-link">
-                                            <i class="menu-bullet menu-bullet-dot">
-                                                <span></span>
-                                            </i>
-                                            <span class="menu-text">Вопросы по товарам</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
+
                             <div class="menu-submenu" style="" kt-hidden-height="160">
                                 <i class="menu-arrow"></i>
                                 <ul class="menu-subnav">
@@ -419,6 +407,41 @@
                             <h4 class="menu-text">Настройки</h4>
                             <i class="menu-icon ki ki-bold-more-hor icon-md"></i>
                         </li>
+                        <li class="menu-item menu-item-submenu
+                        {{ (request()->routeIs('admin.chats') || request()->routeIs('admin.feedback-reason.index') || request()->routeIs('admin.users')) ? 'menu-item-open' : '' }}"
+                            aria-haspopup="true" data-menu-toggle="hover">
+                            <a href="javascript:;" class="menu-link menu-toggle">
+                                <i class="fas flaticon2-copy menu-icon"></i>
+                                <span class="menu-text">Коментарии/Вопросы</span>
+                                <i class="menu-arrow"></i>
+                            </a>
+                            <div class="menu-submenu" style="" kt-hidden-height="160">
+                                <i class="menu-arrow"></i>
+                                <ul class="menu-subnav">
+                                    <li class="menu-item {{ request()->routeIs('admin.product_questions') ? 'menu-item-active' : '' }}" aria-haspopup="true">
+                                        <a href="{{ route('admin.product_questions') }}" class="menu-link">
+                                            <i class="menu-bullet menu-bullet-dot">
+                                                <span></span>
+                                            </i>
+                                            <span class="menu-text">Вопросы по товарам</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="menu-submenu" style="" kt-hidden-height="160">
+                                <i class="menu-arrow"></i>
+                                <ul class="menu-subnav">
+                                    <li class="menu-item {{ request()->routeIs('admin.comment') ? 'menu-item-active' : '' }}" aria-haspopup="true">
+                                        <a href="{{ route('admin.comment') }}" class="menu-link">
+                                            <i class="menu-bullet menu-bullet-dot">
+                                                <span></span>
+                                            </i>
+                                            <span class="menu-text">Модерация коментариев</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
                         <li class="menu-item
                         {{ request()->routeIs('admin.faq-groups') || request()->routeIs('admin.faq-groups.edit') || request()->routeIs('admin.faq-groups.create') ? 'menu-item-active' : '' }}"
                             aria-haspopup="true">
@@ -427,6 +450,8 @@
                                 <span class="menu-text">FAQ</span>
                             </a>
                         </li>
+
+
                         <li class="menu-item menu-item-submenu
     {{ request()->routeIs('admin.menu') ||
     (request()->routeIs('admin.menu.create') && request()->segment(3) === \App\Models\Menu::TOP_MENU) ||
