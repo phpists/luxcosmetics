@@ -7,6 +7,7 @@ use App\Models\FeedbackChat;
 use App\Models\ProductQuestion;
 use App\Models\ProductQuestionMessage;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Symfony\Component\Console\Question\Question;
 
 class ProductQuestionController extends Controller
@@ -24,8 +25,24 @@ class ProductQuestionController extends Controller
         return redirect()->back()->with('success', 'Ответ отправлен');
     }
 
-    public function index(){
-        $questions = ProductQuestion::query()->with('messages')->with('product')->paginate(20);
+    public function index(Request $request){
+        $questions = ProductQuestion::query();
+        if ($request->status !== null) {
+            $questions = $questions->where('status', $request->status);
+        }
+        if ($request->product_id) {
+            $questions = $questions->where('product_id', $request->product_id);
+        }
+        $questions = $questions->with('messages')->with('product')->paginate(20);
+        if ($request->ajax()) {
+            $tableHtml = view('admin.product_questions.parts.table', ['questions' => $questions])->render();
+            $params = $request->all();
+            $paginationHtml = view('admin.product_questions.parts.pagination', compact('questions', 'params'))->render();
+            return response()->json([
+                'tableHtml' => $tableHtml,
+                'paginationHtml' => $paginationHtml
+            ]);
+        }
         return view('admin.product_questions.index', compact('questions'));
     }
 

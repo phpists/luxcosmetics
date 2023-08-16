@@ -121,41 +121,6 @@
                 }
             });
         });
-        function numberSelected() {
-
-            var data = $('#chats_form').serializeArray();
-
-            var counts = [];
-
-            data.forEach(function (element) {
-                if (!counts[element.name]) {
-                    counts[element.name] = 0;
-                }
-                counts[element.name] += 1;
-            });
-        }
-
-        function request(url) {
-
-            numberSelected();
-
-            if (typeof url === 'undefined') {
-                url = $('#filterUrl').data('url') + '?' + $('#chats_form').serialize();
-            }
-
-            $.ajax({
-                type: "GET",
-                url: url,
-                dataType: "json",
-                success: function (response) {
-                    $('#table-container').html(response.productsHtml);
-                    $('#pagination').html(response.paginateHtml);
-
-                    window.history.pushState(null, null, url);
-                }
-            });
-
-        }
 
         $(document).ready(function () {
             $(document).on('change', '#chats_form', function (e) {
@@ -184,6 +149,46 @@
                 })
             })
         })
+        function numberSelected() {
+
+            var data = $('#product_questions_form').serializeArray();
+
+            var counts = [];
+
+            data.forEach(function (element) {
+                if (!counts[element.name]) {
+                    counts[element.name] = 0;
+                }
+                counts[element.name] += 1;
+            });
+        }
+        function request(url) {
+
+            numberSelected();
+
+            if (typeof url === 'undefined') {
+                url = $('#filterUrl').data('url') + '?' + $('#product_questions_form').serialize();
+            }
+            $.ajax({
+                type: "GET",
+                url: url,
+                dataType: "json",
+                success: function (response) {
+                    $('#table-container').html(response.tableHtml);
+                    $('#pagination').html(response.paginateHtml);
+
+                    window.history.pushState(null, null, url);
+                }
+            });
+
+        }
+
+        $(document).ready(function () {
+            $(document).on('change', '#status_filter', function (e) {
+                e.preventDefault();
+                request();
+            });
+        });
     </script>
 @endsection
 
