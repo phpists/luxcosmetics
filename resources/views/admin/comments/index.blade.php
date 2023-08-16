@@ -38,6 +38,7 @@
                                 <thead>
                                 <tr>
                                     <th class="pr-0 text-center">#</th>
+                                    <th class="pr-0 text-center">Товар</th>
                                     <th class="pr-0 text-center">Коментарии</th>
                                     <th class="pr-10 text-center">Статус</th>
                                     <th class="pr-10 text-center">Действия</th>
@@ -47,6 +48,12 @@
                                 @foreach($comment as $item)
                                     <tr id="comment_{{$item->id}}" data-id="{{ $item->id }}" data-label="{{ $item->position }}">
                                         <td class="text-center pr-0">{{ $item->id }}</td>
+                                        <td class="text-center pr-0">
+                                            <a href="{{ route('products.product', App\Models\Product::find($item->product_id)->alias) }}"
+                                               target="_blank">
+                                                {{ App\Models\Product::find($item->product_id)->title }}
+                                            </a>
+                                        </td>
                                         <td class="text-center pr-0">
                                             <a href="{{ route('admin.comment.edit', $item->id) }}">{{ Str::limit($item->description, 300) }}</a>
                                         </td>

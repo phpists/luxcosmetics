@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Banner;
 use App\Models\Comments;
+use App\Models\Product;
 use App\Services\FileService;
 use App\Services\SiteService;
 use Illuminate\Http\Request;
@@ -32,7 +33,8 @@ class CommentsController extends Controller
                 'paginateHtml' => $paginateHtml,
             ]);
         }
-        return response()->view('admin.comments.index', compact('comment'));
+
+        return response()->view('admin.comments.index', compact('comment', ));
     }
     public function edit($id)
     {

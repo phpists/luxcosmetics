@@ -338,6 +338,7 @@
                     <div class="product-tabs__forms">
                         <form action="{{route('send.comment')}}" class="product-tabs__form form" id="newreview-form" method="post">
                             @csrf
+                            <input type="hidden" id='product_id' name="product_id" value="{{ $product->id }}">
                             <div class="form__title">Написать отзыв</div>
                             <div class="form__fieldset">
                                 <legend class="form__label">Рейтинг</legend>
@@ -375,10 +376,6 @@
                                         </label>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="form__fieldset">
-                                <legend class="form__label">Заголовок</legend>
-                                <input type="text" class="form__input">
                             </div>
                             <div class="form__fieldset">
                                 <legend class="form__label">Текст отзыва</legend>
@@ -459,13 +456,14 @@
                             @auth()
                                     <div class="form__col form__col--50">
                                         <div class="form__fieldset">
-                                            <legend class="form__label">Ваше имя: {{ auth()->user()->name }}</legend>
-                                            <div class="form__label"></div>
+                                            <legend class="form__label">Ваше имя</legend>
+                                            <input type="text" class="form__input" name="name" value="{{ auth()->user()->name }}">
                                         </div>
                                     </div>
                                     <div class="form__col form__col--50">
                                         <div class="form__fieldset">
                                             <legend class="form__label">Электронная почта: {{ auth()->user()->email }}</legend>
+                                            <input type="email" class="form__input" name="email" value="{{ auth()->user()->email }}">
                                         </div>
                                     </div>
                             @endauth
@@ -571,6 +569,7 @@
                             </div>
                             <div class="product-tabs__reviews">
                                 @foreach($comments as $comment)
+                                @if($product->id == $comment->product_id)
                                 @if($comment->status === 'Опубликовать')
                                 <div class="review">
                                     <div class="review__header">
@@ -656,6 +655,7 @@
                                         </div>
                                     </div>
                                 </div>
+                                        @endif
                                     @endif
                                 @endforeach
                                 <div class="review">

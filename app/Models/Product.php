@@ -166,7 +166,10 @@ class Product extends Model
         return $this->hasMany(Product::class, 'id', 'relative_product_id');
     }
 
-
+    public function comments()
+    {
+        return $this->hasMany(Comments::class);
+    }
 
     public function hasBonuses()
     {
