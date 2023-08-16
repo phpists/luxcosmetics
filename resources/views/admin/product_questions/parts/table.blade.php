@@ -1,3 +1,10 @@
+@php
+$status_list = [
+    \App\Models\ProductQuestion::NEW => \App\Services\SiteService::getProductQuestionStatus(\App\Models\ProductQuestion::NEW),
+    \App\Models\ProductQuestion::PUBLISHED => \App\Services\SiteService::getProductQuestionStatus(\App\Models\ProductQuestion::PUBLISHED),
+    \App\Models\ProductQuestion::CLOSED => \App\Services\SiteService::getProductQuestionStatus(\App\Models\ProductQuestion::CLOSED),
+]
+@endphp
 <div class="table-responsive">
     <table class="table table-head-custom table-vertical-center">
         <thead>
@@ -51,8 +58,17 @@
                 <td class="text-center pr-0">
                     {{ $question->updated_at->format('m Y, H:i:s') }}
                 </td>
-                <td class="text-center pr-0 status">
-                    {{ \App\Services\SiteService::getProductQuestionStatus($question->status) }}
+                <td class="text-center pr-0"> <!-- TODO: вивести статуси -->
+                    <div class="form-group row">
+                        <div class="col-12">
+                            <select class="form-control selectpicker status_select" data-id="{{$question->id}}">
+                                @foreach($status_list as $value=>$name)
+                                    <option @if($value === $question->status) selected @endif value="{{$value}}">{{ $name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+
                 </td>
                 <td class="text-center pr-0">
                     {{--                                            <i class="handle flaticon2-sort" style="cursor:pointer;"></i>--}}

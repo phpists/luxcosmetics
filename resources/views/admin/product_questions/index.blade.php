@@ -176,12 +176,33 @@
                 success: function (response) {
                     $('#table-container').html(response.tableHtml);
                     $('#pagination').html(response.paginateHtml);
+                    addStatusChange()
 
                     window.history.pushState(null, null, url);
                 }
             });
 
         }
+
+        function addStatusChange() {
+            let csrf = $('meta[name="csrf-token"]').attr('content');
+            document.querySelectorAll('.status_select').forEach(function (el, idx) {
+                el.addEventListener('change', function (ev) {
+                    let data = {
+                        id: ev.currentTarget.getAttribute('data-id'),
+                        status: ev.currentTarget.value,
+                        csrf: csrf
+                    }
+                    $.ajax({
+                        url: '/admin/product_question/update_status',
+                        method: 'POST',
+                        data: data
+                    })
+                })
+            })
+        }
+
+        addStatusChange()
 
         $(document).ready(function () {
             $(document).on('change', '#status_filter', function (e) {

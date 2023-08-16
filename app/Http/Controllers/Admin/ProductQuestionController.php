@@ -8,8 +8,6 @@ use App\Models\Product;
 use App\Models\ProductQuestion;
 use App\Models\ProductQuestionMessage;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
-use Symfony\Component\Console\Question\Question;
 
 class ProductQuestionController extends Controller
 {
@@ -82,5 +80,14 @@ class ProductQuestionController extends Controller
         $products = Product::query()->select('product.title, product.id')
             ->join('product_questions', 'product_id', 'product.id')
             ->get();
+    }
+
+    public function updateStatus(Request $request) {
+        ProductQuestion::query()->find($request->id)->update([
+            'status' => $request->status
+        ]);
+        return response()->json([
+            'success' => true
+        ]);
     }
 }
