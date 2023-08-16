@@ -16,6 +16,7 @@
             <th class="pr-0 text-center">
                 Пользователь
             </th>
+            <th class="text-center pr-0">Название товара</th>
             <td class="text-center pr-0">
                 Обновлено
             </td>
@@ -43,6 +44,9 @@
                 </td>
                 <td class="text-center pr-0">
                     {{ $question->messages->first()?->email }}
+                </td>
+                <td class="text-center pr-0">
+                    <a href="{{route('products.product', $question->product?->alias )}}">{{ $question->product?->title }}</a>
                 </td>
                 <td class="text-center pr-0">
                     {{ $question->updated_at->format('m Y, H:i:s') }}

@@ -25,7 +25,7 @@ class ProductQuestionController extends Controller
     }
 
     public function index(){
-        $questions = ProductQuestion::query()->with('messages')->paginate(20);
+        $questions = ProductQuestion::query()->with('messages')->with('product')->paginate(20);
         return view('admin.product_questions.index', compact('questions'));
     }
 

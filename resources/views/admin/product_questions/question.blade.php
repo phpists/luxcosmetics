@@ -16,6 +16,9 @@
                     <li class="breadcrumb-item">
                         <a href="#" class="text-muted">Вопрос</a>
                     </li>
+                    <li class="breadcrumb-item">
+                        <a href="#" class="text-muted">{{$question->id}}</a>
+                    </li>
                 </ul>
                 <!--end::Breadcrumb-->
             </div>
