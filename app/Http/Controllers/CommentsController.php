@@ -98,6 +98,6 @@ class CommentsController extends Controller
             }
             $record->save();
         }
-        return response()->json(['success' => true, 'count' => $count]);
+        return response()->json(['like' => $record->like, 'dislike' => $record->dislike]);
     }
 }

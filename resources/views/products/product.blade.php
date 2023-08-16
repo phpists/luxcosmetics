@@ -7,6 +7,11 @@
 @section('og:url', request()->url())
 
 @section('content')
+    <style>
+        .like_btn.checked {
+            color: #cc9755;
+        }
+    </style>
     <section class="crumbs">
         <div class="container">
             <div class="row">
@@ -1054,7 +1059,20 @@
                     table_name: button.getAttribute('data-table')
                 },
                 success: function(response) {
-                    button.children[1].innerText = response.count;
+                    let prev_count = parseInt(button.children[1].innerText);
+                    let dislike_button = button.parentNode.querySelector('button.like_btn.dislike_btn');
+                    let like_button = button.parentNode.querySelector('button.like_btn.on_like_btn');
+                    dislike_button.children[1].innerText = response.dislike;
+                    dislike_button.classList.remove('checked');
+                    like_button.children[1].innerText = response.like;
+                    like_button.classList.remove('checked');
+                    if (prev_count < response.like && isLiked) {
+                        button.classList.add('checked');
+                    }
+
+                    if (prev_count < response.dislike && !isLiked) {
+                        button.classList.add('checked');
+                    }
                 }
             });
         }
