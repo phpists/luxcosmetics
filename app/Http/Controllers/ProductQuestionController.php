@@ -21,7 +21,7 @@ class ProductQuestionController extends Controller
         }
         $message = new ProductQuestionMessage($data);
         $message->save();
-        return redirect()->back();
+        return redirect()->back()->with('success', 'Спасибо, вопрос отправлен на модерацию');
     }
 
     public function loadQuestions(Request $request) {

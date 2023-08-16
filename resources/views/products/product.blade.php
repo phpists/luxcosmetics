@@ -499,13 +499,13 @@
                                 <div class="form__col form__col--50">
                                     <div class="form__fieldset">
                                         <legend class="form__label">Ваше имя</legend>
-                                        <input type="text" name="username" class="form__input" required value="{{$user? ($user->name." ".$user->surname): null}}">
+                                        <input type="text" name="username" class="form__input" required value="{{$user? ($user->name." ".$user->surname): null}}" @if($user) readonly @endif>
                                     </div>
                                 </div>
                                 <div class="form__col form__col--50">
                                     <div class="form__fieldset">
                                         <legend class="form__label">Электронная почта</legend>
-                                        <input type="email" name="email" class="form__input" required value="{{$user?->email}}">
+                                        <input type="email" name="email" class="form__input" required value="{{$user?->email}}" @if($user) readonly @endif>
                                     </div>
                                 </div>
                             </div>

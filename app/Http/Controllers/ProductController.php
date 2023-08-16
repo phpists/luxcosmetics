@@ -53,6 +53,7 @@ class ProductController extends Controller
         $questions = ProductQuestion::query()
             ->where('product_id', $product->id)
             ->where('status', '>', 1)
+            ->orderBy('created_at', 'desc')
             ->paginate(ProductQuestion::ITEMS_PER_PAGE);
         $has_more_questions = $questions->hasMorePages();
         $random_products = Product::query()->inRandomOrder()->limit(12)->get();

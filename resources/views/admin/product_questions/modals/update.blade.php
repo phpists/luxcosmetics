@@ -21,7 +21,7 @@
                                     <label for="createSeller"
                                            class="col-sm-12 col-form-label font-weight-bold">Вопрос</label>
                                     <div class="col-sm-12">
-                                        <textarea id="updateQuestionMessage" class="form-control" name="message"></textarea>
+                                        <textarea style="height: 150px" id="updateQuestionMessage" class="form-control" name="message"></textarea>
                                     </div>
                                 </div>
                             </div>
