@@ -40,17 +40,17 @@
             </div>
             <div class="review__mark markblock">
                 <div class="markblock__title">Был ли этот отзыв полезен?</div>
-                <button class="markblock__btn">
+                <button class="markblock__btn like_btn" data-value="1" data-table="product_questions" data-id="{{$question->id}}">
                     <svg class="icon">
                         <use xlink:href="{{asset('images/dist/sprite.svg#like')}}"></use>
                     </svg>
-                    2
+                    <span>{{$question->like}}</span>
                 </button>
-                <button class="markblock__btn">
+                <button class="markblock__btn like_btn" data-value="0" data-table="product_questions" data-id="{{$question->id}}">
                     <svg class="icon">
                         <use xlink:href="{{asset('images/dist/sprite.svg#dislike')}}"></use>
                     </svg>
-                    0
+                    <span>{{$question->dislike}}</span>
                 </button>
             </div>
         </div>

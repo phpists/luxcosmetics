@@ -10,9 +10,14 @@ class CommentsAction extends Model
     use HasFactory;
 
     protected $fillable = [
-      'user_id', 'has_like',
-      'report_id', 'table_name'
+        'user_id',
+        'is_like',
+        'record_id',
+        'table_name',
+        'client_ip'
     ];
+
+    public $timestamps = false;
 
     public function user()
     {

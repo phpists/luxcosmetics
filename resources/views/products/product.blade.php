@@ -1009,6 +1009,11 @@
                 {{--})--}}
             })
         })
+        $('.like_btn').each(function (idx, el) {
+            el.addEventListener('click', (ev) => {
+                handleLike(ev.currentTarget)
+            })
+        })
         $(document).on('click', '#show_more_questions', function () {
             let is_disabled = $('#pagination_question').attr('aria-disabled')
             let question_page = $('#question_page').val();
@@ -1034,26 +1039,20 @@
         })
 
         function handleLike(button) {
-            var commentId = $(button).data('comment-id');
-            var isLiked = $(button).data('liked') === '1'; // Значение true или false
+            var recordId = button.getAttribute('data-id');
+            var isLiked = button.getAttribute('data-value') === '1'; // Значение true или false
 
             $.ajax({
                 type: 'POST',
                 url: '{{ route('send.like') }}',
-                data: { comment_id: commentId, like: isLiked ? 0 : 1, _token: '{{ csrf_token() }}' },
+                data: {
+                    record_id: recordId,
+                    isLiked: isLiked ? 1 : 0,
+                    _token: '{{ csrf_token() }}',
+                    table_name: button.getAttribute('data-table')
+                },
                 success: function(response) {
-                    if (response.success) {
-                        var countElement = $(button).find('.count');
-                        var currentCount = parseInt(countElement.text());
-
-                        if (isLiked) {
-                            countElement.text(currentCount - 1);
-                        } else {
-                            countElement.text(currentCount + 1);
-                        }
-
-                        $(button).toggleClass('active');
-                    }
+                    button.children[1].innerText = response.count;
                 }
             });
         }

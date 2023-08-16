@@ -11,12 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('comments_actions', function (Blueprint $table) {
-            $table->id();
-            $table->string('client_ip');
-            $table->boolean('is_like');
-            $table->integer('record_id')->comment('Питання або коментар');
-            $table->string('table_name');
+        Schema::table('product_questions', function (Blueprint $table) {
+            $table->unsignedInteger('like')->default(0);
+            $table->unsignedInteger('dislike')->default(0);
         });
     }
 
@@ -25,6 +22,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('comments_actions');
+        Schema::table('product_questions', function (Blueprint $table) {
+            //
+        });
     }
 };
