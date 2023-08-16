@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Comments;
 use App\Models\CommentsAction;
+use App\Models\ProductQuestion;
 use App\Models\ProductQuestionMessage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -34,30 +35,70 @@ class CommentsController extends Controller
     }
     public function like(Request $request)
     {
-        $user = Auth::user();
-        $commentId = $request->input('comment_id');
+        $recordId = $request->input('record_id');
 
-        $comment = Comments::findOrFail($commentId);
-
-        $existingAction = CommentsAction::where('user_id', $user->id)
-            ->where('report_id', $comment->id)
-            ->first();
-
-        if (!$existingAction) {
-            $commentAction = new CommentsAction();
-            $commentAction->user_id = $user->id;
-            $commentAction->has_like = $request->input('like');
-            $commentAction->report_id = $comment->id;
-            $commentAction->save();
-
-            $likesCount = CommentsAction::where('like', true)
-                ->where('report_id', $comment->id)
-                ->count();
-
-
-            $comment->like = $likesCount;
-            $comment->save();
+        if ($request->table_name === 'product_questions') {
+            $record = ProductQuestion::query()->find($recordId);
         }
-        return response()->json(['success' => true]);
+        else {
+            $record = Comments::query()->find($recordId);
+        }
+
+        $existingAction = CommentsAction::where('client_ip', $request->ip())
+            ->where('record_id', $recordId)
+            ->first();
+        $count = 0;
+        if (!$existingAction) {
+            $data = [
+                'is_like' => $request->input('isLiked'),
+                'record_id' => $recordId,
+                'table_name' => $request->table_name,
+                'client_ip' => $request->ip()
+            ];
+            $commentAction = new CommentsAction($data);
+//            $commentAction->client_ip = $request->ip();
+//            $commentAction->is_like = $request->input('isLiked');
+//            $commentAction->record_id = $recordId;
+//            $commentAction->table_name = $request->table_name;
+            $commentAction->save();
+            if ((bool)$request->isLiked) {
+                $record->like = $record->like + 1;
+                $count = $record->like;
+            }
+            else {
+                $record->dislike = $record->dislike + 1;
+                $count = $record->dislike;
+            }
+            $record->save();
+        }
+        elseif ((bool)$existingAction->is_like === (bool)$request->isLiked) {
+            $existingAction->delete();
+            if ((bool)$request->isLiked) {
+                $record->like = $record->like - 1;
+                $count = $record->like;
+            }
+            else {
+                $record->dislike = $record->dislike - 1;
+                $count = $record->dislike;
+            }
+            $record->save();
+        }
+        else {
+            $existingAction->update([
+                'is_like'=> $request->isLiked
+            ]);
+            if ((bool)$request->isLiked) {
+                $record->like = $record->like + 1;
+                $record->dislike = $record->dislike - 1;
+                $count = $record->like;
+            }
+            else {
+                $record->dislike = $record->dislike + 1;
+                $record->like = $record->like - 1;
+                $count = $record->dislike;
+            }
+            $record->save();
+        }
+        return response()->json(['like' => $record->like, 'dislike' => $record->dislike]);
     }
 }
