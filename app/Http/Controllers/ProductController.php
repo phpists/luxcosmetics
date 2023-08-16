@@ -51,7 +51,10 @@ class ProductController extends Controller
             ->where('related_products.product_id', $product->id)
             ->get();
         $questions = ProductQuestion::query()
+            ->select(['product_questions.*', 'comments_actions.is_like as is_like'])
+            ->leftJoin('comments_actions', 'comments_actions.record_id', 'product_questions.id')
             ->where('product_id', $product->id)
+            ->where('comments_actions.table_name', 'product_questions')
             ->where('status', '>', 1)
             ->orderBy('created_at', 'desc')
             ->paginate(ProductQuestion::ITEMS_PER_PAGE);

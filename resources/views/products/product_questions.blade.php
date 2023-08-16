@@ -40,13 +40,13 @@
             </div>
             <div class="review__mark markblock">
                 <div class="markblock__title">Был ли этот отзыв полезен?</div>
-                <button class="markblock__btn like_btn on_like_btn" data-value="1" data-table="product_questions" data-id="{{$question->id}}">
+                <button class="markblock__btn like_btn on_like_btn @if($question->is_like === 1) checked @endif" data-value="1" data-table="product_questions" data-id="{{$question->id}}">
                     <svg class="icon">
                         <use xlink:href="{{asset('images/dist/sprite.svg#like')}}"></use>
                     </svg>
                     <span>{{$question->like}}</span>
                 </button>
-                <button class="markblock__btn like_btn dislike_btn" data-value="0" data-table="product_questions" data-id="{{$question->id}}">
+                <button class="markblock__btn like_btn dislike_btn @if($question->is_like === 0) checked @endif" data-value="0" data-table="product_questions" data-id="{{$question->id}}">
                     <svg class="icon">
                         <use xlink:href="{{asset('images/dist/sprite.svg#dislike')}}"></use>
                     </svg>
