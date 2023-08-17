@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Comments;
 use App\Models\CommentsAction;
+use App\Models\Product;
 use App\Models\ProductQuestion;
 use App\Models\ProductQuestionMessage;
+use Illuminate\Database\Query\JoinClause;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
@@ -32,11 +34,63 @@ class CommentsController extends Controller
 
         return redirect()->back()->with('success', 'Спасибо, комментарий отправлен на модерацию');
     }
+    public function sortComments(Request $request)
+    {
+        $sortOption = $request->input('sort_option');
+
+        if ($sortOption === 'newest') {
+            $comments = Comments::query()
+                ->select(['comments.*', 'comments_actions.is_like as is_like'])
+                ->leftJoin('comments_actions', function (JoinClause $join) use ($request) {
+                    $join
+                        ->on('comments_actions.record_id', '=', 'comments.id')
+                        ->where('comments_actions.client_ip', $request->ip())
+                        ->where('comments_actions.table_name', 'comments');
+                })
+                ->orderBy('created_at', 'desc')
+                ->where('status', 'Опубликовать')
+                ->paginate(Comments::ITEMS_PER_PAGE);
+
+        } elseif ($sortOption === 'highest_rating') {
+            $comments = Comments::query()
+                ->select(['comments.*', 'comments_actions.is_like as is_like'])
+                ->leftJoin('comments_actions', function (JoinClause $join) use ($request) {
+                    $join
+                        ->on('comments_actions.record_id', '=', 'comments.id')
+                        ->where('comments_actions.client_ip', $request->ip())
+                        ->where('comments_actions.table_name', 'comments');
+                })
+                ->orderBy('like', 'desc')
+                ->where('status', 'Опубликовать')
+                ->paginate(Comments::ITEMS_PER_PAGE);
+        }
+        if ($request->ajax()) {
+            $comments = view('products.product_comments', ['comments' => $comments])->render();
+
+            return response()->json([
+                'comments' => $comments,
+            ]);
+        }
+
+        return response()->json(['comments' => $comments]);
+    }
     public function loadComments(Request $request)
     {
-        $comments = Comments::where('product_id', $request->product_id)->get();
-
-        return view('products.product', ['comments' => $comments]);
+        $comments = Comments::query()->select(['comments.*', 'comments_actions.is_like as is_like'])
+            ->leftJoin('comments_actions', function (JoinClause $join) use ($request) {
+                $join
+                    ->on('comments_actions.record_id', '=', 'comments.id')
+                    ->where('comments_actions.client_ip', $request->ip())
+                    ->where('comments_actions.table_name', 'comments');
+            })
+            ->where('product_id', $request->product_id)
+            ->where('status', 'Опубликовать')
+            ->paginate(Comments::ITEMS_PER_PAGE, ['*'], 'page', $request->page);
+        $html = view('products.product_comments', compact('comments'))->render();
+        return response()->json([
+            'htmlBody' => $html,
+            'hasMore' => $comments->hasMorePages()
+        ]);
     }
     public function like(Request $request)
     {

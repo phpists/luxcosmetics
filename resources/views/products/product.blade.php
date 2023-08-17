@@ -516,6 +516,7 @@
                         <div class="product-tabs__tab tab">Отзывы</div>
                         <div class="product-tabs__tab tab">Вопросы</div>
                     </div>
+
                     <div class="product-tabs__tabscontent">
                         <div class="product-tabs__tabsitem">
                             <div class="product-tabs__filters">
@@ -558,278 +559,21 @@
 
                             </div>
                             <div class="product-tabs__sortblock sortblock">
-                                <div class="sortblock__total">58 отзывов</div>
+                                <div class="sortblock__total">{{$countComments}} отзывов</div>
                                 <div class="sortblock__sort sort">
                                     <span class="sort__title">Сортировать по</span>
-                                    <select name="" id="" class="sort__select">
-                                        <option value="">Самые новые</option>
-                                        <option value="">Самый высокий рейтинг</option>
+                                    <select name="sort_option" id="sort_option" class="sort__select">
+                                        <option value="newest">Самые новые</option>
+                                        <option value="highest_rating">Самый высокий рейтинг</option>
                                     </select>
                                 </div>
                             </div>
-                            <div class="product-tabs__reviews">
-                                @foreach($comments as $comment)
-                                <div class="review">
-                                    <div class="review__header">
-                                        <div class="review__name">{{$comment->name}}</div>
-                                        <div class="review__userstatus">
-                                            <svg class="icon">
-                                                <use xlink:href="{{asset('images/dist/sprite.svg#shield')}}"></use>
-                                            </svg>
-                                            Проверенный покупатель
-                                        </div>
-                                    </div>
-                                    <div class="review__body">
-                                        <div class="review__content">{{$comment->description}}</div>
-{{--                                        <div class="review__images popup-gallery">--}}
-{{--                                            <div class="review__image"><a--}}
-{{--                                                    href="{{asset('images/dist/tmp-gallery.jpg')}}"><img--}}
-{{--                                                        src="{{asset('images/dist/tmp-gallery.jpg')}}" alt=""></a></div>--}}
-{{--                                            <div class="review__image"><a--}}
-{{--                                                    href="{{asset('images/dist/tmp-gallery.jpg')}}"><img--}}
-{{--                                                        src="{{asset('images/dist/tmp-gallery.jpg')}}" alt=""></a></div>--}}
-{{--                                            <div class="review__image"><a--}}
-{{--                                                    href="{{asset('images/dist/tmp-gallery.jpg')}}"><img--}}
-{{--                                                        src="{{asset('images/dist/tmp-gallery.jpg')}}" alt=""></a></div>--}}
-{{--                                        </div>--}}
-{{--                                        <div class="review__points">--}}
-{{--                                            <div class="reviewresult">--}}
-{{--                                                <div class="reviewresult__title">Долголетие</div>--}}
-{{--                                                <div class="reviewresult__spans">--}}
-{{--                                                    <span class="reviewresult__span is-active"></span>--}}
-{{--                                                    <span class="reviewresult__span is-active"></span>--}}
-{{--                                                    <span class="reviewresult__span is-active"></span>--}}
-{{--                                                    <span class="reviewresult__span"></span>--}}
-{{--                                                    <span class="reviewresult__span"></span>--}}
-{{--                                                </div>--}}
-{{--                                            </div>--}}
-{{--                                            <div class="reviewresult">--}}
-{{--                                                <div class="reviewresult__title">Силос(ароматный след)</div>--}}
-{{--                                                <div class="reviewresult__spans">--}}
-{{--                                                    <span class="reviewresult__span is-active"></span>--}}
-{{--                                                    <span class="reviewresult__span is-active"></span>--}}
-{{--                                                    <span class="reviewresult__span is-active"></span>--}}
-{{--                                                    <span class="reviewresult__span"></span>--}}
-{{--                                                    <span class="reviewresult__span"></span>--}}
-{{--                                                </div>--}}
-{{--                                            </div>--}}
-{{--                                            <div class="reviewresult">--}}
-{{--                                                <div class="reviewresult__title">Поглощение</div>--}}
-{{--                                                <div class="reviewresult__spans">--}}
-{{--                                                    <span class="reviewresult__span is-active"></span>--}}
-{{--                                                    <span class="reviewresult__span is-active"></span>--}}
-{{--                                                    <span class="reviewresult__span is-active"></span>--}}
-{{--                                                    <span class="reviewresult__span is-active"></span>--}}
-{{--                                                    <span class="reviewresult__span is-active"></span>--}}
-{{--                                                </div>--}}
-{{--                                            </div>--}}
-{{--                                        </div>--}}
-                                    </div>
-                                    <div class="review__footer">
-                                        <div class="review__date">
-                                            <svg class="icon">
-                                                <use xlink:href="{{asset('images/dist/sprite.svg#calendar')}}"></use>
-                                            </svg>
-                                            {{ \Carbon\Carbon::parse($comment->created_at)->isoFormat('D.MM.Y') }}
-                                        </div>
-                                        <div class="review__mark markblock">
-                                            <div class="markblock__title">Был ли этот отзыв полезен?</div>
-                                            <button class="markblock__btn like-btn{{ $comment->userLiked ? ' active' : '' }}"
-                                                    data-liked="{{ $comment->userLiked ? '1' : '0' }}"
-                                                    onclick="handleLike(this)" data-comment-id="{{ $comment->id }}">
-                                                <svg class="icon">
-                                                    <use xlink:href="{{ asset('images/dist/sprite.svg#like') }}"></use>
-                                                </svg>
-                                                <span class="count">{{ $comment->like ?? 0 }}</span>
-                                            </button>
-                                            <button class="markblock__btn dislike-btn{{ $comment->userDisliked ? ' active' : '' }}"
-                                                    data-disliked="{{ $comment->userDisliked ? '1' : '0' }}"
-                                                    onclick="handleDislike(this)" data-comment-id="{{ $comment->id }}">
-                                                <svg class="icon">
-                                                    <use xlink:href="{{ asset('images/dist/sprite.svg#dislike') }}"></use>
-                                                </svg>
-                                                <span class="count">{{ $comment->dislike ?? 0 }}</span>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                                @endforeach
-{{--                                <div class="review">--}}
-{{--                                    <div class="review__header">--}}
-{{--                                        <div class="review__name">Ольга</div>--}}
-{{--                                        <div class="review__userstatus">--}}
-{{--                                            <svg class="icon">--}}
-{{--                                                <use xlink:href="{{asset('images/dist/sprite.svg#shield')}}"></use>--}}
-{{--                                            </svg>--}}
-{{--                                            Проверенный покупатель--}}
-{{--                                        </div>--}}
-{{--                                    </div>--}}
-{{--                                    <div class="review__body">--}}
-{{--                                        <div class="review__content">Этот аромат стал для меня настоящим открытием!--}}
-{{--                                            Libre от ИВ СЕН-ЛОРАН обладает свежими и оригинальными нотками, которые--}}
-{{--                                            прекрасно сочетаются с моим стилем. Парфюмированная вода держится на коже--}}
-{{--                                            весь день, и я получаю множество комплиментов от коллег и друзей. Рекомендую--}}
-{{--                                            всем, кто хочет выделиться из толпы и подчеркнуть свою индивидуальность.--}}
-{{--                                        </div>--}}
-{{--                                        <div class="review__images popup-gallery">--}}
-{{--                                            <div class="review__image"><a--}}
-{{--                                                    href="{{asset('images/dist/tmp-gallery.jpg')}}"><img--}}
-{{--                                                        src="{{asset('images/dist/tmp-gallery.jpg')}}" alt=""></a></div>--}}
-{{--                                            <div class="review__image"><a--}}
-{{--                                                    href="{{asset('images/dist/tmp-gallery.jpg')}}"><img--}}
-{{--                                                        src="{{asset('images/dist/tmp-gallery.jpg')}}" alt=""></a></div>--}}
-{{--                                            <div class="review__image"><a--}}
-{{--                                                    href="{{asset('images/dist/tmp-gallery.jpg')}}"><img--}}
-{{--                                                        src="{{asset('images/dist/tmp-gallery.jpg')}}" alt=""></a></div>--}}
-{{--                                        </div>--}}
-{{--                                        <div class="review__points">--}}
-{{--                                            <div class="reviewresult">--}}
-{{--                                                <div class="reviewresult__title">Долголетие</div>--}}
-{{--                                                <div class="reviewresult__spans">--}}
-{{--                                                    <span class="reviewresult__span is-active"></span>--}}
-{{--                                                    <span class="reviewresult__span is-active"></span>--}}
-{{--                                                    <span class="reviewresult__span is-active"></span>--}}
-{{--                                                    <span class="reviewresult__span"></span>--}}
-{{--                                                    <span class="reviewresult__span"></span>--}}
-{{--                                                </div>--}}
-{{--                                            </div>--}}
-{{--                                            <div class="reviewresult">--}}
-{{--                                                <div class="reviewresult__title">Силос(ароматный след)</div>--}}
-{{--                                                <div class="reviewresult__spans">--}}
-{{--                                                    <span class="reviewresult__span is-active"></span>--}}
-{{--                                                    <span class="reviewresult__span is-active"></span>--}}
-{{--                                                    <span class="reviewresult__span is-active"></span>--}}
-{{--                                                    <span class="reviewresult__span"></span>--}}
-{{--                                                    <span class="reviewresult__span"></span>--}}
-{{--                                                </div>--}}
-{{--                                            </div>--}}
-{{--                                            <div class="reviewresult">--}}
-{{--                                                <div class="reviewresult__title">Поглощение</div>--}}
-{{--                                                <div class="reviewresult__spans">--}}
-{{--                                                    <span class="reviewresult__span is-active"></span>--}}
-{{--                                                    <span class="reviewresult__span is-active"></span>--}}
-{{--                                                    <span class="reviewresult__span is-active"></span>--}}
-{{--                                                    <span class="reviewresult__span is-active"></span>--}}
-{{--                                                    <span class="reviewresult__span is-active"></span>--}}
-{{--                                                </div>--}}
-{{--                                            </div>--}}
-{{--                                        </div>--}}
-{{--                                    </div>--}}
-{{--                                    <div class="review__footer">--}}
-{{--                                        <div class="review__date">--}}
-{{--                                            <svg class="icon">--}}
-{{--                                                <use xlink:href="{{asset('images/dist/sprite.svg#calendar')}}"></use>--}}
-{{--                                            </svg>--}}
-{{--                                            15.03.2022--}}
-{{--                                        </div>--}}
-{{--                                        <div class="review__mark markblock">--}}
-{{--                                            <div class="markblock__title">Был ли этот отзыв полезен?</div>--}}
-{{--                                            <button class="markblock__btn is-active">--}}
-{{--                                                <svg class="icon">--}}
-{{--                                                    <use xlink:href="{{asset('images/dist/sprite.svg#like')}}"></use>--}}
-{{--                                                </svg>--}}
-{{--                                                2--}}
-{{--                                            </button>--}}
-{{--                                            <button class="markblock__btn">--}}
-{{--                                                <svg class="icon">--}}
-{{--                                                    <use xlink:href="{{asset('images/dist/sprite.svg#dislike')}}"></use>--}}
-{{--                                                </svg>--}}
-{{--                                                0--}}
-{{--                                            </button>--}}
-{{--                                        </div>--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
-{{--                                <div class="review">--}}
-{{--                                    <div class="review__header">--}}
-{{--                                        <div class="review__name">Ольга</div>--}}
-{{--                                        <div class="review__userstatus">--}}
-{{--                                            <svg class="icon">--}}
-{{--                                                <use xlink:href="{{asset('images/dist/sprite.svg#shield')}}"></use>--}}
-{{--                                            </svg>--}}
-{{--                                            Проверенный покупатель--}}
-{{--                                        </div>--}}
-{{--                                    </div>--}}
-{{--                                    <div class="review__body">--}}
-{{--                                        <div class="review__content">Этот аромат стал для меня настоящим открытием!--}}
-{{--                                            Libre от ИВ СЕН-ЛОРАН обладает свежими и оригинальными нотками, которые--}}
-{{--                                            прекрасно сочетаются с моим стилем. Парфюмированная вода держится на коже--}}
-{{--                                            весь день, и я получаю множество комплиментов от коллег и друзей. Рекомендую--}}
-{{--                                            всем, кто хочет выделиться из толпы и подчеркнуть свою индивидуальность.--}}
-{{--                                        </div>--}}
-{{--                                        <div class="review__images popup-gallery">--}}
-{{--                                            <div class="review__image"><a--}}
-{{--                                                    href="{{asset('images/dist/tmp-gallery.jpg')}}"><img--}}
-{{--                                                        src="{{asset('images/dist/tmp-gallery.jpg')}}" alt=""></a></div>--}}
-{{--                                            <div class="review__image"><a--}}
-{{--                                                    href="{{asset('images/dist/tmp-gallery.jpg')}}"><img--}}
-{{--                                                        src="{{asset('images/dist/tmp-gallery.jpg')}}" alt=""></a></div>--}}
-{{--                                            <div class="review__image"><a--}}
-{{--                                                    href="{{asset('images/dist/tmp-gallery.jpg')}}"><img--}}
-{{--                                                        src="{{asset('images/dist/tmp-gallery.jpg')}}" alt=""></a></div>--}}
-{{--                                        </div>--}}
-{{--                                        <div class="review__points">--}}
-{{--                                            <div class="reviewresult">--}}
-{{--                                                <div class="reviewresult__title">Долголетие</div>--}}
-{{--                                                <div class="reviewresult__spans">--}}
-{{--                                                    <span class="reviewresult__span is-active"></span>--}}
-{{--                                                    <span class="reviewresult__span is-active"></span>--}}
-{{--                                                    <span class="reviewresult__span is-active"></span>--}}
-{{--                                                    <span class="reviewresult__span"></span>--}}
-{{--                                                    <span class="reviewresult__span"></span>--}}
-{{--                                                </div>--}}
-{{--                                            </div>--}}
-{{--                                            <div class="reviewresult">--}}
-{{--                                                <div class="reviewresult__title">Силос(ароматный след)</div>--}}
-{{--                                                <div class="reviewresult__spans">--}}
-{{--                                                    <span class="reviewresult__span is-active"></span>--}}
-{{--                                                    <span class="reviewresult__span is-active"></span>--}}
-{{--                                                    <span class="reviewresult__span is-active"></span>--}}
-{{--                                                    <span class="reviewresult__span"></span>--}}
-{{--                                                    <span class="reviewresult__span"></span>--}}
-{{--                                                </div>--}}
-{{--                                            </div>--}}
-{{--                                            <div class="reviewresult">--}}
-{{--                                                <div class="reviewresult__title">Поглощение</div>--}}
-{{--                                                <div class="reviewresult__spans">--}}
-{{--                                                    <span class="reviewresult__span is-active"></span>--}}
-{{--                                                    <span class="reviewresult__span is-active"></span>--}}
-{{--                                                    <span class="reviewresult__span is-active"></span>--}}
-{{--                                                    <span class="reviewresult__span is-active"></span>--}}
-{{--                                                    <span class="reviewresult__span is-active"></span>--}}
-{{--                                                </div>--}}
-{{--                                            </div>--}}
-{{--                                        </div>--}}
-{{--                                    </div>--}}
-{{--                                    <div class="review__footer">--}}
-{{--                                        <div class="review__date">--}}
-{{--                                            <svg class="icon">--}}
-{{--                                                <use xlink:href="{{asset('images/dist/sprite.svg#calendar')}}"></use>--}}
-{{--                                            </svg>--}}
-{{--                                            15.03.2022--}}
-{{--                                        </div>--}}
-{{--                                        <div class="review__mark markblock">--}}
-{{--                                            <div class="markblock__title">Был ли этот отзыв полезен?</div>--}}
-{{--                                            <button class="markblock__btn is-active">--}}
-{{--                                                <svg class="icon">--}}
-{{--                                                    <use xlink:href="{{asset('images/dist/sprite.svg#like')}}"></use>--}}
-{{--                                                </svg>--}}
-{{--                                                2--}}
-{{--                                            </button>--}}
-{{--                                            <button class="markblock__btn">--}}
-{{--                                                <svg class="icon">--}}
-{{--                                                    <use xlink:href="{{asset('images/dist/sprite.svg#dislike')}}"></use>--}}
-{{--                                                </svg>--}}
-{{--                                                0--}}
-{{--                                            </button>--}}
-{{--                                        </div>--}}
-{{--                                    </div>--}}
-
-{{--                                </div>--}}
+                            <div class="product-tabs__reviews comment-container" id="comment-container">
+                                @include('products.product_comments', compact('comments'))
                             </div>
-                            <div class="pagination">
-                                <div id="comments-container"></div>
-                                <button id="load-more-button" class="pagination__more">
-                                    Показать ещё <span>12 комментариев</span>
+                            <div class="pagination" id="pagination_comment" aria-disabled="{{$has_more_comments? "false": "true"}}">
+                                <input type="hidden" id="comment_page" value="2">
+                                <button class="pagination__more" id="show_more_comments">Показать еще <span>{{\App\Models\Comments::ITEMS_PER_PAGE}} отзыва</span>
                                     <svg class="icon">
                                         <use xlink:href="{{asset('images/dist/sprite.svg#refresh')}}"></use>
                                     </svg>
@@ -1050,6 +794,32 @@
             }
         })
 
+        $(document).on('click', '#show_more_comments', function () {
+            let is_disabled = $('#pagination_comment').attr('aria-disabled')
+            let comment_page = $('#comment_page').val();
+            if(is_disabled === 'false') {
+                $.ajax({
+                    url: '/load_comments',
+                    data: {
+                        load_more: true,
+                        page: comment_page,
+                        product_id: $('#product_id').val()
+                    },
+                    success: function (response) {
+                        console.log(response)
+                        $('#comment-container').append(response.htmlBody);
+                        $('#comment_page').val(comment_page + 1);
+                        let hasMore = response.hasMore? "false": "true";
+                        $('#pagination_comment').attr('aria-disabled', hasMore);
+                        likeEventStarter();
+                    },
+                    error: function (response) {
+                        console.log(response)
+                    }
+                })
+            }
+        })
+
         function handleLike(button) {
             var recordId = button.getAttribute('data-id');
             var isLiked = button.getAttribute('data-value') === '1'; // Значение true или false
@@ -1082,32 +852,24 @@
             });
         }
         $(document).ready(function() {
-            const commentsContainer = $('#comments-container');
-            const loadMoreButton = $('#load-more-button');
-            let currentPage = 1; // Текущая страница комментариев
+            $('#sort_option').change(function() {
+                var selectedOption = $(this).val();
+                var alias = '{{ $product->alias }}';
+                var url = '/sort_comments/' + alias;
 
-            loadMoreButton.on('click', function() {
-                currentPage++;
-                loadComments(currentPage);
-            });
-
-            function loadComments(page) {
                 $.ajax({
-                    url: '/load_comments', // Замените на ваш маршрут для загрузки комментариев
+                    url: url,
                     type: 'GET',
                     data: {
-                        page: page
+                        sort_option: selectedOption
                     },
                     success: function(response) {
-                        commentsContainer.append(response);
-                    },
-                    error: function(error) {
-                        console.error(error);
+                        $('#comment-container').html(response.comments);
+                        likeEventStarter();
                     }
                 });
-            }
+            });
         });
-
     </script>
 @endsection
 
