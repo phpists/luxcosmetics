@@ -1016,11 +1016,15 @@
                 {{--})--}}
             })
         })
-        $('.like_btn').each(function (idx, el) {
-            el.addEventListener('click', (ev) => {
-                handleLike(ev.currentTarget)
+        function likeEventStarter() {
+            $('.like_btn.like_init').each(function (idx, el) {
+                el.classList.remove('like_init');
+                el.addEventListener('click', (ev) => {
+                    handleLike(ev.currentTarget)
+                })
             })
-        })
+        }
+        likeEventStarter();
         $(document).on('click', '#show_more_questions', function () {
             let is_disabled = $('#pagination_question').attr('aria-disabled')
             let question_page = $('#question_page').val();
@@ -1037,6 +1041,7 @@
                         $('#question_page').val(question_page + 1);
                         let hasMore = response.hasMore? "false": "true";
                         $('#pagination_question').attr('aria-disabled', hasMore);
+                        likeEventStarter();
                     },
                     error: function (response) {
                         console.log(response)
