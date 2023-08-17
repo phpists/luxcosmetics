@@ -45,8 +45,7 @@
 
     <div class="cart-aside__total">
         <div class="cart-aside__delivery">
-                        <span class="cart-aside__delivery-name">Доставка <small>Бесплатная доставка
-                                в течении 1-2 дней</small></span>
+            <span class="cart-aside__delivery-name">Доставка <small>Бесплатная доставкав течении 1-2 дней</small></span>
             <span class="cart-aside__delivery-value">Бесплатно</span>
         </div>
         @if($cartService->getBonusAmount() > 0)
@@ -57,7 +56,7 @@
             Вы получите {{ $cartService->getBonusAmount() }} баллов
         </div>
         @endif
-        @if(auth()->user()->hasGiftCardBalance())
+        @if(auth()->check() && auth()->user()->hasGiftCardBalance())
         <div class="cart-aside__points">
             <svg class="icon">
                 <use xlink:href="{{asset('images/dist/sprite.svg#warning')}}"></use>

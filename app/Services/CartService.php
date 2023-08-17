@@ -87,24 +87,26 @@ class CartService
     {
         $totalSum = $this->getTotalSum();
 
-        $user = Auth::user();
-        if ($user->hasGiftCardBalance()) {
-            $maxDiscount = min($totalSum, $user->gift_card_balance);
-            $totalSum = $totalSum - $maxDiscount;
-            $this->discount_reasons[] = [
-                'title' => 'Баланс подарочной карты',
-                'name' => 'gift_card_balance',
-                'amount' => $maxDiscount
-            ];
-        }
+        if (Auth::check()) {
+            $user = Auth::user();
+            if ($user->hasGiftCardBalance()) {
+                $maxDiscount = min($totalSum, $user->gift_card_balance);
+                $totalSum = $totalSum - $maxDiscount;
+                $this->discount_reasons[] = [
+                    'title' => 'Баланс подарочной карты',
+                    'name' => 'gift_card_balance',
+                    'amount' => $maxDiscount
+                ];
+            }
 
-        if ($this->isUsedBonuses()) {
-            $totalSum = $totalSum - $this->getUsedBonusesDiscount();
-            $this->discount_reasons[] = [
-                'title' => 'Бонусные баллы',
-                'name' => 'bonuses',
-                'amount' => $this->getUsedBonusesDiscount()
-            ];
+            if ($this->isUsedBonuses()) {
+                $totalSum = $totalSum - $this->getUsedBonusesDiscount();
+                $this->discount_reasons[] = [
+                    'title' => 'Бонусные баллы',
+                    'name' => 'bonuses',
+                    'amount' => $this->getUsedBonusesDiscount()
+                ];
+            }
         }
 
         return round($totalSum, 2) ?? 0;
