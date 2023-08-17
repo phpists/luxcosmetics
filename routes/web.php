@@ -406,6 +406,7 @@ Route::post('/comment', [App\Http\Controllers\CommentsController::class, 'store'
 Route::post('/comment/like', [App\Http\Controllers\CommentsController::class, 'like'])->name('send.like');
 Route::post('/comment/dislike', [App\Http\Controllers\CommentsController::class, 'dislike'])->name('send.dislike');
 Route::get('/load_comments', [App\Http\Controllers\CommentsController::class, 'loadComments'])->name('comment.load');
+Route::get('/sort_comments/{alias}', [App\Http\Controllers\CommentsController::class, 'sortComments'])->name('comment.sort');
 
 
 Route::get('/user/home', [App\Http\Controllers\HomeController::class, 'home'])->name('user.home');

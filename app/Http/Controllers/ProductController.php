@@ -51,6 +51,7 @@ class ProductController extends Controller
             ->join('related_products', 'related_products.relative_product_id', 'products.id')
             ->where('related_products.product_id', $product->id)
             ->get();
+
         $questions = ProductQuestion::query()
             ->select(['product_questions.*', 'comments_actions.is_like as is_like'])
             ->leftJoin('comments_actions', function (JoinClause $join) use ($request) {
@@ -63,23 +64,38 @@ class ProductController extends Controller
             ->where('status', '>', 1)
             ->orderBy('created_at', 'desc')
             ->paginate(ProductQuestion::ITEMS_PER_PAGE);
+
         $has_more_questions = $questions->hasMorePages();
+        $has_more_comments = $questions->hasMorePages();
         $random_products = Product::query()->inRandomOrder()->limit(12)->get();
         $product_variations = CatalogService::getProductVariations($product->id, $product->base_property_id);
         $user = null;
         if (Auth::check()) {
             $user = $request->user();
         }
+
         $comments = Comments::query()
+            ->select(['comments.*', 'comments_actions.is_like as is_like'])
+            ->leftJoin('comments_actions', function (JoinClause $join) use ($request) {
+                $join
+                    ->on('comments_actions.record_id', '=', 'comments.id')
+                    ->where('comments_actions.client_ip', $request->ip())
+                    ->where('comments_actions.table_name', 'comments');
+            })
             ->where('product_id', $product->id)
             ->where('status', 'Опубликовать')
             ->orderBy('created_at', 'desc')
-            ->paginate(ProductQuestion::ITEMS_PER_PAGE);
+            ->paginate(Comments::ITEMS_PER_PAGE);
+
+        $countComments = $comments->count();
 
         $ratings = Comments::where('product_id', $product->id)->pluck('rating');
         $averageRating = $ratings->avg();
 
-        return view('products.product', compact('product', 'product_variations', 'articles', 'relative_products', 'random_products', 'comments', 'averageRating',  'questions', 'has_more_questions', 'user'));
+        return view('products.product', compact('product', 'product_variations', 'articles',
+            'relative_products', 'random_products',
+            'comments', 'averageRating',  'questions',
+            'has_more_questions', 'user', 'has_more_comments', 'countComments'));
     }
 
     public function productCard(Product $product)
