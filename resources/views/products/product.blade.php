@@ -867,41 +867,43 @@
                             <div class="product-tabs__asks" id="ask_wrapper">
                                 @include('products.product_questions', compact('questions'))
                             </div>
-                            <div class="pagination" id="pagination_question" aria-disabled="{{$has_more_questions? "false": "true"}}">
-                                <input type="hidden" id="question_page" value="2">
-                                <button class="pagination__more" id="show_more_questions">Показать еще <span>{{\App\Models\ProductQuestion::ITEMS_PER_PAGE}} отзыва</span>
-                                    <svg class="icon">
-                                        <use xlink:href="{{asset('images/dist/sprite.svg#refresh')}}"></use>
-                                    </svg>
-                                </button>
-{{--                                <ul class="pagination__list">--}}
-{{--                                    <li class="pagination__item pagination__item--first"><a href="">--}}
-{{--                                            <svg class="icon">--}}
-{{--                                                <use xlink:href="{{asset('images/dist/sprite.svg#first')}}"></use>--}}
-{{--                                            </svg>--}}
-{{--                                        </a></li>--}}
-{{--                                    <li class="pagination__item pagination__item--prev"><a href="">--}}
-{{--                                            <svg class="icon">--}}
-{{--                                                <use xlink:href="{{asset('images/dist/sprite.svg#prev1')}}"></use>--}}
-{{--                                            </svg>--}}
-{{--                                        </a></li>--}}
-{{--                                    <li class="pagination__item pagination__item--active"><span>1</span></li>--}}
-{{--                                    <li class="pagination__item"><a href="">2</a></li>--}}
-{{--                                    <li class="pagination__item"><a href="">3</a></li>--}}
-{{--                                    <li class="pagination__item pagination__item--dots">...</li>--}}
-{{--                                    <li class="pagination__item"><a href="">36</a></li>--}}
-{{--                                    <li class="pagination__item pagination__item--next"><a href="">--}}
-{{--                                            <svg class="icon">--}}
-{{--                                                <use xlink:href="{{asset('images/dist/sprite.svg#next1')}}"></use>--}}
-{{--                                            </svg>--}}
-{{--                                        </a></li>--}}
-{{--                                    <li class="pagination__item pagination__item--last"><a href="">--}}
-{{--                                            <svg class="icon">--}}
-{{--                                                <use xlink:href="{{asset('images/dist/sprite.svg#last')}}"></use>--}}
-{{--                                            </svg>--}}
-{{--                                        </a></li>--}}
-{{--                                </ul>--}}
-                            </div>
+                            @if($has_more_questions)
+                                <div class="pagination" id="pagination_question" aria-disabled="{{$has_more_questions? "false": "true"}}">
+                                    <input type="hidden" id="question_page" value="2">
+                                    <button class="pagination__more" id="show_more_questions">Показать еще <span>{{\App\Models\ProductQuestion::ITEMS_PER_PAGE}} отзыва</span>
+                                        <svg class="icon">
+                                            <use xlink:href="{{asset('images/dist/sprite.svg#refresh')}}"></use>
+                                        </svg>
+                                    </button>
+                                    {{--                                <ul class="pagination__list">--}}
+                                    {{--                                    <li class="pagination__item pagination__item--first"><a href="">--}}
+                                    {{--                                            <svg class="icon">--}}
+                                    {{--                                                <use xlink:href="{{asset('images/dist/sprite.svg#first')}}"></use>--}}
+                                    {{--                                            </svg>--}}
+                                    {{--                                        </a></li>--}}
+                                    {{--                                    <li class="pagination__item pagination__item--prev"><a href="">--}}
+                                    {{--                                            <svg class="icon">--}}
+                                    {{--                                                <use xlink:href="{{asset('images/dist/sprite.svg#prev1')}}"></use>--}}
+                                    {{--                                            </svg>--}}
+                                    {{--                                        </a></li>--}}
+                                    {{--                                    <li class="pagination__item pagination__item--active"><span>1</span></li>--}}
+                                    {{--                                    <li class="pagination__item"><a href="">2</a></li>--}}
+                                    {{--                                    <li class="pagination__item"><a href="">3</a></li>--}}
+                                    {{--                                    <li class="pagination__item pagination__item--dots">...</li>--}}
+                                    {{--                                    <li class="pagination__item"><a href="">36</a></li>--}}
+                                    {{--                                    <li class="pagination__item pagination__item--next"><a href="">--}}
+                                    {{--                                            <svg class="icon">--}}
+                                    {{--                                                <use xlink:href="{{asset('images/dist/sprite.svg#next1')}}"></use>--}}
+                                    {{--                                            </svg>--}}
+                                    {{--                                        </a></li>--}}
+                                    {{--                                    <li class="pagination__item pagination__item--last"><a href="">--}}
+                                    {{--                                            <svg class="icon">--}}
+                                    {{--                                                <use xlink:href="{{asset('images/dist/sprite.svg#last')}}"></use>--}}
+                                    {{--                                            </svg>--}}
+                                    {{--                                        </a></li>--}}
+                                    {{--                                </ul>--}}
+                                </div>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -1024,7 +1026,7 @@
             let question_page = $('#question_page').val();
             if(is_disabled === 'false') {
                 $.ajax({
-                    url: '/load_comments',
+                    url: '/load_questions',
                     data: {
                         load_more: true,
                         page: question_page,
