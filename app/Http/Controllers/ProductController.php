@@ -66,7 +66,6 @@ class ProductController extends Controller
             ->paginate(ProductQuestion::ITEMS_PER_PAGE);
 
         $has_more_questions = $questions->hasMorePages();
-        $has_more_comments = $questions->hasMorePages();
         $random_products = Product::query()->inRandomOrder()->limit(12)->get();
         $product_variations = CatalogService::getProductVariations($product->id, $product->base_property_id);
         $user = null;
@@ -88,6 +87,8 @@ class ProductController extends Controller
             ->paginate(Comments::ITEMS_PER_PAGE);
 
         $countComments = $comments->count();
+        $has_more_comments = $comments->hasMorePages();
+
 
         $ratings = Comments::where('product_id', $product->id)->pluck('rating');
         $averageRating = $ratings->avg();

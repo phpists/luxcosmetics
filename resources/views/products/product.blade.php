@@ -520,42 +520,42 @@
                     <div class="product-tabs__tabscontent">
                         <div class="product-tabs__tabsitem">
                             <div class="product-tabs__filters">
-{{--                                <h4 class="reviewsfilters__title">Фильтр отзывов</h4>--}}
-{{--                                <form action="" class="reviewsfilters__search search">--}}
-{{--                                    <input type="text" class="search__input" placeholder="Поиск отзывов">--}}
-{{--                                    <button class="search__btn">--}}
-{{--                                        <svg class="icon">--}}
-{{--                                            <use xlink:href="{{asset('images/dist/sprite.svg#search')}}"></use>--}}
-{{--                                        </svg>--}}
-{{--                                    </button>--}}
-{{--                                </form>--}}
-{{--                                <div class="reviewsfilters__selects">--}}
-{{--                                    <div class="reviewsfilters__select">--}}
-{{--                                        <select name="" class="selectCustom">--}}
-{{--                                            <option value="">Рейтинг</option>--}}
-{{--                                        </select>--}}
-{{--                                    </div>--}}
-{{--                                    <div class="reviewsfilters__select">--}}
-{{--                                        <select name="" class="selectCustom">--}}
-{{--                                            <option value="">Изображения и видео</option>--}}
-{{--                                        </select>--}}
-{{--                                    </div>--}}
-{{--                                    <div class="reviewsfilters__select">--}}
-{{--                                        <select name="" class="selectCustom">--}}
-{{--                                            <option value="">Поглощение</option>--}}
-{{--                                        </select>--}}
-{{--                                    </div>--}}
-{{--                                    <div class="reviewsfilters__select">--}}
-{{--                                        <select name="" class="selectCustom">--}}
-{{--                                            <option value="">Долголетие</option>--}}
-{{--                                        </select>--}}
-{{--                                    </div>--}}
-{{--                                    <div class="reviewsfilters__select">--}}
-{{--                                        <select name="" class="selectCustom">--}}
-{{--                                            <option value="">Силос</option>--}}
-{{--                                        </select>--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
+                                {{--                                <h4 class="reviewsfilters__title">Фильтр отзывов</h4>--}}
+                                {{--                                <form action="" class="reviewsfilters__search search">--}}
+                                {{--                                    <input type="text" class="search__input" placeholder="Поиск отзывов">--}}
+                                {{--                                    <button class="search__btn">--}}
+                                {{--                                        <svg class="icon">--}}
+                                {{--                                            <use xlink:href="{{asset('images/dist/sprite.svg#search')}}"></use>--}}
+                                {{--                                        </svg>--}}
+                                {{--                                    </button>--}}
+                                {{--                                </form>--}}
+                                {{--                                <div class="reviewsfilters__selects">--}}
+                                {{--                                    <div class="reviewsfilters__select">--}}
+                                {{--                                        <select name="" class="selectCustom">--}}
+                                {{--                                            <option value="">Рейтинг</option>--}}
+                                {{--                                        </select>--}}
+                                {{--                                    </div>--}}
+                                {{--                                    <div class="reviewsfilters__select">--}}
+                                {{--                                        <select name="" class="selectCustom">--}}
+                                {{--                                            <option value="">Изображения и видео</option>--}}
+                                {{--                                        </select>--}}
+                                {{--                                    </div>--}}
+                                {{--                                    <div class="reviewsfilters__select">--}}
+                                {{--                                        <select name="" class="selectCustom">--}}
+                                {{--                                            <option value="">Поглощение</option>--}}
+                                {{--                                        </select>--}}
+                                {{--                                    </div>--}}
+                                {{--                                    <div class="reviewsfilters__select">--}}
+                                {{--                                        <select name="" class="selectCustom">--}}
+                                {{--                                            <option value="">Долголетие</option>--}}
+                                {{--                                        </select>--}}
+                                {{--                                    </div>--}}
+                                {{--                                    <div class="reviewsfilters__select">--}}
+                                {{--                                        <select name="" class="selectCustom">--}}
+                                {{--                                            <option value="">Силос</option>--}}
+                                {{--                                        </select>--}}
+                                {{--                                    </div>--}}
+                                {{--                                </div>--}}
 
                             </div>
                             <div class="product-tabs__sortblock sortblock">
@@ -571,41 +571,43 @@
                             <div class="product-tabs__reviews comment-container" id="comment-container">
                                 @include('products.product_comments', compact('comments'))
                             </div>
-                            <div class="pagination" id="pagination_comment" aria-disabled="{{$has_more_comments? "false": "true"}}">
-                                <input type="hidden" id="comment_page" value="2">
-                                <button class="pagination__more" id="show_more_comments">Показать еще <span>{{\App\Models\Comments::ITEMS_PER_PAGE}} отзыва</span>
-                                    <svg class="icon">
-                                        <use xlink:href="{{asset('images/dist/sprite.svg#refresh')}}"></use>
-                                    </svg>
-                                </button>
-{{--                                <ul class="pagination__list">--}}
-{{--                                    <li class="pagination__item pagination__item--first"><a href="">--}}
-{{--                                            <svg class="icon">--}}
-{{--                                                <use xlink:href="{{asset('images/dist/sprite.svg#first')}}"></use>--}}
-{{--                                            </svg>--}}
-{{--                                        </a></li>--}}
-{{--                                    <li class="pagination__item pagination__item--prev"><a href="">--}}
-{{--                                            <svg class="icon">--}}
-{{--                                                <use xlink:href="{{asset('images/dist/sprite.svg#prev1')}}"></use>--}}
-{{--                                            </svg>--}}
-{{--                                        </a></li>--}}
-{{--                                    <li class="pagination__item pagination__item--active"><span>1</span></li>--}}
-{{--                                    <li class="pagination__item"><a href="">2</a></li>--}}
-{{--                                    <li class="pagination__item"><a href="">3</a></li>--}}
-{{--                                    <li class="pagination__item pagination__item--dots">...</li>--}}
-{{--                                    <li class="pagination__item"><a href="">36</a></li>--}}
-{{--                                    <li class="pagination__item pagination__item--next"><a href="">--}}
-{{--                                            <svg class="icon">--}}
-{{--                                                <use xlink:href="{{asset('images/dist/sprite.svg#next1')}}"></use>--}}
-{{--                                            </svg>--}}
-{{--                                        </a></li>--}}
-{{--                                    <li class="pagination__item pagination__item--last"><a href="">--}}
-{{--                                            <svg class="icon">--}}
-{{--                                                <use xlink:href="{{asset('images/dist/sprite.svg#last')}}"></use>--}}
-{{--                                            </svg>--}}
-{{--                                        </a></li>--}}
-{{--                                </ul>--}}
-                            </div>
+                            @if($has_more_comments)
+                                <div class="pagination" id="pagination_comment" aria-disabled="{{$has_more_comments? "false": "true"}}">
+                                    <input type="hidden" id="comment_page" value="2">
+                                    <button class="pagination__more" id="show_more_comments">Показать еще <span>{{\App\Models\Comments::ITEMS_PER_PAGE}} отзыва</span>
+                                        <svg class="icon">
+                                            <use xlink:href="{{asset('images/dist/sprite.svg#refresh')}}"></use>
+                                        </svg>
+                                    </button>
+                                    {{--                                <ul class="pagination__list">--}}
+                                    {{--                                    <li class="pagination__item pagination__item--first"><a href="">--}}
+                                    {{--                                            <svg class="icon">--}}
+                                    {{--                                                <use xlink:href="{{asset('images/dist/sprite.svg#first')}}"></use>--}}
+                                    {{--                                            </svg>--}}
+                                    {{--                                        </a></li>--}}
+                                    {{--                                    <li class="pagination__item pagination__item--prev"><a href="">--}}
+                                    {{--                                            <svg class="icon">--}}
+                                    {{--                                                <use xlink:href="{{asset('images/dist/sprite.svg#prev1')}}"></use>--}}
+                                    {{--                                            </svg>--}}
+                                    {{--                                        </a></li>--}}
+                                    {{--                                    <li class="pagination__item pagination__item--active"><span>1</span></li>--}}
+                                    {{--                                    <li class="pagination__item"><a href="">2</a></li>--}}
+                                    {{--                                    <li class="pagination__item"><a href="">3</a></li>--}}
+                                    {{--                                    <li class="pagination__item pagination__item--dots">...</li>--}}
+                                    {{--                                    <li class="pagination__item"><a href="">36</a></li>--}}
+                                    {{--                                    <li class="pagination__item pagination__item--next"><a href="">--}}
+                                    {{--                                            <svg class="icon">--}}
+                                    {{--                                                <use xlink:href="{{asset('images/dist/sprite.svg#next1')}}"></use>--}}
+                                    {{--                                            </svg>--}}
+                                    {{--                                        </a></li>--}}
+                                    {{--                                    <li class="pagination__item pagination__item--last"><a href="">--}}
+                                    {{--                                            <svg class="icon">--}}
+                                    {{--                                                <use xlink:href="{{asset('images/dist/sprite.svg#last')}}"></use>--}}
+                                    {{--                                            </svg>--}}
+                                    {{--                                        </a></li>--}}
+                                    {{--                                </ul>--}}
+                                </div>
+                            @endif
                         </div>
                         <div class="product-tabs__tabsitem">
                             <div class="product-tabs__asks" id="ask_wrapper">
@@ -785,6 +787,9 @@
                         $('#question_page').val(question_page + 1);
                         let hasMore = response.hasMore? "false": "true";
                         $('#pagination_question').attr('aria-disabled', hasMore);
+                        if (!response.hasMore) {
+                            $('#pagination_question').hide();
+                        }
                         likeEventStarter();
                     },
                     error: function (response) {
@@ -811,6 +816,9 @@
                         $('#comment_page').val(comment_page + 1);
                         let hasMore = response.hasMore? "false": "true";
                         $('#pagination_comment').attr('aria-disabled', hasMore);
+                        if (!response.hasMore) {
+                            $('#pagination_comment').hide();
+                        }
                         likeEventStarter();
                     },
                     error: function (response) {

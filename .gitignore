@@ -21,3 +21,4 @@ yarn-error.log
 .DS_Store
 public/.DS_Store
 public/css/.DS_Store
+qodana.yaml
