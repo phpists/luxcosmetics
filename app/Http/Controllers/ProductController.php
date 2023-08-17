@@ -10,6 +10,7 @@ use App\Models\ProductQuestion;
 use App\Models\Seo;
 use App\Services\CatalogService;
 use Faker\Provider\Image;
+use Illuminate\Database\Query\JoinClause;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -52,9 +53,13 @@ class ProductController extends Controller
             ->get();
         $questions = ProductQuestion::query()
             ->select(['product_questions.*', 'comments_actions.is_like as is_like'])
-            ->leftJoin('comments_actions', 'comments_actions.record_id', 'product_questions.id')
+            ->leftJoin('comments_actions', function (JoinClause $join) use ($request) {
+                $join
+                    ->on('comments_actions.record_id', '=', 'product_questions.id')
+                    ->where('comments_actions.client_ip', $request->ip())
+                    ->where('comments_actions.table_name', 'product_questions');
+            })
             ->where('product_id', $product->id)
-            ->where('comments_actions.table_name', 'product_questions')
             ->where('status', '>', 1)
             ->orderBy('created_at', 'desc')
             ->paginate(ProductQuestion::ITEMS_PER_PAGE);
