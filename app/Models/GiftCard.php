@@ -17,7 +17,9 @@ class GiftCard extends Model
         'activated_by',
         'activated_at',
         'buyer_id',
-        'card_id'
+        'card_id',
+        'deactivated_at',
+        'balance'
     ];
 
     protected $casts = [
@@ -25,6 +27,21 @@ class GiftCard extends Model
     ];
 
 
+    protected static function booted (): void
+    {
+
+        self::creating(function(GiftCard $model) {
+            $model->balance = $model->sum;
+        });
+
+    }
+
+
+    public function scopeActive($query)
+    {
+        return $query->whereNull('deactivated_at')
+            ->where('balance', '>', 0);
+    }
 
     public function activator()
     {
@@ -43,5 +60,9 @@ class GiftCard extends Model
         return $this->activated_by !== null && $this->activated_at !== null;
     }
 
+    public function isAvailable()
+    {
+        return $this->deactivated_at == null;
+    }
 
 }

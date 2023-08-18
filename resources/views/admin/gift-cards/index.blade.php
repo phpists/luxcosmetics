@@ -9,7 +9,6 @@
 
 @section('content')
 
-
     <!--end::Subheader-->
     <!--begin::Entry-->
     <div class="d-flex flex-column-fluid">
@@ -27,7 +26,8 @@
                     <div class="card-toolbar">
                         <!--begin::Dropdown-->
                         <div class="dropdown dropdown-inline mr-2">
-                            <button data-toggle="modal" data-target="#createModal" class="btn btn-primary font-weight-bold">
+                            <button data-toggle="modal" data-target="#createModal"
+                                    class="btn btn-primary font-weight-bold">
                                 <i class="fas fa-plus mr-2"></i>Создать
                             </button>
                         </div>
@@ -54,6 +54,9 @@
                                 </th>
                                 <th class="text-center pr-0">
                                     Активирована
+                                </th>
+                                <th class="text-center pr-0">
+                                    Статус
                                 </th>
                                 <th class="pr-0 text-center">
                                     Действия
@@ -86,23 +89,35 @@
                                             {{ $giftCard->activated_at ?? '-' }}
                                         </span>
                                     </td>
+                                    <td class="text-center">
+                                        <span class="text-dark-75 d-block font-size-lg">
+                                            {!! $giftCard->isAvailable()
+                                                    ? '<span class="badge badge-success">Доступная для использования</span>'
+                                                    : '<span class="badge badge-danger">Деактивированная</span>' !!}
+                                        </span>
+                                    </td>
                                     <td class="text-center pr-0">
-                                        <form action="{{ route('admin.gift_cards.destroy', $giftCard) }}" method="POST">
-                                            <a href="javascript:;"
-                                               class="btn btn-sm btn-clean btn-icon btn-show"
-                                               data-toggle="modal" data-target="#showModal"
-                                               data-url="{{ route('admin.gift_cards.show', $giftCard) }}">
-                                                <i class="las la-eye"></i>
-                                            </a>
-{{--                                            <a href="javascript:;" class="btn btn-sm btn-clean btn-icon btn_edit"--}}
-{{--                                               data-toggle="modal" data-target="#updateModal"--}}
-{{--                                               data-id="{{ $giftCard->id }}">--}}
-{{--                                                <i class="las la-edit"></i>--}}
-{{--                                            </a>--}}
+                                        <a href="javascript:;"
+                                           class="btn btn-sm btn-clean btn-icon btn-show"
+                                           data-toggle="modal" data-target="#showModal"
+                                           data-url="{{ route('admin.gift_cards.show', $giftCard) }}">
+                                            <i class="las la-eye"></i>
+                                        </a>
+                                        @if($giftCard->isAvailable())
+                                        <form action="{{ route('admin.gift_cards.deactivate', $giftCard) }}" method="POST" style="display: inline">
+                                            @csrf
+                                            @method('PUT')
+                                            <button type="submit" class="btn btn-sm btn-clean btn-icon"
+                                                    onclick="return confirm('Вы уверенны? Это действия нельзя отменить. Все оставшиеся средства больше не смогут быть списаны')"
+                                                    title="Delete"><i class="las la-minus-circle"></i>
+                                            </button>
+                                        </form>
+                                        @endif
+                                        <form action="{{ route('admin.gift_cards.destroy', $giftCard) }}" method="POST" style="display: inline">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-sm btn-clean btn-icon btn_delete"
-                                                    onclick="return confirm('Вы уверенны? Это действия не отменит уже полученные пользователем средства, если карта уже была активирована')"
+                                                    onclick="return confirm('Вы уверенны?')"
                                                     title="Delete"><i class="las la-trash"></i>
                                             </button>
                                         </form>
@@ -148,15 +163,16 @@
                 url: $(this).data('url'),
                 dataType: 'json',
                 success: function (item) {
-                    $('#showColor').val(item.color);
+                    $('#showColor').val(item.color).css('background-color', item.color);
                     $('#showSum').val(item.sum);
+                    $('#showBalance').val(item.balance);
                     $('#showFrom').val(item.from_whom);
                     $('#showReceiver').val(item.receiver);
                     $('#showReceiverEmail').val(item.receiver_email);
                     $('#showDescription').text(item.description);
                     $('#showCode').val(item.code);
-                    $('#showActivated').val(item.activated_at);
-                    $('#showActivatedBy').val(item.activated_by);
+                    $('#showActivated').val(item.activated_date);
+                    $('#showActivatedBy').val(item.activated_by_email);
                 }
             });
         }

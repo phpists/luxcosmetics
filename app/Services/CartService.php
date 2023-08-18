@@ -90,7 +90,7 @@ class CartService
         if (Auth::check()) {
             $user = Auth::user();
             if ($user->hasGiftCardBalance()) {
-                $maxDiscount = min($totalSum, $user->gift_card_balance);
+                $maxDiscount = min($totalSum, $user->activeGiftCard->balance);
                 $totalSum = $totalSum - $maxDiscount;
                 $this->discount_reasons[] = [
                     'title' => 'Баланс подарочной карты',
@@ -269,7 +269,7 @@ class CartService
             $user = Auth::user();
 
             if ($this->isUsedGiftCardDiscount())
-                $user->decrement('gift_card_balance', $this->getTotalSum() - $order->total_sum);
+                $user->activeGiftCard->decrement('balance', $this->getTotalSum() - $order->total_sum);
 
             if ($this->isUsedBonuses())
                 $user->decrement('points', $this->getUsedBonusesDiscount());
