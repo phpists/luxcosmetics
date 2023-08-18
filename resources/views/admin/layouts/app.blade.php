@@ -137,6 +137,14 @@
                             </a>
                         </li>
 
+                        <li class="menu-item {{ Str::is('admin.promo_codes.*', request()->route()->getName()) ? 'menu-item-active' : '' }}"
+                            aria-haspopup="true">
+                            <a href="{{ route('admin.promo_codes.index') }}" class="menu-link">
+                                <i class="fas fa-th menu-icon"></i>
+                                <span class="menu-text">Промо коды</span>
+                            </a>
+                        </li>
+
                         <li class="menu-item menu-item-submenu
 {{ (request()->routeIs('admin.products')
 || request()->routeIs('admin.products.tree')
@@ -587,6 +595,9 @@
         @include('admin.layouts.includes.header')
         <!--begin::Content-->
             <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
+                <div class="container-fluid">
+                    @include('admin.layouts.includes.messages')
+                </div>
                 @yield('content')
             </div>
             <!--end::Content-->
