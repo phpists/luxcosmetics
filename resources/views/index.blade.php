@@ -22,7 +22,7 @@
                         <a href="{{ $selectedItem->link }}">
                             <picture>
                                 <source  srcset="{{asset('images/uploads/banner/' . $selectedItem->image)}}" media="(min-width: 576px)">
-                                <source srcset="{{asset('images/dist/banners/banner-big@320.jpg')}}" media="(max-width: 575px)" >
+                                <source srcset="{{asset('images/uploads/banner/'. $selectedItem->getSmallImage())}}" media="(max-width: 575px)" >
                                 <img src="{{asset('images/uploads/banner/' . $selectedItem->image)}}">
                             </picture>
                         </a>
@@ -39,8 +39,8 @@
                             <div class="article__image">
                                 <picture>
                                     <source  srcset="{{asset('images/uploads/banner/' . $selectedItem->image)}}" media="(min-width: 768px)">
-                                    <source srcset="{{asset('images/dist/banners/banner-medium@768.jpg')}}" media="(min-width: 576px) and (max-width: 767px)" >
-                                    <source srcset="{{asset('images/dist/banners/banner-medium@320.jpg')}}" media="(max-width: 575px)" >
+                                    <source srcset="{{asset('images/uploads/banner/' . $selectedItem->getSmallImage())}}" media="(min-width: 576px) and (max-width: 767px)" >
+                                    <source srcset="{{asset('images/uploads/banner/' . $selectedItem->getSmallImage())}}" media="(max-width: 575px)" >
                                     <img src="{{asset('images/uploads/banner/' . $selectedItem->image)}}">
                                 </picture>
                             </div>
@@ -58,8 +58,8 @@
                             <div class="article__image">
                                 <picture>
                                     <source  srcset="{{asset('images/uploads/banner/' . $selectedItem->image)}}" media="(min-width: 768px)">
-                                    <source srcset="{{asset('images/dist/banners/banner-medium2@768.jpg')}}" media="(min-width: 576px) and (max-width: 767px)" >
-                                    <source srcset="{{asset('images/dist/banners/banner-medium2@320.jpg')}}" media="(max-width: 575px)" >
+                                    <source srcset="{{asset('images/uploads/banner/' . $selectedItem->getSmallImage())}}" media="(min-width: 576px) and (max-width: 767px)" >
+                                    <source srcset="{{asset('images/uploads/banner/' . $selectedItem->getSmallImage())}}" media="(max-width: 575px)" >
                                     <img src="{{asset('images/uploads/banner/' . $selectedItem->image)}}">
                                 </picture>
                             </div>
@@ -79,8 +79,8 @@
                             <div class="article__image">
                                 <picture>
                                     <source  srcset="{{asset('images/uploads/banner/' . $selectedItem->image)}}" media="(min-width: 768px)">
-                                    <source srcset="{{asset('images/dist/banners/banner-small@768.jpg')}}" media="(min-width: 576px) and (max-width: 767px)" >
-                                    <source srcset="{{asset('images/dist/banners/banner-small@320.jpg')}}" media="(max-width: 575px)" >
+                                    <source srcset="{{asset('images/uploads/banner/' . $selectedItem->getSmallImage())}}" media="(min-width: 576px) and (max-width: 767px)" >
+                                    <source srcset="{{asset('images/uploads/banner/' . $selectedItem->getSmallImage())}}" media="(max-width: 575px)" >
                                     <img src="{{asset('images/uploads/banner/' . $selectedItem->image)}}">
                                 </picture>
                             </div>
@@ -98,8 +98,8 @@
                             <div class="article__image">
                                 <picture>
                                     <source  srcset="{{asset('images/uploads/banner/' . $selectedItem->image)}}" media="(min-width: 768px)">
-                                    <source srcset="{{asset('images/dist/banners/banner-small2@768.jpg')}}" media="(min-width: 576px) and (max-width: 767px)" >
-                                    <source srcset="{{asset('images/dist/banners/banner-small2@320.jpg')}}" media="(max-width: 575px)" >
+                                    <source srcset="{{asset('images/uploads/banner/' . $selectedItem->getSmallImage())}}" media="(min-width: 576px) and (max-width: 767px)" >
+                                    <source srcset="{{asset('images/uploads/banner/' . $selectedItem->getSmallImage())}}" media="(max-width: 575px)" >
                                     <img src="{{asset('images/uploads/banner/' . $selectedItem->image)}}">
                                 </picture>
                             </div>
@@ -117,8 +117,8 @@
                             <div class="article__image">
                                 <picture>
                                     <source  srcset="{{asset('images/uploads/banner/' . $selectedItem->image)}}" media="(min-width: 768px)">
-                                    <source srcset="{{asset('images/dist/banners/banner-small3@768.jpg')}}" media="(min-width: 576px) and (max-width: 767px)" >
-                                    <source srcset="{{asset('images/dist/banners/banner-small3@320.jpg')}}" media="(max-width: 575px)" >
+                                    <source srcset="{{asset('images/uploads/banner/' . $selectedItem->getSmallImage())}}" media="(min-width: 576px) and (max-width: 767px)" >
+                                    <source srcset="{{asset('images/uploads/banner/' . $selectedItem->getSmallImage())}}" media="(max-width: 575px)" >
                                     <img src="{{asset('images/uploads/banner/' . $selectedItem->image)}}">
                                 </picture>
                             </div>

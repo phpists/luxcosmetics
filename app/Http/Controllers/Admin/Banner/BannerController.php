@@ -69,14 +69,17 @@ class BannerController extends Controller
 
     public function update(Request $request)
     {
-        $item = Banner::find($request->id);
+        $item = Banner::query()->find($request->id);
+        $data = $request->all();
         if ($request->hasFile('image')) {
             $image = FileService::saveFile('uploads', "banner", $request->image);
-            $item->image = $image;
-            $item->update(['image' => $image]);
-        }else{
-            $item->update($request->all());
+            $data['image'] = $image;
         }
+        if ($request->hasFile('small_img')) {
+            $image = FileService::saveFile('uploads', "banner", $request->small_img);
+            $data['small_img'] = $image;
+        }
+        $item->update($data);
 
         return redirect()->route('admin.banner')->with('success', 'Данные успешно отредактированы');
     }

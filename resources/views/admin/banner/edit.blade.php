@@ -39,11 +39,6 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" data-toggle="tab" href="#kt_tab_pane_2_8">
-                                    <span class="nav-text">Изображения</span>
-                                </a>
-                            </li>
-                            <li class="nav-item">
                                 <a class="nav-link" data-toggle="tab" href="#kt_tab_pane_3_4">
                                     <span class="nav-text">Редактировать Seo</span>
                                 </a>
@@ -68,6 +63,34 @@
                                   enctype="multipart/form-data">
                                 @csrf
                                 <input type="hidden" name="id" value="{{ $item->id }}">
+                                <div class="row justify-content-start">
+                                    <div class="form-group col">
+                                        <label>Изображение большое</label>
+                                        <div class="col-auto ml-2">
+                                            <div class="image-input image-input-outline" id="createImagePlugin" style="background-image: url('{{ asset('images/uploads/banner/' . $item->image) }}')">
+                                                <div class="image-input-wrapper" id="updateImageBackground"></div>
+                                                <label class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="change" data-toggle="tooltip" data-original-title="Change avatar">
+                                                    <i class="fa fa-pen icon-sm text-muted"></i>
+                                                    <input type="file" name="image" accept="image/*"/>
+                                                    <input type="hidden" name="image_remove"/>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col">
+                                        <label>Изображение малое</label>
+                                        <div class="col-auto ml-2">
+                                            <div class="image-input image-input-outline" id="updateSmallImagePlugin" style="background-image: url('{{ asset('images/uploads/banner/' . $item->small_img) }}')">
+                                                <div class="image-input-wrapper" id="updateSmallImageBackground"></div>
+                                                <label class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="change" data-toggle="tooltip" data-original-title="Change avatar">
+                                                    <i class="fa fa-pen icon-sm text-muted"></i>
+                                                    <input type="file" name="small_img" accept="image/*"/>
+                                                    <input type="hidden" name="image_remove"/>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
@@ -134,23 +157,6 @@
                                         </div>
                                     </div>
                                 </div>
-                        </div>
-                        <div class="tab-pane fade" id="kt_tab_pane_2_8" role="tabpanel"
-                             aria-labelledby="kt_tab_pane_2_8">
-                            <div class="form-group">
-                                <label>Изображения</label>
-                                <div class="col-auto ml-2">
-                                    <div class="image-input image-input-outline" id="createImagePlugin" style="background-image: url('{{ asset('images/uploads/banner/' . $item->image) }}')">
-                                        <div class="image-input-wrapper" id="updateImageBackground"></div>
-                                        <label class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="change" data-toggle="tooltip" data-original-title="Change avatar">
-                                            <i class="fa fa-pen icon-sm text-muted"></i>
-                                            <input type="file" name="image" accept="image/*"/>
-                                            <input type="hidden" name="image_remove"/>
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-                            </form>
                         </div>
                         <div class="tab-pane fade" id="kt_tab_pane_3_8" role="tabpanel" aria-labelledby="kt_tab_pane_3_8">
                             <form action="{{route('admin.banner.update.micro-seo')}}" method="POST">
@@ -267,6 +273,7 @@
 
             var createImagePlugin = new KTImageInput('createImagePlugin');
             var createPageImagePlugin = new KTImageInput('createPageImagePlugin');
+            var updateSmallImagePlugin = new KTImageInput('updateSmallImagePlugin');
         });
     </script>
 

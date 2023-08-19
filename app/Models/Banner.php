@@ -18,10 +18,15 @@ class Banner extends Model
         'number_position',
         'image',
         'published_at',
+        'small_img'
     ];
 
     public function mainImage()
     {
         return asset("/uploads/banner/$this->image");
+    }
+
+    public function getSmallImage() {
+        return $this->small_img !== null? $this->small_img: $this->img;
     }
 }
