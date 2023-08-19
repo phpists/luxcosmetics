@@ -392,6 +392,10 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function 
     Route::get('product_questions/{id}/delete', [\App\Http\Controllers\Admin\ProductQuestionController::class, 'delete'])->name('admin.product_question.delete');
     // Gift Cards
     Route::resource('gift_cards', \App\Http\Controllers\Admin\GiftCardController::class, ['as' => 'admin']);
+    Route::put('gift_card/{gift_card}/deactivate', [\App\Http\Controllers\Admin\GiftCardController::class, 'deactivate'])->name('admin.gift_cards.deactivate');
+
+    // PromoCodes
+    Route::resource('promo_codes', \App\Http\Controllers\Admin\PromoCodeController::class, ['as' => 'admin']);
 
 });
 

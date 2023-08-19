@@ -61,7 +61,7 @@
             <svg class="icon">
                 <use xlink:href="{{asset('images/dist/sprite.svg#warning')}}"></use>
             </svg>
-            У вас на счету есть {{ auth()->user()->gift_card_balance }}Р с подарочной карты - которые будут списыватся в первую очередь
+            У вас на счету есть {{ auth()->user()->activeGiftCard->balance }}Р с подарочной карты - которые будут списыватся в первую очередь
         </div>
         @endif
         <div class="cart-aside__sum">Итого с НДС <span>{{ $cartService->getTotalSumWithDiscounts() }}</span> ₽</div>

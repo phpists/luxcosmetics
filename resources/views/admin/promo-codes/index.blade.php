@@ -1,6 +1,6 @@
 @extends('admin.layouts.app')
 @section('title')
-    <h5 class="text-dark font-weight-bold mt-2 mb-2 mr-5">Подарочные карты</h5>
+    <h5 class="text-dark font-weight-bold mt-2 mb-2 mr-5">Промо коды</h5>
 @endsection
 
 @section('styles')
@@ -21,7 +21,7 @@
                 <!--begin::Body-->
                 <div class="card-header flex-wrap border-0 pt-6 pb-0">
                     <div class="card-title">
-                        <h3 class="card-label">Подарочные карты</h3>
+                        <h3 class="card-label">Промо коды</h3>
                     </div>
                     <div class="card-toolbar">
                         <!--begin::Dropdown-->
@@ -44,19 +44,22 @@
                                     #
                                 </th>
                                 <th class="text-center pr-0">
-                                    Сумма
+                                    Код
                                 </th>
                                 <th class="text-center pr-0">
-                                    От кого
+                                    Доступное кол-во
                                 </th>
                                 <th class="text-center pr-0">
-                                    Кому
+                                    Использовано раз
                                 </th>
                                 <th class="text-center pr-0">
-                                    Активирована
+                                    Скидка
                                 </th>
                                 <th class="text-center pr-0">
-                                    Статус
+                                    Тип
+                                </th>
+                                <th class="text-center pr-0">
+                                    Период
                                 </th>
                                 <th class="pr-0 text-center">
                                     Действия
@@ -64,56 +67,57 @@
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach($giftCards as $giftCard)
-                                <tr id="gift_card_{{ $giftCard->id }}" data-id="{{ $giftCard->id }}">
+                            @foreach($promo_codes as $promo_code)
+                                <tr id="gift_card_{{ $promo_code->id }}" data-id="{{ $promo_code->id }}">
                                     <td class="handle text-center pl-0" style="cursor: pointer">
-                                        {{ $giftCard->id }}
+                                        {{ $promo_code->id }}
                                     </td>
                                     <td class="text-center">
                                         <span class="text-dark-75 d-block font-size-lg">
-                                            {{ $giftCard->sum }}
+                                            {{ $promo_code->code }}
                                         </span>
                                     </td>
                                     <td class="text-center">
                                         <span class="text-dark-75 d-block font-size-lg">
-                                            {{ $giftCard->buyer->email ?? 'UNDEFINED' }}
+                                            {{ $promo_code->quantity ?? 'Неограничен' }}
                                         </span>
                                     </td>
                                     <td class="text-center">
                                         <span class="text-dark-75 d-block font-size-lg">
-                                            {{ $giftCard->receiver_email }}
+                                            {{ $promo_code->uses }}
                                         </span>
                                     </td>
                                     <td class="text-center">
                                         <span class="text-dark-75 d-block font-size-lg">
-                                            {{ $giftCard->activated_at ?? '-' }}
+                                            {{ $promo_code->percent ? $promo_code->percent . '%' : $promo_code->amount }}
                                         </span>
                                     </td>
                                     <td class="text-center">
                                         <span class="text-dark-75 d-block font-size-lg">
-                                            {!! $giftCard->isAvailable()
-                                                    ? '<span class="badge badge-success">Доступная для использования</span>'
-                                                    : '<span class="badge badge-danger">Деактивированная</span>' !!}
+                                            @if($promo_code->type == \App\Models\PromoCode::TYPE_CATEGORY)
+                                                Категория: <a href="{{ route('admin.category.edit', $promo_code->category) }}" target="_blank">{{ $promo_code->category->name }}
+                                            @elseif($promo_code->type == \App\Models\PromoCode::TYPE_PRODUCT)
+                                                        Товар: <a href="{{ route('admin.product.edit', $promo_code->product) }}" target="_blank">{{ $promo_code->product->title }}</a>
+                                            @else
+                                                Вся корзина
+                                            @endif
+                                        </span>
+                                    </td>
+                                    <td class="text-center">
+                                        <span class="text-dark-75 d-block font-size-lg">
+                                            @if($promo_code->starts_at) {{ "от {$promo_code->starts_at->format('d.m.y')}" }} @endif
+                                            @if($promo_code->ends_at) {{ "до {$promo_code->ends_at->format('d.m.y')}" }} @endif
+                                            @if(!$promo_code->starts_at && !$promo_code->ends_at) {{ 'Неограничен' }} @endif
                                         </span>
                                     </td>
                                     <td class="text-center pr-0">
                                         <a href="javascript:;"
                                            class="btn btn-sm btn-clean btn-icon btn-show"
                                            data-toggle="modal" data-target="#showModal"
-                                           data-url="{{ route('admin.gift_cards.show', $giftCard) }}">
+                                           data-url="{{ route('admin.promo_codes.show', $promo_code) }}">
                                             <i class="las la-eye"></i>
                                         </a>
-                                        @if($giftCard->isAvailable())
-                                        <form action="{{ route('admin.gift_cards.deactivate', $giftCard) }}" method="POST" style="display: inline">
-                                            @csrf
-                                            @method('PUT')
-                                            <button type="submit" class="btn btn-sm btn-clean btn-icon"
-                                                    onclick="return confirm('Вы уверенны? Это действия нельзя отменить. Все оставшиеся средства больше не смогут быть списаны')"
-                                                    title="Delete"><i class="las la-minus-circle"></i>
-                                            </button>
-                                        </form>
-                                        @endif
-                                        <form action="{{ route('admin.gift_cards.destroy', $giftCard) }}" method="POST" style="display: inline">
+                                        <form action="{{ route('admin.promo_codes.destroy', $promo_code) }}" method="POST" style="display: inline">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-sm btn-clean btn-icon btn_delete"
@@ -127,7 +131,7 @@
                             </tbody>
                         </table>
                     </div>
-                    {{ $giftCards->links('vendor.pagination.super_admin_pagination') }}
+                    {{ $promo_codes->links('vendor.pagination.super_admin_pagination') }}
                     <!--end::Table-->
                 </div>
                 <!--end::Body-->
@@ -139,8 +143,8 @@
     <!--end::Container-->
     <!--end::Entry-->
 
-    @include('admin.gift-cards.modals.create')
-    @include('admin.gift-cards.modals.show')
+    @include('admin.promo-codes.modals.create')
+    @include('admin.promo-codes.modals.show')
 @endsection
 
 @section('js_after')
@@ -153,6 +157,37 @@
                 }
             });
 
+            $(document).on('change', '[name="type"]', function (e) {
+                let $form = $(this).parents('form:first');
+
+                if (this.value === 'category') {
+                    $form.find('[name="category_id"]').parents('div.column:first').show()
+                    $form.find('[name="product_id"]').val('').parents('div.column:first').hide()
+                } else if (this.value === 'product') {
+                    $form.find('[name="product_id"]').parents('div.column:first').show()
+                    $form.find('[name="category_id"]').val('').parents('div.column:first').hide()
+                } else {
+                    $form.find('[name="product_id"]').val('').parents('div.column:first').hide()
+                    $form.find('[name="category_id"]').val('').parents('div.column:first').hide()
+                }
+            })
+
+            $(document).on('input', '[name="amount"]', function(e) {
+                let $form = $(this).parents('form:first');
+                if (this.value)
+                    $form.find('[name="percent"]').prop('disabled', true).prop('required', false)
+                else
+                    $form.find('input[name="percent"]').prop('disabled', false).prop('required', true)
+            })
+
+            $(document).on('input', '[name="percent"]', function(e) {
+                let $form = $(this).parents('form:first');
+                if (this.value)
+                    $form.find('[name="amount"]').prop('disabled', true).prop('required', false)
+                else
+                    $form.find('input[name="amount"]').prop('disabled', false).prop('required', true)
+            })
+
         })
 
 
@@ -163,16 +198,17 @@
                 url: $(this).data('url'),
                 dataType: 'json',
                 success: function (item) {
-                    $('#showColor').val(item.color).css('background-color', item.color);
-                    $('#showSum').val(item.sum);
-                    $('#showBalance').val(item.balance);
-                    $('#showFrom').val(item.from_whom);
-                    $('#showReceiver').val(item.receiver);
-                    $('#showReceiverEmail').val(item.receiver_email);
-                    $('#showDescription').text(item.description);
                     $('#showCode').val(item.code);
-                    $('#showActivated').val(item.activated_date);
-                    $('#showActivatedBy').val(item.activated_by_email);
+                    $('#showType').val(item.type);
+                    if (item.category_id)
+                        $('#showCategory').val(item.category_id).parents('div.column:first').show();
+                    if (item.product_id)
+                        $('#showProduct').val(item.product_id).parents('div.column:first').show();
+                    $('#showAmount').val(item.amount);
+                    $('#showPercent').val(item.percent);
+                    $('#showQuantity').val(item.quantity);
+                    $('#showStarts').val(item.starts_at);
+                    $('#showEnds').val(item.ends_at);
                 }
             });
         }

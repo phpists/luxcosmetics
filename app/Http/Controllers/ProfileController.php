@@ -184,9 +184,9 @@ class ProfileController extends Controller
 
     public function gift_cards() {
         $user = Auth::user();
-        $last_gift_card = $user->lastGiftCard;
+        $activeGiftCard = $user->activeGiftCard;
 
-        return view('cabinet.giftcard', compact('user', 'last_gift_card'));
+        return view('cabinet.giftcard', compact('user', 'activeGiftCard'));
     }
 
     public function bonuses(Request $request) {

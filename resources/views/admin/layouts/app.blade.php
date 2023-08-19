@@ -137,6 +137,14 @@
                             </a>
                         </li>
 
+                        <li class="menu-item {{ Str::is('admin.promo_codes.*', request()->route()->getName()) ? 'menu-item-active' : '' }}"
+                            aria-haspopup="true">
+                            <a href="{{ route('admin.promo_codes.index') }}" class="menu-link">
+                                <i class="fas fa-th menu-icon"></i>
+                                <span class="menu-text">Промо коды</span>
+                            </a>
+                        </li>
+
                         <li class="menu-item menu-item-submenu
 {{ (request()->routeIs('admin.products')
 || request()->routeIs('admin.products.tree')
@@ -149,8 +157,7 @@
 || request()->routeIs('admin.category.create')
 || request()->routeIs('admin.properties.edit')
 || request()->routeIs('admin.properties.create')
-|| request()->routeIs('admin.main-block.index')
-|| request()->routeIs('admin.gift_cards.index')) ? 'menu-item-open' : '' }}"
+|| request()->routeIs('admin.main-block.index')) ? 'menu-item-open' : '' }}"
                         aria-haspopup="true" data-menu-toggle="hover">
                             <a href="javascript:;" class="menu-link menu-toggle">
                                 <i class="fas flaticon2-copy menu-icon"></i>
@@ -223,20 +230,6 @@
                                 </ul>
                             </div>
 
-                            <div class="menu-submenu" style="" kt-hidden-height="160">
-                                <i class="menu-arrow"></i>
-                                <ul class="menu-subnav">
-                                    <li class="menu-item {{ request()->routeIs('admin.gift_cards.index') ? 'menu-item-active' : '' }}" aria-haspopup="true">
-                                        <a href="{{ route('admin.gift_cards.index') }}" class="menu-link">
-                                            <i class="menu-bullet menu-bullet-dot">
-                                                <span></span>
-                                            </i>
-                                            <span class="menu-text">Подарочные карты</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-
 
 {{--                            <div class="menu-submenu" style="" kt-hidden-height="160">--}}
 {{--                                <i class="menu-arrow"></i>--}}
@@ -253,6 +246,48 @@
 {{--                                </ul>--}}
 {{--                            </div>--}}
 
+
+                        </li>
+
+                        <li class="menu-item menu-item-submenu
+{{ (request()->routeIs('admin.gift_cards.index')
+|| request()->routeIs('admin.gif-card')) ? 'menu-item-open' : '' }}"
+                        aria-haspopup="true" data-menu-toggle="hover">
+                            <a href="javascript:;" class="menu-link menu-toggle">
+                                <i class="fas flaticon2-copy menu-icon"></i>
+                                <span class="menu-text">Подарочные карты</span>
+                                <i class="menu-arrow"></i>
+                            </a>
+
+                            <div class="menu-submenu" style="" kt-hidden-height="160">
+                                <i class="menu-arrow"></i>
+                                <ul class="menu-subnav">
+                                    <li class="menu-item {{ request()->routeIs('admin.gift_cards.index') ? 'menu-item-active' : '' }}" aria-haspopup="true">
+                                        <a href="{{ route('admin.gift_cards.index') }}" class="menu-link">
+                                            <i class="menu-bullet menu-bullet-dot">
+                                                <span></span>
+                                            </i>
+                                            <span class="menu-text">Подарочные карты</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+
+
+                            <div class="menu-submenu" style="" kt-hidden-height="160">
+                                <i class="menu-arrow"></i>
+                                <ul class="menu-subnav">
+                                    <li class="menu-item {{ request()->routeIs('admin.gif-card') ? 'menu-item-active' : '' }}"
+                                        aria-haspopup="true">
+                                        <a href="{{route('admin.gif-card')}}" class="menu-link">
+                                            <i class="menu-bullet menu-bullet-dot">
+                                                <span></span>
+                                            </i>
+                                            <span class="menu-text">Настройки</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
 
                         </li>
 
@@ -350,8 +385,7 @@
 || request()->routeIs('admin.banner.create')
 || request()->routeIs('admin.banner.edit')
 || request()->routeIs('admin.pages.create')
-|| request()->routeIs('admin.pages.edit')
-|| request()->routeIs('admin.gif-card')) ? 'menu-item-open' : '' }}"
+|| request()->routeIs('admin.pages.edit')) ? 'menu-item-open' : '' }}"
                         aria-haspopup="true" data-menu-toggle="hover">
                             <a href="javascript:;" class="menu-link menu-toggle">
                                 <i class="fas flaticon2-copy menu-icon"></i>
@@ -385,20 +419,6 @@
                                             <span class="menu-text">Статические</span>
                                         </a>
 
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="menu-submenu" style="" kt-hidden-height="160">
-                                <i class="menu-arrow"></i>
-                                <ul class="menu-subnav">
-                                    <li class="menu-item {{ request()->routeIs('admin.gif-card') ? 'menu-item-active' : '' }}"
-                                        aria-haspopup="true">
-                                        <a href="{{route('admin.gif-card')}}" class="menu-link">
-                                            <i class="menu-bullet menu-bullet-dot">
-                                                <span></span>
-                                            </i>
-                                            <span class="menu-text">Подарочные карты</span>
-                                        </a>
                                     </li>
                                 </ul>
                             </div>
@@ -575,6 +595,9 @@
         @include('admin.layouts.includes.header')
         <!--begin::Content-->
             <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
+                <div class="container-fluid">
+                    @include('admin.layouts.includes.messages')
+                </div>
                 @yield('content')
             </div>
             <!--end::Content-->

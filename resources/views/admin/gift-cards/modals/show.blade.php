@@ -17,9 +17,9 @@
                                     <div class="form-group w-100">
                                         <label for="showColor" class="col-auto col-form-label font-weight-bold">Цвет</label>
                                         <div class="col-sm-12">
-                                            <select id="showColor" class="form-control" readonly>
+                                            <select id="showColor" class="form-control selectpicker" disabled>
                                                 @foreach($colors as $color)
-                                                    <option value="{{ $color->color_card }}">{{ $color->color_card }}</option>
+                                                    <option value="{{ $color->color_card }}" style="background-color: {{ $color->color_card }}; color: white">{{ $color->color_card }}</option>
                                                 @endforeach
                                             </select>
                                         </div>
@@ -35,16 +35,24 @@
                                 </div>
                                 <div class="col-md-4 col-12">
                                     <div class="form-group w-100">
-                                        <label for="showFrom" class="col-auto col-form-label font-weight-bold">От кого</label>
+                                        <label for="showBalance" class="col-auto col-form-label font-weight-bold">Баланс</label>
                                         <div class="col-sm-12">
-                                            <input type="text" class="form-control" id="showFrom" readonly>
+                                            <input type="text" class="form-control" id="showBalance" readonly>
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
                             <div class="row">
-                                <div class="col-md-6 col-12">
+                                <div class="col-md-4 col-12">
+                                    <div class="form-group w-100">
+                                        <label for="showFrom" class="col-auto col-form-label font-weight-bold">От кого</label>
+                                        <div class="col-sm-12">
+                                            <input type="text" class="form-control" id="showFrom" readonly>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 col-12">
                                     <div class="form-group w-100">
                                         <label for="showReceiver" class="col-auto col-form-label font-weight-bold">Имя получателя</label>
                                         <div class="col-sm-12">
@@ -52,7 +60,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-6 col-12">
+                                <div class="col-md-4 col-12">
                                     <div class="form-group w-100">
                                         <label for="showReceiverEmail" class="col-auto col-form-label font-weight-bold">Email получателя</label>
                                         <div class="col-sm-12">
@@ -95,7 +103,7 @@
                                 </div>
                                 <div class="col-md-6 col-12">
                                     <div class="form-group w-100">
-                                        <label for="showActivatedBy" class="col-auto col-form-label font-weight-bold">Пользователем з ID</label>
+                                        <label for="showActivatedBy" class="col-auto col-form-label font-weight-bold">Пользователем</label>
                                         <div class="col-sm-12">
                                             <input type="text" class="form-control" id="showActivatedBy" readonly>
                                         </div>

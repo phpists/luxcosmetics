@@ -43,14 +43,14 @@
         </div>
     @endif
     @if(session()->get('error'))
-        <div class="alert alert-danger mb-0 small py-2">
+        <div class="alert formerror mb-0 small py-2">
             {{ session()->get('error') }}
         </div>
     @endif
 
     @if ($errors->any())
         @foreach ($errors->all() as $error)
-            <div class="alert alert-danger" role="alert">
+            <div class="alert formerror" role="alert">
                 {{ $error }}
             </div>
         @endforeach

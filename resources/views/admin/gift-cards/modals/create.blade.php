@@ -20,9 +20,9 @@
                                     <div class="form-group w-100">
                                         <label for="createColor" class="col-auto col-form-label font-weight-bold">Цвет</label>
                                         <div class="col-sm-12">
-                                            <select name="color" id="createColor" class="form-control">
+                                            <select name="color" id="createColor" class="form-control selectpicker">
                                                 @foreach($colors as $color)
-                                                    <option value="{{ $color->color_card }}">{{ $color->color_card }}</option>
+                                                    <option value="{{ $color->color_card }}" style="background-color: {{ $color->color_card }}">{{ $color->color_card }}</option>
                                                 @endforeach
                                             </select>
                                         </div>

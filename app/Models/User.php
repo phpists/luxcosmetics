@@ -122,13 +122,20 @@ class User extends Authenticatable
 
     public function hasGiftCardBalance()
     {
-        return $this->gift_card_balance > 0;
+        return $this->activeGiftCard != null;
     }
 
 
     public function giftCards()
     {
         return $this->hasMany(GiftCard::class, 'activated_by');
+    }
+
+    public function activeGiftCard()
+    {
+        return $this->hasOne(GiftCard::class, 'activated_by')
+            ->latest()
+            ->active();
     }
 
     public function lastGiftCard()

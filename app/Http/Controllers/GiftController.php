@@ -138,7 +138,6 @@ class GiftController extends Controller
                 'activated_by' => $user->id,
                 'activated_at' => Carbon::now()
             ]);
-            $user->increment('gift_card_balance', $gift_card->sum);
             DB::commit();
 
             return back()->with('success', 'На ваш баланс начислена сумма - ' . $gift_card->sum);
