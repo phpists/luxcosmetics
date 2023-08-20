@@ -49,7 +49,7 @@
                     <del class="product__oldprice">{{ $product->old_price }} ₽</del>
                 @endisset
             </div>
-            <button class="product__mobile-btn">
+            <button class="product__mobile-btn addToCart @if($cartService->check($product->id)) isInCart @endif" data-product="{{ $product->id }}">
                 <svg class="icon">
                     <use xlink:href="{{asset('images/dist/sprite.svg#cart')}}"></use>
                 </svg>
