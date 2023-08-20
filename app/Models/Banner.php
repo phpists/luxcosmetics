@@ -18,7 +18,8 @@ class Banner extends Model
         'number_position',
         'image',
         'published_at',
-        'small_img'
+        'small_img',
+        'medium_img'
     ];
 
     public function mainImage()
@@ -28,5 +29,9 @@ class Banner extends Model
 
     public function getSmallImage() {
         return $this->small_img !== null? $this->small_img: $this->img;
+    }
+
+    public function getMediumImage() {
+        return $this->medium_img !== null? $this->medium_img: $this->img;
     }
 }

@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::table('banners', function (Blueprint $table) {
             $table->string('small_img')->nullable();
+            $table->string('medium_img')->nullable();
         });
     }
 
@@ -22,7 +23,8 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('banners', function (Blueprint $table) {
-            //
+            $table->dropColumn('small_img');
+            $table->dropColumn('medium_img');
         });
     }
 };

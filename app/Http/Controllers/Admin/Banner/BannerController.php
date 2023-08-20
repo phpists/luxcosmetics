@@ -79,6 +79,10 @@ class BannerController extends Controller
             $image = FileService::saveFile('uploads', "banner", $request->small_img);
             $data['small_img'] = $image;
         }
+        if ($request->hasFile('medium_img')) {
+            $image = FileService::saveFile('uploads', "banner", $request->medium_img);
+            $data['medium_img'] = $image;
+        }
         $item->update($data);
 
         return redirect()->route('admin.banner')->with('success', 'Данные успешно отредактированы');

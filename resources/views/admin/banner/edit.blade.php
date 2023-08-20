@@ -78,6 +78,19 @@
                                         </div>
                                     </div>
                                     <div class="form-group col">
+                                        <label>Изображение Среднее</label>
+                                        <div class="col-auto ml-2">
+                                            <div class="image-input image-input-outline" id="updateMediumImagePlugin" style="background-image: url('{{ asset('images/uploads/banner/' . $item->medium_img) }}')">
+                                                <div class="image-input-wrapper" id="updateMediumImageBackground"></div>
+                                                <label class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="change" data-toggle="tooltip" data-original-title="Change avatar">
+                                                    <i class="fa fa-pen icon-sm text-muted"></i>
+                                                    <input type="file" name="medium_img" accept="image/*"/>
+                                                    <input type="hidden" name="image_remove"/>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col">
                                         <label>Изображение малое</label>
                                         <div class="col-auto ml-2">
                                             <div class="image-input image-input-outline" id="updateSmallImagePlugin" style="background-image: url('{{ asset('images/uploads/banner/' . $item->small_img) }}')">
@@ -274,6 +287,7 @@
             var createImagePlugin = new KTImageInput('createImagePlugin');
             var createPageImagePlugin = new KTImageInput('createPageImagePlugin');
             var updateSmallImagePlugin = new KTImageInput('updateSmallImagePlugin');
+            var updateMediumImagePlugin = new KTImageInput('updateMediumImagePlugin');
         });
     </script>
 
