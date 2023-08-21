@@ -44,7 +44,7 @@
                                     #
                                 </th>
                                 <th class="text-center pr-0">
-                                    Сумма
+                                    Баланс
                                 </th>
                                 <th class="text-center pr-0">
                                     От кого
@@ -71,7 +71,7 @@
                                     </td>
                                     <td class="text-center">
                                         <span class="text-dark-75 d-block font-size-lg">
-                                            {{ $giftCard->sum }}
+                                            {{ $giftCard->balance . '/' . $giftCard->sum }}
                                         </span>
                                     </td>
                                     <td class="text-center">
@@ -86,14 +86,22 @@
                                     </td>
                                     <td class="text-center">
                                         <span class="text-dark-75 d-block font-size-lg">
-                                            {{ $giftCard->activated_at ?? '-' }}
+                                            {{ $giftCard->activated_at ? $giftCard->activated_at->format('H:i d.m.y') : '-' }}
                                         </span>
                                     </td>
                                     <td class="text-center">
                                         <span class="text-dark-75 d-block font-size-lg">
-                                            {!! $giftCard->isAvailable()
-                                                    ? '<span class="badge badge-success">Доступная для использования</span>'
-                                                    : '<span class="badge badge-danger">Деактивированная</span>' !!}
+                                            @if($giftCard->isDeactivated())
+                                                <span class="badge badge-danger">Деактивированная</span>
+                                            @elseif($giftCard->isUsed())
+                                                <span class="badge badge-secondary">Использована</span>
+                                            @elseif($giftCard->isPartUsed())
+                                                <span class="badge badge-primary">Частично использована</span>
+                                            @elseif($giftCard->isActivated())
+                                                <span class="badge badge-info">Используется</span>
+                                            @elseif($giftCard->isNotUsed())
+                                                <span class="badge badge-success">Новая</span>
+                                            @endif
                                         </span>
                                     </td>
                                     <td class="text-center pr-0">
@@ -103,7 +111,7 @@
                                            data-url="{{ route('admin.gift_cards.show', $giftCard) }}">
                                             <i class="las la-eye"></i>
                                         </a>
-                                        @if($giftCard->isAvailable())
+                                        @if($giftCard->isAvailable() && !$giftCard->isUsed())
                                         <form action="{{ route('admin.gift_cards.deactivate', $giftCard) }}" method="POST" style="display: inline">
                                             @csrf
                                             @method('PUT')

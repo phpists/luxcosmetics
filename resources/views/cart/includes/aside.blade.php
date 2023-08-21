@@ -35,6 +35,9 @@
                 </svg>
             </dt>
             <dd>
+                @if(auth()->check())
+                <div class="formsuccess">Доступно баллов: <b>{{ auth()->user()->points ?? 0 }}</b> </div>
+                @endif
                 <form action="{{ route('cart.use-bonuses') }}" method="POST" class="form">
                     @csrf
                     <input type="text" class="form__input" placeholder="Введите количество баллов" name="amount" @if($cartService->isUsedBonuses()) value="{{ $cartService->getUsedBonusesDiscount() }}" @endif>
