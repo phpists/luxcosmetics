@@ -18,8 +18,25 @@ class Order extends Model
     const STATUS_NEW = 1;
 
 
-    protected $fillable = ['status_id', 'user_id', 'address_id', 'card_id', 'total_sum', 'delivery_type', 'gift_box',
-        'as_delivery_address', 'full_name', 'phone', 'city', 'region', 'address'];
+    protected $fillable = [
+        'status_id',
+        'user_id',
+        'address_id',
+        'card_id',
+        'total_sum',
+        'delivery_type',
+        'gift_box',
+        'as_delivery_address',
+        'full_name',
+        'phone',
+        'city',
+        'region',
+        'address',
+        'discount',
+        'gift_card_id',
+        'promo_code_id',
+        'is_used_bonuses',
+    ];
 
 
     public function orderProducts()
@@ -35,6 +52,21 @@ class Order extends Model
     public function card()
     {
         return $this->belongsTo(PaymentCard::class);
+    }
+
+    public function giftCard()
+    {
+        return $this->belongsTo(GiftCard::class);
+    }
+
+    public function promoCode()
+    {
+        return $this->belongsTo(PromoCode::class);
+    }
+
+    public function isUsedBonuses()
+    {
+        return $this->is_used_bonuses == 1;
     }
 
 

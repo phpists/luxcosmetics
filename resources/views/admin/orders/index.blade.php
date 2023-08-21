@@ -68,6 +68,9 @@
                                         Сума
                                     </td>
                                     <td class="text-center pr-0">
+                                        Скидка
+                                    </td>
+                                    <td class="text-center pr-0">
                                         Дата
                                     </td>
                                     <th class="pr-0 text-center">
@@ -102,6 +105,18 @@
                                         </td>
                                         <td class="text-center pr-0">
                                             {{ $order->total_sum }}
+                                        </td>
+                                        <td class="text-center pr-0">
+                                            @if($order->discount)
+                                                @if($order->isUsedBonuses())
+                                                    Бонусы:
+                                                @elseif($order->giftCard)
+                                                    Подарочная карта:
+                                                @elseif($order->promoCode)
+                                                    Промо код:
+                                                @endif
+                                            @endif
+                                            {{ $order->discount }}
                                         </td>
                                         <td class="text-center pr-0">
                                             {{ $order->pretty_created_at }}

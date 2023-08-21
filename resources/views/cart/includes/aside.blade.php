@@ -7,9 +7,10 @@
                 </svg>
             </dt>
             <dd>
-                <form action="" class="form">
-                    <input type="text" class="form__input" placeholder="Введите промокод">
-                    <button class="btn btn--accent">Применить</button>
+                <form action="{{ route('cart.use-promo') }}" method="POST" class="form">
+                    @csrf
+                    <input type="text" class="form__input" placeholder="Введите промокод" name="code" @if($cartService->isUsedPromo()) value="{{ $cartService->getPromoCode() }}" @endif>
+                    <button type="submit" class="btn btn--accent">Применить</button>
                 </form>
             </dd>
         </dl>
@@ -48,27 +49,10 @@
             <span class="cart-aside__delivery-name">Доставка <small>Бесплатная доставкав течении 1-2 дней</small></span>
             <span class="cart-aside__delivery-value">Бесплатно</span>
         </div>
-        @if($cartService->getBonusAmount() > 0)
-        <div class="cart-aside__points">
-            <svg class="icon">
-                <use xlink:href="{{asset('images/dist/sprite.svg#warning')}}"></use>
-            </svg>
-            Вы получите {{ $cartService->getBonusAmount() }} баллов
-        </div>
-        @endif
-        @if(auth()->check() && auth()->user()->hasGiftCardBalance())
-        <div class="cart-aside__points">
-            <svg class="icon">
-                <use xlink:href="{{asset('images/dist/sprite.svg#warning')}}"></use>
-            </svg>
-            У вас на счету есть {{ auth()->user()->activeGiftCard->balance }}Р с подарочной карты - которые будут списыватся в первую очередь
-        </div>
-        @endif
-        <div class="cart-aside__sum">Итого с НДС <span>{{ $cartService->getTotalSumWithDiscounts() }}</span> ₽</div>
 
-        @foreach($cartService->discount_reasons as $discount_reason)
-            <span>{{ $discount_reason['title'] }}: -{{ $discount_reason['amount'] }}₽</span>
-        @endforeach
+        <div id="cartTotalBlock">
+            @include('cart.includes.total_sum')
+        </div>
 
     </div>
     <button type="submit" form="orderForm" class="btn btn--accent cart-aside__buy cartSubmit">Перейти к оплате</button>

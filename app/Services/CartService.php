@@ -3,10 +3,12 @@
 namespace App\Services;
 
 use App\Models\Address;
+use App\Models\Category;
 use App\Models\Order;
 use App\Models\OrderProduct;
 use App\Models\Product;
-use App\Models\User;
+use App\Models\PromoCode;
+use Exception;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
@@ -23,6 +25,7 @@ class CartService
 
 
     const BONUSES_KEY = 'cart_bonuses';
+    const PROMO_KEY = 'cart_promo';
 
 
     const ALL_KEYS = [
@@ -33,7 +36,7 @@ class CartService
         self::CARD_KEY => 'Карта для оплаты'
     ];
 
-    public $discount_reasons = [];
+    public $discount;
 
 
     public function getAllItems()
@@ -41,16 +44,25 @@ class CartService
         return session()->get(self::SESSION_KEY, []);
     }
 
-    public function getAllProducts()
+    public function getAllProducts(array $category_ids = [])
     {
         $cart = session()->get(self::SESSION_KEY, []);
         $product_ids = self::getAllProductIds();
 
-        $products = Product::whereIn('products.id', $product_ids)
-            ->get();
+        $query = Product::whereIn('products.id', $product_ids)
+            ->with('categories');
+
+        if (!empty($category_ids))
+            $query->whereIn('products.category_id', $category_ids)
+                ->orWhereHas('categories', function ($query) use($category_ids) {
+                    $query->whereIn('product_categories.category_id', $category_ids);
+                });
+
+        $products = $query->get();
 
         $products->map(function ($item) use ($cart) {
             $item->quantity = $cart[$item->id]['quantity'] ?? 1;
+            $item->total_sum = $item->quantity * $item->price;
         });
 
         return $products;
@@ -89,10 +101,12 @@ class CartService
 
         if (Auth::check()) {
             $user = Auth::user();
+            $this->checkDiscount();
+
             if ($user->hasGiftCardBalance()) {
                 $maxDiscount = min($totalSum, $user->activeGiftCard->balance);
                 $totalSum = $totalSum - $maxDiscount;
-                $this->discount_reasons[] = [
+                $this->discount = [
                     'title' => 'Баланс подарочной карты',
                     'name' => 'gift_card_balance',
                     'amount' => $maxDiscount
@@ -101,10 +115,19 @@ class CartService
 
             if ($this->isUsedBonuses()) {
                 $totalSum = $totalSum - $this->getUsedBonusesDiscount();
-                $this->discount_reasons[] = [
+                $this->discount = [
                     'title' => 'Бонусные баллы',
                     'name' => 'bonuses',
                     'amount' => $this->getUsedBonusesDiscount()
+                ];
+            }
+
+            if ($this->isUsedPromo()) {
+                $totalSum = $totalSum - $this->getUsedPromoDiscount();
+                $this->discount = [
+                    'title' => "Промокод {$this->getPromoCode()}",
+                    'name' => 'promo_code',
+                    'amount' => $this->getUsedPromoDiscount()
                 ];
             }
         }
@@ -252,6 +275,18 @@ class CartService
         $order_data['city'] = $address['city'];
         $order_data['region'] = $address['region'];
         $order_data['address'] = $address['address'];
+        if ($this->isUsedGiftCardDiscount()) {
+            $order_data['discount'] = $this->discount['amount'] ?? 0;
+            $order_data['gift_card_id'] = \auth()->user()->activeGiftCard->id;
+        }
+        if ($this->isUsedBonuses()) {
+            $order_data['discount'] = $this->discount['amount'] ?? 0;
+            $order_data['is_used_bonuses'] = 1;
+        }
+        if ($this->isUsedPromo()) {
+            $order_data['discount'] = $this->discount['amount'] ?? 0;
+            $order_data['promo_code_id'] = $this->getPromo()->id;
+        }
 
         try {
             $order = Order::create($order_data);
@@ -274,13 +309,17 @@ class CartService
             if ($this->isUsedBonuses())
                 $user->decrement('points', $this->getUsedBonusesDiscount());
 
+            if ($this->isUsedPromo())
+                $this->getPromo()->increment('uses');
+
 //            $user->update([ // TODO: перенести це на етап, коли замовлення буде позначено як "ЗАВЕРШЕНЕ"
 //                'points' => $this->getBonusAmount()
 //            ]);
 
             session()->forget(self::SESSION_KEY);
             session()->forget(array_keys(self::ALL_KEYS));
-            session()->forget(self::BONUSES_KEY);
+            $this->dropBonuses();
+            $this->dropPromo();
 
             return $order->id;
         } catch (\Exception $exception) {
@@ -291,19 +330,11 @@ class CartService
 
 
 
-    public function isUsedDiscount($name): bool
-    {
-        $discounts_collection = new Collection($this->discount_reasons);
-        $discount_reasons = $discounts_collection->map(function ($item) {
-            return $item['name'];
-        });
-
-        return $discount_reasons->contains($name);
-    }
-
     public function isUsedGiftCardDiscount(): bool
     {
-        return $this->isUsedDiscount('gift_card_balance');
+        if (is_array($this->discount) && isset($this->discount['name']))
+            return $this->discount['name'] == 'gift_card_balance';
+        return false;
     }
 
     public function isUsedBonuses(): bool
@@ -324,6 +355,162 @@ class CartService
     public function dropBonuses(): void
     {
         session()->forget(self::BONUSES_KEY);
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function verifyBonusesConditions($amount): bool
+    {
+        if (!\auth()->check())
+            throw new Exception('Бонусы можно использовать только авторизованным пользователям');
+
+        $user = \auth()->user();
+
+        if ($user->hasGiftCardBalance())
+            throw new Exception('На этот заказ уже действует подарочная карта');
+
+        if ($this->isUsedPromo())
+            throw new Exception('На этот заказ уже действует промокод');
+
+        if ($user->points < $amount)
+            throw new Exception('У вас на балансе нету столько баллов!');
+
+        $total_cart_sum = $this->getTotalSum();
+        $half = round($total_cart_sum - ($total_cart_sum / 2), 2);
+        if ($half < $amount)
+            throw new Exception('Не больше 50% от суммы заказа - ' . $half);
+
+        return true;
+    }
+
+    public function checkBonuses(): void
+    {
+        try {
+            $this->verifyBonusesConditions($this->getUsedBonusesDiscount());
+        } catch (Exception $exception) {
+            session()->flash('error', 'Бонусы больше не соответствуют требованиям: ' . $exception->getMessage());
+            $this->dropBonuses();
+        }
+    }
+
+
+
+
+    public function usePromo(string $code): void
+    {
+        session()->put(self::PROMO_KEY, $code);
+    }
+
+    public function isUsedPromo(): bool
+    {
+        return session()->has(self::PROMO_KEY);
+    }
+
+    public function getPromoCode()
+    {
+        return session()->get(self::PROMO_KEY);
+    }
+
+    public function getPromo(): ?PromoCode
+    {
+        return PromoCode::where('code', $this->getPromoCode())->first();
+    }
+
+    public function getUsedPromoDiscount()
+    {
+        $promoCode = $this->getPromo();
+        $amount = 0;
+
+        if ($promoCode->amount) {
+            $amount = $promoCode->amount;
+        } elseif ($promoCode->percent) {
+            $totalSum = $this->getTotalSum();
+
+            if ($promoCode->type == PromoCode::TYPE_CART) {
+                $amount = $totalSum * ($promoCode->percent / 100);
+            } elseif ($promoCode->type == PromoCode::TYPE_CATEGORY) {
+                $category_ids = Category::getChildIds($promoCode->category_id);
+                $products = $this->getAllProducts($category_ids);
+                $temp_sum = $products->sum('total_sum');
+                $amount = $temp_sum * ($promoCode->percent / 100);
+            } elseif ($promoCode->type == PromoCode::TYPE_PRODUCT) {
+                $product = $this->getAllProducts()->where('id', $promoCode->product_id)->first();
+                $amount = $product->total_sum * ($promoCode->percent / 100);
+            }
+        }
+
+        return $amount;
+    }
+
+    public function dropPromo(): void
+    {
+        session()->forget(self::PROMO_KEY);
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function verifyPromoConditions(PromoCode $promoCode): bool
+    {
+        if (!\auth()->check())
+            throw new Exception('Промокоды можно использовать только авторизованным пользователям');
+
+        if (\auth()->user()->hasGiftCardBalance())
+            throw new Exception('На этот заказ уже действует подарочная карта');
+
+        if ($this->isUsedBonuses())
+            throw new Exception('На этот заказ уже действует скидка от бонусов');
+
+        if ($promoCode->type == PromoCode::TYPE_CART) {
+            if ($promoCode->min_sum && $promoCode->min_sum > $this->getTotalSum())
+                throw new Exception("Сумма в корзине должна быть не меньше {$promoCode->min_sum} для использования этого промокода");
+        } elseif ($promoCode->type == PromoCode::TYPE_PRODUCT) {
+            if(!$this->getAllProducts()->contains('id', $promoCode->product_id))
+                throw new Exception("Прмокод действует только на товар '{$promoCode->product->title}'");
+        } elseif ($promoCode->type == PromoCode::TYPE_CATEGORY) {
+            $category_ids = Category::getChildIds($promoCode->category_id);
+            if (!$this->checkCategoryInCart($category_ids))
+                throw new Exception("Прмокод действует только на категорию '{$promoCode->category->name}' и сопутствующие категории");
+        }
+
+        return true;
+    }
+
+    public function checkPromo(): void
+    {
+        try {
+            $this->verifyPromoConditions($this->getPromo());
+        } catch (Exception $exception) {
+            session()->flash('error', 'Промокод больше не соответствует требованиям: ' . $exception->getMessage());
+            $this->dropPromo();
+        }
+    }
+
+    public function checkCategoryInCart(array $category_ids): bool
+    {
+        $products = $this->getAllProducts();
+        foreach ($products as $product) {
+            $product_categories = $product->categories()->pluck('categories.id')->toArray();
+            $product_categories[] = $product->category_id;
+            foreach ($product_categories as $product_category_id) {
+                if (in_array($product_category_id, $category_ids))
+                    return true;
+            }
+        }
+
+        return false;
+    }
+
+
+
+    public function checkDiscount(): void
+    {
+        if ($this->isUsedPromo())
+            $this->checkPromo();
+
+        if ($this->isUsedBonuses())
+            $this->checkBonuses();
     }
 
 

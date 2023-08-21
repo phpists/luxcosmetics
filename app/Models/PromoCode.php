@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class PromoCode extends Model
 {
@@ -30,6 +31,7 @@ class PromoCode extends Model
         'type',
         'category_id',
         'product_id',
+        'min_sum'
     ];
 
     protected $casts = [
@@ -37,6 +39,22 @@ class PromoCode extends Model
         'ends_at' => 'date'
     ];
 
+
+    public function scopeActive($query)
+    {
+        $currentDate = now()->toDateString();
+
+        return $query->where(function ($q) {
+            $q->whereNull('quantity')
+                ->orWhere('uses', '<', DB::raw('quantity'));
+        })->where(function ($q) use ($currentDate) {
+            $q->whereNull('starts_at')
+                ->orWhere('starts_at', '<=', $currentDate);
+        })->where(function ($q) use ($currentDate) {
+            $q->whereNull('ends_at')
+                ->orWhere('ends_at', '>=', $currentDate);
+        });
+    }
 
 
     public function category()

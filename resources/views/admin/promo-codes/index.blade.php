@@ -97,9 +97,9 @@
                                             @if($promo_code->type == \App\Models\PromoCode::TYPE_CATEGORY)
                                                 Категория: <a href="{{ route('admin.category.edit', $promo_code->category) }}" target="_blank">{{ $promo_code->category->name }}
                                             @elseif($promo_code->type == \App\Models\PromoCode::TYPE_PRODUCT)
-                                                        Товар: <a href="{{ route('admin.product.edit', $promo_code->product) }}" target="_blank">{{ $promo_code->product->title }}</a>
+                                                Товар: <a href="{{ route('admin.product.edit', $promo_code->product) }}" target="_blank">{{ $promo_code->product->title }}</a>
                                             @else
-                                                Вся корзина
+                                                Вся корзина {{ $promo_code->min_sum ? "(мин.сумма: {$promo_code->min_sum})" : '' }}
                                             @endif
                                         </span>
                                     </td>
@@ -163,10 +163,13 @@
                 if (this.value === 'category') {
                     $form.find('[name="category_id"]').parents('div.column:first').show()
                     $form.find('[name="product_id"]').val('').parents('div.column:first').hide()
+                    $form.find('[name="min_sum"]').val('').parents('div.column:first').hide()
                 } else if (this.value === 'product') {
                     $form.find('[name="product_id"]').parents('div.column:first').show()
                     $form.find('[name="category_id"]').val('').parents('div.column:first').hide()
+                    $form.find('[name="min_sum"]').val('').parents('div.column:first').hide()
                 } else {
+                    $form.find('[name="min_sum"]').parents('div.column:first').show()
                     $form.find('[name="product_id"]').val('').parents('div.column:first').hide()
                     $form.find('[name="category_id"]').val('').parents('div.column:first').hide()
                 }
