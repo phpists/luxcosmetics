@@ -21,7 +21,7 @@ $status_list = [
                 #
             </th>
             <th class="pr-0 text-center">
-                Пользователь
+                Вопрос
             </th>
             <th class="text-center pr-0">Название товара</th>
             <td class="text-center pr-0">
