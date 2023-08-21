@@ -33,6 +33,13 @@
                                         </select>
                                     </div>
                                 </div>
+                                <div class="col-md-3 col-12 column">
+                                    <div class="form-group w-100">
+                                        <label for="createMinSum" class=font-weight-bold">Мин. сумма</label>
+                                        <input type="number" class="form-control" id="createMinSum" name="min_sum" min="0">
+                                        <span class="form-text text-muted">Неограничено, если оставить пустым</span>
+                                    </div>
+                                </div>
                                 <div class="col-md-6 col-12 column" style="display:none;">
                                     <div class="form-group w-100">
                                         <label for="createCategory" class=font-weight-bold">Категория</label>
@@ -55,13 +62,13 @@
                                 </div>
                                 <div class="col-md-3 col-12">
                                     <div class="form-group w-100">
-                                        <label for="createAmount" class=font-weight-bold">Сумма</label>
+                                        <label for="createAmount" class=font-weight-bold">Сумма скидки</label>
                                         <input type="number" class="form-control" id="createAmount" name="amount" min="0" required>
                                     </div>
                                 </div>
                                 <div class="col-md-3 col-12">
                                     <div class="form-group w-100">
-                                        <label for="createPercent" class=font-weight-bold">Процент</label>
+                                        <label for="createPercent" class=font-weight-bold">Процент скидки</label>
                                         <div class="input-group">
                                             <input type="number" class="form-control" id="createPercent" name="percent" min="0" required>
                                             <div class="input-group-append"><span class="input-group-text">%</span></div>

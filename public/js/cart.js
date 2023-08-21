@@ -220,7 +220,8 @@ function removeFromCart(product_id, $button) {
             if (response) {
                 updateTotalCount(response.total_count)
                 $button.removeClass('isInCart')
-                updateTotalSum(response.total_sum)
+                // updateTotalSum(response.total_sum)
+                updateTotalBlock(response.total_block)
 
                 if ($button.data('element') !== undefined) {
                     let selector = $button.data('element')
@@ -253,7 +254,8 @@ function plusQuantity(product_id, $button) {
                 $button.addClass('isInCart')
                 $button.parents($button.data('element')).find('.currentQuantity').val(response.quantity)
                 $button.parents('div.cart-product:first').find('.currentSum').text(response.sum)
-                updateTotalSum(response.total_sum)
+                // updateTotalSum(response.total_sum)
+                updateTotalBlock(response.total_block)
                 $('#modalCurrentProductSum').text(response.sum)
             }
         },
@@ -280,7 +282,8 @@ function minusQuantity(product_id, $button) {
                 $button.addClass('isInCart')
                 $button.parents($button.data('element')).find('.currentQuantity').val(response.quantity)
                 $button.parents('div.cart-product:first').find('.currentSum').text(response.sum)
-                updateTotalSum(response.total_sum)
+                // updateTotalSum(response.total_sum)
+                updateTotalBlock(response.total_block)
                 $('#modalCurrentProductSum').text(response.sum)
             }
         },
@@ -324,6 +327,10 @@ function updateTotalSum(sum) {
     } else {
         $('#submitButton').prop('disabled', false)
     }
+}
+
+function updateTotalBlock(html) {
+    $('#cartTotalBlock').html(html)
 }
 
 function findValueByName(name, serializedForm) {

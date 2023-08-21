@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use App\Mail\CartLetter;
 use App\Mail\OrderLetter;
 use App\Models\Address;
+use App\Models\Category;
 use App\Models\Order;
 use App\Models\PaymentCard;
 use App\Models\Product;
+use App\Models\PromoCode;
 use App\Services\CartService;
 use App\Services\MailService;
 use App\Services\SiteConfigService;
@@ -149,7 +151,8 @@ class CartController extends Controller
 
         return response()->json([
             'total_count' => $total_count,
-            'total_sum' => $total_sum
+            'total_sum' => $total_sum,
+            'total_block' => view('cart.includes.total_sum')->render()
         ]);
     }
 
@@ -164,7 +167,8 @@ class CartController extends Controller
             'quantity' => $quantity,
             'sum' => $sum,
             'total_count' => $total_count,
-            'total_sum' => $total_sum
+            'total_sum' => $total_sum,
+            'total_block' => view('cart.includes.total_sum')->render()
         ]);
     }
 
@@ -179,7 +183,8 @@ class CartController extends Controller
             'quantity' => $quantity,
             'sum' => $sum,
             'total_count' => $total_count,
-            'total_sum' => $total_sum
+            'total_sum' => $total_sum,
+            'total_block' => view('cart.includes.total_sum')->render()
         ]);
     }
 
@@ -197,23 +202,42 @@ class CartController extends Controller
         $amount = (float) $request->post('amount', 0);
         $user = Auth::user();
 
-        if ($user->hasGiftCardBalance())
-            return back()->with('error', 'На этот заказ уже действует подарочная карта');
+        if ($amount > 0) {
+            try {
+                $this->cartService->verifyBonusesConditions($amount);
+            } catch (\Exception $exception) {
+                return back()->with('error', $exception->getMessage());
+            }
 
-        if ($user->points < $amount)
-            return back()->with('error', 'У вас на балансе нету столько баллов!');
-
-        $total_cart_sum = $this->cartService->getTotalSum();
-        $half = round($total_cart_sum - ($total_cart_sum / 2), 2);
-        if ($half < $amount)
-            return back()->with('error', 'Не больше 50% от суммы заказа - ' . $half);
-
-        if ($amount > 0)
             $this->cartService->useBonuses($amount);
-        else
+            return back()->with('success', 'Бонусы успешно применены');
+        } else {
             $this->cartService->dropBonuses();
+            return back()->with('error', 'Бонусы больше не используются');
+        }
+    }
 
-        return back();
+    public function usePromo(Request $request)
+    {
+        if ($request->post('code') == null) {
+            $this->cartService->dropPromo();
+            return back();
+        }
+
+        $promoCode = PromoCode::active()->where('code', $request->post('code'))->first();
+
+        if (!$promoCode)
+            return back()->with('error', 'Такого промо кода не существует');
+
+        try {
+            $this->cartService->verifyPromoConditions($promoCode);
+        } catch (\Exception $exception) {
+            return back()->with('error', $exception->getMessage());
+        }
+
+        $this->cartService->usePromo($promoCode->code);
+
+        return back()->with('success', 'Промокод успешно применён');
     }
 
 
