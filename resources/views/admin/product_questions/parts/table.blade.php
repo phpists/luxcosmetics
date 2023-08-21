@@ -25,9 +25,6 @@ $status_list = [
             </th>
             <th class="text-center pr-0">Название товара</th>
             <td class="text-center pr-0">
-                Обновлено
-            </td>
-            <td class="text-center pr-0">
                 Статус
             </td>
             <th class="pr-0 text-center">
@@ -49,15 +46,15 @@ $status_list = [
                 <td class="text-center pl-0">
                     {{ $question->id }}
                 </td>
-                <td class="text-center pr-0">
-                    {{ $question->messages->first()?->email }}
+                <td class="pr-0">
+                    {{ $question->messages->first()?->message }}
                 </td>
                 <td class="text-center pr-0">
-                    <a href="{{route('products.product', $question->product?->alias )}}">{{ $question->product?->title }}</a>
+                    <a href="{{route('products.product', $question->product?->alias )}}" target="_blank">{{ $question->product?->title }}</a>
                 </td>
-                <td class="text-center pr-0">
-                    {{ $question->updated_at->format('m Y, H:i:s') }}
-                </td>
+{{--                <td class="text-center pr-0">--}}
+{{--                    {{ $question->updated_at->format('m Y, H:i:s') }}--}}
+{{--                </td>--}}
                 <td class="text-center pr-0"> <!-- TODO: вивести статуси -->
                     <div class="form-group row">
                         <div class="col-12">
