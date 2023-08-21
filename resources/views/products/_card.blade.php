@@ -49,11 +49,16 @@
                     <del class="product__oldprice">{{ $product->old_price }} ₽</del>
                 @endisset
             </div>
-            <button class="product__mobile-btn addToCart @if($cartService->check($product->id)) isInCart @endif" data-product="{{ $product->id }}">
-                <svg class="icon">
-                    <use xlink:href="{{asset('images/dist/sprite.svg#cart')}}"></use>
-                </svg>
-            </button>
+{{--            <button class="product__mobile-btn">--}}
+{{--                <svg class="icon">--}}
+{{--                    <use xlink:href="{{asset('images/dist/sprite.svg#cart')}}"></use>--}}
+{{--                </svg>--}}
+{{--            </button>--}}
+                <button class="product__mobile-btn addToCart @if(isset($product->baseValue->id)) @if($cartService->check($product->id, $product->baseValue->id)) isInCart @endif @endif" data-product="{{ $product->id }}" data-property="{{ $product->baseValue->id ?? '' }}">
+                            <svg class="icon">
+                                <use xlink:href="{{asset('images/dist/sprite.svg#cart')}}"></use>
+                            </svg>
+                </button>
         </div>
 
         @if(isset($product->baseProperty->id))
