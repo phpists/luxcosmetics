@@ -291,6 +291,7 @@ function minusQuantity(product_id, $button) {
 }
 
 function updateTotalCount(count) {
+    $('.cart_small_link_count').text(count)
     $('#cartTotalCount').text(count)
 }
 
