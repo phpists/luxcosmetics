@@ -383,9 +383,13 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function 
 
     // Orders
     Route::resource('orders', \App\Http\Controllers\Admin\OrderController::class, ['as' => 'admin']);
+    Route::put('/orders/{order}/change-status', [\App\Http\Controllers\Admin\OrderController::class, 'changeStatus'])->name('admin.orders.change-status');
     Route::delete('/order-product/destroy/{orderProduct}', [\App\Http\Controllers\Admin\OrderProductController::class, 'destroy'])->name('admin.order_products.destroy');
     Route::post('/order-product/add', [\App\Http\Controllers\Admin\OrderProductController::class, 'add'])->name('admin.order_products.add');
     Route::post('/order-product/refresh', [\App\Http\Controllers\Admin\OrderProductController::class, 'refresh'])->name('admin.order_products.refresh');
+
+    // Order Statuses
+    Route::resource('order_statuses', \App\Http\Controllers\Admin\OrderStatusController::class, ['as' => 'admin']);
 
     // Product Questions
     Route::get('product_questions', [\App\Http\Controllers\Admin\ProductQuestionController::class, 'index'])->name('admin.product_questions');

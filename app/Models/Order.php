@@ -64,6 +64,11 @@ class Order extends Model
         return $this->belongsTo(PromoCode::class);
     }
 
+    public function status()
+    {
+        return $this->belongsTo(OrderStatus::class);
+    }
+
     public function isUsedBonuses()
     {
         return $this->is_used_bonuses == 1;

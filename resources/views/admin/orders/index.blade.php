@@ -84,11 +84,14 @@
                                         <td class="text-center pl-0">
                                             {{ $order->id }}
                                         </td>
-                                        <td class="text-center pr-0"> <!-- TODO: вивести статуси -->
+                                        <td class="text-center pr-0">
                                             <div class="form-group row">
                                                 <div class="col-12">
-                                                    <select class="form-control selectpicker">
-                                                        <option>{{ $order->status_title }}</option>
+                                                    <select data-url="{{ route('admin.orders.change-status', $order) }}" class="form-control selectpicker change-status">
+                                                        @foreach($statuses as $status)
+                                                            <option value="{{ $status->id }}" @selected($order->status_id == $status->id)
+                                                                    data-content="<i class='fas fa-circle mr-2' style='color: {{ $status->color }}'></i>{{ $status->title }}">{{ $status->title }}</option>
+                                                        @endforeach
                                                     </select>
                                                 </div>
                                             </div>
@@ -153,6 +156,23 @@
     <script src="{{ asset('super_admin/js/pages/crud/forms/widgets/bootstrap-datepicker.js') }}"></script>
     <script src="{{ asset('super_admin/js/users.js') }}"></script>
     <script src="{{ asset('super_admin/js/pages/crud/forms/widgets/select2.js') }}"></script>
+    <script>
+        $(function() {
+            $(document).on('change', 'select.change-status', function(e) {
+                let url = $(this).data('url'),
+                    value = $(this).val();
+
+                $.ajax({
+                    url: url,
+                    type: 'PUT',
+                    dataType: 'json',
+                    data: {
+                        status_id: value
+                    }
+                })
+            })
+        })
+    </script>
 @endsection
 
 

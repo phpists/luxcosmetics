@@ -129,18 +129,43 @@
                             </a>
                         </li>
 
-                        <li class="menu-item {{ Str::is('admin.orders.*', request()->route()->getName()) ? 'menu-item-active' : '' }}"
-                            aria-haspopup="true">
-                            <a href="{{ route('admin.orders.index') }}" class="menu-link">
-                                <i class="fas fa-th menu-icon"></i>
+                        <li class="menu-item menu-item-submenu {{ (Str::is('admin.orders.*', request()->route()->getName())
+|| Str::is('admin.order_statuses.*', request()->route()->getName())) ? 'menu-item-open' : '' }}"
+                            aria-haspopup="true" data-menu-toggle="hover">
+                            <a href="javascript:;" class="menu-link menu-toggle">
+                                <i class="fas fa-shopping-cart menu-icon"></i>
                                 <span class="menu-text">Заказы</span>
+                                <i class="menu-arrow"></i>
                             </a>
+                            <div class="menu-submenu" style="" kt-hidden-height="160">
+                                <i class="menu-arrow"></i>
+                                <ul class="menu-subnav">
+                                    <li class="menu-item {{ Str::is('admin.orders.*', request()->route()->getName()) ? 'menu-item-active' : '' }}"
+                                        aria-haspopup="true">
+                                        <a href="{{ route('admin.orders.index') }}" class="menu-link">
+                                            <i class="menu-bullet menu-bullet-dot">
+                                                <span></span>
+                                            </i>
+                                            <span class="menu-text">Заказы</span>
+                                        </a>
+                                    </li>
+                                    <li class="menu-item {{ Str::is('admin.order_statuses.*', request()->route()->getName()) ? 'menu-item-active' : '' }}"
+                                        aria-haspopup="true">
+                                        <a href="{{ route('admin.order_statuses.index') }}" class="menu-link">
+                                            <i class="menu-bullet menu-bullet-dot">
+                                                <span></span>
+                                            </i>
+                                            <span class="menu-text">Статусы</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
                         </li>
 
                         <li class="menu-item {{ Str::is('admin.promo_codes.*', request()->route()->getName()) ? 'menu-item-active' : '' }}"
                             aria-haspopup="true">
                             <a href="{{ route('admin.promo_codes.index') }}" class="menu-link">
-                                <i class="fas fa-th menu-icon"></i>
+                                <i class="far fa-star menu-icon"></i>
                                 <span class="menu-text">Промо коды</span>
                             </a>
                         </li>

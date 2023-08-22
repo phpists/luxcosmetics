@@ -11,7 +11,9 @@
                     <div class="chars__item">
                         <div class="chars__name"><span>Статус заказа</span></div>
                         <div class="chars__value">
-                            <span><b class="status status--new">{{ $order->status_title }}</b></span>
+                            @if($order->status)
+                            <span><b class="status status--new" style="color:{{ $order->status->color }}">{{ $order->status->title }}</b></span>
+                            @endif
                         </div>
                     </div>
                     <div class="chars__item">

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Order;
 use App\Models\OrderProduct;
+use App\Models\OrderStatus;
 use App\Models\Product;
 use App\Services\CartService;
 use Illuminate\Http\JsonResponse;
@@ -17,8 +18,9 @@ class OrderController extends Controller
     public function index()
     {
         $orders = Order::orderBy('id', 'DESC')->paginate();
+        $statuses = OrderStatus::all();
 
-        return view('admin.orders.index', compact('orders'));
+        return view('admin.orders.index', compact('orders', 'statuses'));
     }
 
     public function create()
@@ -98,6 +100,11 @@ class OrderController extends Controller
         $order->update($data);
 
         return back()->with('success', 'Заказ успешно обновлён');
+    }
+
+    public function changeStatus(Request $request, Order $order)
+    {
+        return $order->update(['status_id' => $request->post('status_id')]);
     }
 
 }
