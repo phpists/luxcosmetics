@@ -122,6 +122,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('gift-card', [\App\Http\Controllers\GiftController::class, 'index'])->name('gif-card.index');
     Route::get('gift-card/create', [\App\Http\Controllers\GiftController::class, 'create'])->name('gif-card.create');
     Route::post('gift-card', [\App\Http\Controllers\GiftController::class, 'store'])->name('gif-card.store');
+    Route::get('gift-card/cart/success', [\App\Http\Controllers\GiftController::class, 'success'])->name('gift-card.cart.success');
     Route::get('gift-card/cart', [\App\Http\Controllers\GiftController::class, 'cart'])->name('gift_card.cart');
     Route::get('gift-card/cart/clear', [\App\Http\Controllers\GiftController::class, 'cartClear'])->name('gift_card.cart.clear');
     Route::post('gift-card/cart/store', [\App\Http\Controllers\GiftController::class, 'cartStore'])->name('gift_card.cart.store');
