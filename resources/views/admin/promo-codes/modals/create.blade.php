@@ -85,15 +85,13 @@
                                 <div class="col-md-4 col-12">
                                     <div class="form-group w-100">
                                         <label for="createStarts" class=font-weight-bold">Начало</label>
-                                        <input class="form-control" type="date" name="starts_at" id="createStarts"/>
-                                        <span class="form-text text-muted">Неограничено, если оставить пустым</span>
+                                        <input class="form-control" type="date" name="starts_at" id="createStarts" required/>
                                     </div>
                                 </div>
                                 <div class="col-md-4 col-12">
                                     <div class="form-group w-100">
                                         <label for="createStarts" class=font-weight-bold">Конец</label>
-                                        <input class="form-control" type="date" name="ends_at" id="createStarts"/>
-                                        <span class="form-text text-muted">Неограничено, если оставить пустым</span>
+                                        <input class="form-control" type="date" name="ends_at" id="createStarts" required/>
                                     </div>
                                 </div>
                             </div>

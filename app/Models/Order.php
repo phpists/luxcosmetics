@@ -34,10 +34,12 @@ class Order extends Model
         'city',
         'region',
         'address',
-        'discount',
         'gift_card_id',
-        'promo_code_id',
         'is_used_bonuses',
+        'promo_code_id',
+        'gift_card_discount',
+        'bonuses_discount',
+        'promo_code_discount',
     ];
 
 

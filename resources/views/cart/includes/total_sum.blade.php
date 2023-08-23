@@ -16,6 +16,6 @@
 @endif
 <div class="cart-aside__sum">Итого с НДС <span>{{ $cartService->getTotalSumWithDiscounts() }}</span> ₽</div>
 
-@if($cartService->discount)
-    <span>{{ $cartService->discount['title'] ?? 'UNDEFINED' }}: -{{ $cartService->discount['amount'] ?? 0 }}₽</span>
-@endif
+@foreach($cartService->discounts as $discount)
+    <span>{{ $discount['title'] ?? 'UNDEFINED' }}: -{{ $discount['amount'] ?? 0 }}₽</span><br>
+@endforeach

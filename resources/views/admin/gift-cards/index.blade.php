@@ -58,6 +58,9 @@
                                 <th class="text-center pr-0">
                                     Статус
                                 </th>
+                                <th class="text-center pr-0">
+                                    Действительна до
+                                </th>
                                 <th class="pr-0 text-center">
                                     Действия
                                 </th>
@@ -102,6 +105,11 @@
                                             @elseif($giftCard->isNotUsed())
                                                 <span class="badge badge-success">Новая</span>
                                             @endif
+                                        </span>
+                                    </td>
+                                    <td class="text-center">
+                                        <span class="text-dark-75 d-block font-size-lg">
+                                            {{ $giftCard->created_at->addYear()->format('d.m.y') }}
                                         </span>
                                     </td>
                                     <td class="text-center pr-0">

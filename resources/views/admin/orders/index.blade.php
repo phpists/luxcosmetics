@@ -85,7 +85,7 @@
                                             {{ $order->id }}
                                         </td>
                                         <td class="text-center pr-0">
-                                            <div class="form-group row">
+                                            <div class="form-group row my-auto">
                                                 <div class="col-12">
                                                     <select data-url="{{ route('admin.orders.change-status', $order) }}" class="form-control selectpicker change-status">
                                                         @foreach($statuses as $status)
@@ -110,15 +110,15 @@
                                             {{ $order->total_sum }}
                                         </td>
                                         <td class="text-center pr-0">
-                                            @if($order->discount)
-                                                @if($order->isUsedBonuses())
-                                                    Бонусы:
-                                                @elseif($order->giftCard)
-                                                    Подарочная карта:
-                                                @elseif($order->promoCode)
-                                                    Промо код:
+                                                @if($order->giftCard)
+                                                    Подарочная карта: {{ $order->gift_card_discount }}<br>
                                                 @endif
-                                            @endif
+                                                @if($order->isUsedBonuses())
+                                                    Бонусы: {{ $order->bonuses_discount }}<br>
+                                                @endif
+                                                @if($order->promoCode)
+                                                    Промо код: {{ $order->promo_code_discount }}
+                                                @endif
                                             {{ $order->discount }}
                                         </td>
                                         <td class="text-center pr-0">
