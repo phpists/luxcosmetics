@@ -2,9 +2,11 @@
 
 namespace App\Models;
 
+use App\Mail\OrderStatusChangedMail;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Mail;
 
 class Order extends Model
 {
@@ -38,6 +40,18 @@ class Order extends Model
         'is_used_bonuses',
     ];
 
+
+
+    protected static function booted (): void
+    {
+
+        self::updated(function(Order $order) {
+            if ($order->isDirty('status_id')) {
+                Mail::to($order->user->email)->send(new OrderStatusChangedMail($order));
+            }
+        });
+
+    }
 
     public function orderProducts()
     {
