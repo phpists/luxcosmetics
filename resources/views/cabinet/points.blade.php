@@ -1,6 +1,6 @@
 @extends('cabinet.layouts.cabinet')
 
-@section('title', 'Бальная система')
+@section('title', 'Программа лояльности')
 
 @section('page_content')
     <main class="cabinet-page__main">
@@ -28,7 +28,7 @@
             </div>
         </div>
         <div class="cabinet-page__group">
-            <h3 class="subheading">Как работает бальная система</h3>
+            <h3 class="subheading">Как работает программа лояльности</h3>
             <div class="typography">
                 <p>Совершайте покупки в любом магазине, учавствующем в программе, чтобы зарабатывать и использовать
                     баллы.</p>

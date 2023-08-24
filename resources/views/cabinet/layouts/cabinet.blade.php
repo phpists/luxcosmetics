@@ -57,7 +57,7 @@
                                         <svg class="icon">
                                             <use xlink:href="{{asset('images/dist/sprite.svg#label')}}"></use>
                                         </svg>
-                                        Бальная система <span class="cabmenu__label">{{\Illuminate\Support\Facades\Auth::user()->points}} баллов</span></a></li>
+                                        Пргорамма<br> лояльности <span class="cabmenu__label">{{\Illuminate\Support\Facades\Auth::user()->points}} баллов</span></a></li>
                                 <li class="@if(request()->routeIs('profile.password')) is-active @endif"><a href="{{route('profile.password')}}">
                                         <svg class="icon">
                                             <use xlink:href="{{asset('images/dist/sprite.svg#shield2')}}"></use>
