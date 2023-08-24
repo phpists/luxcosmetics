@@ -78,8 +78,8 @@
                             </li>
                         </ul>
                     </div>
-                    <div class="card-toolbar" style="gap: 10px; margin-bottom: 10px">
-                        <a href="{{ route('products.product', ['alias' => $product->alias]) }}" class="btn btn-primary me-3">Посмотреть товар</a>
+                    <div class="card-toolbar " style="gap: 10px; margin-bottom: 10px">
+                        <a href="{{ route('products.product', ['alias' => $product->alias]) }}" class="btn btn-primary me-3" target="_blank">Посмотреть товар</a>
                         <button type="submit" form="blog_post" class="btn btn-primary">Сохранить</button>
                     </div>
                 </div>
