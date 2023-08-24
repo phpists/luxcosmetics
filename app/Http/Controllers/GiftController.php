@@ -73,7 +73,7 @@ class GiftController extends Controller
     public function cartStore(Request $request, GiftCardService $giftCardService)
     {
         if (!session()->has(self::SESSION_KEY))
-            return redirect()->route('gift_card.create');
+            return redirect()->route('gif-card.index');
 
         $card_id = $request->post('card_id');
 
@@ -93,11 +93,19 @@ class GiftController extends Controller
 
         if ($giftCardService->store($data)) {
             session()->forget(self::SESSION_KEY);
-            return redirect()->route('profile.gift-cards')
+            session()->put('gift_card_success_data', $data);
+            return redirect()->route('gift-card.cart.success')
                 ->with('success', 'Подарочная карта отправлена на указанную почту');
         } else {
             return back();
         }
+    }
+
+    public function success()
+    {
+        $data = session()->get('gift_card_success_data');
+        session()->forget('gift_card_success_data');
+        return view('gift_cards.success', compact('data'));
     }
 
 

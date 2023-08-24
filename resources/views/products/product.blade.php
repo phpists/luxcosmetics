@@ -51,7 +51,7 @@
                                     <span class="stars__item"><svg class="icon"><use
                                                 xlink:href="{{asset('/images/dist/sprite.svg#star')}}"></use></svg></span>
                                 </div>
-                                <a href="">16 отзывов</a>
+                                <a href="#commentsBlock">отзывы ({{$countComments}})</a>
                             </div>
                             <div class="product-page__available">
                                 <svg class="icon">
@@ -107,18 +107,20 @@
                         <div class="product-page__reviewsblock">
                             <div class="product-page__reviews">
                                 <div class="stars">
-                                    <span class="stars__item is-active"><svg class="icon"><use
-                                                xlink:href="{{asset('images/dist/sprite.svg#star')}}"></use></svg></span>
-                                    <span class="stars__item is-active"><svg class="icon"><use
-                                                xlink:href="{{asset('images/dist/sprite.svg#star')}}"></use></svg></span>
-                                    <span class="stars__item is-active"><svg class="icon"><use
-                                                xlink:href="{{asset('images/dist/sprite.svg#star')}}"></use></svg></span>
-                                    <span class="stars__item"><svg class="icon"><use
-                                                xlink:href="{{asset('images/dist/sprite.svg#star')}}"></use></svg></span>
-                                    <span class="stars__item"><svg class="icon"><use
-                                                xlink:href="{{asset('images/dist/sprite.svg#star')}}"></use></svg></span>
+                                    @for ($i = 1; $i <= 5; $i++)
+                                        @if ($i <= round($averageRating))
+                                            <span class="stars__item is-active">
+                                            <svg class="icon"><use xlink:href="{{ asset('images/dist/sprite.svg#star') }}"></use></svg>
+                                        </span>
+                                        @else
+                                            <span class="stars__item">
+                                            <svg class="icon"><use xlink:href="{{ asset('images/dist/sprite.svg#star') }}"></use></svg>
+                                        </span>
+                                        @endif
+                                    @endfor
                                 </div>
-                                <a href="">16 отзывов</a>
+
+                                <a href="#commentsBlock">отзывы ({{$countComments}})</a>
                             </div>
                             <div class="product-page__available">
                                 <svg class="icon">
@@ -558,13 +560,13 @@
                                 {{--                                </div>--}}
 
                             </div>
-                            <div class="product-tabs__sortblock sortblock">
-                                <div class="sortblock__total">{{$countComments}} отзывов</div>
+                            <div id="commentsBlock" class="product-tabs__sortblock sortblock">
+                                <div class="sortblock__total">отзывы ({{$countComments}})</div>
                                 <div class="sortblock__sort sort">
                                     <span class="sort__title">Сортировать по</span>
                                     <select name="sort_option" id="sort_option" class="sort__select">
                                         <option value="newest">Самые новые</option>
-                                        <option value="highest_rating">Самый высокий рейтинг</option>
+                                        <option value="highest_rating">Самыый высокий рейтинг</option>
                                     </select>
                                 </div>
                             </div>

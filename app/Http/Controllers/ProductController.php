@@ -86,6 +86,7 @@ class ProductController extends Controller
             ->orderBy('created_at', 'desc')
             ->paginate(Comments::ITEMS_PER_PAGE);
 
+
         $countComments = $comments->count();
         $has_more_comments = $comments->hasMorePages();
 

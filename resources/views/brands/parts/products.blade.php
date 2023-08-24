@@ -26,7 +26,7 @@
                         <span class="stars__item"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#start')}}"></use></svg></span>
                         <span class="stars__item"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#start')}}"></use></svg></span>
                     </div>
-                    <a href="">16 отзывов</a>
+                    <a href="">отзывы ({{$countComments}})</a>
                 </div>
                 <div class="product__ftrwrap">
                     <div class="product__prices">

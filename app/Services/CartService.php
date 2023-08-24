@@ -36,8 +36,38 @@ class CartService
         self::CARD_KEY => 'Карта для оплаты'
     ];
 
-    public $discount;
+    public $discounts = [];
 
+
+
+    private function initializeDiscounts()
+    {
+        if (Auth::check()) {
+            $user = Auth::user();
+            $this->checkDiscount();
+
+            if ($user->hasGiftCardBalance()) {
+                $this->discounts['gift_card_balance'] = [
+                    'title' => 'Баланс подарочной карты',
+                    'amount' => $this->getUsedGiftCardDiscount()
+                ];
+            }
+
+            if ($this->isUsedPromo()) {
+                $this->discounts['promo_code'] = [
+                    'title' => "Промокод {$this->getPromoCode()}",
+                    'amount' => $this->getUsedPromoDiscount()
+                ];
+            }
+
+            if ($this->isUsedBonuses()) {
+                $this->discounts['bonuses'] = [
+                    'title' => 'Бонусные баллы',
+                    'amount' => $this->getUsedBonusesDiscount()
+                ];
+            }
+        }
+    }
 
     public function getAllItems()
     {
@@ -98,39 +128,17 @@ class CartService
     public function getTotalSumWithDiscounts()
     {
         $totalSum = $this->getTotalSum();
+        $this->initializeDiscounts();
 
-        if (Auth::check()) {
-            $user = Auth::user();
-            $this->checkDiscount();
+        if (isset($this->discounts['gift_card_balance']))
+            $totalSum = $totalSum - $this->discounts['gift_card_balance']['amount'];
 
-            if ($user->hasGiftCardBalance()) {
-                $maxDiscount = min($totalSum, $user->activeGiftCard->balance);
-                $totalSum = $totalSum - $maxDiscount;
-                $this->discount = [
-                    'title' => 'Баланс подарочной карты',
-                    'name' => 'gift_card_balance',
-                    'amount' => $maxDiscount
-                ];
-            }
+        if (isset($this->discounts['promo_code']))
+            $totalSum = $totalSum - $this->discounts['promo_code']['amount'];
 
-            if ($this->isUsedBonuses()) {
-                $totalSum = $totalSum - $this->getUsedBonusesDiscount();
-                $this->discount = [
-                    'title' => 'Бонусные баллы',
-                    'name' => 'bonuses',
-                    'amount' => $this->getUsedBonusesDiscount()
-                ];
-            }
+        if (isset($this->discounts['bonuses']))
+            $totalSum = $totalSum - $this->discounts['bonuses']['amount'];
 
-            if ($this->isUsedPromo()) {
-                $totalSum = $totalSum - $this->getUsedPromoDiscount();
-                $this->discount = [
-                    'title' => "Промокод {$this->getPromoCode()}",
-                    'name' => 'promo_code',
-                    'amount' => $this->getUsedPromoDiscount()
-                ];
-            }
-        }
 
         return round($totalSum, 2) ?? 0;
     }
@@ -276,15 +284,15 @@ class CartService
         $order_data['region'] = $address['region'];
         $order_data['address'] = $address['address'];
         if ($this->isUsedGiftCardDiscount()) {
-            $order_data['discount'] = $this->discount['amount'] ?? 0;
+            $order_data['gift_card_discount'] = $this->getUsedGiftCardDiscount();
             $order_data['gift_card_id'] = \auth()->user()->activeGiftCard->id;
         }
         if ($this->isUsedBonuses()) {
-            $order_data['discount'] = $this->discount['amount'] ?? 0;
+            $order_data['bonuses_discount'] = $this->getUsedBonusesDiscount();
             $order_data['is_used_bonuses'] = 1;
         }
         if ($this->isUsedPromo()) {
-            $order_data['discount'] = $this->discount['amount'] ?? 0;
+            $order_data['promo_code_discount'] = $this->getUsedPromoDiscount();
             $order_data['promo_code_id'] = $this->getPromo()->id;
         }
 
@@ -332,9 +340,20 @@ class CartService
 
     public function isUsedGiftCardDiscount(): bool
     {
-        if (is_array($this->discount) && isset($this->discount['name']))
-            return $this->discount['name'] == 'gift_card_balance';
+        if (\auth()->check())
+            return \auth()->user()->hasGiftCardBalance();
+
         return false;
+    }
+
+    public function getUsedGiftCardDiscount(): int
+    {
+        if (Auth::check()) {
+            $user = Auth::user();
+            $maxDiscount = min($this->getTotalSum(), $user->activeGiftCard->balance);
+            return $maxDiscount;
+        }
+        return 0;
     }
 
     public function isUsedBonuses(): bool
@@ -367,11 +386,11 @@ class CartService
 
         $user = \auth()->user();
 
-        if ($user->hasGiftCardBalance())
-            throw new Exception('На этот заказ уже действует подарочная карта');
-
-        if ($this->isUsedPromo())
-            throw new Exception('На этот заказ уже действует промокод');
+//        if ($user->hasGiftCardBalance())
+//            throw new Exception('На этот заказ уже действует подарочная карта');
+//
+//        if ($this->isUsedPromo())
+//            throw new Exception('На этот заказ уже действует промокод');
 
         if ($user->points < $amount)
             throw new Exception('У вас на балансе нету столько баллов!');
@@ -425,7 +444,7 @@ class CartService
         if ($promoCode->amount) {
             $amount = $promoCode->amount;
         } elseif ($promoCode->percent) {
-            $totalSum = $this->getTotalSum();
+            $totalSum = $this->getTotalSumWithDiscounts();
 
             if ($promoCode->type == PromoCode::TYPE_CART) {
                 $amount = $totalSum * ($promoCode->percent / 100);
@@ -456,11 +475,11 @@ class CartService
         if (!\auth()->check())
             throw new Exception('Промокоды можно использовать только авторизованным пользователям');
 
-        if (\auth()->user()->hasGiftCardBalance())
-            throw new Exception('На этот заказ уже действует подарочная карта');
-
-        if ($this->isUsedBonuses())
-            throw new Exception('На этот заказ уже действует скидка от бонусов');
+//        if (\auth()->user()->hasGiftCardBalance())
+//            throw new Exception('На этот заказ уже действует подарочная карта');
+//
+//        if ($this->isUsedBonuses())
+//            throw new Exception('На этот заказ уже действует скидка от бонусов');
 
         if ($promoCode->type == PromoCode::TYPE_CART) {
             if ($promoCode->min_sum && $promoCode->min_sum > $this->getTotalSum())

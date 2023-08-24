@@ -9,7 +9,10 @@
             <p>Введите номер ваучера из полученного вами электронного письма<br> и/или код на
                 обратной стороне физической карты</p>
             @if($activeGiftCard)
-            <div class="formsuccess formsuccess--big">У вас на аккаунте активирована подарочная карта на сумму <b>{{ $activeGiftCard->sum }}</b> <br>ее можно использовать в корзине при покупке <br>Осталось <b>{{ $activeGiftCard->balance }}</b></div>
+            <div class="formsuccess formsuccess--big">У вас на аккаунте активирована подарочная карта на сумму <b>{{ $activeGiftCard->sum }}</b>
+                <br>ее можно использовать в корзине при покупке
+                <br>Осталось <b>{{ $activeGiftCard->balance }}</b>
+                <br>Действительные до <b>{{ $activeGiftCard->created_at->addyear()->format('d.m.y') }}</b></div>
             @endif
             <form action="{{ route('profile.gift-cards.activate') }}" method="POST" class="form form--box">
                 @csrf

@@ -65,4 +65,24 @@ class GiftCard extends Model
         return $this->deactivated_at == null;
     }
 
+    public function isDeactivated()
+    {
+        return $this->deactivated_at != null;
+    }
+
+    public function isPartUsed()
+    {
+        return $this->balance < $this->sum;
+    }
+
+    public function isUsed()
+    {
+        return $this->balance == 0;
+    }
+
+    public function isNotUsed()
+    {
+        return $this->balance == $this->sum;
+    }
+
 }

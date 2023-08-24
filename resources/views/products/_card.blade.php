@@ -1,3 +1,4 @@
+
 <div class="product">
     <div class="product__top">
         <div class="product__image">
@@ -40,7 +41,14 @@
                 <span class="stars__item"><svg class="icon"><use
                             xlink:href="{{asset('images/dist/sprite.svg#start')}}"></use></svg></span>
             </div>
-            <a href="">16 отзывов</a>
+            @php
+                $comments = \App\Models\Comments::query()
+                ->where('product_id', $product->id)
+                ->where('status', 'Опубликовать');
+
+                $countComments = $comments->count();
+            @endphp
+            <a href="{{ route('products.product', ['alias' => $product->alias]) }}">отзывы ({{$countComments}})</a>
         </div>
         <div class="product__ftrwrap">
             <div class="product__prices">
@@ -128,5 +136,4 @@
             </div>
         @endif
     </div>
-
 </div>

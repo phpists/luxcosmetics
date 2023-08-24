@@ -2,9 +2,11 @@
 
 namespace App\Models;
 
+use App\Mail\OrderStatusChangedMail;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Mail;
 
 class Order extends Model
 {
@@ -32,12 +34,26 @@ class Order extends Model
         'city',
         'region',
         'address',
-        'discount',
         'gift_card_id',
-        'promo_code_id',
         'is_used_bonuses',
+        'promo_code_id',
+        'gift_card_discount',
+        'bonuses_discount',
+        'promo_code_discount',
     ];
 
+
+
+    protected static function booted (): void
+    {
+
+        self::updated(function(Order $order) {
+            if ($order->isDirty('status_id')) {
+                Mail::to($order->user->email)->send(new OrderStatusChangedMail($order));
+            }
+        });
+
+    }
 
     public function orderProducts()
     {
@@ -62,6 +78,11 @@ class Order extends Model
     public function promoCode()
     {
         return $this->belongsTo(PromoCode::class);
+    }
+
+    public function status()
+    {
+        return $this->belongsTo(OrderStatus::class);
     }
 
     public function isUsedBonuses()

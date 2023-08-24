@@ -13,6 +13,7 @@ use App\Models\PromoCode;
 use App\Services\CartService;
 use App\Services\MailService;
 use App\Services\SiteConfigService;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -205,6 +206,9 @@ class CartController extends Controller
         if ($amount > 0) {
             try {
                 $this->cartService->verifyBonusesConditions($amount);
+
+                if (($this->cartService->getTotalSumWithDiscounts() - $amount) < 0)
+                    throw new Exception('Общая сумма заказа не может быть меньше 0');
             } catch (\Exception $exception) {
                 return back()->with('error', $exception->getMessage());
             }
@@ -231,6 +235,9 @@ class CartController extends Controller
 
         try {
             $this->cartService->verifyPromoConditions($promoCode);
+
+            if ($promoCode->amount && (($this->cartService->getTotalSumWithDiscounts() - $promoCode->amount) < 0))
+                throw new Exception('Общая сумма заказа не может быть меньше 0');
         } catch (\Exception $exception) {
             return back()->with('error', $exception->getMessage());
         }

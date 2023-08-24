@@ -122,6 +122,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('gift-card', [\App\Http\Controllers\GiftController::class, 'index'])->name('gif-card.index');
     Route::get('gift-card/create', [\App\Http\Controllers\GiftController::class, 'create'])->name('gif-card.create');
     Route::post('gift-card', [\App\Http\Controllers\GiftController::class, 'store'])->name('gif-card.store');
+    Route::get('gift-card/cart/success', [\App\Http\Controllers\GiftController::class, 'success'])->name('gift-card.cart.success');
     Route::get('gift-card/cart', [\App\Http\Controllers\GiftController::class, 'cart'])->name('gift_card.cart');
     Route::get('gift-card/cart/clear', [\App\Http\Controllers\GiftController::class, 'cartClear'])->name('gift_card.cart.clear');
     Route::post('gift-card/cart/store', [\App\Http\Controllers\GiftController::class, 'cartStore'])->name('gift_card.cart.store');
@@ -382,9 +383,13 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function 
 
     // Orders
     Route::resource('orders', \App\Http\Controllers\Admin\OrderController::class, ['as' => 'admin']);
+    Route::put('/orders/{order}/change-status', [\App\Http\Controllers\Admin\OrderController::class, 'changeStatus'])->name('admin.orders.change-status');
     Route::delete('/order-product/destroy/{orderProduct}', [\App\Http\Controllers\Admin\OrderProductController::class, 'destroy'])->name('admin.order_products.destroy');
     Route::post('/order-product/add', [\App\Http\Controllers\Admin\OrderProductController::class, 'add'])->name('admin.order_products.add');
     Route::post('/order-product/refresh', [\App\Http\Controllers\Admin\OrderProductController::class, 'refresh'])->name('admin.order_products.refresh');
+
+    // Order Statuses
+    Route::resource('order_statuses', \App\Http\Controllers\Admin\OrderStatusController::class, ['as' => 'admin']);
 
     // Product Questions
     Route::get('product_questions', [\App\Http\Controllers\Admin\ProductQuestionController::class, 'index'])->name('admin.product_questions');
