@@ -59,14 +59,20 @@
                         </ul>
                     </div>
                     <div class="card-toolbar" style="gap: 10px; margin-bottom: 10px">
+                        @if($order->isCompleted())
+                            <a href="{{ url()->previous() }}" class="btn btn-primary">Назад</a>
+                        @else
                         <button type="submit" form="orderForm" class="btn btn-primary">Сохранить</button>
+                        @endif
                     </div>
                 </div>
                 <div class="card-body">
+                    @if(!$order->isCompleted())
                     <form id="orderForm" action="{{ route('admin.orders.update', $order) }}" method="POST"
                           enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
+                    @endif
                     <div class="tab-content">
                         <div class="tab-pane fade show active" id="general" role="tabpanel">
                                 @include('admin.orders.includes.form')
@@ -76,8 +82,9 @@
                         </div>
 
                     </div>
-
+                    @if(!$order->isCompleted())
                     </form>
+                    @endif
                 </div>
             </div>
         </div>

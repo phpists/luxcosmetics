@@ -79,7 +79,7 @@
                                     </td>
                                     <td class="text-center">
                                         <span class="text-dark-75 d-block font-size-lg">
-                                            <a href="{{ route('admin.user.showByEmail', $giftCard->buyer->email) }}">{{ $giftCard->buyer->email ?? 'UNDEFINED' }}</a>
+                                            <a href="{{ route('admin.user.showByEmail', $giftCard->buyer->email ?? '') }}">{{ $giftCard->buyer->email ?? 'UNDEFINED' }}</a>
                                         </span>
                                     </td>
                                     <td class="text-center">
@@ -115,7 +115,7 @@
                                     <td class="text-center pr-0">
                                         <a href="javascript:;"
                                            class="btn btn-sm btn-clean btn-icon btn-show"
-                                           data-toggle="modal" data-target="#showModal"
+                                           data-toggle="modal" data-target="#showGiftCardModal"
                                            data-url="{{ route('admin.gift_cards.show', $giftCard) }}">
                                             <i class="las la-eye"></i>
                                         </a>

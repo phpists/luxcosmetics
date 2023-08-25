@@ -12,10 +12,13 @@
             {{ $orderProduct['product_id'] }}
         </td>
         <td class="text-center pr-0">
+            {{ $product->code }}
+        </td>
+        <td class="text-center pr-0">
             {{ $product->brand->name }}
         </td>
         <td class="text-center pr-0">
-            {{ $product->title }}
+            <a href="{{ route('products.product', ['alias' => $product->alias]) }}" target="_blank">{{ $product->title }}</a>
         </td>
         <td class="text-center pr-0 price">
             @if(isset($orderProduct['price']))
@@ -29,21 +32,25 @@
         </td>
         <td class="text-center pr-0">
             <input class="form-control text-center productsTableQuantity" type="number" min="1" name="products[{{ $loop->index }}][quantity]"
-                   value="{{ $orderProduct['quantity'] }}">
+                   value="{{ $orderProduct['quantity'] }}" @disabled($order->isCompleted())>
         </td>
         <td class="text-center pr-0">
             {{ ($orderProduct['price'] ?? $product->price) * $orderProduct['quantity'] }}
         </td>
+        @if(!$order->isCompleted())
         <td class="text-center pr-0">
             <button type="button" data-url="{{ route('admin.order_products.destroy', $orderProduct['id'] ?? 0) }}"
                     class="btn btn-sm btn-clean btn-icon removeProduct" data-row="tr:first" @if(isset($orderProduct['id'])) data-exists @endif>
                 <i class="las la-trash"></i>
             </button>
         </td>
+        @endif
     </tr>
 @endforeach
 <tr class="text-right">
-    <td colspan="6">Всего: <b>{{ $total_sum }}</b></td>
+    <td colspan="7">Всего: <b>{{ $total_sum }}</b></td>
+    @if(!$order->isCompleted())
     <td></td>
+    @endif
 </tr>
 

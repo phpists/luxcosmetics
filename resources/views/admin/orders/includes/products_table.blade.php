@@ -1,6 +1,8 @@
+@if(!$order->isCompleted())
 <button type="button" data-toggle="modal" data-target="#addProduct" class="btn btn-primary font-weight-bold">
     <i class="fas fa-plus mr-2"></i>Добавить
 </button>
+@endif
 
 <input type="hidden" id="refreshOrderProductsTableUrl" value="{{ route('admin.order_products.refresh') }}">
 <div class="table-responsive">
@@ -9,6 +11,9 @@
         <tr>
             <th class="pl-0 text-center">
                 #
+            </th>
+            <th class="pr-0 text-center">
+                Артикул
             </th>
             <th class="pr-0 text-center">
                 Бренд
@@ -25,9 +30,11 @@
             <th class="pr-0 text-center">
                 Сумма
             </th>
+            @if(!$order->isCompleted())
             <th class="pr-0 text-center">
                 Действия
             </th>
+            @endif
         </tr>
         </thead>
         <tbody>

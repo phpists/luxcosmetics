@@ -113,7 +113,7 @@
                                     <td class="text-center pr-0">
                                         <a href="javascript:;"
                                            class="btn btn-sm btn-clean btn-icon btn-show"
-                                           data-toggle="modal" data-target="#showModal"
+                                           data-toggle="modal" data-target="#showPromoCodeModal"
                                            data-url="{{ route('admin.promo_codes.show', $promo_code) }}">
                                             <i class="las la-eye"></i>
                                         </a>

@@ -1,5 +1,5 @@
 <!-- Modal -->
-<div class="modal fade" id="showModal" tabindex="-1" role="dialog" aria-labelledby="showModalTitle"
+<div class="modal fade" id="showGiftCardModal" tabindex="-1" role="dialog" aria-labelledby="showModalTitle"
      aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">

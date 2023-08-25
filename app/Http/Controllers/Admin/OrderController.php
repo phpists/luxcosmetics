@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Category;
+use App\Models\GiftCardValue;
 use App\Models\Order;
 use App\Models\OrderProduct;
 use App\Models\OrderStatus;
@@ -15,12 +17,73 @@ use Illuminate\Support\Arr;
 class OrderController extends Controller
 {
 
-    public function index()
+    public function index(Request $request)
     {
-        $orders = Order::orderBy('id', 'DESC')->paginate();
+        $query = Order::orderBy('id', 'DESC')->with('user');
         $statuses = OrderStatus::all();
 
-        return view('admin.orders.index', compact('orders', 'statuses'));
+        if ($request->has('status_id') && $request->get('status_id') != '')
+            $query->whereIn('status_id', $request->get('status_id'));
+        if ($request->has('customer') && $request->get('customer') != '') {
+            $customer = $request->get('customer');
+            $query->where(function ($query) use ($customer) {
+                $query->where('full_name', 'LIKE', "%{$customer}%")
+                    ->orWhere('phone', 'LIKE', "%{$customer}%")
+                    ->orWhere(function ($query) use ($customer) {
+                        $query->whereHas('user', function ($query) use ($customer) {
+                            $query->where('users.name', 'LIKE', "%{$customer}%")
+                                ->orWhere('users.email', 'LIKE', "%{$customer}%")
+                                ->orWhere('users.phone', 'LIKE', "%{$customer}%");
+                        });
+                    });
+            });
+        }
+
+        if ($request->has('sum_from') && $request->get('sum_from') != '')
+            $query->where('total_sum', '>=', $request->get('sum_from'));
+        if ($request->has('sum_to') && $request->get('sum_to') != '')
+            $query->where('total_sum', '<=', $request->get('sum_to'));
+
+        $discount_from = $request->get('discount_from', '');
+        $discount_to = $request->get('discount_to', '');
+        if ($discount_from != '' || $discount_to != '') {
+            $query->where(function ($subquery) use ($discount_from, $discount_to) {
+                if ($discount_from != '')
+                    $subquery->whereRaw('(`gift_card_discount` + `bonuses_discount` + `promo_code_discount`) >= ?', [$discount_from]);
+
+                if ($discount_to != '') {
+                    if ($discount_to == '0') {
+                        $subquery->whereNull('gift_card_discount')
+                            ->whereNull('bonuses_discount')
+                            ->whereNull('promo_code_discount');
+                    } else {
+                        $subquery->whereRaw('(`gift_card_discount` + `bonuses_discount` + `promo_code_discount`) <= ?', [$discount_to]);
+                    }
+                }
+            });
+        }
+
+        if ($request->has('date_from') && $request->get('date_from') != '')
+            $query->where('created_at', '>=', $request->get('date_from'));
+        if ($request->has('date_to') && $request->get('date_to') != '')
+            $query->where('created_at', '<=', $request->get('date_to'));
+
+        $orders = $query->paginate($request->get('per_page') ?? 10);
+
+        if ($request->ajax())
+            return view('admin.orders.includes.table', compact('orders', 'statuses'))->render();
+
+        $total_sum = Order::completed()->sum('total_sum');
+        $total_sum_current_month = Order::currentMonth()->completed()->sum('total_sum');
+        $total_sum_today = Order::today()->completed()->sum('total_sum');
+
+        return view('admin.orders.index', compact(
+            'orders',
+            'statuses',
+            'total_sum',
+            'total_sum_current_month',
+            'total_sum_today'
+        ));
     }
 
     public function create()
@@ -60,8 +123,21 @@ class OrderController extends Controller
             ->with('success', 'Заказ успешно создан');
     }
 
+    public function show(Request $request, Order $order)
+    {
+        return view('admin.orders.show', [
+            'order' => $order,
+            'colors' => GiftCardValue::whereNotNull('color_card')->get(),
+            'categories' => Category::all(),
+            'products' => Product::all()
+        ]);
+    }
+
     public function edit(Order $order)
     {
+        if ($order->isCompleted())
+            return redirect()->route('admin.orders.show', $order);
+
         return view('admin.orders.edit', [
             'order' => $order,
         ]);
@@ -69,6 +145,9 @@ class OrderController extends Controller
 
     public function update(Request $request, Order $order)
     {
+        if ($order->isCompleted())
+            return back()->with('error', 'Заказ уже завершен');
+
         $data = $request->post();
         $data['as_delivery_address'] = $request->boolean('as_delivery_address');
         $data['gift_box'] = $request->boolean('gift_box');
@@ -104,7 +183,11 @@ class OrderController extends Controller
 
     public function changeStatus(Request $request, Order $order)
     {
-        return $order->update(['status_id' => $request->post('status_id')]);
+        if ($order->isCompleted())
+            return ['completed' => true];
+
+        $order->update(['status_id' => $request->post('status_id')]);
+        return ['completed' => $order->isCompleted()];
     }
 
 }

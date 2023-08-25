@@ -312,7 +312,7 @@ class CartService
             $user = Auth::user();
 
             if ($this->isUsedGiftCardDiscount())
-                $user->activeGiftCard->decrement('balance', $this->getTotalSum() - $order->total_sum);
+                $user->activeGiftCard->decrement('balance', $this->getUsedGiftCardDiscount());
 
             if ($this->isUsedBonuses())
                 $user->decrement('points', $this->getUsedBonusesDiscount());

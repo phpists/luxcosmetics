@@ -15,9 +15,16 @@ class Order extends Model
     const DELIVERY_TYPE_STANDARD = 'standard';
     const DELIVERY_TYPE_EXPRESS = 'express';
 
+    const ALL_DELIVERY_TYPES = [
+        self::DELIVERY_TYPE_STANDARD => 'Стандартная',
+        self::DELIVERY_TYPE_EXPRESS => 'Экспресс'
+    ];
+
 
 
     const STATUS_NEW = 1;
+    const STATUS_CANCELLED = 2;
+    const STATUS_COMPLETED = 3;
 
 
     protected $fillable = [
@@ -54,6 +61,23 @@ class Order extends Model
         });
 
     }
+
+
+    public function scopeCompleted($query)
+    {
+        return $query->where('status_id', self::STATUS_COMPLETED);
+    }
+
+    public function scopeCurrentMonth($query)
+    {
+        return $query->where('created_at', '>=', Carbon::now()->startOfMonth());
+    }
+
+    public function scopeToday($query)
+    {
+        return $query->where('created_at', '>=', Carbon::now()->startOfDay());
+    }
+
 
     public function orderProducts()
     {
@@ -100,6 +124,16 @@ class Order extends Model
     public function getPrettyCreatedAtAttribute()
     {
         return Carbon::parse($this->created_at)->format('d.m.Y');
+    }
+
+    public function isCompleted()
+    {
+        return $this->status_id == self::STATUS_COMPLETED;
+    }
+
+    public function getTotalDiscount()
+    {
+        return $this->gift_card_discount + $this->bonuses_discount + $this->promo_code_discount;
     }
 
 
