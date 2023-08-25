@@ -29,6 +29,8 @@ $(document).ready(function () {
             success: function (response) {
                 $('#table').html(response.commentAjaxHtml);
                 $('#pagination').html(response.paginateHtml);
+                addStatusChange();
+                $('.selectpicker').selectpicker();
                 window.history.pushState(null, null, url);
             }
         });
@@ -46,7 +48,7 @@ $(document).ready(function () {
         request();
     });
 
-    $(document).ready(function() {
+    function addStatusChange() {
         $('.statusSelect').on('change', function() {
             const itemId = $(this).data('item-id');
             const selectedValue = $(this).val();
@@ -70,6 +72,10 @@ $(document).ready(function () {
                 }
             });
         });
+    }
+
+    $(document).ready(function() {
+        addStatusChange()
     });
 
 

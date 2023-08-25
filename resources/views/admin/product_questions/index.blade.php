@@ -177,7 +177,7 @@
                     $('#table-container').html(response.tableHtml);
                     $('#pagination').html(response.paginateHtml);
                     addStatusChange()
-
+                    $('.selectpicker').selectpicker();
                     window.history.pushState(null, null, url);
                 }
             });

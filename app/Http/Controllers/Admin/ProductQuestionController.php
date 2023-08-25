@@ -32,7 +32,10 @@ class ProductQuestionController extends Controller
         if ($request->product_id) {
             $questions = $questions->where('product_id', $request->product_id);
         }
-        $questions = $questions->with('messages')->with('product')->paginate(20);
+        $questions = $questions->with('messages')
+            ->orderBy('created_at', 'desc')
+            ->with('product')
+            ->paginate(20);
         if ($request->ajax()) {
             $tableHtml = view('admin.product_questions.parts.table', ['questions' => $questions])->render();
             $params = $request->all();

@@ -21,12 +21,15 @@ $status_list = [
                 #
             </th>
             <th class="pr-0 text-center">
+                Пользователь
+            </th>
+            <th class="pr-0 text-center">
                 Вопрос
             </th>
-            <th class="text-center pr-0">Название товара</th>
             <td class="text-center pr-0">
                 Статус
             </td>
+            <th class="text-center pr-0">Название товара</th>
             <th class="pr-0 text-center">
                 Действия
             </th>
@@ -46,15 +49,14 @@ $status_list = [
                 <td class="text-center pl-0">
                     {{ $question->id }}
                 </td>
-                <td class="pr-0">
-                    {{ $question->messages->first()?->message }}
-                </td>
                 <td class="text-center pr-0">
-                    <a href="{{route('products.product', $question->product?->alias )}}" target="_blank">{{ $question->product?->title }}</a>
+                    {{ $question->messages->first()?->email }}
                 </td>
-{{--                <td class="text-center pr-0">--}}
-{{--                    {{ $question->updated_at->format('m Y, H:i:s') }}--}}
-{{--                </td>--}}
+                <td class="pr-0">
+                    <a href="{{ route('admin.product_question.view', $question->id) }}">
+                        {{ $question->messages->first()?->message }}
+                    </a>
+                </td>
                 <td class="text-center pr-0"> <!-- TODO: вивести статуси -->
                     <div class="form-group row">
                         <div class="col-12">
@@ -65,8 +67,13 @@ $status_list = [
                             </select>
                         </div>
                     </div>
-
                 </td>
+                <td class="text-center pr-0">
+                    <a href="{{route('products.product', $question->product?->alias )}}" target="_blank">{{ $question->product?->title }}</a>
+                </td>
+{{--                <td class="text-center pr-0">--}}
+{{--                    {{ $question->updated_at->format('m Y, H:i:s') }}--}}
+{{--                </td>--}}
                 <td class="text-center pr-0">
                     {{--                                            <i class="handle flaticon2-sort" style="cursor:pointer;"></i>--}}
                     <a href="{{ route('admin.product_question.view', $question->id) }}"

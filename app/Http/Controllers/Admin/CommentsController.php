@@ -24,8 +24,14 @@ class CommentsController extends Controller
 
         $comment = $comment->orderBy('created_at', 'desc')->paginate($request->paginate ?? 100);
 
+        $statusOptions = [
+            'Новый' => 'Новый',
+            'Опубликовать' => 'Опубликован',
+            'Отменить' => 'Отменён'
+        ];
+
         if ($request->ajax()) {
-            $commentAjaxHtml = view('admin.comments.parts.table', ['commentAjax' => $comment])->render();
+            $commentAjaxHtml = view('admin.comments.parts.table', ['comment' => $comment, 'statusOptions' => $statusOptions])->render();
             $paginateHtml = view('admin.comments.parts.paginate', ['commentAjax' => $comment, 'params' => $request->all()])->render();
 
             return response()->json([
@@ -33,12 +39,6 @@ class CommentsController extends Controller
                 'paginateHtml' => $paginateHtml,
             ]);
         }
-
-        $statusOptions = [
-            'Новый' => 'Новый',
-            'Опубликовать' => 'Опубликован',
-            'Отменить' => 'Отменён'
-        ];
 
         return response()->view('admin.comments.index', compact('comment', 'statusOptions'));
     }
