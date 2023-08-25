@@ -277,6 +277,7 @@
         </div>
     </section>
     <section class="product-tabs">
+        @if($product->brand->hide !== 'on')
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
@@ -657,6 +658,7 @@
                 </div>
             </div>
         </div>
+                            @endif
     </section>
     <section class="products-tabs">
         <div class="container">

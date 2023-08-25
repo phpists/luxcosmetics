@@ -43,8 +43,8 @@
                                 <span class="svg-icon svg-icon-md"><i class="las la-trash"></i></span>Удалить
                             </button>
                         </div>
-                        
-                        
+
+
                     </div>
                 </div>
                 <div class="card-body pb-3">
@@ -184,7 +184,7 @@
                 }
             });
         }
-        
+
         function deleteImage() {
             let brandId = $('#updateId').val();
             console.log(brandId)

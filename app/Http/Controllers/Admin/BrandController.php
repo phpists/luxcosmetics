@@ -25,6 +25,8 @@ class BrandController extends Controller
         $brand = Brand::query()->findOrFail($request->id);
         $image = $request->image;
         $data = $request->all();
+        $hideValue = $request->input('hide', null);
+
         if($image !== null) {
             FileService::removeFile('uploads', 'brands', $brand->image);
             $image = FileService::saveFile('uploads', 'brands', $image);
@@ -33,6 +35,11 @@ class BrandController extends Controller
         else {
             $data['image'] = $brand->image;
         }
+        if ($hideValue !== "on") {
+            $hideValue = null;
+            $brand->update(['hide' => $hideValue]);
+        }
+
         $brand->update($data);
         return redirect()->back()->with('success', 'Бренд успешно создан');
     }

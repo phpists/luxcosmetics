@@ -27,10 +27,10 @@
                                         </label>
                                         <label class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" type="button" onclick="deleteImage()" data-toggle="tooltip" title="" data-original-title="Remove avatar">
                                             <i class="fa fa-trash icon-sm text-muted"></i>
-                                        </label> 
+                                        </label>
                                     </div>
                                 </div>
-                                
+
                                 <div class="col">
                                     <div class="col">
                                         <div class="form-group w-100">
@@ -42,24 +42,28 @@
                                             <div class="col-sm-12">
                                                 <input type="text" class="form-control" id="updateLink" name="link" required>
                                             </div>
+                                            <br>
+                                            <div class="checkbox-inline">
+                                                <label class="col-sm-12 checkbox">
+                                                    <input class="form-control" id="updateHide" type="checkbox" name="hide" />
+                                                    <span></span>
+                                                    Отключить комментарии
+                                                </label>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-
                 </div>
-
                 <div class="modal-footer">
                     <button type="button" class="btn btn-lg btn-light-primary font-weight-bold" data-dismiss="modal">
                         Закрити
                     </button>
                     <button type="submit" class="btn btn-lg btn-primary mr-2">Зберегти</button>
                 </div>
-
             </form>
-
         </div>
     </div>
 </div>
