@@ -401,6 +401,7 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function 
     // Gift Cards
     Route::resource('gift_cards', \App\Http\Controllers\Admin\GiftCardController::class, ['as' => 'admin']);
     Route::put('gift_card/{gift_card}/deactivate', [\App\Http\Controllers\Admin\GiftCardController::class, 'deactivate'])->name('admin.gift_cards.deactivate');
+    Route::get('/user/{email}', [\App\Http\Controllers\Admin\GiftCardController::class, 'showByEmail'])->name('admin.user.showByEmail');
 
     // PromoCodes
     Route::resource('promo_codes', \App\Http\Controllers\Admin\PromoCodeController::class, ['as' => 'admin']);

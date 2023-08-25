@@ -317,7 +317,7 @@
                         </li>
 
                         <li class="menu-item menu-item-submenu
-                        {{ (request()->routeIs('admin.chats') || request()->routeIs('admin.feedback-reason.index') || request()->routeIs('admin.users')) ? 'menu-item-open' : '' }}"
+                        {{ (request()->routeIs('admin.chats') || request()->routeIs('admin.feedback-reason.index')) ? 'menu-item-open' : '' }}"
                             aria-haspopup="true" data-menu-toggle="hover">
                             <a href="javascript:;" class="menu-link menu-toggle">
                                 <i class="fas flaticon2-copy menu-icon"></i>
@@ -352,20 +352,7 @@
                                 </ul>
                             </div>
 
-                            <div class="menu-submenu" style="" kt-hidden-height="160">
-                                <i class="menu-arrow"></i>
-                                <ul class="menu-subnav">
-                                    <li class="menu-item {{ request()->routeIs('admin.users') ? 'menu-item-active' : '' }}"
-                                        aria-haspopup="true">
-                                        <a href="{{route('admin.users')}}" class="menu-link">
-                                            <i class="menu-bullet menu-bullet-dot">
-                                                <span></span>
-                                            </i>
-                                            <span class="menu-text">Пользователи</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
+
                         </li>
 
                         <li class="menu-item menu-item-submenu {{(request()->routeIs('admin.subscribers.index')
@@ -452,8 +439,15 @@
                             <h4 class="menu-text">Настройки</h4>
                             <i class="menu-icon ki ki-bold-more-hor icon-md"></i>
                         </li>
+                        <li class="menu-item {{ request()->routeIs('admin.users') ? 'menu-item-active' : '' }}"
+                            aria-haspopup="true">
+                            <a href="{{route('admin.users')}}" class="menu-link">
+                                <i class="far fa-user menu-icon"></i>
+                                <span class="menu-text">Пользователи</span>
+                            </a>
+                        </li>
                         <li class="menu-item menu-item-submenu
-                        {{ (request()->routeIs('admin.chats') || request()->routeIs('admin.feedback-reason.index') || request()->routeIs('admin.users')) ? 'menu-item-open' : '' }}"
+                        {{ (request()->routeIs('admin.chats') || request()->routeIs('admin.feedback-reason.index')) ? 'menu-item-open' : '' }}"
                             aria-haspopup="true" data-menu-toggle="hover">
                             <a href="javascript:;" class="menu-link menu-toggle">
                                 <i class="fas flaticon2-copy menu-icon"></i>

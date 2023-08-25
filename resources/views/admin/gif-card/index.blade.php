@@ -127,7 +127,7 @@
                                                                 @foreach($items as $item)
                                                                     <tr>
                                                                         <form action="{{ route('admin.updateFixPrice', $item->id) }}" method="post">
-                                                                            <td class="handle text-center pl-0" style="cursor: pointer; max-width: 50px;">
+                                                                            <td class="handle text-center pl-0" style="cursor: pointer; max-width: 75px;">
                                                                                 <input type="number" value="{{ $item->fix_price ?? '' }}" class="form-control" name="fix_price">
                                                                             </td>
                                                                             <td class="text-center">

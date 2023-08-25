@@ -38,7 +38,7 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label>Категорії</label>
+                                <label>Категории</label>
                                 <select class="form-control select2" id="kt_select2_4"
                                         name="category_id[]" required multiple>
                                     @foreach($categories as $category)

@@ -5,10 +5,12 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\GiftCard;
 use App\Models\GiftCardValue;
+use App\Models\User;
 use App\Services\FileService;
 use App\Services\GiftCardService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
 class GiftCardController extends Controller
@@ -59,4 +61,15 @@ class GiftCardController extends Controller
         return back()->with('success', 'Подарочная карта была деактивированна');
     }
 
+    public function showByEmail($email)
+    {
+        Log::alert($email);
+        $user = User::where('email', $email)->first();
+
+        if ($user) {
+            return redirect()->route('admin.user.show', ['id' => $user->id]);
+        } else {
+            return view('user.notFound');
+        }
+    }
 }

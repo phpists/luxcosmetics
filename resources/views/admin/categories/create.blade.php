@@ -54,8 +54,8 @@
                                         <div class="form-group">
                                             <label>Статус</label>
                                             <select class="form-control status" id="kt_select2_1" name="status">
-                                                <option value="1">Активний</option>
-                                                <option value="0">Неактивний</option>
+                                                <option value="1">Активный</option>
+                                                <option value="0">Неактивный</option>
                                             </select>
                                         </div>
                                     </div>

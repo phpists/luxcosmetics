@@ -79,7 +79,7 @@
                                     </td>
                                     <td class="text-center">
                                         <span class="text-dark-75 d-block font-size-lg">
-                                            {{ $giftCard->buyer->email ?? 'UNDEFINED' }}
+                                            <a href="{{ route('admin.user.showByEmail', $giftCard->buyer->email) }}">{{ $giftCard->buyer->email ?? 'UNDEFINED' }}</a>
                                         </span>
                                     </td>
                                     <td class="text-center">

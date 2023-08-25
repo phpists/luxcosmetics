@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('name')->comment('Назва бренду');
             $table->string('image')->nullable()->comment('Изображения бренду');
             $table->string('link')->nullable()->comment('Ссылка бренда');
+            $table->string('hide')->comment('Щоб приховувати написання коментарів даного бренду');
         });
     }
 
