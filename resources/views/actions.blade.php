@@ -41,63 +41,7 @@
 {{--                                <li><a href="">Ароматы для дома</a></li>--}}
                             </ul>
                             <div class="filters" id="filters">
-
-                                <form id="filterForm" action="{{ route($currentRoute, request()->all()) }}">
-
-                                    <input type="hidden" name="sort">
-
-                                    <div class="filters__close"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#close')}}"></use></svg></div>
-                                    <div class="filters__hdr">
-                                        <div class="filters__title">Сортировать по</div>
-                                        <a href="{{ route($currentRoute, request()->all()) }}" class="filters__btn">Сбросить все</a>
-                                    </div>
-                                    <div class="filters__wrapper">
-                                        <div class="filters__item filter">
-                                            <div class="filter__title">Цена <svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#arrow')}}"></use></svg></div>
-                                            <div class="filter__block">
-                                                <div class="filter__wrap">
-                                                    <div class="filter__range" id="slider-range"></div>
-                                                    <div class="filter__row">
-                                                        <div class="filter__col">
-                                                            <span>от</span>
-                                                            <input type="number" name="price[from]" class="filter__input" id="amount" value="{{ request()->input('price.from') ?? \App\Services\CatalogService::PRICE_FROM }}">
-                                                        </div>
-                                                        <div class="filter__col">
-                                                            <span>до</span>
-                                                            <input type="number" name="price[to]" class="filter__input" id="amount2" value="{{ request()->input('price.to') ?? \App\Services\CatalogService::PRICE_TO }}">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        @foreach($categories as $category)
-                                            @foreach($category->filter_properties as $category_property)
-                                                <div class="filters__item filter">
-                                                    <div class="filter__title">{{ $category_property->name }} {{ isset($category_property->measure) ? '('.$category_property->measure.')' : '' }} <svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#arrow')}}"></use></svg></div>
-                                                    <div class="filter__block">
-                                                        <div class="filter__wrap filter__scroll">
-                                                            @foreach($category_property->values as $property_value)
-                                                                <label class="checkbox">
-                                                                    <input type="checkbox" name="properties[{{ $category_property->id }}][]" value="{{ $property_value->id }}" @if(is_array(request()->input("properties.".$category_property->id)) && in_array($property_value->id, request()->input("properties.".$category_property->id))) checked @endif/>
-                                                                    <div class="checkbox__text">{{ $property_value->value }}</div>
-                                                                </label>
-                                                            @endforeach
-                                                        </div>
-                                                        @if($category_property->values->count() > 3)
-                                                            <button class="filter__all">Показать все</button>
-                                                        @endif
-                                                    </div>
-                                                </div>
-                                            @endforeach
-                                        @endforeach
-                                    </div>
-                                    <div class="filters__ftr">
-                                        <button type="submit" class="filters__btn">Показать</button>
-                                        <a href="{{ route($currentRoute) }}" class="filters__btn">Сбросить</a>
-                                    </div>
-
-                                </form>
-
+                                @include('categories.parts.filter')
                             </div>
 
                             <div class="category-page__image"><img src="" alt=""></div>
