@@ -47,6 +47,7 @@ class Order extends Model
         'gift_card_discount',
         'bonuses_discount',
         'promo_code_discount',
+        'bonuses_given'
     ];
 
 

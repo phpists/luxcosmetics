@@ -40,35 +40,6 @@ class CartService
 
 
 
-    private function initializeDiscounts()
-    {
-        if (Auth::check()) {
-            $user = Auth::user();
-            $this->checkDiscount();
-
-            if ($user->hasGiftCardBalance()) {
-                $this->discounts['gift_card_balance'] = [
-                    'title' => 'Баланс подарочной карты',
-                    'amount' => $this->getUsedGiftCardDiscount()
-                ];
-            }
-
-            if ($this->isUsedPromo()) {
-                $this->discounts['promo_code'] = [
-                    'title' => "Промокод {$this->getPromoCode()}",
-                    'amount' => $this->getUsedPromoDiscount()
-                ];
-            }
-
-            if ($this->isUsedBonuses()) {
-                $this->discounts['bonuses'] = [
-                    'title' => 'Бонусные баллы',
-                    'amount' => $this->getUsedBonusesDiscount()
-                ];
-            }
-        }
-    }
-
     public function getAllItems()
     {
         return session()->get(self::SESSION_KEY, []);
@@ -127,20 +98,49 @@ class CartService
 
     public function getTotalSumWithDiscounts()
     {
-        $totalSum = $this->getTotalSum();
-        $this->initializeDiscounts();
+        $total_sum = $this->getTotalSum();
+
+        if (Auth::check()) {
+            $user = Auth::user();
+            $this->checkDiscount();
+
+            if ($user->hasGiftCardBalance()) {
+                $discount = $this->getUsedGiftCardDiscount($total_sum);
+                $this->discounts['gift_card_balance'] = [
+                    'title' => 'Баланс подарочной карты',
+                    'amount' => $discount
+                ];
+                $total_sum -= $discount;
+            }
+
+            if ($this->isUsedPromo()) {
+                $discount = $this->getUsedPromoDiscount($total_sum);
+                $this->discounts['promo_code'] = [
+                    'title' => "Промокод {$this->getPromoCode()}",
+                    'amount' => $discount
+                ];
+                $total_sum -= $discount;
+            }
+
+            if ($this->isUsedBonuses()) {
+                $this->discounts['bonuses'] = [
+                    'title' => 'Бонусные баллы',
+                    'amount' => $this->getUsedBonusesDiscount()
+                ];
+            }
+        }
 
         if (isset($this->discounts['gift_card_balance']))
-            $totalSum = $totalSum - $this->discounts['gift_card_balance']['amount'];
+            $total_sum = $total_sum - $this->discounts['gift_card_balance']['amount'];
 
         if (isset($this->discounts['promo_code']))
-            $totalSum = $totalSum - $this->discounts['promo_code']['amount'];
+            $total_sum = $total_sum - $this->discounts['promo_code']['amount'];
 
         if (isset($this->discounts['bonuses']))
-            $totalSum = $totalSum - $this->discounts['bonuses']['amount'];
+            $total_sum = $total_sum - $this->discounts['bonuses']['amount'];
 
 
-        return round($totalSum, 2) ?? 0;
+        return round($total_sum, 2) ?? 0;
     }
 
     public function getBonusAmount()
@@ -283,18 +283,23 @@ class CartService
         $order_data['city'] = $address['city'];
         $order_data['region'] = $address['region'];
         $order_data['address'] = $address['address'];
+        $order_data['gift_card_discount'] = null;
+        $order_data['bonuses_discount'] = null;
         if ($this->isUsedGiftCardDiscount()) {
             $order_data['gift_card_discount'] = $this->getUsedGiftCardDiscount();
             $order_data['gift_card_id'] = \auth()->user()->activeGiftCard->id;
-        }
-        if ($this->isUsedBonuses()) {
-            $order_data['bonuses_discount'] = $this->getUsedBonusesDiscount();
-            $order_data['is_used_bonuses'] = 1;
         }
         if ($this->isUsedPromo()) {
             $order_data['promo_code_discount'] = $this->getUsedPromoDiscount();
             $order_data['promo_code_id'] = $this->getPromo()->id;
         }
+        if ($this->isUsedBonuses()) {
+            $order_data['bonuses_discount'] = $this->getUsedBonusesDiscount();
+            $order_data['is_used_bonuses'] = 1;
+        }
+
+
+        $order_data['bonuses_given'] = $this->getBonusAmount(); // вказуємо скільки бонусів користувач отримає
 
         try {
             $order = Order::create($order_data);
@@ -320,10 +325,6 @@ class CartService
             if ($this->isUsedPromo())
                 $this->getPromo()->increment('uses');
 
-//            $user->update([ // TODO: перенести це на етап, коли замовлення буде позначено як "ЗАВЕРШЕНЕ"
-//                'points' => $this->getBonusAmount()
-//            ]);
-
             session()->forget(self::SESSION_KEY);
             session()->forget(array_keys(self::ALL_KEYS));
             $this->dropBonuses();
@@ -346,11 +347,13 @@ class CartService
         return false;
     }
 
-    public function getUsedGiftCardDiscount(): int
+    public function getUsedGiftCardDiscount($total_sum = null): int
     {
         if (Auth::check()) {
             $user = Auth::user();
-            $maxDiscount = min($this->getTotalSum(), $user->activeGiftCard->balance);
+            if (!$total_sum)
+                $total_sum = $this->getTotalSum();
+            $maxDiscount = min($total_sum, $user->activeGiftCard->balance);
             return $maxDiscount;
         }
         return 0;
@@ -436,7 +439,7 @@ class CartService
         return PromoCode::where('code', $this->getPromoCode())->first();
     }
 
-    public function getUsedPromoDiscount()
+    public function getUsedPromoDiscount($total_sum = null)
     {
         $promoCode = $this->getPromo();
         $amount = 0;
@@ -444,10 +447,11 @@ class CartService
         if ($promoCode->amount) {
             $amount = $promoCode->amount;
         } elseif ($promoCode->percent) {
-            $totalSum = $this->getTotalSumWithDiscounts();
+            if (!$total_sum)
+                $total_sum = $this->getTotalSum();
 
             if ($promoCode->type == PromoCode::TYPE_CART) {
-                $amount = $totalSum * ($promoCode->percent / 100);
+                $amount = $total_sum * ($promoCode->percent / 100);
             } elseif ($promoCode->type == PromoCode::TYPE_CATEGORY) {
                 $category_ids = Category::getChildIds($promoCode->category_id);
                 $products = $this->getAllProducts($category_ids);

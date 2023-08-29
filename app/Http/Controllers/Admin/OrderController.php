@@ -69,9 +69,10 @@ class OrderController extends Controller
             $query->where('created_at', '<=', $request->get('date_to'));
 
         $orders = $query->paginate($request->get('per_page') ?? 10);
+        $current_sum = $query->sum('total_sum');
 
         if ($request->ajax())
-            return view('admin.orders.includes.table', compact('orders', 'statuses'))->render();
+            return view('admin.orders.includes.table', compact('orders', 'statuses', 'current_sum'))->render();
 
         $total_sum = Order::completed()->sum('total_sum');
         $total_sum_current_month = Order::currentMonth()->completed()->sum('total_sum');
@@ -82,7 +83,8 @@ class OrderController extends Controller
             'statuses',
             'total_sum',
             'total_sum_current_month',
-            'total_sum_today'
+            'total_sum_today',
+            'current_sum'
         ));
     }
 
@@ -187,6 +189,9 @@ class OrderController extends Controller
             return ['completed' => true];
 
         $order->update(['status_id' => $request->post('status_id')]);
+        if ($order->isCompleted())
+            $order->user->increment('points', $order->bonuses_given);
+
         return ['completed' => $order->isCompleted()];
     }
 

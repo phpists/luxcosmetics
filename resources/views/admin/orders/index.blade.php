@@ -33,7 +33,7 @@
 
 
                 <div class="row">
-                    <div class="col-xl-4">
+                    <div class="col-xl-3">
                         <!--begin::Stats Widget 25-->
                         <div class="card card-custom card-stretch gutter-b">
                             <!--begin::Body-->
@@ -61,7 +61,7 @@
                         </div>
                         <!--end::Stats Widget 25-->
                     </div>
-                    <div class="col-xl-4">
+                    <div class="col-xl-3">
                         <!--begin::Stats Widget 26-->
                         <div class="card card-custom card-stretch gutter-b">
                             <!--begin::ody-->
@@ -89,7 +89,7 @@
                         </div>
                         <!--end::Stats Widget 26-->
                     </div>
-                    <div class="col-xl-4">
+                    <div class="col-xl-3">
                         <!--begin::Stats Widget 27-->
                         <div class="card card-custom card-stretch gutter-b">
                             <!--begin::Body-->
@@ -112,6 +112,27 @@
                                 </div>
                                 <span class="card-title font-weight-bolder text-dark-75 font-size-h2 mb-0 mt-6 d-block">₽{{ $total_sum_today }}</span>
                                 <span class="font-weight-bold text-muted  font-size-sm">Общая сумма завершенных заказов за сегодня</span>
+                            </div>
+                            <!--end::Body-->
+                        </div>
+                        <!--end::Stats Widget 27-->
+                    </div>
+                    <div class="col-xl-3">
+                        <!--begin::Stats Widget 27-->
+                        <div class="card card-custom card-stretch gutter-b">
+                            <!--begin::Body-->
+                            <div class="card-body">
+                                <div class="d-flex">
+<span class="svg-icon svg-icon-primary svg-icon-2x"><!--begin::Svg Icon | path:/var/www/preview.keenthemes.com/metronic/releases/2021-05-14-112058/theme/html/demo1/dist/../src/media/svg/icons/Text/Filter.svg--><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <rect x="0" y="0" width="24" height="24"/>
+        <path d="M5,4 L19,4 C19.2761424,4 19.5,4.22385763 19.5,4.5 C19.5,4.60818511 19.4649111,4.71345191 19.4,4.8 L14,12 L14,20.190983 C14,20.4671254 13.7761424,20.690983 13.5,20.690983 C13.4223775,20.690983 13.3458209,20.6729105 13.2763932,20.6381966 L10,19 L10,12 L4.6,4.8 C4.43431458,4.5790861 4.4790861,4.26568542 4.7,4.1 C4.78654809,4.03508894 4.89181489,4 5,4 Z" fill="#000000"/>
+    </g>
+</svg><!--end::Svg Icon--></span>
+                                    <span class="card-title text-dark-75 font-size-h3 mb-0 ml-3">Фильтр</span>
+                                </div>
+                                <span class="card-title font-weight-bolder text-dark-75 font-size-h2 mb-0 mt-6 d-block">₽<span id="filteredTotalSum" class="card-title font-weight-bolder text-dark-75 font-size-h2 mb-0 mt-6">{{ $current_sum }}</span></span>
+                                <span class="font-weight-bold text-muted  font-size-sm">Общая сумма отфильтрованных заказов</span>
                             </div>
                             <!--end::Body-->
                         </div>
@@ -266,8 +287,8 @@
 
                         $(document).on('pjax:end', function(e) {
                             $('.selectpicker').selectpicker()
-                            console.log($('#filter [name="per_page"]').val())
                             $('#paginate').val($('#filter [name="per_page"]').val())
+                            $('#filteredTotalSum').text($('#filteredTotalSumValud').val())
                         })
 
                         $(document).on('change', '#paginate', function (e) {

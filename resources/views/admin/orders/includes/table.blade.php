@@ -1,3 +1,4 @@
+<input type="hidden" id="filteredTotalSumValud" value="{{ $current_sum }}">
 <!--begin::Table-->
 <div class="table-responsive">
     <table class="table table-head-custom table-vertical-center">
