@@ -59,11 +59,8 @@
                         </ul>
                     </div>
                     <div class="card-toolbar" style="gap: 10px; margin-bottom: 10px">
-                        @if($order->isCompleted())
-                            <a href="{{ url()->previous() }}" class="btn btn-primary">Назад</a>
-                        @else
+                        <a href="{{ url()->previous() }}" class="btn btn-secondary btn-sm">Назад</a>
                         <button type="submit" form="orderForm" class="btn btn-primary">Сохранить</button>
-                        @endif
                     </div>
                 </div>
                 <div class="card-body">
