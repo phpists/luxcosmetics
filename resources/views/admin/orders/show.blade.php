@@ -49,6 +49,7 @@
                     <!-- begin: Invoice header-->
                     <div class="row justify-content-center pt-8 px-8 pt-md-27 px-md-0">
                         <div class="col-md-10">
+                            <a class="btn btn-secondary btn-sm mb-5" href="{{ url()->previous() }}">Вернутся назад</a>
                             <div class="d-flex justify-content-between pb-10 pb-md-20 flex-column flex-md-row">
                                 <h1 class="display-4 font-weight-boldest mb-10">Заказ №{{ $order->id }}</h1>
                                 <div class="d-flex flex-column align-items-md-end px-0">
@@ -165,9 +166,9 @@
                                 <table class="table">
                                     <thead>
                                     <tr>
-                                        <th class="font-weight-bold text-muted  text-uppercase">Сумма заказа</th>
-                                        <th class="font-weight-bold text-muted  text-uppercase">Сумма скидок</th>
-                                        <th class="font-weight-bold text-muted  text-uppercase text-right">К оплате</th>
+                                        <th class="font-weight-bold text-muted text-uppercase">Сумма заказа</th>
+                                        <th class="font-weight-bold text-muted text-uppercase">Сумма скидок</th>
+                                        <th class="font-weight-bold text-muted text-uppercase text-right">К оплате</th>
                                     </tr>
                                     </thead>
                                     <tbody>
