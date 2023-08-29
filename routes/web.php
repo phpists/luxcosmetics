@@ -397,6 +397,7 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function 
     Route::post('product_questions/answer', [\App\Http\Controllers\Admin\ProductQuestionController::class, 'answer'])->name('admin.product_question.answer');
     Route::put('product_questions/update', [\App\Http\Controllers\Admin\ProductQuestionController::class, 'update'])->name('admin.product_question.update');
     Route::post('product_question/update_status', [\App\Http\Controllers\Admin\ProductQuestionController::class, 'updateStatus'])->name('admin.product_question.update_status');
+    Route::post('product_question/update_bulk_status', [\App\Http\Controllers\Admin\ProductQuestionController::class, 'updateBulkStatus'])->name('admin.product_question.update_bulk_status');
     Route::get('product_questions/{id}/delete', [\App\Http\Controllers\Admin\ProductQuestionController::class, 'delete'])->name('admin.product_question.delete');
     // Gift Cards
     Route::resource('gift_cards', \App\Http\Controllers\Admin\GiftCardController::class, ['as' => 'admin']);

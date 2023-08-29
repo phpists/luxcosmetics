@@ -7,6 +7,7 @@ use App\Models\FeedbackChat;
 use App\Models\Product;
 use App\Models\ProductQuestion;
 use App\Models\ProductQuestionMessage;
+use App\Services\SiteService;
 use Illuminate\Http\Request;
 
 class ProductQuestionController extends Controller
@@ -92,5 +93,21 @@ class ProductQuestionController extends Controller
         return response()->json([
             'success' => true
         ]);
+    }
+
+    public function updateBulkStatus(Request $request) {
+        $question_ids = $request->checkbox;
+        ProductQuestion::query()->whereIn('id', $question_ids)->update([
+            'status' => $request->status
+        ]);
+        if ($request->ajax()) {
+            return response()->json([
+                'message' => 'Статус успешно обновлен',
+                'title' => SiteService::getProductQuestionStatus($request->status)
+            ]);
+        }
+        else {
+            return redirect()->route('admin.chats')->with('success', 'Статус тикета обновлен');
+        }
     }
 }

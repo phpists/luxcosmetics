@@ -102,7 +102,7 @@
 
             $.ajax({
                 type: "POST",
-                url: '{{route('admin.chats.updateStatus')}}',
+                url: '{{route('admin.product_question.update_bulk_status')}}',
                 data: {
                     csrf: csrf,
                     checkbox: checkbox,
@@ -114,8 +114,7 @@
                     let message = response.message;
 
                     checkbox.forEach(function (id) {
-                        $('#category_' + id).find('.status').text(title);
-                        $('.checkbox-item').prop('checked', false);
+                        $('#category_' + id).find('.status_select').val("3").change();
                     });
                     toastr.success(message);
                 }
