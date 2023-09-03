@@ -1,5 +1,5 @@
 <!-- Modal -->
-<div class="modal fade" id="telephonModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalSizeSm" aria-hidden="true">
+<div class="modal fade" id="phoneModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalSizeSm" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -17,8 +17,8 @@
                             @method('PUT')
                             <input id="updateId" type="hidden" name="id">
                             <div class="form-group">
-                                <label for="updateLink" class="col-form-label font-weight-bold">Номер телефона</label>
-                                <input placeholder="Ваш номер" type="text" class="form-control" name="phone" id="phone" required>
+                                <label for="phone" class="col-form-label font-weight-bold">Номер телефона</label>
+                                <input placeholder="Ваш номер" type="text" class="form-control" name="phone" value="{{$phone[0]->phone}}" id="phone" required>
                             </div>
                             <div class="modal-fade">
                                 <button type="submit" class="btn btn-lg btn-primary mr-2">Сохранить</button>

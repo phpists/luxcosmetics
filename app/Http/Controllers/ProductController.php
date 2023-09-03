@@ -91,7 +91,9 @@ class ProductController extends Controller
         $has_more_comments = $comments->hasMorePages();
 
 
-        $ratings = Comments::where('product_id', $product->id)->pluck('rating');
+        $ratings = Comments::where('product_id', $product->id)
+            ->where('status', 'Опубликовать')
+            ->pluck('rating');
         $averageRating = $ratings->avg();
 
         return view('products.product', compact('product', 'product_variations', 'articles',

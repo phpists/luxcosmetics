@@ -451,7 +451,7 @@
                             aria-haspopup="true" data-menu-toggle="hover">
                             <a href="javascript:;" class="menu-link menu-toggle">
                                 <i class="fas flaticon2-copy menu-icon"></i>
-                                <span class="menu-text">Коментарии/Вопросы</span>
+                                <span class="menu-text">Комментарии/Вопросы</span>
                                 <i class="menu-arrow"></i>
                             </a>
                             <div class="menu-submenu" style="" kt-hidden-height="160">

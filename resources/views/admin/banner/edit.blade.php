@@ -65,7 +65,8 @@
                                 <input type="hidden" name="id" value="{{ $item->id }}">
                                 <div class="row justify-content-start">
                                     <div class="form-group col">
-                                        <label>Изображение большое<strong>( > 768px )</strong></label>
+                                        <label>Для первого баннера<strong>( 2560px х 814px )</strong></label><br>
+                                        <label>Изображение большое<strong>( 1256px х 814px )</strong></label><br>
                                         <div class="col-auto ml-2">
                                             <div class="image-input image-input-outline" id="createImagePlugin" style="background-image: url('{{ asset('images/uploads/banner/' . $item->image) }}')">
                                                 <div class="image-input-wrapper" id="updateImageBackground"></div>
@@ -78,7 +79,7 @@
                                         </div>
                                     </div>
                                     <div class="form-group col">
-                                        <label>Изображение Среднее<strong>( > 576px и < 768px )</strong></label>
+                                        <label>Изображение Среднее<strong>( 1104px x 352px )</strong></label>
                                         <div class="col-auto ml-2">
                                             <div class="image-input image-input-outline" id="updateMediumImagePlugin" style="background-image: url('{{ asset('images/uploads/banner/' . $item->medium_img) }}')">
                                                 <div class="image-input-wrapper" id="updateMediumImageBackground"></div>
@@ -91,7 +92,7 @@
                                         </div>
                                     </div>
                                     <div class="form-group col">
-                                        <label>Изображение малое<strong>( < 576px )</strong></label>
+                                        <label>Изображение малое<strong>( 528px x 352px )</strong></label>
                                         <div class="col-auto ml-2">
                                             <div class="image-input image-input-outline" id="updateSmallImagePlugin" style="background-image: url('{{ asset('images/uploads/banner/' . $item->small_img) }}')">
                                                 <div class="image-input-wrapper" id="updateSmallImageBackground"></div>

@@ -249,7 +249,7 @@
                                 <form action="{{ route('admin.settings.phone.edit')}}" method="POST">
                                     @csrf
                                     <a href="javascript:;" class="btn btn-sm btn-clean btn-icon editSocial"
-                                       data-toggle="modal" data-target="#telephonModal"
+                                       data-toggle="modal" data-target="#phoneModal"
                                        data-id="">
                                         <i class="las la-edit"></i>
                                     </a>
@@ -376,7 +376,6 @@
 
         function loadModel() {
             let id = $(this).data('id');
-            console.log(id);
             $.ajax({
                 url: '{{ route('admin.settings.social.show') }}',
                 data: {
@@ -384,8 +383,8 @@
                 },
                 success: function (response) {
                     $('#updateId').val(id);
-
                     $('#updateLink').val(response.link);
+                    $('#phone').val(response.phone);
 
                     let icon_url = 'url("{{ asset('uploads/social/') }}/' + response.icon + '")'
                     $('#updateImageBackground').css('background-image', icon_url);

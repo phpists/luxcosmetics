@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\SocialMedia;
 use App\Services\FileService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class SocialMediaController extends Controller
 {
@@ -47,6 +48,7 @@ class SocialMediaController extends Controller
     {
         $id = $request->id;
         $social = SocialMedia::findOrFail($id);
+        Log::alert($social);
         return response()->json($social);
     }
 

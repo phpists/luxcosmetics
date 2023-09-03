@@ -28,26 +28,33 @@
         <div class="product__subtitle">{{$product->title}}</div>
     </div>
     <div class="product__btm">
-        <div class="product__reviews">
-            <div class="stars">
-                        <span class="stars__item is-active"><svg class="icon"><use
-                                    xlink:href="{{asset('images/dist/sprite.svg#start')}}"></use></svg></span>
-                <span class="stars__item is-active"><svg class="icon"><use
-                            xlink:href="{{asset('images/dist/sprite.svg#start')}}"></use></svg></span>
-                <span class="stars__item is-active"><svg class="icon"><use
-                            xlink:href="{{asset('images/dist/sprite.svg#start')}}"></use></svg></span>
-                <span class="stars__item"><svg class="icon"><use
-                            xlink:href="{{asset('images/dist/sprite.svg#start')}}"></use></svg></span>
-                <span class="stars__item"><svg class="icon"><use
-                            xlink:href="{{asset('images/dist/sprite.svg#start')}}"></use></svg></span>
-            </div>
-            @php
-                $comments = \App\Models\Comments::query()
-                ->where('product_id', $product->id)
-                ->where('status', 'Опубликовать');
+        @php
+            $comments = \App\Models\Comments::query()
+            ->where('product_id', $product->id)
+            ->where('status', 'Опубликовать');
 
-                $countComments = $comments->count();
-            @endphp
+             $ratings = \App\Models\Comments::where('product_id', $product->id)
+            ->where('status', 'Опубликовать')
+            ->pluck('rating');
+            $averageRating = $ratings->avg();
+            $countComments = $comments->count();
+        @endphp
+        <div class="product__reviews">
+            @if($countComments !== 0)
+                <div class="stars">
+                    @for ($i = 1; $i <= 5; $i++)
+                        @if ($i <= round($averageRating))
+                            <span class="stars__item is-active">
+                                            <svg class="icon"><use xlink:href="{{ asset('images/dist/sprite.svg#star') }}"></use></svg>
+                                        </span>
+                        @else
+                            <span class="stars__item">
+                                            <svg class="icon"><use xlink:href="{{ asset('images/dist/sprite.svg#star') }}"></use></svg>
+                                        </span>
+                        @endif
+                    @endfor
+                </div>
+            @endif
             <a href="{{ route('products.product', ['alias' => $product->alias]) }}">отзывы ({{$countComments}})</a>
         </div>
         <div class="product__ftrwrap">

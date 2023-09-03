@@ -63,6 +63,30 @@ class CommentsController extends Controller
                 ->orderBy('like', 'desc')
                 ->where('status', 'Опубликовать')
                 ->paginate(Comments::ITEMS_PER_PAGE);
+        } elseif ($sortOption === 'oldest') {
+            $comments = Comments::query()
+                ->select(['comments.*', 'comments_actions.is_like as is_like'])
+                ->leftJoin('comments_actions', function (JoinClause $join) use ($request) {
+                    $join
+                        ->on('comments_actions.record_id', '=', 'comments.id')
+                        ->where('comments_actions.client_ip', $request->ip())
+                        ->where('comments_actions.table_name', 'comments');
+                })
+                ->orderBy('like', 'asc')
+                ->where('status', 'Опубликовать')
+                ->paginate(Comments::ITEMS_PER_PAGE);
+        } elseif ($sortOption === 'down_rating') {
+            $comments = Comments::query()
+                ->select(['comments.*', 'comments_actions.is_like as is_like'])
+                ->leftJoin('comments_actions', function (JoinClause $join) use ($request) {
+                    $join
+                        ->on('comments_actions.record_id', '=', 'comments.id')
+                        ->where('comments_actions.client_ip', $request->ip())
+                        ->where('comments_actions.table_name', 'comments');
+                })
+                ->orderBy('like', 'asc')
+                ->where('status', 'Опубликовать')
+                ->paginate(Comments::ITEMS_PER_PAGE);
         }
         if ($request->ajax()) {
             $comments = view('products.product_comments', ['comments' => $comments])->render();

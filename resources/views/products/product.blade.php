@@ -119,7 +119,6 @@
                                         @endif
                                     @endfor
                                 </div>
-
                                 <a href="#commentsBlock">отзывы ({{$countComments}})</a>
                             </div>
                             <div class="product-page__available">
@@ -298,6 +297,7 @@
                                     @endif
                                 @endfor
                             </div>
+
                         </div>
                         {{--                        <div class="product-tabs__info">58 отзывов, 4 вопроса и ответа</div>--}}
 {{--                        <div class="product-tabs__results">--}}
@@ -567,7 +567,9 @@
                                     <span class="sort__title">Сортировать по</span>
                                     <select name="sort_option" id="sort_option" class="sort__select">
                                         <option value="newest">Самые новые</option>
+                                        <option value="oldest">Самые старые</option>
                                         <option value="highest_rating">Самыый высокий рейтинг</option>
+                                        <option value="down_rating">Самые низкий рейтинг</option>
                                     </select>
                                 </div>
                             </div>
