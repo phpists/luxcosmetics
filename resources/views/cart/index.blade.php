@@ -33,7 +33,7 @@
 							</div>
 							<div id="cartProductsContainer" class="cart-table__body">
                                 @forelse($cart_products as $product)
-                                    <div class="cart-table__item cart-product" data-product="{{ $product->id }}" data-property="{{ $product->baseValue->id ?? '' }}">
+                                    <div class="cart-table__item cart-product @if(!$product->isAvailable()) unavailable @endif" data-product="{{ $product->id }}" data-property="{{ $product->baseValue->id ?? '' }}">
                                         <div class="cart-product__image">
                                             <a href="{{ route('products.product', ['alias' => $product->alias]) }}">
                                                 <img src="{{ asset('images/uploads/products/' . $product->main_image) }}" alt=""></a>

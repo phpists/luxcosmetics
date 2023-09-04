@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Enums\AvailableOptions;
 use App\Models\Address;
 use App\Models\Category;
 use App\Models\Order;
@@ -96,7 +97,7 @@ class CartService
         return round($totalSum, 2) ?? 0;
     }
 
-    public function getTotalSumWithDiscounts()
+    public function getTotalSumWithDiscounts($with_promo_code = true, $with_bonuses = true, $with_gift_card = true)
     {
         $total_sum = $this->getTotalSum();
 
@@ -104,16 +105,8 @@ class CartService
             $user = Auth::user();
             $this->checkDiscount();
 
-            if ($user->hasGiftCardBalance()) {
-                $discount = $this->getUsedGiftCardDiscount($total_sum);
-                $this->discounts['gift_card_balance'] = [
-                    'title' => 'Баланс подарочной карты',
-                    'amount' => $discount
-                ];
-                $total_sum -= $discount;
-            }
 
-            if ($this->isUsedPromo()) {
+            if ($with_promo_code && $this->isUsedPromo()) {
                 $discount = $this->getUsedPromoDiscount($total_sum);
                 $this->discounts['promo_code'] = [
                     'title' => "Промокод {$this->getPromoCode()}",
@@ -122,23 +115,24 @@ class CartService
                 $total_sum -= $discount;
             }
 
-            if ($this->isUsedBonuses()) {
+            if ($with_bonuses && $this->isUsedBonuses()) {
+                $discount = $this->getUsedBonusesDiscount();
                 $this->discounts['bonuses'] = [
                     'title' => 'Бонусные баллы',
-                    'amount' => $this->getUsedBonusesDiscount()
+                    'amount' => $discount
                 ];
+                $total_sum -= $discount;
+            }
+
+            $discount = $this->getUsedGiftCardDiscount($total_sum);
+            if ($with_gift_card && $discount > 0) {
+                $this->discounts['gift_card_balance'] = [
+                    'title' => 'Баланс подарочной карты',
+                    'amount' => $discount
+                ];
+                $total_sum -= $discount;
             }
         }
-
-        if (isset($this->discounts['gift_card_balance']))
-            $total_sum = $total_sum - $this->discounts['gift_card_balance']['amount'];
-
-        if (isset($this->discounts['promo_code']))
-            $total_sum = $total_sum - $this->discounts['promo_code']['amount'];
-
-        if (isset($this->discounts['bonuses']))
-            $total_sum = $total_sum - $this->discounts['bonuses']['amount'];
-
 
         return round($total_sum, 2) ?? 0;
     }
@@ -254,13 +248,34 @@ class CartService
         return session()->get($name) ?? null;
     }
 
+
+    public function containUnavailable()
+    {
+        return $this->getAllProducts()->contains(function ($item) {
+            return $item->availability !== AvailableOptions::AVAILABLE->value;
+        });
+    }
+
     public static function canCheckout(): bool
     {
+        $cartService = new self();
+
+        if ($cartService->containUnavailable())
+            return false;
+
         $min_sum = SiteConfigService::getParamValue('min_checkout_sum');
         if ($min_sum)
-            return (new self())->getTotalSum() >= $min_sum;
+            return $cartService->getTotalSum() >= $min_sum;
 
         return true;
+    }
+
+    public function canNotCheckoutMessage(): ?string
+    {
+        if ($this->containUnavailable())
+            return 'Невозможно оформить заказ, так как в корзине присутствует товар которого больше недоступен';
+
+        return null;
     }
 
 
@@ -283,21 +298,27 @@ class CartService
         $order_data['city'] = $address['city'];
         $order_data['region'] = $address['region'];
         $order_data['address'] = $address['address'];
-        $order_data['gift_card_discount'] = null;
+        $order_data['promo_code_discount'] = null;
         $order_data['bonuses_discount'] = null;
-        if ($this->isUsedGiftCardDiscount()) {
-            $order_data['gift_card_discount'] = $this->getUsedGiftCardDiscount();
-            $order_data['gift_card_id'] = \auth()->user()->activeGiftCard->id;
-        }
-        if ($this->isUsedPromo()) {
-            $order_data['promo_code_discount'] = $this->getUsedPromoDiscount();
+        $order_data['gift_card_discount'] = null;
+
+        $promo_code_discount = $this->discounts['promo_code']['amount'] ?? 0;
+        if ($promo_code_discount) {
+            $order_data['promo_code_discount'] = $promo_code_discount;
             $order_data['promo_code_id'] = $this->getPromo()->id;
         }
-        if ($this->isUsedBonuses()) {
-            $order_data['bonuses_discount'] = $this->getUsedBonusesDiscount();
+
+        $bonuses_discount = $this->discounts['bonuses']['amount'] ?? 0;
+        if ($bonuses_discount) {
+            $order_data['bonuses_discount'] = $bonuses_discount;
             $order_data['is_used_bonuses'] = 1;
         }
 
+        $gift_card_discount = $this->discounts['gift_card_balance']['amount'] ?? 0;
+        if ($gift_card_discount) {
+            $order_data['gift_card_discount'] = $gift_card_discount;
+            $order_data['gift_card_id'] = \auth()->user()->activeGiftCard->id;
+        }
 
         $order_data['bonuses_given'] = $this->getBonusAmount(); // вказуємо скільки бонусів користувач отримає
 
@@ -316,14 +337,14 @@ class CartService
             }
             $user = Auth::user();
 
-            if ($this->isUsedGiftCardDiscount())
-                $user->activeGiftCard->decrement('balance', $this->getUsedGiftCardDiscount());
-
-            if ($this->isUsedBonuses())
-                $user->decrement('points', $this->getUsedBonusesDiscount());
-
-            if ($this->isUsedPromo())
+            if ($promo_code_discount)
                 $this->getPromo()->increment('uses');
+
+            if ($bonuses_discount)
+                $user->decrement('points', $bonuses_discount);
+
+            if ($gift_card_discount)
+                $user->activeGiftCard->decrement('balance', $gift_card_discount);
 
             session()->forget(self::SESSION_KEY);
             session()->forget(array_keys(self::ALL_KEYS));
@@ -339,22 +360,20 @@ class CartService
 
 
 
-    public function isUsedGiftCardDiscount(): bool
-    {
-        if (\auth()->check())
-            return \auth()->user()->hasGiftCardBalance();
-
-        return false;
-    }
 
     public function getUsedGiftCardDiscount($total_sum = null): int
     {
-        if (Auth::check()) {
+        if (Auth::check() && \auth()->user()->hasGiftCardBalance()) {
             $user = Auth::user();
-            if (!$total_sum)
+
+            if (is_null($total_sum))
                 $total_sum = $this->getTotalSum();
-            $maxDiscount = min($total_sum, $user->activeGiftCard->balance);
-            return $maxDiscount;
+
+
+            if ($total_sum > 0) {
+                $maxDiscount = min($total_sum, $user->activeGiftCard->balance);
+                return $maxDiscount;
+            }
         }
         return 0;
     }
@@ -444,12 +463,12 @@ class CartService
         $promoCode = $this->getPromo();
         $amount = 0;
 
+        if (!$total_sum)
+            $total_sum = $this->getTotalSum();
+
         if ($promoCode->amount) {
             $amount = $promoCode->amount;
         } elseif ($promoCode->percent) {
-            if (!$total_sum)
-                $total_sum = $this->getTotalSum();
-
             if ($promoCode->type == PromoCode::TYPE_CART) {
                 $amount = $total_sum * ($promoCode->percent / 100);
             } elseif ($promoCode->type == PromoCode::TYPE_CATEGORY) {
@@ -462,6 +481,8 @@ class CartService
                 $amount = $product->total_sum * ($promoCode->percent / 100);
             }
         }
+
+        $amount = min($amount, $total_sum);
 
         return $amount;
     }

@@ -232,6 +232,9 @@ function removeFromCart(product_id, $button) {
                     if ($('#cartProductsContainer div.cart-product').length < 1)
                         location.reload()
                 }
+
+                if (response.can_checkout)
+                    allowCheckout()
             }
         }
     })
@@ -257,6 +260,9 @@ function plusQuantity(product_id, $button) {
                 // updateTotalSum(response.total_sum)
                 updateTotalBlock(response.total_block)
                 $('#modalCurrentProductSum').text(response.sum)
+
+                if (!response.can_checkout)
+                    disableCheckout(response.can_not_checkout_message)
             }
         },
         complete: function () {
@@ -285,6 +291,9 @@ function minusQuantity(product_id, $button) {
                 // updateTotalSum(response.total_sum)
                 updateTotalBlock(response.total_block)
                 $('#modalCurrentProductSum').text(response.sum)
+
+                if (response.can_checkout)
+                    allowCheckout()
             }
         },
         complete: function () {
@@ -339,4 +348,16 @@ function findValueByName(name, serializedForm) {
             return serializedForm[i].value;
     }
     return null;
+}
+
+function allowCheckout() {
+    $('button.cartSubmit').prop('disabled', false)
+    $('.cart-aside > .formerror').remove()
+}
+
+function disableCheckout(message) {
+    $('button.cartSubmit').prop('disabled', true)
+    if ($('.cart-aside > .formerror').length < 1) {
+        $('button.cartSubmit').before(`<div class="formerror">${message}</div>`)
+    }
 }

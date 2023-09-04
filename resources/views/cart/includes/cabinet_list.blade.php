@@ -47,5 +47,15 @@
             {{--							</div>--}}
         </div>
     </div>
+
+    @if($order->promoCode)
+        <span>Промокод "{{ $order->promoCode->code }}": -{{ $order->promo_code_discount }}</span><br>
+    @endif
+    @if($order->is_used_bonuses)
+        <span>Бонусов использовано: -{{ $order->bonuses_discount }}</span><br>
+    @endif
+    @if($order->gift_card_id)
+        <span>Списано со счёта подарочной карты: -{{ $order->gift_card_discount }}</span><br>
+    @endif
     <div class="cabinet-page__total">Итого с НДС <b>{{ $order->total_sum }} ₽</b></div>
 </div>

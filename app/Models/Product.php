@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\AvailableOptions;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
@@ -179,6 +180,11 @@ class Product extends Model
     public function hasBonuses()
     {
         return $this->points > 0;
+    }
+
+    public function isAvailable(): bool
+    {
+        return $this->availability == AvailableOptions::AVAILABLE->value;
     }
 
 

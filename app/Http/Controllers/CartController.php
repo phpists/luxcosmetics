@@ -92,6 +92,9 @@ class CartController extends Controller
 
     public function checkoutStore(Request $request)
     {
+        if (!CartService::canCheckout())
+            return back()->with('error', 'Ошибка! Не удалось оформить заказ - пожалуйста, попробуйте ещё раз');
+
         $as_delivery_address = $request->boolean('as_delivery_address');
         $this->cartService->setProperty(CartService::AS_DELIVERY_ADDRESS_KEY, $as_delivery_address);
         $card_id = $request->post('card_id');
@@ -153,7 +156,8 @@ class CartController extends Controller
         return response()->json([
             'total_count' => $total_count,
             'total_sum' => $total_sum,
-            'total_block' => view('cart.includes.total_sum')->render()
+            'total_block' => view('cart.includes.total_sum')->render(),
+            'can_checkout' => CartService::canCheckout()
         ]);
     }
 
@@ -169,7 +173,9 @@ class CartController extends Controller
             'sum' => $sum,
             'total_count' => $total_count,
             'total_sum' => $total_sum,
-            'total_block' => view('cart.includes.total_sum')->render()
+            'total_block' => view('cart.includes.total_sum')->render(),
+            'can_checkout' => CartService::canCheckout(),
+            'can_not_checkout_message' => $this->cartService->canNotCheckoutMessage()
         ]);
     }
 
@@ -185,7 +191,8 @@ class CartController extends Controller
             'sum' => $sum,
             'total_count' => $total_count,
             'total_sum' => $total_sum,
-            'total_block' => view('cart.includes.total_sum')->render()
+            'total_block' => view('cart.includes.total_sum')->render(),
+            'can_checkout' => CartService::canCheckout()
         ]);
     }
 
@@ -202,13 +209,15 @@ class CartController extends Controller
     {
         $amount = (float) $request->post('amount', 0);
         $user = Auth::user();
+        $total_sum_without_gift_card = $this->cartService->getTotalSumWithDiscounts(true, false, false);
 
         if ($amount > 0) {
             try {
-                $this->cartService->verifyBonusesConditions($amount);
-
-                if (($this->cartService->getTotalSumWithDiscounts() - $amount) < 0)
+                if ($total_sum_without_gift_card < 1
+                    || $total_sum_without_gift_card < $amount)
                     throw new Exception('Общая сумма заказа не может быть меньше 0');
+
+                $this->cartService->verifyBonusesConditions($amount);
             } catch (\Exception $exception) {
                 return back()->with('error', $exception->getMessage());
             }
@@ -236,8 +245,8 @@ class CartController extends Controller
         try {
             $this->cartService->verifyPromoConditions($promoCode);
 
-            if ($promoCode->amount && (($this->cartService->getTotalSumWithDiscounts() - $promoCode->amount) < 0))
-                throw new Exception('Общая сумма заказа не может быть меньше 0');
+//            if ($promoCode->amount && (($this->cartService->getTotalSumWithDiscounts() - $promoCode->amount) < 0))
+//                throw new Exception('Общая сумма заказа не может быть меньше 0');
         } catch (\Exception $exception) {
             return back()->with('error', $exception->getMessage());
         }

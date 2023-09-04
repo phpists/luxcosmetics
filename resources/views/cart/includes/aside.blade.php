@@ -58,7 +58,12 @@
         </div>
 
     </div>
-    <button type="submit" form="orderForm" class="btn btn--accent cart-aside__buy cartSubmit">Перейти к оплате</button>
+
+    @if($cartService->containUnavailable())
+        <div class="formerror">{{ $cartService->canNotCheckoutMessage() }}</div>
+    @endif
+
+    <button type="submit" form="orderForm" class="btn btn--accent cart-aside__buy cartSubmit" @disabled(!$cartService->canCheckout())>Перейти к оплате</button>
     <div class="cart-aside__paymethods">
         <img src="{{asset('images/dist/ico-visa.png')}}" alt="visa">
         <img src="{{asset('images/dist/ico-mir.png')}}" alt="mir">
