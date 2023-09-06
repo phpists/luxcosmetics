@@ -240,7 +240,18 @@
                                 </dt>
                                 <dd>
                                     <div class="typography">
+                                        <h3>Описание товара</h3>
                                         {!! $product->description_1 !!}
+                                        <h3>Способ применения</h3>
+                                        {!! $product->description_2 !!}
+                                        @if($product->description_3)
+                                            <h3>Состав/комплектация продукта</h3>
+                                            {!! $product->description_3 !!}
+                                        @endif
+                                        @if($product->description_4)
+                                            <h3>Меры предосторожности</h3>
+                                            {!! $product->description_4 !!}
+                                        @endif
                                     </div>
                                 </dd>
                             </dl>
@@ -257,16 +268,6 @@
                                     @empty
                                         <h4>Нету характеристик</h4>
                                     @endforelse
-                                </dd>
-                            </dl>
-                            <dl>
-                                <dt>Как использовать
-                                    <svg class="icon">
-                                        <use xlink:href="{{asset('images/dist/sprite.svg#arrow')}}"></use>
-                                    </svg>
-                                </dt>
-                                <dd style="display: none;">
-                                    {!! $product->description_2 !!}
                                 </dd>
                             </dl>
                         </div>
