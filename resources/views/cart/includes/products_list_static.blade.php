@@ -15,7 +15,7 @@
                     </div>
                     <div class="cart-product__desc">
                         <div class="cart-product__title">
-                            <a href="{{ route('products.product', ['alias' => $product->alias]) }}">{{ $product->brand->name }}</a>
+                            <a href="{{ route('products.product', ['alias' => $product->alias]) }}">{{ $product->brand?->name }}</a>
                         </div>
                         <div class="cart-product__subtitle">{{ $product->title }}</div>
                         <div class="cart-product__options">

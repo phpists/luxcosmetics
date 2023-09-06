@@ -18,7 +18,7 @@
             {{ $product->category->name }}
         </td>
         <td class="text-center pr-0">
-            {{ $product->brand->name }}
+            {{ $product->brand?->name }}
         </td>
         <td class="text-center pr-0">
             {{ $product->code }}

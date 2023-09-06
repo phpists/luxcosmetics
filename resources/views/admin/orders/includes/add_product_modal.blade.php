@@ -20,7 +20,7 @@
                                 <label for="createFaqQuestion" class="col-auto col-form-label font-weight-bold">Товар</label>
                                 <select class="form-control select2" name="id">
                                     @foreach(\App\Models\Product::all() as $product)
-                                        <option value="{{ $product->id }}">{{ "[{$product->code}] {$product->brand->name} > {$product->title}" }}</option>
+                                        <option value="{{ $product->id }}">{{ "[{$product->code}] {$product->brand?->name} > {$product->title}" }}</option>
                                     @endforeach
                                 </select>
                             </div>

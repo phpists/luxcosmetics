@@ -26,7 +26,7 @@
                         <li class="crumbs__item"><a href="{{ route('categories.show', ['alias' => $product->category->alias]) }}">
                                 {{ $product->category->name }}</a></li>
                         <li class="crumbs__item"><a href="{{ route('brands.show', ['link' => $product->brand->link]) }}">
-                                {{ $product->brand->name }}</a></li>
+                                {{ $product->brand?->name }}</a></li>
                         <li class="crumbs__item">{{ $product->title }}</li>
                     </ol>
                 </div>
@@ -39,7 +39,7 @@
                 <div class="col-lg-7">
                     <div class="for-mobile">
                         <div class="product-page__article">Артикул: {{$product->code}}</div>
-                        <div class="product-page__title">{{$product->brand->name}}</div>
+                        <div class="product-page__title">{{$product->brand?->name}}</div>
                         <div class="product-page__subtitle">{{$product->title}}</div>
                         <div class="product-page__reviewsblock">
                             <div class="product-page__reviews">
@@ -106,7 +106,7 @@
                 <div class="col-lg-5">
                     <div class="for-desktop">
                         <div class="product-page__article">Артикул: {{$product->code}}</div>
-                        <div class="product-page__title">{{$product->brand->name}}</div>
+                        <div class="product-page__title">{{$product->brand?->name}}</div>
                         <div class="product-page__subtitle">{{$product->title}}</div>
                         <div class="product-page__reviewsblock">
                             <div class="product-page__reviews">
