@@ -287,21 +287,6 @@
                                         </div>
                                     </div>
                                 </div>
-
-                                <div class="row">
-                                    <div class="col-md-12 mb-5">
-                                        <label>Описание товара</label>
-                                        <textarea class="textEditor" name="description_1">{{$product->description_1}}</textarea>
-                                    </div>
-                                    <div class="col-md-12 mb-5">
-                                        <label>Как использовать</label>
-                                        <textarea class="textEditor" name="description_2">{{$product->description_2}}</textarea>
-                                    </div>
-                                    <div class="col-md-12 mb-5">
-                                        <label>Доп. описание</label>
-                                        <textarea class="textEditor" name="description_3">{{$product->description_3}}</textarea>
-                                    </div>
-                                </div>
                                 <div class="row">
                                     <div class="col-md-3">
                                         <div class="form-group">
@@ -327,10 +312,82 @@
                                             <input type="number" class="form-control" id="weightField" name="weight_product" min="0" max="100" step="1" value="{{ $product->weight }}">
                                         </div>
                                     </div>
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <label for="weightField">Страна производитель:</label>
+                                            <input type="text" class="form-control" id="country_products" name="country_products" step="1" value="{{ $product->country_products }}">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <label for="weightField">Условия хранения:</label>
+                                            <input type="text" class="form-control" id="storage_conditions" name="storage_conditions" step="1" value="{{ $product->storage_conditions }}">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <label for="weightField">Гипоаллергенный:</label>
+                                            <div class="input-group">
+                                                <select class="form-control status" id="allergy" name="allergy">
+                                                    <option value="Да">Да</option>
+                                                    <option value="Нет">Нет</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <label for="weightField">Срок годности в днях:</label>
+                                            <input type="text" class="form-control" id="expiry_date" name="expiry_date" step="1" value="{{ $product->expiry_date }}">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <label for="weightField">Количество спирта в %:</label>
+                                            <input type="number" class="form-control" id="spyrt" name="spyrt" min="0" max="100" step="1" value="{{ $product->spyrt }}">
+                                        </div>
+                                    </div>
                                 </div>
-
-
-
+                                <div class="tab-container">
+                                    <ul class="nav nav-tabs" role="tablist">
+                                        <li class="nav-item">
+                                            <a class="nav-link active" data-toggle="tab" href="#tab1">Описание товара</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" data-toggle="tab" href="#tab2">Как использовать</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" data-toggle="tab" href="#tab3">Доп. описание</a>
+                                        </li>
+                                    </ul>
+                                    <br>
+                                    <div class="tab-content">
+                                        <div id="tab1" class="tab-pane active">
+                                            <div class="row">
+                                                <div class="col-md-12 mb-5">
+                                                    <label>Описание товара</label>
+                                                    <textarea class="textEditor" name="description_1">{{$product->description_1}}</textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div id="tab2" class="tab-pane">
+                                            <div class="row">
+                                                <div class="col-md-12 mb-5">
+                                                    <label>Как использовать</label>
+                                                    <textarea class="textEditor" name="description_2">{{$product->description_2}}</textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div id="tab3" class="tab-pane">
+                                            <div class="row">
+                                                <div class="col-md-12 mb-5">
+                                                    <label>Доп. описание</label>
+                                                    <textarea class="textEditor" name="description_3">{{$product->description_3}}</textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="card-footer">
                                     <button type="submit" class="btn btn-primary mr-2">Сохранить</button>
                                 </div>
