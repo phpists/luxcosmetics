@@ -75,7 +75,7 @@
                             </div>
                         @endif
                     @endforeach
-                           
+
                 </div>
             </div>
         </div>
@@ -108,7 +108,7 @@
 
         {{-- Функціонал форми пошуку бренда --}}
         <script>
-        
+
             $(document).ready(function() {
         $('#brand-search-input').on('input', function() {
             var searchKeyword = $(this).val().trim().toLowerCase();
@@ -126,12 +126,12 @@
                     }
                 });
             } else {
-                $('div').removeClass('__active'); 
+                $('div').removeClass('__active');
                 $('.brands-page__item').show();
                 $('.brands-page__brand, .brands-page__title').show();
             }
         });
-    
+
         $('#brand-search-button').click(function(event) {
             event.preventDefault();
         });
@@ -145,4 +145,4 @@
 
 @endsection
 
-  
+

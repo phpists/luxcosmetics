@@ -41,7 +41,7 @@ class BrandsService
         $products = Product::query()
             ->selectRaw('products.*, product_images.path as main_image, case when user_favorite_products.product_id is null then FALSE else TRUE end as is_favourite')
             ->join('product_images', 'products.image_print_id', 'product_images.id')
-            ->whereIn('category_id', $this->getCategoryIds())
+//            ->whereIn('category_id', $this->getCategoryIds())
             ->where('brand_id', $brandId)
             ->distinct(['products.id'])
             ->with('brand')

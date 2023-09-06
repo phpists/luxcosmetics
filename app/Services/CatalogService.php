@@ -38,6 +38,9 @@ class CatalogService
         $category_ids = [$this->category->id];
         foreach ($this->category->subcategories as $subcategory) {
             $category_ids[] = $subcategory->id;
+            foreach ($subcategory->categories as $inner_category) {
+                $category_ids[] = $inner_category->id;
+            }
         }
 
         $products = Product::query()
@@ -76,7 +79,7 @@ class CatalogService
             $products->orderBy($sort_column, $this->getSortDirection());
         }
         else {
-            $products->orderBy('created_at', 'DESC');
+            $products->orderBy('created_at', 'DESC')->orderBy('products.id', 'desc');
         }
 
         if (Auth::check()) {
