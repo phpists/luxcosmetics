@@ -58,6 +58,12 @@ class Product extends Model
         'width_product',
         'length_product',
         'weight_product',
+        'description_4',
+        'country_products',
+        'storage_conditions',
+        'allergy',
+        'spyrt',
+        'expiry_date'
     ];
 
     public function getImages(): Collection
