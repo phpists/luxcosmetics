@@ -357,7 +357,10 @@
                                             <a class="nav-link" data-toggle="tab" href="#tab2">Как использовать</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" data-toggle="tab" href="#tab3">Доп. описание</a>
+                                            <a class="nav-link" data-toggle="tab" href="#tab3">Состав/комплектация продукта</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" data-toggle="tab" href="#tab4">Меры предосторожности</a>
                                         </li>
                                     </ul>
                                     <br>
@@ -381,8 +384,16 @@
                                         <div id="tab3" class="tab-pane">
                                             <div class="row">
                                                 <div class="col-md-12 mb-5">
-                                                    <label>Доп. описание</label>
+                                                    <label>Состав/комплектация продукта</label>
                                                     <textarea class="textEditor" name="description_3">{{$product->description_3}}</textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div id="tab4" class="tab-pane">
+                                            <div class="row">
+                                                <div class="col-md-12 mb-5">
+                                                    <label>Меры предосторожности</label>
+                                                    <textarea class="textEditor" name="description_4">{{$product->description_4}}</textarea>
                                                 </div>
                                             </div>
                                         </div>

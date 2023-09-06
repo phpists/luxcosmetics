@@ -59,6 +59,7 @@ return new class extends Migration
             $table->string('allergy')->nullable()->comment('Гипералергийный');
             $table->integer('spyrt')->nullable()->comment('Количество спирта в %');
             $table->string('expiry_date')->nullable()->comment('Срок годности в днях');
+            $table->text('description_4')->nullable()->comment('Описание 4');
             $table->timestamps();
         });
     }

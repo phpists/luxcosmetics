@@ -11,6 +11,10 @@
         .like_btn.checked {
             color: #cc9755;
         }
+
+        .typography > h3 {
+            margin-top: 20px;
+        }
     </style>
     <section class="crumbs">
         <div class="container">
@@ -242,6 +246,8 @@
                                     <div class="typography">
                                         <h3>Описание товара</h3>
                                         {!! $product->description_1 !!}
+                                    </div>
+                                    <div class="typography">
                                         <h3>Способ применения</h3>
                                         {!! $product->description_2 !!}
                                         @if($product->description_3)

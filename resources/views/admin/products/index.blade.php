@@ -128,7 +128,7 @@
                                             <a href="{{ route('admin.product.edit', ['id' => $product->id]) }}">{{ $product->title }}</a>
                                         </td>
                                         <td class="text-center pr-0">
-                                            {{ $product->category->name}}
+                                            {{ $product->category?->name}}
                                         </td>
                                         <td class="text-center pr-0">
                                             {{ $product->brand->name }}

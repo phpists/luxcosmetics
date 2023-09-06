@@ -240,8 +240,12 @@
                                         </div>
                                     </div>
                                     <div class="col-md-12 mb-5">
-                                        <label>Доп. описание</label>
+                                        <label>Состав/комплектация продукта</label>
                                         <textarea class="textEditor" name="description_3"></textarea>
+                                    </div>
+                                    <div class="col-md-12 mb-5">
+                                        <label>Меры предосторожности</label>
+                                        <textarea class="textEditor" name="description_4"></textarea>
                                     </div>
                                 </div>
 
