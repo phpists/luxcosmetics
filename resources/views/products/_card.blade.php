@@ -55,7 +55,9 @@
                     @endfor
                 </div>
             @endif
-            <a href="{{ route('products.product', ['alias' => $product->alias]) }}">отзывы ({{$countComments}})</a>
+            @if($countComments !== 0)
+                <a href="{{ route('products.product', ['alias' => $product->alias]) }}">отзывы ({{$countComments}})</a>
+            @endif
         </div>
         <div class="product__ftrwrap">
             <div class="product__prices">

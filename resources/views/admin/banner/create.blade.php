@@ -58,9 +58,10 @@
                                 @csrf
                                 <div class="row justify-content-start">
                                     <div class="form-group col">
+                                        <label>Для первого баннера(Внимание! этот размер только для позиции first<strong>( 2560px х 814px )</strong></label><br>
                                         <label>Изображение большое<strong>( 1256px х 814px )</strong></label>
                                         <div class="col-auto ml-2">
-                                            <div class="image-input image-input-outline" id="createImagePlugin" style="background-image: url('{{ asset('images/uploads/banner/' . $item->image) }}')">
+                                            <div class="image-input image-input-outline" id="createImagePlugin">
                                                 <div class="image-input-wrapper" id="updateImageBackground"></div>
                                                 <label class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="change" data-toggle="tooltip" data-original-title="Change avatar">
                                                     <i class="fa fa-pen icon-sm text-muted"></i>
@@ -73,7 +74,7 @@
                                     <div class="form-group col">
                                         <label>Изображение Среднее<strong>( 1104px x 352px )</strong></label>
                                         <div class="col-auto ml-2">
-                                            <div class="image-input image-input-outline" id="updateMediumImagePlugin" style="background-image: url('{{ asset('images/uploads/banner/' . $item->medium_img) }}')">
+                                            <div class="image-input image-input-outline" id="updateMediumImagePlugin">
                                                 <div class="image-input-wrapper" id="updateMediumImageBackground"></div>
                                                 <label class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="change" data-toggle="tooltip" data-original-title="Change avatar">
                                                     <i class="fa fa-pen icon-sm text-muted"></i>
@@ -86,7 +87,7 @@
                                     <div class="form-group col">
                                         <label>Изображение малое<strong>( 528px x 352px )</strong></label>
                                         <div class="col-auto ml-2">
-                                            <div class="image-input image-input-outline" id="updateSmallImagePlugin" style="background-image: url('{{ asset('images/uploads/banner/' . $item->small_img) }}')">
+                                            <div class="image-input image-input-outline" id="updateSmallImagePlugin">
                                                 <div class="image-input-wrapper" id="updateSmallImageBackground"></div>
                                                 <label class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="change" data-toggle="tooltip" data-original-title="Change avatar">
                                                     <i class="fa fa-pen icon-sm text-muted"></i>

@@ -65,8 +65,11 @@
                                 <input type="hidden" name="id" value="{{ $item->id }}">
                                 <div class="row justify-content-start">
                                     <div class="form-group col">
+                                        @if($item->position == 'first')
                                         <label>Для первого баннера<strong>( 2560px х 814px )</strong></label><br>
+                                        @elseif($item->position != 'first')
                                         <label>Изображение большое<strong>( 1256px х 814px )</strong></label><br>
+                                        @endif
                                         <div class="col-auto ml-2">
                                             <div class="image-input image-input-outline" id="createImagePlugin" style="background-image: url('{{ asset('images/uploads/banner/' . $item->image) }}')">
                                                 <div class="image-input-wrapper" id="updateImageBackground"></div>

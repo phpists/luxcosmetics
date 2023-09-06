@@ -475,7 +475,7 @@
                                             <i class="menu-bullet menu-bullet-dot">
                                                 <span></span>
                                             </i>
-                                            <span class="menu-text">Коментарии к товарам</span>
+                                            <span class="menu-text">Комментарии к товарам</span>
                                         </a>
                                     </li>
                                 </ul>

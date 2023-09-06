@@ -25,7 +25,6 @@
                 <div class="card gutter-b col-lg-12 ml-0">
                     @include('admin.comments.parts.filter')
                 </div>
-                @include('admin.layouts.includes.messages')
                 <div class="card card-custom">
                     <div class="card-header flex-wrap border-0 pt-6 pb-0">
                         <div class="card-title">

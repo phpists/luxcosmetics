@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('code_1c', 30)->comment('Код article 1C');
             $table->boolean('status')->default(1)->comment('Статус');
             $table->float('price')->comment('Ціна');
-            $table->float('old_price')->nullable();			
+            $table->float('old_price')->nullable();
             $table->integer('image_print_id')->nullable()->comment('ГЛАВНОЕ ИЗОБРАЖЕНИЕ');
             $table->float('discount_price')->nullable()->comment('Ціна зі знижкою');
             $table->integer('category_id')->comment('Головна категорія');
@@ -36,8 +36,8 @@ return new class extends Migration
             $table->boolean('show_in_sales_page')->default(false)->comment('Отобразить на странице Акции');
             $table->boolean('show_in_percent_discount_page')->default(false)->comment('Отобразить на странице До -50% скидки');
             $table->boolean('show_in_new_page')->default(false)->comment('Отобразить на странице Новинки');
-            $table->boolean('show_in_popular')->default(false);			
-			
+            $table->boolean('show_in_popular')->default(false);
+
             $table->string('size');
 
 
@@ -54,6 +54,11 @@ return new class extends Migration
             $table->integer('width_product')->nullable()->comment('Ширина');
             $table->integer('length_product')->nullable()->comment('Длина');
             $table->integer('weight_product')->nullable()->comment('Вес');
+            $table->string('country_products')->nullable()->comment('Страна производителя');
+            $table->string('storage_conditions')->nullable()->comment('Условия хранения');
+            $table->string('allergy')->nullable()->comment('Гипералергийный');
+            $table->integer('spyrt')->nullable()->comment('Количество спирта в %');
+            $table->string('expiry_date')->nullable()->comment('Срок годности в днях');
             $table->timestamps();
         });
     }

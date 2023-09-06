@@ -174,6 +174,12 @@ class ProductController extends Controller
         $product->height_product = $data['height_product'];
         $product->weight_product = $data['weight_product'];
 
+        $product->country_products = $data['country_products'];
+        $product->storage_conditions = $data['storage_conditions'];
+        $product->allergy = $data['allergy'];
+        $product->expiry_date = $data['expiry_date'];
+        $product->spyrt = $data['spyrt'];
+
         if (!array_key_exists('alias', $data) || $data['alias'] === null) {
             $data['alias'] = Str::slug($data['title'], '-');
         }
