@@ -29,6 +29,8 @@ class CategoryController extends Controller
     public function show(Request $request, string $alias) {
         $category = $this->catalogService->category;
         $products = $this->catalogService->getFiltered();
+        $min_price = $this->catalogService->min_price;
+        $max_price = $this->catalogService->max_price;
 
         $products_id = [];
         foreach ($products as $product) {
@@ -65,6 +67,6 @@ class CategoryController extends Controller
         }
         $last_page_url = $products->url($products->lastPage());
         $pagination = view('categories.parts.pagination', compact('products', 'last_page_url'))->render();
-        return view('categories.index', compact('category', 'products', 'pagination', 'products_list'));
+        return view('categories.index', compact('category', 'products', 'pagination', 'products_list', 'min_price', 'max_price'));
     }
 }

@@ -22,6 +22,9 @@ class CatalogService
 
     public $category;
 
+    public $min_price = 1;
+    public $max_price = 999999;
+
     public function __construct(Request $request)
     {
         $this->request = $request;
@@ -92,6 +95,10 @@ class CatalogService
             $products = $products->leftJoin('user_favorite_products', 'user_favorite_products.product_id', 'products.id');
         }
 
+        $all_products = $products->get();
+        $this->min_price = $all_products->min('price');
+        $this->max_price = $all_products->max('price');
+
         return $products->paginate(self::PER_PAGE);
     }
 
@@ -154,10 +161,7 @@ class CatalogService
 
     public static function getFilters($category)
     {
-        $category_ids = [$category->id];
-        foreach ($category->subcategories as $subcategory) {
-            $category_ids[] = $subcategory->id;
-        }
+        $category_ids = Category::getChildIds($category->id);
 
         $product_ids = Product::select('id')
             ->distinct(['products.id'])

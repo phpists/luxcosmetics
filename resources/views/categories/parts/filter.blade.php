@@ -2,9 +2,8 @@
       action="{{ route('categories.show', ['alias' => $category->alias]) }}">
 
     <input type="hidden" name="sort">
-    <input type="hidden" id="filterMinPrice" value="{{ $products->min('price') ?? 1 }}">
-    <input type="hidden" id="filterMaxPrice"
-           value="{{ $products->max('price') ?? 99999 }}">
+    <input type="hidden" id="filterMinPrice" value="{{ $min_price }}">
+    <input type="hidden" id="filterMaxPrice" value="{{ $max_price }}">
 
     <div class="filters__close">
         <svg class="icon">
@@ -45,6 +44,7 @@
         </div>
 
         @foreach(\App\Services\CatalogService::getFilters($category) as $category_property)
+            @continue($category_property->values->isEmpty())
             <div class="filters__item filter">
                 <div
                     class="filter__title @if(!$loop->first) is-close @endif">{{ $category_property->name }} {{ isset($category_property->measure) ? '('.$category_property->measure.')' : '' }}

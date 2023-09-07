@@ -37,7 +37,7 @@
             ->where('status', 'Опубликовать')
             ->pluck('rating');
             $averageRating = $ratings->avg();
-            $countComments = $comments->count();
+            $countComments = $comments->count() ?? 0;
         @endphp
         <div class="product__reviews">
             @if($countComments !== 0)
