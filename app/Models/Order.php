@@ -64,6 +64,11 @@ class Order extends Model
     }
 
 
+    public function scopeNew($query)
+    {
+        return $query->where('status_id', self::STATUS_NEW);
+    }
+
     public function scopeCompleted($query)
     {
         return $query->where('status_id', self::STATUS_COMPLETED);
