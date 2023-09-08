@@ -53,7 +53,7 @@ return new class extends Migration
             $table->integer('height_product')->nullable()->comment('Высота');
             $table->integer('width_product')->nullable()->comment('Ширина');
             $table->integer('length_product')->nullable()->comment('Длина');
-            $table->integer('weight_product')->nullable()->comment('Вес');
+            $table->float('weight_product')->nullable()->comment('Вес');
             $table->string('country_products')->nullable()->comment('Страна производителя');
             $table->string('storage_conditions')->nullable()->comment('Условия хранения');
             $table->string('allergy')->nullable()->comment('Гипералергийный');
