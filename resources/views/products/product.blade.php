@@ -291,19 +291,22 @@
                         <h2 class="title-h2">Рейтинги и обзоры</h2>
                         <div class="product-tabs__rating">
                             {{ number_format($averageRating, 1) }}
-                            <div class="stars">
-                                @for ($i = 1; $i <= 5; $i++)
-                                    @if ($i <= round($averageRating))
-                                        <span class="stars__item is-active">
-                                            <svg class="icon"><use xlink:href="{{ asset('images/dist/sprite.svg#star') }}"></use></svg>
-                                        </span>
-                                    @else
-                                        <span class="stars__item">
-                                            <svg class="icon"><use xlink:href="{{ asset('images/dist/sprite.svg#star') }}"></use></svg>
-                                        </span>
-                                    @endif
-                                @endfor
+                            <div class="starsrating">
+                                <div class="starsrating__span" style="width: {{$averageRating * 20}}%"></div>
                             </div>
+{{--                            <div class="stars">--}}
+{{--                                @for ($i = 1; $i <= 5; $i++)--}}
+{{--                                    @if ($i <= round($averageRating))--}}
+{{--                                        <span class="stars__item is-active">--}}
+{{--                                            <svg class="icon"><use xlink:href="{{ asset('images/dist/sprite.svg#star') }}"></use></svg>--}}
+{{--                                        </span>--}}
+{{--                                    @else--}}
+{{--                                        <span class="stars__item">--}}
+{{--                                            <svg class="icon"><use xlink:href="{{ asset('images/dist/sprite.svg#star') }}"></use></svg>--}}
+{{--                                        </span>--}}
+{{--                                    @endif--}}
+{{--                                @endfor--}}
+{{--                            </div>--}}
 
                         </div>
                         {{--                        <div class="product-tabs__info">58 отзывов, 4 вопроса и ответа</div>--}}
