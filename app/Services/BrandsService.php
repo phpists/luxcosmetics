@@ -23,6 +23,9 @@ class BrandsService
     public $brands;
     public $link;
 
+    public $min_price = 1;
+    public $max_price = 999999;
+
     public function __construct(Request $request)
     {
         $this->request = $request;
@@ -78,6 +81,10 @@ class BrandsService
         } else {
             $products = $products->leftJoin('user_favorite_products', 'user_favorite_products.product_id', 'products.id');
         }
+
+        $all_products = $products->get();
+        $this->min_price = $all_products->min('price');
+        $this->max_price = $all_products->max('price');
 
         return $products->paginate(self::PER_PAGE);
     }

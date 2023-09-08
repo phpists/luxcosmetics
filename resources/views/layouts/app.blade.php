@@ -22,6 +22,7 @@
 
     <link rel="stylesheet" href="{{ asset('/css/main.min.css') }}">
     <link rel="stylesheet" href="{{ asset('/css/cart.css') }}">
+    <link rel="stylesheet" href="{{ asset('/css/custom.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
     @vite(['resources/js/app.js'])
     <![endif]-->

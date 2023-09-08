@@ -24,6 +24,8 @@ class BrandsController extends Controller
         $brands = $this->brandsService->brands;
         $category = $this->brandsService->category;
         $products = $this->brandsService->getFiltered();
+        $min_price = $this->brandsService->min_price;
+        $max_price = $this->brandsService->max_price;
 
         $products_id = [];
         foreach ($products as $product) {
@@ -33,8 +35,8 @@ class BrandsController extends Controller
 
         if ($request->ajax()) {
             if ($request->has('load_more')) {
-                $products_list = view('brands.parts.products', compact('products', 'variations'))->render();
-                $pagination = view('brands.parts.pagination', compact('products'))->render();
+                $products_list = view('categories.parts.products', compact('products', 'variations'))->render();
+                $pagination = view('categories.parts.pagination', compact('products'))->render();
 
                 return response()->json([
                     'new_count' => $products->count(),
@@ -42,14 +44,14 @@ class BrandsController extends Controller
                     'pagination' => $pagination
                 ]);
             } elseif ($request->has('load') || $request->has('change_page')) {
-                $products_list = view('brands.parts.catalog', compact('products', 'variations'))->render();
+                $products_list = view('categories.parts.catalog', compact('products', 'variations'))->render();
             }
 
             return response()->json([
                 'html' => $products_list
             ]);
         } else {
-            $products_list = view('brands.parts.catalog', compact('products', 'variations'))->render();
+            $products_list = view('categories.parts.catalog', compact('products', 'variations'))->render();
         }
         if ($request->ajax()) {
             return response()->json([
@@ -59,7 +61,7 @@ class BrandsController extends Controller
             ]);
         }
         $last_page_url = $products->url($products->lastPage());
-        $pagination = view('brands.parts.pagination', compact('products', 'last_page_url'))->render();
-        return view('brands.index', compact('brands', 'category', 'products', 'pagination', 'products_list'));
+        $pagination = view('categories.parts.pagination', compact('products', 'last_page_url'))->render();
+        return view('brands.index', compact('brands', 'category', 'products', 'pagination', 'products_list', 'min_price', 'max_price'));
     }
 }
