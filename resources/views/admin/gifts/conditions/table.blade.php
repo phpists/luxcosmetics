@@ -31,7 +31,7 @@
                 </td>
                 <td class="text-center pr-0">
                     <form action="{{ route('admin.gift_conditions.destroy', $gift_condition) }}" method="POST">
-                        <a href="javascript:;" class="btn btn-sm btn-clean btn-icon btn_edit"
+                        <a href="javascript:;" class="btn btn-sm btn-clean btn-icon btn_edit_condition"
                            data-toggle="modal" data-target="#editGiftConditionModal"
                            data-url="{{ route('admin.gift_conditions.show', $gift_condition) }}">
                             <i class="las la-edit"></i>

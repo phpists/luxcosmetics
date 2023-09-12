@@ -75,6 +75,9 @@
                             <div id="content">
                                 @include('admin.gifts.conditions.table')
                             </div>
+
+                            @include('admin.gifts.conditions._create')
+                            @include('admin.gifts.conditions._edit')
                         </div>
                     </div>
                 </div>
@@ -146,6 +149,62 @@
                     }
                 });
             });
+
+
+
+            $(document).on('change', '[name="type"]', function (e) {
+                let $form = $(this).parents('form:first');
+
+                $form.find('.hidable').hide().find('select').prop('required', false).val('').trigger('change')
+
+                if (this.value === 'brand') {
+                    $form.find('select.hidable-brand').prop('required', true).parents('div.hidable:first').show()
+                } else if (this.value === 'category') {
+                    $form.find('select.hidable-category').prop('required', true).parents('div.hidable:first').show()
+                } else if (this.value === 'product') {
+                    $form.find('select.hidable-product').prop('required', true).parents('div.hidable:first').show()
+                }
+            })
+
+
+
+
+            $(document).on('click', '.btn_edit_condition', function (e) {
+                $.ajax({
+                    url: $(this).data('url'),
+                    dataType: 'json',
+                    success: function (response) {
+                        $('#editGiftConditionForm').attr('action', response.update_url);
+
+                        $('#editGiftConditionType').val(response.type).trigger('change')
+                        $('#editGiftConditionMinSum').val(response.min_sum)
+                        $('#editGiftConditionMaxSum').val(response.max_sum)
+
+                        let cases = []
+                        $.each(response.condition_cases, function (i, item) {
+                            cases.push(item.foreign_id)
+                        })
+                        $('#editGiftConditionForm select[name="cases[]"][required]').val(cases).trigger('change')
+
+                        let products = []
+                        $.each(response.condition_products, function (i, item) {
+                            products.push(item.gift_product_id)
+                        })
+                        $('#editGiftConditionProducts').val(products).trigger('change')
+
+
+                    }, error: function (response) {
+                        console.log(response)
+                    }
+                });
+            });
+
+            $('[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+                localStorage.setItem('tab', e.target.href.split('#')[1])
+            })
+
+            showLastTab()
+
         })
 
         function filter() {
@@ -153,6 +212,19 @@
                 container: '#content',
                 url: location.pathname + '?search=' + $('#searchGiftProducts').val()
             })
+        }
+
+
+        function showLastTab() {
+            let tab = localStorage.getItem('tab');
+            if (!tab)
+                tab = $('.tab-pane')[0].id
+
+            switchTab(tab)
+        }
+
+        function switchTab(tab) {
+            $(`[href="#${tab}"]`).tab('show')
         }
 
     </script>

@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('gift_condition_products', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(\App\Models\GiftCondition::class);
-            $table->foreignIdFor(\App\Models\GiftConditionProduct::class);
+            $table->foreignIdFor(\App\Models\GiftProduct::class);
         });
     }
 

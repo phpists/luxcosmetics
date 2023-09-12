@@ -409,6 +409,7 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function 
     // Gifts > Products
     Route::resource('gift_products', \App\Http\Controllers\Admin\GiftProductController::class, ['as' => 'admin']);
     // Gifts > Conditions
+    Route::resource('gift_conditions', \App\Http\Controllers\Admin\GiftConditionController::class, ['as' => 'admin']);
 
     // PromoCodes
     Route::resource('promo_codes', \App\Http\Controllers\Admin\PromoCodeController::class, ['as' => 'admin']);

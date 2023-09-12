@@ -27,6 +27,16 @@ class GiftCondition extends Model
     ];
 
 
+    protected static function booted (): void
+    {
+
+        self::deleted(function(GiftCondition $model) {
+            $model->conditionCases()->delete();
+            $model->conditionProducts()->delete();
+        });
+
+    }
+
     public function scopeBrand($query)
     {
         return $query->where('type', self::TYPE_BRAND);
@@ -64,6 +74,16 @@ class GiftCondition extends Model
     }
 
 
+    public function conditionProducts()
+    {
+        return $this->hasMany(GiftConditionProduct::class);
+    }
+
+    public function getProducts()
+    {
+        return $this->hasManyThrough(GiftProduct::class, GiftConditionProduct::class);
+    }
+
 
     public function getTypeTitle()
     {
@@ -72,10 +92,10 @@ class GiftCondition extends Model
 
     public function getSumString()
     {
-        $string = $this->min_sum ? ">{$this->min_sum}" : '>∞';
-        $string .= $this->max_sum ? "<{$this->max_sum}" : '<∞';
+        if (!($this->min_sum && $this->max_sum))
+            return '∞';
 
-        return $string;
+        return ($this->min_sum ? ">{$this->min_sum}" : '>∞') . ' / ' . ($this->max_sum ? "<{$this->max_sum}" : '<∞');
     }
 
 }
