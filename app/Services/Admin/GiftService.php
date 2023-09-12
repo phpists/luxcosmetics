@@ -2,6 +2,7 @@
 
 namespace App\Services\Admin;
 
+use App\Models\GiftCondition;
 use App\Models\GiftProduct;
 
 class GiftService
@@ -21,6 +22,11 @@ class GiftService
         }
 
         return $query->paginate();
+    }
+
+    public function getGiftConditions()
+    {
+        return GiftCondition::paginate();
     }
 
 }

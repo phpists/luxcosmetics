@@ -60,8 +60,21 @@
                             @include('admin.gifts.products._create')
                             @include('admin.gifts.products._edit')
                         </div>
+
                         <div class="tab-pane fade" id="conditions" role="tabpanel"
                              aria-labelledby="conditions">
+                            <div class="row justify-content-end">
+                                <button data-toggle="modal" data-target="#createGiftConditionModal"
+                                        class="btn btn-success font-weight-bolder mx-5">
+                                    <span class="svg-icon svg-icon-md">
+                                        <i class="fas fa-plus"></i>
+                                    </span>Добавить условие
+                                </button>
+                            </div>
+                            <hr class="my-8">
+                            <div id="content">
+                                @include('admin.gifts.conditions.table')
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -24,7 +24,7 @@ class GiftController extends Controller
 
         return view('admin.gifts.index', [
             'gift_products' => $this->giftService->getGiftProducts(),
-            'conditions' => new Collection()
+            'gift_conditions' => $this->giftService->getGiftConditions()
         ]);
     }
 
