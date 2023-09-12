@@ -182,7 +182,8 @@
 || request()->routeIs('admin.category.create')
 || request()->routeIs('admin.properties.edit')
 || request()->routeIs('admin.properties.create')
-|| request()->routeIs('admin.main-block.index')) ? 'menu-item-open' : '' }}"
+|| request()->routeIs('admin.main-block.index')
+|| request()->routeIs('admin.gifts.index')) ? 'menu-item-open' : '' }}"
                         aria-haspopup="true" data-menu-toggle="hover">
                             <a href="javascript:;" class="menu-link menu-toggle">
                                 <i class="fas flaticon2-copy menu-icon"></i>
@@ -250,6 +251,19 @@
                                                 <span></span>
                                             </i>
                                             <span class="menu-text">Блок на главной странице</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="menu-submenu" style="" kt-hidden-height="160">
+                                <i class="menu-arrow"></i>
+                                <ul class="menu-subnav">
+                                    <li class="menu-item {{ request()->routeIs('admin.gifts.index') ? 'menu-item-active' : '' }}" aria-haspopup="true">
+                                        <a href="{{ route('admin.gifts.index') }}" class="menu-link">
+                                            <i class="menu-bullet menu-bullet-dot">
+                                                <span></span>
+                                            </i>
+                                            <span class="menu-text">Подарки</span>
                                         </a>
                                     </li>
                                 </ul>

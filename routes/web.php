@@ -404,6 +404,12 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function 
     Route::put('gift_card/{gift_card}/deactivate', [\App\Http\Controllers\Admin\GiftCardController::class, 'deactivate'])->name('admin.gift_cards.deactivate');
     Route::get('/user/{email}', [\App\Http\Controllers\Admin\GiftCardController::class, 'showByEmail'])->name('admin.user.showByEmail');
 
+    // Gifts
+    Route::get('gifts', [\App\Http\Controllers\Admin\GiftController::class, 'index'])->name('admin.gifts.index');
+    // Gifts > Products
+    Route::resource('gift_products', \App\Http\Controllers\Admin\GiftProductController::class, ['as' => 'admin']);
+    // Gifts > Conditions
+
     // PromoCodes
     Route::resource('promo_codes', \App\Http\Controllers\Admin\PromoCodeController::class, ['as' => 'admin']);
 
