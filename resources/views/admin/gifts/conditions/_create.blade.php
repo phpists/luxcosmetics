@@ -77,7 +77,7 @@
                      <div class="row">
                         <div class="col-12">
                             <div class="form-group w-100">
-                                <label for="createGiftConditionBrand" class="font-weight-bold">Подарочніе товарі</label>
+                                <label for="createGiftConditionBrand" class="font-weight-bold">Подарочные товары</label>
                                 <select id="createGiftConditionBrand" class="form-control selectpicker" name="products[]" multiple data-live-search="true" required>
                                     @foreach($gift_products as $gift_product)
                                         <option value="{{ $gift_product->id }}">[{{ $gift_product->article }}]{{ $gift_product->title }}</option>
