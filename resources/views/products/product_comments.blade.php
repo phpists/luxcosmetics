@@ -14,11 +14,17 @@
                 <div class="review__content">{{ $comment->description }}</div>
             </div>
             <div class="review__footer">
-                <div class="review__date">
-                    <svg class="icon">
-                        <use xlink:href="{{asset('images/dist/sprite.svg#calendar')}}"></use>
-                    </svg>
-                    {{ \Carbon\Carbon::parse($comment->created_at)->isoFormat('D.MM.Y') }}
+                <div class="review__footerwrap">
+                    <div class="stars">
+                        @for($i = 1; $i < 6; $i++)
+                            @if($i <= $comment->rating)
+                                <span class="stars__item is-active"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#star')}}"></use></svg></span>
+                            @else
+                                <span class="stars__item"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#star')}}"></use></svg></span>
+                            @endif
+                        @endfor
+                    </div>
+                    <div class="review__date"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#calendar')}}"></use></svg> {{ \Carbon\Carbon::parse($comment->created_at)->isoFormat('D.MM.Y') }}</div>
                 </div>
                 <div class="review__mark markblock">
                     <div class="markblock__title">Был ли этот отзыв полезен?</div>

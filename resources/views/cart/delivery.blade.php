@@ -26,6 +26,9 @@
 				</div>
 				<div class="cart-page__container">
 					<main class="cart-page__main">
+                        <div>
+                            <button id="send_I_btn">Send</button>
+                        </div>
                         <form id="orderForm" action="{{ route('cart.delivery.store') }}" method="post">
                             @csrf
                         <div class="cart-page__group">
@@ -116,6 +119,27 @@
                         console.log(resp)
                     }
                 })
+            })
+
+            document.getElementById('send_I_btn').addEventListener('click', function(ev) {
+                let data = {
+                    grant_type: 'client_credentials',
+                    client_id: 'EMscd6r9JnFiQ3bLoyjJY6eM78JrJceI',
+                    client_secret: 'PjLZkKBHEiLK3YsjtNrt3TGNG0ahs3kG'
+                }
+
+                $.ajax({
+                    url: 'https://api.edu.cdek.ru/v2/oauth/token',
+                    method: 'POST',
+                    data: data,
+                    success: function (resp) {
+                        console.log(resp)
+                    },
+                    error: function (resp) {
+                        console.log(resp)
+                    }
+                })
+
             })
         })
     </script>

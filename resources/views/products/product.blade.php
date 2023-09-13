@@ -55,7 +55,7 @@
                                     <span class="stars__item"><svg class="icon"><use
                                                 xlink:href="{{asset('/images/dist/sprite.svg#star')}}"></use></svg></span>
                                 </div>
-                                <a href="#commentsBlock">отзывы ({{$countComments}})</a>
+                                <a href="#reviews" class="reviews-link">отзывы ({{$countComments}})</a>
                             </div>
                             <div class="product-page__available">
                                 <svg class="icon">
@@ -123,7 +123,7 @@
                                         @endif
                                     @endfor
                                 </div>
-                                <a href="#commentsBlock">отзывы ({{$countComments}})</a>
+                                <a href="#reviews" class="reviews-link">отзывы ({{$countComments}})</a>
                             </div>
                             <div class="product-page__available">
                                 <svg class="icon">
@@ -525,7 +525,7 @@
                         </form>
 
                     </div>
-                    <div class="product-tabs__tabsheader tabs">
+                    <div class="product-tabs__tabsheader tabs" id="reviews">
                         <div class="product-tabs__tab tab">Отзывы</div>
                         <div class="product-tabs__tab tab">Вопросы</div>
                     </div>
