@@ -10,11 +10,13 @@ class GiftCondition extends Model
     use HasFactory;
 
 
+    const TYPE_SUM = 'sum';
     const TYPE_BRAND = 'brand';
     const TYPE_CATEGORY = 'category';
     const TYPE_PRODUCT = 'product';
 
     const ALL_TYPES = [
+        self::TYPE_SUM => 'Сумма',
         self::TYPE_BRAND => 'Бренд',
         self::TYPE_CATEGORY => 'Категория',
         self::TYPE_PRODUCT => 'Товар'
@@ -59,18 +61,32 @@ class GiftCondition extends Model
         return $this->hasMany(GiftConditionCase::class);
     }
 
-    public function cases()
+    public function cases(): ?\Illuminate\Database\Eloquent\Relations\HasManyThrough
     {
-        switch ($this->type) {
-            case self::TYPE_BRAND:
-                return $this->hasManyThrough(Brand::class, GiftConditionCase::class);
-            case self::TYPE_CATEGORY:
-                return $this->hasManyThrough(Category::class, GiftConditionCase::class);
-            case self::TYPE_PRODUCT:
-                return $this->hasManyThrough(Product::class, GiftConditionCase::class);
-            default:
-                return null;
-        }
+        return match ($this->type) {
+            self::TYPE_BRAND => $this->hasManyThrough(
+                Brand::class,
+                GiftConditionCase::class,
+                'gift_condition_id',
+                'id',
+                'id',
+                'foreign_id'
+            ),
+            self::TYPE_CATEGORY => $this->hasManyThrough(Category::class,
+                GiftConditionCase::class,
+                'gift_condition_id',
+                'id',
+                'id',
+                'foreign_id'
+            ),
+            self::TYPE_PRODUCT => $this->hasManyThrough(Product::class,
+                GiftConditionCase::class,
+                'gift_condition_id',
+                'id',
+                'id',
+                'foreign_id'),
+            default => null,
+        };
     }
 
 
@@ -79,9 +95,13 @@ class GiftCondition extends Model
         return $this->hasMany(GiftConditionProduct::class);
     }
 
-    public function getProducts()
+    public function products()
     {
-        return $this->hasManyThrough(GiftProduct::class, GiftConditionProduct::class);
+        return $this->hasManyThrough(GiftProduct::class, GiftConditionProduct::class,
+            'gift_condition_id',
+            'id',
+        'id',
+        'gift_product_id');
     }
 
 
@@ -92,7 +112,7 @@ class GiftCondition extends Model
 
     public function getSumString()
     {
-        if (!($this->min_sum && $this->max_sum))
+        if (!$this->min_sum && !$this->max_sum)
             return '∞';
 
         return ($this->min_sum ? ">{$this->min_sum}" : '>∞') . ' / ' . ($this->max_sum ? "<{$this->max_sum}" : '<∞');

@@ -129,6 +129,7 @@ Route::group(['middleware' => 'auth'], function () {
 });
 // Cart
 Route::get('cart', [\App\Http\Controllers\CartController::class, 'index'])->name('cart');
+Route::get('cart/gifts', [\App\Http\Controllers\CartController::class, 'gifts'])->name('cart.gifts');
 Route::post('cart', [\App\Http\Controllers\CartController::class, 'indexStore'])
     ->middleware('can-checkout')
     ->name('cart.store');

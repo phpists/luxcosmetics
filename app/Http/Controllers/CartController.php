@@ -116,7 +116,6 @@ class CartController extends Controller
         $this->cartService->setProperty(CartService::CARD_KEY, $card_id);
 
         if ($order_id = $this->cartService->store()) {
-
             Mail::to($email)->send(new OrderLetter('Спасибо за оформления заказа'));
             return redirect()->route('cart.success', ['order' => $order_id]);
         }
@@ -254,6 +253,17 @@ class CartController extends Controller
         $this->cartService->usePromo($promoCode->code);
 
         return back()->with('success', 'Промокод успешно применён');
+    }
+
+
+    public function gifts(Request $request)
+    {
+        if ($request->ajax())
+            return view('cart.includes.gifts', [
+                'gift_products' => $this->cartService->getGiftProducts()
+            ]);
+
+        return to_route('cart');
     }
 
 

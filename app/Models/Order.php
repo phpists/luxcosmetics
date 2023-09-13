@@ -115,17 +115,30 @@ class Order extends Model
         return $this->belongsTo(OrderStatus::class);
     }
 
+    public function orderGiftProducts()
+    {
+        return $this->hasMany(OrderGiftProduct::class);
+    }
+
+    public function giftProducts()
+    {
+        return $this->hasManyThrough(
+            GiftProduct::class,
+            OrderGiftProduct::class,
+            'order_id',
+            'id',
+            'id',
+            'gift_product_id'
+        );
+    }
+
+
     public function isUsedBonuses()
     {
         return $this->is_used_bonuses == 1;
     }
 
 
-
-    public function getStatusTitleAttribute()
-    {
-        return 'Новый'; // TODO: створити сутність статусів
-    }
 
     public function getPrettyCreatedAtAttribute()
     {

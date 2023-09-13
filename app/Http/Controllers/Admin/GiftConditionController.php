@@ -15,7 +15,7 @@ class GiftConditionController extends Controller
     {
         $data = $request->post();
 
-        $cases = $data['cases'];
+        $cases = $data['cases'] ?? [];
         unset($data['cases']);
 
         $products = $data['products'];
@@ -58,7 +58,7 @@ class GiftConditionController extends Controller
     {
         $data = $request->post();
 
-        $cases = $data['cases'];
+        $cases = $data['cases'] ?? [];
         unset($data['cases']);
 
         $products = $data['products'];

@@ -32,10 +32,10 @@
                                 <label for="editGiftConditionMinSum" class="font-weight-bold">Сумма</label>
                                 <div class="row row-cols-1 row-cols-md-2">
                                     <div class="col pr-0">
-                                        <input id="editGiftConditionMinSum" type="number" name="min_sum" placeholder="от" class="form-control rounded-right-0">
+                                        <input id="editGiftConditionMinSum" type="number" name="min_sum" min="0" placeholder="от" class="form-control rounded-right-0">
                                     </div>
                                     <div class="col pl-0">
-                                        <input id="editGiftConditionMaxSum" type="number" name="max_sum" class="form-control rounded-left-0" placeholder="до">
+                                        <input id="editGiftConditionMaxSum" type="number" name="max_sum" min="0" class="form-control rounded-left-0" placeholder="до">
                                     </div>
                                 </div>
                             </div>
@@ -43,10 +43,10 @@
                     </div>
 
                     <div class="row">
-                        <div class="col-12 hidable">
+                        <div class="col-12 hidable" style="display: none;">
                             <div class="form-group w-100">
                                 <label for="editGiftConditionBrand" class="font-weight-bold">Бренд</label>
-                                <select id="editGiftConditionBrand" class="form-control selectpicker hidable-brand" name="cases[]" multiple data-live-search="true" required>
+                                <select id="editGiftConditionBrand" class="form-control selectpicker hidable-brand" name="cases[]" multiple data-live-search="true">
                                     @foreach($brands as $brand)
                                         <option value="{{ $brand->id }}">{{ $brand->name }}</option>
                                     @endforeach
