@@ -388,6 +388,8 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function 
     Route::delete('/order-product/destroy/{orderProduct}', [\App\Http\Controllers\Admin\OrderProductController::class, 'destroy'])->name('admin.order_products.destroy');
     Route::post('/order-product/add', [\App\Http\Controllers\Admin\OrderProductController::class, 'add'])->name('admin.order_products.add');
     Route::post('/order-product/refresh', [\App\Http\Controllers\Admin\OrderProductController::class, 'refresh'])->name('admin.order_products.refresh');
+    // Order Gifts
+    Route::post('/order/gifts/table', [\App\Http\Controllers\Admin\OrderGiftController::class, 'table'])->name('admin.order-gifts.table');
 
     // Order Statuses
     Route::resource('order_statuses', \App\Http\Controllers\Admin\OrderStatusController::class, ['as' => 'admin']);

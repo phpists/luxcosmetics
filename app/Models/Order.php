@@ -90,6 +90,19 @@ class Order extends Model
         return $this->hasMany(OrderProduct::class);
     }
 
+
+    public function products()
+    {
+        return $this->hasManyThrough(
+            Product::class,
+            OrderProduct::class,
+            'order_id',
+            'id',
+            'id',
+            'product_id'
+        );
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class);

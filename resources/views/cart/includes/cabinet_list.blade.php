@@ -40,18 +40,18 @@
 
             @if($order->giftProducts)
                 @foreach($order->giftProducts as $gift_product)
-            <div class="cart-table__item  cart-product cart-product--gift">
-                <div class="cart-product__image">
-                    <img src="{{ $gift_product->getImgSrc() }}" alt="">
-                </div>
-                <div class="cart-product__desc">
-                    <div class="cart-product__title">{{ $gift_product->brand->name ?? 'UNDEFINED BRAND' }}</div>
-                    <div class="cart-product__subtitle">{{ $gift_product->title }}</div>
-                </div>
-                <div class="cart-product__sum cart-product__sum--free">Бесплатно</div>
-            </div>
-                    @endforeach
-                @endif
+                    <div class="cart-table__item  cart-product cart-product--gift">
+                        <div class="cart-product__image">
+                            <img src="{{ $gift_product->getImgSrc() }}" alt="">
+                        </div>
+                        <div class="cart-product__desc">
+                            <div class="cart-product__title">{{ $gift_product->brand->name ?? 'UNDEFINED BRAND' }}</div>
+                            <div class="cart-product__subtitle">{{ $gift_product->title }}</div>
+                        </div>
+                        <div class="cart-product__sum cart-product__sum--free">Бесплатно</div>
+                    </div>
+                @endforeach
+            @endif
 
         </div>
     </div>

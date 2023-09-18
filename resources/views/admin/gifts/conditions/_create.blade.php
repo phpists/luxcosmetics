@@ -45,7 +45,7 @@
                         <div class="col-12 hidable" style="display: none;">
                             <div class="form-group w-100">
                                 <label for="createGiftConditionBrand" class="font-weight-bold">Бренд</label>
-                                <select id="createGiftConditionBrand" class="form-control selectpicker hidable-brand" name="cases[]" multiple data-live-search="true">
+                                <select id="createGiftConditionBrand" class="form-control select2 hidable-brand" name="cases[]" multiple>
                                     @foreach($brands as $brand)
                                         <option value="{{ $brand->id }}">{{ $brand->name }}</option>
                                     @endforeach
@@ -55,7 +55,7 @@
                         <div class="col-12 hidable" style="display: none;">
                             <div class="form-group w-100">
                                 <label for="createGiftConditionCategory" class="font-weight-bold">Категория</label>
-                                <select id="createGiftConditionCategory" class="form-control selectpicker hidable-category" name="cases[]" multiple data-live-search="true">
+                                <select id="createGiftConditionCategory" class="form-control select2 hidable-category" name="cases[]" multiple>
                                     @foreach($categories as $category)
                                         <option value="{{ $category->id }}">{{ $category->name }}</option>
                                     @endforeach
@@ -65,7 +65,7 @@
                         <div class="col-12 hidable" style="display: none;">
                             <div class="form-group w-100">
                                 <label for="createGiftConditionProduct" class="font-weight-bold">Товар</label>
-                                <select id="createGiftConditionProduct" class="form-control selectpicker hidable-product" name="cases[]" multiple data-live-search="true">
+                                <select id="createGiftConditionProduct" class="form-control select2 hidable-product" name="cases[]" multiple>
                                     @foreach($products as $product)
                                         <option value="{{ $product->id }}">{{ "[{$product->code}] {$product->brand?->name} > {$product->title}" }}</option>
                                     @endforeach
@@ -77,8 +77,8 @@
                      <div class="row">
                         <div class="col-12">
                             <div class="form-group w-100">
-                                <label for="createGiftConditionBrand" class="font-weight-bold">Подарочные товары</label>
-                                <select id="createGiftConditionBrand" class="form-control selectpicker" name="products[]" multiple data-live-search="true" required>
+                                <label for="createGiftConditionProducts" class="font-weight-bold">Подарочные товары</label>
+                                <select id="createGiftConditionProducts" class="form-control select2" name="products[]" multiple required>
                                     @foreach($gift_products as $gift_product)
                                         <option value="{{ $gift_product->id }}">[{{ $gift_product->article }}]{{ $gift_product->title }}</option>
                                     @endforeach

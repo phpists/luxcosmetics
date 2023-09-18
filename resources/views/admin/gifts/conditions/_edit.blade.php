@@ -46,7 +46,7 @@
                         <div class="col-12 hidable" style="display: none;">
                             <div class="form-group w-100">
                                 <label for="editGiftConditionBrand" class="font-weight-bold">Бренд</label>
-                                <select id="editGiftConditionBrand" class="form-control selectpicker hidable-brand" name="cases[]" multiple data-live-search="true">
+                                <select id="editGiftConditionBrand" class="form-control select2 hidable-brand" name="cases[]" multiple data-live-search="true">
                                     @foreach($brands as $brand)
                                         <option value="{{ $brand->id }}">{{ $brand->name }}</option>
                                     @endforeach
@@ -56,7 +56,7 @@
                         <div class="col-12 hidable" style="display: none;">
                             <div class="form-group w-100">
                                 <label for="editGiftConditionCategory" class="font-weight-bold">Категория</label>
-                                <select id="editGiftConditionCategory" class="form-control selectpicker hidable-category" name="cases[]" multiple data-live-search="true">
+                                <select id="editGiftConditionCategory" class="form-control select2 hidable-category" name="cases[]" multiple data-live-search="true">
                                     @foreach($categories as $category)
                                         <option value="{{ $category->id }}">{{ $category->name }}</option>
                                     @endforeach
@@ -66,7 +66,7 @@
                         <div class="col-12 hidable" style="display: none;">
                             <div class="form-group w-100">
                                 <label for="editGiftConditionProduct" class="font-weight-bold">Товар</label>
-                                <select id="editGiftConditionProduct" class="form-control selectpicker hidable-product" name="cases[]" multiple data-live-search="true">
+                                <select id="editGiftConditionProduct" class="form-control select2 hidable-product" name="cases[]" multiple data-live-search="true">
                                     @foreach($products as $product)
                                         <option value="{{ $product->id }}">{{ "[{$product->code}] {$product->brand?->name} > {$product->title}" }}</option>
                                     @endforeach
@@ -79,7 +79,7 @@
                         <div class="col-12">
                             <div class="form-group w-100">
                                 <label for="editGiftConditionProducts" class="font-weight-bold">Подарочные товары</label>
-                                <select id="editGiftConditionProducts" class="form-control selectpicker" name="products[]" multiple data-live-search="true" required>
+                                <select id="editGiftConditionProducts" class="form-control select2" name="products[]" multiple data-live-search="true" required>
                                     @foreach($gift_products as $gift_product)
                                         <option value="{{ $gift_product->id }}">[{{ $gift_product->article }}]{{ $gift_product->title }}</option>
                                     @endforeach

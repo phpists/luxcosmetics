@@ -17,6 +17,11 @@
     </div>
 @endsection
 @section('content')
+    <style>
+        .select2-container {
+            width: 100% !important;
+        }
+    </style>
 
     <div class="d-flex flex-column-fluid">
         <div class="container-fluid">
@@ -89,6 +94,7 @@
 
 @section('js_after')
     <script src="{{ asset('super_admin/js/jquery.pjax.js') }}"></script>
+    <script src="{{ asset('super_admin/js/select2.ru.js') }}"></script>
     <script>
         let filterTimeout;
 
@@ -202,6 +208,10 @@
             $('[data-toggle="tab"]').on('shown.bs.tab', function (e) {
                 localStorage.setItem('tab', e.target.href.split('#')[1])
             })
+
+            $('.select2').select2({
+                language: 'ru'
+            });
 
             showLastTab()
 

@@ -69,6 +69,9 @@ $(function () {
         });
     })
 
+
+    $(document).pjax('[data-pjax]', '#gifts')
+
 })
 
 
@@ -95,6 +98,21 @@ function updateTable(data, url = refreshUrl) {
                 $('#orderProductsTable tbody').html(response.html)
                 $('#addProduct').modal('hide')
             }
+            filterGifts()
         }
+    })
+}
+
+function filterGifts() {
+    let products = $('#orderForm').serializeArray().filter(function(item) {
+        return item.name.startsWith('products[');
+    });
+    $.pjax.reload({
+        type: 'POST',
+        url: $('#giftsUrl').val(),
+        push: false,
+        replace: false,
+        container: '#gifts',
+        data: products,
     })
 }

@@ -7,6 +7,9 @@
                 #
             </th>
             <th class="pr-0 text-center">
+                Артикул
+            </th>
+            <th class="pr-0 text-center">
                 Изображение
             </th>
             <th class="pr-0 text-center">
@@ -28,6 +31,9 @@
             <tr>
                 <td class="text-center pl-0">
                     {{ $gift_product->id }}
+                </td>
+                <td class="text-center pl-0">
+                    {{ $gift_product->article }}
                 </td>
                 <td class="text-center pr-0">
                     <img src="{{ $gift_product->getImgSrc() }}" alt="img" class="img-fluid" style="max-height: 64px">

@@ -122,6 +122,17 @@
                                         <td class="border-top-0 text-primary pr-0 pt-7 text-right align-middle">{{ $orderProduct->quantity * $orderProduct->price }}</td>
                                     </tr>
                                     @endforeach
+                                    @foreach($order->giftProducts as $giftProduct)
+                                    <tr class="font-weight-boldest">
+                                        <td class="border-0 pl-0 pt-7 d-flex align-items-center">
+                                            {{ "[{$giftProduct->article}] {$giftProduct->brand->name} > {$giftProduct->title}" }}
+                                            <span class="label label-light-primary label-inline font-weight-lighter ml-2">Подарок</span>
+                                        </td>
+                                        <td class="border-top-0 text-right pt-7 align-middle"></td>
+                                        <td class="border-top-0 text-right pt-7 align-middle"></td>
+                                        <td class="border-top-0 text-primary pr-0 pt-7 text-right align-middle">Бесплатно</td>
+                                    </tr>
+                                    @endforeach
                                     </tbody>
                                 </table>
                             </div>
