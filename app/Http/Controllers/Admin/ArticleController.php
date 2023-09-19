@@ -28,20 +28,20 @@ class ArticleController extends Controller
     }
 
     public function show(Request $request) {
-        $brand = Article::query()->find($request->id);
-        if (!$brand) {
+        $article = Article::query()->find($request->id);
+        if (!$article) {
             return response()->json([
                 'status' => false, 'message' => 'Запись не найдена'
             ], 404);
         }
         else {
-            return response()->json($brand);
+            return response()->json($article);
         }
     }
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
         $data = $request->all();
-        $article = Article::findOrFail($id);
+        $article = Article::findOrFail($request->id);
 
         if ($request->hasFile('image')) {
             $image = FileService::saveFile('uploads', 'articles', $request->file('image'));

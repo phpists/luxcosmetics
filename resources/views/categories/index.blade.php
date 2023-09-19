@@ -76,6 +76,15 @@
                             </ul>
 
                             <div id="catalog">
+                                <div class="category-page__events">
+                                    @foreach($category->posts as $post)
+                                        <div class="category-page__event catevent">
+                                            <div class="catevent__image"><img src="{{asset('/images/uploads/category_posts/'.$post->image_path)}}" alt=""></div>
+                                            <div class="catevent__title">{{$post->title}}</div>
+                                            <div class="catevent__subtitle">{!! $post->content !!}</div>
+                                        </div>
+                                    @endforeach
+                                </div>
                                 {!! $products_list !!}
                             </div>
 

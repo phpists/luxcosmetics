@@ -208,8 +208,9 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function 
     Route::post('categories/update/micro-seo', [AdminCategoryController::class, 'updateMicroSeo'])->name('admin.categories.update.micro-seo');
 
     // Article
+    Route::get('article/{id}', [\App\Http\Controllers\Admin\ArticleController::class, 'show'])->name('admin.article.show');
     Route::post('article/store', [\App\Http\Controllers\Admin\ArticleController::class, 'store'])->name('admin.article.store');
-    Route::put('article/update/{id}', [\App\Http\Controllers\Admin\ArticleController::class, 'update'])->name('admin.article.update');
+    Route::put('article/update', [\App\Http\Controllers\Admin\ArticleController::class, 'update'])->name('admin.article.update');
     Route::post('article/sort', [\App\Http\Controllers\Admin\ArticleController::class, 'sort'])->name('admin.article.sort');
     Route::delete('article/delete', [\App\Http\Controllers\Admin\ArticleController::class, 'delete'])->name('admin.article.delete');
 
@@ -414,6 +415,13 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function 
     // PromoCodes
     Route::resource('promo_codes', \App\Http\Controllers\Admin\PromoCodeController::class, ['as' => 'admin']);
 
+    /* Banners */
+    Route::post('category_post', [\App\Http\Controllers\Admin\CategoryPostsController::class, 'store'])->name('admin.category_post.store');
+    Route::get('category_posts/{id}', [\App\Http\Controllers\Admin\CategoryPostsController::class, 'show'])->name('admin.category_post.show');
+    Route::put('category_post/update', [\App\Http\Controllers\Admin\CategoryPostsController::class, 'update'])->name('admin.category_post.update');
+    Route::get('category_post/delete/{id}', [\App\Http\Controllers\Admin\CategoryPostsController::class, 'delete'])->name('admin.category_post.delete');
+    Route::post('category_posts/update-position', [\App\Http\Controllers\Admin\CategoryPostsController::class, 'updatePosition'])->name('admin.category_posts.update_positions');
+    Route::post('category_post/update-status', [\App\Http\Controllers\Admin\CategoryPostsController::class, 'updateStatus'])->name('admin.category_posts.update_status');
 });
 
 // General Pages

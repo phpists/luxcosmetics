@@ -1,20 +1,3 @@
-<div class="category-page__events">
-    <div class="category-page__event catevent">
-        <div class="catevent__image"><img src="{{asset('images/dist/banners/banner-small2.jpg')}}" alt=""></div>
-        <div class="catevent__title">Заголовок</div>
-        <div class="catevent__subtitle">Подзаголовок</div>
-    </div>
-    <div class="category-page__event catevent">
-        <div class="catevent__image"><img src="{{asset('images/dist/banners/banner-small2.jpg')}}" alt=""></div>
-        <div class="catevent__title">Заголовок</div>
-        <div class="catevent__subtitle">Подзаголовок</div>
-    </div>
-    <div class="category-page__event catevent">
-        <div class="catevent__image"><img src="{{asset('images/dist/banners/banner-small2.jpg')}}" alt=""></div>
-        <div class="catevent__title">Заголовок</div>
-        <div class="catevent__subtitle">Подзаголовок</div>
-    </div>
-</div>
 <div class="category-page__sortblock sortblock">
     <div class="sortblock__total">Показано <b><span id="currentlyShowedCount">{{ $products->count() }}</span> из {{ $products->total() }}</b></div>
     <div class="sortblock__sort sort">

@@ -15,28 +15,26 @@
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="createTagTitle">Редактировать статью</h5>
+                <h5 class="modal-title" id="createTagTitle">Редактировать баннер</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <i aria-hidden="true" class="ki ki-close"></i>
                 </button>
             </div>
-            @foreach($articles as $article)
-            <form action="{{ route('admin.article.update', $article->id ) }}" method="POST" enctype="multipart/form-data">
-            @endforeach
+            <form action="{{ route('admin.article.update') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 @method('put')
-                <input type="hidden" name="record_id" value="{{ $category->id }}">
-                <input type="hidden" name="table_name" value="categories">
+                <input type="hidden" name="category_id" value="{{ $category->id }}">
+                <input type="hidden" name="id" id="updateArticleId">
                 <div class="modal-body">
 
                     <div class="row">
                         <div class="col-lg-4">
-                            <div class="image-input art-image image-input-outline" id="createArticleImage">
-                                <div class="image-input-wrapper" id="createArticleImageBackground"></div>
+                            <div class="image-input art-image image-input-outline" id="updateArticleImage">
+                                <div class="image-input-wrapper" id="updateArticleImageBackground"></div>
 
                                 <label class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="change" data-toggle="tooltip" title="" data-original-title="Change avatar">
                                     <i class="fa fa-pen icon-sm text-muted"></i>
-                                    <input required type="file" name="image" accept="image/*"/>
+                                    <input type="file" name="image" accept="image/*"/>
                                     <input type="hidden" name="image_remove"/>
                                 </label>
                             </div>
@@ -47,15 +45,15 @@
                                     <div class="form-group w-100">
                                         <label for="createFaqQuestion" class="col-auto col-form-label font-weight-bold">Заголовок</label>
                                         <div class="col-sm-12">
-                                            <input value="{{$article->title}}" type="text" class="form-control" id="createFaqQuestion" name="title" required>
+                                            <input type="text" class="form-control" id="updateBannerTitle" name="title" required>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-12 px-0">
                                     <div class="form-group w-100">
-                                        <label for="createFaqPos" class="col-auto col-form-label font-weight-bold">Ссылка</label>
+                                        <label for="updateBannerLink" class="col-auto col-form-label font-weight-bold">Ссылка</label>
                                         <div class="col-sm-12">
-                                            <input value="{{$article->link}}" type="text" class="form-control" id="createLink" name="link" required>
+                                            <input type="text" class="form-control" id="updateBannerLink" name="link" required>
                                         </div>
                                     </div>
                                 </div>
@@ -67,7 +65,7 @@
                                     <div class="form-group w-100">
                                         <label for="createFaqPos" class="col-auto col-form-label font-weight-bold">Позиция</label>
                                         <div class="col-sm-12">
-                                            <input type="number" class="form-control" id="createFaqPos" name="position" value="{{ $last_position }}" min="1" required>
+                                            <input type="number" class="form-control" id="updateBannerPosition" name="position" min="1" required>
                                         </div>
                                     </div>
                                 </div>
@@ -77,7 +75,7 @@
                                         <div class="col-sm-12">
                                    <span class="switch">
                                         <label>
-                                            <input id="createIsActiveInFooter" checked type="checkbox" name="is_active"/>
+                                            <input id="updateIsBannerActive" checked type="checkbox" name="is_active"/>
                                             <span></span>
                                         </label>
                                     </span>
@@ -90,10 +88,10 @@
 
                     <div class="row">
                         <div class="form-group mb-0">
-                            <label class="col-auto col-form-label" for="createFaqAnswer">Ответ</label>
+                            <label class="col-auto col-form-label" for="createFaqAnswer">Описание</label>
                         </div>
                         <div class="col-12">
-                            <textarea name="description" class="summernote" id="createFaqAnswer"></textarea>
+                            <textarea name="description" class="summernote" id="updateBannerDescription"></textarea>
                         </div>
                     </div>
 

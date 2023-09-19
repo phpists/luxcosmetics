@@ -30,7 +30,7 @@ class CatalogService
         $this->request = $request;
 
         $category = Category::where('alias', $request->alias)
-            ->with(['subcategories', 'tags'])
+            ->with(['subcategories', 'tags', 'posts'])
             ->firstOrFail();
 
         $this->category = $category;

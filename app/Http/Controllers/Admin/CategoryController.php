@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Article;
 use App\Models\Category;
+use App\Models\CategoryPost;
 use App\Models\PropertyCategory;
 use App\Models\Tag;
 use App\Services\FileService;
@@ -93,6 +94,7 @@ class CategoryController extends Controller
         $categories = Category::query()->get();
         $category = $categories->find($id);
         $tags = Tag::query()->where('category_id', $id)->paginate();
+        $posts = CategoryPost::query()->where('category_id', $category->id)->orderBy('position')->get();
         $articles = Article::query()->where('record_id', $category->id)
             ->where('table_name', 'categories')
             ->orderBy('position')
@@ -101,7 +103,7 @@ class CategoryController extends Controller
         $last_position = $last_position ? $last_position + 1: 1;
         $properties = PropertyCategory::query()->where('category_id', $category->id)->orderBy('position')->paginate();
         $seo = Category::query()->select('categories.*')->find($id);
-        return view('admin.categories.edit', compact('category', 'categories', 'properties', 'tags', 'last_position', 'articles', 'seo'));
+        return view('admin.categories.edit', compact('category', 'categories', 'properties', 'tags', 'last_position', 'articles', 'seo', 'posts'));
     }
 
     public function update(Request $request){

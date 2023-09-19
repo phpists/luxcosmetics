@@ -79,4 +79,9 @@ class Category extends Model
         return $ids;
     }
 
+    public function posts(): HasMany
+    {
+        return $this->hasMany(CategoryPost::class);
+    }
+
 }
