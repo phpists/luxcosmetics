@@ -14,12 +14,14 @@
                 <img src="{{asset('images/uploads/products/'.$product->main_image)}}" alt="">
             </a>
             <button class="product__fav product_favourite"
-                    data-label=@if($product->is_favourite && \App\Services\FavoriteProductsService::checkByIdForAnonym($product->id)) "1" @else
-                "0"
-            @endif data-value="{{$product->id}}">
-            <svg class="icon">
-                <use xlink:href="{{asset('images/dist/sprite.svg#heart')}}"></use>
-            </svg>
+                    data-label=@if($product->is_favourite && \App\Services\FavoriteProductsService::checkByIdForAnonym($product->id)) "1" @else "0" @endif data-value="{{$product->id}}">
+                <svg class="icon">
+                    @if(isset($is_favourite_page) && $is_favourite_page)
+                        <use xlink:href="{{asset('images/dist/sprite.svg#trash')}}"></use>
+                    @else
+                        <use xlink:href="{{asset('images/dist/sprite.svg#heart')}}"></use>
+                    @endif
+                </svg>
             </button>
         </div>
         <div class="product__title"><a
@@ -72,7 +74,7 @@
 {{--                </svg>--}}
 {{--            </button>--}}
                 <button class="product__mobile-btn addToCart @if(isset($product->baseValue->id)) @if($cartService->check($product->id, $product->baseValue->id)) isInCart @endif @endif" data-product="{{ $product->id }}" data-property="{{ $product->baseValue->id ?? '' }}">
-                            <svg class="icon">
+                            <svg class="icon @if($product->is_favourite) favourite_product @endif">
                                 <use xlink:href="{{asset('images/dist/sprite.svg#cart')}}"></use>
                             </svg>
                 </button>

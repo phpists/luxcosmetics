@@ -25,8 +25,6 @@
                         @include('categories.parts.parent_category', ['category' => $product->category])
                         <li class="crumbs__item"><a href="{{ route('categories.show', ['alias' => $product->category->alias]) }}">
                                 {{ $product->category->name }}</a></li>
-                        <li class="crumbs__item"><a href="{{ route('brands.show', ['link' => $product->brand->link]) }}">
-                                {{ $product->brand?->name }}</a></li>
                         <li class="crumbs__item">{{ $product->title }}</li>
                     </ol>
                 </div>
@@ -527,7 +525,7 @@
                     </div>
                     <div class="product-tabs__tabsheader tabs" id="reviews">
                         <div class="product-tabs__tab tab">Отзывы</div>
-                        <div class="product-tabs__tab tab">Вопросы</div>
+                        <div class="product-tabs__tab tab active">Вопросы</div>
                     </div>
 
                     <div class="product-tabs__tabscontent">

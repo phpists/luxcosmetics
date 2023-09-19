@@ -69,10 +69,21 @@ class TagController extends Controller
         try {
             $tag = Tag::query()->find($request->id);
             if(!$tag) {
+                if ($request->ajax()) {
+                    return response()->json([
+                        'status' => false,
+                        'error' => 'tag not found'
+                    ], 404);
+                }
                 return redirect()->back()->with('error', 'Нет записи с id '.$tag->id);
             }
             FileService::removeFile('uploads', 'tags', $tag->image_path);
             $tag->delete();
+            if ($request->ajax()) {
+                return response()->json([
+                    'success' => true
+                ]);
+            }
             return redirect()->back()->with('success', 'Тег успешно удален');
         }
         catch (\Exception $exception) {

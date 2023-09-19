@@ -65,7 +65,7 @@
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" data-toggle="tab" href="#posts">
-                                    <span class="nav-text">Посты</span>
+                                    <span class="nav-text">Рекламные баннеры</span>
                                 </a>
                             </li>
                         </ul>
@@ -331,20 +331,16 @@
                                                 </span>
                                             </td>
                                             <td class="text-center pr-0">
-                                                    <form action="{{ route('admin.tag.delete') }}" method="POST">
-                                                        <a href="javascript:;" class="btn btn-sm btn-clean btn-icon updateTag"
-                                                           data-toggle="modal" data-target="#updateFaqModal"
-                                                           data-id="{{ $tag->id }}">
-                                                            <i class="las la-edit"></i>
-                                                        </a>
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <input type="hidden" name="id" value="{{ $tag->id }}">
-                                                        <button type="submit" class="btn btn-sm btn-clean btn-icon btn_delete"
-                                                                onclick="return confirm('Ви впевнені, що хочете видалити питання \'{{ $tag->name }}\'?')"
-                                                                title="Delete"><i class="las la-trash"></i>
-                                                        </button>
-                                                    </form>
+                                                <a href="javascript:;" class="btn btn-sm btn-clean btn-icon updateTag"
+                                                   data-toggle="modal" data-target="#updateFaqModal"
+                                                   data-id="{{ $tag->id }}">
+                                                    <i class="las la-edit"></i>
+                                                </a>
+                                                <button type="button" class="btn btn-sm btn-clean btn-icon btn_delete tag_delete"
+                                                        data-label="{{ $tag->name }}"
+                                                        data-value="{{$tag->id}}"
+                                                        title="Delete"><i class="las la-trash"></i>
+                                                </button>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -382,20 +378,16 @@
                                                 </span>
                                             </td>
                                             <td class="text-center pr-0">
-                                                <form action="{{ route('admin.tag.delete') }}" method="POST">
-                                                    <a href="javascript:;" class="btn btn-sm btn-clean btn-icon updateTag"
-                                                       data-toggle="modal" data-target="#updateFaqModal"
-                                                       data-id="{{ $tag->id }}">
-                                                        <i class="las la-edit"></i>
-                                                    </a>
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <input type="hidden" name="id" value="{{ $tag->id }}">
-                                                    <button type="submit" class="btn btn-sm btn-clean btn-icon btn_delete"
-                                                            onclick="return confirm('Ви впевнені, що хочете видалити питання \'{{ $tag->name }}\'?')"
-                                                            title="Delete"><i class="las la-trash"></i>
-                                                    </button>
-                                                </form>
+                                                <a href="javascript:;" class="btn btn-sm btn-clean btn-icon updateTag"
+                                                   data-toggle="modal" data-target="#updateFaqModal"
+                                                   data-id="{{ $tag->id }}">
+                                                    <i class="las la-edit"></i>
+                                                </a>
+                                                <button type="button" class="btn btn-sm btn-clean btn-icon tag_delete btn_delete"
+                                                        data-label="{{ $tag->name }}"
+                                                        data-value="{{$tag->id}}"
+                                                        title="Delete"><i class="las la-trash"></i>
+                                                </button>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -474,7 +466,7 @@
                             <div class="row mb-5">
                                 <div class="col">
                                     <div class="mb-7">
-                                        <h3>Посты</h3>
+                                        <h3>Рекламные баннеры</h3>
                                     </div>
                                 </div>
                                 <div class="col-auto">
@@ -490,11 +482,13 @@
 {{--                                    </span>Активировать--}}
 {{--                                        </button>--}}
 {{--                                    </div>--}}
-                                    <button data-toggle="modal" data-target="#createCategoryPostModal"
-                                            class="btn btn-primary font-weight-bold">
-                                        <i class="fas fa-plus mr-2"></i>
-                                        Добавить
-                                    </button>
+                                    @if(sizeof($posts) < 3)
+                                        <button data-toggle="modal" data-target="#createCategoryPostModal"
+                                                class="btn btn-primary font-weight-bold">
+                                            <i class="fas fa-plus mr-2"></i>
+                                            Добавить
+                                        </button>
+                                    @endif
                                 </div>
                             </div>
                             <table class="table table-head-custom table-vertical-center">
@@ -566,11 +560,11 @@
                                                data-id="{{$item->id}}">
                                                 <i class="las la-edit"></i>
                                             </a>
-                                            <a href="{{ route('admin.category_post.delete', $item->id) }}"
-                                               class="btn btn-sm btn-clean btn-icon"
-                                               onclick="return confirm('Ви впевнені, що хочете видалити цей запис?')">
-                                                <i class="las la-trash"></i>
-                                            </a>
+                                            <button type="button" class="btn btn-sm btn-clean btn-icon post_delete btn_delete"
+                                                    data-label="{{ $item->name }}"
+                                                    data-value="{{$item->id}}"
+                                                    title="Delete"><i class="las la-trash"></i>
+                                            </button>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -606,6 +600,34 @@
             placeholder: "Выберите категорию",
             allowClear: true
         });
+        function ajaxDelete(url, id, el_delete) {
+            if(!confirm('Вы уверенны, что хотите удалить запись?')) {
+                return;
+            }
+            $.ajax({
+                url: url,
+                method: 'delete',
+                data: {
+                    id: id
+                },
+                success: function () {
+                    document.querySelector(el_delete)?.remove();
+                },
+                error: function (res) {
+                    console.log(res)
+                }
+            })
+        }
+        document.querySelectorAll('.tag_delete').forEach((el, id) => {
+            el.addEventListener('click', () => {
+                ajaxDelete('/admin/tag', el.dataset.value, '#tag_'+el.dataset.value)
+            })
+        })
+        document.querySelectorAll('.post_delete').forEach((el, id) => {
+            el.addEventListener('click', () => {
+                ajaxDelete('/admin/category_post/delete', el.dataset.value, '#category_post_'+el.dataset.value)
+            })
+        })
         var KTSummernoteDemo = function () {
             // Private functions
             var demos = function () {

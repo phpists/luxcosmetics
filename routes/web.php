@@ -422,7 +422,7 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function 
     Route::post('category_post', [\App\Http\Controllers\Admin\CategoryPostsController::class, 'store'])->name('admin.category_post.store');
     Route::get('category_posts/{id}', [\App\Http\Controllers\Admin\CategoryPostsController::class, 'show'])->name('admin.category_post.show');
     Route::put('category_post/update', [\App\Http\Controllers\Admin\CategoryPostsController::class, 'update'])->name('admin.category_post.update');
-    Route::get('category_post/delete/{id}', [\App\Http\Controllers\Admin\CategoryPostsController::class, 'delete'])->name('admin.category_post.delete');
+    Route::delete('category_post/delete', [\App\Http\Controllers\Admin\CategoryPostsController::class, 'delete'])->name('admin.category_post.delete');
     Route::post('category_posts/update-position', [\App\Http\Controllers\Admin\CategoryPostsController::class, 'updatePosition'])->name('admin.category_posts.update_positions');
     Route::post('category_post/update-status', [\App\Http\Controllers\Admin\CategoryPostsController::class, 'updateStatus'])->name('admin.category_posts.update_status');
 });

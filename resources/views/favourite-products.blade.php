@@ -40,7 +40,7 @@
                                 </button>
                             </div>
                             <div class="category-page__products">
-                                @include('categories.parts.products', ['products' => $products, 'variations' => $variations])
+                                @include('categories.parts.products', ['products' => $products, 'variations' => $variations, 'is_favourite_page' => true])
                             </div>
                             <div id="paginate">
                                 @include('categories.parts.pagination')

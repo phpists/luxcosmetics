@@ -52,7 +52,16 @@ class CategoryPostsController extends Controller
     }
 
     public function delete(Request $request) {
-        CategoryPost::query()->where('id', $request->id)->delete();
+        $category_post = CategoryPost::query()->find($request->id);
+        if (!$category_post) {
+            if ($request->ajax()) {
+                return response()->json(['status' => false, 'error' => 'Not found record'], 404);
+            }
+        }
+        $category_post->delete();
+        if ($request->ajax()) {
+            return response()->json(['status' => true]);
+        }
         return redirect()->back()->with('success', 'Пост успешно удален');
     }
 
