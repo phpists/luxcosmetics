@@ -44,11 +44,14 @@ class OrderProductController extends Controller
         $products = collect($products);
 
         if ($request->wantsJson()) {
+            $bonuses = $request->get('bonuses', 0);
+            $total_sum = $products->sum(function ($item) {
+                    return $item['quantity'] * $item['price'];
+                });
             $html = view('admin.orders.includes.products', [
                 'orderProducts' => $products,
-                'total_sum' => $products->sum(function ($item) {
-                    return $item['quantity'] * $item['price'];
-                })
+                'total_sum' => $total_sum - $bonuses,
+                'bonuses' => $bonuses
             ])->render();
 
             return new JsonResponse([
@@ -66,11 +69,14 @@ class OrderProductController extends Controller
         $products = collect($request->post('products'));
 
         if ($request->wantsJson()) {
+            $bonuses = $request->get('bonuses', 0);
+            $total_sum = $products->sum(function ($item) {
+                    return $item['quantity'] * $item['price'];
+                });
             $html = view('admin.orders.includes.products', [
                 'orderProducts' => $products,
-                'total_sum' => $products->sum(function ($item) {
-                    return $item['quantity'] * $item['price'];
-                })
+                'total_sum' => $total_sum - $bonuses,
+                'bonuses' => $bonuses
             ])->render();
 
             return new JsonResponse([

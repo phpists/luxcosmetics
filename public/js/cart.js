@@ -340,6 +340,7 @@ function updateTotalSum(sum) {
 
 function updateTotalBlock(html) {
     $('#cartTotalBlock').html(html)
+    loadGifts()
 }
 
 function findValueByName(name, serializedForm) {
@@ -360,4 +361,8 @@ function disableCheckout(message) {
     if ($('.cart-aside > .formerror').length < 1) {
         $('button.cartSubmit').before(`<div class="formerror">${message}</div>`)
     }
+}
+
+function loadGifts() {
+    $('#giftsContainer').load($('#giftsUrl').val())
 }

@@ -2,6 +2,8 @@
 
 @section('title', 'Корзина')
 
+@php($cartService->getGiftProducts())
+
 @section('content')
     <input type="hidden" id="min_sum" value="{{ \App\Services\SiteConfigService::getParamValue('min_checkout_sum') }}">
 
@@ -82,20 +84,10 @@
 						</div>
 
 
-{{--						<div class="cart-page__gifts">--}}
-{{--							<h3 class="cart-page__subheading subheading"> Ваши подарки</h3>--}}
-{{--							<div class="cart-product cart-product--gift">--}}
-{{--								<div class="cart-product__image">--}}
-{{--									<a href=""><img src="{{asset('images/dist/tmp-product2.jpg')}}" alt=""></a>--}}
-{{--								</div>--}}
-{{--								<div class="cart-product__desc">--}}
-{{--									<div class="cart-product__title"><a href="">YVES SAINT LAURENT</a></div>--}}
-{{--									<div class="cart-product__subtitle">Libre Eau de Parfum (50ml)</div>--}}
-{{--								</div>--}}
-{{--								<div class="cart-product__sum cart-product__sum--free">Бесплатно</div>--}}
-{{--							</div>--}}
-{{--						</div>--}}
-
+                        @php($gift_products = $cartService->getGiftProducts())
+                        <div id="giftsContainer">
+                            @include('cart.includes.gifts')
+                        </div>
 
                         <form action="{{ route('cart.store') }}" method="POST" id="orderForm">
                             @csrf

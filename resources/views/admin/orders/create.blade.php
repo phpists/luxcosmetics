@@ -56,6 +56,11 @@
                                     <span class="nav-text">Товары</span>
                                 </a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#gifts">
+                                    <span class="nav-text">Подарки</span>
+                                </a>
+                            </li>
                         </ul>
                     </div>
                     <div class="card-toolbar" style="gap: 10px; margin-bottom: 10px">
@@ -73,7 +78,9 @@
                             <div class="tab-pane fade" id="products" role="tabpanel">
                                 @include('admin.orders.includes.products_table')
                             </div>
-
+                            <div class="tab-pane fade" id="gifts" role="tabpanel">
+                                @include('admin.orders.includes.gifts')
+                            </div>
                         </div>
 
                     </form>
@@ -90,6 +97,7 @@
 @section('js_after')
     <script src="{{ asset('super_admin/js/pages/crud/forms/widgets/select2.js') }}"></script>
     <script src="{{ asset('super_admin/js/pages/crud/ktdatatable/base/html-table.js') }}"></script>
+    <script src="{{ asset('super_admin/js/jquery.pjax.js') }}"></script>
     <script src="{{ asset('super_admin/js/order.js') }}"></script>
 
 @endsection

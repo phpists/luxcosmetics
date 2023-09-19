@@ -63,7 +63,7 @@
                         <div class="col-md-6 col-12">
                             <div class="form-group w-100">
                                 <label for="createGiftProductArticle" class="font-weight-bold">Артикул</label>
-                                <input type="text" class="form-control" id="createGiftProductArticle" name="article">
+                                <input type="text" class="form-control" id="createGiftProductArticle" name="article" required>
                             </div>
                         </div>
                     </div>

@@ -65,6 +65,12 @@ class User extends Authenticatable
         return $this->hasMany(Address::class);
     }
 
+    public function defaultAddress()
+    {
+        return $this->hasOne(Address::class)
+            ->where('is_default', 1);
+    }
+
     public function firstAddress(): Attribute
     {
         return Attribute::make(
@@ -148,6 +154,11 @@ class User extends Authenticatable
     public function comments()
     {
         return $this->hasMany(CommentsAction::class);
+    }
+
+    public function getFullNameAttribute()
+    {
+        return $this->name . ' ' . $this->surname;
     }
 
 }

@@ -64,7 +64,7 @@
                         <div class="col-md-6 col-12">
                             <div class="form-group w-100">
                                 <label for="editGiftProductArticle" class="font-weight-bold">Артикул</label>
-                                <input type="text" class="form-control" id="editGiftProductArticle" name="article">
+                                <input type="text" class="form-control" id="editGiftProductArticle" name="article" required>
                             </div>
                         </div>
                     </div>

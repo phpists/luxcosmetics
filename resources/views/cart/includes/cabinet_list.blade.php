@@ -32,19 +32,27 @@
                             <div class="cart-product__oldprice">{{ $orderProduct->old_price }} ₽</div>
                         @endif
                     </div>
-                    <div class="cart-product__sum" data-title="Сумма">{{ round($orderProduct->price * $orderProduct->quantity, 2) }} ₽</div>
+                    <div class="cart-product__sum"
+                         data-title="Сумма">{{ round($orderProduct->price * $orderProduct->quantity, 2) }} ₽
+                    </div>
                 </div>
             @endforeach
-            {{--							<div class="cart-table__item  cart-product cart-product--gift">--}}
-            {{--								<div class="cart-product__image">--}}
-            {{--									<a href=""><img src="images/dist/tmp-product2.jpg" alt=""></a>--}}
-            {{--								</div>--}}
-            {{--								<div class="cart-product__desc">--}}
-            {{--									<div class="cart-product__title"><a href="">YVES SAINT LAURENT</a></div>--}}
-            {{--									<div class="cart-product__subtitle">Libre Eau de Parfum (50ml)</div>--}}
-            {{--								</div>--}}
-            {{--								<div class="cart-product__sum cart-product__sum--free">Бесплатно</div>--}}
-            {{--							</div>--}}
+
+            @if($order->giftProducts)
+                @foreach($order->giftProducts as $gift_product)
+                    <div class="cart-table__item  cart-product cart-product--gift">
+                        <div class="cart-product__image">
+                            <img src="{{ $gift_product->getImgSrc() }}" alt="">
+                        </div>
+                        <div class="cart-product__desc">
+                            <div class="cart-product__title">{{ $gift_product->brand->name ?? 'UNDEFINED BRAND' }}</div>
+                            <div class="cart-product__subtitle">{{ $gift_product->title }}</div>
+                        </div>
+                        <div class="cart-product__sum cart-product__sum--free">Бесплатно</div>
+                    </div>
+                @endforeach
+            @endif
+
         </div>
     </div>
 

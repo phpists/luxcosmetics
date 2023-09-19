@@ -337,6 +337,10 @@ class CartService
             }
             $user = Auth::user();
 
+            $order->orderGiftProducts()->createMany($this->getGiftProducts()->map(function ($item) {
+                return ['gift_product_id' => $item->id];
+            }));
+
             if ($promo_code_discount)
                 $this->getPromo()->increment('uses');
 
@@ -555,6 +559,14 @@ class CartService
 
         if ($this->isUsedBonuses())
             $this->checkBonuses();
+    }
+
+
+
+    public function getGiftProducts()
+    {
+        $giftService = new GiftService();
+        return $giftService->getGiftProducts($this->getAllProducts(), $this->getTotalSum());
     }
 
 

@@ -41,7 +41,6 @@
     <div class="d-flex flex-column-fluid">
         <!--begin::Container-->
         <div class="container-fluid">
-            @include('admin.layouts.includes.messages')
             <div class="card card-custom">
                 <div class="card-header card-header-tabs-line" style="gap: 10px">
                     <div class="card-toolbar">
@@ -56,6 +55,11 @@
                                     <span class="nav-text">Товары</span>
                                 </a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#gifts">
+                                    <span class="nav-text">Подарки</span>
+                                </a>
+                            </li>
                         </ul>
                     </div>
                     <div class="card-toolbar" style="gap: 10px; margin-bottom: 10px">
@@ -64,24 +68,22 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    @if(!$order->isCompleted())
                     <form id="orderForm" action="{{ route('admin.orders.update', $order) }}" method="POST"
                           enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
-                    @endif
-                    <div class="tab-content">
-                        <div class="tab-pane fade show active" id="general" role="tabpanel">
+                        <div class="tab-content">
+                            <div class="tab-pane fade show active" id="general" role="tabpanel">
                                 @include('admin.orders.includes.form')
+                            </div>
+                            <div class="tab-pane fade" id="products" role="tabpanel">
+                                @include('admin.orders.includes.products_table')
+                            </div>
+                            <div class="tab-pane fade" id="gifts" role="tabpanel">
+                                @include('admin.orders.includes.gifts')
+                            </div>
                         </div>
-                        <div class="tab-pane fade" id="products" role="tabpanel">
-                            @include('admin.orders.includes.products_table')
-                        </div>
-
-                    </div>
-                    @if(!$order->isCompleted())
                     </form>
-                    @endif
                 </div>
             </div>
         </div>
@@ -95,6 +97,7 @@
 @section('js_after')
     <script src="{{ asset('super_admin/js/pages/crud/forms/widgets/select2.js') }}"></script>
     <script src="{{ asset('super_admin/js/pages/crud/ktdatatable/base/html-table.js') }}"></script>
+    <script src="{{ asset('super_admin/js/jquery.pjax.js') }}"></script>
     <script src="{{ asset('super_admin/js/order.js') }}"></script>
 
 @endsection

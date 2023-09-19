@@ -1,8 +1,6 @@
-@if(!$order->isCompleted())
 <button type="button" data-toggle="modal" data-target="#addProduct" class="btn btn-primary font-weight-bold">
     <i class="fas fa-plus mr-2"></i>Добавить
 </button>
-@endif
 
 <input type="hidden" id="refreshOrderProductsTableUrl" value="{{ route('admin.order_products.refresh') }}">
 <div class="table-responsive">
@@ -30,17 +28,16 @@
             <th class="pr-0 text-center">
                 Сумма
             </th>
-            @if(!$order->isCompleted())
             <th class="pr-0 text-center">
                 Действия
             </th>
-            @endif
         </tr>
         </thead>
         <tbody>
             @include('admin.orders.includes.products', [
     				'orderProducts' => old('products', ($order->orderProducts->toArray() ?? [])),
-    				'total_sum' => ($order->total_sum ?? 0)
+    				'total_sum' => ($order->total_sum ?? 0),
+    				'bonuses' => ($order->bonuses_discount ?? 0)
     			])
         </tbody>
     </table>

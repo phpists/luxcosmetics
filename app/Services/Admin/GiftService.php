@@ -15,7 +15,8 @@ class GiftService
         $request = request();
         if ($request->has('search')) {
             $search = $request->get('search');
-            $query->where('title', 'LIKE', "%{$search}%")
+            $query->where('article', 'LIKE', "%{$search}%")
+                ->orWhere('title', 'LIKE', "%{$search}%")
                 ->orWhereHas('brand', function ($query) use ($search) {
                     $query->where('name', 'LIKE', "%{$search}%");
                 });

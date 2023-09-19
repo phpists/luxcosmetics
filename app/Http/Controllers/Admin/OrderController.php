@@ -10,12 +10,18 @@ use App\Models\OrderProduct;
 use App\Models\OrderStatus;
 use App\Models\Product;
 use App\Services\CartService;
+use App\Services\GiftService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Collection;
 
 class OrderController extends Controller
 {
+
+    public function __construct(private GiftService $giftService)
+    {
+    }
 
     public function index(Request $request)
     {
@@ -91,7 +97,8 @@ class OrderController extends Controller
     public function create()
     {
         return view('admin.orders.create', [
-            'order' => new Order()
+            'order' => new Order(),
+            'gift_products' => $this->giftService->getGiftProducts(new Collection(), 0)
         ]);
     }
 
@@ -106,23 +113,42 @@ class OrderController extends Controller
         $data['total_sum'] = $orderProducts->sum(function ($item) {
             return $item['quantity'] * $item['price'];
         });
-        $order = Order::create($data);
+        $data['bonuses_discount'] = $request->get('bonuses_discount', 0);
+        $data['total_sum'] -= $data['bonuses_discount'];
 
-        foreach ($orderProducts as $orderProduct) {
-            $newProduct = [
-                'order_id' => $order->id,
-                'product_id' => $orderProduct['product_id'],
-                'quantity' => $orderProduct['quantity'],
-                'price' => $orderProduct['price'],
-            ];
-            if (isset($orderProduct['old_price']))
-                $newProduct['old_price'] = $orderProduct['old_price'];
+        try {
+            $order = Order::create($data);
 
-            OrderProduct::create($newProduct);
+            if ($data['bonuses_discount'] > 0)
+                $order->user->decrement('points', $data['bonuses_discount']);
+
+            foreach ($orderProducts as $orderProduct) {
+                $newProduct = [
+                    'order_id' => $order->id,
+                    'product_id' => $orderProduct['product_id'],
+                    'quantity' => $orderProduct['quantity'],
+                    'price' => $orderProduct['price'],
+                ];
+                if (isset($orderProduct['old_price']))
+                    $newProduct['old_price'] = $orderProduct['old_price'];
+
+                OrderProduct::create($newProduct);
+            }
+
+            $order->orderGiftProducts()
+                ->createMany(
+                    $this->giftService
+                        ->getGiftProducts($order->products, $order->total_sum)
+                        ->map(function ($item) {
+                            return ['gift_product_id' => $item->id];
+                        })
+                );
+
+            return redirect()->route('admin.orders.edit', $order)
+                ->with('success', 'Заказ успешно создан');
+        } catch (\Exception $exception) {
+            return back()->withErrors(["ОШИБКА: {$exception->getMessage()}"]);
         }
-
-        return redirect()->route('admin.orders.edit', $order)
-            ->with('success', 'Заказ успешно создан');
     }
 
     public function show(Request $request, Order $order)
@@ -142,6 +168,7 @@ class OrderController extends Controller
 
         return view('admin.orders.edit', [
             'order' => $order,
+            'gift_products' => $this->giftService->getGiftProducts($order->products, $order->total_sum)
         ]);
     }
 
@@ -179,6 +206,16 @@ class OrderController extends Controller
         });
 
         $order->update($data);
+
+        $order->orderGiftProducts()->delete();
+        $order->orderGiftProducts()
+            ->createMany(
+                $this->giftService
+                    ->getGiftProducts($order->products, $order->total_sum)
+                    ->map(function ($item) {
+                        return ['gift_product_id' => $item->id];
+                    })
+            );
 
         return back()->with('success', 'Заказ успешно обновлён');
     }
