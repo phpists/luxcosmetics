@@ -113,9 +113,14 @@ class OrderController extends Controller
         $data['total_sum'] = $orderProducts->sum(function ($item) {
             return $item['quantity'] * $item['price'];
         });
+        $data['bonuses_discount'] = $request->get('bonuses_discount', 0);
+        $data['total_sum'] -= $data['bonuses_discount'];
 
         try {
             $order = Order::create($data);
+
+            if ($data['bonuses_discount'] > 0)
+                $order->user->decrement('points', $data['bonuses_discount']);
 
             foreach ($orderProducts as $orderProduct) {
                 $newProduct = [

@@ -71,6 +71,11 @@ class UserController extends Controller
     {
         $user = User::find($id);
 
+        if ($request->wantsJson())
+            return $request->has('with_address')
+                ? $user->load('defaultAddress')
+                : $user;
+
         if (!$user) {
             abort(404);
         }

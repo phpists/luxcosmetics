@@ -36,7 +36,8 @@
         <tbody>
             @include('admin.orders.includes.products', [
     				'orderProducts' => old('products', ($order->orderProducts->toArray() ?? [])),
-    				'total_sum' => ($order->total_sum ?? 0)
+    				'total_sum' => ($order->total_sum ?? 0),
+    				'bonuses' => ($order->bonuses_discount ?? 0)
     			])
         </tbody>
     </table>

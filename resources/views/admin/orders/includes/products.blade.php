@@ -45,6 +45,11 @@
         </td>
     </tr>
 @endforeach
+@if(isset($bonuses) && $bonuses > 0)
+<tr class="text-right">
+    <td colspan="7">Использовано бонусов: <b>{{ $bonuses }}</b></td>
+</tr>
+@endif
 <tr class="text-right">
     <td colspan="7">Всего: <b>{{ $total_sum }}</b></td>
 </tr>

@@ -1,7 +1,9 @@
 const refreshUrl = $('#refreshOrderProductsTableUrl').val();
 
 $(function () {
-    $('select.select2').select2();
+    $('select.select2').select2({
+        placeholder: 'Выбрать'
+    });
 
     $(document).on('submit', '#orderAddProductForm', function (e) {
         e.preventDefault();
@@ -72,6 +74,40 @@ $(function () {
 
     $(document).pjax('[data-pjax]', '#gifts')
 
+
+    $(document).on('change', '[name="user_id"]', function (e) {
+        let url = $('#showUserUrl').val().replace('0', this.value)
+
+        $.ajax({
+            url: url,
+            dataType: 'json',
+            data: {
+                with_address: true
+            },
+            beforeSend: function () {
+                $('[name="full_name"]').val('')
+                $('[name="phone"]').val('')
+                $('[name="region"]').val('')
+                $('[name="city"]').val('')
+                $('[name="address"]').val('')
+                $('#bonusesContainer').hide().find('#bonusesCount').text('')
+            },
+            success: function (response) {
+                if (response) {
+                    if (response.default_address) {
+                        $('[name="full_name"]').val(response.default_address.name + ' ' + response.default_address.surname)
+                        $('[name="phone"]').val(response.default_address.phone);
+                        $('[name="region"]').val(response.default_address.region);
+                        $('[name="city"]').val(response.default_address.city);
+                        $('[name="address"]').val(response.default_address.address);
+
+                        $('#bonusesContainer').show().find('#bonusesCount').text(response.points)
+                    }
+                }
+            }
+        })
+    })
+
 })
 
 
@@ -83,6 +119,14 @@ function getProductsData() {
         if (item.name.includes('products'))
             productsData.push(item)
     })
+
+    let bonuses = parseInt($('[name="bonuses"]').val())
+    if (!isNaN(bonuses)) {
+        productsData.push({
+            name: 'bonuses',
+            value: bonuses
+        })
+    }
 
     return productsData
 }
