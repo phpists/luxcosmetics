@@ -63,7 +63,8 @@ class Product extends Model
         'storage_conditions',
         'allergy',
         'spyrt',
-        'expiry_date'
+        'expiry_date',
+        'items_left'
     ];
 
     public function getImages(): Collection

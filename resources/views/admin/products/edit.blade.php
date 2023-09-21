@@ -138,14 +138,9 @@
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
-                                                <div class="form-group" id="variations_container">
-                                                    <label>Модификации</label>
-                                                    <select class="form-control select2" id="variations_select"
-                                                            name="variations_id[]" data-property="{{ $product->base_property_id }}" data-product="{{ $product->id }}" multiple>
-                                                        @foreach($product_variations as $variation)
-                                                            <option value="{{$variation->id}}" selected>{{ $variation->title . (isset($variation->base_property_value) ? ' (' . $variation->base_property_value . ($variation->base_property_measure ?? '') . ')' : '' )}}</option>
-                                                        @endforeach
-                                                    </select>
+                                                <div class="form-group">
+                                                    <label>Остаток</label>
+                                                    <input class="form-control" type="number" name="items_left" value="{{$product->items_left}}">
                                                 </div>
                                             </div>
                                         </div>
@@ -207,6 +202,17 @@
                                                     name="similar_item_id[]" data-product="{{ $product->id }}" multiple>
                                                 @foreach($related_products->where('relation_type', \App\Models\RelatedProduct::SIMILAR_ITEMS) as $variation)
                                                     <option value="{{$variation->relative_product_id}}" selected>{{ $variation->related_product->title . (isset($variation->base_property_value) ? ' (' . $variation->base_property_value . ($variation->base_property_measure ?? '') . ')' : '' )}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group" id="variations_container">
+                                            <label>Модификации</label>
+                                            <select class="form-control select2" id="variations_select"
+                                                    name="variations_id[]" data-property="{{ $product->base_property_id }}" data-product="{{ $product->id }}" multiple>
+                                                @foreach($product_variations as $variation)
+                                                    <option value="{{$variation->id}}" selected>{{ $variation->title . (isset($variation->base_property_value) ? ' (' . $variation->base_property_value . ($variation->base_property_measure ?? '') . ')' : '' )}}</option>
                                                 @endforeach
                                             </select>
                                         </div>

@@ -183,6 +183,12 @@
                                             <input type="text" name="alias" class="form-control" required/>
                                         </div>
                                     </div>
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <label>Остаток</label>
+                                            <input class="form-control" type="number" name="items_left" min="0">
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-12">
