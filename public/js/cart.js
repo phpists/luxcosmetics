@@ -39,7 +39,11 @@ $(function () {
 
         let $item = $(this).parents($(this).data('element'))
 
-        if ($item) {
+        let max_amount = parseInt(e.currentTarget.dataset.end);
+
+        let current_amount = parseInt($(this).parents().find('.currentQuantity').val());
+
+        if ($item && (max_amount > current_amount)) {
             let product_id = $item.data('product');
             plusQuantity(product_id, $(this))
         }

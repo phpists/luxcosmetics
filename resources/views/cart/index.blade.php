@@ -57,7 +57,7 @@
                                                 <div class="numbers__minus minusQuantity" data-element="div.cart-product:first">
                                                     <svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#minus')}}"></use></svg></div>
                                                 <input type="text" class="numbers__input currentQuantity" value="{{ $product->quantity }}">
-                                                <div class="numbers__plus plusQuantity" data-element="div.cart-product:first">
+                                                <div class="numbers__plus plusQuantity" data-element="div.cart-product:first" data-end="{{$product->items_left}}">
                                                     <svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#plus')}}"></use></svg></div>
                                             </div>
                                         </div>

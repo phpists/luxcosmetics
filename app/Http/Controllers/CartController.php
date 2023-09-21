@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\AvailableOptions;
 use App\Mail\CartLetter;
 use App\Mail\OrderLetter;
 use App\Models\Address;
@@ -13,9 +14,11 @@ use App\Models\PromoCode;
 use App\Services\CartService;
 use App\Services\MailService;
 use App\Services\SiteConfigService;
+use App\Services\SiteService;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
@@ -116,6 +119,7 @@ class CartController extends Controller
         $this->cartService->setProperty(CartService::CARD_KEY, $card_id);
 
         if ($order_id = $this->cartService->store()) {
+            // Send mail to user
             Mail::to($email)->send(new OrderLetter('Спасибо за оформления заказа'));
             return redirect()->route('cart.success', ['order' => $order_id]);
         }

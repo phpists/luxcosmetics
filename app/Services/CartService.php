@@ -13,6 +13,7 @@ use Exception;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class CartService
 {
@@ -278,7 +279,20 @@ class CartService
         return null;
     }
 
-
+    /**
+     * @param int|string $id id
+     * @param int $amount_bought Amount of purchased products
+     * @return bool
+     */
+    private function decreaseAmountOfProduct(int|string $id, int $amount_bought): bool
+    {
+        $product = Product::query()->find($id);
+        $product->items_left = $product->items_left - $amount_bought;
+        if ($product->items_left < 1) {
+            $product->availability = AvailableOptions::NOT_AVAILABLE->value;
+        }
+        return $product->save();
+    }
 
     public function store(): ?int
     {
@@ -334,6 +348,12 @@ class CartService
                     'price' => $product->price,
                     'old_price' => $product->old_price
                 ]);
+                // Decrease count of products in store
+                $decrease_result = $this->decreaseAmountOfProduct($item['product_id'], $item['quantity']);
+                // If false it means failed to decrease amount of products
+                if (!$decrease_result) {
+                    Log::error("Couldn't decrease amount of products with id ".$item['product_id'].' order id - '.$order->id);
+                }
             }
             $user = Auth::user();
 

@@ -191,7 +191,7 @@ class Product extends Model
 
     public function isAvailable(): bool
     {
-        return $this->availability == AvailableOptions::AVAILABLE->value;
+        return $this->items_left > 0;
     }
 
 
