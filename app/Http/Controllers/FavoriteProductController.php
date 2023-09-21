@@ -56,7 +56,7 @@ class FavoriteProductController extends Controller
             $data = $this->getProducts();
             $products = $data['products'];
             $variations = $data['variations'];
-            $productsHtml = view('categories.parts.products', ['products' => $products, 'variations' => $variations])->render();
+            $productsHtml = view('categories.parts.products', ['products' => $products, 'variations' => $variations, 'is_favourite_page' => true])->render();
             $paginateHtml = view('categories.parts.pagination', ['products' => $products])->render();
             return response()->json([
                 'productsHtml' => $productsHtml,
