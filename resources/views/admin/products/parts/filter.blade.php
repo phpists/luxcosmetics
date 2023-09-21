@@ -16,6 +16,12 @@
                         <input type="text" id="code" name="code" class="form-control">
                     </div>
                 </div>
+                <div class="col-lg-4 mb-lg-0 d-flex flex-column">
+                    <label>Артикул 1c</label>
+                    <div class="input-group">
+                        <input type="text" id="code_1c" name="code_1c" class="form-control">
+                    </div>
+                </div>
             </div>
             <div class="row mt-5 mb-3">
                 <div class="col-lg-4 mb-lg-0 d-flex flex-column">

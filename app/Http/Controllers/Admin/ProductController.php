@@ -36,6 +36,10 @@ class ProductController extends Controller
             $query->where('products.code', 'LIKE', '%' . $request->code . '%');
         }
 
+        if ($request->code_1c) {
+            $query->where('products.code_1c', 'LIKE', '%' . $request->code_1c . '%');
+        }
+
         if ($request->category_id) {
             $query->where('products.category_id', '=', $request->category_id);
         }

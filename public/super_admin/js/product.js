@@ -60,6 +60,12 @@ $(document).ready(function () {
         request();
     });
 
+    /* Артикул 1C*/
+    $(document).on('keyup', '#code_1c', function (e) {
+        e.preventDefault();
+        request();
+    });
+
     /* Статус */
     $(document).on('change', '.status', function (e) {
         e.preventDefault();

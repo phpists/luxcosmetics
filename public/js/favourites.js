@@ -38,5 +38,12 @@ $(document).ready(function () {
                 }
             })
         }
+        if (action === 'POST') {
+            const toastLiveExample = document.getElementById('fav_alert')
+            toastLiveExample.classList.toggle('hidden');
+            setTimeout(() => {
+                toastLiveExample.classList.toggle('hidden');
+            }, 2000)
+        }
     })
 });

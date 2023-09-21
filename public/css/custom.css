@@ -3,3 +3,24 @@
     height: 270px;
 }
 
+/*.category-page > .container {*/
+/*    position: relative;*/
+/*}*/
+
+.category-page > .container > .alert {
+    position: sticky;
+    top: 50px;
+    z-index: 5;
+    right: 0;
+    background: #0a58ca;
+    color: white;
+    font-weight: bold;
+    font-size: 16px;
+    opacity: 1;
+    transition: opacity .3s;
+}
+
+.category-page > .container > .alert.hidden {
+    opacity: 0;
+}
+
