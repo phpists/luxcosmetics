@@ -41,7 +41,7 @@ $(function () {
 
         let max_amount = parseInt(e.currentTarget.dataset.end);
 
-        let current_amount = parseInt($(this).parents().find('.currentQuantity').val());
+        let current_amount = parseInt(this.parentElement.querySelector('.currentQuantity').value);
 
         if ($item && (max_amount > current_amount)) {
             let product_id = $item.data('product');
