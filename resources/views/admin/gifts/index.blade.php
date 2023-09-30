@@ -162,13 +162,18 @@
                 let $form = $(this).parents('form:first');
 
                 $form.find('.hidable').hide().find('select').prop('required', false).val('').trigger('change')
+                $form.find('[class*="exceptions"]').hide().find('select').val('').trigger('change')
 
                 if (this.value === 'brand') {
                     $form.find('select.hidable-brand').prop('required', true).parents('div.hidable:first').show()
+                    $form.find('.brand-exceptions').show()
                 } else if (this.value === 'category') {
                     $form.find('select.hidable-category').prop('required', true).parents('div.hidable:first').show()
+                    $form.find('.category-exceptions').show()
                 } else if (this.value === 'product') {
                     $form.find('select.hidable-product').prop('required', true).parents('div.hidable:first').show()
+                } else if (this.value === 'sum') {
+                    $form.find('.sum-exceptions').show()
                 }
             })
 
@@ -197,6 +202,21 @@
                             products.push(item.gift_product_id)
                         })
                         $('#editGiftConditionProducts').val(products).trigger('change')
+
+                        setTimeout(() => {
+                            $('#editGiftConditionForm')
+                                .find('[name="except_categories[]"]:visible')
+                                .val(response.category_exceptions)
+                                .trigger('change')
+                            $('#editGiftConditionForm')
+                                .find('[name="except_brands[]"]:visible')
+                                .val(response.brand_exceptions)
+                                .trigger('change')
+                            $('#editGiftConditionForm')
+                                .find('[name="except_products[]"]:visible')
+                                .val(response.product_exceptions)
+                                .trigger('change')
+                        }, 200)
 
 
                     }, error: function (response) {

@@ -88,6 +88,84 @@
                         </div>
                     </div>
 
+                    <div class="sum-exceptions">
+                        <hr>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="form-group w-100">
+                                    <label for="editGiftConditionSumExceptCategory" class="font-weight-bold">Исключить категорию</label>
+                                    <select id="editGiftConditionSumExceptCategory" class="form-control select2" name="except_categories[]" multiple>
+                                        @foreach($categories as $category)
+                                            <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group w-100">
+                                    <label for="editGiftConditionSumExceptBrand" class="font-weight-bold">Исключить бренд</label>
+                                    <select id="editGiftConditionSumExceptBrand" class="form-control select2" name="except_brands[]" multiple>
+                                        @foreach($brands as $brand)
+                                            <option value="{{ $brand->id }}">{{ $brand->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="brand-exceptions" style="display: none;">
+                        <hr>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="form-group w-100">
+                                    <label for="editGiftConditionBrandExceptCategory" class="font-weight-bold">Исключить категорию</label>
+                                    <select id="editGiftConditionBrandExceptCategory" class="form-control select2" name="except_categories[]" multiple>
+                                        @foreach($categories as $category)
+                                            <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group w-100">
+                                    <label for="editGiftConditionBrandExceptProduct" class="font-weight-bold">Исключить товар</label>
+                                    <select id="editGiftConditionBrandExceptProduct" class="form-control select2" name="except_products[]" multiple>
+                                        @foreach($products as $product)
+                                            <option value="{{ $product->id }}">{{ "[{$product->code}] {$product->brand?->name} > {$product->title}" }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="category-exceptions" style="display: none;">
+                        <hr>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="form-group w-100">
+                                    <label for="editGiftConditionCategoryExceptCategory" class="font-weight-bold">Исключить категорию</label>
+                                    <select id="editGiftConditionCategoryExceptCategory" class="form-control select2" name="except_categories[]" multiple>
+                                        @foreach($categories as $category)
+                                            <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group w-100">
+                                    <label for="editGiftConditionCategoryExceptBrand" class="font-weight-bold">Исключить бренд</label>
+                                    <select id="editGiftConditionCategoryExceptBrand" class="form-control select2" name="except_brands[]" multiple>
+                                        @foreach($brands as $brand)
+                                            <option value="{{ $brand->id }}">{{ $brand->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
 
                 <div class="modal-footer">

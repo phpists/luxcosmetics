@@ -105,6 +105,13 @@ class GiftCondition extends Model
     }
 
 
+
+    public function conditionExceptions()
+    {
+        return $this->hasMany(GiftConditionException::class);
+    }
+
+
     public function getTypeTitle()
     {
         return self::ALL_TYPES[$this->type] ?? "UNDEFINED";
