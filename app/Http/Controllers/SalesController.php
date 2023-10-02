@@ -6,6 +6,7 @@ use App\Models\Category;
 use App\Models\Product;
 use App\Services\ProductFilterService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class SalesController extends Controller
 {
@@ -74,8 +75,10 @@ class SalesController extends Controller
                 'current_page' => $products->currentPage()
             ]);
         }
+        $min_price = $this->productService->min_price;
+        $max_price = $this->productService->max_price;
 //        $last_page_url = $products->url($products->lastPage());
 //        $pagination = view('categories.parts.pagination', compact('products', 'last_page_url'))->render();
-        return view('actions', compact('products', 'categories', 'products_list', 'currentRoute'));
+        return view('actions', compact('products', 'categories', 'products_list', 'currentRoute', 'max_price', 'min_price'));
     }
 }

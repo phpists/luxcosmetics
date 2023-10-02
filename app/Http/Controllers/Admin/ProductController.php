@@ -8,6 +8,7 @@ use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\ProductCategory;
+use App\Models\ProductImage;
 use App\Models\ProductVariation;
 use App\Models\RelatedProduct;
 use App\Services\CatalogService;
@@ -21,8 +22,7 @@ use Illuminate\Support\Str;
 class ProductController extends Controller
 {
     public function index(Request $request) {
-        $products = Product::query()->select('products.*')->get();
-        $query = Product::query();
+        $query = Product::query()->select('products.*');
         $query->select('products.*');
 
         if ($request->name) {
@@ -52,11 +52,11 @@ class ProductController extends Controller
             $query->where('products.status', $request->status);
         }
 
-        $productAjax = $query->paginate($request->paginate ?? 100);
+        $products = $query->paginate($request->paginate ?? 24);
 
         if ($request->ajax()) {
-            $categoriesAjaxHtml = view('admin.products.parts.table', ['productAjax' => $productAjax])->render();
-            $paginateHtml = view('admin.products.parts.paginate', ['productAjax' => $productAjax, 'params' => $request->all()])->render();
+            $categoriesAjaxHtml = view('admin.products.parts.table', ['products' => $products])->render();
+            $paginateHtml = view('admin.products.parts.paginate', ['products' => $products, 'params' => $request->all()])->render();
 
             return response()->json([
                 'categoriesAjaxHtml' => $categoriesAjaxHtml,
@@ -64,7 +64,7 @@ class ProductController extends Controller
             ]);
         }
 
-        return response()->view('admin.products.index', compact('products','productAjax'));
+        return response()->view('admin.products.index', compact('products'));
     }
 
     public function create() {
@@ -310,14 +310,19 @@ class ProductController extends Controller
     }
 
 
-
     public function storeImage(Request $request) {
         $image_path = FileService::saveFile('uploads', "products", $request->image);
+        $max_pos = ProductImage::query()->where('record_id', $request->product_id)->max('position');
+        if (gettype($max_pos) !== 'integer') {
+            $max_pos = 0;
+        }
+        $max_pos += 1;
         if($image_path) {
             $imageId = DB::table('product_images')->insertGetId([
                 'path' => $image_path,
                 'record_id' => $request->product_id,
-                'is_active' => $request->is_active
+                'is_active' => $request->is_active,
+                'position' => $max_pos
             ]);
             if ($request->is_main == 1) {
                 DB::table('products')->where('id', $request->product_id)->update([
@@ -400,5 +405,14 @@ class ProductController extends Controller
     public function searchProducts(Request $request) {
         $products = Product::query()->select(['id', 'title'])->where('title', 'LIKE', '%'.$request->search.'%')->get();
         return response()->json(['products' => $products]);
+    }
+
+    public function sortImages(Request $request) {
+        $images_list = $request->positions;
+        foreach ($images_list as $idx=>$image_id) {
+            ProductImage::query()->where('id', $image_id)->update([
+                'position' => $idx + 1
+            ]);
+        }
     }
 }

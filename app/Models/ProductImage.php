@@ -11,5 +11,7 @@ class ProductImage extends Model
 
     protected $table = 'product_images';
 
-    protected $fillable = ['path', 'is_active'];
+    public $timestamps = false;
+
+    protected $fillable = ['path', 'is_active', 'id'];
 }

@@ -70,8 +70,9 @@ class Product extends Model
     public function getImages(): Collection
     {
         return DB::table('product_images')
-            ->select('path')
+            ->select('id', 'path')
             ->where('record_id', $this->id)
+            ->orderBy('position')
             ->get();
     }
 

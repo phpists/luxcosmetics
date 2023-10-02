@@ -149,7 +149,6 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="col-lg-6 col-xxl-4">
                     <!--begin::Stats Widget 12-->
                     <div class="card card-custom card-stretch card-stretch-half gutter-b">
@@ -163,16 +162,34 @@
                         </div>
                     </div>
                 </div>
+                <div class="col-12 card card-custom">
+                    <div class="card-header flex-wrap border-0 pt-6 pb-0">
+                        <div class="card-title">
+                            <h1 class="card-label">Вопросы</h1>
+                        </div>
+                        <div class="card-toolbar">
+                            <div class="dropdown dropdown-inline mr-2">
+                                <button class="btn btn-success font-weight-bolder deactivateChat" data-status="{{\App\Models\FeedbackChat::CLOSED}}">
+                                    <span class="svg-icon svg-icon-md"><i class="fas fa-toggle-off"></i></span>Закрыть
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        @include('admin.product_questions.parts.table', ['questions' => $product_questions])
+                    </div>
+                </div>
             </div>
         </div>
         <!--end::Container-->
     </div>
     <!--end::Entry-->
-
+    @include('admin.product_questions.modals.update')
 @endsection
 
 @section('js_after')
     <script src="{{ asset('super_admin/plugins/custom/fullcalendar/fullcalendar.bundle.js') }}"></script>
     <script src="{{ asset('super_admin/js/pages/widgets.js') }}"></script>
+    <script src="{{ asset('super_admin/js/product_question.js') }}"></script>
 @endsection
 

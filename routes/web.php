@@ -194,6 +194,7 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function 
     Route::post('products/update/seo', [\App\Http\Controllers\Admin\ProductController::class, 'updateSeo'])->name('admin.product.update.seo');
     Route::post('products/update/micro-seo', [\App\Http\Controllers\Admin\ProductController::class, 'updateMicroSeo'])->name('admin.product.update.micro-seo');
     Route::get('products/search', [\App\Http\Controllers\Admin\ProductController::class, 'searchProducts'])->name('admin.products.search');
+    Route::post('products/images-sort', [\App\Http\Controllers\Admin\ProductController::class, 'sortImages'])->name('admin.product_images.sort');
 
 //    Categories
     Route::get('categories', [AdminCategoryController::class, 'index'])->name('admin.categories');

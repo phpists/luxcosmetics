@@ -162,7 +162,7 @@
                                                     <select class="form-control select2" id="kt_select2_3"
                                                             name="brand_id">
                                                         @foreach($brands as $brand)
-                                                            <option @if($product->brand_id == $brand->id) @endif value="{{ $brand->id }}">{{ $brand->name }}</option>
+                                                            <option @if($product->brand_id == $brand->id) selected @endif value="{{ $brand->id }}">{{ $brand->name }}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>
@@ -438,6 +438,9 @@
                                                 #
                                             </th>
                                             <th class="pl-0 text-center">
+                                                Позиция
+                                            </th>
+                                            <th class="pl-0 text-center">
                                                 ИЗОБРАЖЕНИЕ
                                             </th>
                                             <th class="pr-0 text-center">
@@ -448,11 +451,14 @@
                                             </th>
                                         </tr>
                                         </thead>
-                                        <tbody>
-                                        @foreach($product_images as $image)
+                                        <tbody id="image_table">
+                                        @foreach($product_images->sortBy('position') as $image)
                                             <tr data-id="{{ $image->id }}">
                                                 <td class="text-center pl-0">
-                                                    {{ $loop->iteration }}
+                                                    {{ $image->id }}
+                                                </td>
+                                                <td class="text-center pl-0 img_position">
+                                                    {{$image->position}}
                                                 </td>
                                                 <td class="text-center pl-0">
                                                     <img src="/images/uploads/products/{{ $image->path }}" width="100" height="100">
@@ -461,7 +467,7 @@
                                                     {{ \App\Services\SiteService::getIsMain($image->id===$product->image_print_id) }}
                                                 </td>
                                                 <td class="text-center pr-0">
-                                                    <button class="btn btn-sm btn-clean btn-icon">
+                                                    <button class="btn btn-sm btn-clean btn-icon btn-img-sort">
                                                         <i class="handle_cat_image flaticon2-sort"
                                                            style="cursor:pointer;"></i>
                                                     </button>
@@ -854,6 +860,35 @@
                         data: {
                             positions: list,
                         },
+                    });
+
+                }
+            });
+
+            let image_table = document.getElementById('image_table')
+            new Sortable(image_table, {
+                animation: 150,
+                handle: '.btn-img-sort',
+                dragClass: 'table-sortable-drag',
+                onEnd: function (/**Event*/ evt) {
+                    var id_list = [];
+                    $.each($(image_table).find('tr'), function (idx, el) {
+                        id_list.push(
+                            $(el).data('id')
+                        )
+                    });
+
+                    $.ajax({
+                        method: 'post',
+                        url: '{{ route('admin.product_images.sort') }}',
+                        data: {
+                            positions: id_list,
+                        },
+                        success: function () {
+                            $.each($(image_table).find('.img_position'), function (idx, el) {
+                                el.innerText = idx + 1;
+                            });
+                        }
                     });
 
                 }

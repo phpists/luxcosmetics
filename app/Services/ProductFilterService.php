@@ -2,9 +2,7 @@
 
 namespace App\Services;
 
-use App\Models\Category;
 use App\Models\Product;
-use Illuminate\Database\Query\Builder;
 use Illuminate\Database\Query\JoinClause;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -17,6 +15,10 @@ class ProductFilterService
     const PRICE_FROM = 0;
     const PRICE_TO = 750000;
 
+    public $min_price = 1;
+
+    public $max_price = 999999;
+
     public $request;
 
     public function __construct(Request $request)
@@ -28,11 +30,6 @@ class ProductFilterService
     {
 
         $products = Product::query()
-            ->selectRaw('products.*, product_images.path as main_image, case when user_favorite_products.product_id is null then FALSE else TRUE end as is_favourite')
-            ->join('product_images', 'products.image_print_id', 'product_images.id')
-//            ->whereIn('category_id', $category_ids)
-            ->distinct(['products.id'])
-            ->with('brand')
             ->where(function ($q) {
                 $q->whereBetween('price', [
                     $this->getPriceFrom(),
@@ -77,7 +74,16 @@ class ProductFilterService
             $products = $products->leftJoin('user_favorite_products', 'user_favorite_products.product_id', 'products.id');
         }
 
-        return $products->paginate(self::PER_PAGE);
+        $all_prods = clone $products;
+
+        $prices = $all_prods->selectRaw('max(price) as max_price, min(price) as min_price')->get();
+        $this->min_price = $prices[0]->min_price;
+        $this->max_price = $prices[0]->max_price;
+        return $products
+            ->selectRaw('products.*, product_images.path as main_image, case when user_favorite_products.product_id is null then FALSE else TRUE end as is_favourite')
+            ->join('product_images', 'products.image_print_id', 'product_images.id')
+            ->distinct(['products.id'])
+            ->with('brand')->paginate(self::PER_PAGE);
     }
 
     private function getProperties()

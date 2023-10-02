@@ -118,7 +118,9 @@
                     <div class="seoblock__wrapper">
                         <h1 class="seoblock__title">{{$category->bottom_title}}</h1>
                         <div class="seoblock__content">{!! $category->bottom_text !!}</div>
-                        <div class="seoblock__content is-hidden" id="seohidden">Забота о красоте и здоровье вашей кожи становится приятным и эффективным с нашим широким ассортиментом продуктов для ухода за телом. В нашем интернет-магазине косметики вы найдете все необходимые средства для ежедневного ухода и специальных процедур, которые подарят вашей коже мягкость, увлажнение и сияние. Откройте для себя мир натуральной косметики, разработанной с использованием последних инноваций и проверенных временем рецептов.</div>
+                        @if(isset($category->hidden_bottom_text))
+                            <div class="seoblock__content is-hidden" id="seohidden">{!! $category->hidden_bottom_text !!}</div>
+                        @endif
                         <div class="seoblock__morecontent">Показать еще</div>
                         @php
                             $bottom_tags = $category->tags->where('add_to_top', false);
@@ -129,7 +131,9 @@
                                     <a href="{{$tag->link}}" class="seoblock__tag @if($idx > 4) is-hidden @endif">{{$tag->name}}</a>
                                 @endforeach
                             </div>
-                            <div class="seoblock__moretags">Развернуть</div>
+                            @if(sizeof($bottom_tags) > 4)
+                                <div class="seoblock__moretags">Развернуть</div>
+                            @endif
                         @endif
                     </div>
                 </div>

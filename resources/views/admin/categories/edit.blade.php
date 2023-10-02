@@ -179,6 +179,14 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="form-group">
+                                                <label>Скрытый текст внизу категории</label>
+                                                <textarea name="hidden_bottom_text" class="summernote-lg" required></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="card-footer">
                                     <button type="submit" class="btn btn-primary mr-2">Сохранить</button>
