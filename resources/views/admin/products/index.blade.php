@@ -37,6 +37,7 @@
                         </div>
                         <div class="card-toolbar">
                             <!--begin::Dropdown-->
+                            @if(auth()->user()->isSuperAdmin() || auth()->user()->can(\App\Services\Admin\PermissionService::PRODUCTS_DELETE))
                             <div class="dropdown dropdown-inline mr-2">
                                 <button class="btn btn-danger font-weight-bolder deletedProducts">
                                     <span class="svg-icon svg-icon-md">
@@ -44,6 +45,7 @@
                                     </span>Удалить
                                 </button>
                             </div>
+                            @endif
 							<!--
                             <div class="dropdown dropdown-inline mr-2">
                                <button class="btn btn-success font-weight-bolder activeproducts" data-status="1">
@@ -64,6 +66,8 @@
                                     </span>Імпортувати
                                 </button>
                             </div>-->
+
+                            @if(auth()->user()->isSuperAdmin() || auth()->user()->can(\App\Services\Admin\PermissionService::PRODUCTS_CREATE))
                             <div class="dropdown dropdown-inline mr-2">
                                 <a href="{{ route('admin.product.create') }}"
                                    class="btn btn-success font-weight-bolder">
@@ -72,6 +76,7 @@
                                     </span>Добавить товар
                                 </a>
                             </div>
+                            @endif
                         </div>
                     </div>
                     <div class="card-body pb-3">
@@ -146,15 +151,23 @@
                                                 <i class="las la-eye"></i>
                                             </a>
 
+                                            @if(auth()->user()->isSuperAdmin() || auth()->user()->can(\App\Services\Admin\PermissionService::PRODUCTS_EDIT))
                                             <a href="{{ route('admin.product.edit', ['id' => $product->id]) }}"
                                                class="btn btn-sm btn-clean btn-icon">
                                                 <i class="las la-edit"></i>
                                             </a>
-                                            <a href="{{ route('admin.product.delete', $product->id) }}"
-                                               class="btn btn-sm btn-clean btn-icon"
-                                               onclick="return confirm('Вы уверены, что хотите удалить запись?')">
-                                                <i class="las la-trash"></i>
-                                            </a>
+                                            @endif
+
+                                            @if(auth()->user()->isSuperAdmin() || auth()->user()->can(\App\Services\Admin\PermissionService::PRODUCTS_DELETE))
+                                                <form action="{{ route('admin.product.delete', $product->id) }}" method="POST" style="display: inline">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-sm btn-clean btn-icon btn_delete"
+                                                            onclick="return confirm('Вы уверенны?')"
+                                                            title="Delete"><i class="las la-trash"></i>
+                                                    </button>
+                                                </form>
+                                            @endif
                                         </td>
                                     </tr>
                                 @endforeach

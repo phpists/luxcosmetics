@@ -118,7 +118,7 @@ class LoginController extends Controller
     {
         $previous = url()->previous();
 
-        if ($user->role_id == User::ADMIN && str_contains($previous, '/admin')) {
+        if ($user->isAdmin() && str_contains($previous, '/admin')) {
             return redirect()->route('admin.dashboard');
         } elseif (Str::contains($previous, '/cart/login')) {
             return redirect()->to(route('cart.delivery'));

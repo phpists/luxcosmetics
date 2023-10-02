@@ -50,12 +50,14 @@
                                 <div class="col-md-4 col-12">
                                     <input id="searchGiftProducts" class="form-control" type="search" name="search" placeholder="Поиск..." value="{{ request()->input('search') }}">
                                 </div>
+                                @if(auth()->user()->isSuperAdmin() || auth()->user()->can(\App\Services\Admin\PermissionService::GIFTS_CREATE))
                                 <button data-toggle="modal" data-target="#createGiftProductModal"
                                    class="btn btn-success font-weight-bolder mx-5">
                                     <span class="svg-icon svg-icon-md">
                                         <i class="fas fa-plus"></i>
                                     </span>Добавить товар
                                 </button>
+                                @endif
                             </div>
                             <hr class="my-8">
                             <div id="content">
@@ -69,12 +71,14 @@
                         <div class="tab-pane fade" id="conditions" role="tabpanel"
                              aria-labelledby="conditions">
                             <div class="row justify-content-end">
+                                @if(auth()->user()->isSuperAdmin() || auth()->user()->can(\App\Services\Admin\PermissionService::GIFTS_CREATE))
                                 <button data-toggle="modal" data-target="#createGiftConditionModal"
                                         class="btn btn-success font-weight-bolder mx-5">
                                     <span class="svg-icon svg-icon-md">
                                         <i class="fas fa-plus"></i>
                                     </span>Добавить условие
                                 </button>
+                                @endif
                             </div>
                             <hr class="my-8">
                             <div id="content">

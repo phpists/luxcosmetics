@@ -13,6 +13,8 @@ use Illuminate\Http\Request;
 class ProductQuestionController extends Controller
 {
     public function answer(Request $request){
+        $this->authorize('update', ProductQuestion::class);
+
         $data = $request->all();
         $user = $request->user();
         $data['user_id'] = $user->id;
@@ -26,6 +28,8 @@ class ProductQuestionController extends Controller
     }
 
     public function index(Request $request){
+        $this->authorize('viewAny', ProductQuestion::class);
+
         $questions = ProductQuestion::query();
         if ($request->status !== null) {
             $questions = $questions->where('status', $request->status);
@@ -50,6 +54,8 @@ class ProductQuestionController extends Controller
     }
 
     public function view(Request $request, $id){
+        $this->authorize('view', ProductQuestion::class);
+
         $question = ProductQuestion::query()->findOrFail($id);
         if ($request->ajax()) {
             if (!$question) {
@@ -67,6 +73,8 @@ class ProductQuestionController extends Controller
     }
 
     public function update(Request $request) {
+        $this->authorize('update', ProductQuestion::class);
+
         $question = ProductQuestion::query()->findOrFail($request->id);
         $question->update($request->all());
         $question->messages->first()->update(['message' => $request->message]);
@@ -74,6 +82,8 @@ class ProductQuestionController extends Controller
     }
 
     public function delete(Request $request, $id) {
+        $this->authorize('delete', ProductQuestion::class);
+
         $question = ProductQuestion::query()->findOrFail($request->id);
         $question->delete();
         ProductQuestionMessage::query()->where('question_id', $id)->delete();
@@ -81,12 +91,16 @@ class ProductQuestionController extends Controller
     }
 
     public function search_products(Request $request) {
+        $this->authorize('viewAny', ProductQuestion::class);
+
         $products = Product::query()->select('product.title, product.id')
             ->join('product_questions', 'product_id', 'product.id')
             ->get();
     }
 
     public function updateStatus(Request $request) {
+        $this->authorize('update', ProductQuestion::class);
+
         ProductQuestion::query()->find($request->id)->update([
             'status' => $request->status
         ]);
@@ -96,6 +110,8 @@ class ProductQuestionController extends Controller
     }
 
     public function updateBulkStatus(Request $request) {
+        $this->authorize('update', ProductQuestion::class);
+
         $question_ids = $request->checkbox;
         ProductQuestion::query()->whereIn('id', $question_ids)->update([
             'status' => $request->status

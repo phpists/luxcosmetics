@@ -14,12 +14,9 @@ class OrderGiftController extends Controller
     {
         $cart_products = collect($request->post('products', []));
         $products = Product::find($cart_products->pluck('product_id'));
-        $total_sum = $cart_products->sum(function ($item) {
-            return $item['quantity'] * $item['price'];
-        });
 
         $giftService = new GiftService();
-        $gift_products = $giftService->getGiftProducts($products, $total_sum);
+        $gift_products = $giftService->getGiftProducts($products);
 
         if ($request->pjax())
             return view('admin.orders.includes.gifts', compact('gift_products'));

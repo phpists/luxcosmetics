@@ -151,12 +151,14 @@
                                 <div class="card-toolbar">
                                     <a href="{{ route('admin.orders.index') }}" class="btn btn-secondary font-weight-bolder mr-5">Сбросить фильтр</a>
 
+                                    @if(auth()->user()->isSuperAdmin() || auth()->user()->can(\App\Services\Admin\PermissionService::ORDERS_CREATE))
                                     <a href="{{ route('admin.orders.create') }}"
                                        class="btn btn-success font-weight-bolder">
                                     <span class="svg-icon svg-icon-md">
                                         <i class="fas fa-plus"></i>
                                     </span>Создать заказ
                                     </a>
+                                    @endif
                                 </div>
                             </div>
 

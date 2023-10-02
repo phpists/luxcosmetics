@@ -18,6 +18,7 @@ class GiftCardController extends Controller
 
     public function __construct(private GiftCardService $giftCardService)
     {
+        $this->authorizeResource(GiftCard::class, 'gift_card');
     }
 
     public function index() {
@@ -56,6 +57,8 @@ class GiftCardController extends Controller
 
     public function deactivate(Request $request, GiftCard $giftCard)
     {
+        $this->authorize('update', $giftCard);
+
         $giftCard->update(['deactivated_at' => now()]);
 
         return back()->with('success', 'Подарочная карта была деактивированна');

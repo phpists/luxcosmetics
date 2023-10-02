@@ -26,12 +26,15 @@
                     </span>
                 </td>
                 <td class="text-center pr-0">
-                    <form action="{{ route('admin.subscription-category.delete') }}" method="POST">
+                    @if(auth()->user()->isSuperAdmin() || auth()->user()->can(\App\Services\Admin\PermissionService::SUBSCRIPTIONS_EDIT))
                         <a href="javascript:;" class="btn btn-sm btn-clean btn-icon update"
                            data-toggle="modal" data-target="#updateFaqModal"
                            data-id="{{ $subscription_category->id }}">
                             <i class="las la-edit"></i>
                         </a>
+                    @endif
+                        @if(auth()->user()->isSuperAdmin() || auth()->user()->can(\App\Services\Admin\PermissionService::SUBSCRIPTIONS_DELETE))
+                        <form action="{{ route('admin.subscription-category.delete') }}" method="POST" style="display:inline;">
                         @csrf
                         @method('DELETE')
                         <input type="hidden" name="id" value="{{ $subscription_category->id }}">
@@ -40,6 +43,7 @@
                                 title="Delete"><i class="las la-trash"></i>
                         </button>
                     </form>
+                        @endif
                 </td>
             </tr>
         @endforeach

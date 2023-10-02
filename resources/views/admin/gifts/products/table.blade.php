@@ -55,19 +55,23 @@
                     </div>
                 </td>
                 <td class="text-center pr-0">
-                    <form action="{{ route('admin.gift_products.destroy', $gift_product) }}" method="POST">
-                        <a href="javascript:;" class="btn btn-sm btn-clean btn-icon btn_edit"
+                    @if(auth()->user()->isSuperAdmin() || auth()->user()->can(\App\Services\Admin\PermissionService::GIFTS_EDIT))
+                    <a href="javascript:;" class="btn btn-sm btn-clean btn-icon btn_edit"
                            data-toggle="modal" data-target="#editGiftProductModal"
                            data-url="{{ route('admin.gift_products.show', $gift_product) }}">
                             <i class="las la-edit"></i>
                         </a>
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="btn btn-sm btn-clean btn-icon btn_delete"
-                                onclick="return confirm('Вы уверены?')"
-                                title="Delete"><i class="las la-trash"></i>
-                        </button>
-                    </form>
+                    @endif
+                        @if(auth()->user()->isSuperAdmin() || auth()->user()->can(\App\Services\Admin\PermissionService::GIFTS_DELETE))
+                        <form action="{{ route('admin.gift_products.destroy', $gift_product) }}" method="POST" style="display:inline;">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-sm btn-clean btn-icon btn_delete"
+                                    onclick="return confirm('Вы уверены?')"
+                                    title="Delete"><i class="las la-trash"></i>
+                            </button>
+                        </form>
+                        @endif
                 </td>
             </tr>
         @endforeach

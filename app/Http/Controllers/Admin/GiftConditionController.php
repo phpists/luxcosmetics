@@ -12,6 +12,11 @@ use Illuminate\Support\Facades\DB;
 class GiftConditionController extends Controller
 {
 
+    public function __construct()
+    {
+        $this->authorizeResource(GiftCondition::class, 'gift_condition');
+    }
+
     public function store(Request $request)
     {
         $data = $request->post();

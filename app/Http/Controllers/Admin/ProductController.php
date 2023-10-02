@@ -21,6 +21,8 @@ use Illuminate\Support\Str;
 class ProductController extends Controller
 {
     public function index(Request $request) {
+        $this->authorize('viewAny', Product::class);
+
         $products = Product::query()->select('products.*')->get();
         $query = Product::query();
         $query->select('products.*');
@@ -68,6 +70,8 @@ class ProductController extends Controller
     }
 
     public function create() {
+        $this->authorize('create', Product::class);
+
         $categories = Category::query()
             ->select('id', 'name')
             ->get();
@@ -78,6 +82,8 @@ class ProductController extends Controller
     }
 
     public function store(Request $request) {
+        $this->authorize('create', Product::class);
+
         $request->validate([
            'alias' => 'unique:products'
         ]);
@@ -136,6 +142,8 @@ class ProductController extends Controller
             ->leftJoin('product_images', 'products.image_print_id', 'product_images.id')
             ->find($id);
 
+        $this->authorize('update', $product);
+
         $categories = Category::query()
             ->select('id', 'name')
             ->get();
@@ -166,6 +174,9 @@ class ProductController extends Controller
     public function update(Request $request, $id)
     {
         $product = Product::query()->findOrFail($id);
+
+        $this->authorize('update', $product);
+
         $data = $request->all();
         $data['show_in_discount'] = array_key_exists('show_in_discount', $data)? 1: 0;
         $data['show_in_popular'] = array_key_exists('show_in_popular', $data)? 1: 0;
@@ -281,6 +292,8 @@ class ProductController extends Controller
 
         $seo = Product::find($productId);
 
+        $this->authorize('update', $seo);
+
         if ($seo === null) {
             return redirect()->back()->with('error', 'Продукт не найден.');
         }
@@ -297,6 +310,8 @@ class ProductController extends Controller
         $productId = $request->input('id');
 
         $microSeo = Product::find($productId);
+
+        $this->authorize('update', $microSeo);
 
         if ($microSeo === null) {
             return redirect()->back()->with('error', 'Продукт не найден.');
@@ -370,7 +385,11 @@ class ProductController extends Controller
 
 
     public function delete(Request $request, $id) {
-        Product::query()->find($id)->delete();
+        $product = Product::query()->find($id);
+
+        $this->authorize('delete', $product);
+
+        $product->delete();
         $images = DB::table('product_images')->where('id', $id)->get();
         foreach ($images as $image) {
             FileService::removeFile('uploads', 'products', $image);
@@ -381,7 +400,11 @@ class ProductController extends Controller
 
     public function deleteProducts(Request $request) {
         $product_ids = $request->checkbox;
-        Product::query()->whereIn('id', $product_ids)->delete();
+        $products = Product::find($product_ids);
+
+        $this->authorize('delete', $products);
+
+        $products->delete();
         return response()->json([
             'status' => true,
             'products' => $product_ids,

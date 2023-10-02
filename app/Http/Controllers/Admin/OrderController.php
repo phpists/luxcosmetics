@@ -21,6 +21,7 @@ class OrderController extends Controller
 
     public function __construct(private GiftService $giftService)
     {
+        $this->authorizeResource(Order::class, 'order');
     }
 
     public function index(Request $request)
@@ -98,7 +99,7 @@ class OrderController extends Controller
     {
         return view('admin.orders.create', [
             'order' => new Order(),
-            'gift_products' => $this->giftService->getGiftProducts(new Collection(), 0)
+            'gift_products' => $this->giftService->getGiftProducts(new Collection())
         ]);
     }
 
@@ -138,7 +139,7 @@ class OrderController extends Controller
             $order->orderGiftProducts()
                 ->createMany(
                     $this->giftService
-                        ->getGiftProducts($order->products, $order->total_sum)
+                        ->getGiftProducts($order->products)
                         ->map(function ($item) {
                             return ['gift_product_id' => $item->id];
                         })
@@ -168,7 +169,7 @@ class OrderController extends Controller
 
         return view('admin.orders.edit', [
             'order' => $order,
-            'gift_products' => $this->giftService->getGiftProducts($order->products, $order->total_sum)
+            'gift_products' => $this->giftService->getGiftProducts($order->products)
         ]);
     }
 
@@ -211,7 +212,7 @@ class OrderController extends Controller
         $order->orderGiftProducts()
             ->createMany(
                 $this->giftService
-                    ->getGiftProducts($order->products, $order->total_sum)
+                    ->getGiftProducts($order->products)
                     ->map(function ($item) {
                         return ['gift_product_id' => $item->id];
                     })
@@ -222,6 +223,8 @@ class OrderController extends Controller
 
     public function changeStatus(Request $request, Order $order)
     {
+        $this->authorize('update', $order);
+
         if ($order->isCompleted())
             return ['completed' => true];
 

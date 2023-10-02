@@ -10,7 +10,7 @@
                 <!--end::Page Title-->
                 <!--begin::Breadcrumb-->
                 <ul class="breadcrumb breadcrumb-transparent breadcrumb-dot font-weight-bold p-0 my-2 font-size-sm">
-                    
+
                 </ul>
                 <!--end::Breadcrumb-->
             </div>
@@ -25,6 +25,7 @@
     <div class="d-flex flex-column-fluid">
         <div class="container-fluid">
             @include('admin.layouts.includes.messages')
+            @if(auth()->user()->isSuperAdmin() || auth()->user()->can(\App\Services\Admin\PermissionService::USERS_EDIT))
             <div class="card-header flex-wrap border-0 pt-6 pb-0">
                 <div class="card-toolbar">
                     <div class="dropdown dropdown-inline mr-2 mb-6">
@@ -35,6 +36,7 @@
                     </div>
                 </div>
             </div>
+            @endif
             <div class="card card-custom">
                 <div class="card-body">
                     <div class="row">

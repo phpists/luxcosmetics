@@ -4,6 +4,7 @@ namespace App\Http;
 
 use App\Http\Middleware\CanCheckout;
 use App\Http\Middleware\EnsureActiveUser;
+use App\Http\Middleware\SuperAdmin;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -67,6 +68,7 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'admin' => \App\Http\Middleware\Admin::class,
         'is_active_user' => EnsureActiveUser::class,
-        'can-checkout' => CanCheckout::class
+        'can-checkout' => CanCheckout::class,
+        'is-super-admin' => SuperAdmin::class
     ];
 }

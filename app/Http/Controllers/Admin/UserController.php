@@ -10,12 +10,15 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
+use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
     public function index(Request $request)
     {
-        $query = User::query();
+        $this->authorize('viewAny', User::class);
+
+        $query = User::customers();
         $info = Address::all();
 
         if ($request->id) {
@@ -69,6 +72,8 @@ class UserController extends Controller
 
     public function show(Request $request, $id)
     {
+        $this->authorize('view', User::class);
+
         $user = User::find($id);
 
         if ($request->wantsJson())
@@ -85,6 +90,8 @@ class UserController extends Controller
 
     public function edit(Request $request, $id)
     {
+        $this->authorize('update', User::class);
+
         $user = User::find($id);
 
         if (!$user) {
@@ -96,6 +103,8 @@ class UserController extends Controller
 
     public function update(Request $request)
     {
+        $this->authorize('update', User::class);
+
         $user = User::find($request->id);
         if ($user) {
             $user->name = $request->name;
@@ -111,11 +120,15 @@ class UserController extends Controller
 
     public function delete(Request $request)
     {
+        $this->authorize('delete', User::class);
+
         User::query()->where('id', $request->id)->delete();
         return redirect()->back()->with('success', 'Пользователь успешно удален');
     }
 
     public function generate_password(Request $request) {
+        $this->authorize('update', User::class);
+
         $user = User::query()->find($request->id);
         if (!$user) {
             abort(404);

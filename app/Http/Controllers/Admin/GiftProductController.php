@@ -13,6 +13,7 @@ class GiftProductController extends Controller
 
     public function __construct(private GiftService $giftService)
     {
+        $this->authorizeResource(GiftProduct::class, 'gift_product');
     }
 
     public function store(Request $request)

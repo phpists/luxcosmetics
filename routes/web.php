@@ -228,21 +228,70 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function 
 //    Dashboard
     Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
 
-    //    Social media
-    Route::get('settings/socials', [\App\Http\Controllers\Admin\Settings\SocialMediaController::class, 'index'])->name('admin.settings.socials');
-    Route::get('settings/social', [\App\Http\Controllers\Admin\Settings\SocialMediaController::class, 'show'])->name('admin.settings.social.show');
-    Route::post('settings/social', [\App\Http\Controllers\Admin\Settings\SocialMediaController::class, 'store'])->name('admin.settings.social.store');
-    Route::post('settings/social/update', [\App\Http\Controllers\Admin\Settings\SocialMediaController::class, 'update'])->name('admin.settings.social.update');
-    Route::delete('settings/social/drop', [\App\Http\Controllers\Admin\Settings\SocialMediaController::class, 'destroy'])->name('admin.settings.social.destroy');
-    Route::post('settings/social/change_status', [\App\Http\Controllers\Admin\Settings\SocialMediaController::class, 'change_status'])->name('admin.settings.social.change_status');
-    Route::post('settings/social/update-positions', [\App\Http\Controllers\Admin\Settings\SocialMediaController::class, 'updates_positions'])->name('admin.settings.social.update_positions');
+    Route::group(['middleware' => 'is-super-admin'], function () {
+        Route::get('settings/socials', [\App\Http\Controllers\Admin\Settings\SocialMediaController::class, 'index'])->name('admin.settings.socials');
+        Route::get('settings/social', [\App\Http\Controllers\Admin\Settings\SocialMediaController::class, 'show'])->name('admin.settings.social.show');
+        Route::post('settings/social', [\App\Http\Controllers\Admin\Settings\SocialMediaController::class, 'store'])->name('admin.settings.social.store');
+        Route::post('settings/social/update', [\App\Http\Controllers\Admin\Settings\SocialMediaController::class, 'update'])->name('admin.settings.social.update');
+        Route::delete('settings/social/drop', [\App\Http\Controllers\Admin\Settings\SocialMediaController::class, 'destroy'])->name('admin.settings.social.destroy');
+        Route::post('settings/social/change_status', [\App\Http\Controllers\Admin\Settings\SocialMediaController::class, 'change_status'])->name('admin.settings.social.change_status');
+        Route::post('settings/social/update-positions', [\App\Http\Controllers\Admin\Settings\SocialMediaController::class, 'updates_positions'])->name('admin.settings.social.update_positions');
+        //    Social media
 
 //     Phone Social Media
-    Route::get('settings/phone/edit/', [App\Http\Controllers\Admin\Settings\SocialMediaController::class, 'edit'])->name('admin.settings.phone.edit');
-    Route::put('settings/phone/update/', [App\Http\Controllers\Admin\Settings\SocialMediaController::class, 'updatePhone'])->name('admin.settings.phone.update');
+        Route::get('settings/phone/edit/', [App\Http\Controllers\Admin\Settings\SocialMediaController::class, 'edit'])->name('admin.settings.phone.edit');
+        Route::put('settings/phone/update/', [App\Http\Controllers\Admin\Settings\SocialMediaController::class, 'updatePhone'])->name('admin.settings.phone.update');
 
-    Route::get('clear-cache', [SettingController::class, 'clearCache'])->name('admin.clear.cache');
+        Route::get('clear-cache', [SettingController::class, 'clearCache'])->name('admin.clear.cache');
 //    Route::post('logout')->name('logout');
+
+
+        // Admin Faq group
+        Route::get('faq-groups', [\App\Http\Controllers\Admin\FaqGroupController::class, 'index'])->name('admin.faq-groups');
+        Route::get('faq-groups/search', [\App\Http\Controllers\Admin\FaqGroupController::class, 'search'])->name('admin.faq-groups.search');
+        Route::post('faq-groups/update-positions', [\App\Http\Controllers\Admin\FaqGroupController::class, 'updates_positions'])->name('admin.faq-groups.update_positions');
+        Route::get('faq-groups/create', [\App\Http\Controllers\Admin\FaqGroupController::class, 'create'])->name('admin.faq-groups.create');
+        Route::get('faq-groups/{id}/edit', [\App\Http\Controllers\Admin\FaqGroupController::class, 'edit'])->name('admin.faq-groups.edit');
+        Route::post('faq-groups/store', [\App\Http\Controllers\Admin\FaqGroupController::class, 'store'])->name('admin.faq-groups.store');
+        Route::put('faq-groups/update', [\App\Http\Controllers\Admin\FaqGroupController::class, 'update'])->name('admin.faq-groups.update');
+        Route::delete('faq-groups/delete', [\App\Http\Controllers\Admin\FaqGroupController::class, 'delete'])->name('admin.faq-groups.delete');
+        /* Admin Faq */
+        Route::get('faqs', [\App\Http\Controllers\Admin\FaqController::class, 'index'])->name('admin.faqs');
+        Route::get('faqs/search', [\App\Http\Controllers\Admin\FaqController::class, 'search'])->name('admin.faqs.search');
+        Route::post('faqs/update-positions', [\App\Http\Controllers\Admin\FaqController::class, 'updates_positions'])->name('admin.faqs.update_positions');
+        Route::get('faq/show', [\App\Http\Controllers\Admin\FaqController::class, 'show'])->name('admin.faq.show');
+        Route::post('faq/store', [\App\Http\Controllers\Admin\FaqController::class, 'store'])->name('admin.faq.store');
+        Route::post('faq/update', [\App\Http\Controllers\Admin\FaqController::class, 'update'])->name('admin.faq.update');
+        Route::delete('faq/delete', [\App\Http\Controllers\Admin\FaqController::class, 'delete'])->name('admin.faq.delete');
+//    Route::post('_active-products', [\App\Http\Controllers\Admin\ProductController::class, 'activeProducts']);
+
+
+        // Pages
+        Route::get('/pages', [\App\Http\Controllers\Admin\PagesController::class, 'index'])->name('admin.pages.index');
+        Route::get('/pages/{id}/edit', [\App\Http\Controllers\Admin\PagesController::class, 'edit'])->name('admin.pages.edit');
+        Route::post('/pages', [\App\Http\Controllers\Admin\PagesController::class, 'store'])->name('admin.pages.store');
+        Route::get('/pages/create', [\App\Http\Controllers\Admin\PagesController::class, 'create'])->name('admin.pages.create');
+        Route::put('/pages/update', [\App\Http\Controllers\Admin\PagesController::class, 'update'])->name('admin.pages.update');
+        Route::delete('/pages/{id}/delete', [\App\Http\Controllers\Admin\PagesController::class, 'delete'])->name('admin.pages.delete');
+        // Tags
+        Route::get('/tag', [\App\Http\Controllers\Admin\TagController::class, 'show'])->name('admin.tag.show');
+        Route::post('/tag', [\App\Http\Controllers\Admin\TagController::class, 'store'])->name('admin.tag.store');
+        Route::put('/tag', [\App\Http\Controllers\Admin\TagController::class, 'update'])->name('admin.tag.update');
+        Route::delete('/tag', [\App\Http\Controllers\Admin\TagController::class, 'delete'])->name('admin.tag.delete');
+        Route::post('/tag/update-position', [\App\Http\Controllers\Admin\TagController::class, 'updatePosition'])->name('admin.tag.update_position');
+
+        /** Roles */
+        Route::resource('roles', \App\Http\Controllers\Admin\RoleController::class, ['as' => 'admin'])
+            ->except(['create', 'edit']);
+        /** /Roles */
+        /** Admins */
+        Route::resource('admins', \App\Http\Controllers\Admin\AdminUserController::class, ['as' => 'admin'])
+            ->except(['create', 'edit']);
+        /** /Admins */
+
+        // Order Statuses
+        Route::resource('order_statuses', \App\Http\Controllers\Admin\OrderStatusController::class, ['as' => 'admin']);
+    });
 //    Images
     Route::get('images/show', [\App\Http\Controllers\Admin\ImageController::class, 'show'])->name('admin.image.show');
 
@@ -251,24 +300,6 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function 
     Route::post('_active-categories', [AdminCategoryController::class, 'activeCategories']);
     /* Product Operation */
     Route::post('_delete-products', [\App\Http\Controllers\Admin\ProductController::class, 'deleteProducts']);
-    // Admin Faq group
-    Route::get('faq-groups', [\App\Http\Controllers\Admin\FaqGroupController::class, 'index'])->name('admin.faq-groups');
-    Route::get('faq-groups/search', [\App\Http\Controllers\Admin\FaqGroupController::class, 'search'])->name('admin.faq-groups.search');
-    Route::post('faq-groups/update-positions', [\App\Http\Controllers\Admin\FaqGroupController::class, 'updates_positions'])->name('admin.faq-groups.update_positions');
-    Route::get('faq-groups/create', [\App\Http\Controllers\Admin\FaqGroupController::class, 'create'])->name('admin.faq-groups.create');
-    Route::get('faq-groups/{id}/edit', [\App\Http\Controllers\Admin\FaqGroupController::class, 'edit'])->name('admin.faq-groups.edit');
-    Route::post('faq-groups/store', [\App\Http\Controllers\Admin\FaqGroupController::class, 'store'])->name('admin.faq-groups.store');
-    Route::put('faq-groups/update', [\App\Http\Controllers\Admin\FaqGroupController::class, 'update'])->name('admin.faq-groups.update');
-    Route::delete('faq-groups/delete', [\App\Http\Controllers\Admin\FaqGroupController::class, 'delete'])->name('admin.faq-groups.delete');
-    /* Admin Faq */
-    Route::get('faqs', [\App\Http\Controllers\Admin\FaqController::class, 'index'])->name('admin.faqs');
-    Route::get('faqs/search', [\App\Http\Controllers\Admin\FaqController::class, 'search'])->name('admin.faqs.search');
-    Route::post('faqs/update-positions', [\App\Http\Controllers\Admin\FaqController::class, 'updates_positions'])->name('admin.faqs.update_positions');
-    Route::get('faq/show', [\App\Http\Controllers\Admin\FaqController::class, 'show'])->name('admin.faq.show');
-    Route::post('faq/store', [\App\Http\Controllers\Admin\FaqController::class, 'store'])->name('admin.faq.store');
-    Route::post('faq/update', [\App\Http\Controllers\Admin\FaqController::class, 'update'])->name('admin.faq.update');
-    Route::delete('faq/delete', [\App\Http\Controllers\Admin\FaqController::class, 'delete'])->name('admin.faq.delete');
-//    Route::post('_active-products', [\App\Http\Controllers\Admin\ProductController::class, 'activeProducts']);
 
     // Feedback Chat
     Route::get('chats', [\App\Http\Controllers\Admin\FeedbackController::class, 'index'])->name('admin.chats');
@@ -334,19 +365,7 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function 
 
     // Product Property Values
     Route::post('product-property-values/store', [\App\Http\Controllers\Admin\ProductPropertyValueController::class, 'store'])->name('admin.product-property-values.store');
-    // Pages
-    Route::get('/pages', [\App\Http\Controllers\Admin\PagesController::class, 'index'])->name('admin.pages.index');
-    Route::get('/pages/{id}/edit', [\App\Http\Controllers\Admin\PagesController::class, 'edit'])->name('admin.pages.edit');
-    Route::post('/pages', [\App\Http\Controllers\Admin\PagesController::class, 'store'])->name('admin.pages.store');
-    Route::get('/pages/create', [\App\Http\Controllers\Admin\PagesController::class, 'create'])->name('admin.pages.create');
-    Route::put('/pages/update', [\App\Http\Controllers\Admin\PagesController::class, 'update'])->name('admin.pages.update');
-    Route::delete('/pages/{id}/delete', [\App\Http\Controllers\Admin\PagesController::class, 'delete'])->name('admin.pages.delete');
-    // Tags
-    Route::get('/tag', [\App\Http\Controllers\Admin\TagController::class, 'show'])->name('admin.tag.show');
-    Route::post('/tag', [\App\Http\Controllers\Admin\TagController::class, 'store'])->name('admin.tag.store');
-    Route::put('/tag', [\App\Http\Controllers\Admin\TagController::class, 'update'])->name('admin.tag.update');
-    Route::delete('/tag', [\App\Http\Controllers\Admin\TagController::class, 'delete'])->name('admin.tag.delete');
-    Route::post('/tag/update-position', [\App\Http\Controllers\Admin\TagController::class, 'updatePosition'])->name('admin.tag.update_position');
+
 
     // Feedback Reasons
     Route::get('/feedback-reasons', [\App\Http\Controllers\Admin\FeedbackReasonController::class, 'index'])->name('admin.feedback-reason.index');
@@ -392,9 +411,6 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function 
     // Order Gifts
     Route::post('/order/gifts/table', [\App\Http\Controllers\Admin\OrderGiftController::class, 'table'])->name('admin.order-gifts.table');
 
-    // Order Statuses
-    Route::resource('order_statuses', \App\Http\Controllers\Admin\OrderStatusController::class, ['as' => 'admin']);
-
     // Product Questions
     Route::get('product_questions', [\App\Http\Controllers\Admin\ProductQuestionController::class, 'index'])->name('admin.product_questions');
     Route::get('product_questions/{id}', [\App\Http\Controllers\Admin\ProductQuestionController::class, 'view'])->name('admin.product_question.view');
@@ -425,6 +441,9 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function 
     Route::delete('category_post/delete', [\App\Http\Controllers\Admin\CategoryPostsController::class, 'delete'])->name('admin.category_post.delete');
     Route::post('category_posts/update-position', [\App\Http\Controllers\Admin\CategoryPostsController::class, 'updatePosition'])->name('admin.category_posts.update_positions');
     Route::post('category_post/update-status', [\App\Http\Controllers\Admin\CategoryPostsController::class, 'updateStatus'])->name('admin.category_posts.update_status');
+
+
+
 });
 
 // General Pages

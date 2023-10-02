@@ -17,6 +17,8 @@ class GifCardController extends Controller
 
     public function storeMinSum(Request $request)
     {
+        $this->authorize('update', GiftCard::class);
+
         $min_sum = $request->input('min_sum');
         $gif = GiftCardValue::first();
 
@@ -32,6 +34,8 @@ class GifCardController extends Controller
     }
     public function storeMaxSum(Request $request)
     {
+        $this->authorize('update', GiftCard::class);
+
         $max_sum = $request->input('max_sum');
         $gif = GiftCardValue::first();
 
@@ -48,6 +52,8 @@ class GifCardController extends Controller
 
     public function storeFixPrice(Request $request)
     {
+        $this->authorize('create', GiftCard::class);
+
         $fix_price = $request->input('fix_price');
         $gif = GiftCardValue::pluck('fix_price')->first();
         if ($gif == null) {
@@ -64,6 +70,8 @@ class GifCardController extends Controller
     }
     public function updateFixPrice(Request $request, $id)
     {
+        $this->authorize('update', GiftCard::class);
+
         $number = $request->input('fix_price');
         $gif = GiftCardValue::find($id);
         $gif->fix_price = $number;
@@ -73,11 +81,15 @@ class GifCardController extends Controller
     }
     public function deleteFixPrice(Request $request)
     {
+        $this->authorize('delete', GiftCard::class);
+
         GiftCardValue::query()->where('id', $request->id)->delete();
         return redirect()->back()->with('success', 'Значения успешно удалено');
     }
     public function storeColorCard(Request $request)
     {
+        $this->authorize('create', GiftCard::class);
+
         $color_card = $request->input('color_card');
         $gif = GiftCardValue::whereNull('color_card')->first();
 
@@ -96,6 +108,8 @@ class GifCardController extends Controller
     }
     public function deleteColorCard(Request $request)
     {
+        $this->authorize('delete', GiftCard::class);
+
         $id = $request->id;
         $giftCard = GiftCardValue::find($id);
         if ($giftCard) {

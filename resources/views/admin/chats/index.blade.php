@@ -59,11 +59,13 @@
 {{--                                    </span>Активировать--}}
 {{--                                </button>--}}
 {{--                            </div>--}}
+                            @if(auth()->user()->isSuperAdmin() || auth()->user()->can(\App\Services\Admin\PermissionService::FEEDBACKS_EDIT))
                             <div class="dropdown dropdown-inline mr-2">
                                 <button class="btn btn-success font-weight-bolder deactivateChat" data-status="{{\App\Models\FeedbackChat::CLOSED}}">
                                     <span class="svg-icon svg-icon-md"><i class="fas fa-toggle-off"></i></span>Закрыть
                                 </button>
                             </div>
+                            @endif
                         </div>
                     </div>
                     <div class="card-body pb-3" id="table-container">

@@ -24,6 +24,7 @@
                         <h3 class="card-label">Подарочные карты</h3>
                     </div>
                     <div class="card-toolbar">
+                        @if(auth()->user()->isSuperAdmin() || auth()->user()->can(\App\Services\Admin\PermissionService::GIFT_CARDS_CREATE))
                         <!--begin::Dropdown-->
                         <div class="dropdown dropdown-inline mr-2">
                             <button data-toggle="modal" data-target="#createModal"
@@ -31,6 +32,7 @@
                                 <i class="fas fa-plus mr-2"></i>Создать
                             </button>
                         </div>
+                        @endif
 
                     </div>
                 </div>
@@ -119,6 +121,7 @@
                                            data-url="{{ route('admin.gift_cards.show', $giftCard) }}">
                                             <i class="las la-eye"></i>
                                         </a>
+                                        @if(auth()->user()->isSuperAdmin() || auth()->user()->can(\App\Services\Admin\PermissionService::GIFT_CARDS_EDIT))
                                         @if($giftCard->isAvailable() && !$giftCard->isUsed())
                                         <form action="{{ route('admin.gift_cards.deactivate', $giftCard) }}" method="POST" style="display: inline">
                                             @csrf
@@ -129,6 +132,8 @@
                                             </button>
                                         </form>
                                         @endif
+                                        @endif
+                                        @if(auth()->user()->isSuperAdmin() || auth()->user()->can(\App\Services\Admin\PermissionService::GIFT_CARDS_DELETE))
                                         <form action="{{ route('admin.gift_cards.destroy', $giftCard) }}" method="POST" style="display: inline">
                                             @csrf
                                             @method('DELETE')
@@ -137,6 +142,7 @@
                                                     title="Delete"><i class="las la-trash"></i>
                                             </button>
                                         </form>
+                                        @endif
                                     </td>
                                 </tr>
                             @endforeach

@@ -11,6 +11,8 @@ use Illuminate\Http\Request;
 class PropertyController extends Controller
 {
     public function index() {
+        $this->authorize('viewAny', Property::class);
+
         $properties = Property::query()->paginate(15);
 
         $last_position = Property::query()->count();
@@ -22,6 +24,8 @@ class PropertyController extends Controller
     }
 
     public function store(Request $request) {
+        $this->authorize('create', Property::class);
+
         $data = $request->all();
         $data['show_in_filter'] = array_key_exists('show_in_filter', $data)? 1 : 0;
         $data['show_in_product'] = array_key_exists('show_in_product', $data)? 1 : 0;
@@ -51,6 +55,8 @@ class PropertyController extends Controller
     }
 
     public function create() {
+        $this->authorize('create', Property::class);
+
         $categories = Category::query()->get();
         return view('admin.properties.create', compact('categories'));
     }
@@ -58,6 +64,9 @@ class PropertyController extends Controller
     public function edit(Request $request, $id) {
         $categories = Category::query()->get();
         $property = Property::query()->findOrFail($id);
+
+        $this->authorize('update', $property);
+
         return view('admin.properties.edit', compact('property', 'categories'));
     }
 
@@ -66,6 +75,9 @@ class PropertyController extends Controller
         $data['show_in_filter'] = array_key_exists('show_in_filter', $data)? 1 : 0;
         $data['show_in_product'] = array_key_exists('show_in_product', $data)? 1 : 0;
         $property = Property::query()->findOrFail($id);
+
+        $this->authorize('update', $property);
+
         if ($property->update($data)) {
             $old_cats = $property->category_idx();
             $new_cats = array_diff($data['category_id'], $old_cats);
@@ -99,8 +111,12 @@ class PropertyController extends Controller
     }
 
     public function delete(Request $request, $id) {
+        $property = Property::query()->where('id', $id)->firstOrFail();
+
+        $this->authorize('delete', $property);
+
         PropertyCategory::query()->where('property_id', $id)->delete();
-        Property::query()->where('id', $id)->delete();
+        $property->delete();
     }
 
 //    public function removePropertyCategory(Request $request, $id) {

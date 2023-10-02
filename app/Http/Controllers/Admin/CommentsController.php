@@ -16,6 +16,8 @@ class CommentsController extends Controller
 {
     public function index(Request $request)
     {
+        $this->authorize('viewAny', Comments::class);
+
         $comment = Comments::query();
 
         if (isset($request->status)) {
@@ -44,12 +46,16 @@ class CommentsController extends Controller
     }
     public function edit($id)
     {
+        $this->authorize('update', Comments::class);
+
         $data['item'] = Comments::select('comments.*')->where('comments.id', $id)->first();
         return view('admin.comments.edit', $data);
     }
 
     public function update(Request $request)
     {
+        $this->authorize('update', Comments::class);
+
         $itemId = $request->input('item_id');
         if($itemId == null) {
             $item = Comments::find($request->id);
@@ -67,6 +73,8 @@ class CommentsController extends Controller
 
     public function delete($id)
     {
+        $this->authorize('delete', Comments::class);
+
         $item = Comments::findOrFail($id);
         $item->delete();
         return redirect()->route('admin.comment')->with('success', 'Коментарий успешно удалён');

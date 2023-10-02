@@ -40,6 +40,7 @@
                     {{ $order->id }}
                 </td>
                 <td class="text-center pr-0">
+                    @if(auth()->user()->isSuperAdmin() || auth()->user()->can(\App\Services\Admin\PermissionService::ORDERS_EDIT))
                     <div class="form-group row my-auto">
                         <div class="col-12">
                             <select
@@ -53,6 +54,9 @@
                             </select>
                         </div>
                     </div>
+                    @else
+                        {{ $order->status->title ?? 'UNDEFINED' }}
+                    @endif
 
                 </td>
                 <td class="text-center pr-0">
@@ -83,10 +87,28 @@
                     {{ $order->pretty_created_at }}
                 </td>
                 <td class="text-center pr-0">
+                    @if(auth()->user()->isSuperAdmin() || auth()->user()->can(\App\Services\Admin\PermissionService::ORDERS_VIEW))
+                    <a href="{{ route('admin.orders.show', $order->id) }}"
+                       class="btn btn-sm btn-clean btn-icon">
+                        <i class="las la-eye"></i>
+                    </a>
+                    @endif
+                    @if(auth()->user()->isSuperAdmin() || auth()->user()->can(\App\Services\Admin\PermissionService::ORDERS_EDIT))
                     <a href="{{ route('admin.orders.edit', $order->id) }}"
                        class="btn btn-sm btn-clean btn-icon">
                         <i class="las la-edit"></i>
                     </a>
+                    @endif
+                    @if(auth()->user()->isSuperAdmin() || auth()->user()->can(\App\Services\Admin\PermissionService::ORDERS_DELETE))
+                    <form action="{{ route('admin.orders.destroy', $order) }}" method="POST" style="display: inline">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-sm btn-clean btn-icon btn_delete"
+                                onclick="return confirm('Вы уверенны?')"
+                                title="Delete"><i class="las la-trash"></i>
+                        </button>
+                    </form>
+                    @endif
                 </td>
             </tr>
         @endforeach

@@ -29,11 +29,13 @@
                                 </form>
                             </div>
                         </div>
+                        @if(auth()->user()->isSuperAdmin() || auth()->user()->can(\App\Services\Admin\PermissionService::SUBSCRIPTIONS_CREATE))
                         <div class="col-auto">
                             <button data-toggle="modal" data-target="#createFaqModal" class="btn btn-primary font-weight-bold">
                                 <i class="fas fa-plus mr-2"></i>Добавить
                             </button>
                         </div>
+                        @endif
                     </div>
 
                     <div id="table_data">

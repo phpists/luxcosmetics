@@ -30,6 +30,7 @@
                         </div>
                         <div class="card-toolbar">
                             <!--begin::Dropdown-->
+                            @if(auth()->user()->isSuperAdmin() || auth()->user()->can(\App\Services\Admin\PermissionService::NEWS_DELETE))
                             <div class="dropdown dropdown-inline mr-2">
                                 <button class="btn btn-danger font-weight-bolder deletedPosts">
                                     <span class="svg-icon svg-icon-md">
@@ -37,6 +38,8 @@
                                     </span>Удалить
                                 </button>
                             </div>
+                            @endif
+                            @if(auth()->user()->isSuperAdmin() || auth()->user()->can(\App\Services\Admin\PermissionService::NEWS_EDIT))
                             <div class="dropdown dropdown-inline mr-2">
                                 <button class="btn btn-success font-weight-bolder activePost" data-status="1">
                                     <span class="svg-icon svg-icon-md">
@@ -49,12 +52,15 @@
                                     <span class="svg-icon svg-icon-md"><i class="fas fa-toggle-off"></i></span>Деактивировать
                                 </button>
                             </div>
+                            @endif
+                            @if(auth()->user()->isSuperAdmin() || auth()->user()->can(\App\Services\Admin\PermissionService::NEWS_CREATE))
                             <div class="dropdown dropdown-inline mr-2">
                                 <a href="{{ route('admin.news.create') }}"
                                    class="btn btn-success font-weight-bolder">
                                     <span class="svg-icon svg-icon-md"><i class="fas fa-plus mr-2"></i></span>Добавить
                                 </a>
                             </div>
+                            @endif
                         </div>
                     </div>
                     <div class="card-body pb-3">
@@ -124,15 +130,19 @@
                                             <div class="article__image"><a href="{{ route('index.news', $item->id) }}"><img src="{{asset('images/uploads/news/' . $item->image)}}" alt="" style=" width: 100px;"></a></div>
                                         </td>
                                         <td class="text-center pr-0">
+                                            @if(auth()->user()->isSuperAdmin() || auth()->user()->can(\App\Services\Admin\PermissionService::NEWS_EDIT))
                                             <a href="{{ route('admin.news.edit', $item->id) }}" class="btn btn-sm btn-clean btn-icon">
                                                 <i class="las la-edit"></i>
                                             </a>
                                             <button class="activePost btn btn-sm btn-clean btn-icon" data-status="{{ !$item->status ? 1 : 0 }}">
                                                 <span>{!! \App\Services\SiteService::statusNews($item->status) !!}</span>
                                             </button>
+                                            @endif
+                                                @if(auth()->user()->isSuperAdmin() || auth()->user()->can(\App\Services\Admin\PermissionService::NEWS_DELETE))
                                             <a href="{{ route('admin.news.delete', $item->id) }}" class="btn btn-sm btn-clean btn-icon" onclick="return confirm('Ви впевнені, що хочете видалити цей запис?')">
                                                 <i class="las la-trash"></i>
                                             </a>
+                                                @endif
                                         </td>
 
                                     </tr>

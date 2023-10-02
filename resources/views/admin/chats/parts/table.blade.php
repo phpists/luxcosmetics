@@ -2,6 +2,7 @@
     <table class="table table-head-custom table-vertical-center">
         <thead>
         <tr>
+            @if(auth()->user()->isSuperAdmin() || auth()->user()->can(\App\Services\Admin\PermissionService::FEEDBACKS_EDIT))
             <th class="pl-0 text-center">
                                     <span style="width: 20px;">
                                         <label class="checkbox checkbox-single checkbox-all">
@@ -10,6 +11,7 @@
                                         </label>
                                     </span>
             </th>
+            @endif
             <th class="pl-0 text-center">
                 #
             </th>
@@ -33,6 +35,7 @@
         <tbody id="table">
         @foreach($chats as $chat)
             <tr id="category_{{$chat->id}}" data-id="{{ $chat->id }}">
+                @if(auth()->user()->isSuperAdmin() || auth()->user()->can(\App\Services\Admin\PermissionService::FEEDBACKS_EDIT))
                 <td class="text-center pl-0">
                                             <span style="width: 20px;">
                                                 <label class="checkbox checkbox-single">
@@ -41,6 +44,7 @@
                                                 </label>
                                             </span>
                 </td>
+                @endif
                 <td class="text-center pl-0">
                     {{ $chat->id }}
                 </td>
@@ -58,10 +62,12 @@
                 </td>
                 <td class="text-center pr-0">
                     {{--                                            <i class="handle flaticon2-sort" style="cursor:pointer;"></i>--}}
+                    @if(auth()->user()->isSuperAdmin() || auth()->user()->can(\App\Services\Admin\PermissionService::FEEDBACKS_EDIT))
                     <a href="{{ route('admin.chats.edit', $chat->id) }}"
                        class="btn btn-sm btn-clean btn-icon">
                         <i class="las la-edit"></i>
                     </a>
+                    @endif
                     {{--                                            <a href="{{ route('admin.category.delete', $category->id) }}"--}}
                     {{--                                               class="btn btn-sm btn-clean btn-icon"--}}
                     {{--                                               onclick="return confirm('Ви впевнені, що хочете видалити цей запис?')">--}}

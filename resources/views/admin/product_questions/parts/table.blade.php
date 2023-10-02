@@ -58,6 +58,7 @@ $status_list = [
                     </a>
                 </td>
                 <td class="text-center pr-0"> <!-- TODO: вивести статуси -->
+                    @if(auth()->user()->isSuperAdmin() || auth()->user()->can(\App\Services\Admin\PermissionService::QUESTIONS_EDIT))
                     <div class="form-group row">
                         <div class="col-12">
                             <select class="form-control selectpicker status_select" data-id="{{$question->id}}">
@@ -67,6 +68,9 @@ $status_list = [
                             </select>
                         </div>
                     </div>
+                    @else
+                        {{ $status_list[$question->staus] ?? "UNDEFINED" }}
+                    @endif
                 </td>
                 <td class="text-center pr-0">
                     <a href="{{route('products.product', $question->product?->alias )}}" target="_blank">{{ $question->product?->title }}</a>
@@ -80,16 +84,20 @@ $status_list = [
                        class="btn btn-sm btn-clean btn-icon">
                         <i class="las la-eye"></i>
                     </a>
+                    @if(auth()->user()->isSuperAdmin() || auth()->user()->can(\App\Services\Admin\PermissionService::QUESTIONS_EDIT))
                     <a href="#"
                        class="btn btn-sm btn-clean btn-icon edit_question" data-toggle="modal" data-target="#updateProductQuestion"
                        data-id="{{ $question->id }}">
                         <i class="las la-edit"></i>
                     </a>
+                    @endif
+                    @if(auth()->user()->isSuperAdmin() || auth()->user()->can(\App\Services\Admin\PermissionService::QUESTIONS_DELETE))
                     <a href="{{ route('admin.product_question.delete', $question->id) }}"
                        class="btn btn-sm btn-clean btn-icon"
                        onclick="return confirm('Ви впевнені, що хочете видалити цей запис?')">
                         <i class="las la-trash"></i>
                     </a>
+                    @endif
                 </td>
             </tr>
         @endforeach

@@ -13,7 +13,7 @@ class AdminController extends Controller
     {
         $user = Auth::user();
 
-        if (Auth::check() && $user->role_id == User::ADMIN) {
+        if (Auth::check() && $user->isAdmin()) {
             return view('admin.dashboard.dashboard');
         }
         return view('admin.auth.login');

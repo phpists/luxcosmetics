@@ -14,6 +14,11 @@ use Illuminate\Support\Str;
 class PromoCodeController extends Controller
 {
 
+    public function __construct()
+    {
+        $this->authorizeResource(PromoCode::class, 'promo_code');
+    }
+
     public function index()
     {
         return view('admin.promo-codes.index', [
