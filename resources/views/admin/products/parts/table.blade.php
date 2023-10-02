@@ -1,4 +1,3 @@
-
 @foreach($products as $product)
     <tr id="category_{{$product->id}}" data-id="{{ $product->id }}">
         <td class="text-center pl-0">
@@ -33,16 +32,23 @@
                 <i class="las la-eye"></i>
             </a>
 
-            <a href="{{ route('admin.product.edit', ['id' => $product->id]) }}"
-               class="btn btn-sm btn-clean btn-icon">
-                <i class="las la-edit"></i>
-            </a>
-            <a href="{{ route('admin.product.delete', $product->id) }}"
-               class="btn btn-sm btn-clean btn-icon"
-               onclick="return confirm('Вы уверены, что хотите удалить запись?')">
-                <i class="las la-trash"></i>
-            </a>
+            @if(auth()->user()->isSuperAdmin() || auth()->user()->can(\App\Services\Admin\PermissionService::PRODUCTS_EDIT))
+                <a href="{{ route('admin.product.edit', ['id' => $product->id]) }}"
+                   class="btn btn-sm btn-clean btn-icon">
+                    <i class="las la-edit"></i>
+                </a>
+            @endif
+
+            @if(auth()->user()->isSuperAdmin() || auth()->user()->can(\App\Services\Admin\PermissionService::PRODUCTS_DELETE))
+                <form action="{{ route('admin.product.delete', $product->id) }}" method="POST" style="display: inline">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn btn-sm btn-clean btn-icon btn_delete"
+                            onclick="return confirm('Вы уверенны?')"
+                            title="Delete"><i class="las la-trash"></i>
+                    </button>
+                </form>
+            @endif
         </td>
     </tr>
 @endforeach
-

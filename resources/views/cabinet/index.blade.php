@@ -103,7 +103,7 @@
                 </div>
             </div>
         </div>
-        @if($user->role_id !== \App\Models\User::ADMIN)
+        @if(!$user->isAdmin())
             <div class="cabinet-page__group">
                 <h3 class="cabinet-page__subheading subheading">Обратная связь</h3>
                 @foreach($user->chats as $chat)

@@ -19,11 +19,15 @@ use Nette\Utils\Image;
 class CategoryController extends Controller
 {
     public function index() {
+        $this->authorize('viewAny', Category::class);
+
         $categories = Category::query()->whereNull('category_id')->with('subcategories')->get();
         return view('admin.categories.index', compact('categories'));
     }
 
     public function search(Request $request) {
+        $this->authorize('viewAny', Category::class);
+
         return response()->json(Category::query()
             ->select(['id', 'name'])
             ->where('name', 'like', '%'.$request->search.'%')->get());
@@ -33,15 +37,22 @@ class CategoryController extends Controller
         $query = Category::query();
         $query->where('alias', $alias);
         $category = $query->with('subcategories')->first();
+
+        $this->authorize('view', $category);
+
         return response()->json($category);
     }
 
     public function create() {
+        $this->authorize('create', Category::class);
+
         $categories = Category::query()->get();
         return view('admin.categories.create', compact('categories'));
     }
 
     public function store(Request $request) {
+        $this->authorize('create', Category::class);
+
         $data = $request->all();
         $image = FileService::saveFile('uploads', 'categories', $request->image);
         if ($image){
@@ -81,6 +92,9 @@ class CategoryController extends Controller
 
     public function delete($id) {
         $category = Category::query()->find($id);
+
+        $this->authorize('delete', $category);
+
         if ($category->delete()) {
             FileService::removeFile('uploads', 'categories', $category->image);
             Category::query()->where('category_id', $category->id)->update([
@@ -93,6 +107,9 @@ class CategoryController extends Controller
     public function edit($id) {
         $categories = Category::query()->get();
         $category = $categories->find($id);
+
+        $this->authorize('update', $category);
+
         $tags = Tag::query()->where('category_id', $id)->paginate();
         $posts = CategoryPost::query()->where('category_id', $category->id)->orderBy('position')->get();
         $articles = Article::query()->where('record_id', $category->id)
@@ -109,6 +126,9 @@ class CategoryController extends Controller
     public function update(Request $request){
         $data = $request->all();
         $category = Category::query()->find($data['id']);
+
+        $this->authorize('update', $category);
+
         $data['add_to_top_menu'] = array_key_exists('add_to_top_menu', $data)? 1: 0;
         if (!array_key_exists('alias', $data) || $data['alias'] === null) {
             $data['alias'] = Str::slug($data['name'], '-');
@@ -165,6 +185,8 @@ class CategoryController extends Controller
 
         $seo = Category::find($productId);
 
+        $this->authorize('update', $seo);
+
         if ($seo === null) {
             return redirect()->back()->with('error', 'Продукт не найден.');
         }
@@ -181,6 +203,8 @@ class CategoryController extends Controller
         $productId = $request->input('id');
 
         $microSeo = Category::find($productId);
+
+        $this->authorize('update', $microSeo);
 
         if ($microSeo === null) {
             return redirect()->back()->with('error', 'Продукт не найден.');
@@ -199,6 +223,8 @@ class CategoryController extends Controller
         if ($categoriesId) {
             $categories = Category::query()->whereIn('id', $categoriesId)->get();
             foreach ($categories as $category) {
+                $this->authorize('delete', $category);
+
                 if($category->image) {
                     FileService::removeFile('uploads', 'categories', $category->image);
                 }
@@ -239,6 +265,9 @@ class CategoryController extends Controller
         foreach ($request->data as $pos => $new_position) {
             $parent_id = array_key_exists('parent_id', $new_position)?$new_position['parent_id']:null;
             $category = Category::query()->find($new_position['id']);
+
+            $this->authorize('update', $category);
+
             $is_same_parent = false;
             if ($parent_id !== null) {
                 $is_same_parent = ((int)$parent_id === (int)$category->category_id);

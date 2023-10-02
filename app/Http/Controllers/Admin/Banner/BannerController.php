@@ -14,6 +14,8 @@ class BannerController extends Controller
 {
     public function index(Request $request)
     {
+        $this->authorize('viewAny', Banner::class);
+
         $banner = Banner::query();
 
         if (isset($request->position)) {
@@ -36,11 +38,15 @@ class BannerController extends Controller
 
     public function create()
     {
+        $this->authorize('create', Banner::class);
+
         return view('admin.banner.create');
     }
 
     public function store(Request $request)
     {
+        $this->authorize('create', Banner::class);
+
         $validatedData = $request->validate([
             'text' => 'required',
         ]);
@@ -62,6 +68,8 @@ class BannerController extends Controller
 
     public function edit($id)
     {
+        $this->authorize('update', Banner::class);
+
         $data['item'] = Banner::select('banners.*')->where('banners.id', $id)->first();
         $seo = Banner::query()->select('banners.*')->find($id);
         return view('admin.banner.edit', $data, compact('seo'));
@@ -69,6 +77,8 @@ class BannerController extends Controller
 
     public function update(Request $request)
     {
+        $this->authorize('update', Banner::class);
+
         $item = Banner::query()->find($request->id);
         $data = $request->all();
         if ($request->hasFile('image')) {
@@ -90,6 +100,8 @@ class BannerController extends Controller
 
     public function updateSeo(Request $request)
     {
+        $this->authorize('update', Banner::class);
+
         $productId = $request->input('id');
 
         $seo = Banner::find($productId);
@@ -107,6 +119,8 @@ class BannerController extends Controller
 
     public function updateMicroSeo(Request $request)
     {
+        $this->authorize('update', Banner::class);
+
         $productId = $request->input('id');
 
         $microSeo = Banner::find($productId);
@@ -124,6 +138,8 @@ class BannerController extends Controller
 
     public function delete($id)
     {
+        $this->authorize('delete', Banner::class);
+
         $item = Banner::findOrFail($id);
         $item->delete();
 
@@ -132,6 +148,8 @@ class BannerController extends Controller
 
     public function activePosts(Request $request)
     {
+        $this->authorize('update', Banner::class);
+
         $id = $request->id;
         $bannerId = $request->checkbox;
         $status = $request->status;
@@ -159,6 +177,8 @@ class BannerController extends Controller
     }
 
     public function updatePosition(Request $request) {
+        $this->authorize('update', Banner::class);
+
         $pos_table = [];
         $positions = $request->positions;
         foreach ($positions as $key => $position) {

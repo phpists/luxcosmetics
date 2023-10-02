@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Brand;
 use App\Models\Category;
+use App\Models\GiftCondition;
+use App\Models\GiftProduct;
 use App\Models\Product;
 use App\Services\Admin\GiftService;
 use Illuminate\Http\Request;
@@ -19,6 +21,8 @@ class GiftController extends Controller
 
     public function index(Request $request)
     {
+        $this->authorize('viewAny', GiftProduct::class);
+
         if ($request->pjax()) {
             return view('admin.gifts.products.table', [
                 'gift_products' => $this->giftService->getGiftProducts()

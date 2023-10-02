@@ -36,6 +36,7 @@
                                             <div class="w3-col colorthird1" style="text-align:center;">
                                                 <h3>Цвет карты :</h3>
                                                 <br>
+                                                @if(auth()->user()->isSuperAdmin() || auth()->user()->can(\App\Services\Admin\PermissionService::GIFT_CARDS_CREATE))
                                                 <form action="{{route('admin.storeColorCard')}}" method="post">
                                                     @csrf
                                                     <div style="margin:auto; width:236px;">
@@ -48,6 +49,7 @@
                                                         <i class="fas fa-plus mr-2"></i>Добавить карту
                                                     </button>
                                                 </form>
+                                                @endif
                                             </div>
                                             <div>
                                                 <div class="card-body pb-3" style="max-width: 400px">
@@ -79,6 +81,7 @@
                                                                         </div>
                                                                     </td>
                                                                         <td class="text-center">
+                                                                            @if(auth()->user()->isSuperAdmin() || auth()->user()->can(\App\Services\Admin\PermissionService::GIFT_CARDS_EDIT))
                                                                             <form action="{{ route('admin.deleteColorCard', $item->id) }}" method="post">
                                                                                 @csrf
                                                                                 @method('DELETE')
@@ -86,6 +89,7 @@
                                                                                     <i class="las la-trash"></i>
                                                                                 </button>
                                                                             </form>
+                                                                            @endif
                                                                         </td>
                                                                     </tr>
                                                                 @endif
@@ -103,12 +107,14 @@
                                                                 Редактирования чисел
                                                             </h3>
                                                         </div>
+                                                        @if(auth()->user()->isSuperAdmin() || auth()->user()->can(\App\Services\Admin\PermissionService::GIFT_CARDS_CREATE))
                                                         <div class="card-toolbar">
                                                             <button data-toggle="modal" data-target="#createModal"
                                                                     class="btn btn-primary font-weight-bold createBtn">
                                                                 <i class="fas fa-plus mr-2"></i>Добавить
                                                             </button>
                                                         </div>
+                                                        @endif
                                                     </div>
                                                     <div class="card-body" >
                                                         <div class="table-responsive">
@@ -133,11 +139,14 @@
                                                                             <td class="text-center">
                                                                                 @csrf
                                                                                 @method('PUT')
+                                                                                @if(auth()->user()->isSuperAdmin() || auth()->user()->can(\App\Services\Admin\PermissionService::GIFT_CARDS_EDIT))
                                                                                 <button type="submit" class="btn btn-sm btn-clean btn-icon">
                                                                                     <i class="las la-edit"></i>
                                                                                 </button>
+                                                                                @endif
                                                                             </td>
                                                                         </form>
+                                                                            @if(auth()->user()->isSuperAdmin() || auth()->user()->can(\App\Services\Admin\PermissionService::GIFT_CARDS_DELETE))
                                                                         <form action="{{ route('admin.deleteFixPrice', $item->id) }}" method="post">
                                                                             <td class="text-center">
                                                                                 @csrf
@@ -147,6 +156,7 @@
                                                                                 </button>
                                                                             </td>
                                                                         </form>
+                                                                            @endif
                                                                     </tr>
                                                                 @endforeach
                                                                 </tbody>
@@ -165,9 +175,11 @@
                                                                 <div class="col-sm-8">
                                                                     <input type="number" value="{{$items[0]->min_sum ?? ''}}" class="form-control" name="min_sum" >
                                                                 </div>
+                                                                @if(auth()->user()->isSuperAdmin() || auth()->user()->can(\App\Services\Admin\PermissionService::GIFT_CARDS_EDIT))
                                                                 <button type="submit" class="btn btn-sm btn-clean btn-icon">
                                                                     <i class="las la-edit"></i>
                                                                 </button>
+                                                                @endif
                                                             </div>
                                                         </div>
                                                     </form>
@@ -179,9 +191,11 @@
                                                                 <div class="col-sm-8">
                                                                     <input type="number" value="{{$items[0]->max_sum ?? ''}}" class="form-control" name="max_sum" >
                                                                 </div>
+                                                                @if(auth()->user()->isSuperAdmin() || auth()->user()->can(\App\Services\Admin\PermissionService::GIFT_CARDS_EDIT))
                                                                 <button type="submit" class="btn btn-sm btn-clean btn-icon">
                                                                     <i class="las la-edit"></i>
                                                                 </button>
+                                                                @endif
                                                             </div>
                                                         </div>
                                                     </form>

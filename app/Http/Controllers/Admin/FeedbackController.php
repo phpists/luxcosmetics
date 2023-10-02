@@ -12,6 +12,8 @@ use Illuminate\Http\Request;
 class FeedbackController extends Controller
 {
     public function index(Request $request) {
+        $this->authorize('viewAny', FeedbackChat::class);
+
         $chats = FeedbackChat::query();
         $status_filter = $request->query('status', null);
         if ($status_filter !== null) {
@@ -38,6 +40,8 @@ class FeedbackController extends Controller
     }
 
     public function edit(Request $request, $id) {
+        $this->authorize('update', FeedbackChat::class);
+
         $chat = FeedbackChat::query()->find($id);
         if ( $chat->status === FeedbackChat::NEW ) {
             $chat->update(['status' => 2]);
@@ -47,6 +51,8 @@ class FeedbackController extends Controller
     }
 
     public function updateStatus(Request $request) {
+        $this->authorize('update', FeedbackChat::class);
+
         $chat_ids = $request->checkbox;
         FeedbackChat::query()->whereIn('id', $chat_ids)->update([
             'status' => $request->status

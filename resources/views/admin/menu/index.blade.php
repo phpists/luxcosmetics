@@ -257,6 +257,7 @@
                         <div class="card-title">
                             <h3 class="card-label">{{\App\Services\SiteService::getMenuType($menu_type)}}</h3>
                         </div>
+                        @if(auth()->user()->isSuperAdmin() || auth()->user()->can(\App\Services\Admin\PermissionService::MENUS_CREATE))
                         <div class="card-toolbar">
                             <div class="dropdown dropdown-inline mr-2">
                                 <a href="{{ route('admin.menu.create', $menu_type) }}"
@@ -267,6 +268,7 @@
                                 </a>
                             </div>
                         </div>
+                        @endif
                     </div>
                     <div class="card-header card-header-tabs-line">
                         <div class="card-toolbar">
@@ -326,6 +328,8 @@
     <script>
         let csrf = $('meta[name="csrf-token"]').attr('content');
         $.ajaxSetup({headers: {'X-CSRF-TOKEN': csrf}});
+
+        @if(auth()->user()->isSuperAdmin() || auth()->user()->can(\App\Services\Admin\PermissionService::MENUS_EDIT))
         $('.dd').nestable({
             callback: function(l,e){
                 $.ajax({
@@ -340,6 +344,7 @@
                 })
             }
         });
+        @endif
 
     </script>
     <script src="https://raw.githack.com/SortableJS/Sortable/master/Sortable.js"></script>

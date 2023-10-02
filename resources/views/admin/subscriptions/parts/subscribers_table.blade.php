@@ -43,12 +43,14 @@
                 {{ $subscriber->subscription_category_id? $subscription_categories->find($subscriber->subscription_category_id)->name: '-' }}
             </td>
             <td class="text-center pr-0">
+                @if(auth()->user()->isSuperAdmin() || auth()->user()->can(\App\Services\Admin\PermissionService::SUBSCRIPTIONS_DELETE))
                 <a href="{{ route('admin.subscriber.delete', ['id' => $subscriber->id]) }}"
                    class="btn btn-sm btn-clean btn-icon"
                    onclick="return confirm('Вы уверены, что хотите удалить подписчика?')"
                 >
                     <i class="flaticon-delete"></i>
                 </a>
+                @endif
                 {{--                                            <a href="{{ route('admin.product.delete', $product->id) }}"--}}
                 {{--                                               class="btn btn-sm btn-clean btn-icon"--}}
                 {{--                                               onclick="return confirm('Вы уверены, что хотите удалить запись?')">--}}

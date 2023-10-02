@@ -32,6 +32,7 @@
                             <h3 class="card-label">Баннеры</h3>
                         </div>
                         <div class="card-toolbar">
+                            @if(auth()->user()->isSuperAdmin() || auth()->user()->can(\App\Services\Admin\PermissionService::BANNERS_EDIT))
                             <div class="dropdown dropdown-inline mr-2">
                                 <button class="btn btn-danger font-weight-bolder activePost" data-status="0">
                                     <span class="svg-icon svg-icon-md"><i class="fas fa-toggle-off"></i></span>Деактивировать
@@ -44,12 +45,15 @@
                                     </span>Активировать
                                 </button>
                             </div>
+                            @endif
+                                @if(auth()->user()->isSuperAdmin() || auth()->user()->can(\App\Services\Admin\PermissionService::BANNERS_CREATE))
                             <div class="dropdown dropdown-inline mr-2">
                                 <a href="{{ route('admin.banner.create') }}"
                                    class="btn btn-success font-weight-bolder">
                                     <span class="svg-icon svg-icon-md"><i class="fas fa-plus mr-2"></i></span>Добавить
                                 </a>
                             </div>
+                                @endif
                         </div>
                     </div>
                     <div class="card-body pb-3">
@@ -66,9 +70,11 @@
                                         </label>
                                     </span>
                                     </th>
+                                    @if(auth()->user()->isSuperAdmin() || auth()->user()->can(\App\Services\Admin\PermissionService::BANNERS_EDIT))
                                     <th class="pl-0 text-center">
                                         #
                                     </th>
+                                    @endif
                                     <th class="pr-0 text-center">
                                         ID
                                     </th>
@@ -100,9 +106,11 @@
                                                 </label>
                                             </span>
                                         </td>
+                                        @if(auth()->user()->isSuperAdmin() || auth()->user()->can(\App\Services\Admin\PermissionService::BANNERS_EDIT))
                                         <td class="handle text-center pl-0" style="cursor: pointer">
                                             <i class="flaticon2-sort"></i>
                                         </td>
+                                        @endif
                                         <td class="text-center pl-0">
                                             {{ $item->id }}
                                         </td>
@@ -122,15 +130,19 @@
                                         </td>
 
                                         <td class="text-center pr-0">
+                                            @if(auth()->user()->isSuperAdmin() || auth()->user()->can(\App\Services\Admin\PermissionService::BANNERS_EDIT))
                                             <a href="{{ route('admin.banner.edit', $item->id) }}" class="btn btn-sm btn-clean btn-icon">
                                                 <i class="las la-edit"></i>
                                             </a>
                                             <button class="activePost btn btn-sm btn-clean btn-icon" data-status="{{ !$item->status ? 1 : 0 }}">
                                                 <span>{!! \App\Services\SiteService::statusBanner($item->status) !!}</span>
                                             </button>
+                                            @endif
+                                                @if(auth()->user()->isSuperAdmin() || auth()->user()->can(\App\Services\Admin\PermissionService::BANNERS_DELETE))
                                             <a href="{{ route('admin.banner.delete', $item->id) }}" class="btn btn-sm btn-clean btn-icon" onclick="return confirm('Ви впевнені, що хочете видалити цей запис?')">
                                                 <i class="las la-trash"></i>
                                             </a>
+                                                @endif
                                         </td>
                                     </tr>
                                 @endforeach

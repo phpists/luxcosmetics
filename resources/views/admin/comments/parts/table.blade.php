@@ -23,12 +23,16 @@
             </a>
         </td>
         <td class="text-center pr-10">
+            @if(auth()->user()->isSuperAdmin() || auth()->user()->can(\App\Services\Admin\PermissionService::COMMENTS_EDIT))
             <a href="{{ route('admin.comment.edit', $item->id) }}" class="btn btn-sm btn-clean btn-icon">
                 <i class="las la-eye"></i>
             </a>
+            @endif
+                @if(auth()->user()->isSuperAdmin() || auth()->user()->can(\App\Services\Admin\PermissionService::COMMENTS_DELETE))
             <a href="{{ route('admin.comment.delete', $item->id) }}" class="btn btn-sm btn-clean btn-icon" onclick="return confirm('Ви впевнені, що хочете видалити цей запис?')">
                 <i class="las la-trash"></i>
             </a>
+                @endif
         </td>
     </tr>
 @endforeach

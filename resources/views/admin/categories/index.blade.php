@@ -286,6 +286,8 @@
 {{--                                    </span>Імпортувати--}}
 {{--                                </button>--}}
 {{--                            </div>--}}
+
+                            @if(auth()->user()->isSuperAdmin() || auth()->user()->can(\App\Services\Admin\PermissionService::CATEGORIES_CREATE))
                             <div class="dropdown dropdown-inline mr-2">
                                 <a href="{{ route('admin.category.create') }}"
                                    class="btn btn-success font-weight-bolder">
@@ -294,6 +296,7 @@
                                     </span>Добавить категорию
                                 </a>
                             </div>
+                            @endif
                         </div>
                     </div>
                     <div class="card-body pb-3">
@@ -433,6 +436,7 @@
             //return unescape(dc.substring(begin + prefix.length, end));
             return decodeURI(dc.substring(begin + prefix.length, end));
         }
+        @if(auth()->user()->isSuperAdmin() || auth()->user()->can(\App\Services\Admin\PermissionService::CATEGORIES_EDIT))
         $('.dd').nestable({
             callback: function(l,e){
                 $.ajax({
@@ -447,6 +451,7 @@
                 })
             }
         });
+        @endif
         function cookieNameGenerator(el) {
             return 'el_' + el.getAttribute('data-id');
         }

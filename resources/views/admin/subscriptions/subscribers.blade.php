@@ -36,11 +36,13 @@
                                         <span class="nav-text">Основное</span>
                                     </a>
                                 </li>
+                                @if(auth()->user()->isSuperAdmin() || auth()->user()->can(\App\Services\Admin\PermissionService::SUBSCRIPTIONS_EDIT))
                                 <li class="nav-item">
                                     <a class="nav-link" data-toggle="tab" href="#kt_tab_pane_2_4">
                                         <span class="nav-text">Рассылка</span>
                                     </a>
                                 </li>
+                                @endif
                             </ul>
                         </div>
                     </div>
@@ -48,6 +50,7 @@
                         <div class="tab-content">
                             <div class="tab-pane fade show active" id="kt_tab_pane_1_4" role="tabpanel"
                                  aria-labelledby="kt_tab_pane_1_4">
+                                @if(auth()->user()->isSuperAdmin() || auth()->user()->can(\App\Services\Admin\PermissionService::SUBSCRIPTIONS_EDIT))
                                 <div class="row mb-10 mt-10">
                                     <div class="col-md-12">
                                         <form>
@@ -74,6 +77,7 @@
                                         </form>
                                     </div>
                                 </div>
+                                @endif
                                 <div class="row mb-10">
                                     <input type="hidden" id="filterUrl" data-url="{{ route('admin.subscribers.index') }}">
                                     <form id="subscribers_form" class="w-100">

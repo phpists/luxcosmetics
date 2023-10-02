@@ -586,7 +586,7 @@ class CartService
     public function getGiftProducts()
     {
         $giftService = new GiftService();
-        return $giftService->getGiftProducts($this->getAllProducts(), $this->getTotalSum());
+        return $giftService->getGiftProducts($this->getAllProducts());
     }
 
 

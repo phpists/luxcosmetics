@@ -13,6 +13,8 @@ use Illuminate\Support\Facades\Mail;
 class SubscribersController extends Controller
 {
     public function index(Request $request) {
+        $this->authorize('viewAny', Subscriber::class);
+
         $subscribers = Subscriber::query();
         if ($request->email) {
             $subscribers->where('email', 'LIKE', '%'.$request->email.'%');
@@ -31,11 +33,15 @@ class SubscribersController extends Controller
     }
 
     public function delete($id) {
+        $this->authorize('delete', Subscriber::class);
+
         Subscriber::query()->where('id', $id)->delete();
         return redirect()->back()->with('success', 'Подписчик успешно удален');
     }
 
     public function send_newsletter(Request $request){
+        $this->authorize('update', Subscriber::class);
+
         $subscribers = Subscriber::query();
         if (!is_null($request->category_id) && $request->category_id != -1) {
             $subscribers = $subscribers
@@ -49,6 +55,8 @@ class SubscribersController extends Controller
     }
 
     public function update_category(Request $request) {
+        $this->authorize('update', Subscriber::class);
+
         $checkbox_ids = $request->checkbox;
         foreach ($checkbox_ids as $id) {
             $subscriber = Subscriber::query()->find($id);

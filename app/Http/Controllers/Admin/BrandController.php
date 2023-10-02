@@ -11,11 +11,15 @@ use Illuminate\Support\Str;
 class BrandController extends Controller
 {
     public function index() {
+        $this->authorize('viewAny', Brand::class);
+
         $brands = Brand::query()->get();
         return view('admin.brands.index', compact('brands'));
     }
 
     public function search(Request $request) {
+        $this->authorize('viewAny', Brand::class);
+
         return response()->json(Brand::query()
             ->select(['id', 'name'])
             ->where('name', 'like', '%'.$request->search.'%')->get());
@@ -23,6 +27,9 @@ class BrandController extends Controller
 
     public function update(Request $request) {
         $brand = Brand::query()->findOrFail($request->id);
+
+        $this->authorize('update', $brand);
+
         $image = $request->image;
         $data = $request->all();
         $hideValue = $request->input('hide', null);
@@ -46,6 +53,8 @@ class BrandController extends Controller
 
     public function store(Request $request)
     {
+        $this->authorize('create', Brand::class);
+
         $image = $request->image;
         if ($image !== null) {
             $image = FileService::saveFile('uploads', 'brands', $image);
@@ -62,12 +71,19 @@ class BrandController extends Controller
     }
 
     public function delete(Request $request) {
-        Brand::query()->where('id', $request->id)->delete();
+        $brand = Brand::query()->where('id', $request->id)->firstOrFail();
+
+        $this->authorize('delete', $brand);
+
+        $brand->delete();
         return redirect()->back()->with('success', 'Бренд успешно удален');
     }
 
     public function show(Request $request) {
         $brand = Brand::query()->find($request->id);
+
+        $this->authorize('view', $brand);
+
         if (!$brand) {
             return response()->json([
                 'status' => false, 'message' => 'Запись не найдена'

@@ -33,17 +33,21 @@
                         <h3 class="card-label">Причины обращения пользователей</h3>
                     </div>
                     <div class="card-toolbar">
+                        @if(auth()->user()->isSuperAdmin() || auth()->user()->can(\App\Services\Admin\PermissionService::FEEDBACKS_CREATE))
                         <!--begin::Dropdown-->
                         <div class="dropdown dropdown-inline mr-2">
                             <button data-toggle="modal" data-target="#createModal" class="btn btn-primary font-weight-bold">
                                 <i class="fas fa-plus mr-2"></i>Добавить
                             </button>
                         </div>
+                        @endif
+                            @if(auth()->user()->isSuperAdmin() || auth()->user()->can(\App\Services\Admin\PermissionService::FEEDBACKS_DELETE))
                         <div class="dropdown dropdown-inline mr-2">
                             <button class="btn btn-danger font-weight-bolder deletedCares">
                                 <span class="svg-icon svg-icon-md"><i class="las la-trash"></i></span>Удалить
                             </button>
                         </div>
+                            @endif
 
 
                     </div>
@@ -54,6 +58,7 @@
                         <table class="table table-head-custom table-vertical-center">
                             <thead>
                             <tr>
+                                @if(auth()->user()->isSuperAdmin() || auth()->user()->can(\App\Services\Admin\PermissionService::FEEDBACKS_DELETE))
                                 <th class="pl-0 text-center">
                                     <span style="width: 20px;">
                                         <label class="checkbox checkbox-single checkbox-all">
@@ -62,6 +67,7 @@
                                         </label>
                                     </span>
                                 </th>
+                                @endif
                                 <th class="pl-0 text-center">
                                     #
                                 </th>
@@ -76,6 +82,7 @@
                             <tbody>
                             @foreach($feedback_reasons as $reason)
                                 <tr>
+                                    @if(auth()->user()->isSuperAdmin() || auth()->user()->can(\App\Services\Admin\PermissionService::FEEDBACKS_DELETE))
                                     <td class="text-center pl-0">
                                             <span style="width: 20px;">
                                                 <label class="checkbox checkbox-single">
@@ -84,6 +91,7 @@
                                                 </label>
                                             </span>
                                     </td>
+                                    @endif
                                     <td class="handle text-center pl-0" style="cursor: pointer">
                                         {{ $reason->id }}
                                     </td>
@@ -93,12 +101,15 @@
                                         </span>
                                     </td>
                                     <td class="text-center pr-0">
-                                        <form action="{{ route('admin.feedback-reason.delete')}}" method="POST">
+                                        @if(auth()->user()->isSuperAdmin() || auth()->user()->can(\App\Services\Admin\PermissionService::FEEDBACKS_EDIT))
                                             <a href="javascript:;" class="btn btn-sm btn-clean btn-icon btn_edit"
                                                data-toggle="modal" data-target="#updateModal"
                                                data-id="{{ $reason->id }}">
                                                 <i class="las la-edit"></i>
                                             </a>
+                                        @endif
+                                        @if(auth()->user()->isSuperAdmin() || auth()->user()->can(\App\Services\Admin\PermissionService::FEEDBACKS_DELETE))
+                                            <form action="{{ route('admin.feedback-reason.delete')}}" method="POST" style="display:inline;">
                                             @csrf
                                             @method('DELETE')
                                             <input type="hidden" name="id" value="{{ $reason->id }}">
@@ -107,6 +118,7 @@
                                                     title="Delete"><i class="las la-trash"></i>
                                             </button>
                                         </form>
+                                        @endif
                                     </td>
                                 </tr>
                             @endforeach

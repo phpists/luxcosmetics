@@ -11,11 +11,15 @@ use Illuminate\Http\Request;
 class MenuController extends Controller
 {
     public function index($menu_type) {
+        $this->authorize('viewAny', Menu::class);
+
         $menu_items = Menu::query()->where('type', $menu_type)->get();
         return view('admin.menu.index', compact('menu_items', 'menu_type'));
     }
 
     public function create(Request $request, $menu_type) {
+        $this->authorize('create', Menu::class);
+
         $menu_items = Menu::query()->where('type', $menu_type)->get();
         $pos = 1;
         if ($menu_items) {
@@ -27,6 +31,8 @@ class MenuController extends Controller
     }
 
     public function update(Request $request, $id) {
+        $this->authorize('update', Menu::class);
+
         $data = $request->all();
         $data['is_active'] = array_key_exists('is_active', $data)? 1 : 0;
         $menu = Menu::query()->findOrFail($id);
@@ -40,6 +46,8 @@ class MenuController extends Controller
     }
 
     public function edit($id) {
+        $this->authorize('update', Menu::class);
+
         $item = Menu::query()->find($id);
         if (!$item) {
             abort('404');
@@ -49,6 +57,8 @@ class MenuController extends Controller
     }
 
     public function store(Request $request) {
+        $this->authorize('create', Menu::class);
+
         $data = $request->all();
         $data['is_active'] = array_key_exists('is_active', $data)? 1 : 0;
         if ($request->category_id !== null) {
@@ -63,6 +73,8 @@ class MenuController extends Controller
     }
 
     public function updatePosition(Request $request) {
+        $this->authorize('update', Menu::class);
+
         foreach ($request->data as $pos => $new_position) {
             $parent_id = array_key_exists('parent_id', $new_position)?$new_position['parent_id']:null;
             $menu = Menu::query()->find($new_position['id']);
@@ -82,6 +94,8 @@ class MenuController extends Controller
     }
 
     public function delete($id) {
+        $this->authorize('delete', Menu::class);
+
         $menu = Menu::query()->findOrFail($id);
         Menu::query()->where('parent_id', $id)->update([
             'parent_id' => $menu->parent_id

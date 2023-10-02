@@ -97,14 +97,17 @@
                                             {{ $user->getStatus() }}
                                         </td>
                                         <td class="text-center pr-0">
+                                            @if(auth()->user()->isSuperAdmin() || auth()->user()->can(\App\Services\Admin\PermissionService::USERS_DELETE))
                                             <a href="{{ route('admin.user.delete', $user->id) }}"
                                                class="btn btn-sm btn-clean btn-icon" onclick="return confirm('Вы уверены, что хотите удалить пользователя?')">
                                                 <i class="las la-trash"></i>
                                             </a>
+                                            @endif
                                             <a href="{{ route('admin.user.show', $user->id) }}"
                                                class="btn btn-sm btn-clean btn-icon">
                                                 <i class="las la-eye"></i>
                                             </a>
+                                                @if(auth()->user()->isSuperAdmin() || auth()->user()->can(\App\Services\Admin\PermissionService::USERS_EDIT))
                                             <a href="{{ route('admin.user.edit', $user->id) }}"
                                                class="btn btn-sm btn-clean btn-icon">
                                                 <i class="las la-edit"></i>
@@ -119,6 +122,7 @@
                                                     </button>
                                                 </form>
                                             </a>
+                                                @endif
                                         </td>
                                     </tr>
                                 @endforeach

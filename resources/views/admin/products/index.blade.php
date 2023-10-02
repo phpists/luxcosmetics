@@ -37,6 +37,7 @@
                         </div>
                         <div class="card-toolbar">
                             <!--begin::Dropdown-->
+                            @if(auth()->user()->isSuperAdmin() || auth()->user()->can(\App\Services\Admin\PermissionService::PRODUCTS_DELETE))
                             <div class="dropdown dropdown-inline mr-2">
                                 <button class="btn btn-danger font-weight-bolder deletedProducts">
                                     <span class="svg-icon svg-icon-md">
@@ -44,6 +45,7 @@
                                     </span>Удалить
                                 </button>
                             </div>
+                            @endif
 							<!--
                             <div class="dropdown dropdown-inline mr-2">
                                <button class="btn btn-success font-weight-bolder activeproducts" data-status="1">
@@ -64,6 +66,8 @@
                                     </span>Імпортувати
                                 </button>
                             </div>-->
+
+                            @if(auth()->user()->isSuperAdmin() || auth()->user()->can(\App\Services\Admin\PermissionService::PRODUCTS_CREATE))
                             <div class="dropdown dropdown-inline mr-2">
                                 <a href="{{ route('admin.product.create') }}"
                                    class="btn btn-success font-weight-bolder">
@@ -72,6 +76,7 @@
                                     </span>Добавить товар
                                 </a>
                             </div>
+                            @endif
                         </div>
                     </div>
                     <div class="card-body pb-3">

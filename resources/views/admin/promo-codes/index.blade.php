@@ -23,6 +23,7 @@
                     <div class="card-title">
                         <h3 class="card-label">Промо коды</h3>
                     </div>
+                    @if(auth()->user()->isSuperAdmin() || auth()->user()->can(\App\Services\Admin\PermissionService::PROMO_CODES_CREATE))
                     <div class="card-toolbar">
                         <!--begin::Dropdown-->
                         <div class="dropdown dropdown-inline mr-2">
@@ -31,8 +32,8 @@
                                 <i class="fas fa-plus mr-2"></i>Создать
                             </button>
                         </div>
-
                     </div>
+                    @endif
                 </div>
                 <div class="card-body pb-3">
                     <!--begin::Table-->
@@ -117,6 +118,7 @@
                                            data-url="{{ route('admin.promo_codes.show', $promo_code) }}">
                                             <i class="las la-eye"></i>
                                         </a>
+                                        @if(auth()->user()->isSuperAdmin() || auth()->user()->can(\App\Services\Admin\PermissionService::PROMO_CODES_DELETE))
                                         <form action="{{ route('admin.promo_codes.destroy', $promo_code) }}" method="POST" style="display: inline">
                                             @csrf
                                             @method('DELETE')
@@ -125,6 +127,7 @@
                                                     title="Delete"><i class="las la-trash"></i>
                                             </button>
                                         </form>
+                                        @endif
                                     </td>
                                 </tr>
                             @endforeach

@@ -13,6 +13,8 @@ class NewsController extends Controller
 {
     public function index(Request $request)
     {
+        $this->authorize('viewAny', NewsItem::class);
+
         $query = NewsItem::query();
 
         $query->select('news_item.*');
@@ -24,11 +26,15 @@ class NewsController extends Controller
 
     public function create()
     {
+        $this->authorize('create', NewsItem::class);
+
         return view('admin.news.create');
     }
 
     public function store(Request $request)
     {
+        $this->authorize('create', NewsItem::class);
+
         $link = $request->link ?? Str::slug($request->title);
 
         $validatedData = $request->validate([
@@ -50,6 +56,8 @@ class NewsController extends Controller
 
     public function edit($id)
     {
+        $this->authorize('update', NewsItem::class);
+
         $data['item'] = NewsItem::select('news_item.*')->where('news_item.id', $id)->first();
         $seo = NewsItem::query()->select('news_item.*')->find($id);
         return view('admin.news.edit', $data, compact('seo'));
@@ -57,6 +65,8 @@ class NewsController extends Controller
 
     public function update(Request $request)
     {
+        $this->authorize('update', NewsItem::class);
+
         $item = NewsItem::find($request->id);
 
         if ($request->hasFile('image')) {
@@ -71,6 +81,8 @@ class NewsController extends Controller
 
     public function updateSeo(Request $request)
     {
+        $this->authorize('update', NewsItem::class);
+
         $productId = $request->input('id');
 
         $seo = NewsItem::find($productId);
@@ -88,6 +100,8 @@ class NewsController extends Controller
 
     public function updateMicroSeo(Request $request)
     {
+        $this->authorize('update', NewsItem::class);
+
         $productId = $request->input('id');
 
         $microSeo = NewsItem::find($productId);
@@ -105,6 +119,8 @@ class NewsController extends Controller
 
     public function delete($id)
     {
+        $this->authorize('delete', NewsItem::class);
+
         $item = NewsItem::findOrFail($id);
         $item->delete();
 
@@ -113,6 +129,8 @@ class NewsController extends Controller
 
     public function activePosts(Request $request)
     {
+        $this->authorize('update', NewsItem::class);
+
         $id = $request->id;
         $newsId = $request->checkbox;
         $status = $request->status;

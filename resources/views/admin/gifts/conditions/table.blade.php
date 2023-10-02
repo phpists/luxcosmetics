@@ -30,12 +30,15 @@
                     {{ $gift_condition->getSumString() }}
                 </td>
                 <td class="text-center pr-0">
-                    <form action="{{ route('admin.gift_conditions.destroy', $gift_condition) }}" method="POST">
-                        <a href="javascript:;" class="btn btn-sm btn-clean btn-icon btn_edit_condition"
+                    @if(auth()->user()->isSuperAdmin() || auth()->user()->can(\App\Services\Admin\PermissionService::GIFTS_EDIT))
+                    <a href="javascript:;" class="btn btn-sm btn-clean btn-icon btn_edit_condition"
                            data-toggle="modal" data-target="#editGiftConditionModal"
                            data-url="{{ route('admin.gift_conditions.show', $gift_condition) }}">
                             <i class="las la-edit"></i>
                         </a>
+                    @endif
+                        @if(auth()->user()->isSuperAdmin() || auth()->user()->can(\App\Services\Admin\PermissionService::GIFTS_DELETE))
+                        <form action="{{ route('admin.gift_conditions.destroy', $gift_condition) }}" method="POST" style="display: inline">
                         @csrf
                         @method('DELETE')
                         <button type="submit" class="btn btn-sm btn-clean btn-icon btn_delete"
@@ -43,6 +46,7 @@
                                 title="Delete"><i class="las la-trash"></i>
                         </button>
                     </form>
+                        @endif
                 </td>
             </tr>
         @endforeach

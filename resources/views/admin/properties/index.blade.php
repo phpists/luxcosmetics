@@ -15,25 +15,14 @@
             <div class="card card-custom">
                 <!--begin::Body-->
                 <div class="card-body pb-3">
-                    <div class="row">
-                        <div class="col">
-                            <div class="mb-7">
-                                <form method="GET">
-                                    <div class="input-icon">
-                                        <input id="search_input" type="text" name="search"
-                                               data-type="{{ request()->get('type') }}"
-                                               class="form-control form-control-solid"
-                                               placeholder="Поиск" value="{{ request()->input('search') }}"/>
-                                        <span><i class="flaticon2-search-1 text-muted"></i></span>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
+                    <div class="row justify-content-end">
+                        @if(auth()->user()->isSuperAdmin() || auth()->user()->can(\App\Services\Admin\PermissionService::PROPERTIES_CREATE))
                         <div class="col-auto">
                             <a href="{{route('admin.properties.create')}}" class="btn btn-primary font-weight-bold">
                                 <i class="fas fa-plus mr-2"></i>Добавить
                             </a>
                         </div>
+                        @endif
                     </div>
 
                     <div id="table_data">
@@ -56,47 +45,6 @@
 @section('js_after')
     <script src="https://raw.githack.com/SortableJS/Sortable/master/Sortable.js"></script>
     <script>
-
-        $(document).on('click', '.updateFaq', loadFaq);
-
-        function loadFaq() {
-            let id = $(this).data('id');
-
-            $.ajax({
-                url: '{{ route('admin.faq.show') }}',
-                data: {
-                    'id': id
-                },
-                success: function (response) {
-                    $('#updateFaqId').val(id);
-
-                    $('#updateFaqQuestion').val(response.question);
-                    $('#updateFaqUrl').val(response.url);
-                    $('#updateFaqPos').val(response.position);
-
-                    document.getElementById('updateFaqIsActive').checked = (response.is_active == 1)
-
-                    $('#updateFaqAnswer').summernote('code', response.answer)
-                }, error: function (response) {
-                    console.log(response)
-                }
-            });
-        }
-        $(document).on('keyup', '#search_input', function (e) {
-            let q = $(this).val()
-
-            $.ajax({
-                url: '{{ route('admin.faqs.search') }}',
-                data: {
-                    'search': q
-                },
-                success: function (response) {
-                    $('#table_data').html(response)
-                }, error: function (response) {
-                    console.log(response)
-                }
-            });
-        })
     </script>
 @endsection
 
