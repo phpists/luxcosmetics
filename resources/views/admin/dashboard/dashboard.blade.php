@@ -93,9 +93,22 @@
                     </div>
                     <!--end::Stats Widget 27-->
                 </div>
+                <div class="col-xl-3">
+                    <!--begin::Stats Widget 12-->
+                    <div class="card card-custom card-stretch gutter-b">
+                        <div class="card-body p-0">
+                            <div class="d-flex align-items-center justify-content-between card-spacer flex-grow-1">
+                                <div class="d-flex flex-column text-right pb-3">
+                                    <a href="{{ route('admin.clear.cache') }}" class="btn btn-primary btn-lg btn-block"><i class="icon flaticon-delete"></i> Очистить кэш сайта</a>
+                                </div>
+                            </div>
+{{--                            <div id="kt_stats_widget_12_chart" class="card-rounded-bottom" data-color="primary" style="height: 150px"></div>--}}
+                        </div>
+                    </div>
+                </div>
                 <div class="col-lg-6 col-xxl-4">
                     <!--begin::Stats Widget 12-->
-                    <div class="card card-custom card-stretch card-stretch-half gutter-b">
+                    <div class="card card-custom card-stretch gutter-b">
                         <div class="card-body p-0">
                             <div class="d-flex align-items-center justify-content-between card-spacer flex-grow-1">
                                 <span class="symbol symbol-50 symbol-light-warning mr-2">
@@ -115,14 +128,12 @@
                                     <span class="text-muted font-weight-bold mt-2">Новых заказов</span>
                                 </div>
                             </div>
-                            <div id="kt_stats_widget_12_chart" class="card-rounded-bottom" data-color="primary" style="height: 150px"></div>
                         </div>
                     </div>
                 </div>
-
                 <div class="col-lg-6 col-xxl-4">
                     <!--begin::Stats Widget 12-->
-                    <div class="card card-custom card-stretch card-stretch-half gutter-b">
+                    <div class="card card-custom card-stretch gutter-b">
                         <div class="card-body p-0">
                             <div class="d-flex align-items-center justify-content-between card-spacer flex-grow-1">
                                 <span class="symbol symbol-50 symbol-light-primary mr-2">
@@ -145,38 +156,57 @@
                                     <span class="text-muted font-weight-bold mt-2">Количество пользователей</span>
                                 </div>
                             </div>
-                            <div id="kt_stats_widget_12_chart" class="card-rounded-bottom" data-color="primary" style="height: 150px"></div>
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-6 col-xxl-4">
                     <!--begin::Stats Widget 12-->
-                    <div class="card card-custom card-stretch card-stretch-half gutter-b">
+                    <div class="card card-custom card-stretch gutter-b">
                         <div class="card-body p-0">
                             <div class="d-flex align-items-center justify-content-between card-spacer flex-grow-1">
+                                <span class="symbol symbol-50 symbol-light-warning mr-2">
+                                    <span class="symbol-label">
+                                        <span class="svg-icon svg-icon-primary svg-icon-2x"><!--begin::Svg Icon | path:/var/www/preview.keenthemes.com/metronic/releases/2021-05-14-112058/theme/html/demo1/dist/../src/media/svg/icons/Code/Question-circle.svg--><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                <rect x="0" y="0" width="24" height="24"/>
+                                                <circle fill="#000000" opacity="0.3" cx="12" cy="12" r="10"/>
+                                                <path d="M12,16 C12.5522847,16 13,16.4477153 13,17 C13,17.5522847 12.5522847,18 12,18 C11.4477153,18 11,17.5522847 11,17 C11,16.4477153 11.4477153,16 12,16 Z M10.591,14.868 L10.591,13.209 L11.851,13.209 C13.447,13.209 14.602,11.991 14.602,10.395 C14.602,8.799 13.447,7.581 11.851,7.581 C10.234,7.581 9.121,8.799 9.121,10.395 L7.336,10.395 C7.336,7.875 9.31,5.922 11.851,5.922 C14.392,5.922 16.387,7.875 16.387,10.395 C16.387,12.915 14.392,14.868 11.851,14.868 L10.591,14.868 Z" fill="#000000"/>
+                                            </g>
+                                        </svg><!--end::Svg Icon--></span>
+                                    </span>
+                                </span>
                                 <div class="d-flex flex-column text-right">
-                                    <a href="{{ route('admin.clear.cache') }}" class="btn btn-primary btn-lg btn-block"><i class="icon flaticon-delete"></i> Очистить кэш сайта</a>
+                                    <span class="text-dark-75 font-weight-bolder font-size-h3">{{ \App\Models\ProductQuestion::new()->count() }}</span>
+                                    <span class="text-muted font-weight-bold mt-2">Новых вопросов по товарам</span>
                                 </div>
                             </div>
-                            <div id="kt_stats_widget_12_chart" class="card-rounded-bottom" data-color="primary" style="height: 150px"></div>
                         </div>
                     </div>
                 </div>
-                <div class="col-12 card card-custom">
-                    <div class="card-header flex-wrap border-0 pt-6 pb-0">
-                        <div class="card-title">
-                            <h1 class="card-label">Вопросы</h1>
-                        </div>
-                        <div class="card-toolbar">
-                            <div class="dropdown dropdown-inline mr-2">
-                                <button class="btn btn-success font-weight-bolder deactivateChat" data-status="{{\App\Models\FeedbackChat::CLOSED}}">
-                                    <span class="svg-icon svg-icon-md"><i class="fas fa-toggle-off"></i></span>Закрыть
-                                </button>
+                <div class="col-lg-6 col-xxl-4">
+                    <!--begin::Stats Widget 12-->
+                    <div class="card card-custom card-stretch gutter-b">
+                        <div class="card-body p-0">
+                            <div class="d-flex align-items-center justify-content-between card-spacer flex-grow-1">
+                                <span class="symbol symbol-50 symbol-light-warning mr-2">
+                                   <span class="symbol-label">
+                                       <span class="svg-icon svg-icon-primary svg-icon-2x"><!--begin::Svg Icon | path:/var/www/preview.keenthemes.com/metronic/releases/2021-05-14-112058/theme/html/demo1/dist/../src/media/svg/icons/Communication/Chat6.svg-->
+                                           <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                    <rect x="0" y="0" width="24" height="24"/>
+                                                    <path opacity="0.3" fill-rule="evenodd" clip-rule="evenodd" d="M14.4862 18L12.7975 21.0566C12.5304 21.54 11.922 21.7153 11.4386 21.4483C11.2977 21.3704 11.1777 21.2597 11.0887 21.1255L9.01653 18H5C3.34315 18 2 16.6569 2 15V6C2 4.34315 3.34315 3 5 3H19C20.6569 3 22 4.34315 22 6V15C22 16.6569 20.6569 18 19 18H14.4862Z" fill="black"/>
+                                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M6 7H15C15.5523 7 16 7.44772 16 8C16 8.55228 15.5523 9 15 9H6C5.44772 9 5 8.55228 5 8C5 7.44772 5.44772 7 6 7ZM6 11H11C11.5523 11 12 11.4477 12 12C12 12.5523 11.5523 13 11 13H6C5.44772 13 5 12.5523 5 12C5 11.4477 5.44772 11 6 11Z" fill="black"/>
+                                                </g>
+                                            </svg><!--end::Svg Icon-->
+                                       </span>
+                                   </span>
+                                </span>
+                                <div class="d-flex flex-column text-right">
+                                    <span class="text-dark-75 font-weight-bolder font-size-h3">{{ \App\Models\Comments::new()->count() }}</span>
+                                    <span class="text-muted font-weight-bold mt-2">Новых коментариев к товарам</span>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="card-body">
-                        @include('admin.product_questions.parts.table', ['questions' => $product_questions])
                     </div>
                 </div>
             </div>

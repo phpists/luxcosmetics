@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
@@ -20,6 +21,11 @@ class ProductQuestion extends Model
     const ITEMS_PER_PAGE = 4;
 
     protected $fillable = ['product_id', 'status'];
+
+    public function scopeNew(Builder $query): void
+    {
+        $query->where('status', self::NEW);
+    }
 
     public function messages(): HasMany
     {

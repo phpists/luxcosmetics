@@ -49,7 +49,7 @@ class ProductController extends Controller
             $query->where('products.brand_id', '=', $request->brand_id);
         }
 
-        if (isset($request->status) && gettype($request->status) === 'string') {
+        if (isset($request->status)) {
             $query->where('products.status', $request->status);
         }
 
@@ -344,12 +344,12 @@ class ProductController extends Controller
                 ]);
             }
         }
-        return redirect()->back()->with('success', 'Изображение создано');
+        return redirect()->back()->with('success', 'Изображение создано')->with('tab_id', 'image_tab');
     }
 
     public function deleteImage($id) {
         DB::table('product_images')->where('id', $id)->delete();
-        return redirect()->back()->with('success', 'Изображение удалено');
+        return redirect()->back()->with('success', 'Изображение удалено')->with('tab_id', 'image_tab');
     }
 
     public function updateImage(Request $request) {
@@ -362,7 +362,7 @@ class ProductController extends Controller
                 'image_print_id' => $request->image_id
             ]);
         }
-        return redirect()->back()->with('success', 'Изображение успешно обновлено');
+        return redirect()->back()->with('success', 'Изображение успешно обновлено')->with('tab_id', 'image_tab');
     }
 
     public function storeVariation(Request $request) {

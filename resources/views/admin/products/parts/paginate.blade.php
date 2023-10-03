@@ -1,1 +1,1 @@
-{{ $products->appends(request()->all())->links('vendor.pagination.category_pagination') }}
+{{ $products->appends($params)->links('vendor.pagination.category_pagination') }}

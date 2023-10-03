@@ -70,7 +70,7 @@
                             <ul class="category-page__subcategories">
                                 @foreach($category->tags->where('add_to_top', true)->sortBy('position') as $tag)
                                     <li>
-                                        <a href="/{{$tag->link}}" class="category-page__subcategory">
+                                        <a href="{{$tag->link}}" class="category-page__subcategory">
                                             <span class="category-page__subcategory-image"><img src="{{$tag->getImageSrcAttribute()}}" alt=""></span>
                                             <span class="category-page__subcategory-title">{{$tag->name}}</span>
                                         </a>

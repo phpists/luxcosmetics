@@ -4,6 +4,11 @@
         <div class="dd3-content">
             <span>{{$category->name}}</span>
             <span>
+                @if((bool)$category->status)
+                    <span>
+                        <i class="flaticon-eye"></i>
+                    </span>
+                @endif
                 @if(auth()->user()->isSuperAdmin() || auth()->user()->can(\App\Services\Admin\PermissionService::CATEGORIES_DELETE))
                 <a href="{{ route('admin.category.delete', $category->id) }}"
                    class="btn btn-sm btn-clean btn-icon"
@@ -26,6 +31,11 @@
                         <div class="dd3-content">
                             <span>{{$subcategory->name}}</span>
                             <span>
+                                @if((bool)$subcategory->status)
+                                    <span>
+                                        <i class="flaticon-eye"></i>
+                                    </span>
+                                @endif
                                 @if(auth()->user()->isSuperAdmin() || auth()->user()->can(\App\Services\Admin\PermissionService::CATEGORIES_DELETE))
                                 <a href="{{ route('admin.category.delete', $subcategory->id) }}"
                                    class="btn btn-sm btn-clean btn-icon"

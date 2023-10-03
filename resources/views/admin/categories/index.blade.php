@@ -40,6 +40,10 @@
             height: 0;
         }
 
+        .active-category {
+            color: darkolivegreen;
+        }
+
         * html .cf {
             zoom: 1;
         }

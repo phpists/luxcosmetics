@@ -86,23 +86,23 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="col-4">
-                                        <div class="form-group">
-                                            <label for="add_to_top_menu">Добавить к верхнему меню</label>
-                                            <div class="checkbox-list">
-                                                <label class="checkbox">
-                                                    <input type="checkbox" name="add_to_top_menu" id="add_to_top_menu">
-                                                    <span></span>
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
+{{--                                    <div class="col-4">--}}
+{{--                                        <div class="form-group">--}}
+{{--                                            <label for="add_to_top_menu">Добавить к верхнему меню</label>--}}
+{{--                                            <div class="checkbox-list">--}}
+{{--                                                <label class="checkbox">--}}
+{{--                                                    <input type="checkbox" name="add_to_top_menu" id="add_to_top_menu">--}}
+{{--                                                    <span></span>--}}
+{{--                                                </label>--}}
+{{--                                            </div>--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
                                 </div>
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label>Заголовок внизу категории</label>
-                                            <input type="text" class="form-control" name="bottom_title" required>
+                                            <input type="text" class="form-control" name="bottom_title">
                                         </div>
                                     </div>
                                     <div class="col-md-12">
@@ -143,7 +143,7 @@
                             <div class="col-12">
                                 <div class="form-group">
                                     <label>Текст внизу категории</label>
-                                    <textarea name="bottom_text" class="summernote-lg" required></textarea>
+                                    <textarea name="bottom_text" class="summernote-lg"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -151,7 +151,7 @@
                             <div class="col-12">
                                 <div class="form-group">
                                     <label>Скрытый текст внизу категории</label>
-                                    <textarea name="hidden_bottom_text" class="summernote-lg" required></textarea>
+                                    <textarea name="hidden_bottom_text" class="summernote-lg"></textarea>
                                 </div>
                             </div>
                         </div>

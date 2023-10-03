@@ -17,7 +17,9 @@ class TagController extends Controller
 
     public function store(Request $request) {
         $data = $request->all();
-        $data['image_path'] = FileService::saveFile('uploads', 'tags', $data['image_path']);
+        if (array_key_exists('image_path', $data)) {
+            $data['image_path'] = FileService::saveFile('uploads', 'tags', $data['image_path']);
+        }
         $tag = new Tag($data);
         $tag->save();
 

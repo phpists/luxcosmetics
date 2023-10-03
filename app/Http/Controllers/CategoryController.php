@@ -28,6 +28,9 @@ class CategoryController extends Controller
 
     public function show(Request $request, string $alias) {
         $category = $this->catalogService->category;
+        if (!$category->status) {
+            abort(404);
+        }
         $products = $this->catalogService->getFiltered();
         $min_price = $this->catalogService->min_price;
         $max_price = $this->catalogService->max_price;

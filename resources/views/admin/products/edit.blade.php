@@ -44,35 +44,41 @@
             @include('admin.layouts.includes.messages')
             <div class="card card-custom">
                 <div class="card-header card-header-tabs-line" style="gap: 10px">
+                    @php
+                        $tab_id = 'main_tab';
+                        if (session('tab_id')){
+                            $tab_id = session('tab_id');
+                        }
+                    @endphp
                     <div class="card-toolbar">
                         <ul class="nav nav-tabs nav-bold nav-tabs-line">
                             <li class="nav-item">
-                                <a class="nav-link active" data-toggle="tab" href="#kt_tab_pane_1_4">
+                                <a class="nav-link @if($tab_id === 'main_tab') active @endif" data-toggle="tab" href="#main_tab">
                                     <span class="nav-text">Обновить</span>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" data-toggle="tab" href="#kt_tab_pane_2_4">
+                                <a class="nav-link @if($tab_id === 'image_tab') active @endif" data-toggle="tab" href="#image_tab">
                                     <span class="nav-text">Изображения</span>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" data-toggle="tab" href="#kt_tab_pane_4_4">
+                                <a class="nav-link @if($tab_id === 'properties_tab') active @endif" data-toggle="tab" href="#properties_tab">
                                     <span class="nav-text">Характеристики</span>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" data-toggle="tab" href="#banners">
+                                <a class="nav-link @if($tab_id === 'banners') active @endif" data-toggle="tab" href="#banners">
                                     <span class="nav-text">Статьи</span>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" data-toggle="tab" href="#kt_tab_pane_3_4">
+                                <a class="nav-link @if($tab_id === 'kt_tab_pane_3_4') active @endif" data-toggle="tab" href="#kt_tab_pane_3_4">
                                     <span class="nav-text">Редактировать SEO</span>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" data-toggle="tab" href="#kt_tab_pane_3_8">
+                                <a class="nav-link @if($tab_id === 'micro_seo_tab') active @endif" data-toggle="tab" href="#micro_seo_tab">
                                     <span class="nav-text">Микро разметка SEO</span>
                                 </a>
                             </li>
@@ -85,8 +91,8 @@
                 </div>
                 <div class="card-body">
                     <div class="tab-content">
-                        <div class="tab-pane fade show active" id="kt_tab_pane_1_4" role="tabpanel"
-                             aria-labelledby="kt_tab_pane_1_4">
+                        <div class="tab-pane fade @if($tab_id === 'main_tab') show active @endif" id="main_tab" role="tabpanel"
+                             aria-labelledby="main_tab">
                             <form id="blog_post" action="{{ route('admin.product.update', $product->id) }}" method="POST"
                                   enctype="multipart/form-data">
                                 @csrf
@@ -410,8 +416,8 @@
                                 </div>
                             </form>
                         </div>
-                        <div class="tab-pane fade" id="kt_tab_pane_2_4" role="tabpanel"
-                             aria-labelledby="kt_tab_pane_2_4">
+                        <div class="tab-pane fade @if($tab_id === 'image_tab') show active @endif" id="image_tab" role="tabpanel"
+                             aria-labelledby="image_tab">
                             <div class="row mb-5">
                                 <div class="col">
                                     <div class="mb-7">
@@ -492,8 +498,8 @@
 
                             </div>
                         </div>
-                        <div class="tab-pane fade" id="kt_tab_pane_4_4" role="tabpanel"
-                             aria-labelledby="kt_tab_pane_2_4">
+                        <div class="tab-pane fade @if($tab_id === 'properties_tab') show active @endif" id="properties_tab" role="tabpanel"
+                             aria-labelledby="image_tab">
                             <div class="row">
                             @foreach($product->category->properties as $property)
                                     <div class="col-md-4 px-10">
@@ -513,8 +519,8 @@
                             </div>
 
                         </div>
-                        <div class="tab-pane fade" id="banners" role="tabpanel"
-                             aria-labelledby="kt_tab_pane_4_4">
+                        <div class="tab-pane fade @if($tab_id === 'banners') show active @endif" id="banners" role="tabpanel"
+                             aria-labelledby="properties_tab">
                             <div class="row mb-5">
                                 <div class="col">
                                     <div class="mb-7">
@@ -589,7 +595,7 @@
                             </div>
                             <!--end::Table-->
                         </div>
-                        <div class="tab-pane fade" id="kt_tab_pane_3_8" role="tabpanel"
+                        <div class="tab-pane fade @if($tab_id === 'micro_seo_tab') show active @endif" id="micro_seo_tab" role="tabpanel"
                              aria-labelledby="kt_tab_pane_3_4">
                             <form action="{{route('admin.product.update.micro-seo')}}" method="POST">
                                 @csrf
@@ -618,7 +624,7 @@
                             </form>
                         </div>
 
-                        <div class="tab-pane fade" id="kt_tab_pane_3_4" role="tabpanel"
+                        <div class="tab-pane fade @if($tab_id === 'kt_tab_pane_3_4') show active @endif" id="kt_tab_pane_3_4" role="tabpanel"
                              aria-labelledby="kt_tab_pane_3_4">
                             <form action="{{route('admin.product.update.seo')}}" method="POST">
                                 @csrf
