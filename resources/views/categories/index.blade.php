@@ -111,35 +111,46 @@
             </div>
         </div>
     </section>
+    @php
+        $has_bottom_title = (isset($category->bottom_title) && $category->bottom_title !== '');
+        $has_bottom_text = (isset($category->bottom_text) && $category->bottom_text !== '');
+        $has_hidden_bottom_text = (isset($category->hidden_bottom_text) && $category->hidden_bottom_text !== '');
+    @endphp
+    @if($has_bottom_title || $has_bottom_text || $has_hidden_bottom_text)
     <section class="seoblock">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
                     <div class="seoblock__wrapper">
-                        <h1 class="seoblock__title">{{$category->bottom_title}}</h1>
-                        <div class="seoblock__content">{!! $category->bottom_text !!}</div>
-                        @if(isset($category->hidden_bottom_text))
-                            <div class="seoblock__content is-hidden" id="seohidden">{!! $category->hidden_bottom_text !!}</div>
-                        @endif
-                        <div class="seoblock__morecontent">Показать еще</div>
-                        @php
-                            $bottom_tags = $category->tags->where('add_to_top', false);
-                        @endphp
-                        @if(sizeof($bottom_tags) > 0)
-                            <div class="seoblock__tags">
-                                @foreach($bottom_tags->sortBy('position') as $idx=>$tag)
-                                    <a href="{{$tag->link}}" class="seoblock__tag @if($idx > 4) is-hidden @endif">{{$tag->name}}</a>
-                                @endforeach
-                            </div>
-                            @if(sizeof($bottom_tags) > 4)
-                                <div class="seoblock__moretags">Развернуть</div>
+                            @if($has_bottom_title)
+                                <h1 class="seoblock__title">{{$category->bottom_title}}</h1>
                             @endif
-                        @endif
-                    </div>
+                            @if($has_bottom_text)
+                                <div class="seoblock__content">{!! $category->bottom_text !!}</div>
+                            @endif
+                            @if($has_hidden_bottom_text)
+                                <div class="seoblock__content is-hidden" id="seohidden">{!! $category->hidden_bottom_text !!}</div>
+                                <div class="seoblock__morecontent">Показать еще</div>
+                            @endif
+                            @php
+                                $bottom_tags = $category->tags->where('add_to_top', false);
+                            @endphp
+                            @if(sizeof($bottom_tags) > 0)
+                                <div class="seoblock__tags">
+                                    @foreach($bottom_tags->sortBy('position') as $idx=>$tag)
+                                        <a href="{{$tag->link}}" class="seoblock__tag @if($idx > 4) is-hidden @endif">{{$tag->name}}</a>
+                                    @endforeach
+                                </div>
+                                @if(sizeof($bottom_tags) > 4)
+                                    <div class="seoblock__moretags">Развернуть</div>
+                                @endif
+                            @endif
+                        </div>
                 </div>
             </div>
         </div>
     </section>
+    @endif
     <div class="sortmobile">
         <div class="sortmobile__close"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#close')}}"></use></svg></div>
         <div class="sortmobile__title">Сортировать</div>
