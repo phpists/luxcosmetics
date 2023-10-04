@@ -46,6 +46,8 @@ $(function () {
         if ($item && (max_amount > current_amount)) {
             let product_id = $item.data('product');
             plusQuantity(product_id, $(this))
+        } else if($item && (max_amount <= current_amount)) {
+            toastr.warning(`Нельзя заказать больше чем ${max_amount}`)
         }
     })
 

@@ -24,6 +24,7 @@
     <link rel="stylesheet" href="{{ asset('/css/cart.css') }}">
     <link rel="stylesheet" href="{{ asset('/css/custom.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
     @vite(['resources/js/app.js'])
     <![endif]-->
 
@@ -119,6 +120,7 @@
     })
 </script>
 <script src="{{ asset('js/cart.js') }}"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 @yield('scripts')
 </body>
 
