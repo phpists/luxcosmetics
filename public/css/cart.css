@@ -59,4 +59,19 @@
     left: 0;
 }
 
+.cartstep__tab {
+    width: 0;
+    height: 0;
+    overflow: hidden;
+}
+
+.cartstep__tab.active {
+    width: 100%;
+    height: max-content;
+}
+
+.cartstep__link {
+    color: #0b0b0b;
+}
+
 

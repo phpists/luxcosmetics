@@ -1,5 +1,10 @@
 @extends('layouts.app')
 
+@section('styles')
+    <link rel="stylesheet" href="{{asset('css/maps.css')}}">
+    <script src="https://api-maps.yandex.ru/2.1/?apikey=e2bf7398-9509-44ac-8c19-e3f3fc7832aa&lang=en_US" type="text/javascript"></script>
+@endsection
+
 @section('title', 'Доставка')
 
 @section('content')
@@ -25,62 +30,44 @@
 					<div class="cart-page__step">3. Оплата </div>
 				</div>
 				<div class="cart-page__container">
-					<main class="cart-page__main">
-                        <div>
-                            <button id="send_I_btn">Send</button>
-                        </div>
-                        <form id="orderForm" action="{{ route('cart.delivery.store') }}" method="post">
-                            @csrf
-                        <div class="cart-page__group">
-                            <h3 class="cart-page__subheading subheading">Способ доставки</h3>
-                            <div class="cart-page__deliverymethods">
-                                <label class="radio">
-                                    <input type="radio" name="delivery_type" value="{{ \App\Models\Order::DELIVERY_TYPE_STANDARD }}" @checked($cartService->getProperty(\App\Services\CartService::DELIVERY_KEY) == \App\Models\Order::DELIVERY_TYPE_STANDARD) required/>
-                                    <div class="radio__text">Стандартная доставка <small>2-3 дня в ваш город</small></div>
-                                </label>
-                                <label class="radio">
-                                    <input type="radio" name="delivery_type" value="{{ \App\Models\Order::DELIVERY_TYPE_EXPRESS }}" @checked($cartService->getProperty(\App\Services\CartService::DELIVERY_KEY) == \App\Models\Order::DELIVERY_TYPE_EXPRESS) required/>
-                                    <div class="radio__text">Экспресс доставка</div>
-                                </label>
+					<main class="cart-page__main cartsteps">
+                        <div class="cartsteps__item cartstep">
+                            <div></div>
+                            <div class="cartstep__item">
+                                <div class="cartstep__title">Населённый пункт</div>
+                                <div class="cartstep__add" data-value="Москва" id="area">г. Москва</div>
+                                <a href="#changecity" id="changecity_init" class="btn btn--accent popup-with-form"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#edit')}}"></use></svg> Изменить адрес</a>
+                            </div>
+                            <div class="cartstep__item">
+                                <div class="cartstep__title">Способ доставки</div>
+                                <div class="cartstep__delivery">
+                                    <a href="#addmodal" style="text-decoration: none" class="radio popup-with-form cartstep__link" data-tab="coruier_tab">
+                                        <input type="radio" name="delivery" />
+                                        <div class="radio__text">Курьер <small>Курьерская доставка <span>Бесплатно</span></small></div>
+                                    </a>
+                                    <a href="#pick-up-point" id="show_map_link" style="text-decoration: none" class="radio popup-with-form cartstep__link" data-tab="pickup_delivery_tab">
+                                        <input type="radio" name="delivery" />
+                                        <div class="radio__text">Самовывоз <small>Самовывоз ПВЗ <span>Бесплатно</span></small></div>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="cartstep__tab" id="coruier_tab">
+                                <div class="cartstep__item">
+                                    <div class="cartstep__title">Выберите куда доставить товар</div>
+                                    <a href="#addmodal" class="btn btn--accent popup-with-form">Модалка для адреса</a>
+                                </div>
+                            </div>
+                            <div class="cartstep__tab" id="pickup_delivery_tab">
+                                <div class="cartsteps__title">Адрес и пункт выдачи</div>
+                                <div class="cartstep__item">
+                                    <div class="cartstep__title">Пункт выдачи заказа</div>
+                                    <div class="cartstep__add" id="pickup_addr">г. Москва, улица , дом, Название пункта выдачи</div>
+                                    <a href="#pick-up-point" id="map_init_btn" class="btn btn--accent popup-with-form"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#edit')}}"></use></svg> Выбрать другой</a>
+                                </div>
                             </div>
                         </div>
-
-                        @if(auth()->check() && $user_has_addresses = auth()->user()->addresses->isNotEmpty())
-						<h3 class="cart-page__heading subheading subheading--with-form">Мои адреса</h3>
-						<div class="cart-page__addresses">
-                            @foreach(auth()->user()->addresses as $address)
-							<div class="cart-page__address my-add">
-								<div class="my-add__title">{{ $address->name . ' ' . $address->surname }}</div>
-								<div class="my-add__wrap">
-									<label class="radio">
-										<input type="radio" name="address_id" value="{{ $address->id }}" @checked($cartService->getProperty(\App\Services\CartService::ADDRESS_KEY) == $address->id)/>
-										<div class="radio__text">{{ $address->region . ', ' . $address->city . ', ' . $address->address }}
-                                            <br>{{ $address->phone }}</div>
-									</label>
-									<button class="btn-edit btn_edit_address popup-with-form" data-value="{{$address->id}}" href="#updateAddressModal">
-                                        <svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#edit')}}"></use></svg> Редактировать</button>
-								</div>
-							</div>
-                            @endforeach
-						</div>
-                        @endif
-                        </form>
-
-
-                        @include('layouts.parts.edit_address_modal')
-
-						<div class="cart-page__group">
-							<a href="javascript:;" class="cart-page__subheading subheading subheading--with-form toggle-address">Добавить адрес</a>
-                            <div class="toggable" @if($user_has_addresses) style="display: none" @endif>
-							@include('layouts.parts.create_address')
-                            </div>
-						</div>
-
 
 						@include('cart.includes.products_list_static')
-
-
-
 					</main>
 					<aside class="cart-page__aside">
                         @include('cart.includes.aside')
@@ -93,7 +80,18 @@
 
 @endsection
 
+@section('hidden-content')
+    @include('cart.modals.pickup_modal')
+    @include('cart.modals.change-city')
+    @include('cart.modals.coruier-delivery-modal')
+@endsection
+
 @section('scripts')
+    <script src="{{asset('js/yandex.js')}}"></script>
+    <script
+        src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"
+        defer
+    ></script>
     <script>
         $(document).ready(function () {
             Inputmask("+7 (999) 999-99-99").mask('#phone_inp');

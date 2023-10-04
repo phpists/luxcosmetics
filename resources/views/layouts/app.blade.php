@@ -54,6 +54,7 @@
 </div>
 @include('layouts.parts.mobile-menu', ['menu_items' => $menu_items])
 <div class="hidden">
+    @yield('hidden-content')
     <div class="popupform form" id="callback">
         <div class="popupform__title">Оставить сообщение</div>
         <div class="form__fieldset">
