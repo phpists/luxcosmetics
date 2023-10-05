@@ -6,11 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Models\NewsImage;
 use App\Models\NewsItem;
 use App\Services\FileService;
-use App\Services\SiteService;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
 class NewsImageController extends Controller
@@ -27,8 +25,6 @@ class NewsImageController extends Controller
         $position = NewsImage::query()->where('news_item_id', $data['news_item_id'])->max('position');
 
         $position = $position? $position + 1: 1;
-
-        Log::info($position);
 
         $data['position'] = $position;
 
