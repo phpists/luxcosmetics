@@ -15,6 +15,15 @@
 
                 <div class="modal-body">
 
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="form-group w-100">
+                                <label for="createGiftConditionTitle" class="font-weight-bold">Название</label>
+                                <input id="createGiftConditionTitle" type="text" name="title" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+
                      <div class="row">
                         <div class="col-md-6 col-12">
                             <div class="form-group w-100">

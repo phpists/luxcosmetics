@@ -26,6 +26,7 @@ class GiftCondition extends Model
         'type',
         'min_sum',
         'max_sum',
+        'title'
     ];
 
 

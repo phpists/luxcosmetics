@@ -17,6 +17,15 @@
                 <div class="modal-body">
 
                     <div class="row">
+                        <div class="col-12">
+                            <div class="form-group w-100">
+                                <label for="editGiftConditionTitle" class="font-weight-bold">Название</label>
+                                <input id="editGiftConditionTitle" type="text" name="title" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
                         <div class="col-md-6 col-12">
                             <div class="form-group w-100">
                                 <label for="editGiftConditionType" class="font-weight-bold">Тип</label>
