@@ -208,21 +208,14 @@ const loadDeliveryPlaces = async () => {
     if (location_name === '' || location_name ==null) {
         return;
     }
-    let location = ymaps.geocode(location_name, {
-        kind: 'locality',
-        results: 10
-    });
-    location.then((res) => {
-        let boundaries = res.geoObjects.get(0).properties.get('boundedBy');
-        let center = res.geoObjects.get(0).geometry.getCoordinates();
-        myMap.setCenter(center, 10, {
 
-        });
-        const border = (boundaries[0][1] + ',' + boundaries[0][0])
-            + '~'
-            + (boundaries[1][1] + ',' + boundaries[1][0])
-        findPlaces(border);
+    let border_inp = document.getElementById('search_borders');
+    const border = border_inp.value;
+    const center = border_inp.dataset.center.split(',');
+    myMap.setCenter(center, 10, {
+
     });
+    await findPlaces(border);
 };
 
 function locationItemInit(el) {
@@ -237,7 +230,20 @@ function locationItemInit(el) {
         if (coruier_city) {
             coruier_city.innerText = el.dataset.value;
         }
+
         closeCartTab('pickup_delivery_tab');
+        ymaps.geocode(el.dataset.value, {
+            kind: 'locality',
+            results: 10
+        }).then((res) => {
+            let boundaries = res.geoObjects.get(0).properties.get('boundedBy');
+            let border_inp = document.getElementById('search_borders');
+            border_inp.value = (boundaries[0][1] + ',' + boundaries[0][0])
+                + '~'
+                + (boundaries[1][1] + ',' + boundaries[1][0]);
+            let center = res.geoObjects.get(0).geometry.getCoordinates();
+            border_inp.dataset.center = center[0] + ',' + center[1];
+        })
         // await loadDeliveryPlaces();
     })
 }
@@ -259,10 +265,7 @@ async function handleSearch(ev) {
             if (el.subtitle?.text) {
                 location_title += ', ' + el.subtitle.text;
             }
-            elData.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 384 512">
-            <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
-            <path d="M215.7 499.2C267 435 384 279.4 384 192C384 86 298 0 192 0S0 86 0 192c0 87.4 117 243 168.3 307.2c12.3 15.3 35.1 15.3 47.4 0zM192 128a64 64 0 1 1 0 128 64 64 0 1 1 0-128z"/>
-            </svg> <span>${location_title}</span>`;
+            elData.innerHTML = location_title;
             elData.classList.add('location_item');
             elData.dataset.value = location_title;
             prompt.appendChild(elData);
@@ -305,6 +308,54 @@ function showCartTab(id) {
 function closeCartTab(id) {
     document.getElementById(id).classList.remove('active');
 }
+
+function handleClickStreetOption(ev) {
+    let street_option = ev.currentTarget;
+    let search = document.getElementById('street_house_inp');
+    search.value = street_option.dataset.address;
+    let suggest_box = document.querySelector('.suggest_box__variants');
+    suggest_box.classList.toggle('active');
+}
+
+function initStreetOption(address) {
+    let street_option = document.createElement('li');
+    street_option.dataset.address = address;
+    street_option.innerText = address;
+    street_option.addEventListener('click', handleClickStreetOption);
+    return street_option;
+}
+
+async function handleSearchStreetHouse(ev) {
+    let search_inp = ev.currentTarget;
+    let location_name = document.querySelector('.addmodal__city').innerText;
+    let border_inp = document.getElementById('search_borders');
+    axios.get('https://suggest-maps.yandex.ru/v1/suggest', {
+        params: {
+            text: location_name + ', ' + search_inp.value,
+            types: 'house',
+            apikey: SUGGEST_API_KEY,
+            print_address: 1,
+            bbox: border_inp.value,
+            rspn: 1
+        }
+    }).then((res) => {
+        let suggest_box = document.querySelector('.suggest_box__variants');
+        suggest_box.innerHTML = "";
+        suggest_box.classList.toggle('active');
+        res.data.results.forEach((suggestion) => {
+            suggest_box.appendChild(
+                initStreetOption(suggestion.title?.text)
+            );
+        })
+    })
+}
+
+function initStreetSearch() {
+    let search = document.getElementById('street_house_inp');
+    search.addEventListener('input', handleSearchStreetHouse);
+}
+
+initStreetSearch();
 document.getElementById('changecity_init').addEventListener('click', () => {
     searchInit()
 })
@@ -312,6 +363,9 @@ document.getElementById('changecity_init').addEventListener('click', () => {
 document.querySelectorAll('li.location_item').forEach((el) => locationItemInit(el))
 
 const showMaps = () => {
+    let locationField = document.getElementById('area');
+    if (typeof locationField.dataset.value !== 'string')
+        return;
     setTimeout(async () => {
         initDeliveryOptions();
         handleToggleLoading(true);
@@ -321,3 +375,11 @@ const showMaps = () => {
 
 document.getElementById('map_init_btn').addEventListener('click', showMaps)
 document.getElementById('show_map_link').addEventListener('click', showMaps)
+document.getElementById('submit_coruier_btn').addEventListener('click', () => {
+    let location = document.querySelector('.addmodal__city').innerText;
+    let address = document.getElementById('street_house_inp').value;
+    if (address == null || address == '')
+        return;
+    document.getElementById('courier_addr').innerText = location + ', ' + address;
+    showCartTab('coruier_tab');
+})

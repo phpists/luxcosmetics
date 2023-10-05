@@ -35,9 +35,10 @@
                             <div></div>
                             <div class="cartstep__item">
                                 <div class="cartstep__title">Населённый пункт</div>
-                                <div class="cartstep__add" data-value="Москва" id="area">г. Москва</div>
+                                <div class="cartstep__add" id="area">Выберите пункт</div>
                                 <a href="#changecity" id="changecity_init" class="btn btn--accent popup-with-form"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#edit')}}"></use></svg> Изменить адрес</a>
                             </div>
+                            <input type="hidden" id="search_borders" data-center="">
                             <div class="cartstep__item">
                                 <div class="cartstep__title">Способ доставки</div>
                                 <div class="cartstep__delivery">
@@ -54,6 +55,7 @@
                             <div class="cartstep__tab" id="coruier_tab">
                                 <div class="cartstep__item">
                                     <div class="cartstep__title">Выберите куда доставить товар</div>
+                                    <div class="cartstep__add" id="courier_addr">г. Москва, улица , дом, Название пункта выдачи</div>
                                     <a href="#addmodal" class="btn btn--accent popup-with-form">Модалка для адреса</a>
                                 </div>
                             </div>

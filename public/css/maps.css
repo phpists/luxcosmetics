@@ -94,6 +94,7 @@ div.pick-up-pointmodal__map {
 
 .location_item {
     border-bottom: 1px solid #e6e6e6;
+    cursor: pointer;
 }
 
 .location_item svg {
@@ -102,10 +103,6 @@ div.pick-up-pointmodal__map {
     width: 12px;
     margin-left: 10px;
     margin-right: 5px;
-}
-
-.location_item span {
-    font-size: 12px;
 }
 
 .delivery_places_container {
@@ -171,4 +168,36 @@ div.pick-up-pointmodal__map {
 .select-delivery-type:focus > .dropdown {
     max-height: 200px;
     visibility: visible;
+}
+
+.suggest_box {
+    position: relative;
+}
+
+.suggest_box__variants {
+    position: absolute;
+    background: #f1f1f1;
+    width: 100%;
+    border: 1px solid #d9d9d9;
+    visibility: hidden;
+}
+
+.suggest_box__variants.active {
+    visibility: visible;
+}
+
+.suggest_box__variants li {
+    border-bottom: 1px solid #d9d9d9;
+    padding: 5px 20px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.suggest_box__variants li:hover {
+    background: #23543d;
+    color: whitesmoke;
+}
+
+.suggest_box__variants li:last-child {
+    border-bottom: none;
 }
