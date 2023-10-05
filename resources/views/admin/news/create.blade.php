@@ -38,11 +38,6 @@
                                     <span class="nav-text">Создать</span>
                                 </a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" data-toggle="tab" href="#kt_tab_pane_2_8">
-                                    <span class="nav-text">Добавить Изображения</span>
-                                </a>
-                            </li>
                         </ul>
                     </div>
 
@@ -57,6 +52,19 @@
                             <form id="form1" action="{{ route('admin.news.store') }}" method="POST"
                                   enctype="multipart/form-data">
                                 @csrf
+                                <div class="form-group">
+                                    <label>Изображения</label>
+                                    <div class="col-auto ml-2">
+                                        <div class="image-input image-input-outline" id="createImagePlugin" style="max-height: 700px;">
+                                            <div class="image-input-wrapper" id="updateImageBackground"></div>
+                                            <label class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="change" data-toggle="tooltip" data-original-title="Change avatar">
+                                                <i class="fa fa-pen icon-sm text-muted"></i>
+                                                <input type="file" id="imageInput" name="image" required accept="image/*">
+                                                <input type="hidden" name="image_remove">
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
@@ -101,6 +109,18 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Тип слайдера</label>
+                                            <select name="" id="" class="dropdown form-control">
+                                                @foreach(\App\Models\NewsItem::getSliderTypes() as $slider_type)
+                                                    <option value="{{$slider_type}}">
+                                                        {{\App\Services\SiteService::getNewsSliderType($slider_type)}}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-12">
@@ -110,24 +130,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
 
-                        <div class="tab-pane fade" id="kt_tab_pane_2_8" role="tabpanel"
-                             aria-labelledby="kt_tab_pane_2_8">
-
-                                <div class="form-group">
-                                    <label>Изображения</label>
-                                    <div class="col-auto ml-2">
-                                      <div class="image-input image-input-outline" id="createImagePlugin" style="max-height: 700px;">
-                                        <div class="image-input-wrapper" id="updateImageBackground"></div>
-                                        <label class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="change" data-toggle="tooltip" data-original-title="Change avatar">
-                                          <i class="fa fa-pen icon-sm text-muted"></i>
-                                          <input type="file" id="imageInput" name="image" required accept="image/*">
-                                          <input type="hidden" name="image_remove">
-                                        </label>
-                                      </div>
-                                    </div>
-                                </div>
                             </form>
                         </div>
                     </div>

@@ -94,7 +94,7 @@ $status_list = [
                     @if(auth()->user()->isSuperAdmin() || auth()->user()->can(\App\Services\Admin\PermissionService::QUESTIONS_DELETE))
                     <a href="{{ route('admin.product_question.delete', $question->id) }}"
                        class="btn btn-sm btn-clean btn-icon"
-                       onclick="return confirm('Ви впевнені, що хочете видалити цей запис?')">
+                       onclick="return confirm('Вы уверенны, что хотите удалить данную запись?')">
                         <i class="las la-trash"></i>
                     </a>
                     @endif

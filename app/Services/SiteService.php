@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Enums\AvailableOptions;
 use App\Enums\ConnectionOptions;
 use App\Models\Menu;
+use App\Models\NewsItem;
 use Illuminate\Support\Facades\Log;
 
 class SiteService
@@ -87,6 +88,13 @@ class SiteService
             ConnectionOptions::SMS->value => 'SMS',
             ConnectionOptions::PHONE->value => 'Телефон',
             ConnectionOptions::WHATSAPP->value => 'Whatsapp'
+        };
+    }
+
+    static public function getNewsSliderType(int $slider_type): string {
+        return match ($slider_type) {
+            NewsItem::HORIZONTAL_SLIDER => 'Горизонтальный слайдер',
+            NewsItem::VERTICAL_SLIDER => 'Вертикальный слайдер'
         };
     }
 }

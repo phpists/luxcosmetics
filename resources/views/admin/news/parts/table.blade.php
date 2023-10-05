@@ -33,7 +33,7 @@
             </a>
             <a href="{{ route('admin.news.delete', $item->id) }}"
                class="btn btn-sm btn-clean btn-icon"
-               onclick="return confirm('Ви впевнені, що хочете видалити цей запис?')">
+               onclick="return confirm('Вы уверенны, что хотите удалить данную запись?')">
                 <i class="las la-trash"></i>
             </a>
         </td>
