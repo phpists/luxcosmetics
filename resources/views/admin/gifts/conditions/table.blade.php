@@ -7,6 +7,9 @@
                 #
             </th>
             <th class="pr-0 text-center">
+                Название
+            </th>
+            <th class="pr-0 text-center">
                 Тип
             </th>
             <th class="pr-0 text-center">
@@ -22,6 +25,9 @@
             <tr>
                 <td class="text-center pl-0">
                     {{ $gift_condition->id }}
+                </td>
+                <td class="text-center pl-0">
+                    {{ $gift_condition->title }}
                 </td>
                 <td class="text-center pl-0">
                     {{ $gift_condition->getTypeTitle() }}

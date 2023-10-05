@@ -194,6 +194,7 @@
                         $('#editGiftConditionType').val(response.type).trigger('change')
                         $('#editGiftConditionMinSum').val(response.min_sum)
                         $('#editGiftConditionMaxSum').val(response.max_sum)
+                        $('#editGiftConditionTitle').val(response.title)
 
                         let cases = []
                         $.each(response.condition_cases, function (i, item) {
