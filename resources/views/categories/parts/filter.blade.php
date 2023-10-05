@@ -30,13 +30,13 @@
                             <span>от</span>
                             <input type="number" name="price[from]"
                                    class="filter__input" id="amount"
-                                   value="{{ request()->input('price.from') ?? \App\Services\CatalogService::PRICE_FROM }}">
+                                   value="{{ request()->input('price.from') ?? '' }}">
                         </div>
                         <div class="filter__col">
                             <span>до</span>
                             <input type="number" name="price[to]" class="filter__input"
                                    id="amount2"
-                                   value="{{ request()->input('price.to') ?? \App\Services\CatalogService::PRICE_TO }}">
+                                   value="{{ request()->input('price.to') ?? '' }}">
                         </div>
                     </div>
                 </div>

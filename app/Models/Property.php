@@ -33,7 +33,7 @@ class Property extends Model
 
     public function values()
     {
-        return $this->hasMany(PropertyValue::class)->orderBy('value');
+        return $this->hasMany(PropertyValue::class)->orderByRaw("SUBSTRING_INDEX(value, ' ', -1), CAST(SUBSTRING_INDEX(value, ' ', 1) AS UNSIGNED), value");
     }
 
 }

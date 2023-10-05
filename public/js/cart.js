@@ -143,6 +143,25 @@ $(function () {
         }
     })
 
+
+    // Price Filter Slider Init
+    let minFilterPrice = Math.floor($('#filterMinPrice').val());
+    let maxFilterPrice = Math.ceil($('#filterMaxPrice').val());
+
+    $("#slider-range").slider({
+        range: true,
+        min: minFilterPrice,
+        max: maxFilterPrice,
+        values: [minFilterPrice, maxFilterPrice],
+        slide: function (event, ui) {
+            $("#amount").val(ui.values[0]);
+            $("#amount2").val(ui.values[1]);
+        }
+    });
+
+    $("#amount").val($("#slider-range").slider("values", 0));
+    $("#amount2").val($("#slider-range").slider("values", 1));
+
 })
 
 
