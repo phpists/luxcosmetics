@@ -21,6 +21,9 @@ class Order extends Model
     ];
 
 
+    const DELIVERY_COURIER = 'courier';
+    const DELIVERY_SELF_PICKUP = 'self_pickup';
+
 
     const STATUS_NEW = 1;
     const STATUS_CANCELLED = 2;
@@ -33,13 +36,9 @@ class Order extends Model
         'address_id',
         'card_id',
         'total_sum',
-        'delivery_type',
         'gift_box',
-        'as_delivery_address',
         'full_name',
         'phone',
-        'city',
-        'region',
         'address',
         'gift_card_id',
         'is_used_bonuses',

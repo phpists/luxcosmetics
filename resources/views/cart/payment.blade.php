@@ -77,9 +77,7 @@
 						<div class="cart-page__group">
 							<h3 class="cart-page__subheading subheading">Адрес доставки</h3>
 							<div class="typography addressblock">
-                                <p>{{ $address->full_name }}</p>
-                                <p>{{ $address->phone }}</p>
-                                <p>{{ $address->full_address }}</p>
+                                <p>{{ $address }}</p>
 							</div>
 						</div>
                         <div class="cartsteps__item cartstep">

@@ -67,18 +67,8 @@ class CartController extends Controller
 
     public function deliveryStore(Request $request)
     {
-        $delivery_type = $request->post(CartService::DELIVERY_KEY);
-        $this->cartService->setProperty(CartService::DELIVERY_KEY, $delivery_type);
-
-        $address_id = $request->post(CartService::ADDRESS_KEY);
-        if (!$address_id) {
-            $address_data = $request->post('address');
-            $address_data['is_default'] = $request->boolean('address.is_default');
-            $address_data['user_id'] = Auth::id();
-            $address = Address::create($address_data);
-            $address_id = $address->id;
-        }
-        $this->cartService->setProperty(CartService::ADDRESS_KEY, $address_id);
+        $address = $request->post('address');
+        $this->cartService->setProperty(CartService::ADDRESS_KEY, $address);
 
         return redirect()->route('cart.payment');
     }
@@ -88,7 +78,7 @@ class CartController extends Controller
         if (!$this->cartService->isNotEmpty())
             return redirect()->route('home');
 
-        $address = Address::findOrFail($this->cartService->getProperty(CartService::ADDRESS_KEY));
+        $address = $this->cartService->getProperty(CartService::ADDRESS_KEY);
 
         return view('cart.payment', compact('address'));
     }

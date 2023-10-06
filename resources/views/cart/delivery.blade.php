@@ -39,20 +39,23 @@
                                 <a href="#changecity" id="changecity_init" class="btn btn--accent popup-with-form"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#edit')}}"></use></svg> Изменить адрес</a>
                             </div>
                             <input type="hidden" id="search_borders" data-center="">
-                            <input type="hidden" id="final_addr" >
-                            <div class="cartstep__item">
-                                <div class="cartstep__title">Способ доставки</div>
-                                <div class="cartstep__delivery">
-                                    <a href="#addmodal" style="text-decoration: none" class="radio popup-with-form cartstep__link" data-tab="coruier_tab">
-                                        <input type="radio" name="delivery" />
-                                        <div class="radio__text">Курьер <small>Курьерская доставка <span>Бесплатно</span></small></div>
-                                    </a>
-                                    <a href="#pick-up-point" id="show_map_link" style="text-decoration: none" class="radio popup-with-form cartstep__link" data-tab="pickup_delivery_tab">
-                                        <input type="radio" name="delivery" />
-                                        <div class="radio__text">Самовывоз <small>Самовывоз ПВЗ <span>Бесплатно</span></small></div>
-                                    </a>
+                            <form id="orderForm" action="{{ route('cart.delivery.store') }}" method="post">
+                                @csrf
+                                <input type="hidden" id="final_addr" name="address">
+                                <div class="cartstep__item">
+                                    <div class="cartstep__title">Способ доставки</div>
+                                    <div class="cartstep__delivery">
+                                        <a href="#addmodal" style="text-decoration: none" class="radio popup-with-form cartstep__link" data-tab="coruier_tab">
+                                            <input type="radio" name="delivery" />
+                                            <div class="radio__text">Курьер <small>Курьерская доставка <span>Бесплатно</span></small></div>
+                                        </a>
+                                        <a href="#pick-up-point" id="show_map_link" style="text-decoration: none" class="radio popup-with-form cartstep__link" data-tab="pickup_delivery_tab">
+                                            <input type="radio" name="delivery" />
+                                            <div class="radio__text">Самовывоз <small>Самовывоз ПВЗ <span>Бесплатно</span></small></div>
+                                        </a>
+                                    </div>
                                 </div>
-                            </div>
+                            </form>
                             <div class="cartstep__tab" id="coruier_tab">
                                 <div class="cartstep__item">
                                     <div class="cartstep__title">Выберите куда доставить товар</div>

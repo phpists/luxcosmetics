@@ -20,7 +20,7 @@ class CartService
 
     const SESSION_KEY = 'cart';
     const DELIVERY_KEY = 'delivery_type';
-    const ADDRESS_KEY = 'address_id';
+    const ADDRESS_KEY = 'address';
     const GIFT_BOX_KEY = 'gift_box';
     const AS_DELIVERY_ADDRESS_KEY = 'as_delivery_address';
     const CARD_KEY = 'card_id';
@@ -31,7 +31,6 @@ class CartService
 
 
     const ALL_KEYS = [
-        self::DELIVERY_KEY => 'Способ доставки',
         self::ADDRESS_KEY => 'Адрес',
         self::GIFT_BOX_KEY => 'Подарочная коробка',
         self::AS_DELIVERY_ADDRESS_KEY => 'Использовать как адрес доставки',
@@ -253,7 +252,7 @@ class CartService
     public function containUnavailable()
     {
         return $this->getAllProducts()->contains(function ($item) {
-            return $item->availability !== AvailableOptions::AVAILABLE->value;
+            return !$item->isAvailable();
         });
     }
 
@@ -299,19 +298,15 @@ class CartService
         if (!self::isNotEmpty())
             return null;
 
+        $user = Auth::user();
+
         $order_data = Arr::mapWithKeys(self::ALL_KEYS, function ($title, $name) {
             return [$name => $this->getProperty($name)];
         });
-        $order_data['user_id'] = Auth::id();
+        $order_data['user_id'] = $user->id;
         $order_data['total_sum'] = self::getTotalSumWithDiscounts();
-        $address_id = $order_data['address_id'];
-        unset($order_data['address_id']);
-        $address = Address::find($address_id);
-        $order_data['full_name'] = $address['name'] . ' ' . $address['surname'];
-        $order_data['phone'] = $address['phone'];
-        $order_data['city'] = $address['city'];
-        $order_data['region'] = $address['region'];
-        $order_data['address'] = $address['address'];
+        $order_data['full_name'] = $user->full_name;
+        $order_data['phone'] = $user->phone;
         $order_data['promo_code_discount'] = null;
         $order_data['bonuses_discount'] = null;
         $order_data['gift_card_discount'] = null;

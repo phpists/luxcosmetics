@@ -69,10 +69,6 @@
                                     <span class="opacity-70"><a
                                             href="{{ route('admin.user.show', $order->user) }}" target="_blank">{{ $order->user->email }}</a></span>
                                 </div>
-                                <div class="d-flex flex-column flex-root">
-                                    <span class="font-weight-bolder mb-2">Доставка</span>
-                                    <span class="opacity-70">{{ \App\Models\Order::ALL_DELIVERY_TYPES[$order->delivery_type] ?? 'UNDEFINED' }}</span>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -84,15 +80,13 @@
                                 <div class="col">
                                     <ul class="list-group list-group-flush w-100">
                                         <li class="list-group-item"><span class="opacity-70">Имя:</span> {{ $order->full_name }}</li>
-                                        <li class="list-group-item"><span class="opacity-70">Телефон:</span> {{ $order->phone }}</li>
-                                        <li class="list-group-item"><span class="opacity-70">Подарочная коробка:</span> {{ $order->gift_box ? 'Да' : 'Нет' }}</li>
+                                        <li class="list-group-item"><span class="opacity-70">Адреcс:</span> {{ $order->address }}</li>
                                     </ul>
                                 </div>
                                 <div class="col">
                                     <ul class="list-group list-group-flush w-100">
-                                        <li class="list-group-item"><span class="opacity-70">Регион:</span> {{ $order->region }}</li>
-                                        <li class="list-group-item"><span class="opacity-70">Город:</span> {{ $order->city }}</li>
-                                        <li class="list-group-item"><span class="opacity-70">Адреcс:</span> {{ $order->address }}</li>
+                                        <li class="list-group-item"><span class="opacity-70">Телефон:</span> {{ $order->phone }}</li>
+                                        <li class="list-group-item"><span class="opacity-70">Подарочная коробка:</span> {{ $order->gift_box ? 'Да' : 'Нет' }}</li>
                                     </ul>
                                 </div>
                             </div>
