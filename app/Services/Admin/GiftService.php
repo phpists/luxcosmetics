@@ -27,7 +27,7 @@ class GiftService
 
     public function getGiftConditions()
     {
-        return GiftCondition::paginate();
+        return GiftCondition::paginate(20, ['*'], 'c_page');
     }
 
 }
