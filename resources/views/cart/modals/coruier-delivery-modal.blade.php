@@ -5,7 +5,7 @@
         <a href="#changecity" class="btn-edit popup-with-form"><svg class="icon"><use xlink:href="images/dist/sprite.svg#edit"></use></svg> Редактировать</a>
     </div>
     <div class="addmodal__form">
-        <form class="form">
+        <form class="form" id="coruier_form">
             <div class="form__row">
                 <div class="form__col form__col--100">
                     <div class="form__fieldset">

@@ -375,7 +375,8 @@ const showMaps = () => {
 
 document.getElementById('map_init_btn').addEventListener('click', showMaps)
 document.getElementById('show_map_link').addEventListener('click', showMaps)
-document.getElementById('submit_coruier_btn').addEventListener('click', () => {
+document.getElementById('coruier_form').addEventListener('submit', (ev) => {
+    ev.preventDefault();
     let location = document.querySelector('.addmodal__city').innerText;
     let address = document.getElementById('street_house_inp').value;
     if (address == null || address == '')

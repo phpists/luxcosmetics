@@ -82,6 +82,31 @@
                                 <p>{{ $address->full_address }}</p>
 							</div>
 						</div>
+                        <div class="cartsteps__item cartstep">
+                            <div class="cartsteps__title">Оплата</div>
+                            <div class="cartstep__item">
+                                <div class="cartstep__title">для выбранного ПВЗ доступна только онлайн оплата</div>
+                                <div class="cartstep__paymethods">
+                                    <label class="radio">
+                                        <input type="radio" name="pay" />
+                                        <div class="radio__text">СБП</div>
+                                    </label>
+                                    <label class="radio">
+                                        <input type="radio" name="pay" />
+                                        <div class="radio__text">оплата онлайн</div>
+                                    </label>
+                                    <label class="radio">
+                                        <input type="radio" name="pay" />
+                                        <div class="radio__text">оплата Долями</div>
+                                    </label>
+                                    <label class="radio">
+                                        <input type="radio" name="pay" />
+                                        <div class="radio__text">SberPay</div>
+                                    </label>
+                                </div>
+                            </div>
+
+                        </div>
 					</main>
 					<aside class="cart-page__aside">
                         @include('cart.includes.aside')

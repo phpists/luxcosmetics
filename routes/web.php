@@ -451,7 +451,8 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function 
 });
 
 // General Pages
-Route::get('/news/{link}', [\App\Http\Controllers\NewsController::class, 'show'])->name('index.news');
+Route::get('/news', [\App\Http\Controllers\NewsController::class, 'index'])->name('news.index');
+Route::get('/news/{link}', [\App\Http\Controllers\NewsController::class, 'show'])->name('news.post');
 Route::get('/blog/{link}', [\App\Http\Controllers\BlogController::class, 'show'])->name('index.blog');
 Route::get('/banner/{link}', [\App\Http\Controllers\BannerController::class, 'show'])->name('index.banner');
 Route::get('/load_questions', [\App\Http\Controllers\ProductQuestionController::class, 'loadQuestions'])->name('product_questions.load');

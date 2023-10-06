@@ -127,7 +127,7 @@
                                             {{ date('m Y, H:i:s', strtotime($item->published_at)) }}
                                         </td>
                                         <td class="text-center pr-0">
-                                            <div class="article__image"><a href="{{ route('index.news', $item->id) }}"><img src="{{asset('images/uploads/news/' . $item->image)}}" alt="" style=" width: 100px;"></a></div>
+                                            <div class="article__image"><a href="{{ route('news.post', $item->id) }}"><img src="{{asset('images/uploads/news/' . $item->image)}}" alt="" style=" width: 100px;"></a></div>
                                         </td>
                                         <td class="text-center pr-0">
                                             @if(auth()->user()->isSuperAdmin() || auth()->user()->can(\App\Services\Admin\PermissionService::NEWS_EDIT))
