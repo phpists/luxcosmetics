@@ -39,6 +39,7 @@
                                 <a href="#changecity" id="changecity_init" class="btn btn--accent popup-with-form"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#edit')}}"></use></svg> Изменить адрес</a>
                             </div>
                             <input type="hidden" id="search_borders" data-center="">
+                            <input type="hidden" id="final_addr" >
                             <div class="cartstep__item">
                                 <div class="cartstep__title">Способ доставки</div>
                                 <div class="cartstep__delivery">

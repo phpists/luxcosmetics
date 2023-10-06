@@ -1,5 +1,8 @@
 const SUGGEST_API_KEY = '05c41b12-223c-47e0-a0df-9403b108f3cd';
 const SEARCH_API_KEY = 'd46bfdd1-d9ca-4f94-959e-5c09d2a427e1';
+const ADDRESS_OUTPUT_ID = 'final_addr';
+const PICKUP_DELIVERY = 'pickup';
+const COURIER_DELIVERY = 'courier';
 var myMap;
 function initYandex(){
     // Creating the map.
@@ -296,6 +299,9 @@ function handleSubmitDeliveryAddress(ev) {
     let post_name = ev.currentTarget.dataset.post_name;
     pickup_addr.innerText = address + ', ' + post_name;
     pickup_addr.dataset.address = address;
+    let output_inp = document.getElementById(ADDRESS_OUTPUT_ID);
+    output_inp.value = address + ', ' + post_name;
+    output_inp.dataset.delivery_type = PICKUP_DELIVERY;
     pickup_addr.dataset.post_name = post_name;
     showCartTab('pickup_delivery_tab');
 }
@@ -382,5 +388,9 @@ document.getElementById('coruier_form').addEventListener('submit', (ev) => {
     if (address == null || address == '')
         return;
     document.getElementById('courier_addr').innerText = location + ', ' + address;
+    let output_inp = document.getElementById(ADDRESS_OUTPUT_ID);
+    output_inp.value = location + ', ' + address;
+    output_inp.dataset.delivery_type = COURIER_DELIVERY;
+
     showCartTab('coruier_tab');
 })
