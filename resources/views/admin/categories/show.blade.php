@@ -43,7 +43,7 @@
                     <div class="dropdown dropdown-inline mr-2 mb-6">
                         <a href="{{ route('admin.category.delete', $category->id) }}"
                            class="btn btn-danger font-weight-bolder"
-                           onclick="return confirm('Ви впевнені, що хочете видалити цей запис?')">
+                           onclick="return confirm('Вы уверенны, что хотите удалить данную запись?')">
                             <span class="svg-icon svg-icon-md"></span>Удалить
                         </a>
                     </div>
