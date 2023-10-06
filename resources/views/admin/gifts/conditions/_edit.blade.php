@@ -89,7 +89,7 @@
                             <div class="form-group w-100">
                                 <label for="editGiftConditionProducts" class="font-weight-bold">Подарочные товары</label>
                                 <select id="editGiftConditionProducts" class="form-control select2" name="products[]" multiple data-live-search="true" required>
-                                    @foreach($gift_products as $gift_product)
+                                    @foreach($all_gift_products as $gift_product)
                                         <option value="{{ $gift_product->id }}">[{{ $gift_product->article }}]{{ $gift_product->title }}</option>
                                     @endforeach
                                 </select>

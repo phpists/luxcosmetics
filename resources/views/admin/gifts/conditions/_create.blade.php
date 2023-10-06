@@ -88,7 +88,7 @@
                             <div class="form-group w-100">
                                 <label for="createGiftConditionProducts" class="font-weight-bold">Подарочные товары</label>
                                 <select id="createGiftConditionProducts" class="form-control select2" name="products[]" multiple required>
-                                    @foreach($gift_products as $gift_product)
+                                    @foreach($all_gift_products as $gift_product)
                                         <option value="{{ $gift_product->id }}">[{{ $gift_product->article }}]{{ $gift_product->title }}</option>
                                     @endforeach
                                 </select>
