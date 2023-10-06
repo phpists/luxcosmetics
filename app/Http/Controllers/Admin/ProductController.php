@@ -49,8 +49,8 @@ class ProductController extends Controller
             $query->where('products.brand_id', '=', $request->brand_id);
         }
 
-        if (isset($request->status)) {
-            $query->where('products.status', $request->status);
+        if (isset($request->availability)) {
+            $query->where('products.availability', $request->availability);
         }
 
         $products = $query->paginate($request->paginate ?? 24);
