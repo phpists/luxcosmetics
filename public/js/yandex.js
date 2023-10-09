@@ -121,12 +121,12 @@ const handleFormatPickupCard = (place, coordinates) =>
         <div class="pick-up-point__title">${place?.name ?? ""}</div>
         <div class="pick-up-point__content">
             <p>${ place?.address ?? ""}</p>
-            <p>стоимость — <b>бесплатно</b></p>
-            <p>дата доставки — <b>сегодня, 3 октября</b></p>
-            <p>нет оплаты при получении</p>
+<!--            <p>стоимость — <b>бесплатно</b></p>-->
+<!--            <p>дата доставки — <b>сегодня, 3 октября</b></p>-->
+<!--            <p>нет оплаты при получении</p>-->
             <div class="pick-up-point__ftr">
                 <p><small>Режим работы</small> ${place?.Hours?.text ?? ""}</p>
-                <p><small>Контактный телефон</small> 8 800 770 70 21</p>
+<!--                <p><small>Контактный телефон</small> 8 800 770 70 21</p>-->
             </div>
         </div>
         <button class="btn btn--accent pickup-item__button" data-id="${place?.id}" data-title="${place?.name}" data-address="${place?.address}">Привезти сюда</button>

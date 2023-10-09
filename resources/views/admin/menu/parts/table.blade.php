@@ -4,6 +4,11 @@
         <div class="dd3-content">
             <span>{{$item->title}}</span>
             <span>
+                @if((bool)$item->is_active)
+                    <span>
+                        <i class="flaticon-eye"></i>
+                    </span>
+                @endif
                 @if(auth()->user()->isSuperAdmin() || auth()->user()->can(\App\Services\Admin\PermissionService::MENUS_DELETE))
                 <a href="{{ route('admin.menu.delete', $item->id) }}"
                    class="btn btn-sm btn-clean btn-icon"
@@ -25,6 +30,11 @@
                     <div class="dd3-content">
                         <span>{{$subitem->title}}</span>
                         <span>
+                            @if((bool)$subitem->is_active)
+                                <span>
+                                        <i class="flaticon-eye"></i>
+                                    </span>
+                            @endif
                             @if(auth()->user()->isSuperAdmin() || auth()->user()->can(\App\Services\Admin\PermissionService::MENUS_DELETE))
                                 <a href="{{ route('admin.menu.delete', $subitem->id) }}"
                                    class="btn btn-sm btn-clean btn-icon"

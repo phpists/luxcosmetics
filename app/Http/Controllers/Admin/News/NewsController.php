@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\Admin\News;
 
 use App\Http\Controllers\Controller;
+use App\Models\NewsImage;
 use App\Models\NewsItem;
 use App\Services\FileService;
 use App\Services\SiteService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
 class NewsController extends Controller
@@ -122,6 +124,7 @@ class NewsController extends Controller
         $this->authorize('delete', NewsItem::class);
 
         $item = NewsItem::findOrFail($id);
+        NewsImage::query()->where('news_item_id', $item->id)->delete();
         $item->delete();
 
         return redirect()->route('admin.news')->with('success', 'Данные успешно удалены');

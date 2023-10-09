@@ -112,11 +112,12 @@
         </div>
     </section>
     @php
-        $has_bottom_title = (isset($category->bottom_title) && $category->bottom_title !== '');
-        $has_bottom_text = (isset($category->bottom_text) && $category->bottom_text !== '');
-        $has_hidden_bottom_text = (isset($category->hidden_bottom_text) && $category->hidden_bottom_text !== '');
+        $has_bottom_title = (isset($category->bottom_title) && $category->bottom_title !== ''  && $category->bottom_title !== '<p><br></p>');
+        $has_bottom_text = (isset($category->bottom_text) && $category->bottom_text !== ''  && $category->bottom_text !== '<p><br></p>');
+        $has_hidden_bottom_text = (isset($category->hidden_bottom_text) && $category->hidden_bottom_text !== '' && $category->hidden_bottom_text !== '<p><br></p>');
+        $bottom_tags = $category->tags->where('add_to_top', false);
     @endphp
-    @if($has_bottom_title || $has_bottom_text || $has_hidden_bottom_text)
+    @if($has_bottom_title || $has_bottom_text || $has_hidden_bottom_text || (sizeof($bottom_tags) > 0))
     <section class="seoblock">
         <div class="container">
             <div class="row">
@@ -132,13 +133,10 @@
                                 <div class="seoblock__content is-hidden" id="seohidden">{!! $category->hidden_bottom_text !!}</div>
                                 <div class="seoblock__morecontent">Показать еще</div>
                             @endif
-                            @php
-                                $bottom_tags = $category->tags->where('add_to_top', false);
-                            @endphp
                             @if(sizeof($bottom_tags) > 0)
                                 <div class="seoblock__tags">
                                     @foreach($bottom_tags->sortBy('position') as $idx=>$tag)
-                                        <a href="{{$tag->link}}" class="seoblock__tag @if($idx > 4) is-hidden @endif">{{$tag->name}}</a>
+                                        <a href="{{$tag->link}}" class="seoblock__tag">{{$tag->name}}</a>
                                     @endforeach
                                 </div>
                                 @if(sizeof($bottom_tags) > 4)

@@ -144,6 +144,18 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Тип слайдера</label>
+                                            <select name="slider_type" id="" class="dropdown form-control">
+                                                @foreach(\App\Models\NewsItem::getSliderTypes() as $slider_type)
+                                                    <option @if($slider_type === $item->slider_type) selected @endif value="{{$slider_type}}">
+                                                        {{\App\Services\SiteService::getNewsSliderType($slider_type)}}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
 
                                 </div>
                                 <div class="row">
@@ -313,21 +325,31 @@
             )
         ));
 
-        var KTSummernote = function () {
+        var KTCkeditor = function () {
             // Private functions
             var demos = function () {
-                $('#textEditor').summernote($.extend(summernoteDefaultOptions, {
-                    height: 1000
-                }));
+                ClassicEditor
+                    .create( document.querySelector( '#textEditor' ) )
+                    .then( editor => {
+                        console.log( editor );
+                    } )
+                    .catch( error => {
+                        console.error( error );
+                    } );
             }
 
             return {
                 // public functions
-                init: function () {
+                init: function() {
                     demos();
                 }
             };
         }();
+
+        // Initialization
+        jQuery(document).ready(function() {
+            KTCkeditor.init();
+        });
 
         $(function () {
             $.ajaxSetup({
@@ -335,8 +357,6 @@
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
-            KTSummernote.init();
-
             var createImagePlugin = new KTImageInput('createImagePlugin');newsImageContainer
             var createPageImagePlugin = new KTImageInput('createPageImagePlugin');
             var newsImageContainer = new KTImageInput('newsImageContainer');

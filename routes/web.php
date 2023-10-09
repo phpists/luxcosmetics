@@ -319,7 +319,7 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function 
     Route::post('news/update/seo', [\App\Http\Controllers\Admin\News\NewsController::class, 'updateSeo'])->name('admin.news.update.seo');
     Route::post('news/update/micro-seo', [\App\Http\Controllers\Admin\News\NewsController::class, 'updateMicroSeo'])->name('admin.news.update.micro-seo');
     Route::post('news/images', [\App\Http\Controllers\Admin\News\NewsImageController::class, 'store'])->name('admin.news.image.store');
-    Route::put('news/images/update-positions', [\App\Http\Controllers\Admin\News\NewsImageController::class, 'updateImagesPosition'])->name('admin.news.image.store');
+    Route::put('news/images/update-positions', [\App\Http\Controllers\Admin\News\NewsImageController::class, 'updateImagesPosition'])->name('admin.news.image.update-position');
     Route::delete('news/images', [\App\Http\Controllers\Admin\News\NewsImageController::class, 'delete'])->name('admin.news.image.delete');
 
 

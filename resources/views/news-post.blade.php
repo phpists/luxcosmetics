@@ -24,7 +24,7 @@
             <div class="row">
                 <div class="col-lg-10">
                     <h1 class="title-h1">{{ $item->title }}</h1>
-                    <div class="content-page__preview">
+                    <div class="content-page__preview" style="margin-bottom: 50px">
                         <img src="{{$item->mainImage()}}" alt="">
                     </div>
                     <div class="typography">

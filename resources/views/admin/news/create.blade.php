@@ -112,7 +112,7 @@
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label>Тип слайдера</label>
-                                            <select name="" id="" class="dropdown form-control">
+                                            <select name="slider_type" id="" class="dropdown form-control">
                                                 @foreach(\App\Models\NewsItem::getSliderTypes() as $slider_type)
                                                     <option value="{{$slider_type}}">
                                                         {{\App\Services\SiteService::getNewsSliderType($slider_type)}}
@@ -163,12 +163,17 @@
             )
         ));
 
-        var KTSummernote = function () {
+        var KTCkeditor = function () {
             // Private functions
             var demos = function () {
-                $('#textEditor').summernote($.extend(summernoteDefaultOptions, {
-                    height: 450
-                }));
+                ClassicEditor
+                    .create( document.querySelector( '#textEditor' ) )
+                    .then( editor => {
+                        console.log( editor );
+                    } )
+                    .catch( error => {
+                        console.error( error );
+                    } );
             }
 
             return {
@@ -179,6 +184,11 @@
             };
         }();
 
+        // Initialization
+        jQuery(document).ready(function() {
+            KTCkeditor.init();
+        });
+
         $(function () {
             $.ajaxSetup({
                 headers: {
@@ -186,7 +196,6 @@
                 }
             });
 
-            KTSummernote.init();
 
             var createImagePlugin = new KTImageInput('createImagePlugin');
             var createPageImagePlugin = new KTImageInput('createPageImagePlugin');
