@@ -139,7 +139,7 @@
                                         <a href="{{$tag->link}}" class="seoblock__tag">{{$tag->name}}</a>
                                     @endforeach
                                 </div>
-                                @if(sizeof($bottom_tags) > 4)
+                                @if(sizeof($bottom_tags) > 5)
                                     <div class="seoblock__moretags">Развернуть</div>
                                 @endif
                             @endif
@@ -198,16 +198,16 @@
     <script src="{{asset('/js/favourites.js')}}"></script>
     <script>
         $(document).ready(function () {
-            let tagHidden = document.querySelectorAll('.seoblock__tag.is-hidden');
-
-            $(".seoblock__moretags").click(function() {
-                $(this).text(function(i, text){
-                    return text === "Свернуть" ? "Развернуть" : "Свернуть";
-                })
-                for (let i = 0; i < tagHidden.length; i++) {
-                    tagHidden[i].classList.toggle("is-hidden");
-                }
-            });
+            // let tagHidden = document.querySelectorAll('.seoblock__tag.is-hidden');
+            //
+            // $(".seoblock__moretags").click(function() {
+            //     $(this).text(function(i, text){
+            //         return text === "Свернуть" ? "Развернуть" : "Свернуть";
+            //     })
+            //     for (let i = 0; i < tagHidden.length; i++) {
+            //         tagHidden[i].classList.toggle("is-hidden");
+            //     }
+            // });
             $(document).on('click', '.pagination__more', function () {
                 let is_disabled = $('.pagination__item--next').attr('aria-disabled')
                 if(is_disabled === 'false') {
