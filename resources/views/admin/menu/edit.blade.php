@@ -69,7 +69,7 @@
                                                         <div class="">
                                                 <span class="switch">
                                                     <label>
-                                                        <input type="checkbox" checked id="static_check" name="select"/>
+                                                        <input type="checkbox" id="static_check" name="select"/>
                                                         <span></span>
                                                     </label>
                                                 </span>
