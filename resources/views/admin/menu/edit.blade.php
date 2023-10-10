@@ -65,11 +65,11 @@
                                             <div class="row">
                                                 <div class="col-md-2">
                                                     <div class="form-group">
-                                                        <label class="">Статическая страница?</label>
+                                                        <label class="">Сгенерировать ссылку на категорию автоматически?</label>
                                                         <div class="">
                                                 <span class="switch">
                                                     <label>
-                                                        <input type="checkbox" id="static_check" name="select"/>
+                                                        <input type="checkbox" checked id="static_check" name="select"/>
                                                         <span></span>
                                                     </label>
                                                 </span>
@@ -221,16 +221,16 @@
         });
         $('#static_check').on('change', function (ev) {
             if (ev.currentTarget.checked) {
-                $('#cat_select').attr('disabled', true)
-                $('#link').attr('disabled', false)
-                $('#cat_select').attr('required', true)
-                $('#link').attr('required', false)
-            }
-            else {
                 $('#cat_select').attr('disabled', false)
                 $('#link').attr('disabled', true)
                 $('#cat_select').attr('required', false)
                 $('#link').attr('required', true)
+            }
+            else {
+                $('#cat_select').attr('disabled', true)
+                $('#link').attr('disabled', false)
+                $('#cat_select').attr('required', true)
+                $('#link').attr('required', false)
             }
         })
         $(function () {
