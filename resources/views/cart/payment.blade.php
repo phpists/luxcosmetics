@@ -26,6 +26,31 @@
 				</div>
 				<div class="cart-page__container">
 					<main class="cart-page__main">
+                        <div class="cartsteps__item cartstep">
+                            <div class="cartsteps__title">Оплата</div>
+                            <div class="cartstep__item">
+                                <div class="cartstep__title">для выбранного ПВЗ доступна только онлайн оплата</div>
+                                <div class="cartstep__paymethods">
+                                    <label class="radio">
+                                        <input type="radio" name="pay" />
+                                        <div class="radio__text">СБП</div>
+                                    </label>
+                                    <label class="radio">
+                                        <input type="radio" name="pay" />
+                                        <div class="radio__text">оплата онлайн</div>
+                                    </label>
+                                    <label class="radio">
+                                        <input type="radio" name="pay" />
+                                        <div class="radio__text">оплата Долями</div>
+                                    </label>
+                                    <label class="radio">
+                                        <input type="radio" name="pay" />
+                                        <div class="radio__text">SberPay</div>
+                                    </label>
+                                </div>
+                            </div>
+
+                        </div>
 
                         <form action="{{ route('cart.checkout.store') }}" method="POST" id="orderForm">
                             @csrf
@@ -70,9 +95,7 @@
                             </div>
 						</div>
 
-
                         @include('cart.includes.products_list_static')
-
 
 						<div class="cart-page__group">
 							<h3 class="cart-page__subheading subheading">Адрес доставки</h3>
@@ -80,31 +103,6 @@
                                 <p>{{ $address }}</p>
 							</div>
 						</div>
-                        <div class="cartsteps__item cartstep">
-                            <div class="cartsteps__title">Оплата</div>
-                            <div class="cartstep__item">
-                                <div class="cartstep__title">для выбранного ПВЗ доступна только онлайн оплата</div>
-                                <div class="cartstep__paymethods">
-                                    <label class="radio">
-                                        <input type="radio" name="pay" />
-                                        <div class="radio__text">СБП</div>
-                                    </label>
-                                    <label class="radio">
-                                        <input type="radio" name="pay" />
-                                        <div class="radio__text">оплата онлайн</div>
-                                    </label>
-                                    <label class="radio">
-                                        <input type="radio" name="pay" />
-                                        <div class="radio__text">оплата Долями</div>
-                                    </label>
-                                    <label class="radio">
-                                        <input type="radio" name="pay" />
-                                        <div class="radio__text">SberPay</div>
-                                    </label>
-                                </div>
-                            </div>
-
-                        </div>
 					</main>
 					<aside class="cart-page__aside">
                         @include('cart.includes.aside', ['custom_btn_text' => 'Завершить оформление и перейти к оплате'])
