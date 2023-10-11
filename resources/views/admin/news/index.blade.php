@@ -6,7 +6,14 @@
             <!--begin::Page Heading-->
             <div class="d-flex align-items-baseline flex-wrap mr-5">
                 <!--begin::Page Title-->
-                <h5 class="text-dark font-weight-bold my-1 mr-5">Новости</h5>
+                <ul class="breadcrumb breadcrumb-transparent breadcrumb-dot font-weight-bold p-0 my-2 font-size-sm">
+                    <li class="breadcrumb-item">
+                        <a href="{{ route('admin.home') }}" class="text-muted">Главная</a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <a href="{{ route('admin.news') }}" class="text-muted">Новости</a>
+                    </li>
+                </ul>
                 <!--end::Page Title-->
             </div>
             <!--end::Page Heading-->
@@ -134,6 +141,9 @@
                                             <a href="{{ route('admin.news.edit', $item->id) }}" class="btn btn-sm btn-clean btn-icon">
                                                 <i class="las la-edit"></i>
                                             </a>
+                                                <a href="{{route('news.post', $item->id)}}">
+                                                    <i class="flaticon2-magnifier-tool"></i>
+                                                </a>
                                             <button class="activePost btn btn-sm btn-clean btn-icon" data-status="{{ !$item->status ? 1 : 0 }}">
                                                 <span>{!! \App\Services\SiteService::statusNews($item->status) !!}</span>
                                             </button>

@@ -33,6 +33,7 @@
 					<main class="cart-page__main cartsteps">
                         <div class="cartsteps__item cartstep">
                             <div></div>
+                            <div class="cartsteps__title">Адрес и пункт выдачи</div>
                             <div class="cartstep__item">
                                 <div class="cartstep__title">Населённый пункт</div>
                                 <div class="cartstep__add" id="area">Выберите пункт</div>
@@ -64,12 +65,58 @@
                                 </div>
                             </div>
                             <div class="cartstep__tab" id="pickup_delivery_tab">
-                                <div class="cartsteps__title">Адрес и пункт выдачи</div>
                                 <div class="cartstep__item">
                                     <div class="cartstep__title">Пункт выдачи заказа</div>
                                     <div class="cartstep__add" id="pickup_addr">г. Москва, улица , дом, Название пункта выдачи</div>
                                     <a href="#pick-up-point" id="map_init_btn" class="btn btn--accent popup-with-form"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#edit')}}"></use></svg> Выбрать другой</a>
                                 </div>
+                            </div>
+                        </div>
+                        <div class="cartsteps__item cartstep">
+                            <div class="cartsteps__title">Получатель <small>для получения предоплаченного заказа возможно потребуется  паспорт</small></div>
+                            <div class="cartstep__item">
+                                <div class="cartstep__title">Ваши данные</div>
+                                <form action="" class="form">
+                                    <div class="form__row">
+                                        <div class="form__col form__col--50">
+                                            <div class="form__fieldset">
+                                                <legend class="form__label">Ваше имя *</legend>
+                                                <input type="text" class="form__input">
+                                            </div>
+                                        </div>
+                                        <div class="form__col form__col--50">
+                                            <div class="form__fieldset">
+                                                <legend class="form__label">Фамилия *</legend>
+                                                <input type="text" class="form__input">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form__row">
+                                        <div class="form__col form__col--50">
+                                            <div class="form__fieldset">
+                                                <legend class="form__label">Номер телефона *</legend>
+                                                <input type="text" class="form__input">
+                                            </div>
+                                        </div>
+                                        <div class="form__col form__col--50">
+                                            <div class="form__fieldset">
+                                                <legend class="form__label">Электронная почта *</legend>
+                                                <input type="text" class="form__input">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form__fieldset">
+                                        <label class="checkbox">
+                                            <input type="checkbox" />
+                                            <div class="checkbox__text">я ознакомился и согласен с <a href="">политикой обработки персональных данных</a> и <a href="">пользовательским соглашением</a></div>
+                                        </label>
+                                        <label class="checkbox">
+                                            <input type="checkbox" />
+                                            <div class="checkbox__text">я согласен получать новости об акциях и специальных предложениях</div>
+                                        </label>
+                                    </div>
+                                </form>
+
                             </div>
                         </div>
 

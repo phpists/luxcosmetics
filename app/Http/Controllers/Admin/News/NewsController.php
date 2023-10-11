@@ -21,7 +21,7 @@ class NewsController extends Controller
 
         $query->select('news_item.*');
 
-        $news = $query->paginate(15);
+        $news = $query->orderBy('id', 'desc')->paginate(15);
 
         return view('admin.news.index', compact('news'));
     }

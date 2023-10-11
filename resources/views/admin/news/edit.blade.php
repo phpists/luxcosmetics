@@ -16,7 +16,18 @@
             <!--begin::Page Heading-->
             <div class="d-flex align-items-baseline flex-wrap mr-5">
                 <!--begin::Page Title-->
-                <h5 class="text-dark font-weight-bold my-1 mr-5">Редактирования новость</h5>
+                <ul class="breadcrumb breadcrumb-transparent breadcrumb-dot font-weight-bold p-0 my-2 font-size-sm">
+                    <li class="breadcrumb-item">
+                        <a href="{{ route('admin.home') }}" class="text-muted">Главная</a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <a href="{{ route('admin.news') }}" class="text-muted">Новости</a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <a href="{{ route('admin.news.edit', $item->id) }}"
+                           class="text-muted">Редактирование новости</a>
+                    </li>
+                </ul>
                 <!--end::Page Title-->
             </div>
             <!--end::Page Heading-->
@@ -67,7 +78,8 @@
                     </div>
 
                     <div class="card-toolbar">
-                        <button type="submit" form="form1" class="btn btn-primary">Сохранить</button>
+                        <button type="submit" form="form1" style="margin-right: 20px" class="btn btn-primary">Сохранить</button>
+                        <a href="{{route('news.post', $item->link)}}" class="btn btn-secondary">Посмотреть <i class="flaticon-eye"></i></a>
                     </div>
                 </div>
                 <div class="card-body">
@@ -304,7 +316,7 @@
 @section('js_after')
     <script src="{{ asset('super_admin/js/pages/crud/forms/widgets/select2.js') }}"></script>
     <script src="{{ asset('super_admin/js/pages/crud/ktdatatable/base/html-table.js') }}"></script>
-    <script src="{{ asset('super_admin/plugins/custom/ckeditor/ckeditor-classic.bundle.js') }} "></script>
+    <script src="{{ asset('super_admin/ckeditor/ckeditor.js') }} "></script>
     <script src="{{ asset('super_admin/js/pages/crud/forms/widgets/bootstrap-datetimepicker.js') }}"></script>
     <script src="https://raw.githack.com/SortableJS/Sortable/master/Sortable.js"></script>
 
@@ -325,31 +337,13 @@
             )
         ));
 
-        var KTCkeditor = function () {
-            // Private functions
-            var demos = function () {
-                ClassicEditor
-                    .create( document.querySelector( '#textEditor' ) )
-                    .then( editor => {
-                        console.log( editor );
-                    } )
-                    .catch( error => {
-                        console.error( error );
-                    } );
-            }
+        CKEDITOR.replace( 'textEditor' );
 
-            return {
-                // public functions
-                init: function() {
-                    demos();
-                }
-            };
-        }();
 
         // Initialization
-        jQuery(document).ready(function() {
-            KTCkeditor.init();
-        });
+        // jQuery(document).ready(function() {
+        //     KTCkeditor.init();
+        // });
 
         $(function () {
             $.ajaxSetup({
