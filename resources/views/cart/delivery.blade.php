@@ -59,9 +59,9 @@
                             </form>
                             <div class="cartstep__tab" id="coruier_tab">
                                 <div class="cartstep__item">
-                                    <div class="cartstep__title">Выберите куда доставить товар</div>
+                                    <div class="cartstep__title">Адрес доставки товара</div>
                                     <div class="cartstep__add" id="courier_addr">г. Москва, улица , дом, Название пункта выдачи</div>
-                                    <a href="#addmodal" class="btn btn--accent popup-with-form">Модалка для адреса</a>
+                                    <a href="#addmodal" class="btn btn--accent popup-with-form">Изменить адрес доставки</a>
                                 </div>
                             </div>
                             <div class="cartstep__tab" id="pickup_delivery_tab">

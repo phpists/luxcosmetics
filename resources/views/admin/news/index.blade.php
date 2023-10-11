@@ -141,7 +141,7 @@
                                             <a href="{{ route('admin.news.edit', $item->id) }}" class="btn btn-sm btn-clean btn-icon">
                                                 <i class="las la-edit"></i>
                                             </a>
-                                                <a href="{{route('news.post', $item->id)}}">
+                                                <a href="{{route('news.post', $item->link)}}">
                                                     <i class="flaticon2-magnifier-tool"></i>
                                                 </a>
                                             <button class="activePost btn btn-sm btn-clean btn-icon" data-status="{{ !$item->status ? 1 : 0 }}">

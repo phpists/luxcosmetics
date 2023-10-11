@@ -6,6 +6,37 @@
 @section('og:description', $item->og_description_meta ?? '')
 @section('og:url', request()->url())
 @section('content')
+    <style>
+        .slick-slide img {
+            object-fit: cover;
+        }
+        .slider .slick-slide img {
+            aspect-ratio: 628/407;
+        }
+        .slider-vert img {
+            aspect-ratio: 2133/3200;
+        }
+
+        .content-page__preview img{
+            max-width: 100%;
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+
+        }
+
+        @media screen and (max-width: 768px) {
+            .content-page__preview img{
+                height: 350px;
+            }
+        }
+
+        @media screen and (max-width: 768px) {
+            .content-page__preview img{
+                height: 280px;
+            }
+        }
+    </style>
     <section class="crumbs">
         <div class="container">
             <div class="row">
@@ -24,7 +55,7 @@
             <div class="row">
                 <div class="col-lg-10">
                     <h1 class="title-h1">{{ $item->title }}</h1>
-                    <div class="content-page__preview" style="margin-bottom: 50pxдо">
+                    <div class="content-page__preview" style="margin-bottom: 50px">
                         <img src="{{$item->mainImage()}}" alt="">
                     </div>
                     <div class="typography">

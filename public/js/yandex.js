@@ -250,6 +250,7 @@ function locationItemInit(el) {
             let center = res.geoObjects.get(0).geometry.getCoordinates();
             border_inp.dataset.center = center[0] + ',' + center[1];
         })
+        $.magnificPopup.close();
         // await loadDeliveryPlaces();
     })
 }
@@ -307,6 +308,7 @@ function handleSubmitDeliveryAddress(ev) {
     output_inp.dataset.delivery_type = PICKUP_DELIVERY;
     pickup_addr.dataset.post_name = post_name;
     showCartTab('pickup_delivery_tab');
+    $.magnificPopup.close();
 }
 
 function showCartTab(id) {
@@ -396,4 +398,5 @@ document.getElementById('coruier_form').addEventListener('submit', (ev) => {
     output_inp.dataset.delivery_type = COURIER_DELIVERY;
 
     showCartTab('coruier_tab');
+    $.magnificPopup.close();
 })
