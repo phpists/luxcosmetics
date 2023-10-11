@@ -31,9 +31,9 @@
 				</div>
 				<div class="cart-page__container">
 					<main class="cart-page__main cartsteps">
+                        <div class="cartsteps__title">Адрес и пункт выдачи</div>
                         <div class="cartsteps__item cartstep">
                             <div></div>
-                            <div class="cartsteps__title">Адрес и пункт выдачи</div>
                             <div class="cartstep__item">
                                 <div class="cartstep__title">Населённый пункт</div>
                                 <div class="cartstep__add" id="area">Выберите пункт</div>
