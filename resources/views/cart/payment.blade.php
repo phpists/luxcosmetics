@@ -107,7 +107,7 @@
                         </div>
 					</main>
 					<aside class="cart-page__aside">
-                        @include('cart.includes.aside')
+                        @include('cart.includes.aside', ['custom_btn_text' => 'Завершить оформление и перейти к оплате'])
 					</aside>
 				</div>
 			</div>

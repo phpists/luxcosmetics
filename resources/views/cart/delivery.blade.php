@@ -36,7 +36,7 @@
                             <div></div>
                             <div class="cartstep__item">
                                 <div class="cartstep__title">Населённый пункт</div>
-                                <div class="cartstep__add" id="area">Выберите пункт</div>
+                                <div class="cartstep__add" id="area">Выберите населенный пункт</div>
                                 <a href="#changecity" id="changecity_init" class="btn btn--accent popup-with-form"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#edit')}}"></use></svg> Изменить адрес</a>
                             </div>
                             <input type="hidden" id="search_borders" data-center="">
@@ -44,7 +44,7 @@
                                 @csrf
                                 <input type="hidden" id="final_addr" name="address">
                                 <div class="cartstep__item">
-                                    <div class="cartstep__title">Способ доставки</div>
+                                    <div class="cartstep__title">Выберите способ доставки</div>
                                     <div class="cartstep__delivery">
                                         <a href="#addmodal" style="text-decoration: none" class="radio popup-with-form cartstep__link" data-tab="coruier_tab">
                                             <input type="radio" name="delivery" />
@@ -123,7 +123,7 @@
 						@include('cart.includes.products_list_static')
 					</main>
 					<aside class="cart-page__aside">
-                        @include('cart.includes.aside')
+                        @include('cart.includes.aside', ['custom_btn_text' => 'Перейти к выбору способа оплаты'])
                     </aside>
 				</div>
 			</div>

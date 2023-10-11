@@ -105,7 +105,7 @@
 
 					</main>
 					<aside class="cart-page__aside">
-                        @include('cart.includes.aside')
+                        @include('cart.includes.aside', ['custom_btn_text' => 'Перейти к выбору доставки'])
 					</aside>
 				</div>
 			</div>
