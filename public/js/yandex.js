@@ -234,7 +234,10 @@ function locationItemInit(el) {
             coruier_city.innerText = el.dataset.value;
         }
 
+        document.getElementById('orderForm').classList.add('active');
+
         closeCartTab('pickup_delivery_tab');
+        // Saving place coordinates to input
         ymaps.geocode(el.dataset.value, {
             kind: 'locality',
             results: 10

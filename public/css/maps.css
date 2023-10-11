@@ -108,7 +108,6 @@ div.pick-up-pointmodal__map {
 .delivery_places_container {
     max-height: 80vh;
     width: 300px;
-
 }
 
 .select-delivery-type {
@@ -200,4 +199,15 @@ div.pick-up-pointmodal__map {
 
 .suggest_box__variants li:last-child {
     border-bottom: none;
+}
+
+#orderForm {
+    visibility: hidden;
+    height: 0;
+    transition: height;
+}
+
+#orderForm.active {
+    visibility: visible;
+    height: auto;
 }
