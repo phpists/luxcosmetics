@@ -79,7 +79,8 @@
                                                         <label>Категории</label>
                                                         <select class="form-control select2" id="cat_select"
                                                                 name="category_id[]" required multiple>
-                                                            @foreach($categories as $category)
+                                                            <option class="select_all" value="0">Выбрать все</option>
+                                                        @foreach($categories as $category)
                                                                 <option value="{{ $category->id }}">{{ $category->name }}</option>
                                                             @endforeach
                                                         </select>
@@ -193,6 +194,16 @@
         $('#cat_select').select2({
             placeholder: "Выберите категорию",
             allowClear: true
+        });
+        $("#cat_select").on('select2:select', function() {
+            if($('#cat_select option:selected').hasClass('select_all')){
+                $("#cat_select > option").prop("selected", "selected");
+                $("#cat_select > option.select_all").prop('selected', false);
+                $("#cat_select").trigger("change");
+            } else {
+                $("#cat_select > option").removeAttr("selected");
+                $("#cat_select").trigger("change");
+            }
         });
         $(function () {
             $.ajaxSetup({

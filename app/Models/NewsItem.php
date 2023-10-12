@@ -19,7 +19,8 @@ class NewsItem extends Model
         'status',
         'image',
         'published_at',
-        'slider_type'
+        'slider_type',
+        'thumbnail'
     ];
 
     const HORIZONTAL_SLIDER = 1;
@@ -37,6 +38,11 @@ class NewsItem extends Model
     public function mainImage()
     {
         return asset("/images/uploads/news/$this->image");
+    }
+
+    public function getThumbnailSrcAttribute()
+    {
+        return asset('images/uploads/news/' . $this->thumbnail);
     }
 
     public function images(): HasMany

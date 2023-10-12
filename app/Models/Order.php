@@ -24,6 +24,23 @@ class Order extends Model
     const DELIVERY_COURIER = 'courier';
     const DELIVERY_SELF_PICKUP = 'self_pickup';
 
+    const ALL_DELIVERIES = [
+        self::DELIVERY_COURIER => 'Курьер',
+        self::DELIVERY_SELF_PICKUP => 'Самовынос'
+    ];
+
+    const PAYMENT_SBP = 'sbp';
+    const PAYMENT_ONLINE = 'online';
+    const PAYMENT_PARTS = 'parts';
+    const PAYMENT_SBER = 'sber';
+
+    const ALL_PAYMENTS = [
+        self::PAYMENT_SBP => 'СБП',
+        self::PAYMENT_ONLINE => 'Оплата онлайн',
+        self::PAYMENT_PARTS => 'Оплата Долями',
+        self::PAYMENT_SBER => 'SberPay',
+    ];
+
 
     const STATUS_NEW = 1;
     const STATUS_CANCELLED = 2;
@@ -37,7 +54,6 @@ class Order extends Model
         'card_id',
         'total_sum',
         'gift_box',
-        'full_name',
         'phone',
         'address',
         'gift_card_id',
@@ -46,7 +62,12 @@ class Order extends Model
         'gift_card_discount',
         'bonuses_discount',
         'promo_code_discount',
-        'bonuses_given'
+        'bonuses_given',
+        'first_name',
+        'last_name',
+        'email',
+        'payment_type',
+        'delivery_type',
     ];
 
 
