@@ -27,33 +27,23 @@
 				<div class="cart-page__container">
 					<main class="cart-page__main">
                         <div class="cartsteps__title">Оплата</div>
+                        <form action="{{ route('cart.checkout.store') }}" method="POST" id="orderForm">
+                            @csrf
                         <div class="cartsteps__item cartstep">
                             <div class="cartstep__item">
                                 <div class="cartstep__title">для выбранного ПВЗ доступна только онлайн оплата</div>
                                 <div class="cartstep__paymethods">
+                                    @foreach(\App\Models\Order::ALL_PAYMENTS as $value => $title)
                                     <label class="radio">
-                                        <input type="radio" name="pay" />
-                                        <div class="radio__text">СБП</div>
+                                        <input type="radio" name="payment_type" value="{{ $value }}" required/>
+                                        <div class="radio__text">{{ $title }}</div>
                                     </label>
-                                    <label class="radio">
-                                        <input type="radio" name="pay" />
-                                        <div class="radio__text">оплата онлайн</div>
-                                    </label>
-                                    <label class="radio">
-                                        <input type="radio" name="pay" />
-                                        <div class="radio__text">оплата Долями</div>
-                                    </label>
-                                    <label class="radio">
-                                        <input type="radio" name="pay" />
-                                        <div class="radio__text">SberPay</div>
-                                    </label>
+                                    @endforeach
                                 </div>
                             </div>
 
                         </div>
 
-                        <form action="{{ route('cart.checkout.store') }}" method="POST" id="orderForm">
-                            @csrf
 {{--                        <div class="cart-page__group">--}}
 {{--                            <h3 class="cart-page__subheading subheading">Адрес для выставления счета</h3>--}}
 {{--                            <label class="checkbox">--}}
@@ -67,33 +57,33 @@
 {{--                            </div>--}}
 {{--                        </div>--}}
 
-                            @if($user_has_cards = auth()->user()->cards->isNotEmpty())
-						<h3 class="cart-page__heading subheading subheading--with-form">Выберите свою карту</h3>
-                        <div class="cart-page__addresses">
-                            @foreach(auth()->user()->cards as $card)
-                                <div class="cart-page__address my-add">
-                                    <div class="my-add__title">{{ $card->full_name }}</div>
-                                    <div class="my-add__wrap">
-                                        <label class="radio">
-                                            <input type="radio" name="card_id" value="{{ $card->id }}" @checked($cartService->getProperty(\App\Services\CartService::CARD_KEY) == $card->id)/>
-                                            <div class="radio__text">{{ \App\Services\SiteService::displayCardNumber($card->card_number) }}
-                                                <br>{{ $card->valid_date }}</div>
-                                        </label>
-                                    </div>
-                                </div>
-                            @endforeach
-                        </div>
-                            @endif
+{{--                            @if($user_has_cards = auth()->user()->cards->isNotEmpty())--}}
+{{--						<h3 class="cart-page__heading subheading subheading--with-form">Выберите свою карту</h3>--}}
+{{--                        <div class="cart-page__addresses">--}}
+{{--                            @foreach(auth()->user()->cards as $card)--}}
+{{--                                <div class="cart-page__address my-add">--}}
+{{--                                    <div class="my-add__title">{{ $card->full_name }}</div>--}}
+{{--                                    <div class="my-add__wrap">--}}
+{{--                                        <label class="radio">--}}
+{{--                                            <input type="radio" name="card_id" value="{{ $card->id }}" @checked($cartService->getProperty(\App\Services\CartService::CARD_KEY) == $card->id)/>--}}
+{{--                                            <div class="radio__text">{{ \App\Services\SiteService::displayCardNumber($card->card_number) }}--}}
+{{--                                                <br>{{ $card->valid_date }}</div>--}}
+{{--                                        </label>--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
+{{--                            @endforeach--}}
+{{--                        </div>--}}
+{{--                            @endif--}}
 
                         </form>
 
 
-						<div class="cart-page__group">
-                            <a href="javascript:;" class="cart-page__subheading subheading subheading--with-form toggle-card">Добавить новую карту</a>
-                            <div class="toggable" @if($user_has_cards) style="display: none" @endif>
-                            @include('layouts.parts.create_payment')
-                            </div>
-						</div>
+{{--						<div class="cart-page__group">--}}
+{{--                            <a href="javascript:;" class="cart-page__subheading subheading subheading--with-form toggle-card">Добавить новую карту</a>--}}
+{{--                            <div class="toggable" @if($user_has_cards) style="display: none" @endif>--}}
+{{--                            @include('layouts.parts.create_payment')--}}
+{{--                            </div>--}}
+{{--						</div>--}}
 
                         @include('cart.includes.products_list_static')
 

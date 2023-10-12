@@ -10,6 +10,7 @@ use App\Services\SiteService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
+use Intervention\Image\Facades\Image;
 
 class NewsController extends Controller
 {
@@ -43,12 +44,24 @@ class NewsController extends Controller
             'text' => 'required',
         ]);
 
+        $image = FileService::saveFile('uploads', "news", $request->image);
+        $thumbnail_filename = null;
+        if ($image) {
+            $thumbnail_filename = 'tmb_' . $image;
+            $thumbnail = Image::make($request->file('image')->getRealPath());
+            $thumbnail->fit(400, 230, function ($constraint) {
+                $constraint->upsize();
+            });
+            $thumbnail->save('images/uploads/news/' . $thumbnail_filename);
+        }
+
         NewsItem::create([
             'title' => $request->title,
             'text' => $validatedData['text'],
             'link' => $link,
             'status' => $request->status,
-            'image' => FileService::saveFile('uploads', "news", $request->image),
+            'image' => $image,
+            'thumbnail' => $thumbnail_filename,
             'published_at' => $request->published_at
         ]);
 
@@ -73,8 +86,20 @@ class NewsController extends Controller
 
         if ($request->hasFile('image')) {
             $image = FileService::saveFile('uploads', "news", $request->image);
+            $thumbnail_filename = null;
+            if ($image) {
+                $thumbnail_filename = 'tmb_' . $image;
+                $thumbnail = Image::make($request->file('image')->getRealPath());
+                $thumbnail->fit(400, 230, function ($constraint) {
+                    $constraint->upsize();
+                });
+                $thumbnail->save('images/uploads/news/' . $thumbnail_filename);
+            }
             $item->image = $image;
-            $item->update(['image' => $image]);
+            $item->update([
+                'image' => $image,
+                'thumbnail' => $thumbnail_filename
+            ]);
         }else{
             $item->update($request->all());
         }

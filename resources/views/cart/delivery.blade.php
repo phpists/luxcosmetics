@@ -8,6 +8,13 @@
 @section('title', 'Доставка')
 
 @section('content')
+    <style>
+        #orderForm {
+            visibility: visible;
+            height: inherit;
+
+        }
+    </style>
 <section class="crumbs">
 	<div class="container">
 		<div class="row">
@@ -30,8 +37,15 @@
 					<div class="cart-page__step">3. Оплата </div>
 				</div>
 				<div class="cart-page__container">
+                    <input type="hidden" id="search_borders" data-center="">
+
 					<main class="cart-page__main cartsteps">
+
                         <div class="cartsteps__title">Адрес и пункт выдачи</div>
+
+                        <form id="orderForm" action="{{ route('cart.delivery.store') }}" method="post">
+                            @csrf
+                            <input id="orderFormDeliveryType" type="hidden" name="{{ \App\Services\CartService::DELIVERY_KEY }}" value="{{ old(\App\Services\CartService::DELIVERY_KEY, $cartService->getProperty(\App\Services\CartService::DELIVERY_KEY)) }}" required>
                         <div class="cartsteps__item cartstep">
                             <div></div>
                             <div class="cartstep__item">
@@ -39,24 +53,21 @@
                                 <div class="cartstep__add" id="area">Выберите населенный пункт</div>
                                 <a href="#changecity" id="changecity_init" class="btn btn--accent popup-with-form"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#edit')}}"></use></svg> Изменить адрес</a>
                             </div>
-                            <input type="hidden" id="search_borders" data-center="">
-                            <form id="orderForm" action="{{ route('cart.delivery.store') }}" method="post">
-                                @csrf
+
                                 <input type="hidden" id="final_addr" name="address">
                                 <div class="cartstep__item">
                                     <div class="cartstep__title">Выберите способ доставки</div>
                                     <div class="cartstep__delivery">
                                         <a href="#addmodal" style="text-decoration: none" class="radio popup-with-form cartstep__link" data-tab="coruier_tab">
-                                            <input type="radio" name="delivery" />
+                                            <input type="radio" name="delivery" value="{{ \App\Models\Order::DELIVERY_COURIER }}"/>
                                             <div class="radio__text">Курьер <small>Курьерская доставка <span>Бесплатно</span></small></div>
                                         </a>
                                         <a href="#pick-up-point" id="show_map_link" style="text-decoration: none" class="radio popup-with-form cartstep__link" data-tab="pickup_delivery_tab">
-                                            <input type="radio" name="delivery" />
+                                            <input type="radio" name="delivery" value="{{ \App\Models\Order::DELIVERY_SELF_PICKUP }}"/>
                                             <div class="radio__text">Самовывоз <small>Самовывоз ПВЗ <span>Бесплатно</span></small></div>
                                         </a>
                                     </div>
                                 </div>
-                            </form>
                             <div class="cartstep__tab" id="coruier_tab">
                                 <div class="cartstep__item">
                                     <div class="cartstep__title">Адрес доставки товара</div>
@@ -76,18 +87,17 @@
                             <div class="cartsteps__title">Получатель <small>для получения предоплаченного заказа возможно потребуется  паспорт</small></div>
                             <div class="cartstep__item">
                                 <div class="cartstep__title">Ваши данные</div>
-                                <form action="" class="form">
                                     <div class="form__row">
                                         <div class="form__col form__col--50">
                                             <div class="form__fieldset">
                                                 <legend class="form__label">Ваше имя *</legend>
-                                                <input type="text" class="form__input">
+                                                <input type="text" class="form__input" name="first_name" value="{{ old('first_name', $cartService->getProperty(\App\Services\CartService::FIRST_NAME_KEY) ?? auth()->user()->name) }}" required>
                                             </div>
                                         </div>
                                         <div class="form__col form__col--50">
                                             <div class="form__fieldset">
                                                 <legend class="form__label">Фамилия *</legend>
-                                                <input type="text" class="form__input">
+                                                <input type="text" class="form__input" name="last_name" value="{{ old('last_name', $cartService->getProperty(\App\Services\CartService::LAST_NAME_KEY) ?? auth()->user()->surname) }}" required>
                                             </div>
                                         </div>
                                     </div>
@@ -95,30 +105,26 @@
                                         <div class="form__col form__col--50">
                                             <div class="form__fieldset">
                                                 <legend class="form__label">Номер телефона *</legend>
-                                                <input type="text" class="form__input">
+                                                <input type="text" class="form__input" name="phone" value="{{ old('phone', $cartService->getProperty(\App\Services\CartService::PHONE_KEY) ?? auth()->user()->phone) }}" required>
                                             </div>
                                         </div>
                                         <div class="form__col form__col--50">
                                             <div class="form__fieldset">
                                                 <legend class="form__label">Электронная почта *</legend>
-                                                <input type="text" class="form__input">
+                                                <input type="text" class="form__input" name="email" value="{{ old('email', $cartService->getProperty(\App\Services\CartService::EMAIL_KEY) ?? auth()->user()->email) }}" required>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="form__fieldset">
                                         <label class="checkbox">
-                                            <input type="checkbox" />
-                                            <div class="checkbox__text">я ознакомился и согласен с <a href="">политикой обработки персональных данных</a> и <a href="">пользовательским соглашением</a></div>
-                                        </label>
-                                        <label class="checkbox">
-                                            <input type="checkbox" />
-                                            <div class="checkbox__text">я согласен получать новости об акциях и специальных предложениях</div>
+                                            <input type="checkbox" checked required/>
+                                            <div class="checkbox__text">Я ознакомился и согласен с <a href="">политикой обработки персональных данных</a> и <a href="">пользовательским соглашением</a></div>
                                         </label>
                                     </div>
-                                </form>
 
                             </div>
                         </div>
+                        </form>
 
 						@include('cart.includes.products_list_static')
 					</main>
@@ -147,6 +153,13 @@
     ></script>
     <script>
         $(document).ready(function () {
+
+
+            $(document).on('click', '.cartstep__delivery a', function (e) {
+                console.log(this)
+                $('#orderFormDeliveryType').val($(this).find('input').val())
+            })
+
             Inputmask("+7 (999) 999-99-99").mask('#phone_inp');
             Inputmask("+7 (999) 999-99-99").mask('#updPhone');
 
@@ -192,6 +205,7 @@
                 })
 
             })
+
         })
     </script>
 @endsection

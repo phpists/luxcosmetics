@@ -69,6 +69,14 @@ class CartController extends Controller
     {
         $address = $request->post('address');
         $this->cartService->setProperty(CartService::ADDRESS_KEY, $address);
+        $delivery_type = $request->post('delivery_type');
+        $this->cartService->setProperty(CartService::DELIVERY_KEY, $delivery_type);
+        $first_name = $request->post('first_name');
+        $this->cartService->setProperty(CartService::FIRST_NAME_KEY, $first_name);
+        $last_name = $request->post('last_name');
+        $this->cartService->setProperty(CartService::LAST_NAME_KEY, $last_name);
+        $email = $request->post('email');
+        $this->cartService->setProperty(CartService::EMAIL_KEY, $email);
 
         return redirect()->route('cart.payment');
     }
@@ -92,21 +100,24 @@ class CartController extends Controller
         $this->cartService->setProperty(CartService::AS_DELIVERY_ADDRESS_KEY, $as_delivery_address);
         $card_id = $request->post('card_id');
 
+        $payment_type = $request->post('payment_type');
+        $this->cartService->setProperty(CartService::PAYMENT_TYPE, $payment_type);
+
         $user = Auth::user();
         $email = $user->email;
 
-        if (!$card_id) {
-            $card_data = $request->post('card');
-            $card_data['card_number'] = trim($card_data['card_number']);
-            $card_data['valid_date'] = $card_data['month'].'/'.$card_data['year'];
-            $card_data['cvv'] = Hash::make($card_data['cvv']);
-            $card_data['is_default'] = $request->boolean('cart.is_default');
-            $card_data['user_id'] = Auth::id();
-            $card = PaymentCard::create($card_data);
-            $card_id = $card->id;
-        }
-
-        $this->cartService->setProperty(CartService::CARD_KEY, $card_id);
+//        if (!$card_id) {
+//            $card_data = $request->post('card');
+//            $card_data['card_number'] = trim($card_data['card_number']);
+//            $card_data['valid_date'] = $card_data['month'].'/'.$card_data['year'];
+//            $card_data['cvv'] = Hash::make($card_data['cvv']);
+//            $card_data['is_default'] = $request->boolean('cart.is_default');
+//            $card_data['user_id'] = Auth::id();
+//            $card = PaymentCard::create($card_data);
+//            $card_id = $card->id;
+//        }
+//
+//        $this->cartService->setProperty(CartService::CARD_KEY, $card_id);
 
         if ($order_id = $this->cartService->store()) {
             // Send mail to user

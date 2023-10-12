@@ -24,7 +24,11 @@ class CartService
     const GIFT_BOX_KEY = 'gift_box';
     const AS_DELIVERY_ADDRESS_KEY = 'as_delivery_address';
     const CARD_KEY = 'card_id';
-
+    const FIRST_NAME_KEY = 'first_name';
+    const LAST_NAME_KEY = 'last_name';
+    const PHONE_KEY = 'phone';
+    const EMAIL_KEY = 'email';
+    const PAYMENT_TYPE = 'payment_type';
 
     const BONUSES_KEY = 'cart_bonuses';
     const PROMO_KEY = 'cart_promo';
@@ -34,7 +38,13 @@ class CartService
         self::ADDRESS_KEY => 'Адрес',
         self::GIFT_BOX_KEY => 'Подарочная коробка',
         self::AS_DELIVERY_ADDRESS_KEY => 'Использовать как адрес доставки',
-        self::CARD_KEY => 'Карта для оплаты'
+        self::CARD_KEY => 'Карта для оплаты',
+        self::FIRST_NAME_KEY => 'Имя',
+        self::LAST_NAME_KEY => 'Фамилия',
+        self::PHONE_KEY => 'Телефон',
+        self::EMAIL_KEY => 'E-mail',
+        self::PAYMENT_TYPE => 'Способ оплаты',
+        self::DELIVERY_KEY => 'Способ доставки',
     ];
 
     public $discounts = [];
