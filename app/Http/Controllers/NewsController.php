@@ -8,8 +8,7 @@ class NewsController extends Controller
 {
     public function index()
     {
-        $posts = NewsItem::query()->paginate(24);
-        return view('news', compact('posts'));
+        return view('news');
     }
     public function show($link)
     {

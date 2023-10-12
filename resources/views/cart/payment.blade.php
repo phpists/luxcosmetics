@@ -26,8 +26,8 @@
 				</div>
 				<div class="cart-page__container">
 					<main class="cart-page__main">
+                        <div class="cartsteps__title">Оплата</div>
                         <div class="cartsteps__item cartstep">
-                            <div class="cartsteps__title">Оплата</div>
                             <div class="cartstep__item">
                                 <div class="cartstep__title">для выбранного ПВЗ доступна только онлайн оплата</div>
                                 <div class="cartstep__paymethods">

@@ -88,3 +88,11 @@
         </div>
     </section>
 @endsection
+
+@section('scripts')
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            setTimeout()
+        })
+    </script>
+@endsection

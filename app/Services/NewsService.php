@@ -12,8 +12,10 @@ class NewsService
     {
         setlocale(LC_TIME, 'ru_RU.UTF-8');
 
-        $news = NewsItem::select('news_item.*')
+        $news = NewsItem::query()
+            ->select('news_item.*')
             ->where('status', true)
+            ->orderBy('published_at', 'desc')
             ->paginate();
 
         $news->getCollection()->transform(function ($item) {

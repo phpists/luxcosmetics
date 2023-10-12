@@ -79,7 +79,7 @@
 
                     <div class="card-toolbar">
                         <button type="submit" form="form1" style="margin-right: 20px" class="btn btn-primary">Сохранить</button>
-                        <a href="{{route('news.post', $item->link)}}" class="btn btn-secondary">Посмотреть <i class="flaticon-eye"></i></a>
+                        <a target="_blank" href="{{route('news.post', $item->link)}}" class="btn btn-secondary">Посмотреть <i class="flaticon-eye"></i></a>
                     </div>
                 </div>
                 <div class="card-body">
