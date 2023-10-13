@@ -215,7 +215,7 @@ div.pick-up-pointmodal__map {
     display: none;
 }
 
-@media screen and (max-width: 980px){
+@media screen and (max-width: 998px){
     .pickup-content {
         transition: transform .7s;
         gap: 0;
