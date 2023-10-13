@@ -201,13 +201,70 @@ div.pick-up-pointmodal__map {
     border-bottom: none;
 }
 
-#orderForm {
+#delivery_contaniner {
     visibility: hidden;
     height: 0;
     transition: height;
 }
 
-#orderForm.active {
+#delivery_contaniner.active {
     visibility: visible;
     height: auto;
+}
+
+.modalpanel__nav {
+    display: none;
+}
+
+@media screen and (max-width: 980px){
+    .pickup-content {
+        transition: transform .7s;
+        gap: 0;
+    }
+
+    .pickup-content .pickup-tab {
+        opacity: 0;
+    }
+
+    .pickup-content .pickup-tab.active {
+        opacity: 1;
+    }
+
+    .pick-up-pointmodal {
+        overflow-x: hidden;
+        padding: 50px 0 0;
+        width: 100%;
+    }
+
+    .modalpanel__title {
+        display: none;
+    }
+
+    .modalpanel__nav {
+        display: flex;
+        gap: 20px;
+        justify-content: center;
+    }
+
+    .modalpanel__nav__link {
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    .modalpanel__nav__link.active {
+        border-bottom: 1px solid black;
+    }
+
+    .pick-up-pointmodal__map {
+        display: block;
+        width: 100%;
+        min-width: 100%;
+    }
+
+    .delivery_places_container {
+        display: block;
+        width: 100%;
+        min-width: 100%;
+        padding-left: 20px;
+    }
 }

@@ -53,7 +53,7 @@
                                 <div class="cartstep__add" id="area">Выберите населенный пункт</div>
                                 <a href="#changecity" id="changecity_init" class="btn btn--accent popup-with-form"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#edit')}}"></use></svg> Изменить адрес</a>
                             </div>
-
+                            <div id="delivery_contaniner">
                                 <input type="hidden" id="final_addr" name="address">
                                 <div class="cartstep__item">
                                     <div class="cartstep__title">Выберите способ доставки</div>
@@ -68,18 +68,19 @@
                                         </a>
                                     </div>
                                 </div>
-                            <div class="cartstep__tab" id="coruier_tab">
-                                <div class="cartstep__item">
-                                    <div class="cartstep__title">Адрес доставки товара</div>
-                                    <div class="cartstep__add" id="courier_addr">г. Москва, улица , дом, Название пункта выдачи</div>
-                                    <a href="#addmodal" class="btn btn--accent popup-with-form">Изменить адрес доставки</a>
+                                <div class="cartstep__tab" id="coruier_tab">
+                                    <div class="cartstep__item">
+                                        <div class="cartstep__title">Адрес доставки товара</div>
+                                        <div class="cartstep__add" id="courier_addr">г. Москва, улица , дом, Название пункта выдачи</div>
+                                        <a href="#addmodal" class="btn btn--accent popup-with-form">Изменить адрес доставки</a>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="cartstep__tab" id="pickup_delivery_tab">
-                                <div class="cartstep__item">
-                                    <div class="cartstep__title">Пункт выдачи заказа</div>
-                                    <div class="cartstep__add" id="pickup_addr">г. Москва, улица , дом, Название пункта выдачи</div>
-                                    <a href="#pick-up-point" id="map_init_btn" class="btn btn--accent popup-with-form"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#edit')}}"></use></svg> Выбрать другой</a>
+                                <div class="cartstep__tab" id="pickup_delivery_tab">
+                                    <div class="cartstep__item">
+                                        <div class="cartstep__title">Пункт выдачи заказа</div>
+                                        <div class="cartstep__add" id="pickup_addr">г. Москва, улица , дом, Название пункта выдачи</div>
+                                        <a href="#pick-up-point" id="map_init_btn" class="btn btn--accent popup-with-form"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#edit')}}"></use></svg> Выбрать другой</a>
+                                    </div>
                                 </div>
                             </div>
                         </div>

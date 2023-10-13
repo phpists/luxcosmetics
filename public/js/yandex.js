@@ -3,6 +3,7 @@ const SEARCH_API_KEY = 'd46bfdd1-d9ca-4f94-959e-5c09d2a427e1';
 const ADDRESS_OUTPUT_ID = 'final_addr';
 const PICKUP_DELIVERY = 'pickup';
 const COURIER_DELIVERY = 'courier';
+const WINDOW_SM_SIZE = 980;
 var myMap;
 function initYandex(){
     // Creating the map.
@@ -19,6 +20,10 @@ function initYandex(){
 }
 
 ymaps.ready(initYandex);
+
+function isSmallSize() {
+    return window.innerWidth <= WINDOW_SM_SIZE;
+}
 
 const handleRenderOrderModal = (title, address) => {
     const modal = document.querySelector(".overlay-order");
@@ -145,6 +150,11 @@ function handleClickBaloon(post_office_id) {
         top: selectedBaloon?.offsetTop - 200,
         behavior: "smooth",
     });
+
+    if (isSmallSize()) {
+        let pickupBtn = selectedBaloon.querySelector('.pickup-item__button');
+        handleRenderOrderModal(pickupBtn.dataset.title, pickupBtn.dataset.address);
+    }
 }
 
 function setMarker(post_office){
@@ -234,7 +244,7 @@ function locationItemInit(el) {
             coruier_city.innerText = el.dataset.value;
         }
 
-        document.getElementById('orderForm').classList.add('active');
+        document.getElementById('delivery_contaniner').classList.add('active');
 
         closeCartTab('pickup_delivery_tab');
         // Saving place coordinates to input
@@ -366,7 +376,25 @@ function initStreetSearch() {
     search.addEventListener('input', handleSearchStreetHouse);
 }
 
+function initPickupModalNav() {
+    document.querySelectorAll('.modalpanel__nav__link').forEach(
+        (el, idx) => {
+            el.addEventListener('click', (ev) => {
+                document.querySelector('.modalpanel__nav__link.active')?.classList.toggle('active');
+                el.classList.toggle('active');
+                let contentBlock = document.querySelector('.pickup-content');
+                let percentTranslate = (-idx * contentBlock.parentElement.clientWidth);
+                contentBlock.style['transform'] = `translateX(${percentTranslate}px)`;
+                document.querySelector('.pickup-content div.active')?.classList.toggle('active');
+                document.getElementById(el.dataset.tab).classList.toggle('active')
+            })
+        }
+    )
+}
+
 initStreetSearch();
+
+initPickupModalNav();
 document.getElementById('changecity_init').addEventListener('click', () => {
     searchInit()
 })

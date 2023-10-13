@@ -1,14 +1,18 @@
 <div class="modalpanel pick-up-pointmodal" id="pick-up-point">
     <div class="modalpanel__title">Выбор<br> пункта выдачи</div>
+    <div class="modalpanel__nav">
+        <p class="modalpanel__nav__link active" data-tab="map_tab">На карте</p>
+        <p class="modalpanel__nav__link" data-tab="points_tab">По списку</p>
+    </div>
     <div class="pickup-content">
-        <div class="pick-up-pointmodal__map">
+        <div id="map_tab" class="pick-up-pointmodal__map pickup-tab active">
             <div style="position: relative; width: 100%; height: 80vh;">
                 <div id="map" style="width: 100%; height: 100%">
 
                 </div>
             </div>
         </div>
-        <div class="delivery_places_container">
+        <div id="points_tab" class="pickup-tab delivery_places_container">
             <div class="delivery_service">
                 <button class="select-delivery-type">
                     <div class="select-delivery-type-value">Почта россии</div>
