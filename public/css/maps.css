@@ -266,4 +266,14 @@ div.pick-up-pointmodal__map {
         min-width: 100%;
         padding-left: 20px;
     }
+
+    .cityselectmodal__variants.active {
+        display: block;
+    }
+}
+
+@media screen and (max-width: 576px){
+    div.cityselectmodal {
+        width: 100%;
+    }
 }
