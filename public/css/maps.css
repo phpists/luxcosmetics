@@ -232,7 +232,7 @@ div.pick-up-pointmodal__map {
     .pick-up-pointmodal {
         overflow-x: hidden;
         padding: 50px 0 0;
-        width: 100%;
+        width: 100%!important;
     }
 
     .modalpanel__title {
@@ -276,4 +276,10 @@ div.pick-up-pointmodal__map {
     div.cityselectmodal {
         width: 100%;
     }
+
+    div.addmodal {
+        width: 100%;
+        padding: 24px;
+    }
+
 }
