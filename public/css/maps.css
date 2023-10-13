@@ -270,6 +270,15 @@ div.pick-up-pointmodal__map {
     .cityselectmodal__variants.active {
         display: block;
     }
+
+    .delivery_service {
+        padding-right: 24px;
+    }
+
+    button.select-delivery-type {
+        width: 100%;
+        margin: 0 0 30px;
+    }
 }
 
 @media screen and (max-width: 576px){
