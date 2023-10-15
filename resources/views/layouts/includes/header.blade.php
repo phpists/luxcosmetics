@@ -11,7 +11,7 @@
                         </div>
                         <button class="search__btn"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#search')}}"></use></svg></button>
                     </form>
-                    <div class="header__contacts">
+                    <div class="header__contacts">1111111111
                         @foreach($social as $item)
                         @if($item->link !== null)
                                 <a href="{{ $item->link }}" class="social__item" target="_blank">
