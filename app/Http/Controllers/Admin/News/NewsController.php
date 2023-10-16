@@ -101,7 +101,10 @@ class NewsController extends Controller
                 'thumbnail' => $thumbnail_filename
             ]);
         }else{
-            $item->update($request->all());
+            $data = $request->all();
+            $data['link'] = $request->link ?? Str::slug($request->title);
+
+            $item->update($data);
         }
         return redirect()->route('admin.news')->with('success', 'Данные успешно отредактированы');
     }
