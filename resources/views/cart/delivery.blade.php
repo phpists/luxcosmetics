@@ -54,7 +54,7 @@
                                 <a href="#changecity" id="changecity_init" class="btn btn--accent popup-with-form"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#edit')}}"></use></svg> Изменить адрес</a>
                             </div>
                             <div id="delivery_contaniner">
-                                <input type="hidden" id="final_addr" name="address">
+                                <input type="hidden" id="final_addr" name="address" required>
                                 <div class="cartstep__item">
                                     <div class="cartstep__title">Выберите способ доставки</div>
                                     <div class="cartstep__delivery">
@@ -84,8 +84,9 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="cartsteps__item cartstep">
+
                             <div class="cartsteps__title">Получатель <small>для получения предоплаченного заказа возможно потребуется  паспорт</small></div>
+                            <div class="cartsteps__item cartstep">
                             <div class="cartstep__item">
                                 <div class="cartstep__title">Ваши данные</div>
                                     <div class="form__row">
@@ -156,8 +157,17 @@
         $(document).ready(function () {
 
 
+            $(document).on('submit', '#orderForm', function (e) {
+                let address = $('#final_addr').val();
+
+                if (!address) {
+                    toastr.error('Укажите адрес доставки!');
+                    e.preventDefault();
+                    return false;
+                }
+            })
+
             $(document).on('click', '.cartstep__delivery a', function (e) {
-                console.log(this)
                 $('#orderFormDeliveryType').val($(this).find('input').val())
             })
 
@@ -206,6 +216,8 @@
                 })
 
             })
+
+
 
         })
     </script>

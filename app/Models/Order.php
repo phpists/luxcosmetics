@@ -75,6 +75,11 @@ class Order extends Model
     protected static function booted (): void
     {
 
+        self::created(function (Order $order) {
+            $order->num = date('my') . '/' . $order->id;
+            $order->save();
+        });
+
         self::updated(function(Order $order) {
             if ($order->isDirty('status_id')) {
                 Mail::to($order->user->email)->send(new OrderStatusChangedMail($order));
@@ -186,6 +191,11 @@ class Order extends Model
     public function getTotalDiscount()
     {
         return $this->gift_card_discount + $this->bonuses_discount + $this->promo_code_discount;
+    }
+
+    public function getFullNameAttribute()
+    {
+        return $this->first_name . ' ' . $this->last_name;
     }
 
 
