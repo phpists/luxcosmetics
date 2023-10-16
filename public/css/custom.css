@@ -1,5 +1,7 @@
 .product__image img {
     width: auto;
+    max-height: 270px;
+    margin: 0 auto;
 }
 
 /*.category-page > .container {*/
