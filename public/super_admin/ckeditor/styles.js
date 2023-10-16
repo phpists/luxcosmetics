@@ -32,10 +32,13 @@ CKEDITOR.stylesSet.add( 'default', [
 	{ name: 'Preformatted Text',element: 'pre' },
 	{ name: 'Address',			element: 'address' },
 	*/
-
 	{ name: 'Italic Title',		element: 'h2', styles: { 'font-style': 'italic' } },
 	{ name: 'Subtitle',			element: 'h3', styles: { 'color': '#aaa', 'font-style': 'italic' } },
-	{
+    { name: 'Green',		    element: 'p', attributes: { 'class': 'green' } },
+    { name: 'Yellow',		    element: 'p', attributes: { 'class': 'yellow' } },
+    { name: 'Red',		        element: 'p', attributes: { 'class': 'red' } },
+    { name: 'Blue',		        element: 'p', attributes: { 'class': 'blue' } },
+    {
 		name: 'Special Container',
 		element: 'div',
 		styles: {
