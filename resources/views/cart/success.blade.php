@@ -15,7 +15,7 @@
                         <div class="chars">
                             <div class="chars__item">
                                 <div class="chars__name"><span>Номер заказа</span></div>
-                                <div class="chars__value"><span>{{ $order->id }}</span></div>
+                                <div class="chars__value"><span>{{ $order->num }}</span></div>
                             </div>
                             <div class="chars__item">
                                 <div class="chars__name"><span>Ваше имя</span></div>

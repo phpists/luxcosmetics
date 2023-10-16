@@ -1,6 +1,6 @@
 @foreach($orders as $order)
 <tr>
-    <td data-title="Номер заказа">{{ $order->id }}</td>
+    <td data-title="Номер заказа">{{ $order->num }}</td>
     <td data-title="Дата">{{ $order->pretty_created_at }}</td>
     <td data-title="Статус">
         @if($order->status)
