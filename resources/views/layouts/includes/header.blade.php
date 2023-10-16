@@ -5,7 +5,7 @@
                 <div class="header__container">
                     <div class="header__logo"><a href="{{route('home')}}"><img src="{{asset('images/dist/logo.svg')}}" alt=""></a></div>
                     <form action="{{route('show_search')}}" class="header__search search" id="search_field_header">
-                        <input type="text" minlength="2" name="search" id="header_search" class="search__input" placeholder="Поиск по каталогу">
+                        <input type="text" minlength="2" name="search" id="header_search" class="search__input" placeholder="Поиск по каталогу 1">
                         <div id="header-container" style="position: relative">
                             <div id="search_results" style="position: absolute; background: whitesmoke; z-index: 2; width: 100%; display: none"></div>
                         </div>
