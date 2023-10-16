@@ -20,5 +20,3 @@ jobs:
             composer install
             php artisan migrate
             php artisan view:clear
-            npm install
-            npm run build
