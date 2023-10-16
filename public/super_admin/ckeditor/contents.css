@@ -28,30 +28,6 @@ body
 	word-wrap: break-word;
 }
 
-blockquote
-{
-	font-style: italic;
-	font-family: Georgia, Times, "Times New Roman", serif;
-	padding: 2px 0;
-	border-style: solid;
-	border-color: #ccc;
-	border-width: 0;
-}
-
-.cke_contents_ltr blockquote
-{
-	padding-left: 20px;
-	padding-right: 8px;
-	border-left-width: 5px;
-}
-
-.cke_contents_rtl blockquote
-{
-	padding-left: 8px;
-	padding-right: 20px;
-	border-right-width: 5px;
-}
-
 a
 {
 	color: #0782C1;
@@ -205,4 +181,141 @@ a > img {
 	max-width: 1920px;
 	max-height: 1080px;
 	margin:0 auto;
+}
+
+.typography {
+    color: #021a15;
+    font-size: 16px;
+    line-height: 1.5;
+}
+.typography h3 {
+    color: #1d806f;
+    margin-bottom: 16px;
+    font-weight: 700;
+}
+.typography h2 {
+    margin-bottom: 24px;
+    font-size: 32px;
+    font-weight: 700;
+    line-height: 1.2;
+}
+.typography h4 {
+    font-size: 16px;
+    text-transform: uppercase;
+    font-weight: 700;
+    margin-bottom: 16px;
+    margin-top: 32px;
+}
+.typography p {
+    margin-bottom: 16px;
+}
+.typography a {
+    color: #cc9755;
+}
+.typography a:hover {
+    color: #b77e37;
+}
+.typography b,
+.typography strong {
+    font-weight: 700;
+}
+.typography ul {
+    margin-bottom: 24px;
+}
+.typography ul li {
+    padding-left: 18px;
+    position: relative;
+}
+.typography ul li:before {
+    content: "";
+    display: inline-block;
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    left: 0;
+    top: 9px;
+    border-radius: 50%;
+    background-color: #cc9755;
+}
+.typography .blue,
+.typography .green,
+.typography .red,
+.typography .yellow {
+    padding: 12px;
+    border-radius: 6px;
+}
+.typography .green {
+    background-color: #edffed;
+}
+.typography .blue {
+    background-color: #edfaff;
+}
+.typography .red {
+    background-color: #ffeded;
+}
+.typography .yellow {
+    background-color: #fffaed;
+}
+.typography ol {
+    margin-bottom: 24px;
+    counter-reset: myCounter;
+    padding-left: 0;
+}
+.typography ol li {
+    padding-left: 18px;
+    position: relative;
+    margin-bottom: 12px;
+}
+.typography ol li::before {
+    counter-increment: myCounter;
+    content: counter(myCounter) ".";
+    position: absolute;
+    left: 0;
+    top: 0;
+    font-weight: 700;
+    color: #cc9755;
+}
+.typography blockquote {
+    background-color: #f1f1f1;
+    border-left: 3px solid #cc9755;
+    padding: 32px;
+    padding: 24px;
+    font-style: italic;
+    font-size: 16px;
+    line-height: 150%;
+}
+.typography table {
+    width: 100%;
+    margin-bottom: 64px;
+}
+.typography table th {
+    font-weight: 700;
+}
+.typography table td,
+.typography table th {
+    padding-top: 16px;
+    padding-bottom: 16px;
+}
+body.cke_show_borders table.cke_show_border > thead > tr > th {
+    border: 0;
+    border-bottom: 3px solid #cc9755;
+}
+body.cke_show_borders table.cke_show_border {
+    border: 0;
+}
+.typography table {
+    border: none;
+}
+body.cke_show_borders table.cke_show_border > tbody > tr > td {
+    border: 0;
+    border-bottom: 1px solid #f1f1f1;
+}
+
+.typography table tbody td {
+    -webkit-transition: all 0.3s ease-out;
+    -o-transition: all 0.3s ease-out;
+    transition: all 0.3s ease-out;
+}
+.typography table tbody tr:hover td {
+    background-color: rgba(29, 128, 111, 0.05);
 }
