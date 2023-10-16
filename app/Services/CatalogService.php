@@ -175,7 +175,7 @@ class CatalogService
             ->pluck('id')
             ->toArray();
 
-        return $category->filter_properties()
+        $properties = $category->filter_properties()
             ->with('values', function ($query) use ($product_ids) {
                 $query->whereIn('id', function ($query) use ($product_ids) {
                     return $query->select('property_value_id')
@@ -184,6 +184,18 @@ class CatalogService
                 });
             })
             ->get();
+
+        $properties->each(function($property) {
+            $property->values = $property->values->sortBy(function($value) {
+                if (preg_match('/(\d+)\s.*/', $value->value, $matches)) {
+                    return (int) $matches[1];
+                }
+                return $value->value;
+            });
+        });
+
+
+        return $properties;
     }
 
 
