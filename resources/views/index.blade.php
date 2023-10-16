@@ -294,7 +294,7 @@
                     <h2 class="title-h2">Новости</h2>
                 </div>
                 <div class="newsblock__container">
-                @foreach (\App\Services\NewsService::getNews() as $item)
+                @foreach (\App\Services\NewsService::getNews(3) as $item)
                     <div class="article article--news">
                         <div class="article__image"><a href="{{ route('news.post', $item->link) }}"><img src="{{ $item->thumbnail_src }}" alt=""></a></div>
                         <div class="article__date"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#calendar')}}"></use></svg>{{ \Carbon\Carbon::parse($item->published_at)->locale('ru')->isoFormat('D.MMMM.YYYY') }}</div>

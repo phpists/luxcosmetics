@@ -31,7 +31,7 @@ class SettingController extends Controller
     public function clearCache()
     {
         Cache::flush();
-        return redirect()->back()->with('success', 'Кеш успішно очищено.');
+        return redirect()->back()->with('success', 'Кеш успешно очищен.');
     }
 
 }

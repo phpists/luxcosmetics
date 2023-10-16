@@ -38,16 +38,16 @@
                                             <use xlink:href="{{asset('images/dist/sprite.svg#bug')}}"></use>
                                         </svg>
                                         Подписки</a></li>
-                                <li class="@if(request()->routeIs('profile.addresses')) is-active @endif"><a href="{{route('profile.addresses')}}">
-                                        <svg class="icon">
-                                            <use xlink:href="{{asset('images/dist/sprite.svg#book')}}"></use>
-                                        </svg>
-                                        Мои адреса</a></li>
-                                <li class="@if(request()->routeIs('profile.payment-methods')) is-active @endif"><a href="{{route('profile.payment-methods')}}">
-                                        <svg class="icon">
-                                            <use xlink:href="{{asset('images/dist/sprite.svg#mastercard')}}"></use>
-                                        </svg>
-                                        Способы оплаты</a></li>
+{{--                                <li class="@if(request()->routeIs('profile.addresses')) is-active @endif"><a href="{{route('profile.addresses')}}">--}}
+{{--                                        <svg class="icon">--}}
+{{--                                            <use xlink:href="{{asset('images/dist/sprite.svg#book')}}"></use>--}}
+{{--                                        </svg>--}}
+{{--                                        Мои адреса</a></li>--}}
+{{--                                <li class="@if(request()->routeIs('profile.payment-methods')) is-active @endif"><a href="{{route('profile.payment-methods')}}">--}}
+{{--                                        <svg class="icon">--}}
+{{--                                            <use xlink:href="{{asset('images/dist/sprite.svg#mastercard')}}"></use>--}}
+{{--                                        </svg>--}}
+{{--                                        Способы оплаты</a></li>--}}
                                 <li class="@if(request()->routeIs('profile.gift-cards')) is-active @endif"><a href="{{route('profile.gift-cards')}}">
                                         <svg class="icon">
                                             <use xlink:href="{{asset('images/dist/sprite.svg#gift')}}"></use>
