@@ -27,7 +27,7 @@
                         <a href="{{ route('admin.orders.index') }}" class="text-muted">Заказы</a>
                     </li>
                     <li class="breadcrumb-item">
-                        <a href="{{ route('admin.orders.show', $order) }}" class="text-muted">Заказ №{{ $order->id }}</a>
+                        <a href="{{ route('admin.orders.show', $order) }}" class="text-muted">Заказ №{{ $order->num }} (ID: {{ $order->id }})</a>
                     </li>
                 </ul>
                 <!--end::Breadcrumb-->

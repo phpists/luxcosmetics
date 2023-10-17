@@ -7,6 +7,9 @@
             <th class="pl-0 text-center">
                 #
             </th>
+            <th class="pl-0 text-center">
+                Номер
+            </th>
             <th class="pr-0 text-center">
                 Статус
             </th>
@@ -38,6 +41,9 @@
             <tr>
                 <td class="text-center pl-0">
                     {{ $order->id }}
+                </td>
+                <td class="text-center pl-0">
+                    {{ $order->num }}
                 </td>
                 <td class="text-center pr-0">
                     @if(auth()->user()->isSuperAdmin() || auth()->user()->can(\App\Services\Admin\PermissionService::ORDERS_EDIT))
