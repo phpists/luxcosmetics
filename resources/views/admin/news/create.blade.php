@@ -23,9 +23,8 @@
                     <li class="breadcrumb-item">
                         <a href="{{ route('admin.news') }}" class="text-muted">Новости</a>
                     </li>
-                    <li class="breadcrumb-item">
-                        <a href="{{ route('admin.news.edit', $item->id) }}"
-                           class="text-muted">Создание новости</a>
+                    <li class="breadcrumb-item active">
+                        Создание новости
                     </li>
                 </ul>
                 <!--end::Page Title-->
