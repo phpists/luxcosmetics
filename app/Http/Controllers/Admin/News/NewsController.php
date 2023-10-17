@@ -49,7 +49,7 @@ class NewsController extends Controller
         if ($image) {
             $thumbnail_filename = 'tmb_' . $image;
             $thumbnail = Image::make($request->file('image')->getRealPath());
-            $thumbnail->fit(400, 230, function ($constraint) {
+            $thumbnail->fit(411, 267, function ($constraint) {
                 $constraint->upsize();
             });
             $thumbnail->save('images/uploads/news/' . $thumbnail_filename);
@@ -90,7 +90,7 @@ class NewsController extends Controller
             if ($image) {
                 $thumbnail_filename = 'tmb_' . $image;
                 $thumbnail = Image::make($request->file('image')->getRealPath());
-                $thumbnail->fit(400, 230, function ($constraint) {
+                $thumbnail->fit(411, 267, function ($constraint) {
                     $constraint->upsize();
                 });
                 $thumbnail->save('images/uploads/news/' . $thumbnail_filename);
