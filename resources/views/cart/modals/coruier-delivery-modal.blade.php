@@ -18,31 +18,33 @@
                     </div>
                 </div>
             </div>
-            <div class="form__row">
-                <div class="form__col form__col--50">
-                    <div class="form__fieldset">
-                        <legend class="form__label">Квартира/офис</legend>
-                        <input type="text" class="form__input">
+            <div id="address_additional">
+                <div class="form__row">
+                    <div class="form__col form__col--50">
+                        <div class="form__fieldset">
+                            <legend class="form__label">Квартира/офис</legend>
+                            <input type="text" class="form__input" name="kvartira">
+                        </div>
+                    </div>
+                    <div class="form__col form__col--50">
+                        <div class="form__fieldset">
+                            <legend class="form__label">Домофон</legend>
+                            <input type="text" class="form__input" name="domofon">
+                        </div>
                     </div>
                 </div>
-                <div class="form__col form__col--50">
-                    <div class="form__fieldset">
-                        <legend class="form__label">Домофон</legend>
-                        <input type="text" class="form__input">
+                <div class="form__row">
+                    <div class="form__col form__col--50">
+                        <div class="form__fieldset">
+                            <legend class="form__label">Подъезд</legend>
+                            <input type="text" class="form__input" name="podiezd">
+                        </div>
                     </div>
-                </div>
-            </div>
-            <div class="form__row">
-                <div class="form__col form__col--50">
-                    <div class="form__fieldset">
-                        <legend class="form__label">Подъезд</legend>
-                        <input type="text" class="form__input">
-                    </div>
-                </div>
-                <div class="form__col form__col--50">
-                    <div class="form__fieldset">
-                        <legend class="form__label">Этаж</legend>
-                        <input type="text" class="form__input">
+                    <div class="form__col form__col--50">
+                        <div class="form__fieldset">
+                            <legend class="form__label">Этаж</legend>
+                            <input type="text" class="form__input" name="etaj">
+                        </div>
                     </div>
                 </div>
             </div>
