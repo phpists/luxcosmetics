@@ -420,6 +420,16 @@ document.getElementById('coruier_form').addEventListener('submit', (ev) => {
     let address = document.getElementById('street_house_inp').value;
     if (address == null || address == '')
         return;
+
+    let newAddressAdditional = [];
+    $('#address_additional input').each(function (item, i) {
+        if (this.value.length > 0)
+            newAddressAdditional.push($(this).prev().text() + ` - ${this.value}`)
+    })
+
+    if (newAddressAdditional.length > 0)
+        address = address + ' | ' + newAddressAdditional.join(', ')
+
     document.getElementById('courier_addr').innerText = location + ', ' + address;
     let output_inp = document.getElementById(ADDRESS_OUTPUT_ID);
     output_inp.value = location + ', ' + address;

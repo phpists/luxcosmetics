@@ -154,6 +154,12 @@
         defer
     ></script>
     <script>
+        let address_additional = {
+            kvartira: null,
+            domofon: null,
+            podiezd: null,
+            etaj: null
+        }
         $(document).ready(function () {
 
 
@@ -218,6 +224,29 @@
             })
 
 
+            $(document).on('change', '#address_additional input', function (e) {
+                let currentAddressOutput = $('#' + ADDRESS_OUTPUT_ID),
+                    currentAddressString = currentAddressOutput.text();
+
+                let newAddressAdditional = [];
+                address_additional[this.name] = this.value;
+                for (let additinal in address_additional) {
+                    if (address_additional[additinal]) {
+                        newAddressAdditional
+                            .push($('#address_additional').find(`input[name="${additinal}"]`).prev().text()
+                            + ` - ${address_additional[additinal]}`)
+                    }
+                }
+
+                let output = '';
+                if (newAddressAdditional.length > 0) {
+                    let baseAddress = currentAddressString.split('|')[0];
+                    output = ' | ' + newAddressAdditional.join(', ')
+                    output = baseAddress + output;
+
+                    currentAddressOutput.text(output)
+                }
+            })
 
         })
     </script>
