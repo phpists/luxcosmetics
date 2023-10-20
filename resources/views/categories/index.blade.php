@@ -37,6 +37,9 @@
 
 
 @section('content')
+    <div class="alert alert-primary hidden alert-favadd" role="alert" id="fav_alert">
+        Товар добавлен в избранное
+    </div>
     <section class="crumbs">
         <div class="container">
             <div class="row">
@@ -52,9 +55,7 @@
     </section>
     <section class="category-page">
         <div class="container">
-            <div class="alert alert-primary hidden" role="alert" id="fav_alert">
-                Товар добавлен в избранное
-            </div>
+            
             <div class="row">
                 <div class="col-lg-12">
                     <div class="title-h1">{{$category->name}}</div>
