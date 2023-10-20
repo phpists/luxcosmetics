@@ -59,6 +59,17 @@ document.addEventListener('DOMContentLoaded', () => {
 			  }
 		});
 
+
+		$(".filters").mCustomScrollbar({
+			axis: "y",              // вертикальный скролл
+			theme: "dark",  // тема
+			scrollInertia: "330",   // продолжительность прокрутки, значение в миллисекундах
+			setHeight: "100%",      // высота блока (переписывает CSS)
+			mouseWheel: {
+				deltaFactor: 300    // кол-во пикселей на одну прокрутку колёсика мыши
+			}
+		});
+	
 		
 		
 
