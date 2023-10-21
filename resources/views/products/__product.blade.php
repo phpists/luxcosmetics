@@ -260,11 +260,7 @@
                                 </dd>
                             </dl>
                             <dl>
-                                <dt>Характеристики
-                                <svg class="icon">
-                                        <use xlink:href="{{asset('images/dist/sprite.svg#arrow')}}"></use>
-                                    </svg>
-                                </dt>
+                                <dt>Характеристики</dt>
                                 <dd style="display: none;">
                                     @forelse($product->values as $value)
                                         @if($value->property->show_in_product)
@@ -527,9 +523,9 @@
                         </form>
 
                     </div>
-                    <div class="product-tabs__tabsheader" id="reviews">
-                        <div class="product-tabs__tab">Отзывы</div>
-                        <div class="product-tabs__tab">Вопросы</div>
+                    <div class="product-tabs__tabsheader tabs" id="reviews">
+                        <div class="product-tabs__tab tab">Отзывы</div>
+                        <div class="product-tabs__tab tab active">Вопросы</div>
                     </div>
 
                     <div class="product-tabs__tabscontent">
