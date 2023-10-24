@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', $category->title)
+@section('title', $category->name)
 @section('description', $category->description_meta ?? '')
 @section('keywords', $category->keywords_meta ?? '')
 @section('og:title', $category->og_title_meta ?? '')
@@ -55,7 +55,7 @@
     </section>
     <section class="category-page">
         <div class="container">
-            
+
             <div class="row">
                 <div class="col-lg-12">
                     <div class="title-h1">{{$category->name}}</div>

@@ -120,7 +120,7 @@
                                     <div class="form__fieldset">
                                         <label class="checkbox">
                                             <input type="checkbox" checked required/>
-                                            <div class="checkbox__text">Я ознакомился и согласен с <a href="">политикой обработки персональных данных</a> и <a href="">пользовательским соглашением</a></div>
+                                            <div class="checkbox__text">Я ознакомился и согласен с <a href="/pages/policy">политикой обработки персональных данных</a> и <a href="/pages/policy">пользовательским соглашением</a></div>
                                         </label>
                                     </div>
 
