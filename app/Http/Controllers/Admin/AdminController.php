@@ -33,7 +33,7 @@ class AdminController extends Controller
 
     public function downloadProductJson(Request $request)
     {
-        $data = ProductResource::collection(Product::query()->limit(10)->get())->response()->getData(true);
+        $data = ProductResource::collection(Product::all())->response()->getData(true);
         $jsonContent = json_encode($data, JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT);
         return response()->streamDownload(function () use ($jsonContent) {
             echo $jsonContent;
