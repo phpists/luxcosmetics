@@ -75,9 +75,22 @@
         @endforeach
     </div>
     <div class="filters__ftr">
-        <button type="submit" class="filters__btn">Показать</button>
+        <button type="submit" class="filters__btn" id="btn_show_selected">Показать</button>
         <a href="{{ route('categories.show', ['alias' => $category->alias]) }}"
            class="filters__btn">Сбросить</a>
     </div>
 
 </form>
+@section('scripts')
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            if (window.innerWidth < 1200) {
+                document.getElementById('btn_show_selected').addEventListener('click', (ev) => {
+                    ev.preventDefault();
+                    $("#filters").removeClass("is-active");
+                    $(".filters-overlay").removeClass("is-active");
+                })
+            }
+        })
+    </script>
+@endsection
