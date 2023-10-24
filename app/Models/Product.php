@@ -195,5 +195,14 @@ class Product extends Model
         return $this->items_left > 0;
     }
 
+    public function similarProducts(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    {
+        return $this->belongsToMany(Product::class, 'related_products', 'product_id', 'relative_product_id')->where('relation_type', RelatedProduct::SIMILAR_ITEMS);
+    }
+
+    public function supportProducts(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    {
+        return $this->belongsToMany(Product::class, 'related_products', 'product_id', 'relative_product_id')->where('relation_type', RelatedProduct::SUPPORT_ITEMS);
+    }
 
 }
