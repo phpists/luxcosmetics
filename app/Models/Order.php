@@ -2,7 +2,9 @@
 
 namespace App\Models;
 
+use App\Mail\Admin\OrderCreated;
 use App\Mail\OrderStatusChangedMail;
+use App\Services\SiteConfigService;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -78,12 +80,22 @@ class Order extends Model
         self::created(function (Order $order) {
             $order->num = date('my') . '/' . $order->id;
             $order->save();
+
+            $admin_email = SiteConfigService::getParamValue(SiteConfigService::EMAIL_FOR_ORDERS);
+            if ($admin_email) {
+                Mail::to($admin_email)->send(new OrderCreated($order));
+            }
         });
 
         self::updated(function(Order $order) {
             if ($order->isDirty('status_id')) {
                 Mail::to($order->user->email)->send(new OrderStatusChangedMail($order));
             }
+        });
+
+        self::deleted(function (Order $order) {
+            $order->orderProducts()->delete();
+            $order->orderGiftProducts()->delete();
         });
 
     }

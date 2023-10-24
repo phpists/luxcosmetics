@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', $category->name)
+@section('title', $category->title_meta)
 @section('description', $category->description_meta ?? '')
 @section('keywords', $category->keywords_meta ?? '')
 @section('og:title', $category->og_title_meta ?? '')
