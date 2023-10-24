@@ -104,7 +104,7 @@
                             </div>
                             <div class="d-flex align-items-center justify-content-between card-spacer flex-grow-1">
                                 <div class="d-flex flex-column text-right pb-3">
-                                    <a href="{{ route('admin.info.download') }}" class="btn btn-primary btn-lg btn-block"><i class="icon flaticon-download"></i> Загрузка данны о товарах</a>
+                                    <a href="{{ route('admin.product-info.download') }}" class="btn btn-primary btn-lg btn-block"><i class="icon flaticon-download"></i> Загрузка данны о товарах</a>
                                 </div>
                             </div>
 {{--                            <div id="kt_stats_widget_12_chart" class="card-rounded-bottom" data-color="primary" style="height: 150px"></div>--}}

@@ -153,7 +153,7 @@ Route::get('cart/step2', [\App\Http\Controllers\CartController::class, 'step_sec
 Route::get('admin', [AdminController::class, 'index'])->name('admin.home');
 Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function () {
     // Products Info download
-    Route::get('info/download', [AdminController::class, 'downloadProductJson'])->name('admin.info.download');
+    Route::get('product_info/download', [AdminController::class, 'downloadProductJson'])->name('admin.product-info.download');
     /* Menu */
     Route::get('menu/{menu_type}', [MenuController::class, 'index'])->name('admin.menu');
 //    Route::get('menu/show-all-parents', [MenuController::class, 'showAllParents'])->name('admin.menu.show_all_parents');
