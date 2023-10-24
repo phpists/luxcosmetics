@@ -14,6 +14,9 @@ class SiteConfigService
 
     const NUMERIC = 'numeric';
 
+
+    const EMAIL_FOR_ORDERS = 'email_for_orders';
+
     static private function read_config() {
 
         if (Storage::disk('config')->exists(self::FILE_NAME)) {

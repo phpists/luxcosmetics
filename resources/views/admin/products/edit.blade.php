@@ -507,7 +507,7 @@
                                             <label class="col-form-label text-right col-auto">{{$property->name}}</label>
                                             <div class="col">
                                             <select class="form-control select2 property_values" id="prop_{{$property->id}}" name="property[{{ $property->id }}]">
-                                                <option value=""></option>
+                                                <option value="">Без значения</option>
                                                 @foreach($property->values as $value)
                                                     <option value="{{ $value->id }}" @if($product->values->contains(function($item, $ket) use ($value) { return $item->id === $value->id; })) selected @endif>{{ $value->value }}</option>
                                                 @endforeach
@@ -694,7 +694,6 @@
 
         $(document).ready(function () {
             $('.select2.property_values').select2({
-                placeholder: 'Выберете или добавьте значение',
                 tags: true,
             }).on('select2:select', function (e) {
                 let product_id = $(this).parents('div.props-select').data('product-id'),

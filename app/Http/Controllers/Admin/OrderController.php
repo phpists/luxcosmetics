@@ -235,4 +235,11 @@ class OrderController extends Controller
         return ['completed' => $order->isCompleted()];
     }
 
+    public function destroy(Request $request, Order $order)
+    {
+        $order->delete();
+
+        return back()->with('success', "Заказ №{$order->id} удален");
+    }
+
 }
