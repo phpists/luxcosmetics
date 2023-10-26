@@ -81,16 +81,3 @@
     </div>
 
 </form>
-@section('scripts')
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            if (window.innerWidth < 1200) {
-                document.getElementById('btn_show_selected').addEventListener('click', (ev) => {
-                    ev.preventDefault();
-                    $("#filters").removeClass("is-active");
-                    $(".filters-overlay").removeClass("is-active");
-                })
-            }
-        })
-    </script>
-@endsection
