@@ -118,6 +118,14 @@
                 results_container.style.display = "none";
             }
         })
+
+        if (window.innerWidth < 1200) {
+            document.getElementById('btn_show_selected').addEventListener('click', (ev) => {
+                ev.preventDefault();
+                $("#filters").removeClass("is-active");
+                $(".filters-overlay").removeClass("is-active");
+            })
+        }
     })
 </script>
 <script src="{{ asset('js/cart.js') }}"></script>
