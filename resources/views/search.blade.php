@@ -21,7 +21,7 @@
                     <div class="title-h1">Результаты поиска по запросу {{$search}}</div>
                     <div class="category-page__container">
                         <aside class="category-page__aside">
-                            <div class="filters" id="filters">
+                            <div class="filters" id="filters" style="height: 100%!important;">
                                 <form id="filterForm"
                                       action="{{ route('show_search') }}">
                                     <input type="hidden" id="search_needle" name="search" value="{{request()->input('search')}}">
@@ -122,20 +122,6 @@
                                 {!! $pagination !!}
                             </div>
                         </main>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <section class="seoblock">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="seoblock__wrapper">
-                        <h1 class="seoblock__title">Уход за телом: натуральная косметика для красоты и здоровья</h1>
-                        <div class="seoblock__content">Забота о красоте и здоровье вашей кожи становится приятным и эффективным с нашим широким ассортиментом продуктов для ухода за телом. В нашем интернет-магазине косметики вы найдете все необходимые средства для ежедневного ухода и специальных процедур, которые подарят вашей коже мягкость, увлажнение и сияние. Откройте для себя мир натуральной косметики, разработанной с использованием последних инноваций и проверенных временем рецептов.</div>
-                        <div class="seoblock__content is-hidden" id="seohidden">Забота о красоте и здоровье вашей кожи становится приятным и эффективным с нашим широким ассортиментом продуктов для ухода за телом. В нашем интернет-магазине косметики вы найдете все необходимые средства для ежедневного ухода и специальных процедур, которые подарят вашей коже мягкость, увлажнение и сияние. Откройте для себя мир натуральной косметики, разработанной с использованием последних инноваций и проверенных временем рецептов.</div>
-                        <div class="seoblock__morecontent">Показать еще</div>
                     </div>
                 </div>
             </div>

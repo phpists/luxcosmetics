@@ -40,7 +40,7 @@
 {{--                                <li><a href="">Уход за волосами</a></li>--}}
 {{--                                <li><a href="">Ароматы для дома</a></li>--}}
                             </ul>
-                            <div class="filters" id="filters">
+                            <div class="filters" id="filters" style="height: 100%!important;">
                                 @include('categories.parts.filter')
                             </div>
 
