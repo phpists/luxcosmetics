@@ -76,7 +76,7 @@
 
                             <div class="category-page__image"><img src="" alt=""></div>
                         </aside>
-                        <main class="category-page__main">
+                        <main class="category-page__main" id="catalog">
 {{--                            <ul class="category-page__subcategories">--}}
 {{--                                @foreach($category->subcategories as $subcategory)--}}
 {{--                                    <li>--}}
@@ -175,29 +175,21 @@
 @section('scripts')
     <script>
         $(document).ready(function () {
-            $('.pagination__more').on('click', function () {
+            $(document).on('click', '.pagination__more', function () {
                 let is_disabled = $('.pagination__item--next').attr('aria-disabled')
                 if(is_disabled === 'false') {
-                    let nextPage = parseInt($('.pagination__item--active').attr('aria-current')) + 1;
-                    let search = document.getElementById('search_needle').value;
+                    let url = this.dataset.url
                     $.ajax({
-                        url: '{{route('show_search')}}?page='+nextPage+'&search='+search,
+                        method: 'GET',
+                        url: url,
+                        data: {
+                            load_more: true
+                        },
                         success: function (response) {
-                            $('.category-page__products').append(response['data']);
-                            let next_link = document.querySelector('.pagination__item--next');
-                            if(response['next_link'] !== null) {
-                                next_link.children[0].href = response['next_link'];
-                            }
-                            else {
-                                next_link.setAttribute('aria-disabled', 'true');
-                                next_link.children[0].href = '#';
-                            }
-                            document.getElementById('current_items_number').innerHTML = response['shown_count'];
-                            let active_class = 'pagination__item--active';
-                            document.querySelector(`.${active_class}`).classList.remove(active_class);
-                            let curr_item = document.querySelector(`.pagination__item[data-label="${response['current_page']}"]`);
-                            curr_item.classList.add(active_class);
-                            curr_item.innerHTML = `<span>${nextPage}</span>`;
+                            $('div.category-page__products').append(response.products)
+                            $('div.category-page__pagination').remove()
+                            $('#catalog').append(response.pagination)
+                            $('#current_items_number').text(response.new_count)
                         },
                         error: function (response) {
                             console.log(response)
