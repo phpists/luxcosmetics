@@ -21,7 +21,7 @@
                     <div class="title-h1">Результаты поиска по запросу {{$search}}</div>
                     <div class="category-page__container">
                         <aside class="category-page__aside">
-                            <div class="filters" id="filters">
+                            <div class="filters" id="filters" style="height: 100%!important;">
                                 <form id="filterForm"
                                       action="{{ route('show_search') }}">
                                     <input type="hidden" id="search_needle" name="search" value="{{request()->input('search')}}">
@@ -76,7 +76,7 @@
 
                             <div class="category-page__image"><img src="" alt=""></div>
                         </aside>
-                        <main class="category-page__main">
+                        <main class="category-page__main" id="catalog">
 {{--                            <ul class="category-page__subcategories">--}}
 {{--                                @foreach($category->subcategories as $subcategory)--}}
 {{--                                    <li>--}}
@@ -122,20 +122,6 @@
                                 {!! $pagination !!}
                             </div>
                         </main>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <section class="seoblock">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="seoblock__wrapper">
-                        <h1 class="seoblock__title">Уход за телом: натуральная косметика для красоты и здоровья</h1>
-                        <div class="seoblock__content">Забота о красоте и здоровье вашей кожи становится приятным и эффективным с нашим широким ассортиментом продуктов для ухода за телом. В нашем интернет-магазине косметики вы найдете все необходимые средства для ежедневного ухода и специальных процедур, которые подарят вашей коже мягкость, увлажнение и сияние. Откройте для себя мир натуральной косметики, разработанной с использованием последних инноваций и проверенных временем рецептов.</div>
-                        <div class="seoblock__content is-hidden" id="seohidden">Забота о красоте и здоровье вашей кожи становится приятным и эффективным с нашим широким ассортиментом продуктов для ухода за телом. В нашем интернет-магазине косметики вы найдете все необходимые средства для ежедневного ухода и специальных процедур, которые подарят вашей коже мягкость, увлажнение и сияние. Откройте для себя мир натуральной косметики, разработанной с использованием последних инноваций и проверенных временем рецептов.</div>
-                        <div class="seoblock__morecontent">Показать еще</div>
                     </div>
                 </div>
             </div>
@@ -189,29 +175,21 @@
 @section('scripts')
     <script>
         $(document).ready(function () {
-            $('.pagination__more').on('click', function () {
+            $(document).on('click', '.pagination__more', function () {
                 let is_disabled = $('.pagination__item--next').attr('aria-disabled')
                 if(is_disabled === 'false') {
-                    let nextPage = parseInt($('.pagination__item--active').attr('aria-current')) + 1;
-                    let search = document.getElementById('search_needle').value;
+                    let url = this.dataset.url
                     $.ajax({
-                        url: '{{route('show_search')}}?page='+nextPage+'&search='+search,
+                        method: 'GET',
+                        url: url,
+                        data: {
+                            load_more: true
+                        },
                         success: function (response) {
-                            $('.category-page__products').append(response['data']);
-                            let next_link = document.querySelector('.pagination__item--next');
-                            if(response['next_link'] !== null) {
-                                next_link.children[0].href = response['next_link'];
-                            }
-                            else {
-                                next_link.setAttribute('aria-disabled', 'true');
-                                next_link.children[0].href = '#';
-                            }
-                            document.getElementById('current_items_number').innerHTML = response['shown_count'];
-                            let active_class = 'pagination__item--active';
-                            document.querySelector(`.${active_class}`).classList.remove(active_class);
-                            let curr_item = document.querySelector(`.pagination__item[data-label="${response['current_page']}"]`);
-                            curr_item.classList.add(active_class);
-                            curr_item.innerHTML = `<span>${nextPage}</span>`;
+                            $('div.category-page__products').append(response.products)
+                            $('div.category-page__pagination').remove()
+                            $('#catalog').append(response.pagination)
+                            $('#current_items_number').text(response.new_count)
                         },
                         error: function (response) {
                             console.log(response)

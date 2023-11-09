@@ -85,21 +85,15 @@ class SearchController extends Controller
         $products_list = view('categories.parts.products', compact('products', 'variations'))->render();
         $shown_count = ($products->currentPage() - 1) * $paginate_count + $products->count();
         $last_page_url = $products->url($products->lastPage());
-        $pagination = view('categories.parts.pagination', compact('products', 'last_page_url'))->render();
-        if ($request->ajax() && $request->full!=='1') {
+        $pagination = view('layouts.includes.pagination', compact('products', 'last_page_url'))->render();
+        if ($request->ajax()) {
+            $products_list = view('categories.parts.products', compact('products', 'variations'))->render();
+            $pagination = view('categories.parts.pagination', compact('products'))->render();
+
             return response()->json([
-                'data' => $products_list,
-                'next_link' => $products->nextPageUrl(),
-                'current_page' => $products->currentPage(),
-                'shown_count' => $shown_count
-            ]);
-        }
-        elseif ($request->ajax() && $request->full === '1') {
-            return response()->json([
-                'data' => $products_list,
-                'pagination' => $pagination,
-                'shown_count' => $shown_count,
-                'total' => $products->total()
+                'new_count' => $shown_count,
+                'products' => $products_list,
+                'pagination' => $pagination
             ]);
         }
         return view('search', compact('products', 'pagination', 'products_list', 'search', 'shown_count'));
