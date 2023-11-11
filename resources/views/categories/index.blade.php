@@ -62,7 +62,7 @@
                     <div class="category-page__container">
                         <aside class="category-page__aside">
                             <div class="filters" id="filters">
-                                @include('categories.parts.filter')
+                                @include('categories.parts.filter', ['is_not_brands' => true])
                             </div>
 
                             <div class="category-page__image"><img src="" alt=""></div>
@@ -297,6 +297,8 @@
                     },
                     success: function (response) {
                         $('#catalog').html(response.html)
+                        $('#filterPropertyCounts').val(JSON.stringify(response.filterCounts))
+                        updateFilter()
                     },
                     complete: function () {
                         $('#catalog').removeClass('loading')
@@ -312,7 +314,39 @@
             })
 
 
-
+            updateFilter()
         })
+
+
+        function updateFilter() {
+            let counts = JSON.parse($('#filterPropertyCounts').val());
+
+            for (let property_id in counts) {
+                let $property = $(`.filters__item[data-property="${property_id}"]:not(:has(input:checked))`);
+                $property.find('label').each(function (i, property_value) {
+                    let property_value_id = $(property_value).find('input').val()
+                    console.log(property_id, property_value_id, counts[property_id][property_value_id])
+                    if (counts[property_id][property_value_id] > 0) {
+                        $(property_value).show()
+                    } else {
+                        $(property_value).hide()
+                    }
+                })
+                let maxCount = Math.max(...Object.values(counts[property_id]))
+                if (maxCount < 1) {
+                    $property.hide()
+                } else {
+                    $property.show()
+                }
+
+                if ($property.find('label').filter(function() {
+                    return $(this).css('display') !== 'none';
+                }).length > 3) {
+                    $property.find('button.filter__all').show()
+                } else {
+                    $property.find('button.filter__all').hide()
+                }
+            }
+        }
     </script>
 @endsection

@@ -146,16 +146,18 @@ $(function () {
 
     // Price Filter Slider Init
     let minFilterPrice = Math.floor($('#filterMinPrice').val());
+    let minCurrentPrice = Math.floor($('#filterCurrentMinPrice').val())
     let maxFilterPrice = Math.ceil($('#filterMaxPrice').val());
+    let maxCurrentPrice = Math.floor($('#filterCurrentMaxPrice').val())
 
     $("#slider-range").slider({
         range: true,
         min: minFilterPrice,
         max: maxFilterPrice,
-        values: [minFilterPrice, maxFilterPrice],
+        values: [minCurrentPrice, maxCurrentPrice],
         slide: function (event, ui) {
-            $("#amount").val(ui.values[0]);
-            $("#amount2").val(ui.values[1]);
+            $("#filterCurrentMinPrice").val(ui.values[0]);
+            $("#filterCurrentMaxPrice").val(ui.values[1]);
         }
     });
 

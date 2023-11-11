@@ -73,7 +73,7 @@
 {{--                    <use xlink:href="{{asset('images/dist/sprite.svg#cart')}}"></use>--}}
 {{--                </svg>--}}
 {{--            </button>--}}
-                <button class="product__mobile-btn addToCart @if(isset($product->baseValue->id)) @if($cartService->check($product->id, $product->baseValue->id)) isInCart @endif @endif" data-product="{{ $product->id }}" data-property="{{ $product->baseValue->id ?? '' }}">
+                <button class="product__mobile-btn addToCart @if(isset($product->basePropertyValue->id)) @if($cartService->check($product->id, $product->basePropertyValue->id)) isInCart @endif @endif" data-product="{{ $product->id }}" data-property="{{ $product->basePropertyValue->id ?? '' }}">
                             <svg class="icon @if($product->is_favourite) favourite_product @endif">
                                 <use xlink:href="{{asset('images/dist/sprite.svg#cart')}}"></use>
                             </svg>
@@ -91,13 +91,13 @@
                     <div class="product__pnl">
                         <div class="product__optionsblock">
                             <div class="product__optionstitle">Выбранный {{ mb_strtolower($product->baseProperty->name) }}:
-                                <b>{{ ($product->baseValue->value ?? '') . ($product->baseProperty->measure ?? '') }}</b>
+                                <b>{{ ($product->basePropertyValue->value ?? '') . ($product->baseProperty->measure ?? '') }}</b>
                             </div>
                             <div class="product__options product__volume">
-                                @foreach($product_variations->sortBy('baseValue.value') as $product_variation)
+                                @foreach($product_variations->sortBy('basePropertyValue.value') as $product_variation)
                                     <label class="volume changeModification" data-url="{{ route('product.card', $product_variation->id) }}">
                                         <input type="radio" name="volume" @checked($product->id == $product_variation->id)/>
-                                        <div class="volume__text"><b>{{ ($product_variation->baseValue->value ?? '') . ($product_variation->baseProperty->measure ?? '') }}</b>
+                                        <div class="volume__text"><b>{{ ($product_variation->basePropertyValue->value ?? '') . ($product_variation->baseProperty->measure ?? '') }}</b>
                                             {{ $product_variation->price }} ₽
                                         </div>
                                     </label>
@@ -119,12 +119,12 @@
                 <div class="product__pnl">
                     <div class="product__optionsblock">
                         <div class="product__optionstitle">Выбранный цвет:
-                            <b>{{ ($product->baseValue->value ?? '') }}</b></div>
+                            <b>{{ ($product->basePropertyValue->value ?? '') }}</b></div>
                         <div class="product__options product__colors">
-                            @foreach($product_variations->sortBy('baseValue.value') as $product_variation)
+                            @foreach($product_variations->sortBy('basePropertyValue.value') as $product_variation)
                             <label class="color changeModification" data-url="{{ route('product.card', $product_variation->id) }}">
                                 <input type="radio" name="color" @checked($product->id == $product_variation->id)/>
-                                <div class="color__text" style="background-color: {{ $product_variation->baseValue->color }}"></div>
+                                <div class="color__text" style="background-color: {{ $product_variation->basePropertyValue->color }}"></div>
                             </label>
                             @endforeach
                         </div>

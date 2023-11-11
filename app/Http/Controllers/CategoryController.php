@@ -32,6 +32,8 @@ class CategoryController extends Controller
             abort(404);
         }
         $products = $this->catalogService->getFiltered();
+        $properties = $this->catalogService->getFilters();
+        $filters_weight = $this->catalogService->getFiltersWeight($properties);
         $min_price = $this->catalogService->min_price;
         $max_price = $this->catalogService->max_price;
 
@@ -56,7 +58,8 @@ class CategoryController extends Controller
             }
 
             return response()->json([
-                'html' => $products_list
+                'html' => $products_list,
+                'filterCounts' => $filters_weight
             ]);
         } else {
             $products_list = view('categories.parts.catalog', compact('products', 'variations'))->render();
@@ -70,6 +73,6 @@ class CategoryController extends Controller
         }
         $last_page_url = $products->url($products->lastPage());
         $pagination = view('categories.parts.pagination', compact('products', 'last_page_url'))->render();
-        return view('categories.index', compact('category', 'products', 'pagination', 'products_list', 'min_price', 'max_price'));
+        return view('categories.index', compact('category', 'products', 'properties', 'filters_weight', 'pagination', 'products_list', 'min_price', 'max_price'));
     }
 }

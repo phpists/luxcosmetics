@@ -53,7 +53,7 @@
                     <div class="category-page__container">
                         <aside class="category-page__aside">
                             <div class="filters" id="filters">
-                                @include('categories.parts.filter')
+                                @include('categories.parts.filter', ['is_not_brands' => false])
                             </div>
                             <div class="category-page__image"><img src="" alt=""></div>
                         </aside>
@@ -261,6 +261,7 @@
                     },
                     success: function (response) {
                         $('#catalog').html(response.html)
+                        $('#filters').html(response.filterHtml)
                     },
                     complete: function () {
                         $('#catalog').removeClass('loading')
