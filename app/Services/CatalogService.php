@@ -24,22 +24,37 @@ class CatalogService
     public $category;
     public $all_category_ids;
 
+    public $brand;
+
+    public $modelName;
+
     public $products_query;
     public $products;
 
     public $min_price = 1;
     public $max_price = 999999;
 
-    public function __construct(Request $request)
+    public function __construct(Request $request, string $modelName, string $custom_alias = null)
     {
         $this->request = $request;
+        $this->modelName = $modelName;
 
-        $category = Category::where('alias', $request->alias)
-            ->with(['subcategories', 'tags', 'posts'])
-            ->firstOrFail();
+        if ($modelName == Category::class) {
+            $alias = $custom_alias ?: $request->alias;
+            $category = Category::where('alias', $alias)
+                ->with(['subcategories', 'tags', 'posts'])
+                ->firstOrFail();
 
-        $this->category = $category;
-        $this->all_category_ids = Category::getChildIds($category->id);
+            $this->category = $category;
+            $this->all_category_ids = Category::getChildIds($category->id);
+        } elseif ($modelName == Brand::class) {
+            $category = Category::with(['subcategories', 'tags', 'posts'])
+                ->firstOrFail();
+
+            $this->category = $category;
+            $this->brand = Brand::where('link', $request->link)->firstOrFail();
+        }
+
 
         $this->products = $this->getProductsQuery()->get();
     }
@@ -47,12 +62,14 @@ class CatalogService
     public function getProductsQuery(): \Illuminate\Database\Eloquent\Builder
     {
         $all_category_ids = $this->all_category_ids;
-        return $this->products_query = Product::query()
+        $query = $this->products_query = Product::query()
             ->select(['products.*', 'product_images.path as main_image'])
             ->leftJoin('product_images', 'products.image_print_id', 'product_images.id')
-            ->with(['brand', 'values', 'baseProperty', 'basePropertyValue'])
-            ->distinct(['products.id'])
-            ->where(function ($q) use ($all_category_ids) {
+            ->with(['values', 'baseProperty', 'basePropertyValue'])
+            ->distinct(['products.id']);
+
+        if ($this->modelName == Category::class) {
+            $query->where(function ($q) use ($all_category_ids) {
                 $q->whereIn('products.id', function ($query) use ($all_category_ids) {
                     $query->select('product_id')
                         ->from('product_categories')
@@ -60,6 +77,11 @@ class CatalogService
                 })
                     ->orWhereIn('category_id', $all_category_ids);
             });
+        } elseif ($this->modelName == Brand::class) {
+            $query->where('brand_id', $this->brand->id);
+        }
+
+        return $query;
     }
 
     public function getFiltered()
@@ -201,15 +223,24 @@ class CatalogService
     public function getFiltersWeight($properties): array
     {
         $products = $this->getFilteredProductsQuery()->get();
+        $productsArray = $products->pluck('values', 'id')->toArray();
         $result = [];
 
         foreach ($properties as $property) {
             $result[$property->id] = [];
             foreach ($property->values as $property_value) {
                 $property_value_id = $property_value->id;
-                $result[$property->id][$property_value->id] = $products->filter(function ($product) use ($property_value_id) {
-                    return $product->values->where('id', $property_value_id)->isNotEmpty();
-                })->count();
+                $count = 0;
+                foreach ($productsArray as $product) {
+                    $exists = false;
+                    foreach ($product as $value) {
+                        if ($value['id'] == $property_value_id)
+                            $exists = true;
+                    }
+                    if ($exists)
+                        $count++;
+                }
+                $result[$property->id][$property_value->id] = $count;
             }
         }
 

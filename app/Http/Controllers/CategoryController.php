@@ -19,7 +19,7 @@ class CategoryController extends Controller
 
     public function __construct(Request $request)
     {
-        $this->catalogService = new CatalogService($request);
+        $this->catalogService = new CatalogService($request, Category::class);
     }
 
     function index() {
