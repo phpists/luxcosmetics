@@ -15,7 +15,7 @@
         <div id="points_tab" class="pickup-tab delivery_places_container">
             <div class="delivery_service">
                 <button class="select-delivery-type">
-                    <div class="select-delivery-type-value">Boxberry</div>
+                    <div class="select-delivery-type-value">СДЭК</div>
                     <svg
                         width="15"
                         height="15"
@@ -25,10 +25,10 @@
                         <path d="M3 5L7.5 9.5L12 5" fill="none" stroke-width="1.5"></path>
                     </svg>
                     <div class="dropdown" id="post_offices">
+                        <div class="select-delivery-type-opt active" data-type="СДЭК">СДЭК</div>
                         <div class="select-delivery-type-opt" data-type="Boxberry">
                             Boxberry
                         </div>
-                        <div class="select-delivery-type-opt" data-type="СДЭК">СДЭК</div>
                     </div>
                 </button>
             </div>

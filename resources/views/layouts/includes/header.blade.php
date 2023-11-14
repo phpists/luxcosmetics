@@ -50,11 +50,14 @@
                     <svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#menu')}}"></use></svg>
                     Каталог товаров
                 </a>
+                @php
+                $current_url = '/'.request()->path();
+                @endphp
                 <ul class="navigation__menu">
                     @foreach($menu_items->whereNull('parent_id')->where('type', \App\Models\Menu::TOP_MENU) as $menu_item)
                         <li>
                             @if(sizeof($menu_item->getChildren($menu_items)) > 0)
-                                <a href="{{$menu_item->link}}">{{$menu_item->title}}
+                                <a class="@if($current_url == $menu_item->link) active @endif" href="{{$menu_item->link}}">{{$menu_item->title}}
                                         <svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#arrow')}}"></use></svg>
                                 </a>
                                 <div class="submenu">
@@ -64,7 +67,7 @@
                                                 <div class="submenu__wrapper">
                                                     <ul class="submenu__menu">
                                                         @foreach($menu_item->getChildren($menu_items) as $submenu)
-                                                            <li><a href="{{$submenu->link}}">{{$submenu->title}}</a>
+                                                            <li><a class="@if(str_contains($current_url, $submenu->link)) active @endif" href="{{$submenu->link}}">{{$submenu->title}}</a>
                                                                 @include('layouts.parts.submenu', ['menu_item' => $submenu, 'items' => $menu_items])
                                                             </li>
                                                         @endforeach
@@ -75,7 +78,7 @@
                                     </div>
                                 </div>
                             @else
-                                <a href="{{$menu_item->link}}">{{$menu_item->title}}</a>
+                                <a class="@if(str_contains($current_url, $menu_item->link)) active @endif" href="{{$menu_item->link}}">{{$menu_item->title}}</a>
                         @endif
                         </li>
                     @endforeach

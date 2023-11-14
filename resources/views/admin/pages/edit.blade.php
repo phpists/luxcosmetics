@@ -92,8 +92,8 @@
                                         </div>
                                         <div class="col-12">
                                             <div class="mb-5">
-                                                <label>Описание характеристики</label>
-                                                <textarea id="textEditor" name="content">{{$page->content}}</textarea>
+                                                <label>Текст страницы</label>
+                                                <textarea required id="textEditor" name="content">{{$page->content}}</textarea>
                                             </div>
                                         </div>
                                     </div>
