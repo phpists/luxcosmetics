@@ -189,6 +189,10 @@ function displayPlaces(places, clearArea) {
 
 async function findPlaces(boundaries, count=0, clearArea=true) {
     let post_office = document.querySelector('.select-delivery-type-opt.active');
+    if (post_office === null) {
+        post_office = document.querySelector('#post_offices .select-delivery-type-opt');
+        post_office.classList.add('active');
+    }
     let res = await axios.get('https://search-maps.yandex.ru/v1/', {
         params: {
             apikey: SEARCH_API_KEY,

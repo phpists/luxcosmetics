@@ -4,6 +4,7 @@
     <input type="hidden" name="sort">
     <input type="hidden" id="filterMinPrice" value="{{ $min_price }}">
     <input type="hidden" id="filterMaxPrice" value="{{ $max_price }}">
+    <input type="hidden" id="filterPropertyCounts" value='@json($filters_weight)'>
 
     <div class="filters__close">
         <svg class="icon">
@@ -29,32 +30,55 @@
                         <div class="filter__col">
                             <span>от</span>
                             <input type="number" name="price[from]"
-                                   class="filter__input" id="amount"
-                                   value="{{ request()->input('price.from') ?? '' }}">
+                                   class="filter__input" id="filterCurrentMinPrice"
+                                   value="{{ request()->input('price.from') ?? $min_price }}">
                         </div>
                         <div class="filter__col">
                             <span>до</span>
                             <input type="number" name="price[to]" class="filter__input"
-                                   id="amount2"
-                                   value="{{ request()->input('price.to') ?? '' }}">
+                                   id="filterCurrentMaxPrice"
+                                   value="{{ request()->input('price.to') ?? $max_price }}">
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        @foreach(\App\Services\CatalogService::getFilters($category) as $category_property)
+        @if($is_not_brands)
+        <div class="filters__item filter" data-property="brands">
+            <div class="filter__title">Марка
+                <svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#arrow')}}"></use></svg>
+            </div>
+            <div class="filter__block">
+                <div class="filter__wrap filter__scroll">
+                    @foreach($brands = \App\Models\Brand::select(['id', 'name'])->get() as $brand)
+                        <label class="checkbox">
+                            <input type="checkbox"
+                                   name="brands[]"
+                                   value="{{ $brand->id }}"
+                                   @if(is_array(request()->input("brands.".$brand->id)) && in_array($brand->id, request()->input("brands"))) checked @endif/>
+                            <div
+                                class="checkbox__text">{{ $brand->name }}</div>
+                        </label>
+                    @endforeach
+                </div>
+                <button type="button" class="filter__all">Показать все</button>
+            </div>
+        </div>
+        @endif
+
+        @foreach($properties as $category_property)
             @continue($category_property->values->isEmpty())
-            <div class="filters__item filter">
+            <div class="filters__item filter" data-property="{{ $category_property->id }}">
                 <div
-                    class="filter__title @if(!$loop->first) is-close @endif">{{ $category_property->name }} {{ isset($category_property->measure) ? '('.$category_property->measure.')' : '' }}
+                    class="filter__title @if($is_not_brands || (!$loop->first && !$is_not_brands)) is-close @endif">{{ $category_property->name }} {{ isset($category_property->measure) ? '('.$category_property->measure.')' : '' }}
                     <svg class="icon">
                         <use
                             xlink:href="{{asset('images/dist/sprite.svg#arrow')}}"></use>
                     </svg>
                 </div>
                 <div class="filter__block"
-                     @if(!$loop->first) style="display: none" @endif>
+                     @if($is_not_brands || (!$loop->first && !$is_not_brands)) style="display: none" @endif>
                     <div class="filter__wrap filter__scroll">
                         @foreach($category_property->values as $property_value)
                             <label class="checkbox">
@@ -62,14 +86,11 @@
                                        name="properties[{{ $category_property->id }}][]"
                                        value="{{ $property_value->id }}"
                                        @if(is_array(request()->input("properties.".$category_property->id)) && in_array($property_value->id, request()->input("properties.".$category_property->id))) checked @endif/>
-                                <div
-                                    class="checkbox__text">{{ $property_value->value }}</div>
+                                <div class="checkbox__text">{{ $property_value->value }}</div>
                             </label>
                         @endforeach
                     </div>
-                    @if($category_property->values->count() > 3)
-                        <button class="filter__all">Показать все</button>
-                    @endif
+                    <button type="button" class="filter__all">Показать все</button>
                 </div>
             </div>
         @endforeach

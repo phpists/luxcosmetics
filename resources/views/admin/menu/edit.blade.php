@@ -80,14 +80,14 @@
                                                     <div class="form-group">
                                                         <label>Категория</label>
                                                         <select class="form-control select2" id="cat_select"
-                                                                name="category_id" required>
+                                                                name="category_id" disabled>
                                                         </select>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-5">
                                                     <div class="form-group">
                                                         <label>Ссылка</label>
-                                                        <input type="text" id="link" name="link" value="{{$item->link}}" class="form-control" disabled/>
+                                                        <input type="text" id="link" name="link" value="{{$item->link}}" class="form-control" required/>
                                                     </div>
                                                 </div>
                                             </div>

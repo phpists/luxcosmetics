@@ -25,6 +25,10 @@
     opacity: 0;
 }
 
+.navigation__menu li a.active {
+    color: #cc9755;
+}
+
 @media screen and (max-width: 1200px) {
     #filterForm .filters__hdr {
         display: none;

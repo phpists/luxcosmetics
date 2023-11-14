@@ -4,44 +4,42 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Product;
-use App\Services\ProductFilterService;
+use App\Services\CatalogService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
 class SalesController extends Controller
 {
-    private ProductFilterService $productService;
+    private CatalogService $catalogService;
 
     public function __construct(Request $request)
     {
-        $this->productService = new ProductFilterService($request);
+        $currentRoute = $request->route()->getName();
+        $this->catalogService = new CatalogService($request, Category::class, $currentRoute);
     }
 
     public function index(Request $request) {
-        $currentRoute = $request->route()->getName();;
+        $currentRoute = $request->route()->getName();
         $page_column = match ($currentRoute) {
             'sales' => 'show_in_sales_page',
             'sales-50' => 'show_in_percent_discount_page',
             'novinki' => 'show_in_new_page'
         };
-        $filters = [];
-        $filters[] = [
-            'column' => $page_column,
-            'value' => true
-        ];
-        if ($request->category_id != null) {
-            $filters[] = [
-                'column' => 'category_id',
-                'value' => $request->category_id
-            ];
-        }
+
+        $selected_cat = $this->catalogService->category;
+        $products = $this->catalogService->getFiltered();
+        $properties = $this->catalogService->getFilters();
+        $filters_weight = $this->catalogService->getFiltersWeight($properties);
+        $min_price = $this->catalogService->min_price;
+        $max_price = $this->catalogService->max_price;
+
         $categories = Category::query()
             ->select('categories.*')
             ->join('products', 'products.category_id', 'categories.id')
             ->where($page_column, true)
             ->distinct(['category_id'])
             ->get();
-        $products = $this->productService->getProducts($filters);
+
         $products_id = [];
         foreach ($products as $product) {
             $products_id[] = $product->id;
@@ -75,10 +73,9 @@ class SalesController extends Controller
                 'current_page' => $products->currentPage()
             ]);
         }
-        $min_price = $this->productService->min_price;
-        $max_price = $this->productService->max_price;
+
 //        $last_page_url = $products->url($products->lastPage());
 //        $pagination = view('categories.parts.pagination', compact('products', 'last_page_url'))->render();
-        return view('actions', compact('products', 'categories', 'products_list', 'currentRoute', 'max_price', 'min_price'));
+        return view('actions', compact('products', 'categories', 'selected_cat', 'properties', 'products_list', 'filters_weight', 'max_price', 'min_price', 'currentRoute'));
     }
 }

@@ -144,6 +144,18 @@ class Product extends Model
 //            ->where('product_property_values.property_id', 'products.base_property_id');
 //    }
 
+    public function basePropertyValue()
+    {
+        return $this->hasOneThrough(
+            PropertyValue::class,
+            ProductPropertyValue::class,
+            'product_id',
+            'id',
+            'id',
+            'property_value_id'
+        );
+    }
+
     public function getBaseValueAttribute()
     {
         return $this->values()

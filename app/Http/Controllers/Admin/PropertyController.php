@@ -117,6 +117,8 @@ class PropertyController extends Controller
 
         PropertyCategory::query()->where('property_id', $id)->delete();
         $property->delete();
+
+        return back();
     }
 
 //    public function removePropertyCategory(Request $request, $id) {
