@@ -1,7 +1,8 @@
 <form id="filterForm"
-      action="{{ route('categories.show', ['alias' => $category->alias]) }}">
+      action="{{ $custom_route ?? route('categories.show', ['alias' => $category->alias]) }}">
 
     <input type="hidden" name="sort">
+    <input type="hidden" id="search_needle" name="search" value="{{request()->input('search')}}">
     <input type="hidden" id="filterMinPrice" value="{{ $min_price }}">
     <input type="hidden" id="filterMaxPrice" value="{{ $max_price }}">
     <input type="hidden" id="filterPropertyCounts" value='@json($filters_weight)'>
@@ -13,8 +14,10 @@
     </div>
     <div class="filters__hdr">
         <div class="filters__title">Сортировать по</div>
+        @if(isset($category))
         <a href="{{ route('categories.show', ['alias' => $category->alias]) }}"
            class="filters__btn">Сбросить все</a>
+        @endif
     </div>
     <div class="filters__wrapper">
         <div class="filters__item filter">
@@ -56,7 +59,7 @@
                             <input type="checkbox"
                                    name="brands[]"
                                    value="{{ $brand->id }}"
-                                   @if(is_array(request()->input("brands.".$brand->id)) && in_array($brand->id, request()->input("brands"))) checked @endif/>
+                                   @checked(is_array(request()->input("brands")) && in_array($brand->id, request()->input("brands")))/>
                             <div
                                 class="checkbox__text">{{ $brand->name }}</div>
                         </label>
@@ -85,7 +88,7 @@
                                 <input type="checkbox"
                                        name="properties[{{ $category_property->id }}][]"
                                        value="{{ $property_value->id }}"
-                                       @if(is_array(request()->input("properties.".$category_property->id)) && in_array($property_value->id, request()->input("properties.".$category_property->id))) checked @endif/>
+                                       @checked(is_array(request()->input("properties.".$category_property->id)) && in_array($property_value->id, request()->input("properties.".$category_property->id)))/>
                                 <div class="checkbox__text">{{ $property_value->value }}</div>
                             </label>
                         @endforeach
@@ -97,8 +100,10 @@
     </div>
     <div class="filters__ftr">
         <button type="submit" class="filters__btn" id="btn_show_selected">Показать</button>
+        @if(isset($category))
         <a href="{{ route('categories.show', ['alias' => $category->alias]) }}"
            class="filters__btn">Сбросить</a>
+        @endif
     </div>
 
 </form>

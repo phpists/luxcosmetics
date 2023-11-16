@@ -37,7 +37,7 @@ class CartController extends Controller
         if ($cart_products->isNotEmpty()) {
             $min_sum = SiteConfigService::getParamValue('min_checkout_sum');
             if ($this->cartService->getTotalSum() < $min_sum)
-                Session::flash('error', "Минимальная сумма для заказа - {$min_sum}");
+                Session::flash('error', "Минимальная сумма для заказа {$min_sum}");
 
             return view('cart.index', compact('cart_products'));
         } else {
@@ -121,7 +121,7 @@ class CartController extends Controller
 
         if ($order_id = $this->cartService->store()) {
             // Send mail to user
-            Mail::to($email)->send(new OrderLetter('Спасибо за оформления заказа'));
+            Mail::to($email)->send(new OrderLetter('Спасибо за оформление заказа'));
             return redirect()->route('cart.success', ['order' => $order_id]);
         }
 
