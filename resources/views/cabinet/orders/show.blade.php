@@ -33,12 +33,22 @@
                         <div class="chars__value"><span>{{ $order->user->email }}</span></div>
                     </div>
                 </div>
+                @if($order->status_id == \App\Models\Order::STATUS_NEW)
+                <a href="{{ route('orders.payment', $order) }}" class="btn btn--accent">
+                    <svg class="icon">
+                        <use xlink:href="{{asset('images/dist/sprite.svg#repeat')}}"></use>
+                    </svg>
+                    Оплатить заказ
+                </a>
+                @endif
+                @if($order->status_id == \App\Models\Order::STATUS_COMPLETED)
                 <a href="{{ route('profile.orders.repeat', $order) }}" class="btn btn--accent">
                     <svg class="icon">
                         <use xlink:href="{{asset('images/dist/sprite.svg#repeat')}}"></use>
                     </svg>
                     Повторить заказ
                 </a>
+                @endif
             </div>
         </div>
 

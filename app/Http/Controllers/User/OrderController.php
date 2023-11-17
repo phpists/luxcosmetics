@@ -5,6 +5,7 @@ namespace App\Http\Controllers\User;
 use App\Http\Controllers\Controller;
 use App\Models\Order;
 use App\Services\CartService;
+use App\Services\OrderPaymentService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -42,6 +43,15 @@ class OrderController extends Controller
             $cartService->add($orderProduct->product_id, $orderProduct->quantity);
 
         return redirect()->route('cart');
+    }
+
+    public function payment(Order $order)
+    {
+        $orderPaymentService = new OrderPaymentService($order);
+
+        return view('orders.payment', [
+            'form' => $orderPaymentService->renderForm()
+        ]);
     }
 
 }

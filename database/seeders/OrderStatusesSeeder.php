@@ -19,6 +19,10 @@ class OrderStatusesSeeder extends Seeder
         $statuses = [
             [
                 'title' => 'Новый',
+                'color' => '#42d7d4',
+            ],
+            [
+                'title' => 'Оплачен',
                 'color' => '#65d77e',
             ],
             [
