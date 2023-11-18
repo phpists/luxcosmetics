@@ -31,10 +31,10 @@ class OrderPaymentService
         return $response->getBody();
     }
 
-    public function confirmPayment()
+    public function confirmPayment(): bool
     {
         $this->order->status_id = Order::STATUS_PAYED;
-        $this->order->save();
+        return $this->order->save();
     }
 
 }

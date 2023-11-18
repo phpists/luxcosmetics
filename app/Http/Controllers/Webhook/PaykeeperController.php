@@ -12,11 +12,12 @@ class PaykeeperController extends Controller
 
     public function index(Request $request)
     {
-        $order = Order::find($request->post('orderid'));
-        $orderPaymentService = new OrderPaymentService($order);
-
         try {
-            $orderPaymentService->confirmPayment();
+            $order = Order::find($request->post('orderid'));
+
+            $orderPaymentService = new OrderPaymentService($order);
+            if (!$orderPaymentService->confirmPayment())
+                throw new \Exception('Failed to confirm payment');
 
             $hash = md5($request->post('id') . config('paykeeper.secret'));
             return "OK {$hash}";

@@ -23,7 +23,10 @@ class ValidatePaykeeperSignature
         $client_name = $request->post('clientid');
         $order_id = $request->post('orderid');
 
-        $order = Order::findOrFail($order_id);
+        $order = Order::find($order_id);
+        if (!$order)
+            abort(400);
+
         if ($sum !== $order->total_sum || $client_name !== $order->full_name)
             abort(400);
 
