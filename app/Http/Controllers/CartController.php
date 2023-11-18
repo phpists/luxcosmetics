@@ -2,27 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Enums\AvailableOptions;
-use App\Mail\CartLetter;
 use App\Mail\OrderLetter;
-use App\Models\Address;
-use App\Models\Category;
 use App\Models\Order;
-use App\Models\PaymentCard;
 use App\Models\Product;
 use App\Models\PromoCode;
 use App\Services\CartService;
-use App\Services\MailService;
 use App\Services\SiteConfigService;
-use App\Services\SiteService;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
-use Symfony\Component\HttpFoundation\JsonResponse;
 
 class CartController extends Controller
 {
@@ -37,7 +27,7 @@ class CartController extends Controller
         if ($cart_products->isNotEmpty()) {
             $min_sum = SiteConfigService::getParamValue('min_checkout_sum');
             if ($this->cartService->getTotalSum() < $min_sum)
-                Session::flash('error', "Минимальная сумма для заказа - {$min_sum}");
+                Session::flash('error', "Минимальная сумма для заказа {$min_sum}");
 
             return view('cart.index', compact('cart_products'));
         } else {
@@ -121,7 +111,12 @@ class CartController extends Controller
 
         if ($order_id = $this->cartService->store()) {
             // Send mail to user
-            Mail::to($email)->send(new OrderLetter('Спасибо за оформления заказа'));
+            Mail::to($email)->send(new OrderLetter('Спасибо за оформление заказа'));
+
+            if ($payment_type == Order::PAYMENT_ONLINE) {
+                return redirect()->route('orders.payment', ['order' => $order_id]);
+            }
+
             return redirect()->route('cart.success', ['order' => $order_id]);
         }
 

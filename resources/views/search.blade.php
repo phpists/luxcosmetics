@@ -22,105 +22,14 @@
                     <div class="category-page__container">
                         <aside class="category-page__aside">
                             <div class="filters" id="filters" style="height: 100%!important;">
-                                <form id="filterForm"
-                                      action="{{ route('show_search') }}">
-                                    <input type="hidden" id="search_needle" name="search" value="{{request()->input('search')}}">
-                                    <input type="hidden" name="sort">
-                                    <input type="hidden" id="filterMinPrice" value="{{ $products->min('price') ?? 1 }}">
-                                    <input type="hidden" id="filterMaxPrice"
-                                           value="{{ $products->max('price') ?? 99999 }}">
-
-                                    <div class="filters__close">
-                                        <svg class="icon">
-                                            <use xlink:href="{{asset('images/dist/sprite.svg#close')}}"></use>
-                                        </svg>
-                                    </div>
-                                    <div class="filters__wrapper">
-                                        <div class="filters__item filter">
-                                            <div class="filter__title">Цена
-                                                <svg class="icon">
-                                                    <use xlink:href="{{asset('images/dist/sprite.svg#arrow')}}"></use>
-                                                </svg>
-                                            </div>
-                                            <div class="filter__block">
-                                                <div class="filter__wrap">
-                                                    <div class="filter__range" id="slider-range"></div>
-                                                    <div class="filter__row">
-                                                        <div class="filter__col">
-                                                            <span>от</span>
-                                                            <input type="number" name="price[from]"
-                                                                   class="filter__input" id="amount"
-                                                                   value="{{ request()->input('price.from') ?? \App\Services\CatalogService::PRICE_FROM }}">
-                                                        </div>
-                                                        <div class="filter__col">
-                                                            <span>до</span>
-                                                            <input type="number" name="price[to]" class="filter__input"
-                                                                   id="amount2"
-                                                                   value="{{ request()->input('price.to') ?? \App\Services\CatalogService::PRICE_TO }}">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                    </div>
-{{--                                    <div class="filters__ftr">--}}
-{{--                                        <button type="submit" class="filters__btn">Показать</button>--}}
-{{--                                        <a href="{{ route('categories.show', ['alias' => $category->alias]) }}"--}}
-{{--                                           class="filters__btn">Сбросить</a>--}}
-{{--                                    </div>--}}
-
-                                </form>
-
+                                @include('categories.parts.filter',
+                                        ['is_not_brands' => true, 'custom_route' => route('show_search')])
                             </div>
 
                             <div class="category-page__image"><img src="" alt=""></div>
                         </aside>
                         <main class="category-page__main" id="catalog">
-{{--                            <ul class="category-page__subcategories">--}}
-{{--                                @foreach($category->subcategories as $subcategory)--}}
-{{--                                    <li>--}}
-{{--                                        <a href="/c/{{$subcategory->alias}}" class="category-page__subcategory">--}}
-{{--                                            <span class="category-page__subcategory-image"><img src="{{asset('images/uploads/categories/'.$subcategory->image)}}" alt=""></span>--}}
-{{--                                            <span class="category-page__subcategory-title">{{$subcategory->name}}</span>--}}
-{{--                                        </a>--}}
-{{--                                    </li>--}}
-{{--                                @endforeach--}}
-{{--                            </ul>--}}
-                            <div class="category-page__sortblock sortblock">
-                                <div class="sortblock__total">Показано <b><span id="current_items_number">{{$shown_count}}</span> из <span id="total_products">{{$products->total()}}</span></b></div>
-                                <div class="sortblock__sort sort">
-                                    <span class="sort__title">Сортировать по</span>
-                                    <select name="" id="" class="sort__select">
-                                        <option value="">Возрастанию цены</option>
-                                        <option value="">Убыванию цены</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="category-page__mobilenav">
-                                <button class="category-page__mobilebtn btnfilters"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#filters')}}"></use></svg> Показать фильтры</button>
-                                <button class="category-page__mobilebtn btnsort"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#arrows')}}"></use></svg> Сортировать по</button>
-                            </div>
-                            <div class="category-page__products">
-                                {!! $products_list !!}
-                            </div>
-{{--                            <div class="category-page__pagination pagination">--}}
-{{--                                <button class="pagination__more">Показать  еще <span>12 товаров</span> <svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#refresh')}}"></use></svg></button>--}}
-{{--                                <ul class="pagination__list">--}}
-{{--                                    <li class="pagination__item pagination__item--first"><a href=""><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#first')}}"></use></svg></a></li>--}}
-{{--                                    <li class="pagination__item pagination__item--prev"><a href=""><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#prev1')}}"></use></svg></a></li>--}}
-{{--                                    <li class="pagination__item pagination__item--active"><span>1</span></li>--}}
-{{--                                    <li class="pagination__item"><a href="">2</a></li>--}}
-{{--                                    <li class="pagination__item"><a href="">3</a></li>--}}
-{{--                                    <li class="pagination__item pagination__item--dots">...</li>--}}
-{{--                                    <li class="pagination__item"><a href="">36</a></li>--}}
-{{--                                    <li class="pagination__item pagination__item--next"><a href=""><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#next1')}}"></use></svg></a></li>--}}
-{{--                                    <li class="pagination__item pagination__item--last"><a href=""><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#last')}}"></use></svg></a></li>--}}
-{{--                                </ul>--}}
-{{--                            </div>--}}
-                            <div id="paginate-container">
-                                {!! $pagination !!}
-                            </div>
+                            {!! $products_list !!}
                         </main>
                     </div>
                 </div>
@@ -173,82 +82,6 @@
 @endsection
 
 @section('scripts')
-    <script>
-        $(document).ready(function () {
-            $(document).on('click', '.pagination__more', function () {
-                let is_disabled = $('.pagination__item--next').attr('aria-disabled')
-                if(is_disabled === 'false') {
-                    let url = this.dataset.url
-                    $.ajax({
-                        method: 'GET',
-                        url: url,
-                        data: {
-                            load_more: true
-                        },
-                        success: function (response) {
-                            $('div.category-page__products').append(response.products)
-                            $('div.category-page__pagination').remove()
-                            $('#catalog').append(response.pagination)
-                            $('#current_items_number').text(response.new_count)
-                        },
-                        error: function (response) {
-                            console.log(response)
-                        }
-                    })
-                }
-            })
-            $(document).on('slidechange', '#slider-range', function(e) {
-                $('#filterForm').trigger('change')
-            })
-            $(document).on('change', '#amount', function(e) {
-                $('#filterForm').trigger('change')
-                $('#slider-range').slider( "values", 0, this.value);
-            })
-            $(document).on('change', '#amount2', function(e) {
-                $('#filterForm').trigger('change')
-                $('#slider-range').slider( "values", 1, this.value);
-            })
-
-            $(document).on('change', '#filterForm', function(e) {
-                let data = $(this).serializeArray();
-                data.push({
-                    name: "load",
-                    value: true
-                });
-                data.push({
-                    name: "full",
-                    value: '1'
-                })
-
-                const uri_data = new FormData(this);
-                const queryString = new URLSearchParams(uri_data).toString();
-
-                let uri = location.pathname + '?' + queryString
-
-                $.ajax({
-                    type: 'GET',
-                    data: data,
-                    beforeSend: function () {
-                        $('#catalog').addClass('loading')
-                    },
-                    success: function (response) {
-                        document.querySelector('.category-page__products').innerHTML = response['data'];
-                        document.getElementById('paginate-container').innerHTML = response['pagination'];
-                        document.getElementById('current_items_number').innerText = response.shown_count;
-                        document.getElementById('total_products').innerText = response.total;
-                    },
-                    complete: function () {
-                        $('#catalog').removeClass('loading')
-                        history.replaceState(null, null, uri)
-                    }
-                })
-            })
-
-            $(document).on('submit', '#filterForm', function(e) {
-                e.preventDefault()
-                $(this).trigger('change')
-                return false
-            })
-        })
-    </script>
+    <script src="{{asset('/js/favourites.js')}}"></script>
+    <script src="{{asset('/js/catalog.js')}}"></script>
 @endsection

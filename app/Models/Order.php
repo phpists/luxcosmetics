@@ -45,8 +45,9 @@ class Order extends Model
 
 
     const STATUS_NEW = 1;
-    const STATUS_CANCELLED = 2;
-    const STATUS_COMPLETED = 3;
+    const STATUS_PAYED = 2;
+    const STATUS_CANCELLED = 3;
+    const STATUS_COMPLETED = 4;
 
 
     protected $fillable = [

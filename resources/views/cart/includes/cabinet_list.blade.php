@@ -27,9 +27,9 @@
                     </div>
 
                     <div class="cart-product__prices-and-count" data-title="Цена и кол-во">
-                        <div class="cart-product__price">{{ $orderProduct->quantity }}  x {{ $orderProduct->price }} ₽</div>
+                        <div class="cart-product__price">{{ $orderProduct->quantity }}  x {{ (int) $orderProduct->price }} ₽</div>
                         @if($orderProduct->old_price)
-                            <div class="cart-product__oldprice">{{ $orderProduct->old_price }} ₽</div>
+                            <div class="cart-product__oldprice">{{ (int) $orderProduct->old_price }} ₽</div>
                         @endif
                     </div>
                     <div class="cart-product__sum"

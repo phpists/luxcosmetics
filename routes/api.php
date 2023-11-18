@@ -14,6 +14,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+
+Route::post('webhook/paykeeper', [\App\Http\Controllers\Webhook\PaykeeperController::class, 'index'])
+    ->middleware('paykeeper');
+
+
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });

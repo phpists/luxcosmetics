@@ -34,3 +34,7 @@
         display: none;
     }
 }
+
+.filter__wrap label.checkbox.disabled {
+    opacity: 0.3;
+}

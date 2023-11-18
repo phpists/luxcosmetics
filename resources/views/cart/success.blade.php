@@ -29,6 +29,14 @@
                                 <div class="chars__name"><span>E-mail</span></div>
                                 <div class="chars__value"><span>{{ $order->user->email }}</span></div>
                             </div>
+                            <div class="chars__item">
+                                <div class="chars__name"><span>Способ доставки</span></div>
+                                <div class="chars__value"><span>{{ \App\Models\Order::ALL_DELIVERIES[$order->delivery_type] ?? "???" }}</span></div>
+                            </div>
+                            <div class="chars__item">
+                                <div class="chars__name"><span>Адресс доставки</span></div>
+                                <div class="chars__value"><span>{{ $order->address }}</span></div>
+                            </div>
                         </div>
                     </div>
                 </div>
