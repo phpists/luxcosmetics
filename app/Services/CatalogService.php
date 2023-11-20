@@ -5,10 +5,12 @@ namespace App\Services;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\Property;
 use App\Models\PropertyValue;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Database\Query\JoinClause;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
@@ -136,6 +138,16 @@ class CatalogService
             })
             ->when($brands = $this->request->get('brands'), function ($q) use ($brands) {
                 $q->whereIn('brand_id', $brands);
+            })
+            ->when($category_id = $this->request->get('category_id'), function ($q) use ($category_id) {
+                $q->where(function ($q) use ($category_id) {
+                    $q->whereIn('products.id', function ($query) use ($category_id) {
+                        $query->select('product_id')
+                            ->from('product_categories')
+                            ->where('category_id', $category_id);
+                        })
+                        ->orWhere('category_id', $category_id);
+                });
             });
 
         return $products;
@@ -201,12 +213,15 @@ class CatalogService
 
     public function getFilters()
     {
-        $properties = $this->category
-            ->filter_properties()
-            ->with('values')
-            ->get();
+        $filters = null;
 
-        $properties->each(function($property) {
+        if ($this->modelName == Category::class || $this->modelName == Brand::class) {
+            $filters = $this->getStaticFilters();
+        } elseif ($this->modelName == Product::class) {
+            $filters = $this->getDynamicFilters();
+        }
+
+        $filters->each(function($property) {
             $property->values = $property->values->sortBy(function($value) {
                 if (preg_match('/(\d+)\s.*/', $value->value, $matches)) {
                     return (int) $matches[1];
@@ -215,10 +230,40 @@ class CatalogService
             });
         });
 
-
-        return $properties;
+        return $filters;
     }
 
+    public function getStaticFilters()
+    {
+        return $this->category
+        ->filter_properties()
+        ->with('values')
+        ->get();
+    }
+
+    public function getDynamicFilters()
+    {
+        return Property::whereHas('values')
+            ->with('values')
+            ->orderBy('name')
+            ->get();
+
+        $products = $this->products;
+
+        return $filters->filter(function ($property) use ($products) {
+            $include = false;
+            $products->map(function ($product) use ($property, $include) {
+                $products_with_property = $product->values->filter(function ($product_value) use ($property, $include) {
+                    Arr::has($property->values->pluck('id')->toArray(), $product_value->id);
+                });
+                if ($products_with_property->isNotEmpty()) {
+                    $include = true;
+                }
+            });
+
+            return $include;
+        });
+    }
 
     public function getFiltersWeight($properties): array
     {

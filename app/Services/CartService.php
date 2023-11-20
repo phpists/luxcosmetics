@@ -283,7 +283,7 @@ class CartService
     public function canNotCheckoutMessage(): ?string
     {
         if ($this->containUnavailable())
-            return 'Невозможно оформить заказ, так как в корзине присутствует товар которого больше недоступен';
+            return 'Невозможно оформить заказ, так как в корзине присутствует товар который больше недоступен';
 
         return null;
     }

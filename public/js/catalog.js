@@ -163,20 +163,23 @@ function updateFilter() {
     for (let property_id in counts) {
         let $property = $(`.filters__item[data-property="${property_id}"]:not(:has(input:checked))`);
         $property.find('label').each(function (i, property_value) {
-            let property_value_id = $(property_value).find('input').val()
-            console.log(property_id, property_value_id, counts[property_id][property_value_id])
+            let $input = $(property_value).find('input'),
+                property_value_id = $input.val()
+
             if (counts[property_id][property_value_id] > 0) {
-                $(property_value).show()
+                $(property_value).removeClass('disabled');
+                $input.prop('disabled', false);
             } else {
-                $(property_value).hide()
+                $(property_value).addClass('disabled');
+                $input.prop('disabled', true)
             }
         })
-        let maxCount = Math.max(...Object.values(counts[property_id]))
-        if (maxCount < 1) {
-            $property.hide()
-        } else {
-            $property.show()
-        }
+        // let maxCount = Math.max(...Object.values(counts[property_id]))
+        // if (maxCount < 1) {
+        //     $property.hide()
+        // } else {
+        //     $property.show()
+        // }
 
         if ($property.find('label').filter(function() {
             return $(this).css('display') !== 'none';

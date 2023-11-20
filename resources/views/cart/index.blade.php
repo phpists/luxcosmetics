@@ -91,14 +91,14 @@
 
                         <form action="{{ route('cart.store') }}" method="POST" id="orderForm">
                             @csrf
-                            <div class="cart-page__giftbox">
-                                <h3 class="cart-page__subheading subheading"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#gift')}}"></use></svg> Подарочная коробка</h3>
-                                <label class="checkbox">
-                                    <input type="checkbox" name="gift_box" @checked($cartService->getProperty(\App\Services\CartService::GIFT_BOX_KEY))/>
-                                    <div class="checkbox__text">Добавить подарочную коробку</div>
-                                </label>
-                                <p><em>Подарочная коробка доступна только для заказов, которые доставляются на&nbsp;месте. Ваш счет будет отправлен вам по электронной почте.</em></p>
-                            </div>
+{{--                            <div class="cart-page__giftbox">--}}
+{{--                                <h3 class="cart-page__subheading subheading"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#gift')}}"></use></svg> Подарочная коробка</h3>--}}
+{{--                                <label class="checkbox">--}}
+{{--                                    <input type="checkbox" name="gift_box" @checked($cartService->getProperty(\App\Services\CartService::GIFT_BOX_KEY))/>--}}
+{{--                                    <div class="checkbox__text">Добавить подарочную коробку</div>--}}
+{{--                                </label>--}}
+{{--                                <p><em>Подарочная коробка доступна только для заказов, которые доставляются на&nbsp;месте. Ваш счет будет отправлен вам по электронной почте.</em></p>--}}
+{{--                            </div>--}}
                         </form>
 
 

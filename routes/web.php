@@ -73,6 +73,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/', [\App\Http\Controllers\ProfileController::class, 'index'])->name('profile');
         Route::get('/orders', [\App\Http\Controllers\User\OrderController::class, 'index'])->name('profile.orders.index');
         Route::get('/order/{order}', [\App\Http\Controllers\User\OrderController::class, 'show'])->name('profile.orders.show');
+        Route::get('/order/{order}/payment', [\App\Http\Controllers\User\OrderController::class, 'payment'])->name('orders.payment');
         Route::get('/order/{order}/repeat', [\App\Http\Controllers\User\OrderController::class, 'repeat'])->name('profile.orders.repeat');
         Route::get('/subscriptions', [\App\Http\Controllers\ProfileController::class, 'subscriptions'])->name('profile.subscriptions');
         Route::get('/addresses', [\App\Http\Controllers\ProfileController::class, 'addresses'])->name('profile.addresses');
