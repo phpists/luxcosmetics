@@ -21,16 +21,16 @@ class ValidatePaykeeperSignature
         $id = $request->post('id');
         $sum = number_format($request->post('sum'), 2, ".", "");
         $client_name = $request->post('clientid');
-        $order_id = $request->post('orderid');
+        $order_num = $request->post('orderid');
 
-        $order = Order::find($order_id);
+        $order = Order::where('num', $order_num)->first();
         if (!$order)
             abort(400);
 
         if ($sum !== $order->total_sum || $client_name !== $order->full_name)
             abort(400);
 
-        if ($key !== md5($id . $sum . $client_name . $order_id . config('paykeeper.secret')))
+        if ($key !== md5($id . $sum . $client_name . $order_num . config('paykeeper.secret')))
             abort(400);
 
         return $next($request);

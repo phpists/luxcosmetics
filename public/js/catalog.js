@@ -1,3 +1,36 @@
+
+function initFilters() {
+    // document.getElementById('btn_show_selected')?.addEventListener('click', (ev) => {
+    //     ev.preventDefault();
+    //     $("#filters").removeClass("is-active");
+    //     $(".filters-overlay").removeClass("is-active");
+    // });
+
+    $(".btnfilters").click(function () {
+        $("#filters").addClass("is-active");
+        $(".filters-overlay").addClass("is-active");
+    });
+
+    $(".filters-overlay").click(function () {
+        $(this).removeClass("is-active");
+        $("#filters").removeClass("is-active");
+        $(".sortmobile").removeClass("is-active");
+    });
+
+    $(".filters__close").click(function () {
+        $(".filters-overlay").removeClass("is-active");
+        $("#filters").removeClass("is-active");
+    });
+
+    $(".btnsort").click(function () {
+        $(".sortmobile").addClass("is-active");
+        $(".filters-overlay").addClass("is-active");
+    });
+    $(".sortmobile__close").click(function () {
+        $(".filters-overlay").removeClass("is-active");
+        $(".sortmobile").removeClass("is-active");
+    });
+}
 $(document).ready(function () {
     // let tagHidden = document.querySelectorAll('.seoblock__tag.is-hidden');
     //
@@ -9,6 +42,11 @@ $(document).ready(function () {
     //         tagHidden[i].classList.toggle("is-hidden");
     //     }
     // });
+    document.getElementById('btn_show_selected')?.addEventListener('click', (ev) => {
+        ev.preventDefault();
+        $("#filters").removeClass("is-active");
+        $(".filters-overlay").removeClass("is-active");
+    })
     $(document).on('click', '.pagination__more', function () {
         let is_disabled = $('.pagination__item--next').attr('aria-disabled')
         if(is_disabled === 'false') {
@@ -98,7 +136,8 @@ $(document).ready(function () {
             success: function (response) {
                 $('#catalog').html(response.html)
                 $('#filterPropertyCounts').val(JSON.stringify(response.filterCounts))
-                updateFilter()
+                initFilters();
+                updateFilter();
             },
             complete: function () {
                 $('#catalog').removeClass('loading')

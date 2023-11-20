@@ -13,7 +13,7 @@ class PaykeeperController extends Controller
     public function index(Request $request)
     {
         try {
-            $order = Order::find($request->post('orderid'));
+            $order = Order::where('num', $request->post('orderid'))->first();
 
             $orderPaymentService = new OrderPaymentService($order);
             if (!$orderPaymentService->confirmPayment())
