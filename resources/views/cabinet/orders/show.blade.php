@@ -1,6 +1,6 @@
 @extends('cabinet.layouts.cabinet')
 
-@section('title', 'Заказ №' . $order->id)
+@section('title', 'Заказ №' . $order->num)
 
 @section('page_content')
     <main class="cabinet-page__main">
