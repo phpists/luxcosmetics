@@ -220,8 +220,18 @@ class CatalogService
         } elseif ($this->modelName == Product::class) {
             $filters = $this->getDynamicFilters();
         }
+        $filters_weight = $this->getFiltersWeight($filters, $this->products);
+        $filters = $filters->filter(function ($filter) use($filters_weight) {
+            return $filter->values->filter(function ($filter_value) use ($filter, $filters_weight) {
+                return $filters_weight[$filter->id][$filter_value->id] > 0;
+            })->isNotEmpty();
+        });
 
-        $filters->each(function($property) {
+        $filters->each(function($property) use($filters_weight) {
+            $property->values = $property->values->filter(function ($filter_value) use ($property, $filters_weight) {
+                return $filters_weight[$property->id][$filter_value->id] > 0;
+            });
+
             $property->values = $property->values->sortBy(function($value) {
                 if (preg_match('/(\d+)\s.*/', $value->value, $matches)) {
                     return (int) $matches[1];
@@ -236,9 +246,9 @@ class CatalogService
     public function getStaticFilters()
     {
         return $this->category
-        ->filter_properties()
-        ->with('values')
-        ->get();
+            ->filter_properties()
+            ->with('values')
+            ->get();
     }
 
     public function getDynamicFilters()
@@ -265,9 +275,11 @@ class CatalogService
         });
     }
 
-    public function getFiltersWeight($properties): array
+    public function getFiltersWeight($properties, $products = null): array
     {
-        $products = $this->getFilteredProductsQuery()->get();
+        if (!$products) {
+            $products = $this->getFilteredProductsQuery()->get();
+        }
         $productsArray = $products->pluck('values', 'id')->toArray();
         $result = [];
 
@@ -297,5 +309,11 @@ class CatalogService
         return $result;
     }
 
+    public function getBrands()
+    {
+        return \App\Models\Brand::select(['id', 'name'])
+            ->whereIn('id', $this->products->pluck('brand_id')->toArray())
+            ->get();
+    }
 
 }

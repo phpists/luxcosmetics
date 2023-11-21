@@ -34,6 +34,7 @@ class CategoryController extends Controller
         $products = $this->catalogService->getFiltered();
         $properties = $this->catalogService->getFilters();
         $filters_weight = $this->catalogService->getFiltersWeight($properties);
+        $brands = $this->catalogService->getBrands();
         $min_price = $this->catalogService->min_price;
         $max_price = $this->catalogService->max_price;
 
@@ -73,6 +74,7 @@ class CategoryController extends Controller
         }
         $last_page_url = $products->url($products->lastPage());
         $pagination = view('categories.parts.pagination', compact('products', 'last_page_url'))->render();
-        return view('categories.index', compact('category', 'products', 'properties', 'filters_weight', 'pagination', 'products_list', 'min_price', 'max_price'));
+        return view('categories.index', compact('category', 'products', 'properties', 'brands',
+            'filters_weight', 'pagination', 'products_list', 'min_price', 'max_price'));
     }
 }
