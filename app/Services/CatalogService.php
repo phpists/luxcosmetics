@@ -120,6 +120,9 @@ class CatalogService
         $price_to = $this->getPriceTo();
 
         $products = $this->getProductsQuery()
+            ->when($search = $this->request->get('search'), function ($query) use($search) {
+                $query->where('title', 'like', "%{$search}%");
+            })
             ->where(function ($q) use ($price_from, $price_to) {
                 $q->whereBetween('price', [
                     $price_from,
