@@ -1,4 +1,4 @@
-<form id="filterForm"
+<form id="filterForm" style="visibility: hidden"
       action="{{ $custom_route ?? route('categories.show', ['alias' => $category->alias]) }}">
 
     <input type="hidden" name="sort">

@@ -1,4 +1,8 @@
-
+document.addEventListener('DOMContentLoaded', function () {
+    window.onload = () => {
+        document.getElementById("filterForm").style.visibility = 'visible';
+    }
+});
 function initFilters() {
     // document.getElementById('btn_show_selected')?.addEventListener('click', (ev) => {
     //     ev.preventDefault();
