@@ -19,7 +19,9 @@
            class="filters__btn">Сбросить все</a>
         @endif
     </div>
+
     <div class="filters__wrapper">
+        @if(isset($min_price) || isset($max_price))
         <div class="filters__item filter">
             <div class="filter__title">Цена
                 <svg class="icon">
@@ -46,15 +48,16 @@
                 </div>
             </div>
         </div>
+        @endif
 
-        @if($is_not_brands)
+        @if($is_not_brands && (isset($brands) && $brands->isNotEmpty()))
         <div class="filters__item filter" data-property="brands">
             <div class="filter__title">Марка
                 <svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#arrow')}}"></use></svg>
             </div>
             <div class="filter__block">
                 <div class="filter__wrap filter__scroll">
-                    @foreach($brands = \App\Models\Brand::select(['id', 'name'])->get() as $brand)
+                    @foreach($brands as $brand)
                         <label class="checkbox">
                             <input type="checkbox"
                                    name="brands[]"
