@@ -1,6 +1,8 @@
 document.addEventListener('DOMContentLoaded', function () {
     window.onload = () => {
-        document.getElementById("filterForm").style.visibility = 'visible';
+        let filterForm = document.getElementById("filterForm");
+        filterForm.style.visibility = 'visible';
+        filterForm.classList.add('show');
     }
 });
 function initFilters() {
