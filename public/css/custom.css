@@ -29,6 +29,15 @@
     color: #cc9755;
 }
 
+#filterForm {
+    opacity: 0;
+    transition: opacity .3s;
+}
+
+#filterForm.show {
+    opacity: 1;
+}
+
 @media screen and (max-width: 1200px) {
     #filterForm .filters__hdr {
         display: none;
