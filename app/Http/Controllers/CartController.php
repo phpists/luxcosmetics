@@ -7,6 +7,7 @@ use App\Models\Order;
 use App\Models\Product;
 use App\Models\PromoCode;
 use App\Services\CartService;
+use App\Services\OrderPaymentService;
 use App\Services\SiteConfigService;
 use Exception;
 use Illuminate\Http\Request;
@@ -109,15 +110,13 @@ class CartController extends Controller
 //
 //        $this->cartService->setProperty(CartService::CARD_KEY, $card_id);
 
-        if ($order_id = $this->cartService->store()) {
+        if ($order = $this->cartService->store()) {
             // Send mail to user
             Mail::to($email)->send(new OrderLetter('Спасибо за оформление заказа'));
 
             if ($payment_type == Order::PAYMENT_ONLINE) {
-                return redirect()->route('orders.payment', ['order' => $order_id]);
+                return redirect($order->getPaymentUrl());
             }
-
-            return redirect()->route('cart.success', ['order' => $order_id]);
         }
 
         return redirect()->route('cart.error');

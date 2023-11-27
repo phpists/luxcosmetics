@@ -303,7 +303,7 @@ class CartService
         return $product->save();
     }
 
-    public function store(): ?int
+    public function store(): ?Order
     {
         if (!self::isNotEmpty())
             return null;
@@ -380,7 +380,7 @@ class CartService
             $this->dropBonuses();
             $this->dropPromo();
 
-            return $order->id;
+            return $order;
         } catch (\Exception $exception) {
             session()->flash('error', $exception->getMessage());
             return null;
