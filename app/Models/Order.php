@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Mail\Admin\OrderCreated;
 use App\Mail\OrderStatusChangedMail;
+use App\Services\OrderPaymentService;
 use App\Services\SiteConfigService;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -71,6 +72,7 @@ class Order extends Model
         'email',
         'payment_type',
         'delivery_type',
+        'invoice_id'
     ];
 
 
@@ -209,6 +211,18 @@ class Order extends Model
     public function getFullNameAttribute()
     {
         return $this->first_name . ' ' . $this->last_name;
+    }
+
+
+
+    public function getPaymentUrl()
+    {
+        if ($this->invoice_id) {
+            $server_url = config('paykeeper.server_url');
+            return "{$server_url}/bill/{$this->invoice_id}/";
+        } else {
+            return (new OrderPaymentService($this))->getPaymentUrl();
+        }
     }
 
 

@@ -9,6 +9,7 @@ use App\Services\OrderPaymentService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
 
 class OrderController extends Controller
 {
@@ -47,11 +48,7 @@ class OrderController extends Controller
 
     public function payment(Order $order)
     {
-        $orderPaymentService = new OrderPaymentService($order);
-
-        return view('orders.payment', [
-            'form' => $orderPaymentService->renderForm()
-        ]);
+        return Redirect::away($order->getPaymentUrl());
     }
 
 }
