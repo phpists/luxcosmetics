@@ -40,8 +40,8 @@ class Order extends Model
     const ALL_PAYMENTS = [
         self::PAYMENT_SBP => 'СБП',
         self::PAYMENT_ONLINE => 'Оплата онлайн',
-        self::PAYMENT_PARTS => 'Оплата Долями',
-        self::PAYMENT_SBER => 'SberPay',
+//        self::PAYMENT_PARTS => 'Оплата Долями',
+//        self::PAYMENT_SBER => 'SberPay',
     ];
 
 

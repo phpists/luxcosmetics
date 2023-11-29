@@ -114,7 +114,7 @@ class CartController extends Controller
             // Send mail to user
             Mail::to($email)->send(new OrderLetter('Спасибо за оформление заказа'));
 
-            if ($payment_type == Order::PAYMENT_ONLINE) {
+            if ($payment_type == Order::PAYMENT_ONLINE || $payment_type == Order::PAYMENT_SBP) {
                 return to_route('orders.payment', $order);
             }
         }
