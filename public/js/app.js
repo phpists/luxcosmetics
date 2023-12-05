@@ -128,8 +128,8 @@ document.addEventListener('DOMContentLoaded', () => {
 			infinite: true,
 			slidesToShow: 2,
 			slidesToScroll: 2,
-			prevArrow: '<button type="button" class="btn-slider btn-slider__prev"><svg class="icon"><use xlink:href="images/dist/sprite.svg#prev"></use></svg></button>',
-			nextArrow: '<button type="button" class="btn-slider btn-slider__next"><svg class="icon"><use xlink:href="images/dist/sprite.svg#next"></use></svg></button>',
+			prevArrow: '<button type="button" class="btn-slider btn-slider__prev"><svg class="icon"><use xlink:href="/images/dist/sprite.svg#prev"></use></svg></button>',
+			nextArrow: '<button type="button" class="btn-slider btn-slider__next"><svg class="icon"><use xlink:href="/images/dist/sprite.svg#next"></use></svg></button>',
 			responsive: [
 				{
 				  breakpoint: 1200,
@@ -176,8 +176,8 @@ document.addEventListener('DOMContentLoaded', () => {
 			infinite: true,
 			slidesToShow: 4,
 			slidesToScroll: 1,
-			prevArrow: '<button type="button" class="btn-slider btn-slider__prev"><svg class="icon"><use xlink:href="images/dist/sprite.svg#prev"></use></svg></button>',
-			nextArrow: '<button type="button" class="btn-slider btn-slider__next"><svg class="icon"><use xlink:href="images/dist/sprite.svg#next"></use></svg></button>',
+			prevArrow: '<button type="button" class="btn-slider btn-slider__prev"><svg class="icon"><use xlink:href="/images/dist/sprite.svg#prev"></use></svg></button>',
+			nextArrow: '<button type="button" class="btn-slider btn-slider__next"><svg class="icon"><use xlink:href="/images/dist/sprite.svg#next"></use></svg></button>',
 			responsive: [
 				{
 				  breakpoint: 1200,
@@ -378,8 +378,8 @@ document.addEventListener('DOMContentLoaded', () => {
 					infinite: true,
 					slidesToShow: 4,
 					slidesToScroll: 4,
-					prevArrow: '<button type="button" class="btn-slider btn-slider__prev"><svg class="icon"><use xlink:href="images/dist/sprite.svg#prev"></use></svg></button>',
-					nextArrow: '<button type="button" class="btn-slider btn-slider__next"><svg class="icon"><use xlink:href="images/dist/sprite.svg#next"></use></svg></button>',
+					prevArrow: '<button type="button" class="btn-slider btn-slider__prev"><svg class="icon"><use xlink:href="/images/dist/sprite.svg#prev"></use></svg></button>',
+					nextArrow: '<button type="button" class="btn-slider btn-slider__next"><svg class="icon"><use xlink:href="/images/dist/sprite.svg#next"></use></svg></button>',
 					responsive: [
 						{
 						  breakpoint: 1200,
@@ -481,8 +481,8 @@ document.addEventListener('DOMContentLoaded', () => {
 				  infinite: true,
 				  slidesToShow: 6,
 				  slidesToScroll: 1,
-				  prevArrow: '<button type="button" class="btn-slider btn-slider__prev"><svg class="icon"><use xlink:href="images/dist/sprite.svg#prev"></use></svg></button>',
-				  nextArrow: '<button type="button" class="btn-slider btn-slider__next"><svg class="icon"><use xlink:href="images/dist/sprite.svg#next"></use></svg></button>',
+				  prevArrow: '<button type="button" class="btn-slider btn-slider__prev"><svg class="icon"><use xlink:href="/images/dist/sprite.svg#prev"></use></svg></button>',
+				  nextArrow: '<button type="button" class="btn-slider btn-slider__next"><svg class="icon"><use xlink:href="/images/dist/sprite.svg#next"></use></svg></button>',
 				  responsive: [
 				    {
 				      breakpoint: 1200,
@@ -532,20 +532,20 @@ document.addEventListener('DOMContentLoaded', () => {
 				//});
 
 			/*Magnific Фото в модалке
-			$('.popup').magnificPopup({
-				type: 'image',
-				closeOnContentClick: true,
-				closeBtnInside: false,
-				fixedContentPos: true,
-				mainClass: 'mfp-no-margins mfp-with-zoom', // class to remove default margin from left and right side
-				image: {
-					verticalFit: true
-				},
-				zoom: {
-					enabled: true,
-					duration: 300 // don't foget to change the duration also in CSS
-				}
-			});*/
+			// $('.popup').magnificPopup({
+			// 	type: 'image',
+			// 	closeOnContentClick: true,
+			// 	closeBtnInside: false,
+			// 	fixedContentPos: true,
+			// 	mainClass: 'mfp-no-margins mfp-with-zoom', // class to remove default margin from left and right side
+			// 	image: {
+			// 		verticalFit: true
+			// 	},
+			// 	zoom: {
+			// 		enabled: true,
+			// 		duration: 300 // don't foget to change the duration also in CSS
+			// 	}
+			// });*/
 
 			/*Magnific галерея*/
 
@@ -554,7 +554,7 @@ document.addEventListener('DOMContentLoaded', () => {
 			galleries.each(function() {
 				var gallery = $(this);
 				gallery.find(':not(.slick-cloned)').children('a').magnificPopup({
-					type: 'image',
+					
 					gallery: { 
 						enabled:true,
 						tLoading: 'Загрузка изображения #%curr%...',
@@ -566,7 +566,9 @@ document.addEventListener('DOMContentLoaded', () => {
 						titleSrc: function(item) {
 							return '';
 						}
-					}
+					},
+					
+					
 				});
 			});
 

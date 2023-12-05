@@ -75,7 +75,7 @@
         @endforeach
     </div>
     <div class="filters__ftr">
-        <button type="submit" class="filters__btn">Показать</button>
+        <button type="submit" class="btn btn--accent filters__show">Показать</button>
         <a href="{{ route('categories.show', ['alias' => $category->alias]) }}"
            class="filters__btn">Сбросить</a>
     </div>
