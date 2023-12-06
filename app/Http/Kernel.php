@@ -6,6 +6,7 @@ use App\Http\Middleware\CanCheckout;
 use App\Http\Middleware\EnsureActiveUser;
 use App\Http\Middleware\SuperAdmin;
 use App\Http\Middleware\ValidatePaykeeperSignature;
+use App\Http\Middleware\VerifyApiRequest;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -43,6 +44,7 @@ class Kernel extends HttpKernel
         ],
 
         'api' => [
+            VerifyApiRequest::class,
             \App\Http\Middleware\ForceJsonResponse::class,
             // \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
             \Illuminate\Routing\Middleware\ThrottleRequests::class.':api',

@@ -34,8 +34,7 @@ class OrderController extends Controller
         if ($request->has('customer') && $request->get('customer') != '') {
             $customer = $request->get('customer');
             $query->where(function ($query) use ($customer) {
-                $query->where('full_name', 'LIKE', "%{$customer}%")
-                    ->orWhere('phone', 'LIKE', "%{$customer}%")
+                $query->orWhere('phone', 'LIKE', "%{$customer}%")
                     ->orWhere(function ($query) use ($customer) {
                         $query->whereHas('user', function ($query) use ($customer) {
                             $query->where('users.name', 'LIKE', "%{$customer}%")

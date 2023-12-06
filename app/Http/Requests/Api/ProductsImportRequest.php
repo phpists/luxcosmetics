@@ -1,0 +1,60 @@
+<?php
+
+namespace App\Http\Requests\Api;
+
+use Illuminate\Foundation\Http\FormRequest;
+
+class ProductsImportRequest extends FormRequest
+{
+    /**
+     * Determine if the user is authorized to make this request.
+     */
+    public function authorize(): bool
+    {
+        return true;
+    }
+
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array|string>
+     */
+    public function rules(): array
+    {
+        return [
+            'products' => ['required', 'array'],
+            'products.*.title' => ['required', 'string'],
+            'products.*.code' => ['required', 'string'],
+            'products.*.price' => ['required', 'numeric'],
+            'products.*.alias' => ['string'],
+            'products.*.code_1c' => ['string'],
+            'products.*.status' => ['boolean'],
+            'products.*.old_price' => ['nullable', 'numeric'],
+            'products.*.category_title' => ['required', 'string'],
+            'products.*.base_property_title' => ['required', 'string'],
+            'products.*.brand_title' => ['required', 'string'],
+            'products.*.description_1' => ['string'],
+            'products.*.description_2' => ['string'],
+            'products.*.description_3' => ['string'],
+            'products.*.description_4' => ['string'],
+            'products.*.availability' => ['integer'],
+            'products.*.size' => ['string'],
+//            'products.*.discount' => ['integer'],
+//            'products.*.points' => ['integer'],
+            'products.*.length_product' => ['integer'],
+            'products.*.width_product' => ['integer'],
+            'products.*.height_product' => ['integer'],
+            'products.*.weight_product' => ['numeric'],
+            'products.*.country_products' => ['string'],
+            'products.*.storage_conditions' => ['string'],
+            'products.*.allergy' => ['string'],
+            'products.*.spyrt' => ['integer'],
+            'products.*.expiry_date' => ['integer'],
+            'products.*.items_left' => ['required', 'integer'],
+
+            'variations' => ['nullable', 'array'],
+            'variations.*' => ['array'],
+            'variations.*.*' => ['string']
+        ];
+    }
+}

@@ -16,7 +16,7 @@ class Product extends Model
     const TYPE_COLOR = 2;
 
     const ALL_TYPES = [
-        self::TYPE_VOLUME => 'Объем',
+        self::TYPE_VOLUME => 'Объём',
         self::TYPE_COLOR => 'Цвет'
     ];
 
