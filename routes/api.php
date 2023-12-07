@@ -19,6 +19,20 @@ Route::post('webhook/paykeeper', [\App\Http\Controllers\Webhook\PaykeeperControl
     ->middleware('paykeeper');
 
 
+Route::group(['middleware' => 'api'], function () {
+    /** Products */
+    Route::post('products/import', [\App\Http\Controllers\Api\ProductController::class, 'import']);
+    Route::post('products/update-stocks', [\App\Http\Controllers\Api\ProductController::class, 'updateStocks']);
+
+    /** Orders */
+    Route::get('orders/get-new-orders', [\App\Http\Controllers\Api\OrderController::class, 'getNewOrders']);;
+    Route::put('orders/{order}/change-status', [\App\Http\Controllers\Api\OrderController::class, 'changeStatus']);
+
+    /** Properties */
+    Route::get('properties/get-all', [\App\Http\Controllers\Api\PropertyController::class, 'getAll']);
+});
+
+
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });

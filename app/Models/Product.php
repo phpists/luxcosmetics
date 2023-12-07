@@ -16,7 +16,7 @@ class Product extends Model
     const TYPE_COLOR = 2;
 
     const ALL_TYPES = [
-        self::TYPE_VOLUME => 'Объем',
+        self::TYPE_VOLUME => 'Объём',
         self::TYPE_COLOR => 'Цвет'
     ];
 
@@ -65,6 +65,10 @@ class Product extends Model
         'spyrt',
         'expiry_date',
         'items_left'
+    ];
+
+    protected $hidden = [
+        'laravel_through_key'
     ];
 
     public function getImages(): Collection
