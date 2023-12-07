@@ -18,16 +18,16 @@ class ProductController extends Controller
 
     public function import(ProductsImportRequest $request)
     {
-//        try {
+        try {
             $this->productService->import($request);
 
             return new JsonResponse(['status' => 'success']);
-//        } catch (\Exception $e) {
-//            return new JsonResponse([
-//                'status' => 'fail',
-//                'message' => $e->getMessage()
-//            ], 500);
-//        }
+        } catch (\Exception $e) {
+            return new JsonResponse([
+                'status' => 'fail',
+                'message' => $e->getMessage()
+            ], 500);
+        }
     }
 
     public function updateStocks(ProductsUpdateStocksRequest $request)
