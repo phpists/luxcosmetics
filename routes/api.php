@@ -25,8 +25,8 @@ Route::group(['middleware' => 'api'], function () {
     Route::post('products/update-stocks', [\App\Http\Controllers\Api\ProductController::class, 'updateStocks']);
 
     /** Orders */
-    Route::post('orders/export', [\App\Http\Controllers\Api\OrderController::class, 'export']);;
-    Route::post('orders/{order}/change-status', [\App\Http\Controllers\Api\OrderController::class, 'changeStatus']);
+    Route::get('orders/get-new-orders', [\App\Http\Controllers\Api\OrderController::class, 'getNewOrders']);;
+    Route::put('orders/{order}/change-status', [\App\Http\Controllers\Api\OrderController::class, 'changeStatus']);
 });
 
 

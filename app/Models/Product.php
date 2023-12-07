@@ -67,6 +67,10 @@ class Product extends Model
         'items_left'
     ];
 
+    protected $hidden = [
+        'laravel_through_key'
+    ];
+
     public function getImages(): Collection
     {
         return DB::table('product_images')

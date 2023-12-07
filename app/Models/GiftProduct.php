@@ -22,6 +22,10 @@ class GiftProduct extends Model
         'is_available'
     ];
 
+    protected $hidden = [
+        'laravel_through_key'
+    ];
+
     protected static function booted (): void
     {
 
