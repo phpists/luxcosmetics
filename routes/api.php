@@ -27,6 +27,9 @@ Route::group(['middleware' => 'api'], function () {
     /** Orders */
     Route::get('orders/get-new-orders', [\App\Http\Controllers\Api\OrderController::class, 'getNewOrders']);;
     Route::put('orders/{order}/change-status', [\App\Http\Controllers\Api\OrderController::class, 'changeStatus']);
+
+    /** Properties */
+    Route::get('properties/get-all', [\App\Http\Controllers\Api\PropertyController::class, 'getAll']);
 });
 
 

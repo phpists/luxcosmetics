@@ -3,17 +3,33 @@
 namespace App\Services\Api;
 
 use App\Models\Order;
+use App\Models\OrderProduct;
 use App\Models\OrderStatus;
 use Illuminate\Database\Eloquent\Collection;
 
 class OrderService
 {
 
-    public function getNewOrders(): Collection
+    public function getNewOrders()
     {
-        return Order::new()
-            ->with(['products:code', 'giftProducts:article'])
+        $orders = Order::new()
+            ->with(['orderProducts', 'giftProducts:article'])
             ->get();
+
+        return $orders->map(function ($order) {
+            $order->city = \Str::before($order->address, ',');
+            $order->street = trim(\Str::after($order->address, ','));
+            $order->products = $order->orderProducts->map(function (OrderProduct $orderProduct) {
+                return [
+                    'code' => $orderProduct->product->code,
+                    'qty' => $orderProduct->quantity,
+                    'price' => $orderProduct->price
+                ];
+            });
+            $order->unsetRelation('orderProducts');
+
+            return $order;
+        });
     }
 
     /**

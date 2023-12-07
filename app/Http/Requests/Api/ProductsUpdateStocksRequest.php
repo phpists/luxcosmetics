@@ -26,7 +26,7 @@ class ProductsUpdateStocksRequest extends FormRequest
             'products.*.code' => ['required', 'string'],
             'products.*.price' => ['required', 'numeric'],
             'products.*.items_left' => ['required', 'numeric'],
-            'products.*.old_price' => ['nullable', 'numeric'],
+            'products.*.discount' => ['nullable', 'integer'],
         ];
     }
 }
