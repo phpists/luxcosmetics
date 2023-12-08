@@ -20,7 +20,7 @@ class ProductService
         $products = $request->post('products');
 
         foreach ($products as $product) {
-            $existingProduct = Product::firstOrNew(['code' => $product['code']]);
+            $dbProduct = Product::firstOrNew(['code' => $product['code']]);
 
             if ($product['category_title']) {
                 $category = Category::firstOrCreate(
@@ -48,10 +48,25 @@ class ProductService
             elseif ($product['base_property_title'] == \App\Models\Product::ALL_TYPES[Product::TYPE_COLOR])
                 $product['base_property_id'] = Product::TYPE_COLOR;
 
-            $existingProduct->fill($product);
-            if (!$existingProduct->save()) {
+            $dbProduct->fill($product);
+            if (!$dbProduct->save()) {
                 throw new \Exception('Не удалось сохранить/обновить товар');
             }
+
+            if (isset($product['properties']) && is_array($product['properties'])) {
+                $dbProduct->propertyValues()->delete();
+                foreach ($product['properties'] as $property_id => $property_value) {
+                    $property = Property::find($property_id);
+                    if ($property) {
+                        $property_value = $property->values()->firstOrCreate(['value' => $property_value]);
+                        $dbProduct->propertyValues()->create([
+                            'property_id' => $property->id,
+                            'property_value_id' => $property_value->id
+                        ]);
+                    }
+                }
+            }
+
         }
 
 
