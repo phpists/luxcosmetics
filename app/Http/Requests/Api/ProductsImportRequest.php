@@ -52,6 +52,9 @@ class ProductsImportRequest extends FormRequest
             'products.*.expiry_date' => ['integer'],
             'products.*.items_left' => ['required', 'integer'],
 
+            'products.*.properties' => ['nullable', 'array'],
+            'products.*.properties.*' => ['nullable', 'string'],
+
             'variations' => ['nullable', 'array'],
             'variations.*' => ['array'],
             'variations.*.*' => ['string']
