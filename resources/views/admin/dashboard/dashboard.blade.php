@@ -107,6 +107,19 @@
                                     <a href="{{ route('admin.product-info.download') }}" class="btn btn-primary btn-lg btn-block"><i class="icon flaticon-download"></i> Загрузка данны о товарах</a>
                                 </div>
                             </div>
+                            <div class="d-flex align-items-center justify-content-between card-spacer flex-grow-1">
+                                <div class="d-flex flex-column pb-3">
+                                    <form method="POST" action="{{ route('admin.update-price-from-excel') }}" enctype="multipart/form-data">
+                                        @csrf
+                                        <label>Обновить цены с excel файла</label>
+                                        <div></div>
+                                        <div class="custom-file">
+                                            <input type="file" class="custom-file-input" id="excelFile" name="file" onchange="$(this).parents('form:first').submit()" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
+                                            <label class="custom-file-label" for="excelFile">Загрузить файл</label>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
 {{--                            <div id="kt_stats_widget_12_chart" class="card-rounded-bottom" data-color="primary" style="height: 150px"></div>--}}
                         </div>
                     </div>
