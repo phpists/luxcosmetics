@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Imports\ProductPricesImport;
 use App\Models\Article;
 use App\Models\Brand;
 use App\Models\Category;
@@ -18,6 +19,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ProductController extends Controller
 {
@@ -437,4 +439,17 @@ class ProductController extends Controller
             ]);
         }
     }
+
+
+    public function updatePricesFromExcel(Request $request)
+    {
+        $request->validate([
+            'file' => ['required', 'file']
+        ]);
+
+        Excel::import(new ProductPricesImport, $request->file('file'));
+
+        return back()->with('success', 'Цены обновлены');
+    }
+
 }
