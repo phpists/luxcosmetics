@@ -40,7 +40,7 @@ class ProductsImportRequest extends FormRequest
             'products.*.description_4' => ['string'],
             'products.*.availability' => ['integer'],
             'products.*.size' => ['string'],
-//            'products.*.discount' => ['integer'],
+            'products.*.discount' => ['nullable', 'integer'],
 //            'products.*.points' => ['integer'],
             'products.*.length_product' => ['nullable', 'integer'],
             'products.*.width_product' => ['nullable', 'integer'],
