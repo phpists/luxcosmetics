@@ -31,7 +31,8 @@ class ProductsImportRequest extends FormRequest
             'products.*.status' => ['boolean'],
             'products.*.old_price' => ['nullable', 'numeric'],
             'products.*.category_title' => ['required', 'string'],
-            'products.*.base_property_title' => ['required', 'string'],
+            'products.*.base_property_title' => ['nullable', 'string'],
+            'products.*.base_property' => ['required', 'string'],
             'products.*.brand_title' => ['required', 'string'],
             'products.*.description_1' => ['string'],
             'products.*.description_2' => ['string'],
@@ -55,14 +56,11 @@ class ProductsImportRequest extends FormRequest
             'products.*.properties' => ['nullable', 'array'],
             'products.*.properties.*' => ['nullable', 'string'],
             // модификации
-            'products.*.variations' => ['nullable', 'array'],
-            'products.*.variations.*' => ['string'],
+            'products.*.variations' => ['nullable', 'string'],
             // похожие
-            'products.*.similar_products' => ['nullable', 'array'],
-            'products.*.similar_products.*' => ['string'],
+            'products.*.similar_products' => ['nullable', 'string'],
             // сопутствующие
-            'products.*.related_products' => ['nullable', 'array'],
-            'products.*.related_products.*' => ['string'],
+            'products.*.related_products' => ['nullable', 'string'],
         ];
     }
 }
