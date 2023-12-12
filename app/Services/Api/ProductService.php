@@ -5,8 +5,8 @@ namespace App\Services\Api;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Product;
-use App\Models\ProductVariation;
 use App\Models\Property;
+use App\Models\RelatedProduct;
 
 class ProductService
 {
@@ -67,32 +67,50 @@ class ProductService
                 }
             }
 
-        }
-
-
-        $variations = $request->post('variations');
-
-        if (is_array($variations) && count($variations) > 0) {
-            foreach ($variations as $variation_group) {
-                $products = Product::whereIn('code', $variation_group)->get();
-                ProductVariation::query()
-                    ->whereIn('product_id', $products->pluck('id')->toArray())
-                    ->orWhereIn('variation_id', $products->pluck('id')->toArray())
-                    ->delete();
-
-                foreach ($products as $product) {
-                    foreach ($products as $variation_product) {
-                        if ($product == $variation_product)
-                            continue;
-
-                        $product
+            $dbProduct->product_variations()->delete();
+            if (isset($product['variations']) && is_array($product['variations'])) {
+                foreach ($product['variations'] as $variation_code) {
+                    $variation = Product::whereCode($variation_code)->first();
+                    if ($variation) {
+                        $dbProduct
                             ->product_variations()
                             ->create([
-                                'variation_id' => $variation_product->id
+                                'variation_id' => $variation->id,
                             ]);
                     }
                 }
             }
+
+            $dbProduct->related_products()->delete();
+
+            if (isset($product['similar_products']) && is_array($product['similar_products'])) {
+                foreach ($product['similar_products'] as $similar_product_code) {
+                    $similar = Product::whereCode($similar_product_code)->first();
+                    if ($similar) {
+                        $dbProduct
+                            ->related_products()
+                            ->create([
+                                'relative_product_id' => $similar->id,
+                                'relation_type' => RelatedProduct::SIMILAR_ITEMS
+                            ]);
+                    }
+                }
+            }
+
+            if (isset($product['related_products']) && is_array($product['related_products'])) {
+                foreach ($product['related_products'] as $related_product_code) {
+                    $related = Product::whereCode($related_product_code)->first();
+                    if ($related) {
+                        $dbProduct
+                            ->related_products()
+                            ->create([
+                                'relative_product_id' => $related->id,
+                                'relation_type' => RelatedProduct::SUPPORT_ITEMS
+                            ]);
+                    }
+                }
+            }
+
         }
     }
 

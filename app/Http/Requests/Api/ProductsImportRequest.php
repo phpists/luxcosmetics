@@ -54,10 +54,15 @@ class ProductsImportRequest extends FormRequest
 
             'products.*.properties' => ['nullable', 'array'],
             'products.*.properties.*' => ['nullable', 'string'],
-
-            'variations' => ['nullable', 'array'],
-            'variations.*' => ['array'],
-            'variations.*.*' => ['string']
+            // модификации
+            'products.*.variations' => ['nullable', 'array'],
+            'products.*.variations.*' => ['string'],
+            // похожие
+            'products.*.similar_products' => ['nullable', 'array'],
+            'products.*.similar_products.*' => ['string'],
+            // сопутствующие
+            'products.*.related_products' => ['nullable', 'array'],
+            'products.*.related_products.*' => ['string'],
         ];
     }
 }
