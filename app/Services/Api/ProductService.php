@@ -7,6 +7,7 @@ use App\Models\Category;
 use App\Models\Product;
 use App\Models\Property;
 use App\Models\RelatedProduct;
+use Illuminate\Support\Arr;
 
 class ProductService
 {
@@ -43,10 +44,16 @@ class ProductService
                 $product['brand_id'] = $brand->id;
             }
 
-            if ($product['base_property_title'] == \App\Models\Product::ALL_TYPES[Product::TYPE_VOLUME])
-                $product['base_property_id'] = Product::TYPE_VOLUME;
-            elseif ($product['base_property_title'] == \App\Models\Product::ALL_TYPES[Product::TYPE_COLOR])
-                $product['base_property_id'] = Product::TYPE_COLOR;
+            if (isset($product['base_property'])
+                && ($product['base_property'] == Product::TYPE_VOLUME
+                    || $product['base_property'] == Product::TYPE_COLOR)) {
+                $product['base_property_id'] = $product['base_property'];
+            } else {
+                if ($product['base_property_title'] == \App\Models\Product::ALL_TYPES[Product::TYPE_VOLUME])
+                    $product['base_property_id'] = Product::TYPE_VOLUME;
+                elseif ($product['base_property_title'] == \App\Models\Product::ALL_TYPES[Product::TYPE_COLOR])
+                    $product['base_property_id'] = Product::TYPE_COLOR;
+            }
 
             $dbProduct->fill($product);
             if (!$dbProduct->save()) {
@@ -68,8 +75,9 @@ class ProductService
             }
 
             $dbProduct->product_variations()->delete();
-            if (isset($product['variations']) && is_array($product['variations'])) {
-                foreach ($product['variations'] as $variation_code) {
+            if (isset($product['variations'])) {
+                $variations = explode(',', $product['variations']);
+                foreach ($variations as $variation_code) {
                     $variation = Product::whereCode($variation_code)->first();
                     if ($variation) {
                         $dbProduct
@@ -83,8 +91,9 @@ class ProductService
 
             $dbProduct->related_products()->delete();
 
-            if (isset($product['similar_products']) && is_array($product['similar_products'])) {
-                foreach ($product['similar_products'] as $similar_product_code) {
+            if (isset($product['similar_products'])) {
+                $similar_products = explode(',', $product['similar_products']);
+                foreach ($similar_products as $similar_product_code) {
                     $similar = Product::whereCode($similar_product_code)->first();
                     if ($similar) {
                         $dbProduct
@@ -97,8 +106,9 @@ class ProductService
                 }
             }
 
-            if (isset($product['related_products']) && is_array($product['related_products'])) {
-                foreach ($product['related_products'] as $related_product_code) {
+            if (isset($product['related_products'])) {
+                $related_products = explode(',', $product['related_products']);
+                foreach ($related_products as $related_product_code) {
                     $related = Product::whereCode($related_product_code)->first();
                     if ($related) {
                         $dbProduct
