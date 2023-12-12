@@ -216,6 +216,11 @@ class Product extends Model
         return $this->items_left > 0;
     }
 
+    public function related_products()
+    {
+        return $this->hasMany(RelatedProduct::class, 'product_id');
+    }
+
     public function similarProducts(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
         return $this->belongsToMany(Product::class, 'related_products', 'product_id', 'relative_product_id')->where('relation_type', RelatedProduct::SIMILAR_ITEMS);
