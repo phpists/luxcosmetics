@@ -25,7 +25,7 @@ class ProductsImportRequest extends FormRequest
             'products' => ['required', 'array'],
             'products.*.title' => ['required', 'string'],
             'products.*.code' => ['required', 'string'],
-            'products.*.price' => ['required', 'numeric'],
+            'products.*.price' => ['nullable', 'numeric'],
             'products.*.alias' => ['string'],
             'products.*.code_1c' => ['string'],
             'products.*.status' => ['boolean'],
