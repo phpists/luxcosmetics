@@ -2,6 +2,7 @@
 
 namespace App\Services\Api;
 
+use App\Enums\AvailableOptions;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Product;
@@ -53,6 +54,15 @@ class ProductService
                     $product['base_property_id'] = Product::TYPE_VOLUME;
                 elseif ($product['base_property_title'] == \App\Models\Product::ALL_TYPES[Product::TYPE_COLOR])
                     $product['base_property_id'] = Product::TYPE_COLOR;
+            }
+
+            if (!isset($product['base_property']))
+                $product['base_property'] = Product::TYPE_VOLUME;
+
+            if ($product['items_left'] > 0) {
+                $product['availability'] = AvailableOptions::AVAILABLE->value;
+            } else {
+                $product['availability'] = AvailableOptions::NOT_AVAILABLE->value;
             }
 
             $dbProduct->fill($product);
