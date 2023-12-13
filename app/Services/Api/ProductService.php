@@ -72,13 +72,16 @@ class ProductService
 
             if (isset($product['properties']) && is_array($product['properties'])) {
                 $dbProduct->propertyValues()->delete();
-                foreach ($product['properties'] as $property_id => $property_value) {
-                    $property = Property::find($property_id);
-                    if ($property) {
-                        $property_value = $property->values()->firstOrCreate(['value' => $property_value]);
+                foreach ($product['properties'] as $property) {
+                    $dbProperty = Property::find($property['property_id']);
+                    if ($dbProperty) {
+                        $dbPropertyValue = $dbProperty->values()->firstOrCreate([
+                            'property_id' => $dbProperty->id,
+                            'value' => $property['property_value']
+                        ]);
                         $dbProduct->propertyValues()->create([
-                            'property_id' => $property->id,
-                            'property_value_id' => $property_value->id
+                            'property_id' => $dbProperty->id,
+                            'property_value_id' => $dbPropertyValue->id
                         ]);
                     }
                 }
