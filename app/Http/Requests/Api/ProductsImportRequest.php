@@ -31,7 +31,7 @@ class ProductsImportRequest extends FormRequest
             'products.*.status' => ['nullable', 'boolean'],
             'products.*.old_price' => ['nullable', 'numeric'],
             'products.*.category_title' => ['required', 'string'],
-            'products.*.base_property_title' => ['nullable', 'string'],
+//            'products.*.base_property_title' => ['nullable', 'string'],
             'products.*.base_property' => ['nullable', 'string'],
             'products.*.brand_title' => ['required', 'string'],
             'products.*.description_1' => ['required', 'string'],

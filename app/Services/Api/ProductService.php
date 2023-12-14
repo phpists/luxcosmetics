@@ -27,7 +27,7 @@ class ProductService
             if ($product['category_title']) {
                 $category = Category::firstOrCreate(
                     [
-                        'name' => $product['category_title']
+                        'name' => trim($product['category_title'])
                     ],
                     [
                         'alias' => \Str::slug($product['category_title'])
@@ -39,7 +39,7 @@ class ProductService
             if ($product['brand_title']) {
                 $brand = Brand::firstOrCreate(
                     [
-                        'name' => $product['brand_title']
+                        'name' => trim($product['brand_title'])
                     ]
                 );
                 $product['brand_id'] = $brand->id;
@@ -49,7 +49,7 @@ class ProductService
                 && ($product['base_property'] == Product::TYPE_VOLUME
                     || $product['base_property'] == Product::TYPE_COLOR)) {
                 $product['base_property_id'] = $product['base_property'];
-            } else {
+            } elseif(isset($product['base_property_title'])) {
                 if ($product['base_property_title'] == \App\Models\Product::ALL_TYPES[Product::TYPE_VOLUME])
                     $product['base_property_id'] = Product::TYPE_VOLUME;
                 elseif ($product['base_property_title'] == \App\Models\Product::ALL_TYPES[Product::TYPE_COLOR])
@@ -77,7 +77,7 @@ class ProductService
                     if ($dbProperty) {
                         $dbPropertyValue = $dbProperty->values()->firstOrCreate([
                             'property_id' => $dbProperty->id,
-                            'value' => $property['property_value']
+                            'value' => trim($property['property_value'])
                         ]);
                         $dbProduct->propertyValues()->create([
                             'property_id' => $dbProperty->id,
