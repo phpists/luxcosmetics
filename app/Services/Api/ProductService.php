@@ -30,7 +30,8 @@ class ProductService
                         'name' => trim($product['category_title'])
                     ],
                     [
-                        'alias' => \Str::slug($product['category_title'])
+                        'alias' => \Str::slug($product['category_title']),
+                        'position' => 999
                     ]
                 );
                 $product['category_id'] = $category->id;
@@ -40,6 +41,9 @@ class ProductService
                 $brand = Brand::firstOrCreate(
                     [
                         'name' => trim($product['brand_title'])
+                    ],
+                    [
+                        'link' => \Str::slug($product['brand_title'])
                     ]
                 );
                 $product['brand_id'] = $brand->id;
