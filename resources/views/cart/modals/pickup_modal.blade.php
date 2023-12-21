@@ -25,8 +25,8 @@
                         <path d="M3 5L7.5 9.5L12 5" fill="none" stroke-width="1.5"></path>
                     </svg>
                     <div class="dropdown" id="post_offices">
-                        <div class="select-delivery-type-opt active" data-type="СДЭК">СДЭК</div>
-                        <div class="select-delivery-type-opt" data-type="Boxberry">
+                        <div class="select-delivery-type-opt active" data-value="{{ \App\Models\Order::DELIVERY_SERVICE_CDEK }}" data-type="СДЭК">СДЭК</div>
+                        <div class="select-delivery-type-opt" data-value="{{ \App\Models\Order::DELIVERY_SERVICE_BOXBERRY }}" data-type="Boxberry">
                             Boxberry
                         </div>
                     </div>

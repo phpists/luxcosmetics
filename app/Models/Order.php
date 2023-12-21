@@ -25,12 +25,21 @@ class Order extends Model
 
 
     const DELIVERY_COURIER = 'courier';
-    const DELIVERY_SELF_PICKUP = 'self_pickup';
+    const DELIVERY_SELF_PICKUP = 'pickup';
 
     const ALL_DELIVERIES = [
         self::DELIVERY_COURIER => 'Курьер',
         self::DELIVERY_SELF_PICKUP => 'Самовынос'
     ];
+
+    const DELIVERY_SERVICE_CDEK = 'cdek';
+    const DELIVERY_SERVICE_BOXBERRY = 'boxberry';
+
+    const ALL_DELIVERY_SERVICES = [
+        self::DELIVERY_SERVICE_CDEK => 'СДЭК',
+        self::DELIVERY_SERVICE_BOXBERRY => 'Boxberry'
+    ];
+
 
     const PAYMENT_SBP = 'sbp';
     const PAYMENT_ONLINE = 'online';
@@ -72,7 +81,18 @@ class Order extends Model
         'email',
         'payment_type',
         'delivery_type',
-        'invoice_id'
+        'invoice_id',
+        'is_received_by_1c',
+        'note',
+        'city',
+        'street',
+        'house',
+        'zip',
+        'apartment',
+        'intercom',
+        'entrance',
+        'over',
+        'service'
     ];
 
 
@@ -81,7 +101,8 @@ class Order extends Model
     {
 
         self::created(function (Order $order) {
-            $order->num = date('my') . '/' . $order->id;
+            $ordersInCurrentMonthCount = Order::whereYear('created_at', '=', now()->format('Y'))->whereMonth('created_at', '=', now()->format('m'))->count();
+            $order->num = "ИМ-" . date('ym') . '/' . str_pad($ordersInCurrentMonthCount, 4, 0, STR_PAD_LEFT);
             $order->save();
 
             $admin_email = SiteConfigService::getParamValue(SiteConfigService::EMAIL_FOR_ORDERS);
@@ -122,6 +143,11 @@ class Order extends Model
     public function scopeToday($query)
     {
         return $query->where('created_at', '>=', Carbon::now()->startOfDay());
+    }
+
+    public function scopeNewFor1C($query)
+    {
+        return $query->where('is_received_by_1c', 0);
     }
 
 

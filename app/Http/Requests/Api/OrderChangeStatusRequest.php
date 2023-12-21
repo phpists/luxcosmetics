@@ -22,7 +22,8 @@ class OrderChangeStatusRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'status' => ['required', 'string']
+            'status' => ['required', 'string'],
+            'note' => ['nullable', 'string']
         ];
     }
 }

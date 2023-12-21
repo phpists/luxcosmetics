@@ -26,10 +26,8 @@ class OrderController extends Controller
 
     public function changeStatus(OrderChangeStatusRequest $request, Order $order)
     {
-        $status_title = $request->post('status');
-
         try {
-            $this->orderService->changeStatus($status_title, $order);
+            $this->orderService->changeStatus($request->validated(), $order);
             return new JsonResponse(['result' => 'success']);
         } catch (\Exception $e) {
             return new JsonResponse(['result' => 'fail', 'message' => $e->getMessage()], 500);

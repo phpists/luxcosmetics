@@ -54,6 +54,15 @@
                                 <a href="#changecity" id="changecity_init" class="btn btn--accent popup-with-form"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#edit')}}"></use></svg> Изменить адрес</a>
                             </div>
                             <div id="delivery_contaniner">
+                                <input type="hidden" id="delivery_city" name="city" required>
+                                <input type="hidden" id="delivery_street" name="street" required>
+                                <input type="hidden" id="delivery_house" name="house" required>
+                                <input type="hidden" id="delivery_apartment" name="apartment">
+                                <input type="hidden" id="delivery_intercom" name="intercom">
+                                <input type="hidden" id="delivery_entrance" name="entrance">
+                                <input type="hidden" id="delivery_over" name="over">
+                                <input type="hidden" id="delivery_service" name="service" required>
+                                <input type="hidden" id="delivery_zip" name="zip" required>
                                 <input type="hidden" id="final_addr" name="address" required>
                                 <div class="cartstep__item">
                                     <div class="cartstep__title">Выберите способ доставки</div>
@@ -174,7 +183,14 @@
             })
 
             $(document).on('click', '.cartstep__delivery a', function (e) {
-                $('#orderFormDeliveryType').val($(this).find('input').val())
+                let deliveryType = $(this).find('input').val();
+                $('#orderFormDeliveryType').val(deliveryType)
+
+                if (deliveryType == 'courier') {
+                    $('#delivery_service').val('').prop('required', false)
+                } else if(deliveryType == 'pickup') {
+                    $('#delivery_service').prop('required', true)
+                }
             })
 
             Inputmask("+7 (999) 999-99-99").mask('#phone_inp');

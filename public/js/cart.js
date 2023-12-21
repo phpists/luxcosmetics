@@ -164,6 +164,19 @@ $(function () {
     $("#amount").val($("#slider-range").slider("values", 0));
     $("#amount2").val($("#slider-range").slider("values", 1));
 
+
+
+
+
+    // Data mirroring
+    $(document).on('input', "input[data-mirror]", function (e) {
+        $(this.dataset.mirror).val(this.value)
+    })
+    $(document).on('change', "input[data-mirror]", function (e) {
+        $(this.dataset.mirror).val(this.value)
+    })
+
+
 })
 
 

@@ -12,34 +12,49 @@ class OrderService
 
     public function getNewOrders()
     {
-        $orders = Order::new()
-            ->with(['orderProducts', 'giftProducts:article'])
+        $orders = Order::with(['orderProducts', 'giftProducts:article'])
             ->get();
 
-        return $orders->map(function ($order) {
-            $order->city = \Str::before($order->address, ',');
-            $order->street = trim(\Str::after($order->address, ','));
+        $orders = $orders->map(function ($order) {
+            $order->delivery_method = $order->delivery_type;
+            $order->delivery_type = $order->service;
+            $order->shipping_method = "{$order->delivery_type}_{$order->delivery_method}";
             $order->products = $order->orderProducts->map(function (OrderProduct $orderProduct) {
                 return [
                     'code' => $orderProduct->product->code,
                     'qty' => $orderProduct->quantity,
-                    'price' => $orderProduct->price
+                    'price' => $orderProduct->price,
+                    'sum' => $orderProduct->quantity * $orderProduct->price
+                ];
+            });
+            $order->giftProducts = $order->giftProducts->map(function ($article) {
+                return [
+                    'code' => $article,
+                    'qty' => 1,
+                    'price' => 0,
+                    'sum' => 0
                 ];
             });
             $order->unsetRelation('orderProducts');
 
             return $order;
         });
+
+        Order::whereIn('id', $orders->pluck('id'))->update(['is_received_by_1c' => 1]);
+        return $orders;
     }
 
     /**
      * @throws \Exception
      */
-    public function changeStatus(string $status_title, Order $order): void
+    public function changeStatus(array $data, Order $order): void
     {
-        $status = OrderStatus::firstOrCreate(['title' => $status_title], ['color' => '#FFFFFF']);
+        $status = OrderStatus::firstOrCreate(['title' => $data['status_title']], ['color' => '#FFFFFF']);
 
         $order->status_id = $status->id;
+        if (isset($data['note']))
+            $order->note = $data['note'];
+
         if (!$order->save())
             throw new \Exception('Не удалось обновить статус!');
     }

@@ -107,6 +107,7 @@ class OrderController extends Controller
         $data = $request->post();
         $data['as_delivery_address'] = $request->boolean('as_delivery_address');
         $data['gift_box'] = $request->boolean('gift_box');
+        $data['is_received_by_1c'] = $request->boolean('is_received_by_1c');
         $orderProducts = collect($data['products']);
         unset($data['products']);
 
@@ -180,6 +181,7 @@ class OrderController extends Controller
         $data = $request->post();
         $data['as_delivery_address'] = $request->boolean('as_delivery_address');
         $data['gift_box'] = $request->boolean('gift_box');
+        $data['is_received_by_1c'] = $request->boolean('is_received_by_1c');
         $orderProducts = collect($data['products']);
         unset($data['products']);
 

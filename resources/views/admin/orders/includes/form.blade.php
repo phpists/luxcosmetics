@@ -65,11 +65,67 @@
             </select>
         </div>
     </div>
-    <div class="col-12 col-md">
+    <div class="col-12 col-md-3">
         <div class="form-group">
-            <label for="exampleSelect2">Адрес</label>
-            <input type="text" name="address" value="{{ old('address', $order->address) }}" class="form-control"
+            <label for="exampleSelect2">Сервис</label>
+            <select class="form-control select2" name="service">
+                <option></option>
+                @foreach(\App\Models\Order::ALL_DELIVERY_SERVICES as $service_name => $service_title)
+                    <option value="{{ $service_name }}" @selected(old('service', $order->service) == $service_name)>{{ $service_title }}</option>
+                @endforeach
+            </select>
+        </div>
+    </div>
+    <div class="col-12 col-md-3">
+        <div class="form-group">
+            <label for="exampleSelect2">Город</label>
+            <input type="text" name="city" value="{{ old('city', $order->city) }}" class="form-control"
                    required/>
+        </div>
+    </div>
+    <div class="col-12 col-md-3">
+        <div class="form-group">
+            <label for="exampleSelect2">Улица</label>
+            <input type="text" name="street" value="{{ old('street', $order->street) }}" class="form-control"
+                   required/>
+        </div>
+    </div>
+    <div class="col-12 col-md-1">
+        <div class="form-group">
+            <label for="exampleSelect2">Дом</label>
+            <input type="text" name="house" value="{{ old('house', $order->house) }}" class="form-control"
+                   required/>
+        </div>
+    </div>
+    <div class="col-12 col-md-2">
+        <div class="form-group">
+            <label for="exampleSelect2">Индекс</label>
+            <input type="text" name="zip" value="{{ old('zip', $order->zip) }}" class="form-control"
+                   required/>
+        </div>
+    </div>
+    <div class="col-12 col-md-1">
+        <div class="form-group">
+            <label for="exampleSelect2">Квартира/Офис</label>
+            <input type="text" name="apartment" value="{{ old('apartment', $order->apartment) }}" class="form-control"/>
+        </div>
+    </div>
+    <div class="col-12 col-md-1">
+        <div class="form-group">
+            <label for="exampleSelect2">Домофон</label>
+            <input type="text" name="intercom" value="{{ old('intercom', $order->intercom) }}" class="form-control"/>
+        </div>
+    </div>
+    <div class="col-12 col-md-1">
+        <div class="form-group">
+            <label for="exampleSelect2">Подъезд</label>
+            <input type="text" name="entrance" value="{{ old('entrance', $order->entrance) }}" class="form-control"/>
+        </div>
+    </div>
+    <div class="col-12 col-md-1">
+        <div class="form-group">
+            <label for="exampleSelect2">Этаж</label>
+            <input type="text" name="over" value="{{ old('over', $order->over) }}" class="form-control"/>
         </div>
     </div>
 </div>
@@ -95,7 +151,7 @@
             <input type="number" name="bonuses_discount" value="{{ old('bonuses', $order->bonuses_discount) }}" class="form-control"/>
         </div>
     </div>
-    <div class="col">
+    <div class="col-12 col-md-auto">
         <div class="form-group mt-10">
             <div class="checkbox-inline">
                 <label class="checkbox">
@@ -106,6 +162,30 @@
             </div>
         </div>
     </div>
+    <div class="col-12 col-md-auto">
+        <div class="form-group mt-10">
+            <div class="checkbox-inline">
+                <label class="checkbox">
+                    <input type="checkbox" @checked(old('is_received_by_1c', $order->is_received_by_1c)) name="is_received_by_1c"/>
+                    <span></span>
+                    Передано в 1С
+                </label>
+            </div>
+        </div>
+    </div>
 </div>
+
+
+
+<div class="row">
+    <div class="col-12 col-md-5">
+        <div class="form-group">
+            <label for="exampleSelect2">Примечание 1С</label>
+            <textarea class="form-control" name="note" id="" cols="30" rows="10">{!! $order->note !!}</textarea>
+        </div>
+    </div>
+</div>
+
+
 
 <input type="hidden" id="showUserUrl" value="{{ route('admin.user.show', 0) }}">

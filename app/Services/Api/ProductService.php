@@ -24,6 +24,9 @@ class ProductService
         foreach ($products as $product) {
             $dbProduct = Product::firstOrNew(['code' => $product['code']]);
 
+            if ($dbProduct->availability == AvailableOptions::DISCONTINUED->value)
+                continue;
+
             if ($product['category_title']) {
                 $category = Category::firstOrCreate(
                     [
@@ -153,7 +156,15 @@ class ProductService
             if (!$existingProduct) {
                 throw new \Exception("Не удалось найти товар з артикулом {$product['code']}");
             }
-            $existingProduct->update($product);
+
+            if ($product['items_left'] > 0) {
+                $product['availability'] = AvailableOptions::AVAILABLE->value;
+            } else {
+                $product['availability'] = AvailableOptions::NOT_AVAILABLE->value;
+            }
+
+            if ($existingProduct->availability !== AvailableOptions::DISCONTINUED->value)
+                $existingProduct->update(['items_left' => $product['items_left'], 'availability' => $product['availability']]);
         }
     }
 
