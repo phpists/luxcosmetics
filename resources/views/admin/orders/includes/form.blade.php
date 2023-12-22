@@ -166,7 +166,7 @@
         <div class="form-group mt-10">
             <div class="checkbox-inline">
                 <label class="checkbox">
-                    <input type="checkbox" @checked(old('is_received_by_1c', $order->is_received_by_1c)) name="is_received_by_1c"/>
+                    <input type="checkbox" @disabled($order->is_received_by_1c) @checked(old('is_received_by_1c', $order->is_received_by_1c)) name="is_received_by_1c"/>
                     <span></span>
                     Передано в 1С
                 </label>

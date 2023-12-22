@@ -27,14 +27,16 @@ class OrderService
                     'sum' => $orderProduct->quantity * $orderProduct->price
                 ];
             });
-            $order->giftProducts = $order->giftProducts->map(function ($article) {
+
+            $order->gift_products = $order->giftProducts->map(function ($giftProduct) {
                 return [
-                    'code' => $article,
+                    'code' => $giftProduct['article'],
                     'qty' => 1,
                     'price' => 0,
                     'sum' => 0
                 ];
             });
+            $order->unsetRelation('giftProducts');
             $order->unsetRelation('orderProducts');
 
             return $order;
@@ -50,7 +52,7 @@ class OrderService
     public function changeStatus(array $data, Order $order): void
     {
         $status = OrderStatus::firstOrCreate(
-            ['title' => trim($data['status_title'])],
+            ['title' => trim($data['status'])],
             ['color' => '#FFFFFF']
         );
 
