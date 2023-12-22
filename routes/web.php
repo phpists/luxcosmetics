@@ -75,6 +75,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/order/{order}', [\App\Http\Controllers\User\OrderController::class, 'show'])->name('profile.orders.show');
         Route::get('/order/{order}/payment', [\App\Http\Controllers\User\OrderController::class, 'payment'])->name('orders.payment');
         Route::get('/order/{order}/repeat', [\App\Http\Controllers\User\OrderController::class, 'repeat'])->name('profile.orders.repeat');
+        Route::get('/order/{order}/cancel', [\App\Http\Controllers\User\OrderController::class, 'cancel'])->name('profile.orders.cancel');
         Route::get('/subscriptions', [\App\Http\Controllers\ProfileController::class, 'subscriptions'])->name('profile.subscriptions');
         Route::get('/addresses', [\App\Http\Controllers\ProfileController::class, 'addresses'])->name('profile.addresses');
         Route::get('/address', [\App\Http\Controllers\ProfileController::class, 'show'])->name('profile.addresses.show');

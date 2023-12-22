@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Events\OrderCancelled;
 use App\Mail\Admin\OrderCreated;
 use App\Mail\OrderStatusChangedMail;
 use App\Services\OrderPaymentService;
@@ -25,12 +26,21 @@ class Order extends Model
 
 
     const DELIVERY_COURIER = 'courier';
-    const DELIVERY_SELF_PICKUP = 'self_pickup';
+    const DELIVERY_SELF_PICKUP = 'pickup';
 
     const ALL_DELIVERIES = [
         self::DELIVERY_COURIER => 'Курьер',
         self::DELIVERY_SELF_PICKUP => 'Самовынос'
     ];
+
+    const DELIVERY_SERVICE_CDEK = 'cdek';
+    const DELIVERY_SERVICE_BOXBERRY = 'boxberry';
+
+    const ALL_DELIVERY_SERVICES = [
+        self::DELIVERY_SERVICE_CDEK => 'СДЭК',
+        self::DELIVERY_SERVICE_BOXBERRY => 'Boxberry'
+    ];
+
 
     const PAYMENT_SBP = 'sbp';
     const PAYMENT_ONLINE = 'online';
@@ -47,8 +57,10 @@ class Order extends Model
 
     const STATUS_NEW = 1;
     const STATUS_PAYED = 2;
-    const STATUS_CANCELLED = 3;
-    const STATUS_COMPLETED = 4;
+    const STATUS_GIVEN_LMS = 3;
+    const STATUS_DELIVERED_TO_VPZ = 4;
+    const STATUS_COMPLETED = 5;
+    const STATUS_CANCELLED = 6;
 
 
     protected $fillable = [
@@ -72,7 +84,18 @@ class Order extends Model
         'email',
         'payment_type',
         'delivery_type',
-        'invoice_id'
+        'invoice_id',
+        'is_received_by_1c',
+        'note',
+        'city',
+        'street',
+        'house',
+        'zip',
+        'apartment',
+        'intercom',
+        'entrance',
+        'over',
+        'service'
     ];
 
 
@@ -81,7 +104,8 @@ class Order extends Model
     {
 
         self::created(function (Order $order) {
-            $order->num = date('my') . '/' . $order->id;
+            $ordersInCurrentMonthCount = Order::whereYear('created_at', '=', now()->format('Y'))->whereMonth('created_at', '=', now()->format('m'))->count();
+            $order->num = "ИМ-" . date('ym') . '/' . str_pad($ordersInCurrentMonthCount, 4, 0, STR_PAD_LEFT);
             $order->save();
 
             $admin_email = SiteConfigService::getParamValue(SiteConfigService::EMAIL_FOR_ORDERS);
@@ -93,6 +117,9 @@ class Order extends Model
         self::updated(function(Order $order) {
             if ($order->isDirty('status_id')) {
                 Mail::to($order->user->email)->send(new OrderStatusChangedMail($order));
+
+                if ($order->status_id == self::STATUS_CANCELLED)
+                    event(new OrderCancelled($order));
             }
         });
 
@@ -122,6 +149,11 @@ class Order extends Model
     public function scopeToday($query)
     {
         return $query->where('created_at', '>=', Carbon::now()->startOfDay());
+    }
+
+    public function scopeNewFor1C($query)
+    {
+        return $query->where('is_received_by_1c', 0);
     }
 
 
@@ -223,6 +255,21 @@ class Order extends Model
         } else {
             return (new OrderPaymentService($this))->getPaymentUrl();
         }
+    }
+
+
+    public function canBeCancelled(): bool
+    {
+        if ($this->created_at->hour > 15 && $this->created_at->hour < 21) {
+            if ($this->created_at->isToday() && Carbon::now()->hour < 21)
+                return true;
+        } else {
+            if ($this->created_at->isYesterday() && Carbon::now()->hour > 21
+                || $this->created_at->isToday() && Carbon::now()->hour < 15)
+                return true;
+        }
+
+        return false;
     }
 
 

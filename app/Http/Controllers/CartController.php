@@ -69,6 +69,11 @@ class CartController extends Controller
         $email = $request->post('email');
         $this->cartService->setProperty(CartService::EMAIL_KEY, $email);
 
+        foreach (CartService::ADDRESS_FIELDS as $address_field) {
+            $this->cartService->setProperty($address_field, $request->post($address_field));
+        }
+
+
         return redirect()->route('cart.payment');
     }
 
