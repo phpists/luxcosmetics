@@ -105,7 +105,13 @@ class Order extends Model
 
         self::created(function (Order $order) {
             $ordersInCurrentMonthCount = Order::whereYear('created_at', '=', now()->format('Y'))->whereMonth('created_at', '=', now()->format('m'))->count();
-            $order->num = "ИМ-" . date('ym') . '/' . str_pad($ordersInCurrentMonthCount, 4, 0, STR_PAD_LEFT);
+
+            do {
+                $num = "ИМ-" . date('ym') . '/' . str_pad($ordersInCurrentMonthCount, 4, 0, STR_PAD_LEFT);
+                $ordersInCurrentMonthCount++;
+            } while (Order::whereNum($num)->exists());
+
+            $order->num = $num;
             $order->save();
 
             $admin_email = SiteConfigService::getParamValue(SiteConfigService::EMAIL_FOR_ORDERS);
