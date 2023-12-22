@@ -49,7 +49,10 @@ class OrderService
      */
     public function changeStatus(array $data, Order $order): void
     {
-        $status = OrderStatus::firstOrCreate(['title' => $data['status_title']], ['color' => '#FFFFFF']);
+        $status = OrderStatus::firstOrCreate(
+            ['title' => trim($data['status_title'])],
+            ['color' => '#FFFFFF']
+        );
 
         $order->status_id = $status->id;
         if (isset($data['note']))

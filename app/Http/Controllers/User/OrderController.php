@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\User;
 
+use App\Events\OrderCancelled;
 use App\Http\Controllers\Controller;
 use App\Models\Order;
 use App\Services\CartService;
@@ -49,6 +50,19 @@ class OrderController extends Controller
     public function payment(Order $order)
     {
         return Redirect::away($order->getPaymentUrl());
+    }
+
+    public function cancel(Request $request, Order $order)
+    {
+        if (Auth::id() !== $order->user_id)
+            abort(403);
+        if (!$order->canBeCancelled())
+            abort(403);
+
+        $order->status_id = Order::STATUS_CANCELLED;
+        $order->save();
+
+        return back()->with('success', 'Заказ отменен');
     }
 
 }

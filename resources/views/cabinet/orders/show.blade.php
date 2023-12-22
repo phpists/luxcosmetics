@@ -47,6 +47,16 @@
                         <div class="chars__value"><span>{{ $order->address }}</span></div>
                     </div>
                 </div>
+
+                @if($order->status_id == \App\Models\Order::STATUS_PAYED && $order->canBeCancelled())
+                <a href="{{ route('profile.orders.cancel', $order) }}" class="btn btn--accent">
+                    <svg class="icon">
+                        <use xlink:href="{{asset('images/dist/sprite.svg#repeat')}}"></use>
+                    </svg>
+                    Отменить заказ
+                </a>
+                @endif
+
                 @if($order->status_id == \App\Models\Order::STATUS_NEW)
                 <a href="{{ route('orders.payment', $order) }}" class="btn btn--accent">
                     <svg class="icon">

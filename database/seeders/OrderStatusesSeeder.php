@@ -26,12 +26,20 @@ class OrderStatusesSeeder extends Seeder
                 'color' => '#65d77e',
             ],
             [
-                'title' => 'Отменён',
-                'color' => '#ec6d6d',
+                'title' => 'Принят LMS',
+                'color' => '#a61879',
+            ],
+            [
+                'title' => 'Доставлен в ПВЗ',
+                'color' => '#5e18a6',
             ],
             [
                 'title' => 'Завершён',
                 'color' => '#6182f9',
+            ],
+            [
+                'title' => 'Отменён',
+                'color' => '#ec6d6d',
             ],
         ];
 
