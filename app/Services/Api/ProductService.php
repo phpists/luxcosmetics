@@ -9,6 +9,7 @@ use App\Models\Product;
 use App\Models\Property;
 use App\Models\RelatedProduct;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 
 class ProductService
 {
@@ -71,6 +72,9 @@ class ProductService
             } else {
                 $product['availability'] = AvailableOptions::NOT_AVAILABLE->value;
             }
+
+            if (!isset($product['alias']))
+                $product['alias'] = Str::slug($product['title']);
 
             $dbProduct->fill($product);
             if (!$dbProduct->save()) {
