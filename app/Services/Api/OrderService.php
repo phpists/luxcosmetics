@@ -64,4 +64,15 @@ class OrderService
             throw new \Exception('Не удалось обновить статус!');
     }
 
+
+    /**
+     * @throws \Exception
+     */
+    public function receiveBy1c(Order $order, bool $is_received): void
+    {
+        $order->is_received_by_1c = $is_received;
+        if (!$order->save())
+            throw new \Exception('Не удалось сохранить результат!');
+    }
+
 }
