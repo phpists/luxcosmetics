@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\OrderChangeStatusRequest;
+use App\Http\Requests\Api\OrderReceivedBy1cRequest;
 use App\Models\Order;
 use App\Models\OrderStatus;
 use App\Services\Api\OrderService;
@@ -28,6 +29,16 @@ class OrderController extends Controller
     {
         try {
             $this->orderService->changeStatus($request->validated(), $order);
+            return new JsonResponse(['result' => 'success']);
+        } catch (\Exception $e) {
+            return new JsonResponse(['result' => 'fail', 'message' => $e->getMessage()], 500);
+        }
+    }
+
+    public function receiveBy1c(OrderReceivedBy1cRequest $request, Order $order)
+    {
+        try {
+            $this->orderService->receiveBy1c($order, $request->validated('is_received'));
             return new JsonResponse(['result' => 'success']);
         } catch (\Exception $e) {
             return new JsonResponse(['result' => 'fail', 'message' => $e->getMessage()], 500);
