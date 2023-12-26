@@ -67,14 +67,18 @@ class ProductService
             if (!isset($product['base_property']))
                 $product['base_property'] = Product::TYPE_VOLUME;
 
+            $product['items_left'] = 0;
             if ($product['items_left'] > 0) {
                 $product['availability'] = AvailableOptions::AVAILABLE->value;
             } else {
                 $product['availability'] = AvailableOptions::NOT_AVAILABLE->value;
             }
 
-            if (!isset($product['alias']))
+            if (!$dbProduct->exists() && !isset($product['alias']))
                 $product['alias'] = Str::slug($product['title']);
+
+            $dbProduct->size = '';
+            $dbProduct->price = 0;
 
             $dbProduct->fill($product);
             if (!$dbProduct->save()) {
