@@ -74,11 +74,14 @@ class ProductService
                 $product['availability'] = AvailableOptions::NOT_AVAILABLE->value;
             }
 
-            if (!$dbProduct->exists() && !isset($product['alias']))
+            if (!$dbProduct->exists && !isset($product['alias']))
                 $product['alias'] = Str::slug($product['title']);
 
             $dbProduct->size = '';
             $dbProduct->price = 0;
+            $dbProduct->show_in_discount = 0;
+            $dbProduct->show_in_popular = 0;
+            $dbProduct->show_in_new = 0;
 
             $dbProduct->fill($product);
             if (!$dbProduct->save()) {
@@ -161,9 +164,8 @@ class ProductService
 
         foreach ($products as $product) {
             $existingProduct = Product::whereCode($product['code'])->first();
-            if (!$existingProduct) {
-                throw new \Exception("Не удалось найти товар з артикулом {$product['code']}");
-            }
+            if (!$existingProduct)
+                continue;
 
             if ($product['items_left'] > 0) {
                 $product['availability'] = AvailableOptions::AVAILABLE->value;
@@ -172,7 +174,10 @@ class ProductService
             }
 
             if ($existingProduct->availability !== AvailableOptions::DISCONTINUED->value)
-                $existingProduct->update(['items_left' => $product['items_left'], 'availability' => $product['availability']]);
+                $existingProduct->update([
+                    'items_left' => $product['items_left'],
+                    'availability' => $product['availability']
+                ]);
         }
     }
 
