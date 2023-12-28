@@ -12,7 +12,8 @@ class OrderService
 
     public function getNewOrders()
     {
-        $orders = Order::with(['orderProducts', 'giftProducts:article'])
+        $orders = Order::newFor1C()
+            ->with(['orderProducts', 'giftProducts:article'])
             ->get();
 
         $orders = $orders->map(function ($order) {
