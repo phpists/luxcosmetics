@@ -43,7 +43,7 @@ class OrderService
             return $order;
         });
 
-        Order::whereIn('id', $orders->pluck('id'))->update(['is_received_by_1c' => 1]);
+//        Order::whereIn('id', $orders->pluck('id'))->update(['is_received_by_1c' => 1]);
         return $orders;
     }
 
