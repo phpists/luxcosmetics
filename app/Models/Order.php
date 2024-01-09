@@ -122,6 +122,8 @@ class Order extends Model
 
         self::updated(function(Order $order) {
             if ($order->isDirty('status_id')) {
+                $order->update(['is_received_by_1c' => 0]);
+
                 Mail::to($order->user->email)->send(new OrderStatusChangedMail($order));
 
                 if ($order->status_id == self::STATUS_CANCELLED)

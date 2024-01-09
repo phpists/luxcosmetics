@@ -73,11 +73,13 @@
 {{--                    <use xlink:href="{{asset('images/dist/sprite.svg#cart')}}"></use>--}}
 {{--                </svg>--}}
 {{--            </button>--}}
+            @if($product->isAvailable())
                 <button class="product__mobile-btn addToCart @if(isset($product->basePropertyValue->id)) @if($cartService->check($product->id, $product->basePropertyValue->id)) isInCart @endif @endif" data-product="{{ $product->id }}" data-property="{{ $product->basePropertyValue->id ?? '' }}">
                             <svg class="icon @if($product->is_favourite) favourite_product @endif">
                                 <use xlink:href="{{asset('images/dist/sprite.svg#cart')}}"></use>
                             </svg>
                 </button>
+            @endif
         </div>
 
         @if(isset($product->baseProperty->id))
@@ -104,13 +106,29 @@
                                 @endforeach
                             </div>
                         </div>
-                        <button class="product__addcart addToCart @if($cartService->check($product->id)) isInCart @endif" data-product="{{ $product->id }}"><span>Добавить в корзину {{ $product->price }} ₽</span>
+                        @if($product->isAvailable())
+                        <button class="product__addcart addToCart @if($cartService->check($product->id)) isInCart @endif"
+                                data-product="{{ $product->id }}">
+                            <span>Добавить в корзину {{ $product->price }} ₽</span>
                         </button>
+                        @else
+                            <button class="product__addcart" disabled style="cursor:not-allowed; background-color: #b2b2b2">
+                                <span>Нету в наличии</span>
+                            </button>
+                        @endif
                     </div>
                 @else
                     <div class="product__pnl">
-                        <button class="product__addcart addToCart @if($cartService->check($product->id)) isInCart @endif" data-product="{{ $product->id }}"><span>Добавить в корзину {{ $product->price }} ₽</span>
-                        </button>
+                        @if($product->isAvailable())
+                            <button class="product__addcart addToCart @if($cartService->check($product->id)) isInCart @endif"
+                                    data-product="{{ $product->id }}">
+                                <span>Добавить в корзину {{ $product->price }} ₽</span>
+                            </button>
+                        @else
+                            <button class="product__addcart" disabled style="cursor:not-allowed; background-color: #b2b2b2">
+                                <span>Нету в наличии</span>
+                            </button>
+                        @endif
                     </div>
                 @endif
             @elseif($product->baseProperty->id === \App\Models\Product::TYPE_COLOR)
@@ -129,21 +147,44 @@
                             @endforeach
                         </div>
                     </div>
-                    <button class="product__addcart addToCart @if($cartService->check($product->id)) isInCart @endif" data-product="{{ $product->id }}">
-                        <span>Добавить в корзину {{ $product->price }} ₽</span>
-                    </button>
+                    @if($product->isAvailable())
+                        <button class="product__addcart addToCart @if($cartService->check($product->id)) isInCart @endif"
+                                data-product="{{ $product->id }}">
+                            <span>Добавить в корзину {{ $product->price }} ₽</span>
+                        </button>
+                    @else
+                        <button class="product__addcart" disabled style="cursor:not-allowed; background-color: #b2b2b2">
+                            <span>Нету в наличии</span>
+                        </button>
+                    @endif
                 </div>
                     @endif
             @else
                 <div class="product__pnl">
-                    <button class="product__addcart addToCart @if($cartService->check($product->id)) isInCart @endif" data-product="{{ $product->id }}"><span>Добавить в корзину {{ $product->price }} ₽</span>
-                    </button>
+                    @if($product->isAvailable())
+                        <button class="product__addcart addToCart @if($cartService->check($product->id)) isInCart @endif"
+                                data-product="{{ $product->id }}">
+                            <span>Добавить в корзину {{ $product->price }} ₽</span>
+                        </button>
+                    @else
+                        <button class="product__addcart" disabled style="cursor:not-allowed; background-color: #b2b2b2">
+                            <span>Нету в наличии</span>
+                        </button>
+                    @endif
                 </div>
             @endif
         @else
             <div class="product__pnl">
-                <button class="product__addcart addToCart @if($cartService->check($product->id)) isInCart @endif" data-product="{{ $product->id }}"><span>Добавить в корзину {{ $product->price }} ₽</span>
-                </button>
+                @if($product->isAvailable())
+                    <button class="product__addcart addToCart @if($cartService->check($product->id)) isInCart @endif"
+                            data-product="{{ $product->id }}">
+                        <span>Добавить в корзину {{ $product->price }} ₽</span>
+                    </button>
+                @else
+                    <button class="product__addcart" disabled style="cursor:not-allowed; background-color: #b2b2b2">
+                        <span>Нету в наличии</span>
+                    </button>
+                @endif
             </div>
         @endif
     </div>
