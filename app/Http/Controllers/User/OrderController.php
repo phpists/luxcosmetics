@@ -60,6 +60,7 @@ class OrderController extends Controller
             abort(403);
 
         $order->status_id = Order::STATUS_CANCELLED;
+        $order->is_received_by_1c = 0;
         $order->save();
 
         return back()->with('success', 'Заказ отменен');
