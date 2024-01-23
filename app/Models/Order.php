@@ -95,7 +95,9 @@ class Order extends Model
         'intercom',
         'entrance',
         'over',
-        'service'
+        'service',
+        'delivery_point_id',
+        'delivery_point_code'
     ];
 
 

@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Enums\AvailableOptions;
+use App\Events\OrderCreated;
 use App\Models\Address;
 use App\Models\Category;
 use App\Models\Order;
@@ -412,6 +413,8 @@ class CartService
             session()->forget(array_keys(self::ALL_KEYS));
             $this->dropBonuses();
             $this->dropPromo();
+
+            OrderCreated::dispatch($order);
 
             return $order;
         } catch (\Exception $exception) {
