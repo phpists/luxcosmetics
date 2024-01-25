@@ -13,7 +13,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule): void
     {
         // Update DeliveryPoints
-        $schedule->command('inspire')->daily();
+        $schedule->command('delivery:import')->daily();
     }
 
     /**
