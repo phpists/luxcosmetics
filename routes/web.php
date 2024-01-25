@@ -232,6 +232,17 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function 
 //    Dashboard
     Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
 
+    // Delivery methods
+    Route::resource('delivery-methods', \App\Http\Controllers\Admin\Settings\DeliveryMethodController::class, [
+        'only' => ['index', 'update'],
+        'as' => 'admin',
+    ]);
+    Route::post('delivery-methods/update-positions', [\App\Http\Controllers\Admin\Settings\DeliveryMethodController::class, 'updatePositions'])
+        ->name('admin.delivery-methods.update-positions');
+    Route::post('delivery-methods/bulk-change-status', [\App\Http\Controllers\Admin\Settings\DeliveryMethodController::class, 'bulkChangeStatus'])
+        ->name('admin.delivery-methods.bulk-change-status');
+
+
     Route::group(['middleware' => 'is-super-admin'], function () {
         Route::get('settings/socials', [\App\Http\Controllers\Admin\Settings\SocialMediaController::class, 'index'])->name('admin.settings.socials');
         Route::get('settings/social', [\App\Http\Controllers\Admin\Settings\SocialMediaController::class, 'show'])->name('admin.settings.social.show');

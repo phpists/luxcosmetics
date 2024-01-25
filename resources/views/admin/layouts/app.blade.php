@@ -700,6 +700,12 @@ aria-haspopup="true">
                 <span class="menu-text">Настройки</span>
             </a>
         </li>
+        <li class="menu-item {{ request()->routeIs('admin.delivery-methods.index') ? 'menu-item-active' : '' }}" aria-haspopup="true">
+            <a href="{{ route('admin.delivery-methods.index') }}" class="menu-link">
+                <i class="menu-bullet menu-bullet-dot"><span></span></i>
+                <span class="menu-text">Доставка</span>
+            </a>
+        </li>
     </ul>
 </div>
 </li>
