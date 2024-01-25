@@ -25,10 +25,10 @@
                         <path d="M3 5L7.5 9.5L12 5" fill="none" stroke-width="1.5"></path>
                     </svg>
                     <div class="dropdown" id="post_offices">
-                        <div class="select-delivery-type-opt active" data-value="{{ \App\Models\Order::DELIVERY_SERVICE_CDEK }}" data-type="СДЭК">СДЭК</div>
-                        <div class="select-delivery-type-opt" data-value="{{ \App\Models\Order::DELIVERY_SERVICE_BOXBERRY }}" data-type="Boxberry">
-                            Boxberry
-                        </div>
+                        @foreach(\App\Models\DeliveryMethod::getAll() as $deliveryMethod)
+                        <div class="select-delivery-type-opt @if($loop->first) active @endif" data-value="{{ $deliveryMethod->name }}" data-type="{{ $deliveryMethod->title }}">
+                            {{ $deliveryMethod->title }}</div>
+                        @endforeach
                     </div>
                 </button>
             </div>

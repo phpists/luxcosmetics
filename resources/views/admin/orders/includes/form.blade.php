@@ -128,6 +128,18 @@
             <input type="text" name="over" value="{{ old('over', $order->over) }}" class="form-control"/>
         </div>
     </div>
+    <div class="col-12 col-md-1">
+        <div class="form-group">
+            <label for="exampleSelect2">Номер отделения</label>
+            <input type="text" name="delivery_point_code" value="{{ old('over', $order->delivery_point_code) }}" class="form-control"/>
+        </div>
+    </div>
+    <div class="col-12 col-md-1">
+        <div class="form-group">
+            <label for="exampleSelect2">ID отделения</label>
+            <input type="text" name="delivery_point_id" value="{{ old('over', $order->delivery_point_id) }}" class="form-control"/>
+        </div>
+    </div>
 </div>
 <div class="row">
     <div class="col-12 col-md-3">
