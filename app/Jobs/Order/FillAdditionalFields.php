@@ -2,6 +2,7 @@
 
 namespace App\Jobs\Order;
 
+use App\Models\CourierDeliveryMethod;
 use App\Models\DeliveryPoint;
 use App\Models\Order;
 use Illuminate\Bus\Queueable;
@@ -48,8 +49,29 @@ class FillAdditionalFields implements ShouldQueue
                         'zip' => $deliveryPoint->zipCode,
                         'delivery_point_id' => $deliveryPoint->pointId,
                         'delivery_point_code' => $deliveryPoint->pointCode,
+                        'shipping_method' => $deliveryPoint->name . '_' . $order->delivery_type
                     ]);
                 }
+            }
+        } elseif ($order->delivery_type == Order::DELIVERY_COURIER) {
+            $state = null;
+            if (str_contains($order->city, 'обл')) {
+                [$city, $state] = explode(',', $order->city);
+            } else {
+                $city = $order->city;
+            }
+
+            $courierDeliveryMethod = CourierDeliveryMethod::whereJsonContains('cities', trim($city))->first();
+            if (!$courierDeliveryMethod && $state)
+                $courierDeliveryMethod = CourierDeliveryMethod::whereJsonContains('states', trim($state))->first();
+            if (!$courierDeliveryMethod)
+                $courierDeliveryMethod = CourierDeliveryMethod::whereJsonContains('countries', 'Россия')->first();
+
+            if ($courierDeliveryMethod) {
+                $order->update([
+                    'service' => $courierDeliveryMethod->delivery_method_id,
+                    'shipping_method' => $courierDeliveryMethod->prefix . '_' . $order->delivery_type
+                ]);
             }
         }
     }

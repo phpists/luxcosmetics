@@ -70,8 +70,8 @@
             <label for="exampleSelect2">Сервис</label>
             <select class="form-control select2" name="service">
                 <option></option>
-                @foreach(\App\Models\Order::ALL_DELIVERY_SERVICES as $service_name => $service_title)
-                    <option value="{{ $service_name }}" @selected(old('service', $order->service) == $service_name)>{{ $service_title }}</option>
+                @foreach(\App\Models\DeliveryMethod::all() as $deliveryMethod)
+                    <option value="{{ $deliveryMethod->id }}" @selected(old('service', $order->service) == $deliveryMethod->id)>{{ $deliveryMethod->title }}</option>
                 @endforeach
             </select>
         </div>
