@@ -19,7 +19,6 @@ class OrderService
         $orders = $orders->map(function ($order) {
             $order->delivery_method = $order->delivery_type;
             $order->delivery_type = $order->service;
-            $order->shipping_method = "{$order->delivery_type}_{$order->delivery_method}";
             $order->products = $order->orderProducts->map(function (OrderProduct $orderProduct) {
                 return [
                     'code' => $orderProduct->product->code,

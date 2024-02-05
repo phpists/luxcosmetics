@@ -97,7 +97,8 @@ class Order extends Model
         'over',
         'service',
         'delivery_point_id',
-        'delivery_point_code'
+        'delivery_point_code',
+        'shipping_method'
     ];
 
 

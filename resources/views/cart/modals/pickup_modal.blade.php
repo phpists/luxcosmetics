@@ -26,7 +26,7 @@
                     </svg>
                     <div class="dropdown" id="post_offices">
                         @foreach(\App\Models\DeliveryMethod::getAll() as $deliveryMethod)
-                        <div class="select-delivery-type-opt @if($loop->first) active @endif" data-value="{{ $deliveryMethod->name }}" data-type="{{ $deliveryMethod->title }}">
+                        <div class="select-delivery-type-opt @if($loop->first) active @endif" data-value="{{ $deliveryMethod->id }}" data-type="{{ $deliveryMethod->title }}">
                             {{ $deliveryMethod->title }}</div>
                         @endforeach
                     </div>

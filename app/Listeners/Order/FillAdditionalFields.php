@@ -8,6 +8,7 @@ use App\Models\Order;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Str;
+use PhpOffice\PhpSpreadsheet\Style\Fill;
 
 class FillAdditionalFields
 {
@@ -24,6 +25,6 @@ class FillAdditionalFields
      */
     public function handle(OrderCreated $event): void
     {
-        \App\Jobs\Order\FillAdditionalFields::dispatch($event->order);
+        dispatch(new \App\Jobs\Order\FillAdditionalFields($event->order));
     }
 }
