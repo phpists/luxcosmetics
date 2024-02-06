@@ -48,7 +48,7 @@ class FillAdditionalFields implements ShouldQueue
                     'zip' => $deliveryPoint->zipCode,
                     'delivery_point_id' => $deliveryPoint->pointId,
                     'delivery_point_code' => $deliveryPoint->pointCode,
-                    'shipping_method' => $deliveryPoint->name . '_' . $order->delivery_type
+                    'shipping_method' => $deliveryPoint->lms . '_' . $order->delivery_type
                 ]);
             }
         } elseif ($order->delivery_type == Order::DELIVERY_COURIER) {
