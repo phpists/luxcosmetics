@@ -21,7 +21,7 @@ class OrderService
 
             $order->payment_method = 'checkmo';
             $order->delivery_method = $order->delivery_type;
-            $order->delivery_type = $order->service;
+            $order->delivery_type = $order->deliveryMethod->name;
             $order->products = $order->orderProducts->map(function (OrderProduct $orderProduct) {
                 return [
                     'code' => $orderProduct->product->code,
