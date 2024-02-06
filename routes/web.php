@@ -312,8 +312,8 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function 
 
         /** Courier Delivery Methods */
         Route::resource('courier-delivery-methods', \App\Http\Controllers\Admin\Settings\CourierDeliveryMethodController::class);
-//        Route::get('get-states', [\App\Http\Controllers\Admin\Settings\CourierDeliveryMethodController::class, 'getStates']);
-//        Route::get('get-cities', [\App\Http\Controllers\Admin\Settings\CourierDeliveryMethodController::class, 'getCities']);
+        Route::get('get-states', [\App\Http\Controllers\Admin\Settings\CourierDeliveryMethodController::class, 'getStates']);
+        Route::get('get-cities', [\App\Http\Controllers\Admin\Settings\CourierDeliveryMethodController::class, 'getCities']);
         /** /Courier Delivery Methods */
 
 

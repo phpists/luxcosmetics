@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin\Settings;
 use App\Http\Controllers\Controller;
 use App\Models\CourierDeliveryMethod;
 use App\Models\DeliveryMethod;
+use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 
 class CourierDeliveryMethodController extends Controller
@@ -54,29 +55,38 @@ class CourierDeliveryMethodController extends Controller
 
     public function getStates(Request $request)
     {
-        return [
-            'data' => [
-                'results' => [
-                    'Московская область',
-                    'Белгородская область',
-                    'Воронежская область',
-                ]
-            ]
-        ];
+        $client = new Client();
+        $response = $client->post('https://suggest-maps.yandex.ru/v1/suggest', [
+            'query' => $request->all()
+        ]);
+
+        $result = json_decode($response->getBody()->getContents(), true) ?? [];
+
+        if (isset($result['results'])) {
+            $result = \Arr::map($result['results'], function ($item) {
+                return $item['title']['text'];
+            });
+        }
+
+        return $result;
     }
 
     public function getCities(Request $request)
     {
-        return [
-            'data' => [
-                'results' => [
-                    'Москва',
-                    'Санкт-Петербург',
-                    'Воронеж',
-                    'Белгород'
-                ]
-            ]
-        ];
+        $client = new Client();
+        $response = $client->post('https://suggest-maps.yandex.ru/v1/suggest', [
+            'query' => $request->all()
+        ]);
+
+        $result = json_decode($response->getBody()->getContents(), true) ?? [];
+
+        if (isset($result['results'])) {
+            $result = \Arr::map($result['results'], function ($item) {
+                return $item['title']['text'];
+            });
+        }
+
+        return $result;
     }
 
 }
