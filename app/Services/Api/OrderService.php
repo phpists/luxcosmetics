@@ -22,7 +22,10 @@ class OrderService
             $order->payment_method = 'checkmo';
             $order->delivery_method = $order->delivery_type;
             $order->delivery_type = $order->deliveryMethod->name;
-            $order->pickup_point_id = $order->delivery_point_id;
+
+            if ($order->delivery_type == Order::DELIVERY_SELF_PICKUP)
+                $order->pickup_point_id = $order->delivery_point_id;
+
             $order->products = $order->orderProducts->map(function (OrderProduct $orderProduct) {
                 return [
                     'code' => $orderProduct->product->code,
