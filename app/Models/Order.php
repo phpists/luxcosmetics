@@ -281,5 +281,10 @@ class Order extends Model
         return false;
     }
 
+    public function deliveryMethod()
+    {
+        return $this->belongsTo(DeliveryMethod::class, 'service', 'id');
+    }
+
 
 }

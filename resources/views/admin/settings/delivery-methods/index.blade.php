@@ -75,6 +75,11 @@
                                         Статус
                                     </th>
                                         @endif
+                                        @if(auth()->user()->isSuperAdmin() || auth()->user()->can(\App\Services\Admin\PermissionService::DELIVERY_METHODS_EDIT))
+                                    <th class="pr-0 text-center">
+                                        Действия
+                                    </th>
+                                        @endif
                                 </tr>
                                 </thead>
                                 <tbody id="table" class="banner-table" data-update-positions-url="{{ route('admin.delivery-methods.update-positions') }}">
@@ -96,7 +101,7 @@
                                         <td class="text-center pl-0">
                                             {{ $item->id }}
                                         </td>
-                                        <td class="pr-0">
+                                        <td class="text-center pr-0">
                                             {{ $item->title }}
                                         </td>
                                             @if(auth()->user()->isSuperAdmin() || auth()->user()->can(\App\Services\Admin\PermissionService::DELIVERY_METHODS_EDIT))
@@ -109,6 +114,18 @@
                                                 </label>
                                             </span>
                                             </div>
+                                        </td>
+                                            @endif
+                                            @if(auth()->user()->isSuperAdmin() || auth()->user()->can(\App\Services\Admin\PermissionService::DELIVERY_METHODS_EDIT))
+                                        <td class="text-center pr-0">
+                                            <form action="{{ route('admin.delivery-methods.destroy', $item) }}" method="POST" style="display: inline">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-sm btn-clean btn-icon btn_delete"
+                                                        onclick="return confirm('Вы уверенны?')"
+                                                        title="Delete"><i class="las la-trash"></i>
+                                                </button>
+                                            </form>
                                         </td>
                                             @endif
                                     </tr>
