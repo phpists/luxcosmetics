@@ -135,8 +135,7 @@
             $(".select2-states").select2({
                 placeholder: "Добавьте области",
                 ajax: {
-                    url: "https://suggest-maps.yandex.ru/v1/suggest",
-                    // url: "/admin/get-states",
+                    url: "/admin/get-states",
                     dataType: 'json',
                     delay: 250,
                     data: function(params) {
@@ -148,7 +147,7 @@
                     },
                     processResults: function(result, params) {
                         return {
-                            results: result.data.results.map((item) => {
+                            results: result.map((item) => {
                                 return {
                                     text: item,
                                     id: item
@@ -164,8 +163,7 @@
             $(".select2-cities").select2({
                 placeholder: "Добавьте города",
                 ajax: {
-                    url: "https://suggest-maps.yandex.ru/v1/suggest",
-                    // url: "/admin/get-cities",
+                    url: "/admin/get-cities",
                     dataType: 'json',
                     delay: 250,
                     data: function(params) {
@@ -177,7 +175,7 @@
                     },
                     processResults: function(result, params) {
                         return {
-                            results: result.data.results.map((item) => {
+                            results: result.map((item) => {
                                 return {
                                     text: item,
                                     id: item

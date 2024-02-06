@@ -68,7 +68,7 @@ class FillAdditionalFields implements ShouldQueue
             if ($courierDeliveryMethod) {
                 $order->update([
                     'service' => $courierDeliveryMethod->delivery_method_id,
-                    'shipping_method' => $courierDeliveryMethod->prefix . '_' . $order->delivery_type
+                    'shipping_method' => $courierDeliveryMethod->prefix
                 ]);
             }
         }

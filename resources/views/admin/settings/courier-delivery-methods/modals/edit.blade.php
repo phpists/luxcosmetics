@@ -57,10 +57,9 @@
                         </div>
                         <div class="col-12">
                             <div class="form-group w-100">
-                                <label for="editPrefix" class=font-weight-bold">Префикс при передаче в 1С</label>
+                                <label for="editPrefix" class=font-weight-bold">Значение при передаче в 1С</label>
                                 <div class="input-group">
-                                    <input id="editPrefix" type="text" class="form-control" name="prefix"/>
-                                    <div class="input-group-append"><span class="input-group-text">_courier</span></div>
+                                    <input id="editPrefix" type="text" class="form-control" placeholder="cdek_courier" name="prefix"/>
                                 </div>
                             </div>
                         </div>
