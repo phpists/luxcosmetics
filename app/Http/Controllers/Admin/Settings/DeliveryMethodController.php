@@ -62,4 +62,13 @@ class DeliveryMethodController extends Controller
             ]);
     }
 
+    public function destroy(Request $request, DeliveryMethod $deliveryMethod)
+    {
+        if ($deliveryMethod->delete()) {
+            return to_route('admin.delivery-methods.index')->with('success', 'Метод удален');
+        }
+
+        return back()->with('error', 'Не удалось удалить метод');
+    }
+
 }

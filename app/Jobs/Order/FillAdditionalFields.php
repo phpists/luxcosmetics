@@ -33,25 +33,23 @@ class FillAdditionalFields implements ShouldQueue
         $order = $this->order;
 
         if ($order->delivery_type == Order::DELIVERY_SELF_PICKUP) {
-            if ($order->service == Order::DELIVERY_SERVICE_CDEK) {
-                $deliveryPoint = DeliveryPoint::whereLms('cdek')
-                    ->whereCityname($order->city)
-                    ->where(function ($q) use($order) {
-                        $formattedStreet = $this->clearStreet($order->street);
+            $deliveryPoint = DeliveryPoint::whereLms($order->deliveryMethod->name)
+                ->whereCityname($order->city)
+                ->where(function ($q) use($order) {
+                    $formattedStreet = $this->clearStreet($order->street);
 
-                        $q->where('fullAddress', 'LIKE', "%{$formattedStreet}%")
-                            ->where('fullAddress', 'LIKE', "%{$order->house}%");
-                    })
-                    ->first();
+                    $q->where('fullAddress', 'LIKE', "%{$formattedStreet}%")
+                        ->where('fullAddress', 'LIKE', "%{$order->house}%");
+                })
+                ->first();
 
-                if ($deliveryPoint) {
-                    $order->update([
-                        'zip' => $deliveryPoint->zipCode,
-                        'delivery_point_id' => $deliveryPoint->pointId,
-                        'delivery_point_code' => $deliveryPoint->pointCode,
-                        'shipping_method' => $deliveryPoint->name . '_' . $order->delivery_type
-                    ]);
-                }
+            if ($deliveryPoint) {
+                $order->update([
+                    'zip' => $deliveryPoint->zipCode,
+                    'delivery_point_id' => $deliveryPoint->pointId,
+                    'delivery_point_code' => $deliveryPoint->pointCode,
+                    'shipping_method' => $deliveryPoint->name . '_' . $order->delivery_type
+                ]);
             }
         } elseif ($order->delivery_type == Order::DELIVERY_COURIER) {
             $state = null;

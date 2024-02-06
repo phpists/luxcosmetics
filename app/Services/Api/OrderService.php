@@ -17,6 +17,9 @@ class OrderService
             ->get();
 
         $orders = $orders->map(function ($order) {
+            $order->makeHiddenIf($order->delivery_type == Order::DELIVERY_COURIER, ['delivery_point_id', 'delivery_point_code']);
+
+            $order->payment_method = 'checkmo';
             $order->delivery_method = $order->delivery_type;
             $order->delivery_type = $order->service;
             $order->products = $order->orderProducts->map(function (OrderProduct $orderProduct) {

@@ -234,7 +234,7 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function 
 
     // Delivery methods
     Route::resource('delivery-methods', \App\Http\Controllers\Admin\Settings\DeliveryMethodController::class, [
-        'only' => ['index', 'update'],
+        'only' => ['index', 'update', 'destroy'],
         'as' => 'admin',
     ]);
     Route::post('delivery-methods/update-positions', [\App\Http\Controllers\Admin\Settings\DeliveryMethodController::class, 'updatePositions'])
@@ -312,8 +312,8 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function 
 
         /** Courier Delivery Methods */
         Route::resource('courier-delivery-methods', \App\Http\Controllers\Admin\Settings\CourierDeliveryMethodController::class);
-        Route::get('get-states', [\App\Http\Controllers\Admin\Settings\CourierDeliveryMethodController::class, 'getStates']);
-        Route::get('get-cities', [\App\Http\Controllers\Admin\Settings\CourierDeliveryMethodController::class, 'getCities']);
+//        Route::get('get-states', [\App\Http\Controllers\Admin\Settings\CourierDeliveryMethodController::class, 'getStates']);
+//        Route::get('get-cities', [\App\Http\Controllers\Admin\Settings\CourierDeliveryMethodController::class, 'getCities']);
         /** /Courier Delivery Methods */
 
 
