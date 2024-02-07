@@ -189,7 +189,7 @@ class PermissionService
                 self::MENUS_EDIT => 'Редактирование',
                 self::MENUS_DELETE => 'Удаление',
             ],
-            'Способі доставки' => [
+            'Способы доставки' => [
                 self::DELIVERY_METHODS_VIEW => 'Просмотр',
                 self::DELIVERY_METHODS_EDIT => 'Редактирование'
             ]
