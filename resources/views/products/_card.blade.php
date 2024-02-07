@@ -113,7 +113,7 @@
                         </button>
                         @else
                             <button class="product__addcart" disabled style="cursor:not-allowed; background-color: #b2b2b2">
-                                <span>Нету в наличии</span>
+                                <span>Нет в наличии</span>
                             </button>
                         @endif
                     </div>
@@ -126,7 +126,7 @@
                             </button>
                         @else
                             <button class="product__addcart" disabled style="cursor:not-allowed; background-color: #b2b2b2">
-                                <span>Нету в наличии</span>
+                                <span>Нет в наличии</span>
                             </button>
                         @endif
                     </div>
@@ -154,7 +154,7 @@
                         </button>
                     @else
                         <button class="product__addcart" disabled style="cursor:not-allowed; background-color: #b2b2b2">
-                            <span>Нету в наличии</span>
+                            <span>Нет в наличии</span>
                         </button>
                     @endif
                 </div>
@@ -168,7 +168,7 @@
                         </button>
                     @else
                         <button class="product__addcart" disabled style="cursor:not-allowed; background-color: #b2b2b2">
-                            <span>Нету в наличии</span>
+                            <span>Нет в наличии</span>
                         </button>
                     @endif
                 </div>
@@ -182,7 +182,7 @@
                     </button>
                 @else
                     <button class="product__addcart" disabled style="cursor:not-allowed; background-color: #b2b2b2">
-                        <span>Нету в наличии</span>
+                        <span>Нет в наличии</span>
                     </button>
                 @endif
             </div>

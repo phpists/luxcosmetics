@@ -35,6 +35,7 @@ $(function () {
     })
 
     $(document).on('click', '.plusQuantity', function (e) {
+        console.log('test')
         e.preventDefault()
 
         let $item = $(this).parents($(this).data('element'))
@@ -404,5 +405,6 @@ function disableCheckout(message) {
 }
 
 function loadGifts() {
-    $('#giftsContainer').load($('#giftsUrl').val())
+    if ($('#giftsContainer').length > 0)
+        $('#giftsContainer').load($('#giftsUrl').val())
 }
