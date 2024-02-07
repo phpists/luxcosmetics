@@ -46,6 +46,7 @@ class OrderService
             });
             $order->unsetRelation('giftProducts');
             $order->unsetRelation('orderProducts');
+            $order->unsetRelation('deliveryMethod');
 
             return $order;
         });
