@@ -242,6 +242,9 @@ const loadDeliveryPlaces = async () => {
 
 function locationItemInit(el) {
     el.addEventListener('click', async () => {
+        $('input:radio[name="delivery"]').prop('checked', false)
+        closeCartTab('coruier_tab');
+
         document.querySelector('.find-address-input').value = el.dataset.value;
         let prompt = document.getElementById('suggest_location');
         prompt.innerHTML = "";
