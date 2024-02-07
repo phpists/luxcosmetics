@@ -15,7 +15,7 @@
     <div class="numbers addprod__numbers">
         <div class="numbers__minus minusQuantity" data-element="div.addprod__wrap:first"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#minus')}}"></use></svg></div>
         <input type="text" class="numbers__input currentQuantity" value="1">
-        <div class="numbers__plus plusQuantity" data-element="div.addprod__wrap:first"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#plus')}}"></use></svg></div>
+        <div class="numbers__plus plusQuantity" data-element="div.addprod__wrap:first" data-end="{{ $product->items_left }}"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#plus')}}"></use></svg></div>
     </div>
     <div class="addprod__price"><span id="modalCurrentProductSum">{{ $product->price }}</span> ₽ </div>
 </div>

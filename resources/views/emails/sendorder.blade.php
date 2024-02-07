@@ -5,7 +5,7 @@
         Вы зделали заказ на сайте {{ config('app.name') }}
     </h2>
     <h2 style="text-align: center">
-        Ваш статус, ОПЛАЧЕН!!!
+        Ваш статус, НЕ ОПЛАЧЕН!!!
     </h2>
     <p style="text-align: center">
             Спасибо за покупку

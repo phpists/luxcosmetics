@@ -171,6 +171,10 @@
         }
         $(document).ready(function () {
 
+            $(document).on('click', 'a.radio', function (e) {
+                $(this).find('input:radio').prop('checked', true)
+            })
+
 
             $(document).on('submit', '#orderForm', function (e) {
                 let address = $('#final_addr').val();
