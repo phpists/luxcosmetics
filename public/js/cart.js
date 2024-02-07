@@ -35,7 +35,6 @@ $(function () {
     })
 
     $(document).on('click', '.plusQuantity', function (e) {
-        console.log('test')
         e.preventDefault()
 
         let $item = $(this).parents($(this).data('element'))
@@ -117,7 +116,6 @@ $(function () {
         }
 
         if ($form.find('input[name="card_id"]')) {
-            console.log(data)
             if (findValueByName('card_id', data) === null) {
                 let $submitAddressButton = $('#createCardForm').find('button[type="submit"]')
                 if (!$submitAddressButton.is(':focusable'))

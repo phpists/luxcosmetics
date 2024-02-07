@@ -58,7 +58,7 @@
                     <img src="{{asset('images/dist/logo.svg')}}" alt="">
                 </div>
                 <div class="footer__btm">
-                    <div class="footer__copyright">Luxe cosmetics © 2023 Все права защищены</div>
+                    <div class="footer__copyright">{{ config('app.name') }} © {{ date('Y') }} Все права защищены</div>
                     <div class="footer__policy"><a href="/pages/policy">Политика конфиденциальности</a></div>
                 </div>
             </div>
