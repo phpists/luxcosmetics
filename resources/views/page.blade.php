@@ -17,17 +17,12 @@
         </div>
     </section>
     <section class="content-page">
-        <div class="container">
+        <div class="container typography">
             <div class="row">
-                <div class="col-lg-10">
+                <div class="col-lg-12">
                     <h1 class="title-h1">{{ $page->title }}</h1>
-                    <div class="content-page__preview">
-                        <img src="images/dist/tmp.jpg" alt="">
-                    </div>
-                    <div class="typography">
-                        {!! $page->content !!}
-                    </div>
                 </div>
+                {!! $page->content !!}
             </div>
         </div>
     </section>
