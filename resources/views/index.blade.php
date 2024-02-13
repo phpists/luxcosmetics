@@ -46,7 +46,7 @@
                                 </picture>
                             </div>
                             <div class="article__title"><a href="{{ $selectedItem->link }}">{{ $selectedItem->title }}</a></div>
-                            <div class="article__intro">{{ Str::limit(strip_tags($selectedItem->text), $limit = 130, $end = '...') }}</div>
+                            <div class="article__intro">{{ strip_tags($selectedItem->text) }}</div>
                         </div>
                         <a href="{{ $selectedItem->link }}" class="article__more">Подробнее</a>
                     </div>
@@ -65,7 +65,7 @@
                                 </picture>
                             </div>
                             <div class="article__title"><a href="{{ $selectedItem->link }}">{{ $selectedItem->title }}</a></div>
-                            <div class="article__intro">{{ Str::limit(strip_tags($selectedItem->text), $limit = 130, $end = '...') }}</div>
+                            <div class="article__intro">{{ strip_tags($selectedItem->text) }}</div>
                         </div>
                         <a href="{{ $selectedItem->link }}" class="article__more">Подробнее</a>
                     </div>
@@ -86,7 +86,7 @@
                                 </picture>
                             </div>
                             <div class="article__title"><a href="{{ $selectedItem->link }}">{{ $selectedItem->title }}</a></div>
-                            <div class="article__intro">{{ Str::limit(strip_tags($selectedItem->text), $limit = 150, $end = '...') }}</div>
+                            <div class="article__intro">{{ strip_tags($selectedItem->text) }}</div>
                         </div>
                         <a href="{{ $selectedItem->link }}" class="article__more">Подробнее</a>
                     </div>
@@ -105,7 +105,7 @@
                                 </picture>
                             </div>
                             <div class="article__title"><a href="{{ $selectedItem->link }}">{{ $selectedItem->title }}</a></div>
-                            <div class="article__intro">{{ Str::limit(strip_tags($selectedItem->text), $limit = 150, $end = '...') }}</div>
+                            <div class="article__intro">{{ strip_tags($selectedItem->text) }}</div>
                         </div>
                         <a href="{{ $selectedItem->link }}" class="article__more">Подробнее</a>
                     </div>
@@ -124,7 +124,7 @@
                                 </picture>
                             </div>
                             <div class="article__title"><a href="{{ $selectedItem->link }}">{{ $selectedItem->title }}</a></div>
-                            <div class="article__intro">{{ Str::limit(strip_tags($selectedItem->text), $limit = 150, $end = '...') }}</div>
+                            <div class="article__intro">{{ strip_tags($selectedItem->text) }}</div>
                         </div>
                         <a href="{{ $selectedItem->link }}" class="article__more">Подробнее</a>
                     </div>

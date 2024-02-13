@@ -5,6 +5,8 @@ namespace App\Http;
 use App\Http\Middleware\CanCheckout;
 use App\Http\Middleware\EnsureActiveUser;
 use App\Http\Middleware\SuperAdmin;
+use App\Http\Middleware\ValidatePaykeeperSignature;
+use App\Http\Middleware\VerifyApiRequest;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -42,6 +44,8 @@ class Kernel extends HttpKernel
         ],
 
         'api' => [
+            VerifyApiRequest::class,
+            \App\Http\Middleware\ForceJsonResponse::class,
             // \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
             \Illuminate\Routing\Middleware\ThrottleRequests::class.':api',
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
@@ -69,6 +73,7 @@ class Kernel extends HttpKernel
         'admin' => \App\Http\Middleware\Admin::class,
         'is_active_user' => EnsureActiveUser::class,
         'can-checkout' => CanCheckout::class,
-        'is-super-admin' => SuperAdmin::class
+        'is-super-admin' => SuperAdmin::class,
+        'paykeeper' => ValidatePaykeeperSignature::class
     ];
 }

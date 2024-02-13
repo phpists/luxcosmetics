@@ -30,20 +30,14 @@
                             </ul>
                         </div>
                     @endforeach
-                    <div class="footer__menu">
-                        <h4 class="footer__menutitle">Помощь <svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#arrow')}}"></use></svg></h4>
-                        <ul>
-                            @foreach($static_pages as $sub_item)
-                                <li><a href="/pages/{{$sub_item->link}}">{{$sub_item->title}}</a></li>
-                            @endforeach
-{{--                            <li><a href="">О компании</a></li>--}}
-{{--                            <li><a href="">Сервис</a></li>--}}
-{{--                            <li><a href="">Доставка и оплата</a></li>--}}
-{{--                            <li><a href="">Возврат</a></li>--}}
-{{--                            <li><a href="">Вакансии</a></li>--}}
-{{--                            <li><a href="">Связаться с нами</a></li>--}}
-                        </ul>
-                    </div>
+{{--                    <div class="footer__menu">--}}
+{{--                        <h4 class="footer__menutitle">Помощь <svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#arrow')}}"></use></svg></h4>--}}
+{{--                        <ul>--}}
+{{--                            @foreach($static_pages as $sub_item)--}}
+{{--                                <li><a href="/pages/{{$sub_item->link}}">{{$sub_item->title}}</a></li>--}}
+{{--                            @endforeach--}}
+{{--                        </ul>--}}
+{{--                    </div>--}}
                 </div>
             </div>
 
@@ -64,8 +58,8 @@
                     <img src="{{asset('images/dist/logo.svg')}}" alt="">
                 </div>
                 <div class="footer__btm">
-                    <div class="footer__copyright">Luxe cosmetics © 2023 Все права защищены</div>
-                    <div class="footer__policy"><a href="">Политика конфиденциальности</a></div>
+                    <div class="footer__copyright">{{ config('app.name') }} © {{ date('Y') }} Все права защищены</div>
+                    <div class="footer__policy"><a href="/pages/policy">Политика конфиденциальности</a></div>
                 </div>
             </div>
         </div>

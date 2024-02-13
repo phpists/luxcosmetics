@@ -40,8 +40,8 @@
 {{--                                <li><a href="">Уход за волосами</a></li>--}}
 {{--                                <li><a href="">Ароматы для дома</a></li>--}}
                             </ul>
-                            <div class="filters" id="filters">
-                                @include('categories.parts.filter')
+                            <div class="filters" id="filters" style="height: 100%!important;">
+                                @include('categories.parts.filter', ['is_not_brands' => true])
                             </div>
 
                             <div class="category-page__image"><img src="" alt=""></div>
@@ -163,116 +163,5 @@
 
 @section('scripts')
     <script src="{{asset('/js/favourites.js')}}"></script>
-    <script>
-        $(document).ready(function () {
-            $(document).on('click', '.pagination__more', function () {
-                let is_disabled = $('.pagination__item--next').attr('aria-disabled')
-                if(is_disabled === 'false') {
-                    let url = this.dataset.url
-                    $.ajax({
-                        url: url,
-                        data: {
-                            load_more: true
-                        },
-                        success: function (response) {
-                            $('#catalog div.category-page__products').append(response.products)
-                            $('#catalog div.category-page__pagination').remove()
-                            $('#catalog').append(response.pagination)
-                            let currentlyShowedCount = parseInt($('#currentlyShowedCount').text());
-                            $('#currentlyShowedCount').text(currentlyShowedCount + response.new_count)
-                        },
-                        error: function (response) {
-                            console.log(response)
-                        }
-                    })
-                }
-            })
-
-            $(document).on('click', '.pagination__item', function(e) {
-                e.preventDefault();
-                let url = $(this).find('a').attr('href');
-
-                if (url !== '#') {
-                    $.ajax({
-                        url: url,
-                        data: {
-                            change_page: true
-                        },
-                        beforeSend: function () {
-                            $('#catalog').addClass('loading')
-                        },
-                        success: function (response) {
-                            $('#catalog').html(response.html)
-                            $("html, body").animate({ scrollTop: 0 }, "slow");
-                        },
-                        error: function (response) {
-                            console.log(response)
-                        },
-                        complete: function () {
-                            $('#catalog').removeClass('loading')
-                        }
-                    })
-                }
-
-                return false
-            })
-
-            $(document).on('change', '#select_sort_preview', function(e) {
-                $('#filterForm input[name="sort"]').val(this.value)
-                $('#filterForm').trigger('change')
-            })
-
-            $(document).on('slidechange', '#slider-range', function(e) {
-                $('#filterForm').trigger('change')
-            })
-            $(document).on('change', '#amount', function(e) {
-                $('#filterForm').trigger('change')
-                $('#slider-range').slider( "values", 0, this.value);
-            })
-            $(document).on('change', '#amount2', function(e) {
-                $('#filterForm').trigger('change')
-                $('#slider-range').slider( "values", 1, this.value);
-            })
-
-            $(document).on('change', '#filterForm', function(e) {
-                let data = $(this).serializeArray();
-                data.push({
-                    name: "load", value: true
-                });
-
-                const uri_data = new FormData(this);
-                const urlSearchParams = new URLSearchParams(window.location.search).toString();
-                let queryString = new URLSearchParams(uri_data).toString();
-                if (urlSearchParams.length > 0) {
-                    queryString = queryString + '&' + urlSearchParams;
-                }
-
-                let uri = location.pathname + '?' + queryString
-
-                $.ajax({
-                    type: 'GET',
-                    data: data,
-                    beforeSend: function () {
-                        $('#catalog').addClass('loading')
-                    },
-                    success: function (response) {
-                        $('#catalog').html(response.html)
-                    },
-                    complete: function () {
-                        $('#catalog').removeClass('loading')
-                        history.replaceState(null, null, uri)
-                    }
-                })
-            })
-
-            $(document).on('submit', '#filterForm', function(e) {
-                e.preventDefault()
-                $(this).trigger('change')
-                return false
-            })
-
-
-
-        })
-    </script>
+    <script src="{{asset('/js/catalog.js')}}"></script>
 @endsection

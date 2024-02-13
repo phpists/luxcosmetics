@@ -31,7 +31,7 @@
                             @csrf
                         <div class="cartsteps__item cartstep">
                             <div class="cartstep__item">
-                                <div class="cartstep__title">для выбранного ПВЗ доступна только онлайн оплата</div>
+                                <div class="cartstep__title">Выбрать способ оплаты</div>
                                 <div class="cartstep__paymethods">
                                     @foreach(\App\Models\Order::ALL_PAYMENTS as $value => $title)
                                     <label class="radio">

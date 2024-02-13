@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\DB;
 class ProductFilterService
 {
 
-    const PER_PAGE = 12;
+    const PER_PAGE = 24;
     const PRICE_FROM = 0;
     const PRICE_TO = 750000;
 

@@ -507,7 +507,7 @@
                                             <label class="col-form-label text-right col-auto">{{$property->name}}</label>
                                             <div class="col">
                                             <select class="form-control select2 property_values" id="prop_{{$property->id}}" name="property[{{ $property->id }}]">
-                                                <option value=""></option>
+                                                <option value="0">Без значения</option>
                                                 @foreach($property->values as $value)
                                                     <option value="{{ $value->id }}" @if($product->values->contains(function($item, $ket) use ($value) { return $item->id === $value->id; })) selected @endif>{{ $value->value }}</option>
                                                 @endforeach
@@ -702,9 +702,9 @@
 
                 console.log(data);
 
-                if (!data.element) {
-                    let property_id = $(this).parents('div.props-select').data('property-id')
+                let property_id = $(this).parents('div.props-select').data('property-id')
 
+                if (!data.element) {
                     $.ajax({
                         type: 'POST',
                         url: '{{ route('admin.property-values.store') }}',
@@ -714,12 +714,12 @@
                         },
                         success: function (response) {
                             if (response) {
-                                setPropertyValue(product_id, response.id)
+                                setPropertyValue(product_id, response.id, property_id)
                             }
                         }
                     })
                 } else {
-                    setPropertyValue(product_id, data.id)
+                    setPropertyValue(product_id, data.id, property_id)
                 }
             });
 
@@ -954,13 +954,14 @@
         }
 
 
-        function setPropertyValue(product_id, property_value_id) {
+        function setPropertyValue(product_id, property_value_id, property_id) {
             $.ajax({
                 type: 'POST',
                 url: '{{ route('admin.product-property-values.store') }}',
                 data: {
                     product_id: product_id,
-                    property_value_id: property_value_id
+                    property_value_id: property_value_id,
+                    property_id: property_id
                 },
                 success: function (response) {
                     console.log('property saved successfully')

@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Enums\AvailableOptions;
+use App\Events\OrderCreated;
 use App\Models\Address;
 use App\Models\Category;
 use App\Models\Order;
@@ -34,6 +35,30 @@ class CartService
     const PROMO_KEY = 'cart_promo';
 
 
+    const ADDRESS_CITY = 'city';
+    const ADDRESS_STREET = 'street';
+    const ADDRESS_HOUSE = 'house';
+    const ADDRESS_ZIP = 'zip';
+    const ADDRESS_APARTMENT = 'apartment';
+    const ADDRESS_INTERCOM = 'intercom';
+    const ADDRESS_ENTRANCE = 'entrance';
+    const ADDRESS_OVER = 'over';
+
+    const ADDRESS_SERVICE = 'service';
+
+    const ADDRESS_FIELDS = [
+        self::ADDRESS_CITY,
+        self::ADDRESS_STREET,
+        self::ADDRESS_HOUSE,
+        self::ADDRESS_ZIP,
+        self::ADDRESS_APARTMENT,
+        self::ADDRESS_INTERCOM,
+        self::ADDRESS_ENTRANCE,
+        self::ADDRESS_OVER,
+        self::ADDRESS_SERVICE
+    ];
+
+
     const ALL_KEYS = [
         self::ADDRESS_KEY => 'Адрес',
         self::GIFT_BOX_KEY => 'Подарочная коробка',
@@ -45,6 +70,15 @@ class CartService
         self::EMAIL_KEY => 'E-mail',
         self::PAYMENT_TYPE => 'Способ оплаты',
         self::DELIVERY_KEY => 'Способ доставки',
+        self::ADDRESS_CITY => 'Город',
+        self::ADDRESS_STREET => 'Улица',
+        self::ADDRESS_HOUSE => 'Дом',
+        self::ADDRESS_APARTMENT => 'Ктвртира/Офис',
+        self::ADDRESS_ZIP => 'Индекс',
+        self::ADDRESS_INTERCOM => 'Домофон',
+        self::ADDRESS_ENTRANCE => 'Подъезд',
+        self::ADDRESS_OVER => 'Этаж',
+        self::ADDRESS_SERVICE => 'Сервис доставки'
     ];
 
     public $discounts = [];
@@ -283,7 +317,7 @@ class CartService
     public function canNotCheckoutMessage(): ?string
     {
         if ($this->containUnavailable())
-            return 'Невозможно оформить заказ, так как в корзине присутствует товар которого больше недоступен';
+            return 'Невозможно оформить заказ, так как в корзине присутствует товар который больше недоступен';
 
         return null;
     }
@@ -303,7 +337,7 @@ class CartService
         return $product->save();
     }
 
-    public function store(): ?int
+    public function store(): ?Order
     {
         if (!self::isNotEmpty())
             return null;
@@ -380,7 +414,9 @@ class CartService
             $this->dropBonuses();
             $this->dropPromo();
 
-            return $order->id;
+            OrderCreated::dispatch($order);
+
+            return $order;
         } catch (\Exception $exception) {
             session()->flash('error', $exception->getMessage());
             return null;

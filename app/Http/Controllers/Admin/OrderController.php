@@ -34,8 +34,7 @@ class OrderController extends Controller
         if ($request->has('customer') && $request->get('customer') != '') {
             $customer = $request->get('customer');
             $query->where(function ($query) use ($customer) {
-                $query->where('full_name', 'LIKE', "%{$customer}%")
-                    ->orWhere('phone', 'LIKE', "%{$customer}%")
+                $query->orWhere('phone', 'LIKE', "%{$customer}%")
                     ->orWhere(function ($query) use ($customer) {
                         $query->whereHas('user', function ($query) use ($customer) {
                             $query->where('users.name', 'LIKE', "%{$customer}%")
@@ -108,6 +107,7 @@ class OrderController extends Controller
         $data = $request->post();
         $data['as_delivery_address'] = $request->boolean('as_delivery_address');
         $data['gift_box'] = $request->boolean('gift_box');
+        $data['is_received_by_1c'] = $request->boolean('is_received_by_1c');
         $orderProducts = collect($data['products']);
         unset($data['products']);
 
@@ -181,6 +181,7 @@ class OrderController extends Controller
         $data = $request->post();
         $data['as_delivery_address'] = $request->boolean('as_delivery_address');
         $data['gift_box'] = $request->boolean('gift_box');
+        $data['is_received_by_1c'] = $request->boolean('is_received_by_1c');
         $orderProducts = collect($data['products']);
         unset($data['products']);
 
@@ -233,6 +234,13 @@ class OrderController extends Controller
             $order->user->increment('points', $order->bonuses_given);
 
         return ['completed' => $order->isCompleted()];
+    }
+
+    public function destroy(Request $request, Order $order)
+    {
+        $order->delete();
+
+        return back()->with('success', "Заказ №{$order->id} удален");
     }
 
 }

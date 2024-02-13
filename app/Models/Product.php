@@ -16,7 +16,7 @@ class Product extends Model
     const TYPE_COLOR = 2;
 
     const ALL_TYPES = [
-        self::TYPE_VOLUME => 'Объем',
+        self::TYPE_VOLUME => 'Объём',
         self::TYPE_COLOR => 'Цвет'
     ];
 
@@ -65,6 +65,10 @@ class Product extends Model
         'spyrt',
         'expiry_date',
         'items_left'
+    ];
+
+    protected $hidden = [
+        'laravel_through_key'
     ];
 
     public function getImages(): Collection
@@ -121,6 +125,11 @@ class Product extends Model
         return $variations;
     }
 
+    public function propertyValues()
+    {
+        return $this->hasMany(ProductPropertyValue::class);
+    }
+
     public function values()
     {
         return $this->belongsToMany(PropertyValue::class, 'product_property_values', 'product_id', 'property_value_id');
@@ -143,6 +152,18 @@ class Product extends Model
 //        )
 //            ->where('product_property_values.property_id', 'products.base_property_id');
 //    }
+
+    public function basePropertyValue()
+    {
+        return $this->hasOneThrough(
+            PropertyValue::class,
+            ProductPropertyValue::class,
+            'product_id',
+            'id',
+            'id',
+            'property_value_id'
+        );
+    }
 
     public function getBaseValueAttribute()
     {
@@ -195,5 +216,19 @@ class Product extends Model
         return $this->items_left > 0;
     }
 
+    public function related_products()
+    {
+        return $this->hasMany(RelatedProduct::class, 'product_id');
+    }
+
+    public function similarProducts(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    {
+        return $this->belongsToMany(Product::class, 'related_products', 'product_id', 'relative_product_id')->where('relation_type', RelatedProduct::SIMILAR_ITEMS);
+    }
+
+    public function supportProducts(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    {
+        return $this->belongsToMany(Product::class, 'related_products', 'product_id', 'relative_product_id')->where('relation_type', RelatedProduct::SUPPORT_ITEMS);
+    }
 
 }

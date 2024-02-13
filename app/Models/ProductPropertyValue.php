@@ -11,4 +11,9 @@ class ProductPropertyValue extends Model
 
     protected $fillable = ['product_id', 'property_id', 'property_value_id'];
 
+    public function property(): \Illuminate\Database\Eloquent\Relations\HasOne
+    {
+        return $this->hasOne(Property::class);
+    }
+
 }

@@ -12,15 +12,23 @@ class PropertyValueController extends Controller
     public function store(Request $request)
     {
         $property_id = $request->post('property_id');
-        $value = $request->post('value');
+        $value = trim($request->post('value'));
 
-        $property_value = PropertyValue::create(compact('property_id', 'value'));
+        if ($value) {
+            $property_value = PropertyValue::create(compact('property_id', 'value'));
 
-        if ($request->ajax()) {
-            return response()->json($property_value);
+            if ($request->ajax()) {
+                return response()->json($property_value);
+            }
+
+            return back()->with('success', 'Значение успешно сохранено');
         }
 
-        return back()->with('success', 'Значение успешно сохранено');
+        if ($request->ajax()) {
+            return response()->json(['message' => 'Значение не может быть пустым'], 422);
+        }
+
+        return back()->with('error', 'Значение не может быть пустым');
     }
 
     public function update(Request $request)

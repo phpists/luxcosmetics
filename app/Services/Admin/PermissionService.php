@@ -85,6 +85,9 @@ class PermissionService
     const MENUS_EDIT = 'menus.edit';
     const MENUS_DELETE = 'menus.delete';
 
+    const DELIVERY_METHODS_VIEW = 'delivery-methods.view';
+    const DELIVERY_METHODS_EDIT = 'delivery-methods.edit';
+
 
 
     public static function getAll(): array
@@ -186,6 +189,10 @@ class PermissionService
                 self::MENUS_EDIT => 'Редактирование',
                 self::MENUS_DELETE => 'Удаление',
             ],
+            'Способы доставки' => [
+                self::DELIVERY_METHODS_VIEW => 'Просмотр',
+                self::DELIVERY_METHODS_EDIT => 'Редактирование'
+            ]
         ];
     }
 

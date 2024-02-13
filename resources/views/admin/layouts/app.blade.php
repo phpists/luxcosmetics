@@ -36,9 +36,9 @@
     <link rel="stylesheet" href="{{ asset('super_admin/css/main.min.css') }}" type="text/css">
     <link rel="stylesheet" href="{{ asset('super_admin/plugins/custom/uppy/uppy.bundle.css') }}" type="text/css">
     <link rel="stylesheet" href="{{ asset('super_admin/css/toastr.css') }}">
-@yield('styles')
+    @yield('styles')
 
-<!--end::Layout Themes-->
+    <!--end::Layout Themes-->
 </head>
 <!--end::Head-->
 <!--begin::Body-->
@@ -151,15 +151,15 @@
                                             </a>
                                         </li>
                                         @if(auth()->user()->isSuperAdmin())
-                                        <li class="menu-item {{ Str::is('admin.order_statuses.*', request()->route()->getName()) ? 'menu-item-active' : '' }}"
-                                            aria-haspopup="true">
-                                            <a href="{{ route('admin.order_statuses.index') }}" class="menu-link">
-                                                <i class="menu-bullet menu-bullet-dot">
-                                                    <span></span>
-                                                </i>
-                                                <span class="menu-text">Статусы</span>
-                                            </a>
-                                        </li>
+                                            <li class="menu-item {{ Str::is('admin.order_statuses.*', request()->route()->getName()) ? 'menu-item-active' : '' }}"
+                                                aria-haspopup="true">
+                                                <a href="{{ route('admin.order_statuses.index') }}" class="menu-link">
+                                                    <i class="menu-bullet menu-bullet-dot">
+                                                        <span></span>
+                                                    </i>
+                                                    <span class="menu-text">Статусы</span>
+                                                </a>
+                                            </li>
                                         @endif
                                     </ul>
                                 </div>
@@ -167,13 +167,13 @@
                         @endif
 
                         @if(auth()->user()->isSuperAdmin() || auth()->user()->can(\App\Services\Admin\PermissionService::PROMO_CODES_VIEW))
-                        <li class="menu-item {{ Str::is('admin.promo_codes.*', request()->route()->getName()) ? 'menu-item-active' : '' }}"
-                            aria-haspopup="true">
-                            <a href="{{ route('admin.promo_codes.index') }}" class="menu-link">
-                                <i class="far fa-star menu-icon"></i>
-                                <span class="menu-text">Промо коды</span>
-                            </a>
-                        </li>
+                            <li class="menu-item {{ Str::is('admin.promo_codes.*', request()->route()->getName()) ? 'menu-item-active' : '' }}"
+                                aria-haspopup="true">
+                                <a href="{{ route('admin.promo_codes.index') }}" class="menu-link">
+                                    <i class="far fa-star menu-icon"></i>
+                                    <span class="menu-text">Промо коды</span>
+                                </a>
+                            </li>
                         @endif
 
                         @if(auth()->user()->isSuperAdmin()
@@ -183,7 +183,7 @@
                             || auth()->user()->can(\App\Services\Admin\PermissionService::PROPERTIES_VIEW)
                             || auth()->user()->can(\App\Services\Admin\PermissionService::GIFTS_VIEW)
                             )
-                        <li class="menu-item menu-item-submenu
+                            <li class="menu-item menu-item-submenu
 {{ (request()->routeIs('admin.products')
 || request()->routeIs('admin.products.tree')
 || request()->routeIs('admin.categories')
@@ -197,240 +197,248 @@
 || request()->routeIs('admin.properties.create')
 || request()->routeIs('admin.main-block.index')
 || request()->routeIs('admin.gifts.index')) ? 'menu-item-open' : '' }}"
-                        aria-haspopup="true" data-menu-toggle="hover">
-                            <a href="javascript:;" class="menu-link menu-toggle">
-                                <i class="fas flaticon2-copy menu-icon"></i>
-                                <span class="menu-text">Магазин</span>
-                                <i class="menu-arrow"></i>
-                            </a>
-                            @if(auth()->user()->isSuperAdmin() || auth()->user()->can(\App\Services\Admin\PermissionService::PRODUCTS_VIEW))
-                            <div class="menu-submenu" style="" kt-hidden-height="160">
-    <i class="menu-arrow"></i>
-    <ul class="menu-subnav">
-        <li class="menu-item {{ (request()->routeIs('admin.products') || request()->routeIs('admin.products.tree')) || request()->routeIs('admin.product.edit') || request()->routeIs('admin.product.create') ? 'menu-item-active' : '' }}" aria-haspopup="true">
-            <a href="{{ route('admin.products') }}" class="menu-link">
-                <i class="menu-bullet menu-bullet-dot">
-                    <span></span>
-                </i>
-                <span class="menu-text">Товары</span>
-            </a>
-        </li>
-    </ul>
-</div>
-                            @endif
-                            @if(auth()->user()->isSuperAdmin() || auth()->user()->can(\App\Services\Admin\PermissionService::CATEGORIES_VIEW))
-                            <div class="menu-submenu" style="" kt-hidden-height="160">
-                                <i class="menu-arrow"></i>
-                                <ul class="menu-subnav">
-                                    <li class="menu-item {{ request()->routeIs('admin.categories') || request()->routeIs('admin.category.edit') || request()->routeIs('admin.category.create') ? 'menu-item-active' : '' }}" aria-haspopup="true">
-                                        <a href="{{ route('admin.categories') }}" class="menu-link">
-                                            <i class="menu-bullet menu-bullet-dot">
-                                                <span></span>
-                                            </i>
-                                            <span class="menu-text">Категории</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                            @endif
-                            @if(auth()->user()->isSuperAdmin() || auth()->user()->can(\App\Services\Admin\PermissionService::BRANDS_VIEW))
-                            <div class="menu-submenu" style="" kt-hidden-height="160">
-                                <i class="menu-arrow"></i>
-                                <ul class="menu-subnav">
-                                    <li class="menu-item {{ request()->routeIs('admin.brands.index') ? 'menu-item-active' : '' }}" aria-haspopup="true">
-                                        <a href="{{ route('admin.brands.index') }}" class="menu-link">
-                                            <i class="menu-bullet menu-bullet-dot">
-                                                <span></span>
-                                            </i>
-                                            <span class="menu-text">Бренды</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                            @endif
-                            @if(auth()->user()->isSuperAdmin() || auth()->user()->can(\App\Services\Admin\PermissionService::PROPERTIES_VIEW))
-                            <div class="menu-submenu" style="" kt-hidden-height="160">
-                                <i class="menu-arrow"></i>
-                                <ul class="menu-subnav">
-                                    <li class="menu-item {{ request()->routeIs('admin.properties.index') || request()->routeIs('admin.properties.edit') || request()->routeIs('admin.properties.create') ? 'menu-item-active' : '' }}" aria-haspopup="true">
-                                        <a href="{{ route('admin.properties.index') }}" class="menu-link">
-                                            <i class="menu-bullet menu-bullet-dot">
-                                                <span></span>
-                                            </i>
-                                            <span class="menu-text">Характеристики</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                            @endif
-                            @if(auth()->user()->isSuperAdmin())
-                            <div class="menu-submenu" style="" kt-hidden-height="160">
-                                <i class="menu-arrow"></i>
-                                <ul class="menu-subnav">
-                                    <li class="menu-item {{ request()->routeIs('admin.main-block.index') ? 'menu-item-active' : '' }}" aria-haspopup="true">
-                                        <a href="{{ route('admin.main-block.index') }}" class="menu-link">
-                                            <i class="menu-bullet menu-bullet-dot">
-                                                <span></span>
-                                            </i>
-                                            <span class="menu-text">Блок на главной странице</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                            @endif
-                            @if(auth()->user()->isSuperAdmin() || auth()->user()->can(\App\Services\Admin\PermissionService::GIFTS_VIEW))
-                            <div class="menu-submenu" style="" kt-hidden-height="160">
-                                <i class="menu-arrow"></i>
-                                <ul class="menu-subnav">
-                                    <li class="menu-item {{ request()->routeIs('admin.gifts.index') ? 'menu-item-active' : '' }}" aria-haspopup="true">
-                                        <a href="{{ route('admin.gifts.index') }}" class="menu-link">
-                                            <i class="menu-bullet menu-bullet-dot">
-                                                <span></span>
-                                            </i>
-                                            <span class="menu-text">Подарки</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                            @endif
+                                aria-haspopup="true" data-menu-toggle="hover">
+                                <a href="javascript:;" class="menu-link menu-toggle">
+                                    <i class="fas flaticon2-copy menu-icon"></i>
+                                    <span class="menu-text">Магазин</span>
+                                    <i class="menu-arrow"></i>
+                                </a>
+                                @if(auth()->user()->isSuperAdmin() || auth()->user()->can(\App\Services\Admin\PermissionService::PRODUCTS_VIEW))
+                                    <div class="menu-submenu" style="" kt-hidden-height="160">
+                                        <i class="menu-arrow"></i>
+                                        <ul class="menu-subnav">
+                                            <li class="menu-item {{ (request()->routeIs('admin.products') || request()->routeIs('admin.products.tree')) || request()->routeIs('admin.product.edit') || request()->routeIs('admin.product.create') ? 'menu-item-active' : '' }}"
+                                                aria-haspopup="true">
+                                                <a href="{{ route('admin.products') }}" class="menu-link">
+                                                    <i class="menu-bullet menu-bullet-dot">
+                                                        <span></span>
+                                                    </i>
+                                                    <span class="menu-text">Товары</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                @endif
+                                @if(auth()->user()->isSuperAdmin() || auth()->user()->can(\App\Services\Admin\PermissionService::CATEGORIES_VIEW))
+                                    <div class="menu-submenu" style="" kt-hidden-height="160">
+                                        <i class="menu-arrow"></i>
+                                        <ul class="menu-subnav">
+                                            <li class="menu-item {{ request()->routeIs('admin.categories') || request()->routeIs('admin.category.edit') || request()->routeIs('admin.category.create') ? 'menu-item-active' : '' }}"
+                                                aria-haspopup="true">
+                                                <a href="{{ route('admin.categories') }}" class="menu-link">
+                                                    <i class="menu-bullet menu-bullet-dot">
+                                                        <span></span>
+                                                    </i>
+                                                    <span class="menu-text">Категории</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                @endif
+                                @if(auth()->user()->isSuperAdmin() || auth()->user()->can(\App\Services\Admin\PermissionService::BRANDS_VIEW))
+                                    <div class="menu-submenu" style="" kt-hidden-height="160">
+                                        <i class="menu-arrow"></i>
+                                        <ul class="menu-subnav">
+                                            <li class="menu-item {{ request()->routeIs('admin.brands.index') ? 'menu-item-active' : '' }}"
+                                                aria-haspopup="true">
+                                                <a href="{{ route('admin.brands.index') }}" class="menu-link">
+                                                    <i class="menu-bullet menu-bullet-dot">
+                                                        <span></span>
+                                                    </i>
+                                                    <span class="menu-text">Бренды</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                @endif
+                                @if(auth()->user()->isSuperAdmin() || auth()->user()->can(\App\Services\Admin\PermissionService::PROPERTIES_VIEW))
+                                    <div class="menu-submenu" style="" kt-hidden-height="160">
+                                        <i class="menu-arrow"></i>
+                                        <ul class="menu-subnav">
+                                            <li class="menu-item {{ request()->routeIs('admin.properties.index') || request()->routeIs('admin.properties.edit') || request()->routeIs('admin.properties.create') ? 'menu-item-active' : '' }}"
+                                                aria-haspopup="true">
+                                                <a href="{{ route('admin.properties.index') }}" class="menu-link">
+                                                    <i class="menu-bullet menu-bullet-dot">
+                                                        <span></span>
+                                                    </i>
+                                                    <span class="menu-text">Характеристики</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                @endif
+                                @if(auth()->user()->isSuperAdmin())
+                                    <div class="menu-submenu" style="" kt-hidden-height="160">
+                                        <i class="menu-arrow"></i>
+                                        <ul class="menu-subnav">
+                                            <li class="menu-item {{ request()->routeIs('admin.main-block.index') ? 'menu-item-active' : '' }}"
+                                                aria-haspopup="true">
+                                                <a href="{{ route('admin.main-block.index') }}" class="menu-link">
+                                                    <i class="menu-bullet menu-bullet-dot">
+                                                        <span></span>
+                                                    </i>
+                                                    <span class="menu-text">Блок на главной странице</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                @endif
+                                @if(auth()->user()->isSuperAdmin() || auth()->user()->can(\App\Services\Admin\PermissionService::GIFTS_VIEW))
+                                    <div class="menu-submenu" style="" kt-hidden-height="160">
+                                        <i class="menu-arrow"></i>
+                                        <ul class="menu-subnav">
+                                            <li class="menu-item {{ request()->routeIs('admin.gifts.index') ? 'menu-item-active' : '' }}"
+                                                aria-haspopup="true">
+                                                <a href="{{ route('admin.gifts.index') }}" class="menu-link">
+                                                    <i class="menu-bullet menu-bullet-dot">
+                                                        <span></span>
+                                                    </i>
+                                                    <span class="menu-text">Подарки</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                @endif
 
-{{--                            <div class="menu-submenu" style="" kt-hidden-height="160">--}}
-{{--                                <i class="menu-arrow"></i>--}}
-{{--                                <ul class="menu-subnav">--}}
-{{--                                    <li class="menu-item {{ request()->routeIs('admin.sale.index') || request()->routeIs('admin.sale.edit') ? 'menu-item-active' : '' }}"--}}
-{{--                                        aria-haspopup="true">--}}
-{{--                                        <a href="{{route('admin.sale.index')}}" class="menu-link">--}}
-{{--                                            <i class="menu-bullet menu-bullet-dot">--}}
-{{--                                                <span></span>--}}
-{{--                                            </i>--}}
-{{--                                            <span class="menu-text">Розпродажі</span>--}}
-{{--                                        </a>--}}
-{{--                                    </li>--}}
-{{--                                </ul>--}}
-{{--                            </div>--}}
+                                {{--                            <div class="menu-submenu" style="" kt-hidden-height="160">--}}
+                                {{--                                <i class="menu-arrow"></i>--}}
+                                {{--                                <ul class="menu-subnav">--}}
+                                {{--                                    <li class="menu-item {{ request()->routeIs('admin.sale.index') || request()->routeIs('admin.sale.edit') ? 'menu-item-active' : '' }}"--}}
+                                {{--                                        aria-haspopup="true">--}}
+                                {{--                                        <a href="{{route('admin.sale.index')}}" class="menu-link">--}}
+                                {{--                                            <i class="menu-bullet menu-bullet-dot">--}}
+                                {{--                                                <span></span>--}}
+                                {{--                                            </i>--}}
+                                {{--                                            <span class="menu-text">Розпродажі</span>--}}
+                                {{--                                        </a>--}}
+                                {{--                                    </li>--}}
+                                {{--                                </ul>--}}
+                                {{--                            </div>--}}
 
 
-</li>
-@endif
+                            </li>
+                        @endif
 
                         @if(auth()->user()->isSuperAdmin() || auth()->user()->can(\App\Services\Admin\PermissionService::GIFT_CARDS_VIEW))
-                        <li class="menu-item menu-item-submenu
+                            <li class="menu-item menu-item-submenu
                         {{ (request()->routeIs('admin.gift_cards.index')
                         || request()->routeIs('admin.gif-card')) ? 'menu-item-open' : '' }}"
-                        aria-haspopup="true" data-menu-toggle="hover">
-                        <a href="javascript:;" class="menu-link menu-toggle">
-                            <i class="fas flaticon2-copy menu-icon"></i>
-                            <span class="menu-text">Подарочные карты</span>
-                            <i class="menu-arrow"></i>
-                        </a>
-                        <div class="menu-submenu" style="" kt-hidden-height="160">
-                            <i class="menu-arrow"></i>
-                            <ul class="menu-subnav">
-                                <li class="menu-item {{ request()->routeIs('admin.gift_cards.index') ? 'menu-item-active' : '' }}" aria-haspopup="true">
-                                    <a href="{{ route('admin.gift_cards.index') }}" class="menu-link">
-                                        <i class="menu-bullet menu-bullet-dot">
-                                            <span></span>
-                                        </i>
-                                        <span class="menu-text">Подарочные карты</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="menu-submenu" style="" kt-hidden-height="160">
-                            <i class="menu-arrow"></i>
-                            <ul class="menu-subnav">
-                                <li class="menu-item {{ request()->routeIs('admin.gif-card') ? 'menu-item-active' : '' }}"
-                                    aria-haspopup="true">
-                                    <a href="{{route('admin.gif-card')}}" class="menu-link">
-                                        <i class="menu-bullet menu-bullet-dot">
-                                            <span></span>
-                                        </i>
-                                        <span class="menu-text">Настройки</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                        </li>
+                                aria-haspopup="true" data-menu-toggle="hover">
+                                <a href="javascript:;" class="menu-link menu-toggle">
+                                    <i class="fas flaticon2-copy menu-icon"></i>
+                                    <span class="menu-text">Подарочные карты</span>
+                                    <i class="menu-arrow"></i>
+                                </a>
+                                <div class="menu-submenu" style="" kt-hidden-height="160">
+                                    <i class="menu-arrow"></i>
+                                    <ul class="menu-subnav">
+                                        <li class="menu-item {{ request()->routeIs('admin.gift_cards.index') ? 'menu-item-active' : '' }}"
+                                            aria-haspopup="true">
+                                            <a href="{{ route('admin.gift_cards.index') }}" class="menu-link">
+                                                <i class="menu-bullet menu-bullet-dot">
+                                                    <span></span>
+                                                </i>
+                                                <span class="menu-text">Подарочные карты</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="menu-submenu" style="" kt-hidden-height="160">
+                                    <i class="menu-arrow"></i>
+                                    <ul class="menu-subnav">
+                                        <li class="menu-item {{ request()->routeIs('admin.gif-card') ? 'menu-item-active' : '' }}"
+                                            aria-haspopup="true">
+                                            <a href="{{route('admin.gif-card')}}" class="menu-link">
+                                                <i class="menu-bullet menu-bullet-dot">
+                                                    <span></span>
+                                                </i>
+                                                <span class="menu-text">Настройки</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
                         @endif
 
                         @if(auth()->user()->isSuperAdmin() || auth()->user()->can(\App\Services\Admin\PermissionService::FEEDBACKS_VIEW))
-                        <li class="menu-item menu-item-submenu
+                            <li class="menu-item menu-item-submenu
                         {{ (request()->routeIs('admin.chats') || request()->routeIs('admin.feedback-reason.index')) ? 'menu-item-open' : '' }}"
-                        aria-haspopup="true" data-menu-toggle="hover">
-                        <a href="javascript:;" class="menu-link menu-toggle">
-                            <i class="fas flaticon2-copy menu-icon"></i>
-                            <span class="menu-text">Обратная связь</span>
-                            <i class="menu-arrow"></i>
-                        </a>
-                        <div class="menu-submenu" style="" kt-hidden-height="160">
-                            <i class="menu-arrow"></i>
-                            <ul class="menu-subnav">
-                                <li class="menu-item {{ request()->routeIs('admin.feedback-reason.index') ? 'menu-item-active' : '' }}" aria-haspopup="true">
-                                    <a href="{{ route('admin.feedback-reason.index') }}" class="menu-link">
-                                        <i class="menu-bullet menu-bullet-dot">
-                                            <span></span>
-                                        </i>
-                                        <span class="menu-text">Причины обращения</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="menu-submenu" style="" kt-hidden-height="160">
-                            <i class="menu-arrow"></i>
-                            <ul class="menu-subnav">
-                                <li class="menu-item {{ request()->routeIs('admin.chats') ? 'menu-item-active' : '' }}"
-                                    aria-haspopup="true">
-                                    <a href="{{route('admin.chats')}}" class="menu-link">
-                                        <i class="menu-bullet menu-bullet-dot">
-                                            <span></span>
-                                        </i>
-                                        <span class="menu-text">Тикеты</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                        </li>
+                                aria-haspopup="true" data-menu-toggle="hover">
+                                <a href="javascript:;" class="menu-link menu-toggle">
+                                    <i class="fas flaticon2-copy menu-icon"></i>
+                                    <span class="menu-text">Обратная связь</span>
+                                    <i class="menu-arrow"></i>
+                                </a>
+                                <div class="menu-submenu" style="" kt-hidden-height="160">
+                                    <i class="menu-arrow"></i>
+                                    <ul class="menu-subnav">
+                                        <li class="menu-item {{ request()->routeIs('admin.feedback-reason.index') ? 'menu-item-active' : '' }}"
+                                            aria-haspopup="true">
+                                            <a href="{{ route('admin.feedback-reason.index') }}" class="menu-link">
+                                                <i class="menu-bullet menu-bullet-dot">
+                                                    <span></span>
+                                                </i>
+                                                <span class="menu-text">Причины обращения</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="menu-submenu" style="" kt-hidden-height="160">
+                                    <i class="menu-arrow"></i>
+                                    <ul class="menu-subnav">
+                                        <li class="menu-item {{ request()->routeIs('admin.chats') ? 'menu-item-active' : '' }}"
+                                            aria-haspopup="true">
+                                            <a href="{{route('admin.chats')}}" class="menu-link">
+                                                <i class="menu-bullet menu-bullet-dot">
+                                                    <span></span>
+                                                </i>
+                                                <span class="menu-text">Тикеты</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
                         @endif
 
                         @if(auth()->user()->isSuperAdmin() || auth()->user()->can(\App\Services\Admin\PermissionService::SUBSCRIPTIONS_VIEW))
-                        <li class="menu-item menu-item-submenu {{(request()->routeIs('admin.subscribers.index')
+                            <li class="menu-item menu-item-submenu {{(request()->routeIs('admin.subscribers.index')
                         || request()->routeIs('admin.subscription-category.index')) ? 'menu-item-open' : '' }}"
-                        aria-haspopup="true" data-menu-toggle="hover">
-                        <a href="javascript:;" class="menu-link menu-toggle">
-                            <i class="fas flaticon2-paper-plane menu-icon"></i>
-                            <span class="menu-text">Подписки</span>
-                            <i class="menu-arrow"></i>
-                        </a>
-                        <div class="menu-submenu" style="" kt-hidden-height="160">
-                            <i class="menu-arrow"></i>
-                            <ul class="menu-subnav">
-                                <li class="menu-item {{ request()->routeIs('admin.subscribers.index') ? 'menu-item-active' : '' }}"
-                                    aria-haspopup="true">
-                                    <a href="{{route('admin.subscribers.index')}}" class="menu-link">
-                                        <i class="menu-bullet menu-bullet-dot">
-                                            <span></span>
-                                        </i>
-                                        <span class="menu-text">Подписчики</span>
-                                    </a>
-                                </li>
-                                <li class="menu-item {{ request()->routeIs('admin.subscription-category.index') ? 'menu-item-active' : '' }}"
-                                    aria-haspopup="true">
-                                    <a href="{{route('admin.subscription-category.index')}}" class="menu-link">
-                                        <i class="menu-bullet menu-bullet-dot">
-                                            <span></span>
-                                        </i>
-                                        <span class="menu-text">Категории</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                        </li>
+                                aria-haspopup="true" data-menu-toggle="hover">
+                                <a href="javascript:;" class="menu-link menu-toggle">
+                                    <i class="fas flaticon2-paper-plane menu-icon"></i>
+                                    <span class="menu-text">Подписки</span>
+                                    <i class="menu-arrow"></i>
+                                </a>
+                                <div class="menu-submenu" style="" kt-hidden-height="160">
+                                    <i class="menu-arrow"></i>
+                                    <ul class="menu-subnav">
+                                        <li class="menu-item {{ request()->routeIs('admin.subscribers.index') ? 'menu-item-active' : '' }}"
+                                            aria-haspopup="true">
+                                            <a href="{{route('admin.subscribers.index')}}" class="menu-link">
+                                                <i class="menu-bullet menu-bullet-dot">
+                                                    <span></span>
+                                                </i>
+                                                <span class="menu-text">Подписчики</span>
+                                            </a>
+                                        </li>
+                                        <li class="menu-item {{ request()->routeIs('admin.subscription-category.index') ? 'menu-item-active' : '' }}"
+                                            aria-haspopup="true">
+                                            <a href="{{route('admin.subscription-category.index')}}" class="menu-link">
+                                                <i class="menu-bullet menu-bullet-dot">
+                                                    <span></span>
+                                                </i>
+                                                <span class="menu-text">Категории</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
                         @endif
 
                         @if(auth()->user()->isSuperAdmin()
                                 || auth()->user()->can(\App\Services\Admin\PermissionService::NEWS_VIEW)
                                 || auth()->user()->can(\App\Services\Admin\PermissionService::BANNERS_VIEW))
-<li class="menu-item menu-item-submenu
+                            <li class="menu-item menu-item-submenu
 {{ (request()->routeIs('admin.news')
 || request()->routeIs('admin.banner')
 || request()->routeIs('admin.pages.index')
@@ -440,191 +448,200 @@
 || request()->routeIs('admin.banner.edit')
 || request()->routeIs('admin.pages.create')
 || request()->routeIs('admin.pages.edit')) ? 'menu-item-open' : '' }}"
-aria-haspopup="true" data-menu-toggle="hover">
-<a href="javascript:;" class="menu-link menu-toggle">
-    <i class="fas flaticon2-copy menu-icon"></i>
-    <span class="menu-text">Страницы</span>
-    <i class="menu-arrow"></i>
-</a>
-<div class="menu-submenu" style="" kt-hidden-height="160">
-    <i class="menu-arrow"></i>
-    <ul class="menu-subnav">
-        @if(auth()->user()->isSuperAdmin() || auth()->user()->can(\App\Services\Admin\PermissionService::NEWS_VIEW))
-        <li class="menu-item {{ (request()->routeIs('admin.news') || request()->routeIs('admin.news.edit') || request()->routeIs('admin.news.create')) ? 'menu-item-active' : '' }}" aria-haspopup="true">
-            <a href="{{ route('admin.news') }}" class="menu-link">
-                <i class="menu-bullet menu-bullet-dot">
-                    <span></span>
-                </i>
-                <span class="menu-text">Новости</span>
-            </a>
-        </li>
-        @endif
-            @if(auth()->user()->isSuperAdmin() || auth()->user()->can(\App\Services\Admin\PermissionService::BANNERS_VIEW))
-        <li class="menu-item {{ (request()->routeIs('admin.banner') || request()->routeIs('admin.banner.edit') || request()->routeIs('admin.banner.create')) ? 'menu-item-active' : '' }}" aria-haspopup="true">
-            <a href="{{ route('admin.banner') }}" class="menu-link">
-                <i class="menu-bullet menu-bullet-dot">
-                    <span></span>
-                </i>
-                <span class="menu-text">Баннеры</span>
-            </a>
-        </li>
-            @endif
-            @if(auth()->user()->isSuperAdmin())
-        <li class="menu-item {{ request()->routeIs('admin.pages.index') || request()->routeIs('admin.pages.edit') || request()->routeIs('admin.pages.create') ? 'menu-item-active' : '' }}" aria-haspopup="true">
-            <a href="{{ route('admin.pages.index') }}" class="menu-link">
-                <i class="menu-bullet menu-bullet-dot">
-                    <span></span>
-                </i>
-                <span class="menu-text">Статические</span>
-            </a>
-        </li>
-            @endif
-    </ul>
-</div>
-</li>
+                                aria-haspopup="true" data-menu-toggle="hover">
+                                <a href="javascript:;" class="menu-link menu-toggle">
+                                    <i class="fas flaticon2-copy menu-icon"></i>
+                                    <span class="menu-text">Страницы</span>
+                                    <i class="menu-arrow"></i>
+                                </a>
+                                <div class="menu-submenu" style="" kt-hidden-height="160">
+                                    <i class="menu-arrow"></i>
+                                    <ul class="menu-subnav">
+                                        @if(auth()->user()->isSuperAdmin() || auth()->user()->can(\App\Services\Admin\PermissionService::NEWS_VIEW))
+                                            <li class="menu-item {{ (request()->routeIs('admin.news') || request()->routeIs('admin.news.edit') || request()->routeIs('admin.news.create')) ? 'menu-item-active' : '' }}"
+                                                aria-haspopup="true">
+                                                <a href="{{ route('admin.news') }}" class="menu-link">
+                                                    <i class="menu-bullet menu-bullet-dot">
+                                                        <span></span>
+                                                    </i>
+                                                    <span class="menu-text">Новости</span>
+                                                </a>
+                                            </li>
+                                        @endif
+                                        @if(auth()->user()->isSuperAdmin() || auth()->user()->can(\App\Services\Admin\PermissionService::BANNERS_VIEW))
+                                            <li class="menu-item {{ (request()->routeIs('admin.banner') || request()->routeIs('admin.banner.edit') || request()->routeIs('admin.banner.create')) ? 'menu-item-active' : '' }}"
+                                                aria-haspopup="true">
+                                                <a href="{{ route('admin.banner') }}" class="menu-link">
+                                                    <i class="menu-bullet menu-bullet-dot">
+                                                        <span></span>
+                                                    </i>
+                                                    <span class="menu-text">Баннеры</span>
+                                                </a>
+                                            </li>
+                                        @endif
+                                        @if(auth()->user()->isSuperAdmin())
+                                            <li class="menu-item {{ request()->routeIs('admin.pages.index') || request()->routeIs('admin.pages.edit') || request()->routeIs('admin.pages.create') ? 'menu-item-active' : '' }}"
+                                                aria-haspopup="true">
+                                                <a href="{{ route('admin.pages.index') }}" class="menu-link">
+                                                    <i class="menu-bullet menu-bullet-dot">
+                                                        <span></span>
+                                                    </i>
+                                                    <span class="menu-text">Статические</span>
+                                                </a>
+                                            </li>
+                                        @endif
+                                    </ul>
+                                </div>
+                            </li>
                         @endif
                         @if(auth()->user()->isSuperAdmin()
                                 || auth()->user()->can(\App\Services\Admin\PermissionService::USERS_VIEW)
                                 || auth()->user()->can(\App\Services\Admin\PermissionService::COMMENTS_VIEW)
                                 || auth()->user()->can(\App\Services\Admin\PermissionService::QUESTIONS_VIEW)
                                 || auth()->user()->can(\App\Services\Admin\PermissionService::MENUS_VIEW))
-<li class="menu-section ">
-<h4 class="menu-text">Настройки</h4>
-<i class="menu-icon ki ki-bold-more-hor icon-md"></i>
-</li>
-@if(auth()->user()->isSuperAdmin())
-<li class="menu-item menu-item-submenu
+                            <li class="menu-section ">
+                                <h4 class="menu-text">Настройки</h4>
+                                <i class="menu-icon ki ki-bold-more-hor icon-md"></i>
+                            </li>
+                            @if(auth()->user()->isSuperAdmin())
+                                <li class="menu-item menu-item-submenu
 {{ (request()->routeIs('admin.roles.index') || request()->routeIs('admin.admins.index')) ? 'menu-item-open' : '' }}"
-aria-haspopup="true" data-menu-toggle="hover">
-<a href="javascript:;" class="menu-link menu-toggle">
-    <i class="fas fa-lock menu-icon"></i>
-    <span class="menu-text">Администрирование</span>
-    <i class="menu-arrow"></i>
-</a>
-<div class="menu-submenu" style="" kt-hidden-height="160">
-    <i class="menu-arrow"></i>
-    <ul class="menu-subnav">
-        <li class="menu-item {{ request()->routeIs('admin.admins.index') ? 'menu-item-active' : '' }}" aria-haspopup="true">
-            <a href="{{ route('admin.admins.index') }}" class="menu-link">
-                <i class="menu-bullet menu-bullet-dot">
-                    <span></span>
-                </i>
-                <span class="menu-text">Администраторы</span>
-            </a>
-        </li>
-    </ul>
-</div>
-<div class="menu-submenu" style="" kt-hidden-height="160">
-    <i class="menu-arrow"></i>
-    <ul class="menu-subnav">
-        <li class="menu-item {{ request()->routeIs('admin.roles.index') ? 'menu-item-active' : '' }}" aria-haspopup="true">
-            <a href="{{ route('admin.roles.index') }}" class="menu-link">
-                <i class="menu-bullet menu-bullet-dot">
-                    <span></span>
-                </i>
-                <span class="menu-text">Роли</span>
-            </a>
-        </li>
-    </ul>
-</div>
-</li>
-@endif
-                        @if(auth()->user()->isSuperAdmin() || auth()->user()->can(\App\Services\Admin\PermissionService::USERS_VIEW))
-<li class="menu-item {{ request()->routeIs('admin.users') ? 'menu-item-active' : '' }}"
-aria-haspopup="true">
-<a href="{{route('admin.users')}}" class="menu-link">
-    <i class="far fa-user menu-icon"></i>
-    <span class="menu-text">Пользователи</span>
-</a>
-</li>
-                        @endif
-                        @if(auth()->user()->isSuperAdmin()
-                                || auth()->user()->can(\App\Services\Admin\PermissionService::COMMENTS_VIEW)
-                                || auth()->user()->can(\App\Services\Admin\PermissionService::QUESTIONS_VIEW))
-<li class="menu-item menu-item-submenu
+                                    aria-haspopup="true" data-menu-toggle="hover">
+                                    <a href="javascript:;" class="menu-link menu-toggle">
+                                        <i class="fas fa-lock menu-icon"></i>
+                                        <span class="menu-text">Администрирование</span>
+                                        <i class="menu-arrow"></i>
+                                    </a>
+                                    <div class="menu-submenu" style="" kt-hidden-height="160">
+                                        <i class="menu-arrow"></i>
+                                        <ul class="menu-subnav">
+                                            <li class="menu-item {{ request()->routeIs('admin.admins.index') ? 'menu-item-active' : '' }}"
+                                                aria-haspopup="true">
+                                                <a href="{{ route('admin.admins.index') }}" class="menu-link">
+                                                    <i class="menu-bullet menu-bullet-dot">
+                                                        <span></span>
+                                                    </i>
+                                                    <span class="menu-text">Администраторы</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="menu-submenu" style="" kt-hidden-height="160">
+                                        <i class="menu-arrow"></i>
+                                        <ul class="menu-subnav">
+                                            <li class="menu-item {{ request()->routeIs('admin.roles.index') ? 'menu-item-active' : '' }}"
+                                                aria-haspopup="true">
+                                                <a href="{{ route('admin.roles.index') }}" class="menu-link">
+                                                    <i class="menu-bullet menu-bullet-dot">
+                                                        <span></span>
+                                                    </i>
+                                                    <span class="menu-text">Роли</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                            @endif
+                            @if(auth()->user()->isSuperAdmin() || auth()->user()->can(\App\Services\Admin\PermissionService::USERS_VIEW))
+                                <li class="menu-item {{ request()->routeIs('admin.users') ? 'menu-item-active' : '' }}"
+                                    aria-haspopup="true">
+                                    <a href="{{route('admin.users')}}" class="menu-link">
+                                        <i class="far fa-user menu-icon"></i>
+                                        <span class="menu-text">Пользователи</span>
+                                    </a>
+                                </li>
+                            @endif
+                            @if(auth()->user()->isSuperAdmin()
+                                    || auth()->user()->can(\App\Services\Admin\PermissionService::COMMENTS_VIEW)
+                                    || auth()->user()->can(\App\Services\Admin\PermissionService::QUESTIONS_VIEW))
+                                <li class="menu-item menu-item-submenu
 {{ (request()->routeIs('admin.chats') || request()->routeIs('admin.feedback-reason.index')) ? 'menu-item-open' : '' }}"
-aria-haspopup="true" data-menu-toggle="hover">
-<a href="javascript:;" class="menu-link menu-toggle">
-    <i class="fas flaticon2-copy menu-icon"></i>
-    <span class="menu-text">Комментарии/Вопросы</span>
-    <i class="menu-arrow"></i>
-</a>
-    @if(auth()->user()->isSuperAdmin() || auth()->user()->can(\App\Services\Admin\PermissionService::QUESTIONS_VIEW))
-<div class="menu-submenu" style="" kt-hidden-height="160">
-    <i class="menu-arrow"></i>
-    <ul class="menu-subnav">
-        <li class="menu-item {{ request()->routeIs('admin.product_questions') ? 'menu-item-active' : '' }}" aria-haspopup="true">
-            <a href="{{ route('admin.product_questions') }}" class="menu-link">
-                <i class="menu-bullet menu-bullet-dot">
-                    <span></span>
-                </i>
-                <span class="menu-text">Вопросы по товарам</span>
-            </a>
-        </li>
-    </ul>
-</div>
-    @endif
-    @if(auth()->user()->isSuperAdmin() || auth()->user()->can(\App\Services\Admin\PermissionService::COMMENTS_VIEW))
-<div class="menu-submenu" style="" kt-hidden-height="160">
-    <i class="menu-arrow"></i>
-    <ul class="menu-subnav">
-        <li class="menu-item {{ request()->routeIs('admin.comment') ? 'menu-item-active' : '' }}" aria-haspopup="true">
-            <a href="{{ route('admin.comment') }}" class="menu-link">
-                <i class="menu-bullet menu-bullet-dot">
-                    <span></span>
-                </i>
-                <span class="menu-text">Комментарии к товарам</span>
-            </a>
-        </li>
-    </ul>
-</div>
-    @endif
-</li>
-                        @endif
-                        @if(auth()->user()->isSuperAdmin())
-<li class="menu-item
+                                    aria-haspopup="true" data-menu-toggle="hover">
+                                    <a href="javascript:;" class="menu-link menu-toggle">
+                                        <i class="fas flaticon2-copy menu-icon"></i>
+                                        <span class="menu-text">Комментарии/Вопросы</span>
+                                        <i class="menu-arrow"></i>
+                                    </a>
+                                    @if(auth()->user()->isSuperAdmin() || auth()->user()->can(\App\Services\Admin\PermissionService::QUESTIONS_VIEW))
+                                        <div class="menu-submenu" style="" kt-hidden-height="160">
+                                            <i class="menu-arrow"></i>
+                                            <ul class="menu-subnav">
+                                                <li class="menu-item {{ request()->routeIs('admin.product_questions') ? 'menu-item-active' : '' }}"
+                                                    aria-haspopup="true">
+                                                    <a href="{{ route('admin.product_questions') }}" class="menu-link">
+                                                        <i class="menu-bullet menu-bullet-dot">
+                                                            <span></span>
+                                                        </i>
+                                                        <span class="menu-text">Вопросы по товарам</span>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    @endif
+                                    @if(auth()->user()->isSuperAdmin() || auth()->user()->can(\App\Services\Admin\PermissionService::COMMENTS_VIEW))
+                                        <div class="menu-submenu" style="" kt-hidden-height="160">
+                                            <i class="menu-arrow"></i>
+                                            <ul class="menu-subnav">
+                                                <li class="menu-item {{ request()->routeIs('admin.comment') ? 'menu-item-active' : '' }}"
+                                                    aria-haspopup="true">
+                                                    <a href="{{ route('admin.comment') }}" class="menu-link">
+                                                        <i class="menu-bullet menu-bullet-dot">
+                                                            <span></span>
+                                                        </i>
+                                                        <span class="menu-text">Комментарии к товарам</span>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    @endif
+                                </li>
+                            @endif
+                            @if(auth()->user()->isSuperAdmin())
+                                <li class="menu-item
 {{ request()->routeIs('admin.faq-groups') || request()->routeIs('admin.faq-groups.edit') || request()->routeIs('admin.faq-groups.create') ? 'menu-item-active' : '' }}"
-aria-haspopup="true">
-<a href="{{ route('admin.faq-groups') }}" class="menu-link">
-    <i class="far fa-question-circle menu-icon"></i>
-    <span class="menu-text">FAQ</span>
-</a>
-</li>
-                        @endif
+                                    aria-haspopup="true">
+                                    <a href="{{ route('admin.faq-groups') }}" class="menu-link">
+                                        <i class="far fa-question-circle menu-icon"></i>
+                                        <span class="menu-text">FAQ</span>
+                                    </a>
+                                </li>
+                            @endif
 
-                        @if(auth()->user()->isSuperAdmin() || auth()->user()->can(\App\Services\Admin\PermissionService::MENUS_VIEW))
-<li class="menu-item menu-item-submenu
+                            @if(auth()->user()->isSuperAdmin() || auth()->user()->can(\App\Services\Admin\PermissionService::MENUS_VIEW))
+                                <li class="menu-item menu-item-submenu
 {{ request()->routeIs('admin.menu') ||
 (request()->routeIs('admin.menu.create') && request()->segment(3) === \App\Models\Menu::TOP_MENU) ||
 request()->routeIs('admin.menu.edit', \App\Models\Menu::FOOTER_MENU) ||
 request()->routeIs('admin.menu.create', \App\Models\Menu::TOP_MENU) ||
 request()->routeIs('admin.menu.edit', \App\Models\Menu::TOP_MENU) ? 'menu-item-open' : '' }}"
-aria-haspopup="true" data-menu-toggle="hover">
-<a href="javascript:;" class="menu-link menu-toggle">
-<i class="fas flaticon2-copy menu-icon"></i>
-<span class="menu-text">Меню</span>
-<i class="menu-arrow"></i>
-</a>
-<div class="menu-submenu" style="" kt-hidden-height="160">
-<i class="menu-arrow"></i>
-<ul class="menu-subnav">
-<li class="menu-item {{ (request()->routeIs('admin.menu', \App\Models\Menu::TOP_MENU) && request()->segment(3) == \App\Models\Menu::TOP_MENU) || request()->routeIs('admin.menu.create', \App\Models\Menu::TOP_MENU) || request()->routeIs('admin.menu.edit', \App\Models\Menu::TOP_MENU) ? 'menu-item-active' : '' }}"
-aria-haspopup="true">
-<a href="{{ route('admin.menu', \App\Models\Menu::TOP_MENU) }}" class="menu-link">
-<i class="fas flaticon2-copy menu-icon"></i>
-<span class="menu-text">Верхнее меню</span>
-</a>
-</li>
-<li class="menu-item {{ (request()->routeIs('admin.menu', \App\Models\Menu::FOOTER_MENU) && request()->segment(3) == \App\Models\Menu::FOOTER_MENU) || request()->routeIs('admin.menu.create', \App\Models\Menu::FOOTER_MENU) || request()->routeIs('admin.menu.edit', \App\Models\Menu::FOOTER_MENU) ? 'menu-item-active' : '' }}"
-aria-haspopup="true">
-<a href="{{ route('admin.menu', \App\Models\Menu::FOOTER_MENU) }}" class="menu-link">
-<i class="fas flaticon2-copy menu-icon"></i>
-<span class="menu-text">Нижнее меню</span>
-</a>
-</li>
-</ul>
-</div>
-</li>
+                                    aria-haspopup="true" data-menu-toggle="hover">
+                                    <a href="javascript:;" class="menu-link menu-toggle">
+                                        <i class="fas flaticon2-copy menu-icon"></i>
+                                        <span class="menu-text">Меню</span>
+                                        <i class="menu-arrow"></i>
+                                    </a>
+                                    <div class="menu-submenu" style="" kt-hidden-height="160">
+                                        <i class="menu-arrow"></i>
+                                        <ul class="menu-subnav">
+                                            <li class="menu-item {{ (request()->routeIs('admin.menu', \App\Models\Menu::TOP_MENU) && request()->segment(3) == \App\Models\Menu::TOP_MENU) || request()->routeIs('admin.menu.create', \App\Models\Menu::TOP_MENU) || request()->routeIs('admin.menu.edit', \App\Models\Menu::TOP_MENU) ? 'menu-item-active' : '' }}"
+                                                aria-haspopup="true">
+                                                <a href="{{ route('admin.menu', \App\Models\Menu::TOP_MENU) }}"
+                                                   class="menu-link">
+                                                    <i class="fas flaticon2-copy menu-icon"></i>
+                                                    <span class="menu-text">Верхнее меню</span>
+                                                </a>
+                                            </li>
+                                            <li class="menu-item {{ (request()->routeIs('admin.menu', \App\Models\Menu::FOOTER_MENU) && request()->segment(3) == \App\Models\Menu::FOOTER_MENU) || request()->routeIs('admin.menu.create', \App\Models\Menu::FOOTER_MENU) || request()->routeIs('admin.menu.edit', \App\Models\Menu::FOOTER_MENU) ? 'menu-item-active' : '' }}"
+                                                aria-haspopup="true">
+                                                <a href="{{ route('admin.menu', \App\Models\Menu::FOOTER_MENU) }}"
+                                                   class="menu-link">
+                                                    <i class="fas flaticon2-copy menu-icon"></i>
+                                                    <span class="menu-text">Нижнее меню</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
                             @endif
 
 
@@ -633,126 +650,174 @@ aria-haspopup="true">
 
 
 
-{{--                            <div class="menu-submenu" style="" kt-hidden-height="160">--}}
-{{--                                <i class="menu-arrow"></i>--}}
-{{--                                <ul class="menu-subnav">--}}
-{{--                                    <li class="menu-item {{ request()->routeIs('admin.sale.index') || request()->routeIs('admin.sale.edit') ? 'menu-item-active' : '' }}"--}}
-{{--                                        aria-haspopup="true">--}}
-{{--                                        <a href="{{route('admin.sale.index')}}" class="menu-link">--}}
-{{--                                            <i class="menu-bullet menu-bullet-dot">--}}
-{{--                                                <span></span>--}}
-{{--                                            </i>--}}
-{{--                                            <span class="menu-text">Розпродажі</span>--}}
-{{--                                        </a>--}}
-{{--                                    </li>--}}
-{{--                                </ul>--}}
-{{--                            </div>--}}
+                            {{--                            <div class="menu-submenu" style="" kt-hidden-height="160">--}}
+                            {{--                                <i class="menu-arrow"></i>--}}
+                            {{--                                <ul class="menu-subnav">--}}
+                            {{--                                    <li class="menu-item {{ request()->routeIs('admin.sale.index') || request()->routeIs('admin.sale.edit') ? 'menu-item-active' : '' }}"--}}
+                            {{--                                        aria-haspopup="true">--}}
+                            {{--                                        <a href="{{route('admin.sale.index')}}" class="menu-link">--}}
+                            {{--                                            <i class="menu-bullet menu-bullet-dot">--}}
+                            {{--                                                <span></span>--}}
+                            {{--                                            </i>--}}
+                            {{--                                            <span class="menu-text">Розпродажі</span>--}}
+                            {{--                                        </a>--}}
+                            {{--                                    </li>--}}
+                            {{--                                </ul>--}}
+                            {{--                            </div>--}}
 
 
-                        @if(auth()->user()->isSuperAdmin())
-<li class="menu-item  menu-item-submenu {{ (request()->routeIs('admin.settings.contacts') || request()->routeIs('admin.settings.socials')) ? 'menu-item-open' : '' }}" aria-haspopup="true" data-menu-toggle="hover">
-<a href="javascript:;" class="menu-link menu-toggle">
+                            @if(auth()->user()->isSuperAdmin())
+                                <li class="menu-item  menu-item-submenu {{ (request()->routeIs('admin.settings.contacts') || request()->routeIs('admin.settings.socials')) ? 'menu-item-open' : '' }}"
+                                    aria-haspopup="true" data-menu-toggle="hover">
+                                    <a href="javascript:;" class="menu-link menu-toggle">
     <span class="svg-icon menu-icon">
         <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
             <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
                 <rect x="0" y="0" width="24" height="24"></rect>
-                <path d="M7,3 L17,3 C19.209139,3 21,4.790861 21,7 C21,9.209139 19.209139,11 17,11 L7,11 C4.790861,11 3,9.209139 3,7 C3,4.790861 4.790861,3 7,3 Z M7,9 C8.1045695,9 9,8.1045695 9,7 C9,5.8954305 8.1045695,5 7,5 C5.8954305,5 5,5.8954305 5,7 C5,8.1045695 5.8954305,9 7,9 Z" fill="#000000"></path>
-                <path d="M7,13 L17,13 C19.209139,13 21,14.790861 21,17 C21,19.209139 19.209139,21 17,21 L7,21 C4.790861,21 3,19.209139 3,17 C3,14.790861 4.790861,13 7,13 Z M17,19 C18.1045695,19 19,18.1045695 19,17 C19,15.8954305 18.1045695,15 17,15 C15.8954305,15 15,15.8954305 15,17 C15,18.1045695 15.8954305,19 17,19 Z" fill="#000000" opacity="0.3"></path>
+                <path
+                    d="M7,3 L17,3 C19.209139,3 21,4.790861 21,7 C21,9.209139 19.209139,11 17,11 L7,11 C4.790861,11 3,9.209139 3,7 C3,4.790861 4.790861,3 7,3 Z M7,9 C8.1045695,9 9,8.1045695 9,7 C9,5.8954305 8.1045695,5 7,5 C5.8954305,5 5,5.8954305 5,7 C5,8.1045695 5.8954305,9 7,9 Z"
+                    fill="#000000"></path>
+                <path
+                    d="M7,13 L17,13 C19.209139,13 21,14.790861 21,17 C21,19.209139 19.209139,21 17,21 L7,21 C4.790861,21 3,19.209139 3,17 C3,14.790861 4.790861,13 7,13 Z M17,19 C18.1045695,19 19,18.1045695 19,17 C19,15.8954305 18.1045695,15 17,15 C15.8954305,15 15,15.8954305 15,17 C15,18.1045695 15.8954305,19 17,19 Z"
+                    fill="#000000" opacity="0.3"></path>
             </g>
          </svg>
     </span>
-    <span class="menu-text">Общие</span>
-    <i class="menu-arrow"></i>
-</a>
-<div class="menu-submenu">
-    <i class="menu-arrow"></i>
-    <ul class="menu-subnav">
-        <li class="menu-item  menu-item-parent" aria-haspopup="true">
-            <span class="menu-link"><span class="menu-text">Общие</span></span>
-        </li>
-        <li class="menu-item {{ request()->routeIs('admin.settings.contacts') ? 'menu-item-active' : '' }}">
-            <a href="#" class="menu-link">
-                <i class="menu-bullet menu-bullet-dot"><span></span></i>
-                <span class="menu-text">Контактные данные</span>
-            </a>
-        </li>
-        <li class="menu-item  {{ request()->routeIs('admin.settings.socials') ? 'menu-item-active' : '' }}" aria-haspopup="true">
-            <a href="{{ route('admin.settings.socials') }}" class="menu-link">
-                <i class="menu-bullet menu-bullet-dot"><span></span></i>
-                <span class="menu-text">Соц.медиа</span>
-            </a>
-        </li>
-        <li class="menu-item {{ request()->routeIs('admin.sitemap') ? 'menu-item-active' : '' }}" aria-haspopup="true">
-            <a href="" class="menu-link">
-                <i class="menu-bullet menu-bullet-dot"><span></span></i>
-                <span class="menu-text">Sitemap Generator</span>
-            </a>
-        </li>
-        <li class="menu-item {{ request()->routeIs('admin.robots') ? 'menu-item-active' : '' }}" aria-haspopup="true">
-            <a href="" class="menu-link">
-                <i class="menu-bullet menu-bullet-dot"><span></span></i>
-                <span class="menu-text">Robots.txt</span>
-            </a>
-        </li>
-        <li class="menu-item {{ request()->routeIs('admin.settings.index') ? 'menu-item-active' : '' }}" aria-haspopup="true">
-            <a href="{{ route('admin.settings.index') }}" class="menu-link">
-                <i class="menu-bullet menu-bullet-dot"><span></span></i>
-                <span class="menu-text">Настройки</span>
-            </a>
-        </li>
-    </ul>
-</div>
-</li>
+                                        <span class="menu-text">Общие</span>
+                                        <i class="menu-arrow"></i>
+                                    </a>
+                                    <div class="menu-submenu">
+                                        <i class="menu-arrow"></i>
+                                        <ul class="menu-subnav">
+                                            <li class="menu-item  menu-item-parent" aria-haspopup="true">
+                                                <span class="menu-link"><span class="menu-text">Общие</span></span>
+                                            </li>
+                                            <li class="menu-item {{ request()->routeIs('admin.settings.contacts') ? 'menu-item-active' : '' }}">
+                                                <a href="#" class="menu-link">
+                                                    <i class="menu-bullet menu-bullet-dot"><span></span></i>
+                                                    <span class="menu-text">Контактные данные</span>
+                                                </a>
+                                            </li>
+                                            <li class="menu-item  {{ request()->routeIs('admin.settings.socials') ? 'menu-item-active' : '' }}"
+                                                aria-haspopup="true">
+                                                <a href="{{ route('admin.settings.socials') }}" class="menu-link">
+                                                    <i class="menu-bullet menu-bullet-dot"><span></span></i>
+                                                    <span class="menu-text">Соц.медиа</span>
+                                                </a>
+                                            </li>
+                                            <li class="menu-item {{ request()->routeIs('admin.sitemap') ? 'menu-item-active' : '' }}"
+                                                aria-haspopup="true">
+                                                <a href="" class="menu-link">
+                                                    <i class="menu-bullet menu-bullet-dot"><span></span></i>
+                                                    <span class="menu-text">Sitemap Generator</span>
+                                                </a>
+                                            </li>
+                                            <li class="menu-item {{ request()->routeIs('admin.robots') ? 'menu-item-active' : '' }}"
+                                                aria-haspopup="true">
+                                                <a href="" class="menu-link">
+                                                    <i class="menu-bullet menu-bullet-dot"><span></span></i>
+                                                    <span class="menu-text">Robots.txt</span>
+                                                </a>
+                                            </li>
+                                            <li class="menu-item {{ request()->routeIs('admin.settings.index') ? 'menu-item-active' : '' }}"
+                                                aria-haspopup="true">
+                                                <a href="{{ route('admin.settings.index') }}" class="menu-link">
+                                                    <i class="menu-bullet menu-bullet-dot"><span></span></i>
+                                                    <span class="menu-text">Настройки</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="menu-item  menu-item-submenu {{ request()->routeIs(['admin.delivery-methods.*']) ? 'menu-item-open' : '' }}"
+                                    aria-haspopup="true" data-menu-toggle="hover">
+                                    <a href="javascript:;" class="menu-link menu-toggle">
+    <span class="svg-icon menu-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                <rect x="0" y="0" width="24" height="24"></rect>
+                <path
+                    d="M7,3 L17,3 C19.209139,3 21,4.790861 21,7 C21,9.209139 19.209139,11 17,11 L7,11 C4.790861,11 3,9.209139 3,7 C3,4.790861 4.790861,3 7,3 Z M7,9 C8.1045695,9 9,8.1045695 9,7 C9,5.8954305 8.1045695,5 7,5 C5.8954305,5 5,5.8954305 5,7 C5,8.1045695 5.8954305,9 7,9 Z"
+                    fill="#000000"></path>
+                <path
+                    d="M7,13 L17,13 C19.209139,13 21,14.790861 21,17 C21,19.209139 19.209139,21 17,21 L7,21 C4.790861,21 3,19.209139 3,17 C3,14.790861 4.790861,13 7,13 Z M17,19 C18.1045695,19 19,18.1045695 19,17 C19,15.8954305 18.1045695,15 17,15 C15.8954305,15 15,15.8954305 15,17 C15,18.1045695 15.8954305,19 17,19 Z"
+                    fill="#000000" opacity="0.3"></path>
+            </g>
+         </svg>
+    </span>
+                                        <span class="menu-text">Доставка</span>
+                                        <i class="menu-arrow"></i>
+                                    </a>
+                                    <div class="menu-submenu">
+                                        <i class="menu-arrow"></i>
+                                        <ul class="menu-subnav">
+                                            <li class="menu-item {{ request()->routeIs('admin.delivery-methods.*') ? 'menu-item-active' : '' }}"
+                                                aria-haspopup="true">
+                                                <a href="{{ route('admin.delivery-methods.index') }}" class="menu-link">
+                                                    <i class="menu-bullet menu-bullet-dot"><span></span></i>
+                                                    <span class="menu-text">Службы</span>
+                                                </a>
+                                            </li>
+                                            <li class="menu-item {{ request()->routeIs('admin.courier-delivery-methods.*') ? 'menu-item-active' : '' }}"
+                                                aria-haspopup="true">
+                                                <a href="{{ route('admin.courier-delivery-methods.index') }}" class="menu-link">
+                                                    <i class="menu-bullet menu-bullet-dot"><span></span></i>
+                                                    <span class="menu-text">Курьерская</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                            @endif
                         @endif
-                        @endif
-</ul>
-<!--end::Menu Nav-->
-</div>
-<!--end::Menu Container-->
-</div>
-<!--end::Aside Menu-->
-</div>
-<!--end::Aside-->
-<!--begin::Wrapper-->
-<div class="d-flex flex-column flex-row-fluid wrapper" id="kt_wrapper">
-@include('admin.layouts.includes.header')
-<!--begin::Content-->
-<div class="content d-flex flex-column flex-column-fluid" id="kt_content">
-@yield('content')
-</div>
-<!--end::Content-->
-@include('admin.layouts.includes.footer')
-</div>
-<!--end::Wrapper-->
-</div>
-<!--end::Page-->
+                    </ul>
+                    <!--end::Menu Nav-->
+                </div>
+                <!--end::Menu Container-->
+            </div>
+            <!--end::Aside Menu-->
+        </div>
+        <!--end::Aside-->
+        <!--begin::Wrapper-->
+        <div class="d-flex flex-column flex-row-fluid wrapper" id="kt_wrapper">
+            @include('admin.layouts.includes.header')
+            <!--begin::Content-->
+            <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
+                @yield('content')
+            </div>
+            <!--end::Content-->
+            @include('admin.layouts.includes.footer')
+        </div>
+        <!--end::Wrapper-->
+    </div>
+    <!--end::Page-->
 </div>
 <!--end::Main-->
 <!-- begin::User Panel-->
 <div id="kt_quick_user" class="offcanvas offcanvas-right p-10">
-<!--begin::Header-->
-<div class="offcanvas-header d-flex align-items-center justify-content-between pb-5">
-<h3 class="font-weight-bold m-0">Ваш профиль</h3>
-<a href="#" class="btn btn-xs btn-icon btn-light btn-hover-primary" id="kt_quick_user_close">
-<i class="ki ki-close icon-xs text-muted"></i>
-</a>
-</div>
-<!--end::Header-->
-<!--begin::Content-->
-<div class="offcanvas-content pr-5 mr-n5">
-<!--begin::Header-->
-<div class="d-flex align-items-center mt-5">
-<div class="symbol symbol-100 mr-5">
-<div class="symbol-label"
-style="background-image:url( {{ asset('super_admin/media/users/300_21.jpg') }})"></div>
-<i class="symbol-badge bg-success"></i>
-</div>
-<div class="d-flex flex-column">
-<a href="#"
-class="font-weight-bold font-size-h5 text-dark-75 text-hover-primary">{{ Auth::user()->name }}</a>
-<!-- <div class="text-muted mt-1">Application Developer</div> -->
-<div class="navi mt-2">
-<a href="#" class="navi-item">
+    <!--begin::Header-->
+    <div class="offcanvas-header d-flex align-items-center justify-content-between pb-5">
+        <h3 class="font-weight-bold m-0">Ваш профиль</h3>
+        <a href="#" class="btn btn-xs btn-icon btn-light btn-hover-primary" id="kt_quick_user_close">
+            <i class="ki ki-close icon-xs text-muted"></i>
+        </a>
+    </div>
+    <!--end::Header-->
+    <!--begin::Content-->
+    <div class="offcanvas-content pr-5 mr-n5">
+        <!--begin::Header-->
+        <div class="d-flex align-items-center mt-5">
+            <div class="symbol symbol-100 mr-5">
+                <div class="symbol-label"
+                     style="background-image:url( {{ asset('super_admin/media/users/300_21.jpg') }})"></div>
+                <i class="symbol-badge bg-success"></i>
+            </div>
+            <div class="d-flex flex-column">
+                <a href="#"
+                   class="font-weight-bold font-size-h5 text-dark-75 text-hover-primary">{{ Auth::user()->name }}</a>
+                <!-- <div class="text-muted mt-1">Application Developer</div> -->
+                <div class="navi mt-2">
+                    <a href="#" class="navi-item">
     <span class="navi-link p-0 pb-2">
         <span class="navi-icon mr-1">
             <span class="svg-icon svg-icon-lg svg-icon-primary">
@@ -772,23 +837,23 @@ class="font-weight-bold font-size-h5 text-dark-75 text-hover-primary">{{ Auth::u
         <span
             class="navi-text text-muted text-hover-primary">{{ Auth::user()->email }}</span>
     </span>
-</a>
-<a href="{{ route('logout') }}"
-class="btn btn-sm btn-light-primary font-weight-bolder py-2 px-5"
-onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Выйти</a>
-<form id="logout-form" action="{{ route('logout') }}" method="POST"
-style="display: none;">
-@csrf
-</form>
-</div>
-</div>
-</div>
-<!--end::Header-->
-<!--begin::Separator-->
-<div class="separator separator-dashed mt-8 mb-5"></div>
-<!--end::Separator-->
-</div>
-<!--end::Content-->
+                    </a>
+                    <a href="{{ route('logout') }}"
+                       class="btn btn-sm btn-light-primary font-weight-bolder py-2 px-5"
+                       onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Выйти</a>
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                          style="display: none;">
+                        @csrf
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!--end::Header-->
+        <!--begin::Separator-->
+        <div class="separator separator-dashed mt-8 mb-5"></div>
+        <!--end::Separator-->
+    </div>
+    <!--end::Content-->
 </div>
 <!-- end::User Panel-->
 
@@ -800,11 +865,11 @@ style="display: none;">
 <polygon points="0 0 24 0 24 24 0 24"/>
 <rect fill="#000000" opacity="0.3" x="11" y="10" width="2" height="10" rx="1"/>
 <path
-d="M6.70710678,12.7071068 C6.31658249,13.0976311 5.68341751,13.0976311 5.29289322,12.7071068 C4.90236893,12.3165825 4.90236893,11.6834175 5.29289322,11.2928932 L11.2928932,5.29289322 C11.6714722,4.91431428 12.2810586,4.90106866 12.6757246,5.26284586 L18.6757246,10.7628459 C19.0828436,11.1360383 19.1103465,11.7686056 18.7371541,12.1757246 C18.3639617,12.5828436 17.7313944,12.6103465 17.3242754,12.2371541 L12.0300757,7.38413782 L6.70710678,12.7071068 Z"
-fill="#000000" fill-rule="nonzero"/>
+    d="M6.70710678,12.7071068 C6.31658249,13.0976311 5.68341751,13.0976311 5.29289322,12.7071068 C4.90236893,12.3165825 4.90236893,11.6834175 5.29289322,11.2928932 L11.2928932,5.29289322 C11.6714722,4.91431428 12.2810586,4.90106866 12.6757246,5.26284586 L18.6757246,10.7628459 C19.0828436,11.1360383 19.1103465,11.7686056 18.7371541,12.1757246 C18.3639617,12.5828436 17.7313944,12.6103465 17.3242754,12.2371541 L12.0300757,7.38413782 L6.70710678,12.7071068 Z"
+    fill="#000000" fill-rule="nonzero"/>
 </g>
 </svg>
-<!--end::Svg Icon-->
+    <!--end::Svg Icon-->
 </span>
 </div>
 <!--end::Scrolltop-->

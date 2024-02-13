@@ -2,18 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Brand;
 use App\Models\Product;
 use App\Services\BrandsService;
+use App\Services\CatalogService;
 use Illuminate\Http\Request;
 
 class BrandsController extends Controller
 {
 
-    private BrandsService $brandsService;
+    private CatalogService $catalogService;
 
     public function __construct(Request $request)
     {
-        $this->brandsService = new BrandsService($request);
+        $this->catalogService = new CatalogService($request, Brand::class);
     }
 
     function index() {
@@ -21,11 +23,13 @@ class BrandsController extends Controller
     }
 
     public function show(Request $request, string $link) {
-        $brands = $this->brandsService->brands;
-        $category = $this->brandsService->category;
-        $products = $this->brandsService->getFiltered();
-        $min_price = $this->brandsService->min_price;
-        $max_price = $this->brandsService->max_price;
+        $brands = $this->catalogService->brand;
+        $category = $this->catalogService->category;
+        $products = $this->catalogService->getFiltered();
+        $properties = $this->catalogService->getFilters();
+        $filters_weight = $this->catalogService->getFiltersWeight($properties);
+        $min_price = $this->catalogService->min_price;
+        $max_price = $this->catalogService->max_price;
 
         $products_id = [];
         foreach ($products as $product) {
@@ -48,7 +52,8 @@ class BrandsController extends Controller
             }
 
             return response()->json([
-                'html' => $products_list
+                'html' => $products_list,
+                'filterCounts' => $filters_weight
             ]);
         } else {
             $products_list = view('categories.parts.catalog', compact('products', 'variations'))->render();
@@ -62,6 +67,7 @@ class BrandsController extends Controller
         }
         $last_page_url = $products->url($products->lastPage());
         $pagination = view('categories.parts.pagination', compact('products', 'last_page_url'))->render();
-        return view('brands.index', compact('brands', 'category', 'products', 'pagination', 'products_list', 'min_price', 'max_price'));
+        return view('brands.index', compact('brands', 'category', 'filters_weight', 'properties',
+            'products', 'pagination', 'products_list', 'min_price', 'max_price'));
     }
 }

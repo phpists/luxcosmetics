@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Product;
 use App\Services\CatalogService;
 use App\Services\LanguageService;
@@ -71,38 +72,50 @@ class SearchController extends Controller
     public function showResultsPage(Request $request) {
         $paginate_count = 12;
         $search = $request->get('search');
-        $products = $this->search($request);
-        $products = $products
-            ->select('products.*', 'product_images.path as main_image')
-            ->join('product_images', 'products.image_print_id', 'product_images.id')
-            ->with('brand')
-            ->paginate($paginate_count);
+
+        $catalogService = new CatalogService($request, Product::class);
+        $products = $catalogService->getFiltered();
+        $properties = $catalogService->getFilters();
+        $filters_weight = $catalogService->getFiltersWeight($properties);
+        $min_price = $catalogService->min_price;
+        $max_price = $catalogService->max_price;
+
+//        $products = $this->search($request);
+//        $products = $products
+//            ->select('products.*', 'product_images.path as main_image')
+//            ->join('product_images', 'products.image_print_id', 'product_images.id')
+//            ->with('brand')
+//            ->paginate($paginate_count);
         $products_id = [];
         foreach ($products as $product) {
             $products_id[] = $product->id;
         }
         $variations = Product::getVariations($products_id);
-        $products_list = view('categories.parts.products', compact('products', 'variations'))->render();
+        $products_list = view('categories.parts.catalog', compact('products', 'variations'))->render();
+
+        if ($request->ajax()) {
+            if ($request->has('load_more')) {
+                $products_list = view('categories.parts.products', compact('products', 'variations'))->render();
+                $pagination = view('categories.parts.pagination', compact('products'))->render();
+
+                return response()->json([
+                    'new_count' => $products->count(),
+                    'products' => $products_list,
+                    'pagination' => $pagination
+                ]);
+            }
+
+            return response()->json([
+                'html' => $products_list,
+                'filterCounts' => $filters_weight
+            ]);
+        }
+
         $shown_count = ($products->currentPage() - 1) * $paginate_count + $products->count();
         $last_page_url = $products->url($products->lastPage());
-        $pagination = view('categories.parts.pagination', compact('products', 'last_page_url'))->render();
-        if ($request->ajax() && $request->full!=='1') {
-            return response()->json([
-                'data' => $products_list,
-                'next_link' => $products->nextPageUrl(),
-                'current_page' => $products->currentPage(),
-                'shown_count' => $shown_count
-            ]);
-        }
-        elseif ($request->ajax() && $request->full === '1') {
-            return response()->json([
-                'data' => $products_list,
-                'pagination' => $pagination,
-                'shown_count' => $shown_count,
-                'total' => $products->total()
-            ]);
-        }
-        return view('search', compact('products', 'pagination', 'products_list', 'search', 'shown_count'));
+        $pagination = view('layouts.includes.pagination', compact('products', 'last_page_url'))->render();
+        return view('search', compact('products', 'properties', 'filters_weight', 'min_price',
+            'max_price', 'pagination', 'products_list', 'search', 'shown_count'));
     }
     public function search_prompt(Request $request): JsonResponse
     {

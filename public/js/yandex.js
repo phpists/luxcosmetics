@@ -26,6 +26,8 @@ function isSmallSize() {
 }
 
 const handleRenderOrderModal = (title, address) => {
+    let [country, street, house] = address.split(', ')
+
     const modal = document.querySelector(".overlay-order");
     const content = `
       <div class="modal_maps">
@@ -43,7 +45,7 @@ const handleRenderOrderModal = (title, address) => {
           <div class="pickup-item__address">
               <div class="pickup-item__text"> ${address ?? ""}</div>
           </div>
-          <button data-address="${address ?? ''}" data-post_name="${title?? ''}" class="submit submit_address">Привезти сюда</button>
+          <button data-address="${address ?? ''}" data-street="${street}" data-house="${house}" data-post_name="${title?? ''}" class="submit submit_address">Привезти сюда</button>
       </div>
     `;
 
@@ -120,12 +122,14 @@ const handleOfficeZoom = () => {
     })
 }
 
-const handleFormatPickupCard = (place, coordinates) =>
-    `
+const handleFormatPickupCard = (place, coordinates) => {
+    let [country, street, house] = place?.address.split(', ')
+
+    return `
     <div class="pick-up-point pickup-item" data-id="${place?.id}" data-value="${coordinates[1] + ',' + coordinates[0]}">
         <div class="pick-up-point__title">${place?.name ?? ""}</div>
         <div class="pick-up-point__content">
-            <p>${ place?.address ?? ""}</p>
+            <p>${place?.address ?? ""}</p>
 <!--            <p>стоимость — <b>бесплатно</b></p>-->
 <!--            <p>дата доставки — <b>сегодня, 3 октября</b></p>-->
 <!--            <p>нет оплаты при получении</p>-->
@@ -134,9 +138,10 @@ const handleFormatPickupCard = (place, coordinates) =>
 <!--                <p><small>Контактный телефон</small> 8 800 770 70 21</p>-->
             </div>
         </div>
-        <button class="btn btn--accent pickup-item__button" data-id="${place?.id}" data-title="${place?.name}" data-address="${place?.address}">Привезти сюда</button>
+        <button class="btn btn--accent pickup-item__button" data-id="${place?.id}" data-title="${place?.name}" data-street="${street}" data-house="${house}" data-address="${place?.address}">Привезти сюда</button>
     </div>
-`;
+`
+};
 
 function handleClickBaloon(post_office_id) {
     const listWrapper = document.querySelector(".pick-up-points");
@@ -189,6 +194,10 @@ function displayPlaces(places, clearArea) {
 
 async function findPlaces(boundaries, count=0, clearArea=true) {
     let post_office = document.querySelector('.select-delivery-type-opt.active');
+    if (post_office === null) {
+        post_office = document.querySelector('#post_offices .select-delivery-type-opt');
+        post_office.classList.add('active');
+    }
     let res = await axios.get('https://search-maps.yandex.ru/v1/', {
         params: {
             apikey: SEARCH_API_KEY,
@@ -233,6 +242,9 @@ const loadDeliveryPlaces = async () => {
 
 function locationItemInit(el) {
     el.addEventListener('click', async () => {
+        $('input:radio[name="delivery"]').prop('checked', false)
+        closeCartTab('coruier_tab');
+
         document.querySelector('.find-address-input').value = el.dataset.value;
         let prompt = document.getElementById('suggest_location');
         prompt.innerHTML = "";
@@ -245,6 +257,8 @@ function locationItemInit(el) {
         }
 
         document.getElementById('delivery_contaniner').classList.add('active');
+
+        $('#delivery_city').val(el.dataset.value)
 
         closeCartTab('pickup_delivery_tab');
         // Saving place coordinates to input
@@ -297,6 +311,8 @@ function initDeliveryOptions() {
     document.querySelectorAll('.select-delivery-type-opt').forEach((el) => {
         let delivery_value = document.querySelector('.select-delivery-type-value');
         el.addEventListener('click', async () => {
+            $('#delivery_service').val(el.dataset.value)
+
             document.querySelector('.select-delivery-type-opt.active').classList.toggle('active');
             el.classList.toggle('active');
             delivery_value.innerText = el.dataset.type;
@@ -308,6 +324,16 @@ function initDeliveryOptions() {
 }
 
 function handleSubmitDeliveryAddress(ev) {
+    $('#delivery_street').val(ev.currentTarget.dataset.street)
+    $('#delivery_house').val(ev.currentTarget.dataset.house)
+
+    ymaps.geocode(ev.currentTarget.dataset.address, {results: 1}).then(function (res) {
+        var firstGeoObject = res.geoObjects.get(0),
+            vPostal = firstGeoObject.properties.get('metaDataProperty').GeocoderMetaData.Address.postal_code;
+
+        $('#delivery_zip').val(vPostal)
+    })
+
     let pickup_addr = document.getElementById('pickup_addr');
     let address = ev.currentTarget.dataset.address;
     let post_name = ev.currentTarget.dataset.post_name;
@@ -334,6 +360,7 @@ function handleClickStreetOption(ev) {
     let street_option = ev.currentTarget;
     let search = document.getElementById('street_house_inp');
     search.value = street_option.dataset.address;
+    $(search).trigger('change')
     let suggest_box = document.querySelector('.suggest_box__variants');
     suggest_box.classList.toggle('active');
 }
@@ -353,7 +380,7 @@ async function handleSearchStreetHouse(ev) {
     axios.get('https://suggest-maps.yandex.ru/v1/suggest', {
         params: {
             text: location_name + ', ' + search_inp.value,
-            types: 'house',
+            types: 'street',
             apikey: SUGGEST_API_KEY,
             print_address: 1,
             bbox: border_inp.value,
@@ -409,6 +436,7 @@ const showMaps = () => {
         initDeliveryOptions();
         handleToggleLoading(true);
         await loadDeliveryPlaces();
+        $(".select-delivery-type-opt:first").click()
     }, 600)
 }
 

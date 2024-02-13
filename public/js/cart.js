@@ -116,7 +116,6 @@ $(function () {
         }
 
         if ($form.find('input[name="card_id"]')) {
-            console.log(data)
             if (findValueByName('card_id', data) === null) {
                 let $submitAddressButton = $('#createCardForm').find('button[type="submit"]')
                 if (!$submitAddressButton.is(':focusable'))
@@ -146,21 +145,36 @@ $(function () {
 
     // Price Filter Slider Init
     let minFilterPrice = Math.floor($('#filterMinPrice').val());
+    let minCurrentPrice = Math.floor($('#filterCurrentMinPrice').val())
     let maxFilterPrice = Math.ceil($('#filterMaxPrice').val());
+    let maxCurrentPrice = Math.floor($('#filterCurrentMaxPrice').val())
 
     $("#slider-range").slider({
         range: true,
         min: minFilterPrice,
         max: maxFilterPrice,
-        values: [minFilterPrice, maxFilterPrice],
+        values: [minCurrentPrice, maxCurrentPrice],
         slide: function (event, ui) {
-            $("#amount").val(ui.values[0]);
-            $("#amount2").val(ui.values[1]);
+            $("#filterCurrentMinPrice").val(ui.values[0]);
+            $("#filterCurrentMaxPrice").val(ui.values[1]);
         }
     });
 
     $("#amount").val($("#slider-range").slider("values", 0));
     $("#amount2").val($("#slider-range").slider("values", 1));
+
+
+
+
+
+    // Data mirroring
+    $(document).on('input', "input[data-mirror]", function (e) {
+        $(this.dataset.mirror).val(this.value)
+    })
+    $(document).on('change', "input[data-mirror]", function (e) {
+        $(this.dataset.mirror).val(this.value)
+    })
+
 
 })
 
@@ -389,5 +403,6 @@ function disableCheckout(message) {
 }
 
 function loadGifts() {
-    $('#giftsContainer').load($('#giftsUrl').val())
+    if ($('#giftsContainer').length > 0)
+        $('#giftsContainer').load($('#giftsUrl').val())
 }

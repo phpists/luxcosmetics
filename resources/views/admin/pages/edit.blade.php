@@ -92,8 +92,8 @@
                                         </div>
                                         <div class="col-12">
                                             <div class="mb-5">
-                                                <label>Описание характеристики</label>
-                                                <textarea class="textEditor" name="content">{{$page->content}}</textarea>
+                                                <label>Текст страницы</label>
+                                                <textarea required id="textEditor" name="content">{{$page->content}}</textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -120,8 +120,7 @@
 @section('js_after')
     <script src="{{ asset('super_admin/js/pages/crud/forms/widgets/select2.js') }}"></script>
     <script src="{{ asset('super_admin/js/pages/crud/ktdatatable/base/html-table.js') }}"></script>
-    <script src="{{ asset('super_admin/plugins/custom/ckeditor/ckeditor-classic.bundle.js') }} "></script>
-
+    <script src="{{ asset('super_admin/ckeditor/ckeditor.js') }} "></script>
     <script>
         Promise.allSettled = Promise.allSettled || ((promises) => Promise.all(
             promises.map(p => p
@@ -145,9 +144,7 @@
         //     language: 'ru',
         //     height: "1000"
         // });
-        $('.textEditor').summernote($.extend(summernoteDefaultOptions, {
-            height: 400
-        }));
+        CKEDITOR.replace( 'textEditor' );
     </script>
 @endsection
 
