@@ -102,7 +102,7 @@
         @endforeach
     </div>
     <div class="filters__ftr">
-        <button type="submit" class="filters__btn" id="btn_show_selected">Показать</button>
+        <button type="submit" class="btn btn--accent filters__show filters__btn" id="btn_show_selected">>Показать</button>
         @if(isset($category))
         <a href="{{ route('categories.show', ['alias' => $category->alias]) }}"
            class="filters__btn">Сбросить</a>
