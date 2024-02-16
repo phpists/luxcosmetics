@@ -238,7 +238,7 @@ class Product extends Model
                 ->wherePropertyId($value->property_id)
                 ->pluck('property_value_id');
 
-            $allValues = implode(', ', PropertyValue::whereIn('id', $productPropertyValueIds)->pluck('value')->toArray());
+            $allValues = implode('; ', PropertyValue::whereIn('id', $productPropertyValueIds)->pluck('value')->toArray());
             $value->value = $allValues;
 
             return $value;
