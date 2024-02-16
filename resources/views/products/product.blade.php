@@ -74,7 +74,7 @@
                             <div class="gallery" id="product_gallery">
                                 @foreach($images as $image)
                                     <div class="gallery__item"><a
-                                            href="{{asset('images/uploads/products/'.$image->path)}}"><img
+                                            href="{{asset('images/uploads/products/'.$image->path)}}" class="mfp-image"><img
                                                 src="{{asset('images/uploads/products/'.$image->path)}}" alt=""></a>
                                     </div>
                                 @endforeach
