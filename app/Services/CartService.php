@@ -43,6 +43,7 @@ class CartService
     const ADDRESS_INTERCOM = 'intercom';
     const ADDRESS_ENTRANCE = 'entrance';
     const ADDRESS_OVER = 'over';
+    const ADDRESS_BUILDING = 'building';
 
     const ADDRESS_SERVICE = 'service';
 
@@ -55,7 +56,8 @@ class CartService
         self::ADDRESS_INTERCOM,
         self::ADDRESS_ENTRANCE,
         self::ADDRESS_OVER,
-        self::ADDRESS_SERVICE
+        self::ADDRESS_SERVICE,
+        self::ADDRESS_BUILDING,
     ];
 
 
@@ -78,7 +80,8 @@ class CartService
         self::ADDRESS_INTERCOM => 'Домофон',
         self::ADDRESS_ENTRANCE => 'Подъезд',
         self::ADDRESS_OVER => 'Этаж',
-        self::ADDRESS_SERVICE => 'Сервис доставки'
+        self::ADDRESS_SERVICE => 'Сервис доставки',
+        self::ADDRESS_BUILDING => 'Корпус/строение'
     ];
 
     public $discounts = [];

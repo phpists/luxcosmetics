@@ -316,6 +316,7 @@ class CatalogService
     {
         return \App\Models\Brand::select(['id', 'name'])
             ->whereIn('id', $this->products->pluck('brand_id')->toArray())
+            ->orderBy('name')
             ->get();
     }
 

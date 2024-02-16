@@ -37,7 +37,7 @@ class DeliveryMethodPolicy
 
     public function delete(User $user): bool
     {
-        return false;
+        return $user->isSuperAdmin() || $user->can(PermissionService::DELIVERY_METHODS_DELETE);
     }
 
 }

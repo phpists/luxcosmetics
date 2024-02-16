@@ -57,6 +57,7 @@
                                 <input type="hidden" id="delivery_city" name="city" required>
                                 <input type="hidden" id="delivery_street" name="street" required>
                                 <input type="hidden" id="delivery_house" name="house" required>
+                                <input type="hidden" id="delivery_building" name="building">
                                 <input type="hidden" id="delivery_apartment" name="apartment">
                                 <input type="hidden" id="delivery_intercom" name="intercom">
                                 <input type="hidden" id="delivery_entrance" name="entrance">

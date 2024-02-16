@@ -30,6 +30,7 @@
                         <h3 class="card-label">Курьерская доставка</h3>
                     </div>
                     <div class="card-toolbar">
+                        @if(auth()->user()->isSuperAdmin() || auth()->user()->can(\App\Services\Admin\PermissionService::DELIVERY_METHODS_EDIT))
                         <!--begin::Dropdown-->
                         <div class="dropdown dropdown-inline mr-2">
                             <button data-toggle="modal" data-target="#createModal"
@@ -37,6 +38,7 @@
                                 <i class="fas fa-plus mr-2"></i>Создать
                             </button>
                         </div>
+                        @endif
                     </div>
                 </div>
                 <div class="card-body pb-3">
@@ -45,9 +47,11 @@
                         <table class="table table-head-custom table-vertical-center">
                             <thead>
                             <tr>
+                                @if(auth()->user()->isSuperAdmin() || auth()->user()->can(\App\Services\Admin\PermissionService::DELIVERY_METHODS_EDIT))
                                 <th class="pl-0 text-center">
                                     #
                                 </th>
+                                @endif
                                 <th class="text-center pr-0">
                                     Название
                                 </th>
@@ -62,9 +66,11 @@
                             <tbody>
                             @foreach($models as $model)
                                 <tr id="gift_card_{{ $model->id }}" data-id="{{ $model->id }}">
+                                    @if(auth()->user()->isSuperAdmin() || auth()->user()->can(\App\Services\Admin\PermissionService::DELIVERY_METHODS_EDIT))
                                     <td class="handle text-center pl-0" style="cursor: pointer">
                                         {{ $model->id }}
                                     </td>
+                                    @endif
                                     <td class="text-center">
                                         <span class="text-dark-75 d-block font-size-lg">
                                             {{ $model->title }}
@@ -76,12 +82,15 @@
                                         </span>
                                     </td>
                                     <td class="text-center pr-0">
+                                        @if(auth()->user()->isSuperAdmin() || auth()->user()->can(\App\Services\Admin\PermissionService::DELIVERY_METHODS_EDIT))
                                         <a href="javascript:;" class="btn btn-sm btn-clean btn-icon btn-edit"
                                            data-toggle="modal" data-target="#editModal"
                                            data-show-url="{{ route('admin.courier-delivery-methods.show', $model) }}"
                                            data-update-url="{{ route('admin.courier-delivery-methods.update', $model) }}">
                                             <i class="las la-edit"></i>
                                         </a>
+                                        @endif
+                                            @if(auth()->user()->isSuperAdmin() || auth()->user()->can(\App\Services\Admin\PermissionService::DELIVERY_METHODS_DELETE))
                                         <form action="{{ route('admin.courier-delivery-methods.destroy', $model) }}" method="POST" style="display: inline">
                                             @csrf
                                             @method('DELETE')
@@ -90,6 +99,7 @@
                                                     title="Delete"><i class="las la-trash"></i>
                                             </button>
                                         </form>
+                                            @endif
                                     </td>
                                 </tr>
                             @endforeach
@@ -107,8 +117,10 @@
     <!--end::Container-->
     <!--end::Entry-->
 
-    @include('admin.settings.courier-delivery-methods.modals.create')
-    @include('admin.settings.courier-delivery-methods.modals.edit')
+    @if(auth()->user()->isSuperAdmin() || auth()->user()->can(\App\Services\Admin\PermissionService::DELIVERY_METHODS_EDIT))
+        @include('admin.settings.courier-delivery-methods.modals.create')
+        @include('admin.settings.courier-delivery-methods.modals.edit')
+    @endif
 @endsection
 
 @section('js_after')

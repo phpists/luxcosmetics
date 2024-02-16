@@ -19,7 +19,7 @@
                         </div>
                         <div class="cart-product__subtitle">{{ $orderProduct->product->title }}</div>
                         <div class="cart-product__options">
-                            @if($orderProduct->product->baseProperty)
+                            @if($orderProduct->product->baseProperty && $orderProduct->product->product_variations->isNotEmpty())
                             <div class="cart-product__option">Выбранный {{ mb_strtolower($orderProduct->product->baseProperty->name) }}:
                                 <b>{{ ($orderProduct->product->baseValue->value ?? '') . ($orderProduct->product->baseProperty->measure ?? '') }}</b></div>
                             @endif

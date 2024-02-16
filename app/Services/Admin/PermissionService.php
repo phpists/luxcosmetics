@@ -87,6 +87,7 @@ class PermissionService
 
     const DELIVERY_METHODS_VIEW = 'delivery-methods.view';
     const DELIVERY_METHODS_EDIT = 'delivery-methods.edit';
+    const DELIVERY_METHODS_DELETE = 'delivery-methods.delete';
 
 
 
@@ -189,9 +190,10 @@ class PermissionService
                 self::MENUS_EDIT => 'Редактирование',
                 self::MENUS_DELETE => 'Удаление',
             ],
-            'Способы доставки' => [
+            'Доставка' => [
                 self::DELIVERY_METHODS_VIEW => 'Просмотр',
-                self::DELIVERY_METHODS_EDIT => 'Редактирование'
+                self::DELIVERY_METHODS_EDIT => 'Редактирование',
+                self::DELIVERY_METHODS_DELETE => 'Удаление'
             ]
         ];
     }

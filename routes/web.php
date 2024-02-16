@@ -310,13 +310,6 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function 
         Route::post('update-price-from-excel', [\App\Http\Controllers\Admin\ProductController::class, 'updatePricesFromExcel'])
             ->name('update-price-from-excel');
 
-        /** Courier Delivery Methods */
-        Route::resource('courier-delivery-methods', \App\Http\Controllers\Admin\Settings\CourierDeliveryMethodController::class);
-        Route::get('get-states', [\App\Http\Controllers\Admin\Settings\CourierDeliveryMethodController::class, 'getStates']);
-        Route::get('get-cities', [\App\Http\Controllers\Admin\Settings\CourierDeliveryMethodController::class, 'getCities']);
-        /** /Courier Delivery Methods */
-
-
     });
 //    Images
     Route::get('images/show', [\App\Http\Controllers\Admin\ImageController::class, 'show'])->name('admin.image.show');
@@ -471,6 +464,13 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function 
     Route::post('category_posts/update-position', [\App\Http\Controllers\Admin\CategoryPostsController::class, 'updatePosition'])->name('admin.category_posts.update_positions');
     Route::post('category_post/update-status', [\App\Http\Controllers\Admin\CategoryPostsController::class, 'updateStatus'])->name('admin.category_posts.update_status');
 
+    /** Courier Delivery Methods */
+    Route::resource('courier-delivery-methods', \App\Http\Controllers\Admin\Settings\CourierDeliveryMethodController::class, [
+        'as' => 'admin'
+    ]);
+    Route::get('get-states', [\App\Http\Controllers\Admin\Settings\CourierDeliveryMethodController::class, 'getStates']);
+    Route::get('get-cities', [\App\Http\Controllers\Admin\Settings\CourierDeliveryMethodController::class, 'getCities']);
+    /** /Courier Delivery Methods */
 
 
 });

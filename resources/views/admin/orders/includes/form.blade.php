@@ -90,13 +90,6 @@
                    required/>
         </div>
     </div>
-    <div class="col-12 col-md-1">
-        <div class="form-group">
-            <label for="exampleSelect2">Дом</label>
-            <input type="text" name="house" value="{{ old('house', $order->house) }}" class="form-control"
-                   required/>
-        </div>
-    </div>
     <div class="col-12 col-md-2">
         <div class="form-group">
             <label for="exampleSelect2">Индекс</label>
@@ -106,14 +99,16 @@
     </div>
     <div class="col-12 col-md-1">
         <div class="form-group">
-            <label for="exampleSelect2">Квартира/Офис</label>
-            <input type="text" name="apartment" value="{{ old('apartment', $order->apartment) }}" class="form-control"/>
+            <label for="exampleSelect2">Дом</label>
+            <input type="text" name="house" value="{{ old('house', $order->house) }}" class="form-control"
+                   required/>
         </div>
     </div>
     <div class="col-12 col-md-1">
         <div class="form-group">
-            <label for="exampleSelect2">Домофон</label>
-            <input type="text" name="intercom" value="{{ old('intercom', $order->intercom) }}" class="form-control"/>
+            <label for="exampleSelect2">Корпус/строение</label>
+            <input type="text" name="building" value="{{ old('building', $order->building) }}" class="form-control"
+                   required/>
         </div>
     </div>
     <div class="col-12 col-md-1">
@@ -130,14 +125,14 @@
     </div>
     <div class="col-12 col-md-1">
         <div class="form-group">
-            <label for="exampleSelect2">Номер отделения</label>
-            <input type="text" name="delivery_point_code" value="{{ old('over', $order->delivery_point_code) }}" class="form-control"/>
+            <label for="exampleSelect2">Квартира/Офис</label>
+            <input type="text" name="apartment" value="{{ old('apartment', $order->apartment) }}" class="form-control"/>
         </div>
     </div>
     <div class="col-12 col-md-1">
         <div class="form-group">
-            <label for="exampleSelect2">ID отделения</label>
-            <input type="text" name="delivery_point_id" value="{{ old('over', $order->delivery_point_id) }}" class="form-control"/>
+            <label for="exampleSelect2">Домофон</label>
+            <input type="text" name="intercom" value="{{ old('intercom', $order->intercom) }}" class="form-control"/>
         </div>
     </div>
 </div>
@@ -151,6 +146,19 @@
                     <option value="{{ $payment_value }}" @selected(old('payment_type', $order->payment_type) == $payment_value)>{{ $payment_title }}</option>
                 @endforeach
             </select>
+        </div>
+    </div>
+
+    <div class="col-12 col-md-2">
+        <div class="form-group">
+            <label for="exampleSelect2">Номер отделения</label>
+            <input type="text" name="delivery_point_code" value="{{ old('over', $order->delivery_point_code) }}" class="form-control"/>
+        </div>
+    </div>
+    <div class="col-12 col-md-2">
+        <div class="form-group">
+            <label for="exampleSelect2">ID отделения</label>
+            <input type="text" name="delivery_point_id" value="{{ old('over', $order->delivery_point_id) }}" class="form-control"/>
         </div>
     </div>
 </div>

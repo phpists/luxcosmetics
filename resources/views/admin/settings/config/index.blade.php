@@ -87,6 +87,8 @@
                                         <td class="text-center pr-0">
                                             @if($cfg['type'] === \App\Services\SiteConfigService::BOOL)
                                                 {{ $cfg['value']? 'Да': 'Нет' }}
+                                            @elseif($cfg['type'] == \App\Services\SiteConfigService::WYSIWYG)
+                                                {{ Str::words(strip_tags($cfg['value']), 5) }}
                                             @else
                                                 {{ $cfg['value'] }}
                                             @endif
@@ -129,7 +131,9 @@
 @endsection
 
 @section('js_after')
-{{--    <script src="https://raw.githack.com/SortableJS/Sortable/master/Sortable.js"></script>--}}
+    <script src="{{ asset('super_admin/ckeditor/ckeditor.js') }} "></script>
+
+    {{--    <script src="https://raw.githack.com/SortableJS/Sortable/master/Sortable.js"></script>--}}
 {{--    <script src="{{ asset('super_admin/js/product.js') }}"></script>--}}
     <script>
         function change_val_input(container_id, type, id, value=null) {
@@ -153,6 +157,10 @@
             }
             else if (type === '{{\App\Services\SiteConfigService::NUMERIC}}') {
                 element.innerHTML = `<input type="number" required name="value" value="${value}" class="form-control" id="${id}">`
+            }
+            else if (type === '{{\App\Services\SiteConfigService::WYSIWYG}}') {
+                element.innerHTML = `<textarea required id="${id}" name="value">${value}</textarea>`
+                CKEDITOR.replace( id );
             }
         }
         $('.updateCfg').on('click', function (ev) {

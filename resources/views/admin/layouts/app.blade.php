@@ -729,7 +729,10 @@ request()->routeIs('admin.menu.edit', \App\Models\Menu::TOP_MENU) ? 'menu-item-o
                                         </ul>
                                     </div>
                                 </li>
-                                <li class="menu-item  menu-item-submenu {{ request()->routeIs(['admin.delivery-methods.*']) ? 'menu-item-open' : '' }}"
+                            @endif
+
+                                @if(auth()->user()->isSuperAdmin() || auth()->user()->can(\App\Services\Admin\PermissionService::DELIVERY_METHODS_VIEW))
+                                <li class="menu-item  menu-item-submenu {{ request()->routeIs(['admin.delivery-methods.*'], 'admin.courier-delivery-methods.*') ? 'menu-item-open' : '' }}"
                                     aria-haspopup="true" data-menu-toggle="hover">
                                     <a href="javascript:;" class="menu-link menu-toggle">
     <span class="svg-icon menu-icon">
@@ -768,7 +771,7 @@ request()->routeIs('admin.menu.edit', \App\Models\Menu::TOP_MENU) ? 'menu-item-o
                                         </ul>
                                     </div>
                                 </li>
-                            @endif
+                                @endif
                         @endif
                     </ul>
                     <!--end::Menu Nav-->

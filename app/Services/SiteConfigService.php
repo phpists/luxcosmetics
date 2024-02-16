@@ -14,6 +14,8 @@ class SiteConfigService
 
     const NUMERIC = 'numeric';
 
+    const WYSIWYG = 'wysiwyg';
+
 
     const EMAIL_FOR_ORDERS = 'email_for_orders';
 

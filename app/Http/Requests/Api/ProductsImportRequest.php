@@ -49,7 +49,7 @@ class ProductsImportRequest extends FormRequest
             'products.*.properties' => ['nullable', 'array'],
             'products.*.properties.*' => ['array'],
             'products.*.properties.*.property_id' => ['required', 'string'],
-            'products.*.properties.*.property_value' => ['required', 'string'],
+            'products.*.properties.*.property_value' => ['nullable', 'string'],
             'products.*.base_property' => ['nullable', 'string'],
             // модификации
             'products.*.variations' => ['nullable', 'string'],

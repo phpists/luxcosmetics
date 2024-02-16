@@ -136,7 +136,7 @@
                     </div>
 
                     @php($product_variations->push($product))
-                    @if(isset($product->baseProperty->id))
+                    @if(isset($product->baseProperty->id) && $product->product_variations->isNotEmpty())
                         @if($product_variations->count() > 1)
                             @if($product->baseProperty->id === \App\Models\Product::TYPE_VOLUME)
                                 <div class="product-page__options">
@@ -205,10 +205,7 @@
                             </span>
                         </button>
                     @endif
-                    <div class="product-page__deliveryinfo">
-                        <p>Доставка в тот же день: заказ до 13:00 в Москве и <a href="">других городах.</a></p>
-                        <p>Бесплатная экспресс-доставка для всех заказов на сумму свыше 10 000 ₽ </p>
-                    </div>
+                    <div class="product-page__deliveryinfo">{!! \App\Services\SiteConfigService::getParamValue('product_additional_info') !!}</div>
                     @if(sizeof($articles) > 0)
                         <div class="product-page__actions">
                             @foreach($articles->sortBy('position') as $article)

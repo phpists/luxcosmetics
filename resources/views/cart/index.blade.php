@@ -45,7 +45,7 @@
                                                 <a href="{{ route('products.product', ['alias' => $product->alias]) }}">{{ $product->brand?->name }}</a>
                                             </div>
                                             <div class="cart-product__subtitle">{{ $product->title }}</div>
-                                            @if($product->baseProperty)
+                                            @if($product->baseProperty && $product->product_variations->isNotEmpty())
                                             <div class="cart-product__options">
                                                 <div class="cart-product__option">Выбранный {{ mb_strtolower($product->baseProperty->name) }}:
                                                     <b>{{ ($product->baseValue->value ?? '') . ($product->baseProperty->measure ?? '') }}</b></div>
