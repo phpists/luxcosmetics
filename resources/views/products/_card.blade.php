@@ -82,7 +82,7 @@
             @endif
         </div>
 
-        @if(isset($product->baseProperty->id))
+        @if(isset($product->baseProperty->id) && $product->product_variations->isNotEmpty())
             @php
                 $product_variations = \App\Services\CatalogService::getProductVariations($product->id, $product->base_property_id);
                 $product_variations->push($product)

@@ -11,6 +11,11 @@ use Illuminate\Http\Request;
 class CourierDeliveryMethodController extends Controller
 {
 
+    public function __construct()
+    {
+        $this->authorizeResource(CourierDeliveryMethod::class);
+    }
+
     public function index()
     {
         return view('admin.settings.courier-delivery-methods.index', [

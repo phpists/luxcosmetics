@@ -52,7 +52,7 @@
 
         @if($is_not_brands && (isset($brands) && $brands->isNotEmpty()))
         <div class="filters__item filter" data-property="brands">
-            <div class="filter__title">Марка
+            <div class="filter__title">Бренд
                 <svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#arrow')}}"></use></svg>
             </div>
             <div class="filter__block">

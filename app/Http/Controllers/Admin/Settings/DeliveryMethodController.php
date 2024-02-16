@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Admin\Settings;
 
 use App\Http\Controllers\Controller;
 use App\Models\DeliveryMethod;
-use App\Services\SiteService;
 use Illuminate\Http\Request;
 
 class DeliveryMethodController extends Controller
@@ -12,7 +11,7 @@ class DeliveryMethodController extends Controller
 
     public function index()
     {
-        $this->authorize('viewAny', DeliveryMethod::class);
+//        $this->authorize('viewAny', DeliveryMethod::class);
 
         return view('admin.settings.delivery-methods.index', [
             'delivery_methods' => DeliveryMethod::orderBy('pos')->get()

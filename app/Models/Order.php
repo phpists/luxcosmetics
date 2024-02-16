@@ -98,7 +98,8 @@ class Order extends Model
         'service',
         'delivery_point_id',
         'delivery_point_code',
-        'shipping_method'
+        'shipping_method',
+        'building',
     ];
 
 
@@ -162,7 +163,9 @@ class Order extends Model
 
     public function scopeNewFor1C($query)
     {
-        return $query->where('is_received_by_1c', 0);
+        return $query
+            ->where('status_id', '!=', self::STATUS_NEW)
+            ->where('is_received_by_1c', 0);
     }
 
 

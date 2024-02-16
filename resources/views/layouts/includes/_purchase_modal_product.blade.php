@@ -7,7 +7,7 @@
     </div>
     <div class="addprod__subtitle">{{ $product->title }}</div>
     <div class="addprod__options">
-        @if($product->baseProperty)
+        @if($product->baseProperty && $product->product_variations->isNotEmpty())
         <div class="addprod__option">Выбранный {{ mb_strtolower($product->baseProperty->name) }}:
             <b>{{ ($product->baseValue->value ?? '') . ($product->baseProperty->measure ?? '') }}</b></div>
         @endif

@@ -34,6 +34,7 @@
                                             <option value="{{\App\Services\SiteConfigService::BOOL}}">Логическое</option>
                                             <option selected value="{{\App\Services\SiteConfigService::TEXT}}">Текстовое</option>
                                             <option value="{{\App\Services\SiteConfigService::NUMERIC}}">Числовое</option>
+                                            <option value="{{\App\Services\SiteConfigService::WYSIWYG}}">Текстовый редактор</option>
                                         </select>
                                     </div>
                                 </div>
