@@ -14,13 +14,13 @@ class ProductPropertyValueController extends Controller
     public function store(Request $request)
     {
         $product_id = $request->post('product_id');
-        $property_value_id = $request->post('property_value_id');
+        $property_value_ids = $request->post('property_value_ids');
         $property_id = $request->post('property_id');
 
-        if ($property_value_id == 0) {
+        if (in_array(0, $property_value_ids)) {
             $property = Property::find($property_id);
         } else {
-            $property_value = PropertyValue::find($property_value_id);
+            $property_value = PropertyValue::find($property_value_ids[0]);
             $property = $property_value->property;
         }
 
@@ -32,16 +32,20 @@ class ProductPropertyValueController extends Controller
             ->whereIn('property_value_id', $all_property_values_ids)
             ->delete();
 
-        if ($property_value_id == 0)
+        if (in_array(0, $property_value_ids) && count($property_value_ids) < 2)
             return response()->json(['result' => true]);
 
-        $product_property_value = ProductPropertyValue::create([
-            'product_id' => $product_id,
-            'property_id' => $property_value->property_id,
-            'property_value_id' => $property_value_id
-        ]);
+        $result = [];
 
-        return response()->json($product_property_value);
+        foreach ($property_value_ids as $property_value_id) {
+            $result[] = ProductPropertyValue::create([
+                'product_id' => $product_id,
+                'property_id' => $property_value->property_id,
+                'property_value_id' => $property_value_id
+            ]);
+        }
+
+        return response()->json($result);
     }
 
 }
