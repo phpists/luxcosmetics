@@ -107,8 +107,7 @@
     <div class="col-12 col-md-1">
         <div class="form-group">
             <label for="exampleSelect2">Корпус/строение</label>
-            <input type="text" name="building" value="{{ old('building', $order->building) }}" class="form-control"
-                   required/>
+            <input type="text" name="building" value="{{ old('building', $order->building) }}" class="form-control"/>
         </div>
     </div>
     <div class="col-12 col-md-1">
