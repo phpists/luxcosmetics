@@ -263,7 +263,7 @@
                                     </svg>
                                 </dt>
                                 <dd style="display: none;">
-                                    @forelse($product->values as $value)
+                                    @forelse($product->getPropertyValues() as $value)
                                         @if($value->property?->show_in_product)
                                             <p style="padding: 0 15px">{{ $value->property->name ?? 'UNDEFINED' }}: <b
                                                     style="font-weight: bolder">{{ $value->value . ' ' . $value->property->measure }}</b>

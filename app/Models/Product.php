@@ -231,4 +231,18 @@ class Product extends Model
         return $this->belongsToMany(Product::class, 'related_products', 'product_id', 'relative_product_id')->where('relation_type', RelatedProduct::SUPPORT_ITEMS);
     }
 
+    public function getPropertyValues()
+    {
+        return $this->values->map(function ($value) {
+            $productPropertyValueIds = ProductPropertyValue::whereProductId($this->id)
+                ->wherePropertyId($value->property_id)
+                ->pluck('property_value_id');
+
+            $allValues = implode(', ', PropertyValue::whereIn('id', $productPropertyValueIds)->pluck('value')->toArray());
+            $value->value = $allValues;
+
+            return $value;
+        })->unique('property_id');
+    }
+
 }
