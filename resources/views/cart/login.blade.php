@@ -24,18 +24,18 @@
 				</div>
 				<div class="cart-page__auth cart-auth">
 					<div class="cart-auth__col">
-						<div class="cart-auth__title">Авторизация через соцсети</div>
-						<div class="cart-auth__providers">
-							<button class="cart-auth__provider">
-								<img src="{{asset('images/dist/icons/google.svg')}}" alt="">
-								<span>Google</span>
-							</button>
-							<button class="cart-auth__provider">
-								<img src="{{asset('images/dist/icons/fb.svg')}}" alt="">
-								<span>Facebook</span>
-							</button>
-						</div>
-						<div class="cart-auth__or">или</div>
+{{--						<div class="cart-auth__title">Авторизация через соцсети</div>--}}
+{{--						<div class="cart-auth__providers">--}}
+{{--							<button class="cart-auth__provider">--}}
+{{--								<img src="{{asset('images/dist/icons/google.svg')}}" alt="">--}}
+{{--								<span>Google</span>--}}
+{{--							</button>--}}
+{{--							<button class="cart-auth__provider">--}}
+{{--								<img src="{{asset('images/dist/icons/fb.svg')}}" alt="">--}}
+{{--								<span>Facebook</span>--}}
+{{--							</button>--}}
+{{--						</div>--}}
+						<div class="cart-auth__or">Авторизация на сайте</div>
 						<form action="{{ route('login') }}" method="POST" class="form form--box">
                             @csrf
 							<div class="form__fieldset">

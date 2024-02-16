@@ -85,20 +85,20 @@
                 <div class="col-lg-12">
                     <div class="title-h1">Войти</div>
                     <div class="signin-page__wrap">
-                        <div class="signin-page__social">
-                            <p>Зарегистрируйтесь через</p>
-                            <div class="cart-auth__providers">
-                                <a href="{{route('login_socialite', ['provider' => 'google'])}}" class="cart-auth__provider">
-                                    <img src="{{asset('images/dist/icons/google.svg')}}" alt="">
-                                    <span>Google</span>
-                                </a>
-                                <a href="{{route('login_socialite', ['provider' => 'facebook'])}}" class="cart-auth__provider">
-                                    <img src="{{asset('images/dist/icons/fb.svg')}}" alt="">
-                                    <span>Facebook</span>
-                                </a>
-                            </div>
-                        </div>
-                        <p><b>ИЛИ</b></p>
+{{--                        <div class="signin-page__social">--}}
+{{--                            <p>Зарегистрируйтесь через</p>--}}
+{{--                            <div class="cart-auth__providers">--}}
+{{--                                <a href="{{route('login_socialite', ['provider' => 'google'])}}" class="cart-auth__provider">--}}
+{{--                                    <img src="{{asset('images/dist/icons/google.svg')}}" alt="">--}}
+{{--                                    <span>Google</span>--}}
+{{--                                </a>--}}
+{{--                                <a href="{{route('login_socialite', ['provider' => 'facebook'])}}" class="cart-auth__provider">--}}
+{{--                                    <img src="{{asset('images/dist/icons/fb.svg')}}" alt="">--}}
+{{--                                    <span>Facebook</span>--}}
+{{--                                </a>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+                        <p><b>Авторизация на сайте</b></p>
                         <form method="POST" action="{{ route('login') }}" class="form form--box signin-page__form">
                             @csrf
                             @if (session('error'))
@@ -133,7 +133,7 @@
                             </div>
                             <button class="btn btn--accent">Авторизоваться</button>
                         </form>
-                        <p><b>ИЛИ</b></p>
+                        <p><b>Регистрация на сайте</b></p>
                         <a href="{{ route('register') }}"  class="btn btn--accent">Создать аккаунт</a>
                     </div>
                 </div>
