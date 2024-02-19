@@ -118,7 +118,7 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="exampleSelect2">Ссылка</label>
-                                            <input type="text" name="link" class="form-control" value="{{ urlencode($item->link) }}" />
+                                            <input type="text" name="link" class="form-control" value="{{ $item->link }}" />
                                         </div>
                                     </div>
                                 </div>
