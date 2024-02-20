@@ -751,10 +751,10 @@
                         console.log(data)
                         data = data.map((x) => {
                             let title = x.title,
-                                sub_title = ` (${x.value}`;
+                                sub_title = x.value ? ` (${x.value}` : '';
                             if (x.measure) {
                                 sub_title += `${x.measure})`
-                            } else {
+                            } else if(sub_title.length > 0) {
                                 sub_title += ')'
                             }
 
