@@ -195,15 +195,17 @@ class CatalogService
     public static function getProductVariations($product_id, $base_property_id)
     {
         return Product::query()
-            ->select(['products.*', 'property_value.value as base_property_value', 'properties.name as  base_property_name', 'properties.measure as base_property_measure'])
-            ->join('product_variations', 'product_variations.variation_id', 'products.id')
-            ->where('product_variations.product_id', $product_id)
-            ->join('product_property_values', function ($join) use ($base_property_id) {
-                $join->on('product_property_values.product_id', '=', 'products.id')
-                    ->where('product_property_values.property_id', '=', DB::raw($base_property_id));
+            ->select(['products.*', 'property_value.value as base_property_value', 'properties.name as base_property_name', 'properties.measure as base_property_measure'])
+            ->join('product_variations', function ($join) use ($product_id) {
+                $join->on('product_variations.variation_id', '=', 'products.id')
+                    ->where('product_variations.product_id', $product_id);
             })
-            ->join('property_value', 'product_property_values.property_value_id', '=', 'property_value.id')
-            ->join('properties', 'properties.id', '=', DB::raw($base_property_id))
+            ->leftJoin('product_property_values', function ($join) use ($base_property_id) {
+                $join->on('product_property_values.product_id', '=', 'products.id')
+                    ->where('product_property_values.property_id', $base_property_id);
+            })
+            ->leftJoin('property_value', 'product_property_values.property_value_id', '=', 'property_value.id')
+            ->leftJoin('properties', 'properties.id', '=', DB::raw($base_property_id))
             ->get();
     }
 

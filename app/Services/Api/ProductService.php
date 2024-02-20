@@ -121,6 +121,11 @@ class ProductService
                             ->create([
                                 'variation_id' => $variation->id,
                             ]);
+                        $variation
+                            ->product_variations()
+                            ->create([
+                                'variation_id' => $dbProduct->id,
+                            ]);
                     }
                 }
             }
