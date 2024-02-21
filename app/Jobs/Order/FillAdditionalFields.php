@@ -52,9 +52,14 @@ class FillAdditionalFields implements ShouldQueue
                 ]);
             }
         } elseif ($order->delivery_type == Order::DELIVERY_COURIER) {
-            $state = null;
             if (str_contains($order->city, 'обл')) {
-                [$city, $state] = explode(',', $order->city);
+                $addressParts = explode(',', $order->city);
+                $state = null;
+                $city = $addressParts[0];
+                foreach ($addressParts as $addressPart) {
+                    if (str_contains($addressPart, 'обл'))
+                        $state = $addressPart;
+                }
             } else {
                 $city = $order->city;
             }

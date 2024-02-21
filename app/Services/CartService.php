@@ -352,8 +352,8 @@ class CartService
         });
         $order_data['user_id'] = $user->id;
         $order_data['total_sum'] = self::getTotalSumWithDiscounts();
-        $order_data['full_name'] = $user->full_name;
-        $order_data['phone'] = $user->phone;
+        $order_data['full_name'] = $this->getProperty(self::FIRST_NAME_KEY) . ' ' . $this->getProperty(self::LAST_NAME_KEY);
+        $order_data['phone'] = $this->getProperty(self::PHONE_KEY);
         $order_data['promo_code_discount'] = null;
         $order_data['bonuses_discount'] = null;
         $order_data['gift_card_discount'] = null;

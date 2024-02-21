@@ -117,7 +117,7 @@
                                         <div class="form__col form__col--50">
                                             <div class="form__fieldset">
                                                 <legend class="form__label">Номер телефона *</legend>
-                                                <input type="text" class="form__input" name="phone" value="{{ old('phone', $cartService->getProperty(\App\Services\CartService::PHONE_KEY) ?? auth()->user()->phone) }}" required>
+                                                <input id="phone_inp" type="text" class="form__input" name="phone" value="{{ old('phone', $cartService->getProperty(\App\Services\CartService::PHONE_KEY) ?? auth()->user()->phone) }}" required>
                                             </div>
                                         </div>
                                         <div class="form__col form__col--50">
