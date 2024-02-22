@@ -44,7 +44,6 @@ class Kernel extends HttpKernel
         ],
 
         'api' => [
-            VerifyApiRequest::class,
             \App\Http\Middleware\ForceJsonResponse::class,
             // \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
             \Illuminate\Routing\Middleware\ThrottleRequests::class.':api',
@@ -74,6 +73,7 @@ class Kernel extends HttpKernel
         'is_active_user' => EnsureActiveUser::class,
         'can-checkout' => CanCheckout::class,
         'is-super-admin' => SuperAdmin::class,
-        'paykeeper' => ValidatePaykeeperSignature::class
+        'paykeeper' => ValidatePaykeeperSignature::class,
+        'api.1c' => VerifyApiRequest::class,
     ];
 }
