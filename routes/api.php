@@ -19,7 +19,7 @@ Route::post('webhook/paykeeper', [\App\Http\Controllers\Webhook\PaykeeperControl
     ->middleware('paykeeper');
 
 
-Route::group(['middleware' => 'api'], function () {
+Route::group(['middleware' => ['api', 'api.1c']], function () {
     /** Products */
     Route::post('products/import', [\App\Http\Controllers\Api\ProductController::class, 'import']);
     Route::post('products/update-stocks', [\App\Http\Controllers\Api\ProductController::class, 'updateStocks']);
