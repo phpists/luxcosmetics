@@ -17,7 +17,7 @@ class OrderLetter extends Mailable
     /**
      * Create a new message instance.
      */
-    public function __construct($subject)
+    public function __construct($subject, public string $orderStatusTitle = 'Новый')
     {
         $this->subject = $subject;
         $this->userName = Auth::user()->name;
@@ -41,7 +41,8 @@ class OrderLetter extends Mailable
         return new Content(
             markdown: 'emails.sendorder',
             with: [
-                'userName' => $this->userName
+                'userName' => $this->userName,
+                'orderStatusTitle' => $this->orderStatusTitle
             ]
         );
     }

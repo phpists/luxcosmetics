@@ -2,10 +2,10 @@
         Привет, {{$userName}}
     </h1>
     <h2 style="text-align: center">
-        Вы зделали заказ на сайте {{ config('app.name') }}
+        Вы сделали заказ на сайте {{ config('app.name') }}
     </h2>
     <h2 style="text-align: center">
-        Ваш статус, НЕ ОПЛАЧЕН!!!
+        Ваш статус - {{ $orderStatusTitle }}
     </h2>
     <p style="text-align: center">
             Спасибо за покупку
