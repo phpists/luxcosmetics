@@ -162,7 +162,7 @@ class Product extends Model
             'id',
             'id',
             'property_value_id'
-        );
+        )->orderBy('property_id');
     }
 
     public function getBaseValueAttribute()

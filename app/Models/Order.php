@@ -126,7 +126,7 @@ class Order extends Model
 
         self::updated(function(Order $order) {
             if ($order->isDirty('status_id')) {
-                Mail::to($order->user->email)->send(new OrderStatusChangedMail($order));
+                Mail::to($order->email)->send(new OrderStatusChangedMail($order));
 
                 if ($order->status_id == self::STATUS_CANCELLED && $order->invoice_id)
                     event(new OrderCancelled($order));
