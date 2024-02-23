@@ -81,13 +81,14 @@ class FillAdditionalFields implements ShouldQueue
 
     private function clearStreet(string $street): string
     {
-        return Str::replace(
+        return trim(Str::replace(
             [
-                'улица'
+                'улица',
+                'ул.'
             ],
             '',
             $street
-        );
+        ));
     }
 
 }

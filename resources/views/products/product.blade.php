@@ -147,7 +147,7 @@
                                     @foreach($product_variations->sortBy('baseValue.value') as $product_variation)
                                         <label class="volume"
                                                onclick="window.location.href = '{{ route('products.product', ['alias' => $product_variation->alias]) }}'">
-                                            <input class="variation__select" type="radio"
+                                            <input class="variation__select @if($product->id === $product_variation->id) checked @endif" type="radio"
                                                    value="{{$product_variation->alias}}"
                                                    name="volume" @checked($product->id === $product_variation->id)/>
                                             <div class="volume__text">
@@ -892,6 +892,8 @@
                     }
                 });
             });
+
+            $('.variation__select.checked').prop('checked', true)
         });
     </script>
 @endsection

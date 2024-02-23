@@ -27,7 +27,8 @@ class SearchController extends Controller
             ->join('brands', 'brands.id', 'brand_id')
             ->where(function ($query) use ($search_query) {
                 return $query->where('title', 'like', '%'.$search_query.'%')
-                    ->orWhere('brands.name', 'like', '%'.$search_query.'%');
+                    ->orWhere('brands.name', 'like', '%'.$search_query.'%')
+                    ->orWhere('code', 'like', '%'.$search_query.'%');
             })
             ->where(function ($q) use ($from_price, $to_price) {
                 $q->whereBetween('price', [
