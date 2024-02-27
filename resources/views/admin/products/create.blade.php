@@ -123,7 +123,7 @@
                                             </div>
                                             <div class="col-md-2">
                                                 <label>Размер</label>
-                                                <input type="text" name="size" required class="form-control"/>
+                                                <input type="text" name="size" class="form-control"/>
                                             </div>
                                             <div class="col-md-2">
                                                 <label>Бонусные баллы</label>

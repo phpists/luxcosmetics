@@ -21,6 +21,16 @@ class Property extends Model
     const HORIZONTAL = 2;
     const VERTICAL = 1;
 
+
+    protected static function booted (): void
+    {
+
+        self::deleted(function (self $model) {
+            PropertyCategory::whereIn('property_id', $model->id)->delete();
+        });
+
+    }
+
     public function category_idx(): array
     {
         return PropertyCategory::query()->where('property_id', $this->id)->pluck('category_id')->toArray();

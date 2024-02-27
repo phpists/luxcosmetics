@@ -92,14 +92,19 @@
                     <div class="product__sizesinfo">Еще {{ ($product_variations->count() - 1) }} варианта</div>
                     <div class="product__pnl">
                         <div class="product__optionsblock">
+                            @if(in_array($product->base_property_id, [1,2]))
                             <div class="product__optionstitle">Выбранный {{ mb_strtolower($product->baseProperty->name) }}:
                                 <b>{{ ($product->basePropertyValue->value ?? '') . ($product->baseProperty->measure ?? '') }}</b>
                             </div>
+                            @endif
                             <div class="product__options product__volume">
                                 @foreach($product_variations->sortBy('basePropertyValue.value') as $product_variation)
                                     <label class="volume changeModification" data-url="{{ route('product.card', $product_variation->id) }}">
-                                        <input type="radio" name="volume" @checked($product->id == $product_variation->id)/>
-                                        <div class="volume__text"><b>{{ ($product_variation->basePropertyValue->value ?? '') . ($product_variation->baseProperty->measure ?? '') }}</b>
+                                        <input type="radio" name="volume_{{ md5($product->id . microtime()) }}" @checked($product->id == $product_variation->id)/>
+                                        <div class="volume__text">
+                                            @if(in_array($product_variation->base_property_id, [1,2]))
+                                                <b>{{ ($product_variation->basePropertyValue->value ?? '') . ($product_variation->baseProperty->measure ?? '') }}</b>
+                                            @endif
                                             {{ $product_variation->price }} ₽
                                         </div>
                                     </label>
@@ -141,7 +146,7 @@
                         <div class="product__options product__colors">
                             @foreach($product_variations->sortBy('basePropertyValue.value') as $product_variation)
                             <label class="color changeModification" data-url="{{ route('product.card', $product_variation->id) }}">
-                                <input type="radio" name="color" @checked($product->id == $product_variation->id)/>
+                                <input type="radio" name="color_{{ md5($product->id . microtime()) }}" @checked($product->id == $product_variation->id)/>
                                 <div class="color__text" style="background-color: {{ $product_variation->basePropertyValue->color }}"></div>
                             </label>
                             @endforeach
