@@ -109,7 +109,7 @@
                                             </div>
                                             <div class="col-md-2">
                                                 <label>Размер</label>
-                                                <input type="text" name="size" class="form-control" required value="{{$product->size}}"/>
+                                                <input type="text" name="size" class="form-control" value="{{$product->size}}"/>
                                             </div>
                                             <div class="col-md-2">
                                                 <label>Бонусные баллы</label>

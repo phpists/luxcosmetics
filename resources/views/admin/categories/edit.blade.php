@@ -219,6 +219,7 @@
                                     </thead>
                                     <tbody id="properties-table">
                                     @foreach($properties as $property)
+                                        @continue(!$property->property)
                                         <tr data-id="{{ $property->id }}">
                                             <td class="handle text-center pl-0" style="cursor: pointer">
                                                 <i class="flaticon2-sort"></i>
@@ -800,6 +801,36 @@
             let bt_menu = document.getElementById('bt_menu');
             let category_posts_table = document.getElementById('category_posts_table');
             let properties_table = document.getElementById('properties-table');
+
+            new Sortable(properties_table, {
+                animation: 150,
+                handle: '.handle',
+                dragClass: 'table-sortable-drag',
+                onEnd: function (/**Event*/ evt) {
+                    var list = [];
+                    $.each($(properties_table).find('tr'), function (idx, el) {
+                        console.log(el)
+                        list.push({
+                            id: $(el).data('id'),
+                            position: idx + 1
+                        })
+                    });
+                    $.ajax({
+                        method: 'post',
+                        url: '{{ route('admin.categories.updatePropsPosition') }}',
+                        data: {
+                            positions: list,
+                        },
+                        success: function () {
+                            list.forEach(function (el) {
+                                $('#prop_'+el['id']).find('.sort_col')[0].innerText = el['position'];
+                            })
+                        }
+                    });
+                }
+            });
+
+
             new Sortable(category_posts_table, {
                 animation: 150,
                 draggable: '.category_post_draggable',
@@ -839,32 +870,6 @@
                         },
                     });
 
-                }
-            });
-            new Sortable(properties_table, {
-                animation: 150,
-                handle: '.handle',
-                dragClass: 'table-sortable-drag',
-                onEnd: function (/**Event*/ evt) {
-                    var list = [];
-                    $.each($(properties_table).find('tr'), function (idx, el) {
-                        list.push({
-                            id: $(el).data('id'),
-                            position: idx + 1
-                        })
-                    });
-                    $.ajax({
-                        method: 'post',
-                        url: '{{ route('admin.categories.updatePropsPosition') }}',
-                        data: {
-                            positions: list,
-                        },
-                        success: function () {
-                            list.forEach(function (el) {
-                                $('#prop_'+el['id']).find('.sort_col')[0].innerText = el['position'];
-                            })
-                        }
-                    });
                 }
             });
         });

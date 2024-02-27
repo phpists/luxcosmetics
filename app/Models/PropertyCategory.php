@@ -22,7 +22,7 @@ class PropertyCategory extends Model
 
     protected function name(): Attribute {
         return Attribute::make(
-            get: fn () => $this->property->name
+            get: fn () => $this->property?->name
         );
     }
 }

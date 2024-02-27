@@ -6,6 +6,7 @@ use App\Enums\AvailableOptions;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\ProductVariation;
 use App\Models\Property;
 use App\Models\RelatedProduct;
 use Illuminate\Support\Arr;
@@ -116,16 +117,21 @@ class ProductService
                 foreach ($variations as $variation_code) {
                     $variation = Product::whereCode($variation_code)->first();
                     if ($variation) {
-                        $dbProduct
-                            ->product_variations()
-                            ->create([
-                                'variation_id' => $variation->id,
-                            ]);
-                        $variation
-                            ->product_variations()
-                            ->create([
-                                'variation_id' => $dbProduct->id,
-                            ]);
+                        if (!ProductVariation::whereProductId($dbProduct->id)->whereVariationId($variation->id)->exists()) {
+                            $dbProduct
+                                ->product_variations()
+                                ->create([
+                                    'variation_id' => $variation->id,
+                                ]);
+                        }
+
+                        if (!ProductVariation::whereProductId($variation->id)->whereVariationId($dbProduct->id)->exists()) {
+                            $variation
+                                ->product_variations()
+                                ->create([
+                                    'variation_id' => $dbProduct->id,
+                                ]);
+                        }
                     }
                 }
             }
