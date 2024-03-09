@@ -245,4 +245,11 @@ class Product extends Model
         })->unique('property_id');
     }
 
+    public function getVaritationsCountLabel(): string
+    {
+        $variants = \App\Services\CatalogService::getProductVariations($this->id, $this->base_property_id);
+        $count = $variants->count();
+        return trans_choice('plurals.variants_left', $count);
+    }
+
 }

@@ -89,7 +89,7 @@
             @endphp
             @if($product->baseProperty->id === \App\Models\Product::TYPE_VOLUME)
                 @if($product_variations->count() > 1)
-                    <div class="product__sizesinfo">Еще {{ ($product_variations->count() - 1) }} варианта</div>
+                    <div class="product__sizesinfo">{{ $product->getVaritationsCountLabel() }}</div>
                     <div class="product__pnl">
                         <div class="product__optionsblock">
                             @if(in_array($product->base_property_id, [1,2]))
@@ -138,7 +138,7 @@
                 @endif
             @elseif($product->baseProperty->id === \App\Models\Product::TYPE_COLOR)
                 @if($product_variations->count() > 1)
-                <div class="product__sizesinfo">Еще {{ ($product_variations->count() - 1) }} варианта</div>
+                <div class="product__sizesinfo">{{ $product->getVaritationsCountLabel() }}</div>
                 <div class="product__pnl">
                     <div class="product__optionsblock">
                         <div class="product__optionstitle">Выбранный цвет:
