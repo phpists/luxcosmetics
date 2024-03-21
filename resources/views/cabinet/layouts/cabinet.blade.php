@@ -33,11 +33,11 @@
                                             <use xlink:href="{{asset('images/dist/sprite.svg#bug')}}"></use>
                                         </svg>
                                         История заказов</a></li>
-                                <li class="@if(request()->routeIs('profile.subscriptions')) is-active @endif"><a href="{{route('profile.subscriptions')}}">
-                                        <svg class="icon">
-                                            <use xlink:href="{{asset('images/dist/sprite.svg#bug')}}"></use>
-                                        </svg>
-                                        Подписки</a></li>
+{{--                                <li class="@if(request()->routeIs('profile.subscriptions')) is-active @endif"><a href="{{route('profile.subscriptions')}}">--}}
+{{--                                        <svg class="icon">--}}
+{{--                                            <use xlink:href="{{asset('images/dist/sprite.svg#bug')}}"></use>--}}
+{{--                                        </svg>--}}
+{{--                                        Подписки</a></li>--}}
 {{--                                <li class="@if(request()->routeIs('profile.addresses')) is-active @endif"><a href="{{route('profile.addresses')}}">--}}
 {{--                                        <svg class="icon">--}}
 {{--                                            <use xlink:href="{{asset('images/dist/sprite.svg#book')}}"></use>--}}

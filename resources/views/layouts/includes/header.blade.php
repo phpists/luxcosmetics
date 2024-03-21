@@ -78,7 +78,7 @@
                                     </div>
                                 </div>
                             @else
-                                <a class="@if(str_contains($current_url, $menu_item->link)) active @endif" href="{{$menu_item->link}}">{{$menu_item->title}}</a>
+                                <a class="@if($current_url == $menu_item->link)) active @endif" href="{{$menu_item->link}}">{{$menu_item->title}}</a>
                         @endif
                         </li>
                     @endforeach

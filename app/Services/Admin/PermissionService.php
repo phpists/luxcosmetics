@@ -89,6 +89,9 @@ class PermissionService
     const DELIVERY_METHODS_EDIT = 'delivery-methods.edit';
     const DELIVERY_METHODS_DELETE = 'delivery-methods.delete';
 
+    const CONFIG_VIEW = 'config.view';
+    const CONFIG_MANAGE = 'config.manage';
+
 
 
     public static function getAll(): array
@@ -194,6 +197,10 @@ class PermissionService
                 self::DELIVERY_METHODS_VIEW => 'Просмотр',
                 self::DELIVERY_METHODS_EDIT => 'Редактирование',
                 self::DELIVERY_METHODS_DELETE => 'Удаление'
+            ],
+            'Настройки' => [
+                self::CONFIG_VIEW => 'Просмотр',
+                self::CONFIG_MANAGE => 'Создание/Редактирование',
             ]
         ];
     }
