@@ -50,6 +50,11 @@ class Category extends Model
         return $this->hasMany(Product::class);
     }
 
+    public function productsAsAdditional()
+    {
+        return $this->belongsToMany(Product::class, ProductCategory::class);
+    }
+
     public function properties()
     {
         return $this->belongsToMany(
