@@ -62,6 +62,7 @@ class ProductsImportRequest extends FormRequest
 //            'products.*.discount' => ['nullable', 'integer'],
 //            'products.*.points' => ['integer'],
 //            'products.*.items_left' => ['required', 'integer'],
+            'products.*.additional_categories' => ['nullable', 'array']
         ];
     }
 }
