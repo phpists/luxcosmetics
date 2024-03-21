@@ -307,10 +307,11 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function 
         // Order Statuses
         Route::resource('order_statuses', \App\Http\Controllers\Admin\OrderStatusController::class);
 
-        Route::post('update-price-from-excel', [\App\Http\Controllers\Admin\ProductController::class, 'updatePricesFromExcel'])
-            ->name('update-price-from-excel');
-
     });
+
+    Route::post('update-price-from-excel', [\App\Http\Controllers\Admin\ProductController::class, 'updatePricesFromExcel'])
+        ->name('admin.update-price-from-excel');
+
 //    Images
     Route::get('images/show', [\App\Http\Controllers\Admin\ImageController::class, 'show'])->name('admin.image.show');
 

@@ -443,6 +443,13 @@ class ProductController extends Controller
 
     public function updatePricesFromExcel(Request $request)
     {
+        if (!(auth()->user()->isSuperAdmin()
+            || (auth()->user()->can(\App\Services\Admin\PermissionService::PRODUCTS_VIEW)
+                && auth()->user()->can(\App\Services\Admin\PermissionService::PRODUCTS_CREATE)
+                && auth()->user()->can(\App\Services\Admin\PermissionService::PRODUCTS_EDIT)
+                && auth()->user()->can(\App\Services\Admin\PermissionService::PRODUCTS_DELETE))))
+            abort(403);
+
         $request->validate([
             'file' => ['required', 'file']
         ]);
