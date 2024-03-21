@@ -303,25 +303,25 @@
                                     <div class="col-md-3">
                                         <div class="form-group">
                                             <label for="lengthField">Длина:</label>
-                                            <input type="number" class="form-control" id="lengthField" name="length_product" min="0" max="100" step="1" value="{{ $product->length }}">
+                                            <input type="number" class="form-control" id="lengthField" name="length_product" min="0" max="100" step="1" value="{{ $product->length_product }}">
                                         </div>
                                     </div>
                                     <div class="col-md-3">
                                         <div class="form-group">
                                             <label for="widthField">Ширина:</label>
-                                            <input type="number" class="form-control" id="widthField" name="width_product" min="0" max="100" step="1" value="{{ $product->width }}">
+                                            <input type="number" class="form-control" id="widthField" name="width_product" min="0" max="100" step="1" value="{{ $product->width_product }}">
                                         </div>
                                     </div>
                                     <div class="col-md-3">
                                         <div class="form-group">
                                             <label for="heightField">Высота:</label>
-                                            <input type="number" class="form-control" id="heightField" name="height_product" min="0" max="100" step="1" value="{{ $product->height }}">
+                                            <input type="number" class="form-control" id="heightField" name="height_product" min="0" max="100" step="1" value="{{ $product->height_product }}">
                                         </div>
                                     </div>
                                     <div class="col-md-3">
                                         <div class="form-group">
                                             <label for="weightField">Вес:</label>
-                                            <input type="number" class="form-control" id="weightField" name="weight_product" min="0" max="100" step="1" value="{{ $product->weight }}">
+                                            <input type="number" class="form-control" id="weightField" name="weight_product" min="0" max="100" step="1" value="{{ $product->weight_product }}">
                                         </div>
                                     </div>
                                     <div class="col-md-2">

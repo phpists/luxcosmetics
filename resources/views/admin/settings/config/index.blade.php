@@ -34,11 +34,13 @@
                         </div>
                         <div class="card-toolbar">
                             <!--begin::Dropdown-->
+                            @if(auth()->user()->isSuperAdmin() || auth()->user()->can(\App\Services\Admin\PermissionService::CONFIG_MANAGE))
                             <div class="col-auto">
                                 <button data-toggle="modal" data-target="#createConfigModal" class="btn btn-primary font-weight-bold">
                                     <i class="fas fa-plus mr-2"></i>Добавить
                                 </button>
                             </div>
+                            @endif
                             <!--
                             <div class="dropdown dropdown-inline mr-2">
                                <button class="btn btn-success font-weight-bolder activeproducts" data-status="1">
@@ -73,9 +75,11 @@
                                     <th class="pr-0 text-center">
                                         Значение
                                     </th>
+                                    @if(auth()->user()->isSuperAdmin() || auth()->user()->can(\App\Services\Admin\PermissionService::CONFIG_MANAGE))
                                     <th class="pr-0 text-center">
                                         Действие
                                     </th>
+                                    @endif
                                 </tr>
                                 </thead>
                                 <tbody id="table">
@@ -93,6 +97,7 @@
                                                 {{ $cfg['value'] }}
                                             @endif
                                         </td>
+                                        @if(auth()->user()->isSuperAdmin() || auth()->user()->can(\App\Services\Admin\PermissionService::CONFIG_MANAGE))
                                         <td class="text-center pr-0">
                                             <a href="javascript:;" class="btn btn-sm btn-clean btn-icon updateCfg"
                                                data-toggle="modal" data-target="#updateConfigModal"
@@ -109,6 +114,7 @@
 {{--                                                <i class="las la-trash"></i>--}}
 {{--                                            </a>--}}
                                         </td>
+                                        @endif
                                     </tr>
                                 @endforeach
 

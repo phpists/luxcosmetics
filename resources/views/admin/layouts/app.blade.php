@@ -666,7 +666,7 @@ request()->routeIs('admin.menu.edit', \App\Models\Menu::TOP_MENU) ? 'menu-item-o
                             {{--                            </div>--}}
 
 
-                            @if(auth()->user()->isSuperAdmin())
+                            @if(auth()->user()->isSuperAdmin() || auth()->user()->can(\App\Services\Admin\PermissionService::CONFIG_VIEW))
                                 <li class="menu-item  menu-item-submenu {{ (request()->routeIs('admin.settings.contacts') || request()->routeIs('admin.settings.socials')) ? 'menu-item-open' : '' }}"
                                     aria-haspopup="true" data-menu-toggle="hover">
                                     <a href="javascript:;" class="menu-link menu-toggle">
@@ -689,6 +689,7 @@ request()->routeIs('admin.menu.edit', \App\Models\Menu::TOP_MENU) ? 'menu-item-o
                                     <div class="menu-submenu">
                                         <i class="menu-arrow"></i>
                                         <ul class="menu-subnav">
+                                            @if(auth()->user()->isSuperAdmin())
                                             <li class="menu-item  menu-item-parent" aria-haspopup="true">
                                                 <span class="menu-link"><span class="menu-text">Общие</span></span>
                                             </li>
@@ -719,6 +720,8 @@ request()->routeIs('admin.menu.edit', \App\Models\Menu::TOP_MENU) ? 'menu-item-o
                                                     <span class="menu-text">Robots.txt</span>
                                                 </a>
                                             </li>
+                                            @endif
+                                            @if(auth()->user()->isSuperAdmin() || auth()->user()->can(\App\Services\Admin\PermissionService::CONFIG_VIEW))
                                             <li class="menu-item {{ request()->routeIs('admin.settings.index') ? 'menu-item-active' : '' }}"
                                                 aria-haspopup="true">
                                                 <a href="{{ route('admin.settings.index') }}" class="menu-link">
@@ -726,6 +729,7 @@ request()->routeIs('admin.menu.edit', \App\Models\Menu::TOP_MENU) ? 'menu-item-o
                                                     <span class="menu-text">Настройки</span>
                                                 </a>
                                             </li>
+                                            @endif
                                         </ul>
                                     </div>
                                 </li>
