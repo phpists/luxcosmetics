@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Mail\OrderLetter;
 use App\Models\Order;
+use App\Models\Page;
 use App\Models\Product;
 use App\Models\PromoCode;
 use App\Services\CartService;
@@ -135,7 +136,9 @@ class CartController extends Controller
 
     public function error()
     {
-        return view('cart.error');
+        return view('cart.error', [
+            'page' => Page::whereLink('cart/error')->first()
+        ]);
     }
 
 

@@ -98,9 +98,9 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-lg btn-light-primary font-weight-bold" data-dismiss="modal">
-                        Закрити
+                        Закрыть
                     </button>
-                    <button type="submit" class="btn btn-lg btn-primary mr-2">Зберегти</button>
+                    <button type="submit" class="btn btn-lg btn-primary mr-2">Сохранить</button>
                 </div>
             </form>
 

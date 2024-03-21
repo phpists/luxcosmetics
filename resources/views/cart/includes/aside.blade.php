@@ -49,7 +49,9 @@
 
     <div class="cart-aside__total">
         <div class="cart-aside__delivery">
-            <span class="cart-aside__delivery-name">Доставка <small>Бесплатная доставкав течении 1-2 дней</small></span>
+            <span class="cart-aside__delivery-name">Доставка
+                <small>{{ \App\Services\SiteConfigService::getParamValue('cart_delivery_label') }}</small>
+            </span>
             <span class="cart-aside__delivery-value">Бесплатно</span>
         </div>
 

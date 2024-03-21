@@ -155,6 +155,21 @@
 
             $('.select2').select2()
 
+            $('#createAdminEmail').select2({
+                tags: true,
+                placeholder: 'Email'
+            }).on('change.select2', function (e) {
+                let userData = $(this).find('option:selected').data('user');
+
+                if (userData) {
+                    $('#createAdminName').val(userData.name);
+                    $('#createAdminSurname').val(userData.surname);
+                    $('#createAdminPassword').prop('required', false);
+                } else {
+                    $('#createAdminPassword').prop('required', true);
+                }
+            })
+
         })
 
 

@@ -97,7 +97,7 @@
                         <div class="form-group">
                             <label class="font-size-h6 font-weight-bolder text-dark">Почта</label>
                             <input class="form-control form-control-solid h-auto py-6 px-6 rounded-lg" name="email"
-                                   type="email" autocomplete="off" value="admin@gmail.com"/>
+                                   type="email" autocomplete="off">
                         </div>
                         <!--end::Form group-->
                         <!--begin::Form group-->
