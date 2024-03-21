@@ -107,6 +107,10 @@
                                     <a href="{{ route('admin.product-info.download') }}" class="btn btn-primary btn-lg btn-block"><i class="icon flaticon-download"></i> Загрузка данны о товарах</a>
                                 </div>
                             </div>
+                            @if(auth()->user()->isSuperAdmin() || (auth()->user()->can(\App\Services\Admin\PermissionService::PRODUCTS_VIEW)
+                && auth()->user()->can(\App\Services\Admin\PermissionService::PRODUCTS_CREATE)
+                && auth()->user()->can(\App\Services\Admin\PermissionService::PRODUCTS_EDIT)
+                && auth()->user()->can(\App\Services\Admin\PermissionService::PRODUCTS_DELETE)))
                             <div class="d-flex align-items-center justify-content-between card-spacer flex-grow-1">
                                 <div class="d-flex flex-column pb-3">
                                     <form method="POST" action="{{ route('admin.update-price-from-excel') }}" enctype="multipart/form-data">
@@ -120,6 +124,7 @@
                                     </form>
                                 </div>
                             </div>
+                            @endif
 {{--                            <div id="kt_stats_widget_12_chart" class="card-rounded-bottom" data-color="primary" style="height: 150px"></div>--}}
                         </div>
                     </div>
