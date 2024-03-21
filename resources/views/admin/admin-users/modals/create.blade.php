@@ -18,6 +18,28 @@
                     <div class="row">
                         <div class="col-md-6 col-12">
                             <div class="form-group w-100">
+                                <label for="createAdminEmail"
+                                       class="font-weight-bold">Email</label>
+                                <select name="email" id="createAdminEmail" class="form-control select2" required>
+                                    <option></option>
+                                    @foreach($commonUsers as $commonUser)
+                                        <option data-user='@json($commonUser)' value="{{ $commonUser->email }}">{{ $commonUser->email }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-12">
+                            <div class="form-group w-100">
+                                <label for="createAdminPassword"
+                                       class="font-weight-bold">Пароль</label>
+                                <input type="password" class="form-control" id="createAdminPassword" name="password" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 col-12">
+                            <div class="form-group w-100">
                                 <label for="createAdminName"
                                        class="font-weight-bold">Имя</label>
                                     <input type="text" class="form-control" id="createAdminName" name="name" required>
@@ -28,24 +50,6 @@
                                 <label for="createAdminSurname"
                                        class="font-weight-bold">Фамилия</label>
                                     <input type="text" class="form-control" id="createAdminSurname" name="surname" required>
-                            </div>
-                        </div>
-                    </div>
-
-
-                    <div class="row">
-                        <div class="col-md-6 col-12">
-                            <div class="form-group w-100">
-                                <label for="createAdminEmail"
-                                       class="font-weight-bold">Email</label>
-                                    <input type="email" class="form-control" id="createAdminEmail" name="email" required>
-                            </div>
-                        </div>
-                        <div class="col-md-6 col-12">
-                            <div class="form-group w-100">
-                                <label for="createAdminPassword"
-                                       class="font-weight-bold">Пароль</label>
-                                    <input type="password" class="form-control" id="createAdminPassword" name="password" required>
                             </div>
                         </div>
                     </div>

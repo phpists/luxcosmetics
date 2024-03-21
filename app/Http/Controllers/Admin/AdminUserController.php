@@ -8,6 +8,7 @@ use App\Models\Address;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rule;
 use Spatie\Permission\Models\Role;
 
 class AdminUserController extends Controller
@@ -17,6 +18,7 @@ class AdminUserController extends Controller
     {
         return view('admin.admin-users.index', [
             'users' => User::admins()->paginate(),
+            'commonUsers' => User::customers()->get(),
             'roles' => Role::all()
         ]);
     }
@@ -24,7 +26,7 @@ class AdminUserController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'email' => 'unique:users,email'
+            'email' => Rule::unique('users', 'email')->where('role_id', User::ADMIN)
         ]);
 
         $data = $request->post();
@@ -36,7 +38,12 @@ class AdminUserController extends Controller
         unset($data['roles']);
 
         try {
-            $admin = User::create($data);
+            $admin = User::whereEmail($data['email'])->first();
+            if ($admin && $admin->role_id !== User::ADMIN)
+                $admin->update(['role_id' => User::ADMIN, ...$data]);
+            else
+                $admin = User::create($data);
+
             $admin->syncRoles($roles);
 
             return back()->with('success', 'Администратор успешно сохранен');

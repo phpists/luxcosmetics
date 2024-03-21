@@ -105,6 +105,11 @@ class GiftCondition extends Model
         'gift_product_id');
     }
 
+    public function availableProducts()
+    {
+        return $this->products()->available();
+    }
+
 
 
     public function conditionExceptions()

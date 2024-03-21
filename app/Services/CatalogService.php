@@ -91,20 +91,17 @@ class CatalogService
         $products = $this->getFilteredProductsQuery()
             ->selectRaw('case when user_favorite_products.product_id is null then FALSE else TRUE end as is_favourite');
 
-        if ($sort_column = $this->getSortColumn()) {
+        if ($sort_column = $this->getSortColumn())
             $products->orderBy($sort_column, $this->getSortDirection());
-        }
-        else {
+        else
             $products->orderBy('created_at', 'DESC')->orderBy('products.id', 'desc');
-        }
 
         if (Auth::check()) {
             $favourites = DB::table('user_favorite_products')->select('user_favorite_products.*')->where('user_id', $this->request->user()->id);
             $products = $products->leftJoinSub($favourites, 'user_favorite_products', function (JoinClause $join) {
                 $join->on('user_favorite_products.product_id', '=', 'products.id');
             });
-        }
-        else {
+        } else {
             $products = $products->leftJoin('user_favorite_products', 'user_favorite_products.product_id', '=', 'products.id');
         }
 
@@ -121,7 +118,13 @@ class CatalogService
 
         $products = $this->getProductsQuery()
             ->when($search = $this->request->get('search'), function ($query) use($search) {
-                $query->where('title', 'like', "%{$search}%");
+                $query
+                    ->leftJoin('brands', 'brands.id', 'brand_id')
+                    ->where(function ($query) use ($search) {
+                    return $query->where('title', 'like', "%{$search}%")
+                        ->orWhere('brands.name', 'like', '%'.$search.'%')
+                        ->orWhere('code', 'like', '%'.$search.'%');
+                });
             })
             ->where(function ($q) use ($price_from, $price_to) {
                 $q->whereBetween('price', [

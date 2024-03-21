@@ -36,7 +36,7 @@ class GiftService
             }
 
             if ($this->checkCondition($condition, $cart_products, $cart_sum))
-                $gift_products = $gift_products->merge($condition->products);
+                $gift_products = $gift_products->merge($condition->availableProducts);
         }
 
         return self::UNIQUE_GIFTS

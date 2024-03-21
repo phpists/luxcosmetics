@@ -256,27 +256,27 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-12">
-                                        <div class="form-group">
-                                            <div class="checkbox-inline">
-                                                <label class="checkbox">
-                                                    <input type="checkbox" @if($product->show_in_sales_page) checked @endif name="show_in_sales_page"/>
-                                                    <span></span>
-                                                    Отобразить на странице акции
-                                                </label>
-                                                <label class="checkbox">
-                                                    <input type="checkbox" @if($product->show_in_percent_discount_page) checked @endif name="show_in_percent_discount_page"/>
-                                                    <span></span>
-                                                    Отобразить на странице Товары со скидкой до -50%
-                                                </label>
-                                                <label class="checkbox">
-                                                    <input type="checkbox" @if($product->show_in_new_page) checked @endif name="show_in_new_page"/>
-                                                    <span></span>
-                                                    Отобразить на странице Новинки
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
+{{--                                    <div class="col-12">--}}
+{{--                                        <div class="form-group">--}}
+{{--                                            <div class="checkbox-inline">--}}
+{{--                                                <label class="checkbox">--}}
+{{--                                                    <input type="checkbox" @if($product->show_in_sales_page) checked @endif name="show_in_sales_page"/>--}}
+{{--                                                    <span></span>--}}
+{{--                                                    Отобразить на странице акции--}}
+{{--                                                </label>--}}
+{{--                                                <label class="checkbox">--}}
+{{--                                                    <input type="checkbox" @if($product->show_in_percent_discount_page) checked @endif name="show_in_percent_discount_page"/>--}}
+{{--                                                    <span></span>--}}
+{{--                                                    Отобразить на странице Товары со скидкой до -50%--}}
+{{--                                                </label>--}}
+{{--                                                <label class="checkbox">--}}
+{{--                                                    <input type="checkbox" @if($product->show_in_new_page) checked @endif name="show_in_new_page"/>--}}
+{{--                                                    <span></span>--}}
+{{--                                                    Отобразить на странице Новинки--}}
+{{--                                                </label>--}}
+{{--                                            </div>--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
                                     <div class="col-12">
                                         <div class="form-group">
                                             <div class="checkbox-inline">
@@ -450,9 +450,6 @@
                                                 ИЗОБРАЖЕНИЕ
                                             </th>
                                             <th class="pr-0 text-center">
-                                                ГЛАВНОЕ
-                                            </th>
-                                            <th class="pr-0 text-center">
                                                 Действия
                                             </th>
                                         </tr>
@@ -469,21 +466,11 @@
                                                 <td class="text-center pl-0">
                                                     <img src="/images/uploads/products/{{ $image->path }}" width="100" height="100">
                                                 </td>
-                                                <td class="text-center pl-0">
-                                                    {{ \App\Services\SiteService::getIsMain($image->id===$product->image_print_id) }}
-                                                </td>
                                                 <td class="text-center pr-0">
                                                     <button class="btn btn-sm btn-clean btn-icon btn-img-sort">
                                                         <i class="handle_cat_image flaticon2-sort"
                                                            style="cursor:pointer;"></i>
                                                     </button>
-                                                    <a href="javascript:;" data-toggle="modal"
-                                                       data-target="#updateProductImageModal"
-                                                       data-id="{{ $image->id }}"
-                                                       class="btn btn-sm btn-clean btn-icon updateCategoryImage edit-btn-img">
-                                                        <i class="las la-edit"></i>
-                                                    </a>
-
                                                     <a href="{{ route('admin.product.image.remove', $image->id) }}"
                                                        class="btn btn-sm btn-clean btn-icon"
                                                        onclick="return confirm('Вы уверенны, что хотите удалить данную запись?')">

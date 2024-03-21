@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title', $page->title ?? 'Ошибка')
+
 @section('content')
 <section class="crumbs">
 	<div class="container">
@@ -17,9 +19,9 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-lg-12 typography">
-				<h1 class="title-h1">Произошла ошибка</h1>
-				<p>В процессе заказа произошла ошибка. Попробуйте повторить попытку оплаты заказа в вашем личном кабинете, в разделе <a href="">Заказы</a></p>
-				<a href="" class="btn btn--accent">Вернутся в  каталог</a>
+                @if($page)
+                    {!! $page->content !!}
+                @endif
 			</div>
 		</div>
 	</div>
