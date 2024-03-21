@@ -25,6 +25,17 @@ class SalesController extends Controller
             'sales-50' => 'show_in_percent_discount_page',
             'novinki' => 'show_in_new_page'
         };
+        $currentCategory = Category::whereAlias($currentRoute)->first();
+        if (!$currentCategory)
+            abort(404);
+
+        $products = $currentCategory->productsAsAdditional;
+        $category_ids = [];
+
+        foreach ($products as $product)
+            $category_ids[] = $product->category_id;
+
+        $categories = Category::whereIn('id', $category_ids)->distinct()->get();
 
         $selected_cat = $this->catalogService->category;
         $products = $this->catalogService->getFiltered();
@@ -34,12 +45,12 @@ class SalesController extends Controller
         $min_price = $this->catalogService->min_price;
         $max_price = $this->catalogService->max_price;
 
-        $categories = Category::query()
-            ->select('categories.*')
-            ->join('products', 'products.category_id', 'categories.id')
-            ->where($page_column, true)
-            ->distinct(['category_id'])
-            ->get();
+//        $categories = Category::query()
+//            ->select('categories.*')
+//            ->join('products', 'products.category_id', 'categories.id')
+//            ->where($page_column, true)
+//            ->distinct(['category_id'])
+//            ->get();
 
         $products_id = [];
         foreach ($products as $product) {
