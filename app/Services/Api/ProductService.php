@@ -168,6 +168,23 @@ class ProductService
                 }
             }
 
+            $dbProduct->productCategories()->delete();
+
+            if (isset($product['additional_categories']) && is_array($product['additional_categories'])) {
+                foreach ($product['additional_categories'] as $additionalCategory) {
+                    $dbAdditionalCategory = Category::firstOrCreate(
+                        [
+                            'name' => trim($additionalCategory)
+                        ],
+                        [
+                            'alias' => \Str::slug($additionalCategory),
+                            'position' => 999
+                        ]
+                    );
+                    $dbProduct->productCategories()->create(['category_id' => $dbAdditionalCategory->id]);
+                }
+            }
+
         }
     }
 
