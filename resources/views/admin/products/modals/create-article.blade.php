@@ -22,8 +22,8 @@
 
             <form action="{{ route('admin.article.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
-                <input type="hidden" name="record_id" value="{{ $product->id }}">
-                <input type="hidden" name="table_name" value="products">
+                <input type="hidden" name="record_id" value="{{ $record_id }}">
+                <input type="hidden" name="table_name" value="{{ $table_name }}">
                 <div class="modal-body">
 
                     <div class="row">
