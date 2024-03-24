@@ -68,6 +68,11 @@
                                     <span class="nav-text">Рекламные баннеры</span>
                                 </a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#articles">
+                                    <span class="nav-text">Статьи</span>
+                                </a>
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -580,6 +585,84 @@
                                 </tbody>
                             </table>
                         </div>
+
+                        <div class="tab-pane fade" id="articles" role="tabpanel"
+                             aria-labelledby="properties_tab">
+                            <div class="row mb-5">
+                                <div class="col">
+                                    <div class="mb-7">
+                                        <h3>Статьи</h3>
+                                    </div>
+                                </div>
+                                <div class="col-auto">
+                                    <button data-toggle="modal" data-target="#createArticleModal"
+                                            class="btn btn-primary font-weight-bold">
+                                        <i class="fas fa-plus mr-2"></i>
+                                        Добавить
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table table-head-custom table-vertical-center">
+                                    <thead>
+                                    <tr>
+                                        <th class="pl-0 text-center">
+                                            #
+                                        </th>
+                                        <th class="pr-0 text-center">
+                                            Изображение
+                                        </th>
+                                        <th class="text-center pr-0">
+                                            Название
+                                        </th>
+                                        <th class="pr-0 text-center">
+                                            Ссылка
+                                        </th>
+                                        <th class="pr-0 text-center">
+                                            Действия
+                                        </th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="product_banners-table">
+                                    @foreach($articles as $article)
+                                        <tr data-id="{{ $article->id }}">
+                                            <td class="handle text-center pl-0" style="cursor: pointer">
+                                                <i class="flaticon2-sort"></i>
+                                            </td>
+                                            <td class="text-center position">
+                                                <div class="mx-auto rounded-circle overflow-hidden" style="width: fit-content">
+                                                    <img src="{{ $article->getImageSrcAttribute() }}" width="50" height="50" alt="">
+                                                </div>
+                                            </td>
+                                            <td class="text-center position">
+                                                <span class="text-dark-75 d-block font-size-lg sort_col">
+                                                    <a href="{{$article->link}}">{{ $article->title }}</a>
+                                                </span>
+                                            </td>
+                                            <td class="text-center">
+                                                <span class="text-dark-75 d-block font-size-lg">
+                                                    {{$article->link}}
+                                                </span>
+                                            </td>
+                                            <td class="text-center pr-0">
+                                                <form action="{{ route('admin.article.delete') }}" method="POST">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <input type="hidden" name="id" value="{{ $article->id }}">
+                                                    <button type="submit" class="btn btn-sm btn-clean btn-icon btn_delete"
+                                                            onclick="return confirm('Вы уверены, что хотите удалить ссылку на статью \'{{ $article->title }}\'?')"
+                                                            title="Delete"><i class="las la-trash"></i>
+                                                    </button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!--end::Table-->
+                        </div>
+
                     </div>
                 </div>
             </div>
@@ -594,6 +677,7 @@
     @include('admin.categories.modals.update-tag')
     @include('admin.categories.modals.create-category_post')
     @include('admin.categories.modals.update-category_post')
+    @include('admin.products.modals.create-article', ['record_id' => $category->id, 'table_name' => 'categories'])
 @endsection
 
 @section('js_after')

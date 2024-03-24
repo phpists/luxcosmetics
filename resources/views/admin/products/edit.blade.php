@@ -658,7 +658,7 @@
     @include('admin.products.modals.create-variation')
     @include('admin.products.modals.update-variation')
 
-    @include('admin.products.modals.create-article')
+    @include('admin.products.modals.create-article', ['record_id' => $product->id, 'table_name' => 'products'])
 
 @endsection
 
