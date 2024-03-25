@@ -563,7 +563,14 @@
                                                 </span>
                                             </td>
                                             <td class="text-center pr-0">
-                                                <form action="{{ route('admin.article.delete') }}" method="POST">
+                                                <a href="javascript:;" class="btn btn-sm btn-clean btn-icon edit-btn-article"
+                                                   data-toggle="modal" data-target="#editArticleModal"
+                                                   data-show-url="{{ route('admin.article.show', $article) }}"
+                                                   data-update-url="{{ route('admin.article.update', $article) }}"
+                                                   data-id="{{ $article->id }}">
+                                                    <i class="las la-edit"></i>
+                                                </a>
+                                                <form action="{{ route('admin.article.delete') }}" method="POST" style="display:inline;">
                                                     @csrf
                                                     @method('DELETE')
                                                     <input type="hidden" name="id" value="{{ $article->id }}">
@@ -659,6 +666,7 @@
     @include('admin.products.modals.update-variation')
 
     @include('admin.products.modals.create-article', ['record_id' => $product->id, 'table_name' => 'products'])
+    @include('admin.products.modals.edit-article')
 
 @endsection
 
@@ -832,6 +840,7 @@
             var createImagePlugin = new KTImageInput('kt_image_1');
             var createPageImagePlugin = new KTImageInput('kt_image_1');
             var createArticleImage = new KTImageInput('createArticleImage');
+            var editArticleImage = new KTImageInput('editArticleImage');
 
 
             $('#product_banner_create_select').select2();
@@ -936,6 +945,36 @@
                     $('#updateVariationPrice').val(response.price);
                     $('#updateVariationDiscountPrice').val(response.discount_price);
                     $('#variationId').val(id);
+                },
+                error: function (response) {
+                    console.log(response)
+                }
+            })
+        }
+
+
+        $(document).on('click', ".edit-btn-article", loadModelArticle);
+
+        function loadModelArticle() {
+            let id = $(this).data('id'),
+                showUrl = this.dataset.showUrl,
+                updateUrl = this.dataset.updateUrl;
+
+            $.ajax({
+                url: showUrl,
+                data: {
+                    id: id
+                },
+                success: function (response) {
+                    $('#editArticleModal form').attr('action', updateUrl);
+
+                    let img_url = `url("${response.image_src}")`;
+                    $('#editArticleImageBackground').css('background-image', img_url);
+                    $('#editArticleTitle').val(response.title);
+                    $('#editArticleLink').val(response.link);
+                    $('#editArticlePosition').val(response.position);
+                    $('#editArticleDescription').summernote('code', response.description)
+                    $('#editArticleIsActive').prop('checked', response.is_active == 1);
                 },
                 error: function (response) {
                     console.log(response)
