@@ -25,11 +25,11 @@ class SalesController extends Controller
             'sales-50' => 'show_in_percent_discount_page',
             'novinki' => 'show_in_new_page'
         };
-        $currentCategory = Category::whereAlias($currentRoute)->first();
-        if (!$currentCategory)
+        $category = Category::whereAlias($currentRoute)->first();
+        if (!$category)
             abort(404);
 
-        $products = $currentCategory->productsAsAdditional;
+        $products = $category->productsAsAdditional;
         $category_ids = [];
 
         foreach ($products as $product)
@@ -89,6 +89,6 @@ class SalesController extends Controller
 //        $last_page_url = $products->url($products->lastPage());
 //        $pagination = view('categories.parts.pagination', compact('products', 'last_page_url'))->render();
         return view('actions', compact('products', 'categories', 'selected_cat', 'properties',
-            'brands', 'products_list', 'filters_weight', 'max_price', 'min_price', 'currentRoute'));
+            'brands', 'products_list', 'filters_weight', 'max_price', 'min_price', 'currentRoute', 'category'));
     }
 }

@@ -763,6 +763,7 @@
             var updateCatPostImagePlugin = new KTImageInput('updateCategoryPostModal');
             var updateTagImage = new KTImageInput('updateImageTag');
             var createCatPostImagePlugin = new KTImageInput('createCatPostImagePlugin');
+            var createArticleImage = new KTImageInput('createArticleImage');
 
             KTSummernoteDemo.init();
 
