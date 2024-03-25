@@ -38,10 +38,9 @@ class ArticleController extends Controller
             return response()->json($article);
         }
     }
-    public function update(Request $request)
+    public function update(Request $request, Article $article)
     {
         $data = $request->all();
-        $article = Article::findOrFail($request->id);
 
         if ($request->hasFile('image')) {
             $image = FileService::saveFile('uploads', 'articles', $request->file('image'));

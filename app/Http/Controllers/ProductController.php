@@ -32,10 +32,10 @@ class ProductController extends Controller
                 'images' => $images
             ]);
         }
-        $articles = Article::query()->where('record_id', $product->id)->where('table_name', 'products')->get();
+        $articles = Article::active()->where('record_id', $product->id)->where('table_name', 'products')->get();
         $category = $product->category;
         while (sizeof($articles) === 0) {
-            $articles = Article::query()->where('record_id', $category->id)->where('table_name', 'categories')->get();
+            $articles = Article::active()->where('record_id', $category->id)->where('table_name', 'categories')->get();
             if ($category->category_id !== null && sizeof($articles) === 0) {
                 $category = Category::query()->find($category->category_id);
                 if (!$category) {
