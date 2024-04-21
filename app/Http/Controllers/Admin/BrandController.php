@@ -25,9 +25,13 @@ class BrandController extends Controller
             ->where('name', 'like', '%'.$request->search.'%')->get());
     }
 
-    public function update(Request $request) {
-        $brand = Brand::query()->findOrFail($request->id);
+    public function edit(Brand $brand) {
+        $this->authorize('update', $brand);
 
+        return view('admin.brands.edit', compact('brand'));
+    }
+
+    public function update(Request $request, Brand $brand) {
         $this->authorize('update', $brand);
 
         $image = $request->image;

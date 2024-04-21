@@ -35,6 +35,8 @@ class CatalogService
 
     public $min_price = 1;
     public $max_price = 999999;
+    public $min_filtered_price = 1;
+    public $max_filtered_price = 999999;
 
     public function __construct(Request $request, string $modelName, string $custom_alias = null)
     {
@@ -105,8 +107,13 @@ class CatalogService
             $products = $products->leftJoin('user_favorite_products', 'user_favorite_products.product_id', '=', 'products.id');
         }
 
+        $filteredProducts = $products->get();
+
         $this->min_price = $this->products->min('price');
         $this->max_price = $this->products->max('price');
+
+        $this->min_filtered_price = $filteredProducts->min('price');
+        $this->max_filtered_price = $filteredProducts->max('price');
 
         return $products->paginate(self::PER_PAGE);
     }
@@ -173,12 +180,12 @@ class CatalogService
         return false;
     }
 
-    private function getPriceFrom()
+    public function getPriceFrom()
     {
         return $this->request->get('price')['from'] ?? $this->products->min('price');
     }
 
-    private function getPriceTo()
+    public function getPriceTo()
     {
         return $this->request->get('price')['to'] ?? $this->products->max('price');
     }
@@ -315,6 +322,18 @@ class CatalogService
         }
 
         return $result;
+    }
+
+    function getFilterPrices()
+    {
+        return [
+            'min' => $this->min_price,
+            'max' => $this->max_price,
+            'filteredMin' => $this->min_filtered_price,
+            'filteredMax' => $this->max_filtered_price,
+            'currentMin' => $this->getPriceFrom() < $this->min_filtered_price ? $this->min_filtered_price : $this->getPriceFrom(),
+            'currentMax' => $this->getPriceTo() > $this->max_filtered_price ? $this->max_filtered_price : $this->getPriceTo(),
+        ];
     }
 
     public function getBrands()

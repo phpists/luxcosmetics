@@ -106,9 +106,7 @@
                                     </td>
                                     <td class="text-center pr-0">
                                         @if(auth()->user()->isSuperAdmin() || auth()->user()->can(\App\Services\Admin\PermissionService::BRANDS_EDIT))
-                                            <a href="javascript:;" class="btn btn-sm btn-clean btn-icon btn_edit"
-                                               data-toggle="modal" data-target="#updateModal"
-                                               data-id="{{ $brand->id }}">
+                                            <a href="{{ route('admin.brands.edit', $brand) }}" class="btn btn-sm btn-clean btn-icon">
                                                 <i class="las la-edit"></i>
                                             </a>
                                         @endif

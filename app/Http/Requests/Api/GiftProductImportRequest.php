@@ -1,0 +1,32 @@
+<?php
+
+namespace App\Http\Requests\Api;
+
+use Illuminate\Foundation\Http\FormRequest;
+
+class GiftProductImportRequest extends FormRequest
+{
+    /**
+     * Determine if the user is authorized to make this request.
+     */
+    public function authorize(): bool
+    {
+        return true;
+    }
+
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array|string>
+     */
+    public function rules(): array
+    {
+        return [
+            'gift-products' => ['array'],
+            'gift-products.*.brand_title' => ['required', 'string'],
+            'gift-products.*.article' => ['required', 'string'],
+            'gift-products.*.title' => ['required', 'string'],
+            'gift-products.*.pieces' => ['required', 'numeric'],
+        ];
+    }
+}

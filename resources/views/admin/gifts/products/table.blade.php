@@ -45,14 +45,7 @@
                     {{ $gift_product->title }}
                 </td>
                 <td class="text-center pr-0">
-                    <div class="form-group row justify-content-center">
-                            <span class="switch switch-success">
-                                <label>
-                                    <input class="is-available-edit" type="checkbox" name="is_available" @checked($gift_product->isAvailable()) data-url="{{ route('admin.gift_products.update', $gift_product) }}"/>
-                                    <span></span>
-                                </label>
-                            </span>
-                    </div>
+                    {!! $gift_product->isAvailable() ? "<span class='badge badge-primary'>{$gift_product->pieces}</span>" : "<span class='badge badge-secondary'>{$gift_product->pieces}</span>" !!}
                 </td>
                 <td class="text-center pr-0">
                     @if(auth()->user()->isSuperAdmin() || auth()->user()->can(\App\Services\Admin\PermissionService::GIFTS_EDIT))

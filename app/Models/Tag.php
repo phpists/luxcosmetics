@@ -11,9 +11,15 @@ class Tag extends Model
 
     public $timestamps = false;
 
-    protected $fillable = ['name', 'link', 'image_path', 'category_id', 'add_to_top', 'position'];
+    protected $fillable = ['name', 'link', 'image_path', 'add_to_top', 'position', 'morphable_id', 'morphable_type'];
     public function getImageSrcAttribute()
     {
         return asset('images/uploads/tags/'.$this->image_path);
     }
+
+    function morphable()
+    {
+        return $this->morphTo();
+    }
+
 }

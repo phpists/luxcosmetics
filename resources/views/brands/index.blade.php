@@ -59,7 +59,7 @@
                         </aside>
                         <main class="category-page__main">
                             <ul class="category-page__subcategories">
-                                @foreach($category->tags as $tag)
+                                @foreach($brands->topTags as $tag)
                                     <li>
                                         <a href="/{{$tag->link}}" class="category-page__subcategory">
                                             <span class="category-page__subcategory-image"><img src="{{$tag->getImageSrcAttribute()}}" alt=""></span>
@@ -98,28 +98,25 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="seoblock__wrapper">
-                        <h1 class="seoblock__title">Уход за телом: натуральная косметика для красоты и здоровья</h1>
-                        <div class="seoblock__content">Забота о красоте и здоровье вашей кожи становится приятным и эффективным с нашим широким ассортиментом продуктов для ухода за телом. В нашем интернет-магазине косметики вы найдете все необходимые средства для ежедневного ухода и специальных процедур, которые подарят вашей коже мягкость, увлажнение и сияние. Откройте для себя мир натуральной косметики, разработанной с использованием последних инноваций и проверенных временем рецептов.</div>
-                        <div class="seoblock__content is-hidden" id="seohidden">Забота о красоте и здоровье вашей кожи становится приятным и эффективным с нашим широким ассортиментом продуктов для ухода за телом. В нашем интернет-магазине косметики вы найдете все необходимые средства для ежедневного ухода и специальных процедур, которые подарят вашей коже мягкость, увлажнение и сияние. Откройте для себя мир натуральной косметики, разработанной с использованием последних инноваций и проверенных временем рецептов.</div>
+                        @if($bottomTitle = $brands->getSeo('bottom_title'))
+                        <h1 class="seoblock__title">{{ $bottomTitle }}</h1>
+                        @endif
+                            @if($bottomText = $brands->getSeo('bottom_text'))
+                        <div class="seoblock__content">{!! $bottomText !!}</div>
+                            @endif
+                            @if($hiddenBottomText = $brands->getSeo('hidden_bottom_text'))
+                            <div class="seoblock__content is-hidden" id="seohidden">{!! $hiddenBottomText !!}</div>
                         <div class="seoblock__morecontent">Показать еще</div>
+                            @endif
+
+                        @if($brands->bottomTags->isNotEmpty())
                         <div class="seoblock__tags">
-                            <a href="" class="seoblock__tag">кремы для тела</a>
-                            <a href="" class="seoblock__tag">гели для душа</a>
-                            <a href="" class="seoblock__tag">скрабы для тела</a>
-                            <a href="" class="seoblock__tag">масла для тела</a>
-                            <a href="" class="seoblock__tag">борьба с растяжками</a>
-                            <a href="" class="seoblock__tag">кремы для тела</a>
-                            <a href="" class="seoblock__tag">гели для душа</a>
-                            <a href="" class="seoblock__tag">скрабы для тела</a>
-                            <a href="" class="seoblock__tag">масла для тела</a>
-                            <a href="" class="seoblock__tag">борьба с растяжками</a>
-                            <a href="" class="seoblock__tag">кремы для тела</a>
-                            <a href="" class="seoblock__tag">гели для душа</a>
-                            <a href="" class="seoblock__tag">скрабы для тела</a>
-                            <a href="" class="seoblock__tag">масла для тела</a>
-                            <a href="" class="seoblock__tag">борьба с растяжками</a>
+                            @foreach($brands->bottomTags as $bottomTag)
+                            <a href="{{ $bottomTag->link }}" class="seoblock__tag">{{ $bottomTag->name }}</a>
+                            @endforeach
                         </div>
                         <div class="seoblock__moretags">Развернуть</div>
+                         @endif
                     </div>
                 </div>
             </div>

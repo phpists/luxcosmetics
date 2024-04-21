@@ -3,9 +3,10 @@
 
     <input type="hidden" name="sort">
     <input type="hidden" id="search_needle" name="search" value="{{request()->input('search')}}">
-    <input type="hidden" id="filterMinPrice" value="{{ $min_price }}">
-    <input type="hidden" id="filterMaxPrice" value="{{ $max_price }}">
+    <input type="hidden" id="filterMinPrice" value="{{ $filter_prices['min'] }}">
+    <input type="hidden" id="filterMaxPrice" value="{{ $filter_prices['max'] }}">
     <input type="hidden" id="filterPropertyCounts" value='@json($filters_weight)'>
+    <input type="hidden" id="filterPrices" value='@json($filter_prices)'>
 
     <div class="filters__close">
         <svg class="icon">
@@ -21,7 +22,7 @@
     </div>
 
     <div class="filters__wrapper">
-        @if(isset($min_price) || isset($max_price))
+        @if(isset($filter_prices['min']) || isset($filter_prices['max']))
         <div class="filters__item filter">
             <div class="filter__title">Цена
                 <svg class="icon">
@@ -36,13 +37,13 @@
                             <span>от</span>
                             <input type="number" name="price[from]"
                                    class="filter__input" id="filterCurrentMinPrice"
-                                   value="{{ request()->input('price.from') ?? $min_price }}">
+                                   value="{{ request()->input('price.from') ?? $filter_prices['min'] }}">
                         </div>
                         <div class="filter__col">
                             <span>до</span>
                             <input type="number" name="price[to]" class="filter__input"
                                    id="filterCurrentMaxPrice"
-                                   value="{{ request()->input('price.to') ?? $max_price }}">
+                                   value="{{ request()->input('price.to') ?? $filter_prices['max'] }}">
                         </div>
                     </div>
                 </div>
@@ -103,9 +104,12 @@
     </div>
     <div class="filters__ftr">
         <button type="submit" class="filters__btn" id="btn_show_selected">Показать</button>
-        @if(isset($category))
+        @if($is_not_brands && isset($category))
         <a href="{{ route('categories.show', ['alias' => $category->alias]) }}"
            class="filters__btn">Сбросить</a>
+        @else
+            <a href="{{ route('brands.show', ['link' => $brands->link]) }}"
+               class="filters__btn">Сбросить</a>
         @endif
     </div>
 

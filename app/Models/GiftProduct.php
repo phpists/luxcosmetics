@@ -19,7 +19,7 @@ class GiftProduct extends Model
         'article',
         'title',
         'img',
-        'is_available'
+        'pieces'
     ];
 
     protected $hidden = [
@@ -37,7 +37,7 @@ class GiftProduct extends Model
 
     public function scopeAvailable($query)
     {
-        return $query->where('is_available', 1);
+        return $query->whereNot('pieces', 0);
     }
 
 
@@ -49,7 +49,7 @@ class GiftProduct extends Model
 
     public function isAvailable(): bool
     {
-        return $this->is_available == 1;
+        return $this->pieces > 0;
     }
 
     public function getImgSrc()

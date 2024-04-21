@@ -110,7 +110,7 @@ class CategoryController extends Controller
 
         $this->authorize('update', $category);
 
-        $tags = Tag::query()->where('category_id', $id)->paginate();
+        $tags = $category->tags;
         $posts = CategoryPost::query()->where('category_id', $category->id)->orderBy('position')->get();
         $articles = Article::query()->where('record_id', $category->id)
             ->where('table_name', 'categories')

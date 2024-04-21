@@ -142,6 +142,7 @@ $(document).ready(function () {
             success: function (response) {
                 $('#catalog').html(response.html)
                 $('#filterPropertyCounts').val(JSON.stringify(response.filterCounts))
+                $('#filterPrices').val(JSON.stringify(response.filterPrices))
                 initFilters();
                 updateFilter();
             },
@@ -193,6 +194,34 @@ function updateFilter() {
             $property.find('button.filter__all').show()
         } else {
             $property.find('button.filter__all').hide()
+        }
+    }
+
+    let prices = JSON.parse($('#filterPrices').val());
+    if (prices) {
+        const $filterMinPrice = $('#filterMinPrice'),
+            $filterMaxPrice = $('#filterMaxPrice'),
+            $filterCurrentMinPrice = $('#filterCurrentMinPrice'),
+            $filterCurrentMaxPrice = $('#filterCurrentMaxPrice'),
+            $slider = $("#slider-range");
+
+        if (Number($filterMinPrice.val()) !== Number(prices.filteredMin) || Number($filterMaxPrice.val()) !== Number(prices.filteredMax)) {
+            $slider.slider({'min': prices.filteredMin});
+            $slider.slider({'max': prices.filteredMax});
+
+            $filterMinPrice.val(prices.filteredMin)
+            $filterMaxPrice.val(prices.filteredMax)
+
+            // if (Number($filterCurrentMinPrice.val()) < Number(prices.currentMin) || Number($filterCurrentMaxPrice.val()) > Number(prices.currentMax)) {
+            //     $slider.slider({
+            //         values: [prices.currentMin, prices.currentMax]
+            //     });
+            //     $("#amount").val($slider.slider("values", 0));
+            //     $("#amount2").val($slider.slider("values", 1));
+            //
+            //     $filterCurrentMinPrice.val(prices.currentMin)
+            //     $filterCurrentMaxPrice.val(prices.currentMax)
+            // }
         }
     }
 }

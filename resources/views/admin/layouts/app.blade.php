@@ -187,7 +187,7 @@
 {{ (request()->routeIs('admin.products')
 || request()->routeIs('admin.products.tree')
 || request()->routeIs('admin.categories')
-|| request()->routeIs('admin.brands.index')
+|| request()->routeIs('admin.brands.*')
 || request()->routeIs('admin.properties.index')
 || request()->routeIs('admin.product.edit')
 || request()->routeIs('admin.product.create')
@@ -239,7 +239,7 @@
                                     <div class="menu-submenu" style="" kt-hidden-height="160">
                                         <i class="menu-arrow"></i>
                                         <ul class="menu-subnav">
-                                            <li class="menu-item {{ request()->routeIs('admin.brands.index') ? 'menu-item-active' : '' }}"
+                                            <li class="menu-item {{ request()->routeIs('admin.brands.*') ? 'menu-item-active' : '' }}"
                                                 aria-haspopup="true">
                                                 <a href="{{ route('admin.brands.index') }}" class="menu-link">
                                                     <i class="menu-bullet menu-bullet-dot">

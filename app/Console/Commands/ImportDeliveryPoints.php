@@ -60,5 +60,6 @@ class ImportDeliveryPoints extends Command
             DeliveryPoint::firstOrCreate($datum);
         }
 
+        $this->call('delivery:sync');
     }
 }
