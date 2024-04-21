@@ -98,13 +98,13 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="seoblock__wrapper">
-                        @if($bottomTitle = $brands->getSeo('bottom_title'))
+                        @if($bottomTitle = $brands->getSeo('bottom_title') && !empty($bottomTitle))
                         <h1 class="seoblock__title">{{ $bottomTitle }}</h1>
                         @endif
-                            @if($bottomText = $brands->getSeo('bottom_text'))
+                            @if($bottomText = $brands->getSeo('bottom_text') && !empty($bottomText))
                         <div class="seoblock__content">{!! $bottomText !!}</div>
                             @endif
-                            @if($hiddenBottomText = $brands->getSeo('hidden_bottom_text'))
+                            @if($hiddenBottomText = $brands->getSeo('hidden_bottom_text') && !empty($hiddenBottomText))
                             <div class="seoblock__content is-hidden" id="seohidden">{!! $hiddenBottomText !!}</div>
                         <div class="seoblock__morecontent">Показать еще</div>
                             @endif
