@@ -139,7 +139,6 @@
     <!--end::Entry-->
 
     @include('admin.brands.modals.create')
-    @include('admin.brands.modals.update')
 @endsection
 
 @section('js_after')
