@@ -105,7 +105,7 @@
                                         <div class="col-12">
                                             <div class="form-group">
                                                 <label>Заголовок внизу</label>
-                                                <input type="text" name="seo_content[bottom_title]" class="form-control" required value="{{ $brand->getSeo('bottom_title') }}"/>
+                                                <input type="text" name="seo_content[bottom_title]" class="form-control" value="{{ $brand->getSeo('bottom_title') }}"/>
                                             </div>
                                         </div>
                                         <div class="col-12">
