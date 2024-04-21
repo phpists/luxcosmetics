@@ -3,13 +3,15 @@
 namespace App\Models;
 
 use App\Http\Controllers\CategoryController;
+use App\Traits\Models\HasTags;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 class Category extends Model
 {
-    use HasFactory;
+    use HasTags;
 
     protected $table = "categories";
 
@@ -70,11 +72,6 @@ class Category extends Model
         return $this->properties()
             ->whereHas("values")
             ->where("show_in_filter", 1);
-    }
-
-    public function tags(): HasMany
-    {
-        return $this->hasMany(Tag::class);
     }
 
     public function banners()

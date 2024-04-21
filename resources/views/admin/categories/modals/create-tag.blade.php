@@ -11,7 +11,8 @@
 
             <form action="{{ route('admin.tag.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
-                <input type="hidden" name="category_id" value="{{ $category->id }}">
+                <input type="hidden" name="morphable_type" value="{{ $morphable_type }}">
+                <input type="hidden" name="morphable_id" value="{{ $morphable_id }}">
                 <div class="modal-body">
                     <div class="row">
                         <div class="col">

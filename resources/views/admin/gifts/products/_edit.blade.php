@@ -39,13 +39,8 @@
                         </div>
                         <div class="col-md-3 col-12">
                             <div class="form-group w-100">
-                                <label for="editGiftProductIsAvailable" class="font-weight-bold">В наличии</label>
-                                <span class="switch switch-success">
-                                    <label>
-                                        <input type="checkbox" checked="checked" id="editGiftProductIsAvailable" name="is_available">
-                                        <span></span>
-                                    </label>
-                                </span>
+                                <label for="editGiftProductPieces" class="font-weight-bold">В наличии</label>
+                                <input type="number" class="form-control" id="editGiftProductPieces" name="pieces" min="0" required>
                             </div>
                         </div>
                     </div>

@@ -310,9 +310,15 @@ class CartService
         if ($cartService->containUnavailable())
             return false;
 
+        $total_sum = $cartService->getTotalSum();
+
         $min_sum = SiteConfigService::getParamValue('min_checkout_sum');
-        if ($min_sum)
-            return $cartService->getTotalSum() >= $min_sum;
+        if ($min_sum && $total_sum < $min_sum)
+            return false;
+
+        $max_sum = SiteConfigService::getParamValue('max_checkout_sum');
+        if ($max_sum && $total_sum > $max_sum)
+            return false;
 
         return true;
     }
@@ -321,6 +327,16 @@ class CartService
     {
         if ($this->containUnavailable())
             return 'Невозможно оформить заказ, так как в корзине присутствует товар который больше недоступен';
+
+        $total_sum = $this->getTotalSum();
+
+        $min_sum = SiteConfigService::getParamValue('min_checkout_sum');
+        if ($min_sum && $total_sum < $min_sum)
+            return 'Минимальная сумма для заказа ' . $min_sum;
+
+        $max_sum = SiteConfigService::getParamValue('max_checkout_sum');
+        if ($max_sum && $total_sum > $max_sum)
+            return 'Максимальная сумма для заказа ' . $max_sum;
 
         return null;
     }

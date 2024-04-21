@@ -409,7 +409,6 @@
                                 </table>
                             </div>
                             <!--end::Table-->
-                            {{ $tags->links('vendor.pagination.super_admin_pagination') }}
                         </div>
                         <div class="tab-pane fade" id="kt_tab_pane_7_4" role="tabpanel"
                              aria-labelledby="kt_tab_pane_7_4">
@@ -680,8 +679,8 @@
     </div>
     <!--end::Container-->
     <!--end::Entry-->
-    @include('admin.categories.modals.create-tag')
-    @include('admin.categories.modals.update-tag')
+    @include('admin.categories.modals.create-tag', ['morphable_type' => \App\Models\Category::class, 'morphable_id' => $category->id])
+    @include('admin.categories.modals.update-tag', ['morphable_type' => \App\Models\Category::class, 'morphable_id' => $category->id])
     @include('admin.categories.modals.create-category_post')
     @include('admin.categories.modals.update-category_post')
     @include('admin.products.modals.create-article', ['record_id' => $category->id, 'table_name' => 'categories'])

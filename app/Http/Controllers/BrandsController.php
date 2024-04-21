@@ -28,8 +28,7 @@ class BrandsController extends Controller
         $products = $this->catalogService->getFiltered();
         $properties = $this->catalogService->getFilters();
         $filters_weight = $this->catalogService->getFiltersWeight($properties);
-        $min_price = $this->catalogService->min_price;
-        $max_price = $this->catalogService->max_price;
+        $filter_prices = $this->catalogService->getFilterPrices();
 
         $products_id = [];
         foreach ($products as $product) {
@@ -62,12 +61,13 @@ class BrandsController extends Controller
             return response()->json([
                 'data' => $products_list,
                 'next_link' => $products->nextPageUrl(),
-                'current_page' => $products->currentPage()
+                'current_page' => $products->currentPage(),
+                'filtered_prices' => $filter_prices,
             ]);
         }
         $last_page_url = $products->url($products->lastPage());
         $pagination = view('categories.parts.pagination', compact('products', 'last_page_url'))->render();
         return view('brands.index', compact('brands', 'category', 'filters_weight', 'properties',
-            'products', 'pagination', 'products_list', 'min_price', 'max_price'));
+            'products', 'pagination', 'products_list', 'filter_prices'));
     }
 }

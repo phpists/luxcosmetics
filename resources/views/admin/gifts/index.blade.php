@@ -147,10 +147,12 @@
                     success: function (response) {
                         $('#editGiftProductForm').attr('action', response.update_url);
 
+                        console.log($('#editGiftProductPieces'), response.pieces, $('#editGiftProductTitle').val())
+
                         let image_url = `url("${response.img_src}"`;
                         $('#editGiftProductImgBackground').css('background-image', image_url);
                         $('#editGiftProductTitle').val(response.title);
-                        $('#editGiftProductIsAvailable').prop('checked', response.is_available == 1);
+                        $('#editGiftProductPieces').val(response.pieces);
                         $('#editGiftProductBrandId').val(response.brand_id).trigger('change');
                         $('#editGiftProductArticle').val(response.article);
 

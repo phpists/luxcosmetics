@@ -380,11 +380,12 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function 
     // Brands
     Route::get('/brands', [\App\Http\Controllers\Admin\BrandController::class, 'index'])->name('admin.brands.index');
     Route::post('/brands', [\App\Http\Controllers\Admin\BrandController::class, 'store'])->name('admin.brands.store');
-    Route::put('/brands/update', [\App\Http\Controllers\Admin\BrandController::class, 'update'])->name('admin.brands.update');
+    Route::put('/brands/{brand}/update', [\App\Http\Controllers\Admin\BrandController::class, 'update'])->name('admin.brands.update');
     Route::delete('/brands/delete', [\App\Http\Controllers\Admin\BrandController::class, 'delete'])->name('admin.brands.delete');
     Route::get('/brands/show', [\App\Http\Controllers\Admin\BrandController::class, 'show'])->name('admin.brands.show');
     Route::delete('/brands/{id}/deleteImage', [\App\Http\Controllers\Admin\BrandController::class, 'deleteImage'])->name('admin.brands.deleteImage');
     Route::get(' brands/search', [\App\Http\Controllers\Admin\BrandController::class, 'search'])->name('admin.brands.search');
+    Route::get('brands/{brand}/edit', [\App\Http\Controllers\Admin\BrandController::class, 'edit'])->name('admin.brands.edit');
 
     // Product Property Values
     Route::post('product-property-values/store', [\App\Http\Controllers\Admin\ProductPropertyValueController::class, 'store'])->name('admin.product-property-values.store');

@@ -31,6 +31,9 @@ Route::group(['middleware' => ['api', 'api.1c']], function () {
 
     /** Properties */
     Route::get('properties/get-all', [\App\Http\Controllers\Api\PropertyController::class, 'getAll']);
+
+    /** Gift Products */
+    Route::post('gift-products/import', [\App\Http\Controllers\Api\GiftProductController::class, 'import']);
 });
 
 

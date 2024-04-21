@@ -6,6 +6,7 @@
 
 @section('content')
     <input type="hidden" id="min_sum" value="{{ \App\Services\SiteConfigService::getParamValue('min_checkout_sum') }}">
+    <input type="hidden" id="max_sum" value="{{ \App\Services\SiteConfigService::getParamValue('max_checkout_sum') }}">
 
 <section class="crumbs">
 	<div class="container">

@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Session;
 class CartController extends Controller
 {
 
-    public function __construct(private CartService $cartService)
+    public function __construct(private readonly CartService $cartService)
     {}
 
 
@@ -26,9 +26,8 @@ class CartController extends Controller
         $cart_products = $this->cartService->getAllProducts();
 
         if ($cart_products->isNotEmpty()) {
-            $min_sum = SiteConfigService::getParamValue('min_checkout_sum');
-            if ($this->cartService->getTotalSum() < $min_sum)
-                Session::flash('error', "Минимальная сумма для заказа {$min_sum}");
+            if (!CartService::canCheckout())
+                Session::flash('error', $this->cartService->canNotCheckoutMessage());
 
             return view('cart.index', compact('cart_products'));
         } else {
