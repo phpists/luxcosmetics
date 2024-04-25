@@ -122,23 +122,30 @@ const handleOfficeZoom = () => {
     })
 }
 
-const handleFormatPickupCard = (place, coordinates) => {
-    let [country, street, house] = place?.address.split(', ')
+const handleFormatPickupCard = (place) => {
+    let house = place.fullAddress.split(',').pop(),
+        street = '';
+
+    place.fullAddress.split(',').forEach((addressPart) => {
+        if (addressPart.toLowerCase().includes('ул.') || addressPart.toLowerCase().includes('улица'))
+            street = addressPart;
+    })
 
     return `
-    <div class="pick-up-point pickup-item" data-id="${place?.id}" data-value="${coordinates[1] + ',' + coordinates[0]}">
-        <div class="pick-up-point__title">${place?.name ?? ""}</div>
+    <div class="pick-up-point pickup-item" data-id="${place.id}" data-value="${place.gpsCoordinates}">
+        <div class="pick-up-point__title">${place.deliveryMethodTitle + ' №' + place.pointId}</div>
         <div class="pick-up-point__content">
-            <p>${place?.address ?? ""}</p>
+            <p>${place.name}</p>
+            <p>${place.fullAddress}</p>
 <!--            <p>стоимость — <b>бесплатно</b></p>-->
 <!--            <p>дата доставки — <b>сегодня, 3 октября</b></p>-->
 <!--            <p>нет оплаты при получении</p>-->
             <div class="pick-up-point__ftr">
-                <p><small>Режим работы</small> ${place?.Hours?.text ?? ""}</p>
+                <p><small>Режим работы</small> ${place.openingHoursText}</p>
 <!--                <p><small>Контактный телефон</small> 8 800 770 70 21</p>-->
             </div>
         </div>
-        <button class="btn btn--accent pickup-item__button" data-id="${place?.id}" data-title="${place?.name}" data-street="${street}" data-house="${house}" data-address="${place?.address}">Привезти сюда</button>
+        <button class="btn btn--accent pickup-item__button" data-id="${place.id}" data-title="${place.deliveryMethodTitle}" data-street="${street}" data-house="${house}" data-address="${place.shortAddress}">Привезти сюда</button>
     </div>
 `
 };
@@ -162,23 +169,28 @@ function handleClickBaloon(post_office_id) {
     }
 }
 
-function setMarker(post_office){
-    post_office_coordinates = post_office.geometry.coordinates;
+function setMarker(item){
     let myGeoObject = new ymaps.Placemark(
-        [post_office_coordinates[1], post_office_coordinates[0]],
-        {balloonContent: `<h2>${post_office.properties.CompanyMetaData.name}</h2><h3>${post_office.properties.CompanyMetaData.address}</h3><p>${post_office.properties.CompanyMetaData.Hours?.text}</p>`},
-        { preset: 'islands#icon', iconColor:'#0095b6' }
+        [...item.gpsCoordinates.split(',')],
+        {
+            balloonContent: `<h2>${item.deliveryMethodTitle} №${item.pointId}</h2>`
+                + `<h3>${item.name}</h3><h4>${item.fullAddress}</h4><p>${item.openingHoursText}</p>`
+        },
+        {
+            preset: 'islands#icon',
+            iconColor:'#0095b6'
+        }
     );
     myGeoObject.events.add('click', () => {
-        handleClickBaloon(post_office.properties.CompanyMetaData.id);
+        handleClickBaloon(item.id);
     })
     myMap.geoObjects.add(myGeoObject);
 }
 
 function displayPlaces(places, clearArea) {
-    let cards = places.data.features.map((el) => {
-        setMarker(el);
-        return handleFormatPickupCard(el.properties.CompanyMetaData, el.geometry.coordinates);
+    let cards = places.data.map((item) => {
+        setMarker(item);
+        return handleFormatPickupCard(item);
     })
 
     const listWrapper = document.querySelector(".pick-up-points");
@@ -192,37 +204,30 @@ function displayPlaces(places, clearArea) {
     handleClickOnPickItem();
 }
 
-async function findPlaces(boundaries, count=0, clearArea=true) {
+async function findPlaces(boundaries, count= 0, clearArea= true) {
     let post_office = document.querySelector('.select-delivery-type-opt.active');
     if (post_office === null) {
         post_office = document.querySelector('#post_offices .select-delivery-type-opt');
         post_office.classList.add('active');
     }
-    let res = await axios.get('https://search-maps.yandex.ru/v1/', {
-        params: {
-            apikey: SEARCH_API_KEY,
-            text: post_office.dataset.type,
-            type: 'biz',
-            lang: 'ru_RU',
-            bbox: boundaries,
-            rspn: 1,
-            results: 50,
-            skip: count
-        }
-    });
-    if (count === 0) {
-        myMap.geoObjects.removeAll();
-    }
-    count += 50;
-    displayPlaces(res, clearArea);
-    let getNumber = parseInt(res.data.properties.ResponseMetaData.SearchResponse.found);
-    if (getNumber > count) {
-        await findPlaces(boundaries, count, false);
-    }
-    else  {
-        handleOfficeZoom();
-        handleToggleLoading(false);
-    }
+    myMap.geoObjects.removeAll();
+
+    let url = '/delivery-points';
+    do {
+        let response = await axios.get(url, {
+            params: {
+                lms: post_office.dataset.name,
+                cityName: document.getElementById('delivery_city').value
+            }
+        })
+
+        displayPlaces(response.data, clearArea);
+        clearArea = false;
+        url = response.data?.links?.next ?? null;
+    } while (url)
+
+    handleOfficeZoom();
+    handleToggleLoading(false);
 }
 
 const loadDeliveryPlaces = async () => {
@@ -435,7 +440,7 @@ const showMaps = () => {
     setTimeout(async () => {
         initDeliveryOptions();
         handleToggleLoading(true);
-        await loadDeliveryPlaces();
+        // await loadDeliveryPlaces();
         $(".select-delivery-type-opt:first").click()
     }, 600)
 }

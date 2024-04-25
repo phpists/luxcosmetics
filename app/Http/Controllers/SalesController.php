@@ -42,8 +42,8 @@ class SalesController extends Controller
         $properties = $this->catalogService->getFilters();
         $filters_weight = $this->catalogService->getFiltersWeight($properties);
         $brands = $this->catalogService->getBrands();
-        $min_price = $this->catalogService->min_price;
-        $max_price = $this->catalogService->max_price;
+        $filter_prices = $this->catalogService->getFilterPrices();
+
 
 //        $categories = Category::query()
 //            ->select('categories.*')
@@ -73,7 +73,9 @@ class SalesController extends Controller
             }
 
             return response()->json([
-                'html' => $products_list
+                'html' => $products_list,
+                'filterCounts' => $filters_weight,
+                'filterPrices' => $filter_prices
             ]);
         } else {
             $products_list = view('categories.parts.catalog', compact('products', 'variations'))->render();
@@ -82,13 +84,13 @@ class SalesController extends Controller
             return response()->json([
                 'data' => $products_list,
                 'next_link' => $products->nextPageUrl(),
-                'current_page' => $products->currentPage()
+                'current_page' => $products->currentPage(),
             ]);
         }
 
 //        $last_page_url = $products->url($products->lastPage());
 //        $pagination = view('categories.parts.pagination', compact('products', 'last_page_url'))->render();
         return view('actions', compact('products', 'categories', 'selected_cat', 'properties',
-            'brands', 'products_list', 'filters_weight', 'max_price', 'min_price', 'currentRoute', 'category'));
+            'brands', 'products_list', 'filters_weight', 'currentRoute', 'category', 'filter_prices'));
     }
 }

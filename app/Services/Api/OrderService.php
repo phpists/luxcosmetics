@@ -48,6 +48,8 @@ class OrderService
             $order->unsetRelation('orderProducts');
             $order->unsetRelation('deliveryMethod');
 
+            $order->date = $order->created_at->toAtomString();
+
             return $order;
         });
 

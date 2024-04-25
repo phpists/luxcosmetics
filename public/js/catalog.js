@@ -208,20 +208,19 @@ function updateFilter() {
         if (Number($filterMinPrice.val()) !== Number(prices.filteredMin) || Number($filterMaxPrice.val()) !== Number(prices.filteredMax)) {
             $slider.slider({'min': prices.filteredMin});
             $slider.slider({'max': prices.filteredMax});
-
             $filterMinPrice.val(prices.filteredMin)
             $filterMaxPrice.val(prices.filteredMax)
 
-            // if (Number($filterCurrentMinPrice.val()) < Number(prices.currentMin) || Number($filterCurrentMaxPrice.val()) > Number(prices.currentMax)) {
-            //     $slider.slider({
-            //         values: [prices.currentMin, prices.currentMax]
-            //     });
-            //     $("#amount").val($slider.slider("values", 0));
-            //     $("#amount2").val($slider.slider("values", 1));
-            //
-            //     $filterCurrentMinPrice.val(prices.currentMin)
-            //     $filterCurrentMaxPrice.val(prices.currentMax)
-            // }
+            if (Number($filterCurrentMinPrice.val()) < Number(prices.currentMin) || Number($filterCurrentMaxPrice.val()) > Number(prices.currentMax)) {
+                $slider.slider({
+                    values: [prices.currentMin, prices.currentMax]
+                });
+                $("#amount").val($slider.slider("values", 0));
+                $("#amount2").val($slider.slider("values", 1));
+
+                $filterCurrentMinPrice.val(prices.currentMin)
+                $filterCurrentMaxPrice.val(prices.currentMax)
+            }
         }
     }
 }

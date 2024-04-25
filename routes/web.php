@@ -497,6 +497,10 @@ Route::get('/user/home', [App\Http\Controllers\HomeController::class, 'home'])->
 // Subscription
 Route::post('/subscribe', [\App\Http\Controllers\SubscriptionController::class, 'subscribe'])->name('subscribe');
 
+
+/** Delivery Points */
+Route::get('delivery-points', [\App\Http\Controllers\DeliveryPointController::class, 'index'])->name('delivery-points.index');
+
 // Front pages - only for admin users
 Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'front'], function () {
     Route::get('', [\App\Http\Controllers\FrontCardController::class, 'index']);
