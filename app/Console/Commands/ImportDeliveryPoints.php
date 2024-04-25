@@ -57,7 +57,11 @@ class ImportDeliveryPoints extends Command
                 if (!is_string($value))
                     $datum[$i] = json_encode($value);
 
-            DeliveryPoint::firstOrCreate($datum);
+            DeliveryPoint::firstOrCreate([
+                'lms' => $datum['lms'],
+                'pointId' => $datum['pointId'],
+                'pointCode' => $datum['pointCode'],
+            ], $datum);
         }
 
         $this->call('delivery:sync');
