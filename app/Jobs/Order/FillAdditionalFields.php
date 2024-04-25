@@ -65,7 +65,7 @@ class FillAdditionalFields implements ShouldQueue
             }
 
             $courierDeliveryMethod = CourierDeliveryMethod::whereJsonContains('cities', trim($city))->first();
-            if (!$courierDeliveryMethod && $state)
+            if (!$courierDeliveryMethod && isset($state))
                 $courierDeliveryMethod = CourierDeliveryMethod::whereJsonContains('states', trim($state))->first();
             if (!$courierDeliveryMethod)
                 $courierDeliveryMethod = CourierDeliveryMethod::whereJsonContains('countries', 'Россия')->first();

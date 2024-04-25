@@ -3,8 +3,8 @@
 
     <input type="hidden" name="sort">
     <input type="hidden" id="search_needle" name="search" value="{{request()->input('search')}}">
-    <input type="hidden" id="filterMinPrice" value="{{ $filter_prices['min'] }}">
-    <input type="hidden" id="filterMaxPrice" value="{{ $filter_prices['max'] }}">
+    <input type="hidden" id="filterMinPrice" value="{{ $filter_prices['filteredMin'] }}">
+    <input type="hidden" id="filterMaxPrice" value="{{ $filter_prices['filteredMax'] }}">
     <input type="hidden" id="filterPropertyCounts" value='@json($filters_weight)'>
     <input type="hidden" id="filterPrices" value='@json($filter_prices)'>
 

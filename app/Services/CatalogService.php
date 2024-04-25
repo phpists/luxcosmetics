@@ -107,13 +107,8 @@ class CatalogService
             $products = $products->leftJoin('user_favorite_products', 'user_favorite_products.product_id', '=', 'products.id');
         }
 
-        $filteredProducts = $products->get();
-
         $this->min_price = $this->products->min('price');
         $this->max_price = $this->products->max('price');
-
-        $this->min_filtered_price = $filteredProducts->min('price');
-        $this->max_filtered_price = $filteredProducts->max('price');
 
         return $products->paginate(self::PER_PAGE);
     }
@@ -132,15 +127,6 @@ class CatalogService
                         ->orWhere('brands.name', 'like', '%'.$search.'%')
                         ->orWhere('code', 'like', '%'.$search.'%');
                 });
-            })
-            ->where(function ($q) use ($price_from, $price_to) {
-                $q->whereBetween('price', [
-                    $price_from,
-                    $price_to
-                ])->orWhereBetween('old_price', [
-                    $price_from,
-                    $price_to
-                ]);
             })
             ->when($properties = $this->getProperties(), function ($q) use ($properties) {
                 foreach ($properties as $property_id => $property_value_id) {
@@ -163,7 +149,20 @@ class CatalogService
                 });
             });
 
-        return $products;
+        $filteredProducts = $products->get();
+        $this->min_filtered_price = $filteredProducts->min('price');
+        $this->max_filtered_price = $filteredProducts->max('price');
+
+        return $products
+            ->where(function ($q) use ($price_from, $price_to) {
+                $q->whereBetween('price', [
+                    $price_from,
+                    $price_to
+                ])->orWhereBetween('old_price', [
+                    $price_from,
+                    $price_to
+                ]);
+            });
     }
 
 
@@ -326,15 +325,29 @@ class CatalogService
 
     function getFilterPrices()
     {
+        $currentMin = $this->isAppliedAnyFilters()
+            ? $this->getPriceFrom() < $this->min_filtered_price ? $this->min_filtered_price : $this->getPriceFrom()
+            : $this->min_filtered_price;
+        $currentMax = $this->isAppliedAnyFilters()
+            ? $this->getPriceTo() > $this->max_filtered_price ? $this->max_filtered_price : $this->getPriceTo()
+            : $this->max_filtered_price;
+
         return [
             'min' => $this->min_price,
             'max' => $this->max_price,
             'filteredMin' => $this->min_filtered_price,
             'filteredMax' => $this->max_filtered_price,
-            'currentMin' => $this->getPriceFrom() < $this->min_filtered_price ? $this->min_filtered_price : $this->getPriceFrom(),
-            'currentMax' => $this->getPriceTo() > $this->max_filtered_price ? $this->max_filtered_price : $this->getPriceTo(),
+            'currentMin' => (int) $currentMin,
+            'currentMax' => (int) $currentMax,
         ];
     }
+
+    private function isAppliedAnyFilters(): bool
+    {
+        return request('search') || request('brands')
+            || request('category_id') || request('properties');
+    }
+
 
     public function getBrands()
     {
