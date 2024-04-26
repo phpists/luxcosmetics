@@ -33,27 +33,15 @@ class FillAdditionalFields implements ShouldQueue
         $order = $this->order;
 
         if ($order->delivery_type == Order::DELIVERY_SELF_PICKUP) {
-            $deliveryPoint = DeliveryPoint::whereLms($order->deliveryMethod->name)
-                ->whereCityname($order->city)
-                ->where(function ($q) use($order) {
-                    $formattedStreet = $this->clearStreet($order->street);
+            $shippingMethod = $order->deliveryMethod?->shipping_method
+                ?? $order->deliveryPoint->lms . '_' . $order->delivery_type;
 
-                    $q->where('fullAddress', 'LIKE', "%{$formattedStreet}%")
-                        ->where('fullAddress', 'LIKE', "%{$order->house}%");
-                })
-                ->first();
-
-            $shippingMethod = $deliveryPoint->deliveryMethod?->shipping_method
-                ?? $deliveryPoint->lms . '_' . $order->delivery_type;
-
-            if ($deliveryPoint) {
-                $order->update([
-                    'zip' => $deliveryPoint->zipCode,
-                    'delivery_point_id' => $deliveryPoint->pointId,
-                    'delivery_point_code' => $deliveryPoint->pointCode,
-                    'shipping_method' => $shippingMethod
-                ]);
-            }
+            $order->update([
+                'zip' => $order->deliveryPoint->zipCode,
+                'delivery_point_id' => $order->deliveryPoint->pointId,
+                'delivery_point_code' => $order->deliveryPoint->pointCode,
+                'shipping_method' => $shippingMethod
+            ]);
         } elseif ($order->delivery_type == Order::DELIVERY_COURIER) {
             if (str_contains($order->city, 'обл')) {
                 $addressParts = explode(',', $order->city);

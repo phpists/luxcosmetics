@@ -100,6 +100,7 @@ class Order extends Model
         'delivery_point_code',
         'shipping_method',
         'building',
+        'local_delivery_point_id'
     ];
 
 
@@ -287,6 +288,11 @@ class Order extends Model
     public function deliveryMethod()
     {
         return $this->belongsTo(DeliveryMethod::class, 'service', 'id');
+    }
+
+    public function deliveryPoint()
+    {
+        return $this->belongsTo(DeliveryPoint::class, 'local_delivery_point_id', 'id');
     }
 
 
