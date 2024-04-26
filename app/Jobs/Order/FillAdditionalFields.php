@@ -36,11 +36,16 @@ class FillAdditionalFields implements ShouldQueue
             $shippingMethod = $order->deliveryMethod?->shipping_method
                 ?? $order->deliveryPoint->lms . '_' . $order->delivery_type;
 
+            [$pointCode, $city, $street] = explode(',', $order->city);
+
             $order->update([
                 'zip' => $order->deliveryPoint->zipCode,
                 'delivery_point_id' => $order->deliveryPoint->pointId,
                 'delivery_point_code' => $order->deliveryPoint->pointCode,
-                'shipping_method' => $shippingMethod
+                'shipping_method' => $shippingMethod,
+                'city' => $order->deliveryPoint->cityName,
+                'street' => isset($street) ? trim($street) : null,
+                'house' => $order->deliveryPoint->pointId,
             ]);
         } elseif ($order->delivery_type == Order::DELIVERY_COURIER) {
             if (str_contains($order->city, 'обл')) {
