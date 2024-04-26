@@ -46,6 +46,7 @@ class CartService
     const ADDRESS_BUILDING = 'building';
 
     const ADDRESS_SERVICE = 'service';
+    const DELIVERY_POINT_ID = 'local_delivery_point_id';
 
     const ADDRESS_FIELDS = [
         self::ADDRESS_CITY,
@@ -58,6 +59,7 @@ class CartService
         self::ADDRESS_OVER,
         self::ADDRESS_SERVICE,
         self::ADDRESS_BUILDING,
+        self::DELIVERY_POINT_ID
     ];
 
 
@@ -81,7 +83,8 @@ class CartService
         self::ADDRESS_ENTRANCE => 'Подъезд',
         self::ADDRESS_OVER => 'Этаж',
         self::ADDRESS_SERVICE => 'Сервис доставки',
-        self::ADDRESS_BUILDING => 'Корпус/строение'
+        self::ADDRESS_BUILDING => 'Корпус/строение',
+        self::DELIVERY_POINT_ID => 'local_delivery_point_id'
     ];
 
     public $discounts = [];
