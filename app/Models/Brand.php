@@ -22,9 +22,9 @@ class Brand extends Model
         return asset('images/uploads/brands/'.$this->image);
     }
 
-    function getSeo(string $key): string
+    function getSeo(string $key): ?string
     {
-        return $this->seo_content[$key] ?? '';
+        return $this->seo_content[$key] ?? null;
     }
 
 }

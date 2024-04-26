@@ -30,6 +30,7 @@ class Category extends Model
         "bottom_text",
         "breadcrumb",
         "hidden_bottom_text",
+        'h1'
     ];
 
     public function categories(): HasMany

@@ -234,7 +234,7 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function 
 
     // Delivery methods
     Route::resource('delivery-methods', \App\Http\Controllers\Admin\Settings\DeliveryMethodController::class, [
-        'only' => ['index', 'update', 'destroy'],
+        'only' => ['index', 'show', 'update', 'destroy'],
         'as' => 'admin',
     ]);
     Route::post('delivery-methods/update-positions', [\App\Http\Controllers\Admin\Settings\DeliveryMethodController::class, 'updatePositions'])
@@ -288,12 +288,6 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function 
         Route::get('/pages/create', [\App\Http\Controllers\Admin\PagesController::class, 'create'])->name('pages.create');
         Route::put('/pages/update', [\App\Http\Controllers\Admin\PagesController::class, 'update'])->name('pages.update');
         Route::delete('/pages/{id}/delete', [\App\Http\Controllers\Admin\PagesController::class, 'delete'])->name('pages.delete');
-        // Tags
-        Route::get('/tag', [\App\Http\Controllers\Admin\TagController::class, 'show'])->name('tag.show');
-        Route::post('/tag', [\App\Http\Controllers\Admin\TagController::class, 'store'])->name('tag.store');
-        Route::put('/tag', [\App\Http\Controllers\Admin\TagController::class, 'update'])->name('tag.update');
-        Route::delete('/tag', [\App\Http\Controllers\Admin\TagController::class, 'delete'])->name('tag.delete');
-        Route::post('/tag/update-position', [\App\Http\Controllers\Admin\TagController::class, 'updatePosition'])->name('tag.update_position');
 
         /** Roles */
         Route::resource('roles', \App\Http\Controllers\Admin\RoleController::class)
@@ -308,6 +302,13 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function 
         Route::resource('order_statuses', \App\Http\Controllers\Admin\OrderStatusController::class);
 
     });
+
+    // Tags
+    Route::get('/tag', [\App\Http\Controllers\Admin\TagController::class, 'show'])->name('admin.tag.show');
+    Route::post('/tag', [\App\Http\Controllers\Admin\TagController::class, 'store'])->name('admin.tag.store');
+    Route::put('/tag', [\App\Http\Controllers\Admin\TagController::class, 'update'])->name('admin.tag.update');
+    Route::delete('/tag', [\App\Http\Controllers\Admin\TagController::class, 'delete'])->name('admin.tag.delete');
+    Route::post('/tag/update-position', [\App\Http\Controllers\Admin\TagController::class, 'updatePosition'])->name('admin.tag.update_position');
 
     Route::post('update-price-from-excel', [\App\Http\Controllers\Admin\ProductController::class, 'updatePricesFromExcel'])
         ->name('admin.update-price-from-excel');

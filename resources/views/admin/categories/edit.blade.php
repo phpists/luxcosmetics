@@ -107,7 +107,7 @@
                                             <div class="row">
                                                 <div class="col-12">
                                                     <div class="form-group">
-                                                        <label>Назва</label>
+                                                        <label>Название</label>
                                                         <input type="text" name="name" class="form-control" required value="{{$category->name}}"/>
                                                     </div>
                                                 </div>
@@ -137,6 +137,12 @@
 {{--                                                </div>--}}
                                             </div>
                                             <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <label>H1 тег</label>
+                                                        <input value="{{$category->h1}}" type="text" class="form-control" name="h1">
+                                                    </div>
+                                                </div>
                                                 <div class="col-md-12">
                                                     <div class="form-group">
                                                         <label>Заголовок внизу категории</label>

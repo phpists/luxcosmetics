@@ -18,6 +18,11 @@ class DeliveryMethodController extends Controller
         ]);
     }
 
+    public function show(DeliveryMethod $deliveryMethod)
+    {
+        return $deliveryMethod;
+    }
+
     public function update(Request $request, DeliveryMethod $deliveryMethod)
     {
         $this->authorize('update', DeliveryMethod::class);
@@ -31,6 +36,9 @@ class DeliveryMethodController extends Controller
                 'result' => $result
             ];
         }
+
+        $deliveryMethod->update($request->all());
+        return back()->with('Изменения сохранено');
     }
 
     public function updatePositions(Request $request)
