@@ -52,4 +52,9 @@ class DeliveryPoint extends Model
             });
     }
 
+    public function deliveryMethod()
+    {
+        return $this->hasOne(DeliveryMethod::class, 'name', 'lms');
+    }
+
 }

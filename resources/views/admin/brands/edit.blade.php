@@ -104,6 +104,12 @@
                                     <div class="row">
                                         <div class="col-12">
                                             <div class="form-group">
+                                                <label>H1 тег</label>
+                                                <input type="text" name="seo_content[h1]" class="form-control" value="{{ $brand->getSeo('h1') }}"/>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="form-group">
                                                 <label>Заголовок внизу</label>
                                                 <input type="text" name="seo_content[bottom_title]" class="form-control" value="{{ $brand->getSeo('bottom_title') }}"/>
                                             </div>

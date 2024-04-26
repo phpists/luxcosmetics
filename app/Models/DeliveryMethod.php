@@ -13,7 +13,8 @@ class DeliveryMethod extends Model
         'pos',
         'is_active',
         'title',
-        'name'
+        'name',
+        'shipping_method'
     ];
 
 

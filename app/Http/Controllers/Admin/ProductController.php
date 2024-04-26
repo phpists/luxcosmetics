@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Enums\AvailableOptions;
 use App\Http\Controllers\Controller;
 use App\Imports\ProductPricesImport;
 use App\Models\Article;
@@ -102,6 +103,7 @@ class ProductController extends Controller
         if ($count > 0) {
             $data['alias'] = $data['alias'].'_'.$count;
         }
+        $data['items_left'] = $data['items_left'] ?? 0;
         $product = new Product($data);
         if ($product->save()) {
             $image_path = FileService::saveFile('uploads', "products", $request->image);
@@ -195,6 +197,12 @@ class ProductController extends Controller
         $product->allergy = $data['allergy'];
         $product->expiry_date = $data['expiry_date'];
         $product->spyrt = $data['spyrt'];
+        $data['items_left'] = $data['items_left'] ?? 0;
+        if ($data['items_left'] > 0) {
+            $data['availability'] = AvailableOptions::AVAILABLE->value;
+        } else {
+            $data['availability'] = AvailableOptions::NOT_AVAILABLE->value;
+        }
 
         if (!array_key_exists('alias', $data) || $data['alias'] === null) {
             $data['alias'] = Str::slug($data['title'], '-');

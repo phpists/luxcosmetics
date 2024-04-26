@@ -212,12 +212,16 @@ async function findPlaces(boundaries, count= 0, clearArea= true) {
     }
     myMap.geoObjects.removeAll();
 
-    let url = '/delivery-points';
+    let url = '/delivery-points',
+        city = document.getElementById('delivery_city').value.includes(',')
+            ? document.getElementById('delivery_city').value.split(',')[0]
+            : document.getElementById('delivery_city').value;
+
     do {
         let response = await axios.get(url, {
             params: {
                 lms: post_office.dataset.name,
-                cityName: document.getElementById('delivery_city').value
+                cityName: city
             }
         })
 

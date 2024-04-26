@@ -1,4 +1,4 @@
-<div class="modal fade" id="updateConfigModal" tabindex="-1" role="dialog" aria-labelledby="updateConfigModal"
+<div class="modal fade" id="updateConfigModal" tabindex="-1" role="dialog" aria-labelledby="updateConfigModal" data-focus="false"
      aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -34,6 +34,7 @@
                                             <option value="{{\App\Services\SiteConfigService::BOOL}}">Логическое</option>
                                             <option value="{{\App\Services\SiteConfigService::TEXT}}">Текстовое</option>
                                             <option value="{{\App\Services\SiteConfigService::NUMERIC}}">Числовое</option>
+                                            <option value="{{\App\Services\SiteConfigService::WYSIWYG}}">Текстовый редактор</option>
                                         </select>
                                         <input type="hidden" name="type" id="type_upd_val">
                                     </div>

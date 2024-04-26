@@ -1,4 +1,4 @@
-<div class="modal fade" id="createConfigModal" tabindex="-1" role="dialog" aria-labelledby="createConfigModal"
+<div class="modal fade" id="createConfigModal" tabindex="-1" role="dialog" aria-labelledby="createConfigModal" data-focus="false"
      aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">

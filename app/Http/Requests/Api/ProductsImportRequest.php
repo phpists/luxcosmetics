@@ -36,12 +36,12 @@ class ProductsImportRequest extends FormRequest
             'products.*.storage_conditions' => ['nullable', 'string'],
             'products.*.allergy' => ['nullable', 'string'],
             'products.*.spyrt' => ['nullable', 'integer'],
-            'products.*.expiry_date' => ['required', 'integer'],
-            'products.*.country_products' => ['required', 'string'],
-            'products.*.height_product' => ['required', 'integer'],
-            'products.*.length_product' => ['required', 'integer'],
-            'products.*.width_product' => ['required', 'integer'],
-            'products.*.weight_product' => ['required', 'numeric'],
+            'products.*.expiry_date' => ['nullable', 'integer'],
+            'products.*.country_products' => ['nullable', 'string'],
+            'products.*.height_product' => ['nullable', 'integer'],
+            'products.*.length_product' => ['nullable', 'integer'],
+            'products.*.width_product' => ['nullable', 'integer'],
+            'products.*.weight_product' => ['nullable', 'numeric'],
             // похожие
             'products.*.similar_products' => ['nullable', 'string'],
             // сопутствующие

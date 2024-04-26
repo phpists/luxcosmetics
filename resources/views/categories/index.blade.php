@@ -58,7 +58,7 @@
 
             <div class="row">
                 <div class="col-lg-12">
-                    <div class="title-h1">{{$category->name}}</div>
+                    <h1 class="title-h1">{{ $category->h1 ?? $category->name }}</h1>
                     <div class="category-page__container">
                         <aside class="category-page__aside">
                             <div class="filters" id="filters">

@@ -49,7 +49,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
-                    <div class="title-h1">{{$brands->name}}</div>
+                    <h1 class="title-h1">{{ $brands->getSeo('h1') ?? $brands->name }}</h1>
                     <div class="category-page__container">
                         <aside class="category-page__aside">
                             <div class="filters" id="filters">
