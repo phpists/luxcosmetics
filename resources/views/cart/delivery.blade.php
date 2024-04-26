@@ -65,6 +65,7 @@
                                 <input type="hidden" id="delivery_service" name="service" required>
                                 <input type="hidden" id="delivery_zip" name="zip" required>
                                 <input type="hidden" id="final_addr" name="address" required>
+                                <input type="hidden" id="delivery_point_id" name="delivery_point_id" required>
                                 <div class="cartstep__item">
                                     <div class="cartstep__title">Выберите способ доставки</div>
                                     <div class="cartstep__delivery">

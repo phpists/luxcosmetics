@@ -85,6 +85,8 @@ const handleSelectPost = (id) => {
     const pickupCards = document.querySelectorAll(".pickup-item");
     const listWrapper = document.querySelector(".pick-up-points");
 
+    $('#delivery_point_id').val(id);
+
     pickupCards.forEach((card) => {
         const cardId = card.getAttribute("data-id");
         card.classList.toggle("active", cardId === id);
