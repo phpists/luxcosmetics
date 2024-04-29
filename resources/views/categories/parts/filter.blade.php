@@ -107,6 +107,9 @@
         @if($is_not_brands && isset($category))
         <a href="{{ route('categories.show', ['alias' => $category->alias]) }}"
            class="filters__btn">Сбросить</a>
+        @elseif(Route::is('show_search'))
+            <a href="{{ route('show_search', ['search' => request('search')]) }}"
+               class="filters__btn">Сбросить</a>
         @else
             <a href="{{ route('brands.show', ['link' => $brands->link]) }}"
                class="filters__btn">Сбросить</a>
