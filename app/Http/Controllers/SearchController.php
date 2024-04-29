@@ -84,8 +84,7 @@ class SearchController extends Controller
         $products = $catalogService->getFiltered();
         $properties = $catalogService->getFilters();
         $filters_weight = $catalogService->getFiltersWeight($properties);
-        $min_price = $catalogService->min_price;
-        $max_price = $catalogService->max_price;
+        $filter_prices = $catalogService->getFilterPrices();
 
 //        $products = $this->search($request);
 //        $products = $products
@@ -114,15 +113,15 @@ class SearchController extends Controller
 
             return response()->json([
                 'html' => $products_list,
-                'filterCounts' => $filters_weight
+                'filterCounts' => $filters_weight,
+                'filterPrices' => $filter_prices
             ]);
         }
 
         $shown_count = ($products->currentPage() - 1) * $paginate_count + $products->count();
         $last_page_url = $products->url($products->lastPage());
         $pagination = view('layouts.includes.pagination', compact('products', 'last_page_url'))->render();
-        return view('search', compact('products', 'properties', 'filters_weight', 'min_price',
-            'max_price', 'pagination', 'products_list', 'search', 'shown_count'));
+        return view('search', compact('products', 'properties', 'filters_weight', 'pagination', 'products_list', 'search', 'shown_count', 'filter_prices'));
     }
     public function search_prompt(Request $request): JsonResponse
     {
