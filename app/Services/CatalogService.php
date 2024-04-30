@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Enums\AvailableOptions;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Product;
@@ -70,7 +71,9 @@ class CatalogService
             ->select(['products.*', 'product_images.path as main_image'])
             ->leftJoin('product_images', 'products.image_print_id', 'product_images.id')
             ->with(['values', 'baseProperty', 'basePropertyValue'])
-            ->distinct(['products.id']);
+            ->distinct(['products.id'])
+            ->orderBy('availability')
+            ->whereNot('availability', AvailableOptions::DISCONTINUED->value);
 
         if ($this->modelName == Category::class) {
             $query->where(function ($q) use ($all_category_ids) {

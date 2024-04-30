@@ -124,14 +124,25 @@ $(document).ready(function () {
 
     $(document).on('change', '#filterForm', function(e) {
         let data = $(this).serializeArray();
+
+        data = data.filter((el) => {
+            if (el.name.includes('price')) {
+                if (el.name === 'price[from]') {
+                    console.log(el.value, $('#filterMinPrice').val())
+                    return el.value != $('#filterMinPrice').val();
+                } else if (el.name === 'price[to]') {
+                    return el.value != $('#filterMaxPrice').val();
+                }
+            }
+
+            return el.value !== '';
+        })
+
+        let uri = location.pathname + '?' + $.param(data)
+
         data.push({
             name: "load", value: true
         });
-
-        const uri_data = new FormData(this);
-        const queryString = new URLSearchParams(uri_data).toString();
-
-        let uri = location.pathname + '?' + queryString
 
         $.ajax({
             type: 'GET',
@@ -199,27 +210,27 @@ function updateFilter() {
 
     let prices = JSON.parse($('#filterPrices').val());
     if (prices) {
-        const $filterMinPrice = $('#filterMinPrice'),
-            $filterMaxPrice = $('#filterMaxPrice'),
-            $filterCurrentMinPrice = $('#filterCurrentMinPrice'),
-            $filterCurrentMaxPrice = $('#filterCurrentMaxPrice'),
+        const filterMinPrice = document.getElementById('filterMinPrice'),
+            filterMaxPrice = document.getElementById('filterMaxPrice'),
+            filterCurrentMinPrice = document.getElementById('filterCurrentMinPrice'),
+            filterCurrentMaxPrice = document.getElementById('filterCurrentMaxPrice'),
             $slider = $("#slider-range");
 
-        if (Number($filterMinPrice.val()) !== Number(prices.filteredMin) || Number($filterMaxPrice.val()) !== Number(prices.filteredMax)) {
-            $slider.slider({'min': prices.filteredMin});
-            $slider.slider({'max': prices.filteredMax});
-            $filterMinPrice.val(prices.filteredMin)
-            $filterMaxPrice.val(prices.filteredMax)
+        if (Number(filterMinPrice.value) !== Number(prices.filteredMin) || Number(filterMaxPrice.value) !== Number(prices.filteredMax)) {
+            $slider.slider({
+                'min': prices.filteredMin,
+                'max': prices.filteredMax
+            });
+            filterMinPrice.value = prices.filteredMin;
+            filterMaxPrice.value = prices.filteredMax
 
-            if (Number($filterCurrentMinPrice.val()) < Number(prices.currentMin) || Number($filterCurrentMaxPrice.val()) > Number(prices.currentMax)) {
-                $slider.slider({
-                    values: [prices.currentMin, prices.currentMax]
-                });
-                $("#amount").val($slider.slider("values", 0));
-                $("#amount2").val($slider.slider("values", 1));
+            if (Number(filterCurrentMinPrice.value) !== Number(prices.currentMin) || Number(filterCurrentMaxPrice.value) !== Number(prices.currentMax)) {
+                // $slider.slider({
+                //     values: [prices.currentMin, prices.currentMax]
+                // });
 
-                $filterCurrentMinPrice.val(prices.currentMin)
-                $filterCurrentMaxPrice.val(prices.currentMax)
+                filterCurrentMinPrice.value = prices.currentMin;
+                filterCurrentMaxPrice.value = prices.currentMax;
             }
         }
     }
