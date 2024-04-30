@@ -201,7 +201,8 @@ class ProductController extends Controller
         if ($data['items_left'] > 0) {
             $data['availability'] = AvailableOptions::AVAILABLE->value;
         } else {
-            $data['availability'] = AvailableOptions::NOT_AVAILABLE->value;
+            if ($product->availability == AvailableOptions::AVAILABLE->value)
+                $data['availability'] = AvailableOptions::NOT_AVAILABLE->value;
         }
 
         if (!array_key_exists('alias', $data) || $data['alias'] === null) {
