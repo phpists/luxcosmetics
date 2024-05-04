@@ -57,16 +57,27 @@ class DeliveryPoint extends Model
         return $this->hasOne(DeliveryMethod::class, 'name', 'lms');
     }
 
-    public function getStreet(): string
+    public function getStreetAttribute(): string
     {
-        $address = explode(',', $this->name);
-        $street = $address[2] ?? '';
+        return trim(explode(',', $this->fullAddress)[$this->getStreetIndex()] ?? '');
+    }
 
-        if (!$street) {
-            foreach (explode(',', $this->fullAddress) as $addressPart) {
-                foreach(['ул.', 'пр-т', 'мрн', 'пр.'] as $a) {
-                    if (stripos(strtolower($addressPart), $a) !== false)
-                        $street = $addressPart;
+    public function getHouseAttribute()
+    {
+        $i = $this->getStreetIndex() + 1;
+        return trim(explode(',', $this->fullAddress)[$i] ?? '');
+    }
+
+    public function getStreetIndex(): int
+    {
+        $address = '';
+        $street = 2;
+
+        foreach (explode(',', $this->fullAddress) as $i => $addressPart) {
+            foreach (['ул.', ' ул', 'пр-т', 'пр-д', 'мрн', 'пр.', 'б-р'] as $a) {
+                if (stripos(strtolower($addressPart), $a) !== false) {
+                    $street = $i;
+                    $address = $addressPart;
                 }
             }
         }
