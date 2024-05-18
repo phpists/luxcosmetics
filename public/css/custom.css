@@ -47,3 +47,18 @@
 .filter__wrap label.checkbox.disabled {
     opacity: 0.3;
 }
+
+
+button.product_favourite svg.active-icon {
+    display: none;
+}
+button.product_favourite svg.inactive-icon {
+    display: block;
+}
+
+button.product_favourite.active svg.active-icon {
+    display: block;
+}
+button.product_favourite.active svg.inactive-icon {
+    display: none;
+}

@@ -35,6 +35,7 @@ class CartService
     const PROMO_KEY = 'cart_promo';
 
 
+    const ADDRESS_STATE = 'state';
     const ADDRESS_CITY = 'city';
     const ADDRESS_STREET = 'street';
     const ADDRESS_HOUSE = 'house';
@@ -49,6 +50,7 @@ class CartService
     const DELIVERY_POINT_ID = 'local_delivery_point_id';
 
     const ADDRESS_FIELDS = [
+        self::ADDRESS_STATE,
         self::ADDRESS_CITY,
         self::ADDRESS_STREET,
         self::ADDRESS_HOUSE,
@@ -74,6 +76,7 @@ class CartService
         self::EMAIL_KEY => 'E-mail',
         self::PAYMENT_TYPE => 'Способ оплаты',
         self::DELIVERY_KEY => 'Способ доставки',
+        self::ADDRESS_STATE => 'Область',
         self::ADDRESS_CITY => 'Город',
         self::ADDRESS_STREET => 'Улица',
         self::ADDRESS_HOUSE => 'Дом',
@@ -505,9 +508,24 @@ class CartService
             throw new Exception('У вас на балансе нету столько баллов!');
 
         $total_cart_sum = $this->getTotalSum();
-        $half = round($total_cart_sum - ($total_cart_sum / 2), 2);
-        if ($half < $amount)
-            throw new Exception('Не больше 50% от суммы заказа - ' . $half);
+        $bonuses_per_order = (int) SiteConfigService::getParamValue('bonuses_per_order') ?? 0;
+        if ($bonuses_per_order > 0) {
+            $max_bonuses_for_current_checkout = round(($bonuses_per_order / 100) * $total_cart_sum, 2);
+        } else {
+            $max_bonuses_for_current_checkout = 0;
+        }
+
+        $error_message = SiteConfigService::getParamValue('checkout_max_bonuses_error_message');
+        $error_message = \Str::replace([
+            '{bonuses_per_order}',
+            '{max_bonuses_for_current_checkout}',
+        ], [
+            $bonuses_per_order,
+            $max_bonuses_for_current_checkout,
+        ], $error_message);
+
+        if ($max_bonuses_for_current_checkout < $amount)
+            throw new Exception($error_message);
 
         return true;
     }
@@ -650,6 +668,22 @@ class CartService
     {
         $giftService = new GiftService();
         return $giftService->getGiftProducts($this->getAllProducts());
+    }
+
+    public function getUserBonusesMessage(): string
+    {
+        $message = SiteConfigService::getParamValue('user_bonuses_message');
+        $bonuses_per_order = (int) SiteConfigService::getParamValue('bonuses_per_order') ?? 0;
+        $bonuses = auth()->user()->points ?? 0;
+
+        return \Str::replace([
+            '{bonuses}',
+            '{bonuses_per_order}',
+        ], [
+            $bonuses,
+            $bonuses_per_order,
+        ], $message);
+
     }
 
 

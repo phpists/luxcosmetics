@@ -269,7 +269,8 @@ function locationItemInit(el) {
 
         document.getElementById('delivery_contaniner').classList.add('active');
 
-        $('#delivery_city').val(el.dataset.value)
+        $('#delivery_state').val(el.dataset.state)
+        $('#delivery_city').val(el.dataset.city)
 
         closeCartTab('pickup_delivery_tab');
         // Saving place coordinates to input
@@ -291,12 +292,13 @@ function locationItemInit(el) {
 }
 
 async function handleSearch(ev) {
-    let search = ev.currentTarget.value;
+    let search = 'Россия, ' + ev.currentTarget.value;
     axios.get('https://suggest-maps.yandex.ru/v1/suggest', {
         params: {
             apikey: SUGGEST_API_KEY,
             types: 'locality',
-            text: search
+            text: search,
+            print_address: 1
         }
     }).then(function (res) {
         let prompt = document.getElementById('suggest_location');
@@ -307,9 +309,25 @@ async function handleSearch(ev) {
             if (el.subtitle?.text) {
                 location_title += ', ' + el.subtitle.text;
             }
+
+            let state = '',
+                city = '';
+            for (const componentKey in el.address.component) {
+                if (el.address.component[componentKey].kind.includes('PROVINCE'))
+                    state = el.address.component[componentKey].name;
+                if (el.address.component[componentKey].kind.includes('LOCALITY') && city.length < 1)
+                    city = el.address.component[componentKey].name;
+            }
+
+            location_title = el.address.formatted_address;
+
             elData.innerHTML = location_title;
             elData.classList.add('location_item');
             elData.dataset.value = location_title;
+
+            elData.dataset.state = state;
+            elData.dataset.city = city;
+
             prompt.appendChild(elData);
             locationItemInit(elData);
         });

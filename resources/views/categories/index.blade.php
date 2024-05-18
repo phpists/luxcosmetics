@@ -37,9 +37,6 @@
 
 
 @section('content')
-    <div class="alert alert-primary hidden alert-favadd" role="alert" id="fav_alert">
-        Товар добавлен в избранное
-    </div>
     <section class="crumbs">
         <div class="container">
             <div class="row">

@@ -54,6 +54,7 @@
                                 <a href="#changecity" id="changecity_init" class="btn btn--accent popup-with-form"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#edit')}}"></use></svg> Изменить адрес</a>
                             </div>
                             <div id="delivery_contaniner">
+                                <input type="hidden" id="delivery_state" name="state" required>
                                 <input type="hidden" id="delivery_city" name="city" required>
                                 <input type="hidden" id="delivery_street" name="street" required>
                                 <input type="hidden" id="delivery_house" name="house" required>

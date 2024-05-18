@@ -40,3 +40,17 @@ function initFilters() {
         $(".sortmobile").removeClass("is-active");
     });
 }
+
+function throwMessage(message) {
+    const $toast = $('#fav_alert').clone();
+    $toast.text(message);
+
+    $('body').append($toast)
+    $toast.fadeIn(function () {
+        setTimeout(() => {
+            $toast.fadeOut(function () {
+                $toast.remove();
+            });
+        }, 2000)
+    })
+}

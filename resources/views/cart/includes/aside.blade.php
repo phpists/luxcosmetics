@@ -36,7 +36,7 @@
             </dt>
             <dd>
                 @if(auth()->check())
-                <div class="formsuccess">Доступно баллов: <b>{{ auth()->user()->points ?? 0 }}</b> </div>
+                <div class="formsuccess">{!! $cartService->getUserBonusesMessage() !!}</div>
                 @endif
                 <form action="{{ route('cart.use-bonuses') }}" method="POST" class="form">
                     @csrf

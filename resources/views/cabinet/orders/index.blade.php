@@ -25,7 +25,7 @@
             </tbody>
         </table>
 
-            {{ $orders->withQueryString()->links('vendor.pagination.products_pagination') }}
+            {{ $orders->withQueryString()->links('vendor.pagination.products_pagination_without_load_more') }}
 
     </main>
 @endsection

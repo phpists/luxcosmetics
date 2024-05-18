@@ -87,6 +87,7 @@ class Order extends Model
         'invoice_id',
         'is_received_by_1c',
         'note',
+        'state',
         'city',
         'street',
         'house',
@@ -100,7 +101,7 @@ class Order extends Model
         'delivery_point_code',
         'shipping_method',
         'building',
-        'local_delivery_point_id'
+        'local_delivery_point_id',
     ];
 
 
