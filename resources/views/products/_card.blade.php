@@ -13,14 +13,19 @@
             <a href="{{ route('products.product', ['alias' => $product->alias]) }}">
                 <img src="{{asset('images/uploads/products/'.$product->main_image)}}" alt="">
             </a>
-            <button class="product__fav product_favourite"
-                    data-label=@if($product->is_favourite && \App\Services\FavoriteProductsService::checkByIdForAnonym($product->id)) "1" @else "0" @endif data-value="{{$product->id}}">
-                <svg class="icon">
-                    @if(isset($is_favourite_page) && $is_favourite_page)
-                        <use xlink:href="{{asset('images/dist/sprite.svg#trash')}}"></use>
-                    @else
-                        <use xlink:href="{{asset('images/dist/sprite.svg#heart')}}"></use>
-                    @endif
+            <button class="product__fav product_favourite @if($product->is_favourite && \App\Services\FavoriteProductsService::checkByIdForAnonym($product->id)) active @endif" data-value="{{$product->id}}">
+{{--                <svg class="icon">--}}
+{{--                    @if(isset($is_favourite_page) && $is_favourite_page)--}}
+{{--                        <use xlink:href="{{asset('images/dist/sprite.svg#trash')}}"></use>--}}
+{{--                    @else--}}
+{{--                        <use xlink:href="{{asset('images/dist/sprite.svg#heart')}}"></use>--}}
+{{--                    @endif--}}
+{{--                </svg>--}}
+                <svg class="active-icon icon">
+                    <use xlink:href="{{asset('images/dist/sprite.svg#trash')}}"></use>
+                </svg>
+                <svg class="inactive-icon icon">
+                    <use xlink:href="{{asset('images/dist/sprite.svg#heart')}}"></use>
                 </svg>
             </button>
         </div>

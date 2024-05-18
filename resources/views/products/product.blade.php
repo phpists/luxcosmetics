@@ -678,13 +678,13 @@
                     <div class="wrapper">
                         <div class="tabs">
                             @if(sizeof($relative_products->where('relation_type', \App\Models\RelatedProduct::SUPPORT_ITEMS)) > 0)
-                                <span class="tab">Выбрано для вас</span>
+                                <span class="tab">Сопутствующие товары</span>
                             @endif
                             @if(sizeof($relative_products->where('relation_type', \App\Models\RelatedProduct::SIMILAR_ITEMS)) > 0)
-                                <span class="tab">Вам также может понравиться</span>
+                                <span class="tab">Аналогичные товары</span>
                             @endif
                             @if(sizeof($random_products) > 0)
-                                <span class="tab">Клиенты также просмотрели</span>
+                                <span class="tab">Популярные товары</span>
                             @endif
                         </div>
                         <div class="tab_content">

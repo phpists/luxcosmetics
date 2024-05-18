@@ -313,7 +313,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
-                    <form action="{{route('subscribe')}}" class="mailing__form" method="POST">
+                    <form id="subscribeMailForm" action="{{route('subscribe')}}" class="mailing__form" method="POST">
                         @csrf
                         <div class="mailing__left">
                             <h2 class="mailing__title">Подписаться на&nbsp;рассылку</h2>
@@ -321,7 +321,7 @@
                         </div>
                         <div class="mailing__right">
                             <input required type="email" class="mailing__input" name="email" placeholder="Введите ваш e-mail">
-                            <button class="mailing__button"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#circle-arrow')}}"></use></svg></button>
+                            <button class="mailing__button g-recaptcha" data-sitekey="6LcA7-ApAAAAAGhKAU2lkuhwT77uYqcGfTXH74M_" data-callback='onSubmit' data-action='submit'><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#circle-arrow')}}"></use></svg></button>
                         </div>
                     </form>
                 </div>
@@ -397,6 +397,10 @@
                 }
             });
         })
+
+        function onSubmit(token) {
+            document.getElementById("subscribeMailForm").submit();
+        }
     </script>
 @endsection
 

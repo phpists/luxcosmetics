@@ -46,21 +46,9 @@ class FillAdditionalFields implements ShouldQueue
                 'house' => $order->deliveryPoint->house,
             ]);
         } elseif ($order->delivery_type == Order::DELIVERY_COURIER) {
-            if (str_contains($order->city, 'обл')) {
-                $addressParts = explode(',', $order->city);
-                $state = null;
-                $city = $addressParts[0];
-                foreach ($addressParts as $addressPart) {
-                    if (str_contains($addressPart, 'обл'))
-                        $state = $addressPart;
-                }
-            } else {
-                $city = $order->city;
-            }
-
-            $courierDeliveryMethod = CourierDeliveryMethod::whereJsonContains('cities', trim($city))->first();
-            if (!$courierDeliveryMethod && isset($state))
-                $courierDeliveryMethod = CourierDeliveryMethod::whereJsonContains('states', trim($state))->first();
+            $courierDeliveryMethod = CourierDeliveryMethod::whereJsonContains('cities', trim($order->city))->first();
+            if (!$courierDeliveryMethod)
+                $courierDeliveryMethod = CourierDeliveryMethod::whereJsonContains('states', trim($order->state))->first();
             if (!$courierDeliveryMethod)
                 $courierDeliveryMethod = CourierDeliveryMethod::whereJsonContains('countries', 'Россия')->first();
 

@@ -78,6 +78,13 @@
     </div>
     <div class="col-12 col-md-3">
         <div class="form-group">
+            <label for="exampleSelect2">Область</label>
+            <input type="text" name="state" value="{{ old('state', $order->state) }}" class="form-control"
+                   required/>
+        </div>
+    </div>
+    <div class="col-12 col-md-3">
+        <div class="form-group">
             <label for="exampleSelect2">Город</label>
             <input type="text" name="city" value="{{ old('city', $order->city) }}" class="form-control"
                    required/>

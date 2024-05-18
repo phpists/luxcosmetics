@@ -46,7 +46,11 @@ class FavoriteProductController extends Controller
 
     public function add(Request $request)
     {
-        return FavoriteProductsService::setById($request->post('id'));
+        return \Response::json([
+            'result' => true,
+            'total_count' => FavoriteProductsService::setById($request->post('id')),
+            'message' => 'Товар добавлен в избранное'
+        ]);
     }
 
     public function remove(Request $request)
@@ -64,7 +68,12 @@ class FavoriteProductController extends Controller
                 'count' => $count
             ]);
         }
-        return $count;
+
+        return \Response::json([
+            'result' => true,
+            'total_count' => $count,
+            'message' => 'Товар удален из избранного'
+        ]);
     }
 
 }
