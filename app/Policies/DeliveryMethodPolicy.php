@@ -22,7 +22,7 @@ class DeliveryMethodPolicy
 
     public function create(User $user): bool
     {
-        return false;
+        return $user->isSuperAdmin() || $user->can(PermissionService::DELIVERY_METHODS_EDIT);
     }
 
     public function view(User $user): bool
