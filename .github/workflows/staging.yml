@@ -1,0 +1,21 @@
+name: SSH deploy on push
+on:
+  push:
+    branches: [ staging ]
+    
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy & Install dependencies
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.STAGING_HOST }}
+          username: ${{ secrets.STAGING_USERNAME }}
+          password: ${{ secrets.STAGING_PASSWORD }}
+          script: |
+            git reset --hard
+            git pull
+            composer install
+            php artisan migrate
+            php artisan view:clear
