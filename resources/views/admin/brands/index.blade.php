@@ -116,7 +116,7 @@
                                             @method('DELETE')
                                             <input type="hidden" name="id" value="{{ $brand->id }}">
                                             <button type="submit" class="btn btn-sm btn-clean btn-icon btn_delete"
-                                                    onclick="return confirm('Ви впевнені, що хочете видалити спосіб доставки {{ $brand->title }}?')"
+                                                    onclick="const message = 'Вы уверены, что хотите удалить бренд';return confirm(message + ' {{ $brand->name }}?')"
                                                     title="Delete"><i class="las la-trash"></i>
                                             </button>
                                             </form>
