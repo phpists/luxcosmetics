@@ -14,8 +14,9 @@ jobs:
           username: ${{ secrets.STAGING_USERNAME }}
           password: ${{ secrets.STAGING_PASSWORD }}
           script: |
+            cd public_html/
             git reset --hard
             git pull
-            composer install
-            php artisan migrate
-            php artisan view:clear
+            /usr/local/php/cgi/8.1/bin/php ../composer.phar install
+            /usr/local/php/cgi/8.1/bin/php artisan migrate
+            /usr/local/php/cgi/8.1/bin/php artisan view:clear
