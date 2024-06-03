@@ -33,7 +33,7 @@ class SocialMediaController extends Controller
         $data['is_active_in_contacts'] = $request->post('is_active_in_contacts') ? 1 : 0;
         $data['is_active_in_footer'] = $request->post('is_active_in_footer') ? 1 : 0;
 
-        $data['icon'] = FileService::saveFile('uploads', "social", $request->icon);
+        $data['icon'] = FileService::saveFile('uploads', "social", $request->file('icon'));
 
         $social = SocialMedia::create($data);
 
@@ -56,24 +56,18 @@ class SocialMediaController extends Controller
         $data = $request->all();
         $data['is_active_in_contacts'] = $request->post('is_active_in_contacts') == 'on' ? 1 : 0;
         $data['is_active_in_footer'] = $request->post('is_active_in_footer') == 'on' ? 1 : 0;
-        // dd($request->post('is_active_in_contacts'));
 
         $social = SocialMedia::findOrFail($data['id']);
 
         if ($request->hasFile('icon')) {
-            $icon = FileService::saveFile('uploads', "social", $request->icon);
+            $icon = FileService::saveFile('uploads', "social", $request->file('icon'));
             $social->icon = $icon;
             $social->update(['icon' => $icon]);
         }else{
             $social->update($data);
         }
 
-
-        if ($social->update($data)) {
-            return redirect()->back()->with('success', ($social->type_id == SocialMedia::TYPE_NETWORK ? 'Соц.мережу' : 'Месенджер') . ' успішно відредаговано');
-        } else {
-            return redirect()->back()->with('error', 'Не вдалось відредагувати ' .  ($social->type_id == SocialMedia::TYPE_NETWORK ? 'соц.мережу' : 'месенджер'));
-        }
+        return redirect()->back()->with('success', ($social->type_id == SocialMedia::TYPE_NETWORK ? 'Соц.мережу' : 'Месенджер') . ' успішно відредаговано');
     }
     public function updatePhone(Request $request)
     {
