@@ -48,7 +48,6 @@ class SocialMediaController extends Controller
     {
         $id = $request->id;
         $social = SocialMedia::findOrFail($id);
-        Log::alert($social);
         return response()->json($social);
     }
 

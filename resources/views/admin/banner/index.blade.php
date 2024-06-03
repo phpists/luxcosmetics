@@ -95,7 +95,7 @@
                                     </th>
                                 </tr>
                                 </thead>
-                                <tbody id="table" class="banner-table">
+                                <tbody id="bannersTable" class="banner-table" data-url="{{ route("admin.banners.update_positions") }}">
                                     @foreach($banner as $item)
                                     <tr id="banner_{{$item->id}}" data-id="{{ $item->id }}" data-label="{{ $item->position }}">
                                         <td class="text-center pl-0">

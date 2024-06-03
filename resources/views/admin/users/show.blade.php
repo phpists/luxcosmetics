@@ -49,6 +49,10 @@
                                         <th>{{ $user->id }}</th>
                                     </tr>
                                     <tr>
+                                        <th>Бонусы</th>
+                                        <th>{{ $user->points }}</th>
+                                    </tr>
+                                    <tr>
                                         <th>Email</th>
                                         <th>{{ $user->email }}</th>
                                     </tr>

@@ -11,7 +11,7 @@
                         @foreach($social as $item)
                         @if($item->link !== null)
                                 <a href="{{ $item->link }}" class="social__item" target="_blank">
-                                    <svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#insta')}}"></use></svg>
+                                    <img src="{{ $item->getIconSrcAttribute() }}" alt="social icon" height="32" width="32">
                                 </a>
                         @endif
                         @endforeach

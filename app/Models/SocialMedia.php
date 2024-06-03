@@ -62,7 +62,7 @@ class SocialMedia extends Model
 
     public function getIconSrcAttribute()
     {
-        return asset('uploads/social/' . $this->icon);
+        return asset('images/uploads/social/' . $this->icon);
     }
 
     public function dropIcon()

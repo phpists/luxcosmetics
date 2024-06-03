@@ -27,7 +27,7 @@ $(document).ready(function () {
             url: url,
             dataType: "json",
             success: function (response) {
-                $('#table').html(response.bannerAjaxHtml);
+                $('#bannersTable').html(response.bannerAjaxHtml);
                 $('#pagination').html(response.paginateHtml);
                 window.history.pushState(null, null, url);
             }
@@ -99,48 +99,4 @@ $(document).ready(function () {
         });
     });
 
-    let tbody = document.querySelector('tbody');
-    new Sortable(tbody, {
-        animation: 150,
-        handle: '.handle',
-        dragClass: 'table-sortable-drag',
-        onEnd: function (/**Event*/ evt) {
-            console.log('drop');
-            var list = [];
-            $.each($('tbody tr'), function (idx, el) {
-                list.push({
-                    id: $(el).data('id'),
-                    pos: idx + 1
-                })
-            });
-
-            $('.left-btn').click(function() {
-                var id = $(this).data('id');
-                var pos = $(this).data('pos');
-                pos--;
-                $(this).data('pos', pos).siblings('.number-position').text(pos);
-            });
-
-            $('.right-btn').click(function() {
-                var id = $(this).data('id');
-                var pos = $(this).data('pos');
-                pos++;
-                $(this).data('pos', pos).siblings('.number-position').text(pos);
-            });
-
-            $.ajax({
-                method: 'post',
-                url: '{{ route("admin.banner_method.update_positions") }}',
-                data: {
-                    positions: list,
-                },
-                success: function (response) {
-                    console.log(response)
-                    $.each(response, function(i, item) {
-                        $(`tr[data-id="${i}"]`).find('.position').text(item)
-                    })
-                }
-            });
-        }
-    });
 });
