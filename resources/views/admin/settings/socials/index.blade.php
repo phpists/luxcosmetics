@@ -386,7 +386,7 @@
                     $('#updateLink').val(response.link);
                     $('#phone').val(response.phone);
 
-                    let icon_url = 'url("{{ asset('uploads/social/') }}/' + response.icon + '")'
+                    let icon_url = 'url("{{ asset('images/uploads/social/') }}/' + response.icon + '")'
                     $('#updateImageBackground').css('background-image', icon_url);
 
                     document.getElementById('updateIsActiveInContacts').checked = (response.is_active_in_contacts == 1)
