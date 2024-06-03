@@ -35,6 +35,7 @@ class ProductService
                         'name' => trim($product['category_title'])
                     ],
                     [
+
                         'alias' => \Str::slug($product['category_title']),
                         'position' => 999
                     ]
@@ -42,7 +43,9 @@ class ProductService
                 $product['category_id'] = $category->id;
             }
 
-            if ($product['brand_title']) {
+            if ($product['brand_title']
+                && $product['brand_title'] !== 'The Masters'
+                && $product['brand_title'] !== 'GIOIELLO LIQUID') {
                 $brand = Brand::firstOrCreate(
                     [
                         'name' => trim($product['brand_title'])
