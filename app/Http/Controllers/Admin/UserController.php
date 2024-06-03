@@ -112,6 +112,7 @@ class UserController extends Controller
             $user->surname = $request->surname;
             $user->phone = $request->phone;
             $user->email = $request->email;
+            $user->points = $request->points;
             $user->update();
         }
 

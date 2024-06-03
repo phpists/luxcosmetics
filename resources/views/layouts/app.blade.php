@@ -16,7 +16,7 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <link rel="icon" href="{{ asset('/images/54231.mp3') }}">
+    <link rel="icon" href="{{ asset('favicon.ico') }}">
 
     <meta name="theme-color" content="#06473A">
 

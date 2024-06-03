@@ -173,6 +173,7 @@
                                     <tr>
                                         <th class="font-weight-bold text-muted text-uppercase">Сумма заказа</th>
                                         <th class="font-weight-bold text-muted text-uppercase">Сумма скидок</th>
+                                        <th class="font-weight-bold text-muted text-uppercase">Бонусов будет начислено</th>
                                         <th class="font-weight-bold text-muted text-uppercase text-right">К оплате</th>
                                     </tr>
                                     </thead>
@@ -180,6 +181,7 @@
                                     <tr class="font-weight-bolder">
                                         <td>{{ $order->orderProducts->sum(function ($item) { return $item->quantity * $item->price; }) }}</td>
                                         <td>{{ $total_discount ? '-' . $total_discount : 0 }}</td>
+                                        <td>{{ $order->bonuses_given }}</td>
                                         <td class="text-primary font-size-h3 font-weight-boldest text-right">{{ $order->total_sum }}</td>
                                     </tr>
                                     </tbody>

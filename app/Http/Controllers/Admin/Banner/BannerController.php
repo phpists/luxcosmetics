@@ -16,7 +16,7 @@ class BannerController extends Controller
     {
         $this->authorize('viewAny', Banner::class);
 
-        $banner = Banner::query();
+        $banner = Banner::query()->orderBy('number_position');
 
         if (isset($request->position)) {
             $banner->where('banners.position', $request->position);
