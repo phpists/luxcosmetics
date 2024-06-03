@@ -35,6 +35,7 @@ class ProductService
                         'name' => trim($product['category_title'])
                     ],
                     [
+
                         'alias' => \Str::slug($product['category_title']),
                         'position' => 999
                     ]
