@@ -43,9 +43,7 @@ class ProductService
                 $product['category_id'] = $category->id;
             }
 
-            if ($product['brand_title']
-                && $product['brand_title'] !== 'The Masters'
-                && $product['brand_title'] !== 'GIOIELLO LIQUID') {
+            if ($product['brand_title']) {
                 $brand = Brand::firstOrCreate(
                     [
                         'name' => trim($product['brand_title'])
