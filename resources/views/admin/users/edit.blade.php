@@ -82,6 +82,15 @@
                                         </div>
                                     </div>
                                 </div>
+
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <label for="editUserPoints" class="font-weight-bold">Бонусы</label>
+                                            <input type="text" class="form-control" id="editUserPoints" name="points" value="{{ $user->points }}">
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="row">
                                     <div class="col-6">
                                         <div class="form-group">
