@@ -52,7 +52,8 @@ class BrandsController extends Controller
 
             return response()->json([
                 'html' => $products_list,
-                'filterCounts' => $filters_weight
+                'filterCounts' => $filters_weight,
+                'filterPrices' => $filter_prices
             ]);
         } else {
             $products_list = view('categories.parts.catalog', compact('products', 'variations'))->render();
