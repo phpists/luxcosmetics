@@ -8,7 +8,12 @@ use Illuminate\Http\Request;
 class BrandController extends Controller
 {
     public function index() {
-        $brands = Brand::query()->selectRaw('brands.*, LOWER(SUBSTR(brands.name, 1, 1)) as letter')->orderByRaw('name')->get();
+        $brands = Brand::query()
+            ->whereHas('products')
+            ->selectRaw('brands.*, LOWER(SUBSTR(brands.name, 1, 1)) as letter')
+            ->orderByRaw('name')
+            ->get();
+
         return view('brands', compact('brands'));
     }
 }
