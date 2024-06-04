@@ -173,8 +173,8 @@
 <div class="row">
     <div id="bonusesContainer" class="col-12 col-md-2" @if(!$order->bonuses_discount) style="display:none;" @endif>
         <div class="form-group">
-            <label>Бонусы: будет начислено - <b id="bonusesCount">{{ $order->bonuses_given ?? 0 }}</b></label>
-            <input type="number" name="bonuses_discount" value="{{ old('bonuses', $order->bonuses_discount) }}" class="form-control"/>
+            <label>Бонусов будет начислено</label>
+            <input type="number" name="bonuses_given" value="{{ old('bonuses_given', $order->bonuses_given) }}" class="form-control"/>
         </div>
     </div>
     <div class="col-12 col-md-auto">
