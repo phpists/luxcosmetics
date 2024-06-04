@@ -50,6 +50,18 @@
     <td colspan="7">Использовано бонусов: <b>{{ $bonuses }}</b></td>
 </tr>
 @endif
+@if(isset($bonuses_given))
+<tr class="text-right">
+    <td colspan="7">
+        <div class="form-group row justify-content-end">
+            <label class="col-auto col-form-label">Бонусов будет начислено:</label>
+            <div class="col-1">
+                <input class="form-control text-right" type="number" min="0" name="bonuses_given" value="{{ $bonuses_given }}"/>
+            </div>
+        </div>
+    </td>
+</tr>
+@endif
 <tr class="text-right">
     <td colspan="7">Всего: <b>{{ $total_sum }}</b></td>
 </tr>
