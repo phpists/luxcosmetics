@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 use App\Models\Product;
 use App\Services\FavoriteProductsService;
 use Illuminate\Http\Request;
@@ -11,7 +12,7 @@ use Illuminate\Support\Facades\Log;
 class FavoriteProductController extends Controller
 {
 
-    private function getProducts() {
+    private function getProducts($categoryId = null) {
         $products_id = FavoriteProductsService::getAllIds();
         $products = [];
         $variations = [];
@@ -23,6 +24,9 @@ class FavoriteProductController extends Controller
                 ->with('brand')
                 ->whereIn('products.id', FavoriteProductsService::getAllIds())
                 ->distinct(['products.id'])
+                ->when($categoryId, function ($query, $categoryId) {
+                    $query->where('products.category_id', $categoryId);
+                })
                 ->paginate(12);
 
             $products_id = [];
@@ -36,12 +40,15 @@ class FavoriteProductController extends Controller
             'variations' => $variations
         ];
     }
-    public function index()
+    public function index(string $categoryId = null)
     {
-        $data = $this->getProducts();
+        $data = $this->getProducts($categoryId);
         $products = $data['products'];
         $variations = $data['variations'];
-        return view('favourite-products', compact('products', 'variations'));
+
+        $categories = Category::whereIn('id', $this->getProducts()['products']->pluck('category_id'))->get();
+
+        return view('favourite-products', compact('products', 'variations', 'categories', 'categoryId'));
     }
 
     public function add(Request $request)

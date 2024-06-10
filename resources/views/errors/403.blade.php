@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container">
-        {!! \App\Models\Page::whereLink('404')->first()?->content !!}
+        {!! \App\Models\Page::whereLink('403')->first()?->content !!}
     </div>
 
     @php($popular_products = \App\Models\Product::query()
