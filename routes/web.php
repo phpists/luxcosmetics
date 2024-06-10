@@ -59,7 +59,7 @@ Route::get('sales', [\App\Http\Controllers\SalesController::class, 'index'])->na
 Route::get('sales-50', [\App\Http\Controllers\SalesController::class, 'index'])->name('sales-50');
 Route::get('novinki', [\App\Http\Controllers\SalesController::class, 'index'])->name('novinki');
 // Favourite Products
-Route::get('favourites', [\App\Http\Controllers\FavoriteProductController::class, 'index'])->name('favourites');
+Route::get('favourites/{categoryId?}', [\App\Http\Controllers\FavoriteProductController::class, 'index'])->name('favourites');
 Route::post('favourites', [\App\Http\Controllers\FavoriteProductController::class, 'add'])->name('favourites.add');
 Route::delete('favourites', [\App\Http\Controllers\FavoriteProductController::class, 'remove'])->name('favourites.remove');
 // Ask product question

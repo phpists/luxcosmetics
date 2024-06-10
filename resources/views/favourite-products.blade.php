@@ -24,10 +24,11 @@
                             <div class="category-page__sortblock sortblock">
                                 <div class="sortblock__sort sort">
                                     <span class="sort__title">Выберите категорию </span>
-                                    <select name="" id="" class="sort__select">
+                                    <select name="" id="" class="sort__select" onchange="location.href = '{{ route('favourites') }}/' + this.value">
                                         <option value="">Все товары</option>
-                                        <option value="">Уход за кожей</option>
-                                        <option value="">Уход за волосами</option>
+                                        @foreach($categories as $category)
+                                            <option value="{{ $category->id }}" @selected($categoryId == $category->id)>{{ $category->name }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>
