@@ -336,7 +336,7 @@
                 <div class="col-lg-12">
                     <h2 class="title-h2">Бренды</h2>
                     <div class="brands-slider">
-                        @foreach(\App\Models\Brand::query()->selectRaw('brands.*')->get() as $item)
+                        @foreach(\App\Models\Brand::whereHas('products')->get() as $item)
                             <div class="brands-slider__item">
                                 <a href="{{ route('brands.show', ['link' => strtolower($item->link)]) }}">
                                     <div class="brand">

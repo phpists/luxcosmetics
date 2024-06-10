@@ -61,11 +61,10 @@ class SocialMediaController extends Controller
 
         if ($request->hasFile('icon')) {
             $icon = FileService::saveFile('uploads', "social", $request->file('icon'));
-            $social->icon = $icon;
-            $social->update(['icon' => $icon]);
-        }else{
-            $social->update($data);
+            $data['icon'] = $icon;
         }
+
+        $social->update($data);
 
         return redirect()->back()->with('success', ($social->type_id == SocialMedia::TYPE_NETWORK ? 'Соц.мережу' : 'Месенджер') . ' успішно відредаговано');
     }
