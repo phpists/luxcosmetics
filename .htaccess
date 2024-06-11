@@ -1,4 +1,16 @@
 RewriteEngine on
 
+# www > non www
+RewriteCond %{HTTP_HOST} ^www\.(.*)$ [NC]
+RewriteRule ^(.*)$ https://%1/$1 [R=301,L]
+
+# http > https
+RewriteCond %{HTTPS} off
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
+
+# remove index.php
+RewriteCond %{REQUEST_URI} ^/index\.php [NC]
+RewriteRule ^index\.php(.*)$ https://%{HTTP_HOST}/$1 [R=301,L]
+
 RewriteCond %{REQUEST_URI} !^public
 RewriteRule ^(.*)$ public/$1 [L]
