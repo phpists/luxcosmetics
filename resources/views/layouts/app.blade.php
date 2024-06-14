@@ -124,6 +124,7 @@
 <script src="{{asset('/js/scripts.js')}}"></script>
 <script src="https://www.google.com/recaptcha/api.js"></script>
 @yield('scripts')
+{!! \App\Services\SiteConfigService::getParamValue('footer_scripts') !!}
 </body>
 
 </html>
