@@ -59,7 +59,7 @@
 					<div class="cart-auth__col">
 						<div class="cart-auth__title">Продолжить как гость</div>
 						<div class="cart-auth__subtitle">Продолжить оформление заказа в качестве гостя и создать учетную запись позже</div>
-						<form action="{{ route('fast-register') }}" class="form form--box" method="POST">
+						<form id="signUpWithEmail" action="{{ route('fast-register') }}" class="form form--box" method="POST">
                             @csrf
 							<div class="form__fieldset">
 								<legend class="form__label">Электронная почта *</legend>
@@ -71,7 +71,7 @@
 									<div class="checkbox__text small">Подпишитесь, чтобы получить эксклюзивне предложения, анонсы новых брендов и советы экспетов по красоте</div>
 								</label>
 							</div>
-							<button type="submit" class="btn btn--accent btn--full">Продолжить оформление заказа</button>
+							<button type="submit" class="btn btn--accent btn--full" data-sitekey="{{ env('GOOGLE_CAPTCHA_SITE_KEY') }}" data-callback="onSubmit" data-action="submit">Продолжить оформление заказа</button>
 						</form>
 					</div>
 				</div>
@@ -81,11 +81,25 @@
 						<img src="{{asset('images/dist/ico-mir.png')}}" alt="">
 						<img src="{{asset('images/dist/ico-youmoney.png')}}" alt="">
 					</div>
-					<h3>Нужна помощь? <a href="tel:+74951528544">+7 495 152 85 44</a></h3>
+					<h3>Нужна помощь?
+                        @foreach($social as $item)
+                        @if($item->phone)
+                            <a href="tel:{{ $item->phone }}">{{ $item->phone }}</a>
+                        @endif
+                        @endforeach
+                    </h3>
 					<p>Служба поддержки клиентов открыта: с 10:00 до 22:00 (с понедельника по пятницу)</p>
 				</div>
 			</div>
 		</div>
 	</div>
 </section>
+@endsection
+
+@section('scripts')
+    <script>
+        function onSubmit(token) {
+            document.getElementById("signUpWithEmail").submit();
+        }
+    </script>
 @endsection

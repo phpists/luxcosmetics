@@ -21,7 +21,7 @@
         </tr>
         </thead>
         <tbody>
-        @foreach($gift_products as $gift_product)
+        @foreach($order->giftProducts as $gift_product)
             <tr>
                 <td class="text-center pl-0">
                     {{ $gift_product->id }}
