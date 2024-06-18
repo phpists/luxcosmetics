@@ -22,6 +22,10 @@ $(function () {
     if (address_city) {
         let address_state_city = address_state ? address_state + ', ' + address_city : address_city;
 
+        setTimeout(() => {
+            initMapItems(address_city)
+        }, 1000)
+
         locationItemClickHandler(address_state_city, address_city, address_state)
     }
 
@@ -304,20 +308,28 @@ function locationItemInit(el) {
 
         closeCartTab('pickup_delivery_tab');
         // Saving place coordinates to input
-        ymaps.geocode(el.dataset.value, {
-            kind: 'locality',
-            results: 10
-        }).then((res) => {
-            let boundaries = res.geoObjects.get(0).properties.get('boundedBy');
-            let border_inp = document.getElementById('search_borders');
-            border_inp.value = (boundaries[0][1] + ',' + boundaries[0][0])
-                + '~'
-                + (boundaries[1][1] + ',' + boundaries[1][0]);
-            let center = res.geoObjects.get(0).geometry.getCoordinates();
-            border_inp.dataset.center = center[0] + ',' + center[1];
-        })
+
+        initMapItems(el.dataset.value)
+
         $.magnificPopup.close();
-        // await loadDeliveryPlaces();
+    })
+}
+
+function initMapItems(address) {
+    ymaps.geocode(address, {
+        kind: 'locality',
+        results: 10
+    }).then(async (res) => {
+        console.log(res)
+        let boundaries = res.geoObjects.get(0).properties.get('boundedBy');
+        let border_inp = document.getElementById('search_borders');
+        border_inp.value = (boundaries[0][1] + ',' + boundaries[0][0])
+            + '~'
+            + (boundaries[1][1] + ',' + boundaries[1][0]);
+        let center = res.geoObjects.get(0).geometry.getCoordinates();
+        border_inp.dataset.center = center[0] + ',' + center[1];
+
+        await loadDeliveryPlaces();
     })
 }
 
