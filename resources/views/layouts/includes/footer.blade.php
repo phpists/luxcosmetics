@@ -45,9 +45,7 @@
                 <div class="footer__contacts">
 
                     @foreach (\App\Models\SocialMedia::whereNotNull('phone')->get() as $item)
-                        @if($item->phone)
                             <a href="tel:{{ $item->phone }}" class="footer__phone" style="color:inherit">{{ $item->phone }}</a></a>
-                        @endif
                     @endforeach
 {{--                    <a href="#callback" class="btn btn--accent popup-with-form">Заказать звонок--}}
 {{--                        <svg class="icon">--}}

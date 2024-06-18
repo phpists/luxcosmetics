@@ -82,10 +82,8 @@
 						<img src="{{asset('images/dist/ico-youmoney.png')}}" alt="">
 					</div>
 					<h3>Нужна помощь?
-                        @foreach($social as $item)
-                        @if($item->phone)
+                        @foreach(\App\Models\SocialMedia::whereNotNull('phone')->get() as $item)
                             <a href="tel:{{ $item->phone }}">{{ $item->phone }}</a>
-                        @endif
                         @endforeach
                     </h3>
 					<p>Служба поддержки клиентов открыта: с 10:00 до 22:00 (с понедельника по пятницу)</p>
