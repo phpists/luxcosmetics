@@ -2,6 +2,11 @@
     background-color: #614300f2;
 }
 
+.product__mobile-btn.isInCart {
+    background-color: #614300f2;
+    color: white;
+}
+
 .product__addcart.isInCart:after,.product-page__addcart.isInCart:after {
     content: 'Товар в корзине';
 }

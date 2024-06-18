@@ -33,7 +33,6 @@ $(document).ready(function () {
             handle: '.handle',
             dragClass: 'table-sortable-drag',
             onEnd: function (evt) {
-                console.log('drop');
                 var list = [];
                 $.each($('#table_category_menu tr'), function (idx, el) {
                     list.push({
@@ -164,7 +163,6 @@ $(document).ready(function () {
             handle: '.menu_item_handle',
             dragClass: 'table-sortable-drag',
             onEnd: function (evt) {
-                console.log('drop');
                 var list = [];
                 $.each($('#table_menu tr'), function (idx, el) {
                     list.push({
@@ -192,7 +190,6 @@ $(document).ready(function () {
             handle: '.menu_item_handle',
             dragClass: 'table-sortable-drag',
             onEnd: function (evt) {
-                console.log('drop');
                 var list = [];
                 $.each($(footer_tbody).find('tr'), function (idx, el) {
                     list.push({

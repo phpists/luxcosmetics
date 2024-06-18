@@ -59,7 +59,7 @@
 					<div class="cart-auth__col">
 						<div class="cart-auth__title">Продолжить как гость</div>
 						<div class="cart-auth__subtitle">Продолжить оформление заказа в качестве гостя и создать учетную запись позже</div>
-						<form action="{{ route('fast-register') }}" class="form form--box" method="POST">
+						<form id="signUpWithEmail" action="{{ route('fast-register') }}" class="form form--box" method="POST">
                             @csrf
 							<div class="form__fieldset">
 								<legend class="form__label">Электронная почта *</legend>
@@ -71,7 +71,7 @@
 									<div class="checkbox__text small">Подпишитесь, чтобы получить эксклюзивне предложения, анонсы новых брендов и советы экспетов по красоте</div>
 								</label>
 							</div>
-							<button type="submit" class="btn btn--accent btn--full">Продолжить оформление заказа</button>
+							<button type="submit" class="btn btn--accent btn--full" data-sitekey="{{ env('GOOGLE_CAPTCHA_SITE_KEY') }}" data-callback="onSubmit" data-action="submit">Продолжить оформление заказа</button>
 						</form>
 					</div>
 				</div>
@@ -94,4 +94,12 @@
 		</div>
 	</div>
 </section>
+@endsection
+
+@section('scripts')
+    <script>
+        function onSubmit(token) {
+            document.getElementById("signUpWithEmail").submit();
+        }
+    </script>
 @endsection

@@ -320,7 +320,6 @@ function initMapItems(address) {
         kind: 'locality',
         results: 10
     }).then(async (res) => {
-        console.log(res)
         let boundaries = res.geoObjects.get(0).properties.get('boundedBy');
         let border_inp = document.getElementById('search_borders');
         border_inp.value = (boundaries[0][1] + ',' + boundaries[0][0])

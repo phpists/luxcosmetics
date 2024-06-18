@@ -183,7 +183,6 @@ $(function () {
 function validateForm(form) {
     let isValid = true;
     $(form).find('input[required]').each(function() {
-        console.log($(this).attr('type'))
 
         if ($(this).attr('type') === 'radio') {
 
