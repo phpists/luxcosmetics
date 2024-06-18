@@ -5,6 +5,53 @@ const PICKUP_DELIVERY = 'pickup';
 const COURIER_DELIVERY = 'courier';
 const WINDOW_SM_SIZE = 980;
 var myMap;
+
+
+
+
+
+
+
+
+
+$(function () {
+    let address_state = document.getElementById('delivery_state').value,
+        address_city = document.getElementById('delivery_city').value;
+
+
+    if (address_city) {
+        let address_state_city = address_state ? address_state + ', ' + address_city : address_city;
+
+        locationItemClickHandler(address_state_city, address_city, address_state)
+    }
+
+
+    let $checkedDeliveryInput = $('[name="delivery"][checked]');
+    if ($checkedDeliveryInput.length > 0) {
+        $checkedDeliveryInput.prop('checked', true);
+
+        if ($checkedDeliveryInput.val() == PICKUP_DELIVERY) {
+            let pickup_addr = document.getElementById('pickup_addr');
+            pickup_addr.innerText = document.getElementById(ADDRESS_OUTPUT_ID).value;
+            showCartTab('pickup_delivery_tab');
+        } else if ($checkedDeliveryInput.val() == COURIER_DELIVERY) {
+            document.getElementById('courier_addr').innerText = document.getElementById(ADDRESS_OUTPUT_ID).value;
+
+            showCartTab('coruier_tab');
+        }
+    }
+
+})
+
+
+
+
+
+
+
+
+
+
 function initYandex(){
     // Creating the map.
     myMap = new ymaps.Map("map", {
@@ -25,7 +72,7 @@ function isSmallSize() {
     return window.innerWidth <= WINDOW_SM_SIZE;
 }
 
-const handleRenderOrderModal = (title, address) => {
+const handleRenderOrderModal = (title, address, id) => {
     let [country, street, house] = address.split(', ')
 
     const modal = document.querySelector(".overlay-order");
@@ -56,7 +103,7 @@ const handleRenderOrderModal = (title, address) => {
     const submitBtn = document.querySelector(".submit_address");
     closeBtn.addEventListener("click", () => modal.classList.remove("active"));
     submitBtn.addEventListener('click', (ev) => {
-        handleSubmitDeliveryAddress(ev);
+        handleSubmitDeliveryAddress(ev, id);
         modal.classList.remove("active");
     });
 };
@@ -76,7 +123,7 @@ const handleOrder = () => {
             const title = btn.getAttribute("data-title");
             const address = btn.getAttribute("data-address");
 
-            handleRenderOrderModal(title, address);
+            handleRenderOrderModal(title, address, id);
         });
     });
 };
@@ -84,8 +131,6 @@ const handleOrder = () => {
 const handleSelectPost = (id) => {
     const pickupCards = document.querySelectorAll(".pickup-item");
     const listWrapper = document.querySelector(".pick-up-points");
-
-    $('#local_delivery_point_id').val(id);
 
     pickupCards.forEach((card) => {
         const cardId = card.getAttribute("data-id");
@@ -165,10 +210,10 @@ function handleClickBaloon(post_office_id) {
         behavior: "smooth",
     });
 
-    if (isSmallSize()) {
+    // if (isSmallSize()) {
         let pickupBtn = selectedBaloon.querySelector('.pickup-item__button');
-        handleRenderOrderModal(pickupBtn.dataset.title, pickupBtn.dataset.address);
-    }
+        handleRenderOrderModal(pickupBtn.dataset.title, pickupBtn.dataset.address, post_office_id);
+    // }
 }
 
 function setMarker(item){
@@ -253,24 +298,9 @@ const loadDeliveryPlaces = async () => {
 
 function locationItemInit(el) {
     el.addEventListener('click', async () => {
-        $('input:radio[name="delivery"]').prop('checked', false)
         closeCartTab('coruier_tab');
 
-        document.querySelector('.find-address-input').value = el.dataset.value;
-        let prompt = document.getElementById('suggest_location');
-        prompt.innerHTML = "";
-        let areaElement = document.getElementById('area');
-        areaElement.dataset.value = el.dataset.value;
-        areaElement.innerText = el.dataset.value;
-        let coruier_city = document.querySelector('.addmodal__city');
-        if (coruier_city) {
-            coruier_city.innerText = el.dataset.value;
-        }
-
-        document.getElementById('delivery_contaniner').classList.add('active');
-
-        $('#delivery_state').val(el.dataset.state)
-        $('#delivery_city').val(el.dataset.city)
+        locationItemClickHandler(el.dataset.value, el.dataset.city, el.dataset.state)
 
         closeCartTab('pickup_delivery_tab');
         // Saving place coordinates to input
@@ -289,6 +319,26 @@ function locationItemInit(el) {
         $.magnificPopup.close();
         // await loadDeliveryPlaces();
     })
+}
+
+function locationItemClickHandler(address, city, state) {
+    $('input:radio[name="delivery"]').prop('checked', false)
+
+    document.querySelector('.find-address-input').value = address;
+    let prompt = document.getElementById('suggest_location');
+    prompt.innerHTML = "";
+    let areaElement = document.getElementById('area');
+    areaElement.dataset.value = address;
+    areaElement.innerText = address;
+    let coruier_city = document.querySelector('.addmodal__city');
+    if (coruier_city) {
+        coruier_city.innerText = address;
+    }
+
+    document.getElementById('delivery_contaniner').classList.add('active');
+
+    $('#delivery_state').val(state)
+    $('#delivery_city').val(city)
 }
 
 async function handleSearch(ev) {
@@ -352,7 +402,8 @@ function initDeliveryOptions() {
     })
 }
 
-function handleSubmitDeliveryAddress(ev) {
+function handleSubmitDeliveryAddress(ev, id) {
+    $('#local_delivery_point_id').val(id);
     $('#delivery_street').val(ev.currentTarget.dataset.street)
     $('#delivery_house').val(ev.currentTarget.dataset.house)
 
@@ -372,6 +423,7 @@ function handleSubmitDeliveryAddress(ev) {
     output_inp.value = address + ', ' + post_name;
     output_inp.dataset.delivery_type = PICKUP_DELIVERY;
     pickup_addr.dataset.post_name = post_name;
+
     showCartTab('pickup_delivery_tab');
     $.magnificPopup.close();
 }
@@ -495,3 +547,5 @@ document.getElementById('coruier_form').addEventListener('submit', (ev) => {
     showCartTab('coruier_tab');
     $.magnificPopup.close();
 })
+
+

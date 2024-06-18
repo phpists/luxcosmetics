@@ -54,28 +54,28 @@
                                 <a href="#changecity" id="changecity_init" class="btn btn--accent popup-with-form"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#edit')}}"></use></svg> Изменить адрес</a>
                             </div>
                             <div id="delivery_contaniner">
-                                <input type="hidden" id="delivery_state" name="state" required>
-                                <input type="hidden" id="delivery_city" name="city" required>
-                                <input type="hidden" id="delivery_street" name="street" required>
-                                <input type="hidden" id="delivery_house" name="house" required>
-                                <input type="hidden" id="delivery_building" name="building">
-                                <input type="hidden" id="delivery_apartment" name="apartment">
-                                <input type="hidden" id="delivery_intercom" name="intercom">
-                                <input type="hidden" id="delivery_entrance" name="entrance">
-                                <input type="hidden" id="delivery_over" name="over">
-                                <input type="hidden" id="delivery_service" name="service" required>
-                                <input type="hidden" id="delivery_zip" name="zip" required>
-                                <input type="hidden" id="final_addr" name="address" required>
-                                <input type="hidden" id="local_delivery_point_id" name="local_delivery_point_id">
+                                <input type="hidden" id="delivery_state" name="state" value="{{ old(\App\Services\CartService::ADDRESS_STATE, $cartService->getProperty(\App\Services\CartService::ADDRESS_STATE)) }}" required>
+                                <input type="hidden" id="delivery_city" name="city" value="{{ old(\App\Services\CartService::ADDRESS_CITY, $cartService->getProperty(\App\Services\CartService::ADDRESS_CITY)) }}" required>
+                                <input type="hidden" id="delivery_street" name="street" value="{{ old(\App\Services\CartService::ADDRESS_STREET, $cartService->getProperty(\App\Services\CartService::ADDRESS_STREET)) }}" required>
+                                <input type="hidden" id="delivery_house" name="house" value="{{ old(\App\Services\CartService::ADDRESS_HOUSE, $cartService->getProperty(\App\Services\CartService::ADDRESS_HOUSE)) }}" required>
+                                <input type="hidden" id="delivery_building" name="building" value="{{ old(\App\Services\CartService::ADDRESS_BUILDING, $cartService->getProperty(\App\Services\CartService::ADDRESS_BUILDING)) }}">
+                                <input type="hidden" id="delivery_apartment" name="apartment" value="{{ old(\App\Services\CartService::ADDRESS_APARTMENT, $cartService->getProperty(\App\Services\CartService::ADDRESS_APARTMENT)) }}">
+                                <input type="hidden" id="delivery_intercom" name="intercom" value="{{ old(\App\Services\CartService::ADDRESS_INTERCOM, $cartService->getProperty(\App\Services\CartService::ADDRESS_INTERCOM)) }}">
+                                <input type="hidden" id="delivery_entrance" name="entrance" value="{{ old(\App\Services\CartService::ADDRESS_ENTRANCE, $cartService->getProperty(\App\Services\CartService::ADDRESS_ENTRANCE)) }}">
+                                <input type="hidden" id="delivery_over" name="over" value="{{ old(\App\Services\CartService::ADDRESS_OVER, $cartService->getProperty(\App\Services\CartService::ADDRESS_OVER)) }}">
+                                <input type="hidden" id="delivery_service" name="service" value="{{ old(\App\Services\CartService::ADDRESS_SERVICE, $cartService->getProperty(\App\Services\CartService::ADDRESS_SERVICE)) }}" required>
+                                <input type="hidden" id="delivery_zip" name="zip" value="{{ old(\App\Services\CartService::ADDRESS_ZIP, $cartService->getProperty(\App\Services\CartService::ADDRESS_ZIP)) }}" required>
+                                <input type="hidden" id="final_addr" name="address" value="{{ old(\App\Services\CartService::ADDRESS_KEY, $cartService->getProperty(\App\Services\CartService::ADDRESS_KEY)) }}" required>
+                                <input type="hidden" id="local_delivery_point_id" name="local_delivery_point_id" value="{{ old(\App\Services\CartService::DELIVERY_POINT_ID, $cartService->getProperty(\App\Services\CartService::DELIVERY_POINT_ID)) }}">
                                 <div class="cartstep__item">
                                     <div class="cartstep__title">Выберите способ доставки</div>
                                     <div class="cartstep__delivery">
                                         <a href="#addmodal" style="text-decoration: none" class="radio popup-with-form cartstep__link" data-tab="coruier_tab">
-                                            <input type="radio" name="delivery" value="{{ \App\Models\Order::DELIVERY_COURIER }}"/>
+                                            <input type="radio" name="delivery" value="{{ \App\Models\Order::DELIVERY_COURIER }}" @checked(old(\App\Services\CartService::DELIVERY_KEY, $cartService->getProperty(\App\Services\CartService::DELIVERY_KEY)) == \App\Models\Order::DELIVERY_COURIER)/>
                                             <div class="radio__text">Курьер <small>Курьерская доставка <span>Бесплатно</span></small></div>
                                         </a>
                                         <a href="#pick-up-point" id="show_map_link" style="text-decoration: none" class="radio popup-with-form cartstep__link" data-tab="pickup_delivery_tab">
-                                            <input type="radio" name="delivery" value="{{ \App\Models\Order::DELIVERY_SELF_PICKUP }}"/>
+                                            <input type="radio" name="delivery" value="{{ \App\Models\Order::DELIVERY_SELF_PICKUP }}" @checked(old(\App\Services\CartService::DELIVERY_KEY, $cartService->getProperty(\App\Services\CartService::DELIVERY_KEY)) == \App\Models\Order::DELIVERY_SELF_PICKUP)/>
                                             <div class="radio__text">Самовывоз <small>Самовывоз ПВЗ <span>Бесплатно</span></small></div>
                                         </a>
                                     </div>
