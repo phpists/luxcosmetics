@@ -368,6 +368,11 @@ class CartService
             return null;
 
         $user = Auth::user();
+        $user->update([
+            'name' => $this->getProperty(self::FIRST_NAME_KEY),
+            'surname' => $this->getProperty(self::LAST_NAME_KEY),
+            'phone' => $this->getProperty(self::PHONE_KEY),
+        ]);
 
         $order_data = Arr::mapWithKeys(self::ALL_KEYS, function ($title, $name) {
             return [$name => $this->getProperty($name)];
