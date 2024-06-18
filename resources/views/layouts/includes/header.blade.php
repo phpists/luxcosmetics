@@ -20,7 +20,9 @@
                         @endif
                         @endforeach
                     @foreach ($social as $item)
-                            <div class="header__phone"><a href="">{{ $item->phone ?? ''}}</a></div>
+                        @if($item->phone)
+                            <div class="header__phone"><a href="tel:{{ $item->phone }}">{{ $item->phone }}</a></div>
+                                @endif
                         @endforeach
                         <div class="header__links">
                             <button class="header__link header__link--search">

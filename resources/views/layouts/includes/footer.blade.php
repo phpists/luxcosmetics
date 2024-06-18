@@ -43,14 +43,16 @@
 
             <div class="col-lg-2 col-md-4 col-sm-4 col-6 colcontacts">
                 <div class="footer__contacts">
-                    @foreach ($social as $item)
-                        <div class="footer__phone">{{ $item->phone ?? ''}}</a></div>
+
+                    @foreach (\App\Models\SocialMedia::whereNotNull('phone')->get() as $item)
+                            <a href="tel:{{ $item->phone }}" class="footer__phone" style="color:inherit">{{ $item->phone }}</a></a>
                     @endforeach
-                    <a href="#callback" class="btn btn--accent popup-with-form">Заказать звонок
-                        <svg class="icon">
-                            <use xlink:href="{{asset('images/dist/sprite.svg#circle-arrow')}}"></use>
-                        </svg>
-                    </a>                </div>
+{{--                    <a href="#callback" class="btn btn--accent popup-with-form">Заказать звонок--}}
+{{--                        <svg class="icon">--}}
+{{--                            <use xlink:href="{{asset('images/dist/sprite.svg#circle-arrow')}}"></use>--}}
+{{--                        </svg>--}}
+{{--                    </a>--}}
+                </div>
             </div>
 
             <div class="col-lg-12 colcopyright">

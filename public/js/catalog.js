@@ -128,7 +128,6 @@ $(document).ready(function () {
         data = data.filter((el) => {
             if (el.name.includes('price')) {
                 if (el.name === 'price[from]') {
-                    console.log(el.value, $('#filterMinPrice').val())
                     return el.value != $('#filterMinPrice').val();
                 } else if (el.name === 'price[to]') {
                     return el.value != $('#filterMaxPrice').val();

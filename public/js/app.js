@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	$(function() {
 
-		
+
 
 
 		$("#menu").mmenu({
@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
 				title: "Каталог продукции"
 			}
 		});
-	
+
 
 
 
@@ -69,12 +69,12 @@ document.addEventListener('DOMContentLoaded', () => {
 				deltaFactor: 300    // кол-во пикселей на одну прокрутку колёсика мыши
 			}
 		});
-	
-		
-		
+
+
+
 
 		let tag = document.querySelectorAll('.seoblock__tag');
-		for (let i = 5; i < tag.length; i++) { 
+		for (let i = 5; i < tag.length; i++) {
 			tag[i].classList.add("is-hidden");
 		}
 
@@ -87,7 +87,7 @@ document.addEventListener('DOMContentLoaded', () => {
 			$(this).text(function(i, text){
 				return text === "Свернуть" ? "Развернуть" : "Свернуть";
 			 })
-			for (let i = 0; i < tagHidden.length; i++) { 
+			for (let i = 0; i < tagHidden.length; i++) {
 				tagHidden[i].classList.toggle("is-hidden");
 			}
 		});
@@ -98,10 +98,10 @@ document.addEventListener('DOMContentLoaded', () => {
 				return text === "Свернуть" ? "Развернуть" : "Свернуть";
 			 })
 			 $("#seohidden").toggleClass("is-hidden");
-			
+
 		});
 
-		
+
 
 
 
@@ -119,8 +119,8 @@ document.addEventListener('DOMContentLoaded', () => {
 		// $( "#amount" ).val( $( "#slider-range" ).slider( "values", 0 ) );
 		// $( "#amount2" ).val( $( "#slider-range" ).slider( "values", 1 ) );
 
-		
-		
+
+
 
 		$('.slider').slick({
 			dots: true,
@@ -228,7 +228,7 @@ document.addEventListener('DOMContentLoaded', () => {
 			arrows: false,
 			asNavFor: '.gallerythumb'
 		 });
-		
+
 		$('.gallerythumb').slick({
 			slidesToShow: 3,
 			slidesToScroll: 1,
@@ -286,7 +286,7 @@ document.addEventListener('DOMContentLoaded', () => {
 				mainClass: 'mfp-fade',
 				removalDelay: 160,
 				preloader: false,
-		
+
 				fixedContentPos: false
 			});
 		}
@@ -297,8 +297,8 @@ document.addEventListener('DOMContentLoaded', () => {
 			$('.cvv-mask').inputmask('999');
 			$('.date-mask').inputmask('99');
 
-			/*Аккордеон*/  
-			
+			/*Аккордеон*/
+
 			$(".accordeon dd").prev().click(function() {
 				$(this).parents(".accordeon").find("dd").not(this).slideUp().prev().removeClass("active");
 				$(this).next().not(":visible").slideDown().prev().addClass("active");
@@ -316,18 +316,18 @@ document.addEventListener('DOMContentLoaded', () => {
 			});
 
 
-			
 
-			
 
-			
+
+
+
 			$(".filter__all").click(function() {
 				$(this).text(function(i, text){
 					return text === "Свернуть" ? "Показать все" : "Свернуть";
 				})
 				$(this).parents(".filter").find(".filter__wrap").toggleClass("is-open");
 			});
-			
+
 
 			$(".filter__title").click(function() {
 				$(this).toggleClass("is-close");
@@ -361,12 +361,11 @@ document.addEventListener('DOMContentLoaded', () => {
 			  });
 
 
-			  $('.products-slider').on('setPosition', function () {	
-				console.log("ddd");
-				  $(this).find('.products-slider__item').height('auto');		      
-				  var slickTrack = $(this).find('.slick-track');		      
-				  var slickTrackHeight = $(slickTrack).height();		      
-				  $(this).find('.products-slider__item').css('height', slickTrackHeight + 'px');		      
+			  $('.products-slider').on('setPosition', function () {
+				  $(this).find('.products-slider__item').height('auto');
+				  var slickTrack = $(this).find('.slick-track');
+				  var slickTrackHeight = $(slickTrack).height();
+				  $(this).find('.products-slider__item').css('height', slickTrackHeight + 'px');
 			});
 
 
@@ -554,8 +553,8 @@ document.addEventListener('DOMContentLoaded', () => {
 			galleries.each(function() {
 				var gallery = $(this);
 				gallery.find(':not(.slick-cloned)').children('a').magnificPopup({
-					
-					gallery: { 
+					type: 'image',
+					gallery: {
 						enabled:true,
 						tLoading: 'Загрузка изображения #%curr%...',
 						mainClass: 'mfp-fade mfp-img-mobile',
@@ -591,7 +590,7 @@ document.addEventListener('DOMContentLoaded', () => {
 						}
 					});
 				});
-			
+
 
 			/*Magnific модальное окно */
 			if(document.querySelector(".popup-with-form")) {
@@ -641,9 +640,9 @@ document.addEventListener('DOMContentLoaded', () => {
 				return false;
 			});
 
-			
+
 			/*
-				
+
 
 
 				$(this).text(function(i, text){
@@ -657,7 +656,7 @@ document.addEventListener('DOMContentLoaded', () => {
 				});
 			*/
 
-			
+
 
 			$(".btnfilters").click(function() {
 				$("#filters").addClass("is-active");
@@ -685,7 +684,7 @@ document.addEventListener('DOMContentLoaded', () => {
 			});
 
 
-			
+
 
 			$("#new-review").click(function() {
 				$(this).addClass("active");
@@ -715,29 +714,29 @@ document.addEventListener('DOMContentLoaded', () => {
 			$(".scroll a, .reviews-link").on("click",this, function (event) {
 				// исключаем стандартную реакцию браузера
 				event.preventDefault();
-			    
+
 				// получем идентификатор блока из атрибута href
 				var id  = $(this).attr('href'),
-			    
+
 				// находим высоту, на которой расположен блок
 				    top = $(id).offset().top;
-			    
+
 				// анимируем переход к блоку, время: 800 мс
 				$('body,html').animate({scrollTop: top}, 800);
 			});
 
 
-			
 
-			
 
-			
+
+
+
 
 		});
 
 
 })
- 
+
 
 $(document).ready(function() {
 	$('.rulesmenu a[href^="#"]').on('click', function(e) {
