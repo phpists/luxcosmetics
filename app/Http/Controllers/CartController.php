@@ -95,7 +95,6 @@ class CartController extends Controller
 
         $as_delivery_address = $request->boolean('as_delivery_address');
         $this->cartService->setProperty(CartService::AS_DELIVERY_ADDRESS_KEY, $as_delivery_address);
-        $card_id = $request->post('card_id');
 
         $payment_type = $request->post('payment_type');
         $this->cartService->setProperty(CartService::PAYMENT_TYPE, $payment_type);
@@ -103,6 +102,7 @@ class CartController extends Controller
         $user = Auth::user();
         $email = $user->email;
 
+//        $card_id = $request->post('card_id');
 //        if (!$card_id) {
 //            $card_data = $request->post('card');
 //            $card_data['card_number'] = trim($card_data['card_number']);
