@@ -81,7 +81,13 @@
 						<img src="{{asset('images/dist/ico-mir.png')}}" alt="">
 						<img src="{{asset('images/dist/ico-youmoney.png')}}" alt="">
 					</div>
-					<h3>Нужна помощь? <a href="tel:+74951528544">+7 495 152 85 44</a></h3>
+					<h3>Нужна помощь?
+                        @foreach($social as $item)
+                        @if($item->phone)
+                            <a href="tel:{{ $item->phone }}">{{ $item->phone }}</a>
+                        @endif
+                        @endforeach
+                    </h3>
 					<p>Служба поддержки клиентов открыта: с 10:00 до 22:00 (с понедельника по пятницу)</p>
 				</div>
 			</div>
