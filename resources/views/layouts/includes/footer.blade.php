@@ -43,6 +43,7 @@
 
             <div class="col-lg-2 col-md-4 col-sm-4 col-6 colcontacts">
                 <div class="footer__contacts">
+
                     @foreach (\App\Models\SocialMedia::whereNotNull('phone')->get() as $item)
                         @if($item->phone)
                             <a href="tel:{{ $item->phone }}" class="footer__phone" style="color:inherit">{{ $item->phone }}</a></a>
