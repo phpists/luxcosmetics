@@ -21,7 +21,7 @@ class SocialMediaController extends Controller
         $messenger_next_pos = SocialMedia::messenger()->max('pos');
         $messenger_next_pos = $messenger_next_pos ? $messenger_next_pos + 1 : 1;
 
-        $phone = SocialMedia::all();
+        $phone = SocialMedia::phone()->get();
 
         return view('admin.settings.socials.index', compact('networks', 'network_next_pos',
             'messengers', 'messenger_next_pos', 'phone'));
@@ -38,9 +38,28 @@ class SocialMediaController extends Controller
         $social = SocialMedia::create($data);
 
         if ($social) {
-            return redirect()->back()->with('success', ($data['type_id'] == SocialMedia::TYPE_NETWORK ? 'Соц.мережу' : 'Месенджер') . ' успішно додано');
+            return redirect()->back()->with('success', 'Данные успешно сохранены');
         } else {
-            return redirect()->back()->with('error', 'Не вдалось додати ' .  ($data['type_id'] == SocialMedia::TYPE_NETWORK ? 'соц.мережу' : 'месенджер'));
+            return redirect()->back()->with('error', 'Не удалось сохранить данные');
+        }
+    }
+
+    public function storeMessenger(Request $request)
+    {
+        $data = $request->all();
+        $data['type_id'] = SocialMedia::TYPE_MESSENGER;
+        $data['pos'] = SocialMedia::network()->count() + 1;
+        $data['is_active_in_contacts'] = $request->boolean('is_active_in_contacts');
+        $data['is_active_in_footer'] = $request->boolean('is_active_in_footer');
+
+        $data['icon'] = FileService::saveFile('uploads', "social", $request->file('icon'));
+
+        $social = SocialMedia::create($data);
+
+        if ($social) {
+            return redirect()->back()->with('success', 'Данные успешно сохранены');
+        } else {
+            return redirect()->back()->with('error', 'Не удалось сохранить данные');
         }
     }
 
@@ -54,8 +73,6 @@ class SocialMediaController extends Controller
     public function update(Request $request)
     {
         $data = $request->all();
-        $data['is_active_in_contacts'] = $request->post('is_active_in_contacts') == 'on' ? 1 : 0;
-        $data['is_active_in_footer'] = $request->post('is_active_in_footer') == 'on' ? 1 : 0;
 
         $social = SocialMedia::findOrFail($data['id']);
 
@@ -66,21 +83,26 @@ class SocialMediaController extends Controller
 
         $social->update($data);
 
-        return redirect()->back()->with('success', ($social->type_id == SocialMedia::TYPE_NETWORK ? 'Соц.мережу' : 'Месенджер') . ' успішно відредаговано');
+        return redirect()->back()->with('success', 'Данные успешно сохранены');
     }
     public function updatePhone(Request $request)
     {
         $phone = $request->input('phone');
-        $social = SocialMedia::first();
+        $social = SocialMedia::phone()->limit(1)->get();
 
-    if ($social == null) {
-        $phone->save();
-    } else {
-        $social->phone = $phone;
-        $social->save();
-    }
+        if ($social->isEmpty()) {
+            SocialMedia::create([
+                'type_id' => SocialMedia::TYPE_NUMBER,
+                'phone' => $phone,
+            ]);
+        } else {
+            $social->first()->update([
+                'type_id' => SocialMedia::TYPE_NUMBER,
+                'phone' => $phone,
+            ]);
+        }
 
-    return redirect()->route('admin.settings.socials');
+        return redirect()->route('admin.settings.socials');
     }
 
     public function change_status(Request $request)
@@ -94,6 +116,8 @@ class SocialMediaController extends Controller
             $social->is_active_in_contacts = $status;
         } elseif ($type == 'footer') {
             $social->is_active_in_footer = $status;
+        } elseif ($type == 'header') {
+            $social->is_active_in_header = $status;
         }
 
         return $social->save();
@@ -117,6 +141,6 @@ class SocialMediaController extends Controller
         $social = SocialMedia::findOrFail($request->post('id'));
         $social->delete();
 
-        return redirect()->back()->with('success', 'Запис про соціальну медіа видалено');
+        return redirect()->back()->with('success', 'Данные успешно удалены');
     }
 }

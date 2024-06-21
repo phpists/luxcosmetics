@@ -67,7 +67,7 @@ class MenuController extends Controller
         }
         $menu = new Menu($data);
         if ($menu->save()) {
-            return redirect()->route('admin.menu', $data['type'])->with('success', 'Меню удачно создано');
+            return redirect()->route('admin.menu', $data['type'])->with('success', 'Меню успешно создано');
         }
         return redirect()->back('error', 'Не удалось сохранить запис');
     }
