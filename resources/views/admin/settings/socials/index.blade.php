@@ -54,8 +54,11 @@
                                         <th class="pr-0 text-center">
                                             Ссылка
                                         </th>
+{{--                                        <th class="pr-0 text-center">--}}
+{{--                                            Контакты--}}
+{{--                                        </th>--}}
                                         <th class="pr-0 text-center">
-                                            Контакты
+                                            Хедер
                                         </th>
                                         <th class="pr-0 text-center">
                                             Футер
@@ -77,11 +80,21 @@
                                                     <i class="ml-2 fas fa-external-link-alt"></i>
                                                 </a>
                                             </td>
+{{--                                            <td class="text-center">--}}
+{{--                                                <div class="d-flex justify-content-center">--}}
+{{--                                        <span class="switch">--}}
+{{--                                            <label>--}}
+{{--                                                <input class="active_switch" type="checkbox" @if($network->is_active_in_contacts) checked="checked" @endif data-id="{{ $network->id }}" data-type="contacts">--}}
+{{--                                                <span></span>--}}
+{{--                                            </label>--}}
+{{--                                        </span>--}}
+{{--                                                </div>--}}
+{{--                                            </td>--}}
                                             <td class="text-center">
                                                 <div class="d-flex justify-content-center">
                                         <span class="switch">
                                             <label>
-                                                <input class="active_switch" type="checkbox" @if($network->is_active_in_contacts) checked="checked" @endif data-id="{{ $network->id }}" data-type="contacts">
+                                                <input class="active_switch" type="checkbox" @if($network->is_active_in_header) checked="checked" @endif data-id="{{ $network->id }}" data-type="header">
                                                 <span></span>
                                             </label>
                                         </span>
@@ -137,7 +150,7 @@
                                 </h3>
                             </div>
                             <div class="card-toolbar">
-                                <button data-toggle="modal" data-target="#createModal" data-type="{{ \App\Models\SocialMedia::TYPE_MESSENGER }}" data-pos="{{ $messenger_next_pos }}" class="btn btn-primary font-weight-bold createBtn">
+                                <button data-toggle="modal" data-target="#createMessengerModal" data-type="{{ \App\Models\SocialMedia::TYPE_MESSENGER }}" data-pos="{{ $messenger_next_pos }}" class="btn btn-primary font-weight-bold createBtn">
                                     <i class="fas fa-plus mr-2"></i>Добавить
                                 </button>
                             </div>
@@ -159,9 +172,9 @@
                                         <th class="pr-0 text-center">
                                             Ссылка
                                         </th>
-                                        <th class="pr-0 text-center">
-                                            Контакты
-                                        </th>
+{{--                                        <th class="pr-0 text-center">--}}
+{{--                                            Контакты--}}
+{{--                                        </th>--}}
                                         <th class="pr-0 text-center">
                                             Футер
                                         </th>
@@ -187,16 +200,16 @@
                                                     <i class="ml-2 fas fa-external-link-alt"></i>
                                                 </a>
                                             </td>
-                                            <td class="text-center">
-                                                <div class="d-flex justify-content-center">
-                                        <span class="switch">
-                                            <label>
-                                                <input class="active_switch" type="checkbox" @if($messenger->is_active_in_contacts) checked="checked" @endif data-id="{{ $messenger->id }}" data-type="contacts">
-                                                <span></span>
-                                            </label>
-                                        </span>
-                                                </div>
-                                            </td>
+{{--                                            <td class="text-center">--}}
+{{--                                                <div class="d-flex justify-content-center">--}}
+{{--                                        <span class="switch">--}}
+{{--                                            <label>--}}
+{{--                                                <input class="active_switch" type="checkbox" @if($messenger->is_active_in_contacts) checked="checked" @endif data-id="{{ $messenger->id }}" data-type="contacts">--}}
+{{--                                                <span></span>--}}
+{{--                                            </label>--}}
+{{--                                        </span>--}}
+{{--                                                </div>--}}
+{{--                                            </td>--}}
                                             <td class="text-center">
                                                 <div class="d-flex justify-content-center">
                                         <span class="switch">
@@ -270,6 +283,7 @@
     <!--end::Entry-->
 
 @include('admin.settings.socials.modals.create')
+@include('admin.settings.socials.modals.create_messenger')
 @include('admin.settings.socials.modals.update')
 @include('admin.settings.socials.modals.phone')
 @endsection
@@ -338,6 +352,8 @@
 
         var createImagePlugin = new KTImageInput('createImagePlugin');
         var updateImagePlugin = new KTImageInput('updateImagePlugin');
+        var createMessengerImagePlugin = new KTImageInput('createMessengerImagePlugin');
+        var updateMessengerImagePlugin = new KTImageInput('updateMessengerImagePlugin');
 
         $(document).on('click', '.createBtn', function (e) {
             let type_id = $(this).data('type'),

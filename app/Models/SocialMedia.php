@@ -20,17 +20,29 @@ class SocialMedia extends Model
     const ALL_TYPES = [
         self::TYPE_NETWORK => 'Соціальна мережа',
         self::TYPE_MESSENGER => 'Месенджер',
-        self::TYPE_MESSENGER => 'Мобільний'
+        self::TYPE_NUMBER => 'Мобільний'
     ];
 
 
-    protected $fillable = ['id', 'phone', 'type_id', 'pos', 'icon', 'link', 'is_active_in_contacts', 'is_active_in_footer'];
+    protected $fillable = ['id', 'phone', 'type_id', 'pos', 'icon', 'link', 'is_active_in_contacts', 'is_active_in_footer', 'is_active_in_header'];
 
     public static function boot() {
         parent::boot();
 
         self::deleting(function($model) {
             $model->dropIcon();
+        });
+    }
+
+    /**
+     * The "booted" method of the model.
+     *
+     * @return void
+     */
+    protected static function booted()
+    {
+        static::addGlobalScope('positionSorted', function (Builder $builder) {
+            $builder->orderBy('pos');
         });
     }
 
@@ -50,6 +62,11 @@ class SocialMedia extends Model
         $query->where('type_id', self::TYPE_MESSENGER);
     }
 
+    public function scopePhone(Builder $query): void
+    {
+        $query->where('type_id', self::TYPE_NUMBER);
+    }
+
     public function scopeActiveInContacts(Builder $query): void
     {
         $query->where('is_active_in_contacts', true);
@@ -58,6 +75,11 @@ class SocialMedia extends Model
     public function scopeActiveInFooter(Builder $query): void
     {
         $query->where('is_active_in_footer', true);
+    }
+
+    public function scopeActiveInHeader(Builder $query): void
+    {
+        $query->where('is_active_in_header', true);
     }
 
     public function getIconSrcAttribute()
