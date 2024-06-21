@@ -75,7 +75,7 @@ class FaqGroupController extends Controller
 
         $faq->save();
 
-        return redirect()->route('admin.faq-groups')->with('success', 'Дані збережено');
+        return redirect()->route('admin.faq-groups')->with('success', 'Данные успешно сохранены');
     }
 
     public function update(Request $request)
@@ -96,9 +96,9 @@ class FaqGroupController extends Controller
         $faq = FaqGroup::findOrFail($id);
 
         if ($faq->delete()) {
-            return redirect()->route('admin.faqs')->with('success', 'Питання видалено');
+            return redirect()->route('admin.faqs')->with('success', 'Вопрос удален');
         } else {
-            return redirect()->route('admin.faqs')->with('warning', 'Не вдалось видалити питання');
+            return redirect()->route('admin.faqs')->with('warning', 'Не удалось удалить вопрос');
         }
     }
 }

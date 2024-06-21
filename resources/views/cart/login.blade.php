@@ -86,7 +86,7 @@
                             <a href="tel:{{ $item->phone }}">{{ $item->phone }}</a>
                         @endforeach
                     </h3>
-					<p>Служба поддержки клиентов открыта: с 10:00 до 22:00 (с понедельника по пятницу)</p>
+					{!! \App\Services\SiteConfigService::getParamValue('cart_login_support_text') !!}
 				</div>
 			</div>
 		</div>

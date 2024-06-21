@@ -116,7 +116,7 @@ class UserController extends Controller
             $user->update();
         }
 
-        return redirect()->route('admin.user.show', ['id' => $request->id])->with('success', 'Дані успішно оновлені');
+        return redirect()->route('admin.user.show', ['id' => $request->id])->with('success', 'Данные успешно обновлены');
     }
 
     public function delete(Request $request)

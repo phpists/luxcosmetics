@@ -62,3 +62,10 @@ button.product_favourite.active svg.active-icon {
 button.product_favourite.active svg.inactive-icon {
     display: none;
 }
+
+a.social__item img {
+    transition: all .3s;
+}
+a.social__item:hover img {
+    opacity: .7;
+}
