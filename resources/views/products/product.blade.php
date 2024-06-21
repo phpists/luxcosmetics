@@ -42,16 +42,10 @@
                         <div class="product-page__reviewsblock">
                             <div class="product-page__reviews">
                                 <div class="stars">
-                                    <span class="stars__item is-active"><svg class="icon"><use
-                                                xlink:href="{{asset('/images/dist/sprite.svg#star')}}"></use></svg></span>
-                                    <span class="stars__item is-active"><svg class="icon"><use
-                                                xlink:href="{{asset('/images/dist/sprite.svg#star')}}"></use></svg></span>
-                                    <span class="stars__item is-active"><svg class="icon"><use
-                                                xlink:href="{{asset('/images/dist/sprite.svg#star')}}"></use></svg></span>
-                                    <span class="stars__item"><svg class="icon"><use
-                                                xlink:href="{{asset('/images/dist/sprite.svg#star')}}"></use></svg></span>
-                                    <span class="stars__item"><svg class="icon"><use
-                                                xlink:href="{{asset('/images/dist/sprite.svg#star')}}"></use></svg></span>
+                                    @foreach([1, 2, 3, 4, 5] as $star)
+                                        <span class="stars__item {{ $averageRating >= $star ? 'is-active' : '' }}"><svg class="icon"><use
+                                                    xlink:href="{{asset('/images/dist/sprite.svg#star')}}"></use></svg></span>
+                                    @endforeach
                                 </div>
                                 <a href="#reviews" class="reviews-link">отзывы ({{$countComments}})</a>
                             </div>
