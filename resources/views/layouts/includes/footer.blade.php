@@ -56,7 +56,7 @@
                         <svg class="icon">
                             <use xlink:href="images/dist/sprite.svg#pin"></use>
                         </svg>
-                        г.Москва, ул. Название улицы, дом 5
+                        {{ \App\Services\SiteConfigService::getParamValue('footer_address') }}
                     </div>
 
                     @php($socialNetworks = \App\Models\SocialMedia::messenger()->activeInFooter()->get())
