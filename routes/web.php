@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
 use App\Http\Controllers\Admin\MenuController;
+use App\Http\Controllers\Admin\ProductPriceController;
 use App\Http\Controllers\Admin\Settings\SettingController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\CategoryController;
@@ -303,6 +304,10 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function 
         Route::resource('order_statuses', \App\Http\Controllers\Admin\OrderStatusController::class);
 
         Route::resource('seo-templates', \App\Http\Controllers\Admin\SeoTemplateController::class);
+
+        Route::post('product-prices/update-status', [ProductPriceController::class, 'updateStatus'])
+            ->name('product-prices.update-status');
+        Route::resource('product-prices', \App\Http\Controllers\Admin\ProductPriceController::class);
 
     });
 

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Enums\AvailableOptions;
+use App\Enums\ProductPriceTypeEnum;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
@@ -251,6 +252,87 @@ class Product extends Model
         $variants = \App\Services\CatalogService::getProductVariations($this->id, $this->base_property_id);
         $count = $variants->count();
         return trans_choice('plurals.variants_left', $count);
+    }
+
+    public function getAllCategoriesArray(): array
+    {
+        return array_merge($this->productCategories()->select('category_id')->pluck('category_id')->toArray(), [$this->category_id]);
+    }
+
+
+    private function getActualPrice($price)
+    {
+        try {
+            $allCategories = $this->getAllCategoriesArray();
+            $productPrice = ProductPrice::findCondition(ProductPriceTypeEnum::DISCOUNT, $this->brand_id, $allCategories, $this->id);
+
+            if ($productPrice)
+                return $productPrice->getPrice($price);
+        } catch (\Throwable $e) {
+            \Log::error($e->getMessage());
+        }
+
+        return $price;
+    }
+
+    private function getActualBonuses($bonuses)
+    {
+        try {
+            $allCategories = $this->getAllCategoriesArray();
+            $productPrice = ProductPrice::findCondition(ProductPriceTypeEnum::BONUSES, $this->brand_id, $allCategories, $this->id);
+
+            if ($productPrice)
+                return $productPrice->getBonuses($bonuses);
+        } catch (\Throwable $e) {
+            \Log::error($e->getMessage());
+        }
+
+        return $bonuses;
+    }
+
+    private function getActualOldPrice()
+    {
+        if ($this->raw_price != $this->price) {
+            return $this->raw_price;
+        }
+
+        return $this->old_price;
+    }
+
+    public function getPriceAttribute($value)
+    {
+        return $this->getActualPrice($value);
+    }
+
+    public function getOldPriceAttribute($value)
+    {
+        if ($value || ($this->price != $this->raw_price))
+            return $this->getActualOldPrice();
+
+        return null;
+    }
+
+    public function getPointsAttribute($value)
+    {
+        if ($value || ($this->price != $this->raw_price))
+            return $this->getActualBonuses($value);
+
+        return null;
+    }
+
+    public function getRawPriceAttribute($value)
+    {
+        return $this->attributes['price'];
+    }
+
+    public function getRawOldPriceAttribute($value)
+    {
+        return $this->attributes['old_price'];
+    }
+
+    public function getRawPointsAttribute($value)
+    {
+        return $this->attributes['points'];
     }
 
 }
