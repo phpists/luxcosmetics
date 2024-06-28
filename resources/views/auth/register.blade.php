@@ -1,5 +1,8 @@
 @extends('layouts.app')
 
+@section('title', getSeoTemplateTitle(\App\Enums\SeoTemplateEnum::REGISTER))
+@section('description', getSeoTemplateDescription(\App\Enums\SeoTemplateEnum::REGISTER))
+
 @section('content')
     <style>
     </style>
@@ -90,15 +93,15 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="form__fieldset">
-                            <legend class="form__label">Выберите предпочтительный способ связи
-                            </legend>
-                            @foreach(\App\Models\User::getConnectionOptions() as $option)
-                                <label class="checkbox">
-                                    <input type="radio" value="{{$option}}" name="connection_type" />
-                                    <div class="checkbox__text">{{\App\Services\SiteService::getConnectionOption($option)}}</div>
-                                </label>
-                            @endforeach
+{{--                        <div class="form__fieldset">--}}
+{{--                            <legend class="form__label">Выберите предпочтительный способ связи--}}
+{{--                            </legend>--}}
+{{--                            @foreach(\App\Models\User::getConnectionOptions() as $option)--}}
+{{--                                <label class="checkbox">--}}
+{{--                                    <input type="radio" value="{{$option}}" name="connection_type" />--}}
+{{--                                    <div class="checkbox__text">{{\App\Services\SiteService::getConnectionOption($option)}}</div>--}}
+{{--                                </label>--}}
+{{--                            @endforeach--}}
 
 {{--                            <label class="checkbox">--}}
 {{--                                <input type="checkbox" name="communications[]" />--}}
@@ -116,7 +119,7 @@
 {{--                                <input type="checkbox" name="communications[]" />--}}
 {{--                                <div class="checkbox__text">WhatsApp</div>--}}
 {{--                            </label>--}}
-                        </div>
+{{--                        </div>--}}
                         <div class="form__fieldset">
                             <label class="checkbox">
                                 <input type="checkbox" name="newsletter" />

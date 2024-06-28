@@ -40,11 +40,15 @@ class SiteConfigService
     }
 
     static public function getParam($name) {
-        return self::read_config() !== null? self::read_config()[$name]: null;
+        return self::read_config() !== null
+            ? (self::read_config()[$name] ?? null)
+            : null;
     }
 
     static public function getParamValue($name) {
-        return self::read_config() !== null? self::read_config()[$name]['value']: null;
+        return self::read_config() !== null
+            ? (self::read_config()[$name]['value'] ?? null)
+            : null;
     }
 
     static public function getParams(): array

@@ -1,5 +1,8 @@
 @extends('layouts.app')
 
+@section('title', getSeoTemplateTitle(\App\Enums\SeoTemplateEnum::CART))
+@section('description', getSeoTemplateDescription(\App\Enums\SeoTemplateEnum::CART))
+
 @section('styles')
     <link rel="stylesheet" href="{{asset('css/maps.css')}}">
     <script src="https://api-maps.yandex.ru/2.1/?apikey=e2bf7398-9509-44ac-8c19-e3f3fc7832aa&lang=en_US" type="text/javascript"></script>

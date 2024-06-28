@@ -219,7 +219,7 @@
                                         <div class="form-group">
                                             <label>Meta title</label>
                                             <input type="text" name="meta_title" class="form-control"
-                                                   value="{{ $seo->title ?? '' }}"/>
+                                                   value="{{ $seo->meta_title ?? '' }}"/>
                                         </div>
                                     </div>
                                 </div>

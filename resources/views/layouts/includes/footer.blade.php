@@ -54,7 +54,7 @@
 
                     <div class="footer__add">
                         <svg class="icon">
-                            <use xlink:href="images/dist/sprite.svg#pin"></use>
+                            <use xlink:href="{{ asset('images/dist/sprite.svg#pin') }}"></use>
                         </svg>
                         {{ \App\Services\SiteConfigService::getParamValue('footer_address') }}
                     </div>

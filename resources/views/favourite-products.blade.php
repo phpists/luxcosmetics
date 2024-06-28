@@ -1,4 +1,8 @@
 @extends('layouts.app')
+
+@section('title', getSeoTemplateTitle(\App\Enums\SeoTemplateEnum::BOOKMARK))
+@section('description', getSeoTemplateDescription(\App\Enums\SeoTemplateEnum::BOOKMARK))
+
 @section('content')
     <section class="crumbs">
         <div class="container">
@@ -21,6 +25,7 @@
 
                         <main class="category-page__main">
 
+                            @if($products)
                             <div class="category-page__sortblock sortblock">
                                 <div class="sortblock__sort sort">
                                     <span class="sort__title">Выберите категорию </span>
@@ -46,40 +51,11 @@
                             <div id="paginate">
                                 @include('categories.parts.pagination')
                             </div>
-{{--                            <div class="category-page__pagination pagination">--}}
-{{--                                <button class="pagination__more">Показать еще <span>12 товаров</span>--}}
-{{--                                    <svg class="icon">--}}
-{{--                                        <use xlink:href="{{asset('images/dist/sprite.svg#refresh')}}"></use>--}}
-{{--                                    </svg>--}}
-{{--                                </button>--}}
-{{--                                <ul class="pagination__list">--}}
-{{--                                    <li class="pagination__item pagination__item--first"><a href="">--}}
-{{--                                            <svg class="icon">--}}
-{{--                                                <use xlink:href="{{asset('images/dist/sprite.svg#first')}}"></use>--}}
-{{--                                            </svg>--}}
-{{--                                        </a></li>--}}
-{{--                                    <li class="pagination__item pagination__item--prev"><a href="">--}}
-{{--                                            <svg class="icon">--}}
-{{--                                                <use xlink:href="{{asset('images/dist/sprite.svg#prev1')}}"></use>--}}
-{{--                                            </svg>--}}
-{{--                                        </a></li>--}}
-{{--                                    <li class="pagination__item pagination__item--active"><span>1</span></li>--}}
-{{--                                    <li class="pagination__item"><a href="">2</a></li>--}}
-{{--                                    <li class="pagination__item"><a href="">3</a></li>--}}
-{{--                                    <li class="pagination__item pagination__item--dots">...</li>--}}
-{{--                                    <li class="pagination__item"><a href="">36</a></li>--}}
-{{--                                    <li class="pagination__item pagination__item--next"><a href="">--}}
-{{--                                            <svg class="icon">--}}
-{{--                                                <use xlink:href="{{asset('images/dist/sprite.svg#next1')}}"></use>--}}
-{{--                                            </svg>--}}
-{{--                                        </a></li>--}}
-{{--                                    <li class="pagination__item pagination__item--last"><a href="">--}}
-{{--                                            <svg class="icon">--}}
-{{--                                                <use xlink:href="{{asset('images/dist/sprite.svg#last')}}"></use>--}}
-{{--                                            </svg>--}}
-{{--                                        </a></li>--}}
-{{--                                </ul>--}}
-{{--                            </div>--}}
+                            @else
+                                <p>Список избранного пуст, перейдите в каталог, чтоб добавить товары</p>
+                                <a href="{{ route('categories') }}" class="btn btn--accent">Каталог</a>
+                            @endif
+
                         </main>
                     </div>
                 </div>

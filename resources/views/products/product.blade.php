@@ -1,6 +1,6 @@
 @extends('layouts.app')
-@section('title', $product->title)
-@section('description', $product->description_meta ?? '')
+@section('title', $product->meta_title ?? getSeoTemplateTitle(\App\Enums\SeoTemplateEnum::PRODUCT, $product))
+@section('description', $product->description_meta ?? getSeoTemplateDescription(\App\Enums\SeoTemplateEnum::PRODUCT, $product))
 @section('keywords', $product->keywords_meta ?? '')
 @section('og:title', $product->og_title_meta ?? '')
 @section('og:description', $product->og_description_meta ?? '')
