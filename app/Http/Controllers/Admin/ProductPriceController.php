@@ -28,9 +28,14 @@ class ProductPriceController extends Controller
     public function store(Request $request)
     {
         try {
+            $start_date = $request->get('start_date');
+            $end_date = $request->get('end_date');
+
             $productPrice = ProductPrice::create([
-                ...$request->only('title', 'type', 'amount', 'rounding', 'start_date', 'end_date'),
+                ...$request->only('title', 'type', 'amount', 'rounding'),
                 'is_active' => $request->boolean('is_active'),
+                'start_date' => $start_date ? Carbon::parse($start_date)->format('Y-m-d') : null,
+                'end_date' => $end_date ? Carbon::parse($end_date)->format('Y-m-d') : null,
             ]);
 
             foreach ($request->get('cases') as $modelType => $modelIds) {
