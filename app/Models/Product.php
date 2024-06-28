@@ -290,13 +290,13 @@ class Product extends Model
         return $bonuses;
     }
 
-    private function getActualOldPrice()
+    private function getActualOldPrice($value)
     {
         if ($this->raw_price != $this->price) {
             return $this->raw_price;
         }
 
-        return $this->old_price;
+        return $value;
     }
 
     public function getPriceAttribute($value)
@@ -307,7 +307,7 @@ class Product extends Model
     public function getOldPriceAttribute($value)
     {
         if ($value || ($this->price != $this->raw_price))
-            return $this->getActualOldPrice();
+            return $this->getActualOldPrice($value);
 
         return null;
     }
