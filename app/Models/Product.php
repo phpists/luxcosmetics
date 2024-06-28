@@ -49,6 +49,7 @@ class Product extends Model
         'size',
         'points',
 
+        'meta_title',
         'description_meta',
         'keywords_meta',
         'og_title_meta',

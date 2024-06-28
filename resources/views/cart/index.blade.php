@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
-@section('title', 'Корзина')
+@section('title', getSeoTemplateTitle(\App\Enums\SeoTemplateEnum::CART))
+@section('description', getSeoTemplateDescription(\App\Enums\SeoTemplateEnum::CART))
 
 @php($cartService->getGiftProducts())
 

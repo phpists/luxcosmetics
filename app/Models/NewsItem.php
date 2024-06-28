@@ -20,7 +20,8 @@ class NewsItem extends Model
         'image',
         'published_at',
         'slider_type',
-        'thumbnail'
+        'thumbnail',
+        'meta_title'
     ];
 
     const HORIZONTAL_SLIDER = 1;

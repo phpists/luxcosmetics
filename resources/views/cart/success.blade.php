@@ -1,5 +1,8 @@
 @extends('layouts.app')
 
+@section('title', getSeoTemplateTitle(\App\Enums\SeoTemplateEnum::CART))
+@section('description', getSeoTemplateDescription(\App\Enums\SeoTemplateEnum::CART))
+
 @section('content')
 
 <section class="cart-page" style="margin-top: 40px">

@@ -22,3 +22,4 @@ yarn-error.log
 public/.DS_Store
 public/css/.DS_Store
 qodana.yaml
+public/robots.txt

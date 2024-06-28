@@ -1,6 +1,6 @@
 @extends('layouts.app')
-@section('title', $item->title)
-@section('description', $item->description_meta ?? '')
+@section('title', $item->meta_title ?? getSeoTemplateTitle(\App\Enums\SeoTemplateEnum::NEWS, $item))
+@section('description', $item->description_meta ?? getSeoTemplateDescription(\App\Enums\SeoTemplateEnum::NEWS, $item))
 @section('keywords', $item->keywords_meta ?? '')
 @section('og:title', $item->og_title_meta ?? '')
 @section('og:description', $item->og_description_meta ?? '')
@@ -42,7 +42,7 @@
             <div class="row">
                 <div class="col-lg-12">
                     <ol class="crumbs__list">
-                        <li class="crumbs__item"><a href="">Главная</a></li>
+                        <li class="crumbs__item"><a href="/">Главная</a></li>
                         <li class="crumbs__item"><a href="/news">Новости</a></li>
                         <li class="crumbs__item"><a href="{{route('news.post', $item->link)}}">{{$item->title}}</a></li>
                     </ol>

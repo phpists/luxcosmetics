@@ -46,7 +46,11 @@ class FavoriteProductController extends Controller
         $products = $data['products'];
         $variations = $data['variations'];
 
-        $categories = Category::whereIn('id', $this->getProducts()['products']->pluck('category_id'))->get();
+        $ids = is_array($products) ? null : $products->pluck('category_id');
+        if ($ids)
+            $categories = Category::whereIn('id', $ids)->get();
+        else
+            $categories = [];
 
         return view('favourite-products', compact('products', 'variations', 'categories', 'categoryId'));
     }

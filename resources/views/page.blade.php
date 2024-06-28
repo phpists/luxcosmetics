@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
-@section('title', $page->title)
+@section('title', $page->title ?? getSeoTemplateTitle(\App\Enums\SeoTemplateEnum::STATIC, $page))
+@section('description', $item->description_meta ?? getSeoTemplateDescription(\App\Enums\SeoTemplateEnum::STATIC, $page))
 
 @section('content')
     <section class="crumbs">

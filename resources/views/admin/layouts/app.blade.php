@@ -777,6 +777,16 @@ request()->routeIs('admin.menu.edit', \App\Models\Menu::TOP_MENU) ? 'menu-item-o
                                 </li>
                                 @endif
                         @endif
+
+                        @if(auth()->user()->isSuperAdmin())
+                            <li class="menu-item {{ Str::is('admin.seo-templates.*', request()->route()->getName()) ? 'menu-item-active' : '' }}"
+                                aria-haspopup="true">
+                                <a href="{{ route('admin.seo-templates.index') }}" class="menu-link">
+                                    <i class="far fa-star menu-icon"></i>
+                                    <span class="menu-text">SEO шаблоны</span>
+                                </a>
+                            </li>
+                        @endif
                     </ul>
                     <!--end::Menu Nav-->
                 </div>

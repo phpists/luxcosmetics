@@ -121,6 +121,7 @@ class NewsController extends Controller
             return redirect()->back()->with('error', 'Продукт не найден.');
         }
 
+        $seo->meta_title = $request->meta_title;
         $seo->description_meta = $request->description_meta;
         $seo->keywords_meta = $request->keywords_meta;
         $seo->save();

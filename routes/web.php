@@ -302,6 +302,8 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function 
         // Order Statuses
         Route::resource('order_statuses', \App\Http\Controllers\Admin\OrderStatusController::class);
 
+        Route::resource('seo-templates', \App\Http\Controllers\Admin\SeoTemplateController::class);
+
     });
 
     // Tags
