@@ -66,16 +66,17 @@ class CatalogService
 
     public function getProductsQuery(): \Illuminate\Database\Eloquent\Builder
     {
-        $all_category_ids = $this->all_category_ids;
         $query = $this->products_query = Product::query()
             ->select(['products.*', 'product_images.path as main_image'])
             ->leftJoin('product_images', 'products.image_print_id', 'product_images.id')
-            ->with(['values', 'baseProperty', 'basePropertyValue'])
+            ->with(['publishedComments', 'brand', 'values', 'baseProperty', 'basePropertyValue', 'product_variations', 'images'])
             ->distinct(['products.id'])
             ->orderBy('availability')
             ->whereNot('availability', AvailableOptions::DISCONTINUED->value);
 
         if ($this->modelName == Category::class) {
+            $all_category_ids = $this->all_category_ids;
+
             $query->where(function ($q) use ($all_category_ids) {
                 $q->whereIn('products.id', function ($query) use ($all_category_ids) {
                     $query->select('product_id')
@@ -132,11 +133,12 @@ class CatalogService
                 });
             })
             ->when($properties = $this->getProperties(), function ($q) use ($properties) {
-                foreach ($properties as $property_id => $property_value_id) {
-                    $q->whereHas('values', function ($q) use($property_value_id)  {
-                        return $q->whereIn('property_value_id', $property_value_id);
-                    });
-                }
+                $q->whereHas('values', function ($q) use($properties)  {
+                    foreach ($properties as $property_id => $property_value_id)
+                        $q->whereIn('property_value_id', $property_value_id);
+
+                    return $q;
+                });
             })
             ->when($brands = $this->request->get('brands'), function ($q) use ($brands) {
                 $q->whereIn('brand_id', $brands);
@@ -274,22 +276,6 @@ class CatalogService
             ->with('values')
             ->orderBy('name')
             ->get();
-
-        $products = $this->products;
-
-        return $filters->filter(function ($property) use ($products) {
-            $include = false;
-            $products->map(function ($product) use ($property, $include) {
-                $products_with_property = $product->values->filter(function ($product_value) use ($property, $include) {
-                    Arr::has($property->values->pluck('id')->toArray(), $product_value->id);
-                });
-                if ($products_with_property->isNotEmpty()) {
-                    $include = true;
-                }
-            });
-
-            return $include;
-        });
     }
 
     public function getFiltersWeight($properties, $products = null): array
@@ -355,7 +341,7 @@ class CatalogService
     public function getBrands()
     {
         return \App\Models\Brand::select(['id', 'name'])
-            ->whereIn('id', $this->products->pluck('brand_id')->toArray())
+            ->whereIn('id', array_unique($this->products->pluck('brand_id')->toArray()))
             ->orderBy('name')
             ->get();
     }

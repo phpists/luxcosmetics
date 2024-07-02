@@ -98,7 +98,7 @@ class Product extends Model
 
     public function getMainImageAttribute()
     {
-        $image = ProductImage::query()->where('id', $this->image_print_id)->first();
+        $image = $this->images->where('id', $this->image_print_id)->first();
         if ($image) {
             return $image->path;
         }
@@ -208,6 +208,11 @@ class Product extends Model
         return $this->hasMany(Comments::class);
     }
 
+    public function publishedComments()
+    {
+        return $this->comments()->published();
+    }
+
     public function hasBonuses()
     {
         return $this->points > 0;
@@ -263,11 +268,15 @@ class Product extends Model
     private function getActualPrice($price)
     {
         try {
-            $allCategories = $this->getAllCategoriesArray();
-            $productPrice = ProductPrice::findCondition(ProductPriceTypeEnum::DISCOUNT, $this->brand_id, $allCategories, $this->id);
+            return \Cache::remember('product_price_'. $this->id, now()->addHour(), function () use ($price) {
+                $allCategories = $this->getAllCategoriesArray();
+                $productPrice = ProductPrice::findCondition(ProductPriceTypeEnum::DISCOUNT, $this->brand_id, $allCategories, $this->id);
 
-            if ($productPrice)
-                return $productPrice->getPrice($price);
+                if ($productPrice)
+                    return $productPrice->getPrice($price);
+
+                return $price;
+            });
         } catch (\Throwable $e) {
             \Log::error($e->getMessage());
         }
