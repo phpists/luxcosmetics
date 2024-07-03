@@ -47,13 +47,13 @@ class CatalogService
         if ($modelName == Category::class) {
             $alias = $custom_alias ?: $request->alias;
             $category = Category::where('alias', $alias)
-                ->with(['subcategories', 'tags', 'posts'])
+                ->with(['tags', 'posts'])
                 ->firstOrFail();
 
             $this->category = $category;
             $this->all_category_ids = Category::getChildIds($category->id);
         } elseif ($modelName == Brand::class) {
-            $category = Category::with(['subcategories', 'tags', 'posts'])
+            $category = Category::with(['tags', 'posts'])
                 ->firstOrFail();
 
             $this->category = $category;
@@ -154,9 +154,12 @@ class CatalogService
                 });
             });
 
-        $filteredProducts = $products->get();
-        $this->min_filtered_price = $filteredProducts->min('price');
-        $this->max_filtered_price = $filteredProducts->max('price');
+
+        $sql = $products->toSql();
+        $bindings = $products->getBindings();
+        $result = DB::select("SELECT MIN(price) as min_price, MAX(price) as max_price FROM ({$sql}) as subquery", $bindings);
+        $this->min_filtered_price = $result[0]->min_price;
+        $this->max_filtered_price = $result[0]->max_price;
 
         return $products
             ->where(function ($q) use ($price_from, $price_to) {
@@ -186,12 +189,12 @@ class CatalogService
 
     public function getPriceFrom()
     {
-        return $this->request->get('price')['from'] ?? $this->products->min('price');
+        return $this->request->get('price')['from'] ?? $this->min_price;
     }
 
     public function getPriceTo()
     {
-        return $this->request->get('price')['to'] ?? $this->products->max('price');
+        return $this->request->get('price')['to'] ?? $this->max_price;
     }
 
     private function getSortColumn()
@@ -281,7 +284,7 @@ class CatalogService
     public function getFiltersWeight($properties, $products = null): array
     {
         if (!$products) {
-            $products = $this->getFilteredProductsQuery()->get();
+            $products = $this->products;
         }
         $productsArray = $products->pluck('values', 'id')->toArray();
         $result = [];
