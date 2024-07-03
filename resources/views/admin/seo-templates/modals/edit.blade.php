@@ -20,7 +20,7 @@
                         <div class="col-12">
                             <div class="form-group w-100">
                                 <label for="editSeoTemplateTitle" class="font-weight-bold">Title</label>
-                                <input id="editSeoTemplateTitle" type="text" name="title" class="form-control" required>
+                                <input id="editSeoTemplateTitle" type="text" name="title" class="form-control">
                             </div>
                         </div>
                     </div>

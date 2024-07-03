@@ -61,15 +61,17 @@ class CatalogService
         }
 
 
-        $this->products = $this->getProductsQuery()->get();
+        $this->products = $this->getProductsQuery(['values'])->get();
     }
 
-    public function getProductsQuery(): \Illuminate\Database\Eloquent\Builder
+    public function getProductsQuery(?array $with = null): \Illuminate\Database\Eloquent\Builder
     {
         $query = $this->products_query = Product::query()
             ->select(['products.*', 'product_images.path as main_image'])
             ->leftJoin('product_images', 'products.image_print_id', 'product_images.id')
-            ->with(['publishedComments', 'brand', 'values', 'baseProperty', 'basePropertyValue', 'product_variations', 'images'])
+            ->when($with, function ($query) use ($with) {
+                $query->with($with);
+            })
             ->distinct(['products.id'])
             ->orderBy('availability')
             ->whereNot('availability', AvailableOptions::DISCONTINUED->value);
@@ -122,7 +124,7 @@ class CatalogService
         $price_from = $this->getPriceFrom();
         $price_to = $this->getPriceTo();
 
-        $products = $this->getProductsQuery()
+        $products = $this->getProductsQuery(['publishedComments', 'brand', 'values', 'baseProperty', 'basePropertyValue', 'product_variations', 'images'])
             ->when($search = $this->request->get('search'), function ($query) use($search) {
                 $query
                     ->leftJoin('brands', 'brands.id', 'brand_id')
