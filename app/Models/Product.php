@@ -308,6 +308,14 @@ class Product extends Model
         return $value;
     }
 
+    public function getDiscountAttribute($value)
+    {
+        if ($this->old_price)
+            return round((($this->old_price - $this->price) / $this->old_price) * 100);
+
+        return $value;
+    }
+
     public function getPriceAttribute($value)
     {
         return $this->getActualPrice($value);
@@ -342,6 +350,11 @@ class Product extends Model
     public function getRawPointsAttribute($value)
     {
         return $this->attributes['points'];
+    }
+
+    public function getRawDiscountAttribute($value)
+    {
+        return $this->attributes['discount'];
     }
 
 }
