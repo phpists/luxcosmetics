@@ -91,16 +91,18 @@ class Category extends Model
 
     public static function getChildIds($category_id): array
     {
-        $ids = [$category_id];
-        $category = self::find($category_id);
+        return \Cache::rememberForever('category_child_ids_' . $category_id, function () use ($category_id) {
+            $ids = [$category_id];
+            $category = self::find($category_id);
 
-        if ($category->subcategories) {
-            foreach ($category->subcategories as $subcategory) {
-                $ids = array_merge($ids, self::getChildIds($subcategory->id));
+            if ($category->subcategories) {
+                foreach ($category->subcategories as $subcategory) {
+                    $ids = array_merge($ids, self::getChildIds($subcategory->id));
+                }
             }
-        }
 
-        return $ids;
+            return $ids;
+        });
     }
 
     public function posts(): HasMany

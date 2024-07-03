@@ -54,6 +54,7 @@
 @endsection
 
 @section('js_after')
+    <script src="https://raw.githack.com/SortableJS/Sortable/master/Sortable.js"></script>
     <script src="{{ asset('super_admin/js/jquery.pjax.js') }}"></script>
     <script src="{{ asset('super_admin/js/select2.ru.js') }}"></script>
     <script>
@@ -134,6 +135,34 @@
                 })
 
             })
+
+            let tbody = document.querySelector('#productPricesTable tbody')
+            new Sortable(tbody, {
+                animation: 150,
+                handle: '.handle',
+                dragClass: 'table-sortable-drag',
+                onEnd: function (/**Event*/ evt) {
+                    var list = [];
+                    $.each($('#productPricesTable tbody tr'), function (idx, el) {
+                        list.push({
+                            id: $(el).data('id'),
+                            position: idx + 1
+                        })
+                    });
+
+                    $.ajax({
+                        method: 'post',
+                        url: $(tbody).data('update-positions-url'),
+                        data: {
+                            positions: list,
+                        },
+                        success: function (response) {
+                        }
+                    });
+
+                }
+            });
+
         })
     </script>
 @endsection

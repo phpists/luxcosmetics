@@ -47,13 +47,13 @@ class CatalogService
         if ($modelName == Category::class) {
             $alias = $custom_alias ?: $request->alias;
             $category = Category::where('alias', $alias)
-                ->with(['subcategories', 'tags', 'posts'])
+                ->with(['tags', 'posts'])
                 ->firstOrFail();
 
             $this->category = $category;
             $this->all_category_ids = Category::getChildIds($category->id);
         } elseif ($modelName == Brand::class) {
-            $category = Category::with(['subcategories', 'tags', 'posts'])
+            $category = Category::with(['tags', 'posts'])
                 ->firstOrFail();
 
             $this->category = $category;
@@ -61,21 +61,24 @@ class CatalogService
         }
 
 
-        $this->products = $this->getProductsQuery()->get();
+        $this->products = $this->getProductsQuery(['values'])->get();
     }
 
-    public function getProductsQuery(): \Illuminate\Database\Eloquent\Builder
+    public function getProductsQuery(?array $with = null): \Illuminate\Database\Eloquent\Builder
     {
-        $all_category_ids = $this->all_category_ids;
         $query = $this->products_query = Product::query()
             ->select(['products.*', 'product_images.path as main_image'])
             ->leftJoin('product_images', 'products.image_print_id', 'product_images.id')
-            ->with(['values', 'baseProperty', 'basePropertyValue'])
+            ->when($with, function ($query) use ($with) {
+                $query->with($with);
+            })
             ->distinct(['products.id'])
             ->orderBy('availability')
             ->whereNot('availability', AvailableOptions::DISCONTINUED->value);
 
         if ($this->modelName == Category::class) {
+            $all_category_ids = $this->all_category_ids;
+
             $query->where(function ($q) use ($all_category_ids) {
                 $q->whereIn('products.id', function ($query) use ($all_category_ids) {
                     $query->select('product_id')
@@ -121,7 +124,7 @@ class CatalogService
         $price_from = $this->getPriceFrom();
         $price_to = $this->getPriceTo();
 
-        $products = $this->getProductsQuery()
+        $products = $this->getProductsQuery(['publishedComments', 'brand', 'values', 'baseProperty', 'basePropertyValue', 'product_variations', 'images'])
             ->when($search = $this->request->get('search'), function ($query) use($search) {
                 $query
                     ->leftJoin('brands', 'brands.id', 'brand_id')
@@ -132,11 +135,12 @@ class CatalogService
                 });
             })
             ->when($properties = $this->getProperties(), function ($q) use ($properties) {
-                foreach ($properties as $property_id => $property_value_id) {
-                    $q->whereHas('values', function ($q) use($property_value_id)  {
-                        return $q->whereIn('property_value_id', $property_value_id);
-                    });
-                }
+                $q->whereHas('values', function ($q) use($properties)  {
+                    foreach ($properties as $property_id => $property_value_id)
+                        $q->whereIn('property_value_id', $property_value_id);
+
+                    return $q;
+                });
             })
             ->when($brands = $this->request->get('brands'), function ($q) use ($brands) {
                 $q->whereIn('brand_id', $brands);
@@ -152,9 +156,12 @@ class CatalogService
                 });
             });
 
-        $filteredProducts = $products->get();
-        $this->min_filtered_price = $filteredProducts->min('price');
-        $this->max_filtered_price = $filteredProducts->max('price');
+
+        $sql = $products->toSql();
+        $bindings = $products->getBindings();
+        $result = DB::select("SELECT MIN(price) as min_price, MAX(price) as max_price FROM ({$sql}) as subquery", $bindings);
+        $this->min_filtered_price = $result[0]->min_price;
+        $this->max_filtered_price = $result[0]->max_price;
 
         return $products
             ->where(function ($q) use ($price_from, $price_to) {
@@ -184,12 +191,12 @@ class CatalogService
 
     public function getPriceFrom()
     {
-        return $this->request->get('price')['from'] ?? $this->products->min('price');
+        return $this->request->get('price')['from'] ?? $this->min_price;
     }
 
     public function getPriceTo()
     {
-        return $this->request->get('price')['to'] ?? $this->products->max('price');
+        return $this->request->get('price')['to'] ?? $this->max_price;
     }
 
     private function getSortColumn()
@@ -274,28 +281,12 @@ class CatalogService
             ->with('values')
             ->orderBy('name')
             ->get();
-
-        $products = $this->products;
-
-        return $filters->filter(function ($property) use ($products) {
-            $include = false;
-            $products->map(function ($product) use ($property, $include) {
-                $products_with_property = $product->values->filter(function ($product_value) use ($property, $include) {
-                    Arr::has($property->values->pluck('id')->toArray(), $product_value->id);
-                });
-                if ($products_with_property->isNotEmpty()) {
-                    $include = true;
-                }
-            });
-
-            return $include;
-        });
     }
 
     public function getFiltersWeight($properties, $products = null): array
     {
         if (!$products) {
-            $products = $this->getFilteredProductsQuery()->get();
+            $products = $this->products;
         }
         $productsArray = $products->pluck('values', 'id')->toArray();
         $result = [];
@@ -355,7 +346,7 @@ class CatalogService
     public function getBrands()
     {
         return \App\Models\Brand::select(['id', 'name'])
-            ->whereIn('id', $this->products->pluck('brand_id')->toArray())
+            ->whereIn('id', array_unique($this->products->pluck('brand_id')->toArray()))
             ->orderBy('name')
             ->get();
     }

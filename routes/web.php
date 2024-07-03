@@ -307,6 +307,8 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function 
 
         Route::post('product-prices/update-status', [ProductPriceController::class, 'updateStatus'])
             ->name('product-prices.update-status');
+        Route::post('product-prices/update-positions', [ProductPriceController::class, 'updatePositions'])
+            ->name('product-price.update-positions');
         Route::resource('product-prices', \App\Http\Controllers\Admin\ProductPriceController::class);
 
     });

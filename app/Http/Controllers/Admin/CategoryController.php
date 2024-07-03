@@ -176,6 +176,9 @@ class CategoryController extends Controller
 
             PropertyCategory::query()->insert($data->toArray());
         }
+
+        \Cache::forget('category_child_ids_' . $category->id);
+
         return redirect()->route('admin.categories')->with('success', 'Категория успешно отредактирована');
     }
 

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Enums\ProductPriceTypeEnum;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
@@ -18,7 +19,21 @@ class ProductPrice extends Model
         'type',
         'amount',
         'rounding',
+        'pos'
     ];
+
+
+    /**
+     * The "booted" method of the model.
+     *
+     * @return void
+     */
+    protected static function booted()
+    {
+        static::addGlobalScope('positionSorted', function (Builder $builder) {
+            $builder->orderBy('pos');
+        });
+    }
 
 
     public function scopeActive($query)

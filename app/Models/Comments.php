@@ -12,6 +12,7 @@ class Comments extends Model
     const ITEMS_PER_PAGE = 4;
 
     const NEW = 'Новый';
+    const PUBLISHED = 'Опубликовать';
 
     protected $fillable = [
         'rating',
@@ -25,6 +26,11 @@ class Comments extends Model
     public function scopeNew(Builder $query): void
     {
         $query->where('status', self::NEW);
+    }
+
+    public function scopePublished(Builder $query): void
+    {
+        $query->where('status', self::PUBLISHED);
     }
 
     public function product()
