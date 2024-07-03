@@ -124,6 +124,20 @@ class ProductPriceController extends Controller
         ]);
     }
 
+    public function updatePositions(Request $request)
+    {
+        $positions = $request->post('positions');
+
+        if ($positions) {
+            foreach ($positions as $position) {
+
+                $faq = ProductPrice::findOrFail($position['id']);
+                $faq->pos = $position['position'];
+                $faq->save();
+            }
+        }
+    }
+
     public function destroy(Request $request, ProductPrice $productPrice)
     {
         if ($productPrice->delete()) {

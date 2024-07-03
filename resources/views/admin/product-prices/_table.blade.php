@@ -1,8 +1,11 @@
 <!--begin::Table-->
 <div class="table-responsive">
-    <table class="table table-head-custom table-vertical-center">
+    <table id="productPricesTable" class="table table-head-custom table-vertical-center">
         <thead>
         <tr>
+            <th class="pl-0 text-center">
+                #
+            </th>
             <th class="pr-0 text-center">
                 Название
             </th>
@@ -20,9 +23,12 @@
             </th>
         </tr>
         </thead>
-        <tbody id="table">
+        <tbody id="table" data-update-positions-url="{{ route('admin.product-price.update-positions') }}">
         @foreach($productPrices as $productPrice)
-            <tr>
+            <tr data-id="{{ $productPrice->id }}">
+                <td class="handle text-center pl-0" style="cursor: pointer">
+                    <i class="flaticon2-sort"></i>
+                </td>
                 <td class="text-center pl-0">
                     {{ $productPrice->title }}
                 </td>
