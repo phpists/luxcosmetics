@@ -1,7 +1,9 @@
 @extends('layouts.app')
 
-@section('title', getSeoTemplateTitle(\App\Enums\SeoTemplateEnum::REGISTER))
-@section('description', getSeoTemplateDescription(\App\Enums\SeoTemplateEnum::REGISTER))
+@section('title', $metaTitle = getSeoTemplateTitle(\App\Enums\SeoTemplateEnum::REGISTER))
+@section('description', $metaDescription = getSeoTemplateDescription(\App\Enums\SeoTemplateEnum::REGISTER))
+@section('og:title', $metaTitle)
+@section('og:description', $metaDescription)
 
 @section('content')
     <style>

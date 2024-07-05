@@ -1,10 +1,10 @@
 @extends('layouts.app')
 
-@section('title', $category->title_meta ?? getSeoTemplateTitle(\App\Enums\SeoTemplateEnum::CATEGORY, $category))
-@section('description', $category->description_meta ?? getSeoTemplateDescription(\App\Enums\SeoTemplateEnum::CATEGORY, $category))
+@section('title', $metaTitle = $category->title_meta ?? getSeoTemplateTitle(\App\Enums\SeoTemplateEnum::CATEGORY, $category))
+@section('description', $metaDescription = $category->description_meta ?? getSeoTemplateDescription(\App\Enums\SeoTemplateEnum::CATEGORY, $category))
 @section('keywords', $category->keywords_meta ?? '')
-@section('og:title', $category->og_title_meta ?? '')
-@section('og:description', $category->og_description_meta ?? '')
+@section('og:title', $category->og_title_meta ?? $metaTitle)
+@section('og:description', $category->og_description_meta ?? $metaDescription)
 @section('og:url', request()->url())
 
 @section('styles')

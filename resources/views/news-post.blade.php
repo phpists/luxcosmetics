@@ -1,9 +1,9 @@
 @extends('layouts.app')
-@section('title', $item->meta_title ?? getSeoTemplateTitle(\App\Enums\SeoTemplateEnum::NEWS, $item))
-@section('description', $item->description_meta ?? getSeoTemplateDescription(\App\Enums\SeoTemplateEnum::NEWS, $item))
+@section('title', $metaTitle = $item->meta_title ?? getSeoTemplateTitle(\App\Enums\SeoTemplateEnum::NEWS, $item))
+@section('description', $metaDescription = $item->description_meta ?? getSeoTemplateDescription(\App\Enums\SeoTemplateEnum::NEWS, $item))
 @section('keywords', $item->keywords_meta ?? '')
-@section('og:title', $item->og_title_meta ?? '')
-@section('og:description', $item->og_description_meta ?? '')
+@section('og:title', $item->og_title_meta ?? $metaTitle)
+@section('og:description', $item->og_description_meta ?? $metaDescription)
 @section('og:url', request()->url())
 @section('content')
     <style>
