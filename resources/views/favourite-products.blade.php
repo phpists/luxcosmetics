@@ -1,7 +1,9 @@
 @extends('layouts.app')
 
-@section('title', getSeoTemplateTitle(\App\Enums\SeoTemplateEnum::BOOKMARK))
-@section('description', getSeoTemplateDescription(\App\Enums\SeoTemplateEnum::BOOKMARK))
+@section('title', $metaTitle = getSeoTemplateTitle(\App\Enums\SeoTemplateEnum::BOOKMARK))
+@section('description', $metaDescription = getSeoTemplateDescription(\App\Enums\SeoTemplateEnum::BOOKMARK))
+@section('og:title', $metaTitle)
+@section('og:description', $metaDescription)
 
 @section('content')
     <section class="crumbs">
