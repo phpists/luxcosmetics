@@ -35,22 +35,11 @@
         <div class="product__subtitle">{{$product->title}}</div>
     </div>
     <div class="product__btm">
-        @php
-            $comments = \App\Models\Comments::query()
-            ->where('product_id', $product->id)
-            ->where('status', 'Опубликовать');
-
-             $ratings = \App\Models\Comments::where('product_id', $product->id)
-            ->where('status', 'Опубликовать')
-            ->pluck('rating');
-            $averageRating = $ratings->avg();
-            $countComments = $comments->count() ?? 0;
-        @endphp
         <div class="product__reviews">
-            @if($countComments !== 0)
+            @if($product->publishedComments->isNotEmpty())
                 <div class="stars">
                     @for ($i = 1; $i <= 5; $i++)
-                        @if ($i <= round($averageRating))
+                        @if ($i <= round($product->publishedComments->avg('rating')))
                             <span class="stars__item is-active">
                                             <svg class="icon"><use xlink:href="{{ asset('images/dist/sprite.svg#star') }}"></use></svg>
                                         </span>
@@ -61,9 +50,7 @@
                         @endif
                     @endfor
                 </div>
-            @endif
-            @if($countComments !== 0)
-                <a href="{{ route('products.product', ['alias' => $product->alias]) }}">отзывы ({{$countComments}})</a>
+                <a href="{{ route('products.product', ['alias' => $product->alias]) }}">отзывы ({{ $product->publishedComments->count() }})</a>
             @endif
         </div>
         <div class="product__ftrwrap">

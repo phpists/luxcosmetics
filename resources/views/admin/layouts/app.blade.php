@@ -299,23 +299,22 @@
                                         </ul>
                                     </div>
                                 @endif
-
-                                {{--                            <div class="menu-submenu" style="" kt-hidden-height="160">--}}
-                                {{--                                <i class="menu-arrow"></i>--}}
-                                {{--                                <ul class="menu-subnav">--}}
-                                {{--                                    <li class="menu-item {{ request()->routeIs('admin.sale.index') || request()->routeIs('admin.sale.edit') ? 'menu-item-active' : '' }}"--}}
-                                {{--                                        aria-haspopup="true">--}}
-                                {{--                                        <a href="{{route('admin.sale.index')}}" class="menu-link">--}}
-                                {{--                                            <i class="menu-bullet menu-bullet-dot">--}}
-                                {{--                                                <span></span>--}}
-                                {{--                                            </i>--}}
-                                {{--                                            <span class="menu-text">Розпродажі</span>--}}
-                                {{--                                        </a>--}}
-                                {{--                                    </li>--}}
-                                {{--                                </ul>--}}
-                                {{--                            </div>--}}
-
-
+                                @if(auth()->user()->isSuperAdmin())
+                                    <div class="menu-submenu" style="" kt-hidden-height="160">
+                                        <i class="menu-arrow"></i>
+                                        <ul class="menu-subnav">
+                                            <li class="menu-item {{ request()->routeIs('admin.product-prices.index') ? 'menu-item-active' : '' }}"
+                                                aria-haspopup="true">
+                                                <a href="{{ route('admin.product-prices.index') }}" class="menu-link">
+                                                    <i class="menu-bullet menu-bullet-dot">
+                                                        <span></span>
+                                                    </i>
+                                                    <span class="menu-text">Модуль ценников</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                @endif
                             </li>
                         @endif
 
@@ -776,6 +775,16 @@ request()->routeIs('admin.menu.edit', \App\Models\Menu::TOP_MENU) ? 'menu-item-o
                                     </div>
                                 </li>
                                 @endif
+                        @endif
+
+                        @if(auth()->user()->isSuperAdmin())
+                            <li class="menu-item {{ Str::is('admin.seo-templates.*', request()->route()->getName()) ? 'menu-item-active' : '' }}"
+                                aria-haspopup="true">
+                                <a href="{{ route('admin.seo-templates.index') }}" class="menu-link">
+                                    <i class="far fa-star menu-icon"></i>
+                                    <span class="menu-text">SEO шаблоны</span>
+                                </a>
+                            </li>
                         @endif
                     </ul>
                     <!--end::Menu Nav-->

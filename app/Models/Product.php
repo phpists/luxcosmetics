@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Enums\AvailableOptions;
+use App\Enums\ProductPriceTypeEnum;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
@@ -49,6 +50,7 @@ class Product extends Model
         'size',
         'points',
 
+        'meta_title',
         'description_meta',
         'keywords_meta',
         'og_title_meta',
@@ -96,7 +98,7 @@ class Product extends Model
 
     public function getMainImageAttribute()
     {
-        $image = ProductImage::query()->where('id', $this->image_print_id)->first();
+        $image = $this->images->where('id', $this->image_print_id)->first();
         if ($image) {
             return $image->path;
         }
@@ -206,6 +208,11 @@ class Product extends Model
         return $this->hasMany(Comments::class);
     }
 
+    public function publishedComments()
+    {
+        return $this->comments()->published();
+    }
+
     public function hasBonuses()
     {
         return $this->points > 0;
@@ -250,6 +257,104 @@ class Product extends Model
         $variants = \App\Services\CatalogService::getProductVariations($this->id, $this->base_property_id);
         $count = $variants->count();
         return trans_choice('plurals.variants_left', $count);
+    }
+
+    public function getAllCategoriesArray(): array
+    {
+        return array_merge($this->productCategories()->select('category_id')->pluck('category_id')->toArray(), [$this->category_id]);
+    }
+
+
+    private function getActualPrice($price)
+    {
+        try {
+            return \Cache::remember('product_price_'. $this->id, now()->addHour(), function () use ($price) {
+                $allCategories = $this->getAllCategoriesArray();
+                $productPrice = ProductPrice::findCondition(ProductPriceTypeEnum::DISCOUNT, $this->brand_id, $allCategories, $this->id);
+
+                if ($productPrice)
+                    return $productPrice->getPrice($price);
+
+                return $price;
+            });
+        } catch (\Throwable $e) {
+            \Log::error($e->getMessage());
+        }
+
+        return $price;
+    }
+
+    private function getActualBonuses($bonuses)
+    {
+        try {
+            $allCategories = $this->getAllCategoriesArray();
+            $productPrice = ProductPrice::findCondition(ProductPriceTypeEnum::BONUSES, $this->brand_id, $allCategories, $this->id);
+
+            if ($productPrice)
+                return $productPrice->getBonuses($bonuses);
+        } catch (\Throwable $e) {
+            \Log::error($e->getMessage());
+        }
+
+        return $bonuses;
+    }
+
+    private function getActualOldPrice($value)
+    {
+        if ($this->raw_price != $this->price) {
+            return $this->raw_price;
+        }
+
+        return $value;
+    }
+
+    public function getDiscountAttribute($value)
+    {
+        if ($this->old_price)
+            return round((($this->old_price - $this->price) / $this->old_price) * 100);
+
+        return $value;
+    }
+
+    public function getPriceAttribute($value)
+    {
+        return $this->getActualPrice($value);
+    }
+
+    public function getOldPriceAttribute($value)
+    {
+        if ($value || ($this->price != $this->raw_price))
+            return $this->getActualOldPrice($value);
+
+        return null;
+    }
+
+    public function getPointsAttribute($value)
+    {
+        if ($value || ($this->price != $this->raw_price))
+            return $this->getActualBonuses($value);
+
+        return null;
+    }
+
+    public function getRawPriceAttribute($value)
+    {
+        return $this->attributes['price'];
+    }
+
+    public function getRawOldPriceAttribute($value)
+    {
+        return $this->attributes['old_price'];
+    }
+
+    public function getRawPointsAttribute($value)
+    {
+        return $this->attributes['points'];
+    }
+
+    public function getRawDiscountAttribute($value)
+    {
+        return $this->attributes['discount'];
     }
 
 }

@@ -5,7 +5,7 @@
         <button class="pagination__more" data-url="{{ $paginator->nextPageUrl() }}">Показать  еще <span>12 товаров</span> <svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#refresh')}}"></use></svg></button>
         @endif
 
-        <ul class="pagination__list">
+        <ul class="pagination__list" style="display: flex">
 
             {{-- Previous Page Link --}}
             @if ($paginator->onFirstPage())

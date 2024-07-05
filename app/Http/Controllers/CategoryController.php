@@ -22,10 +22,6 @@ class CategoryController extends Controller
         $this->catalogService = new CatalogService($request, Category::class);
     }
 
-    function index() {
-        return view('categories.index_archived');
-    }
-
     public function show(Request $request, string $alias) {
         $category = $this->catalogService->category;
         if (!$category->status) {
