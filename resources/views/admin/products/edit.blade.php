@@ -183,7 +183,7 @@
                                             </div>
                                             <div class="col-md-1">
                                                 <label for="exampleSelect2">Скидка в %</label>
-                                                <input type="number" step="any" name="discount" value="{{$product->discount}}" class="form-control"/>
+                                                <input type="number" step="any" name="discount" value="{{$product->raw_discount}}" class="form-control"/>
                                             </div>
                                         </div>
                                     </div>
