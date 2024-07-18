@@ -39,4 +39,6 @@ CKEDITOR.editorConfig = function( config ) {
 	config.removeDialogTabs = 'image:advanced;link:advanced';
 
 	config.allowedContent  = true;
+
+    config.versionCheck = false;
 };
