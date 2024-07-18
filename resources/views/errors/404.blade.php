@@ -6,7 +6,8 @@
     </div>
 
     @php($popular_products = \App\Models\Product::query()
-        ->join('product_images', 'products.image_print_id', 'product_images.id')
+        ->select(['products.*', 'product_images.path as main_image'])
+        ->leftJoin('product_images', 'products.image_print_id', 'product_images.id')
         ->with('brand')
         ->with('product_variations')
         ->distinct(['products.id'])
