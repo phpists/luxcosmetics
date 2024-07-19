@@ -92,6 +92,10 @@ class PermissionService
     const CONFIG_VIEW = 'config.view';
     const CONFIG_MANAGE = 'config.manage';
 
+    const PRODUCT_PRICES_VIEW = 'product-prices.view';
+    const PRODUCT_PRICES_CREATE = 'product-prices.create';
+    const PRODUCT_PRICES_EDIT = 'product-prices.edit';
+    const PRODUCT_PRICES_DELETE = 'product-prices.delete';
 
 
     public static function getAll(): array
@@ -201,6 +205,12 @@ class PermissionService
             'Настройки' => [
                 self::CONFIG_VIEW => 'Просмотр',
                 self::CONFIG_MANAGE => 'Создание/Редактирование',
+            ],
+            'Модуль ценников' => [
+                self::PRODUCT_PRICES_VIEW => 'Просмотр',
+                self::PRODUCT_PRICES_CREATE => 'Создание',
+                self::PRODUCT_PRICES_EDIT => 'Редактирование',
+                self::PRODUCT_PRICES_DELETE => 'Удаление',
             ]
         ];
     }
