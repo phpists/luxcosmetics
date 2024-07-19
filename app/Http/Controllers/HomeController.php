@@ -7,7 +7,6 @@ use App\Models\Product;
 use App\Services\SiteConfigService;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Query\JoinClause;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
