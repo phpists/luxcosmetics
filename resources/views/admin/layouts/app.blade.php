@@ -299,7 +299,8 @@
                                         </ul>
                                     </div>
                                 @endif
-                                @if(auth()->user()->isSuperAdmin())
+                                @if(auth()->user()->isSuperAdmin()
+                            || auth()->user()->can(\App\Services\Admin\PermissionService::PRODUCT_PRICES_VIEW))
                                     <div class="menu-submenu" style="" kt-hidden-height="160">
                                         <i class="menu-arrow"></i>
                                         <ul class="menu-subnav">
