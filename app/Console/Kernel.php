@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use App\Console\Commands\GenerateSitemap;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -14,6 +15,8 @@ class Kernel extends ConsoleKernel
     {
         // Update DeliveryPoints
         $schedule->command('delivery:import')->daily();
+        // Generate sitemap.xml
+        $schedule->command(GenerateSitemap::class)->daily();
     }
 
     /**
