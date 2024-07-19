@@ -2,9 +2,11 @@
 
 namespace App\Console\Commands;
 
+use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Psr\Http\Message\UriInterface;
 use Spatie\Sitemap\SitemapGenerator;
+use Spatie\Sitemap\Tags\Url;
 
 class GenerateSitemap extends Command
 {
@@ -38,6 +40,10 @@ class GenerateSitemap extends Command
                     return false;
 
                 return true;
+            })
+            ->hasCrawled(function (Url $url) {
+                $url->setLastModificationDate(Carbon::now());
+                return $url;
             })
             ->writeToFile(public_path('sitemap.xml'));
     }
