@@ -268,7 +268,7 @@ class Product extends Model
     private function getActualPrice($price)
     {
         try {
-            return \Cache::remember('product_price_'. $this->id, now()->addHour(), function () use ($price) {
+            //return \Cache::remember('product_price_'. $this->id, now()->addHour(), function () use ($price) {
                 $allCategories = $this->getAllCategoriesArray();
                 $productPrice = ProductPrice::findCondition(ProductPriceTypeEnum::DISCOUNT, $this->brand_id, $allCategories, $this->id);
 
@@ -276,7 +276,7 @@ class Product extends Model
                     return $productPrice->getPrice($price);
 
                 return $price;
-            });
+            //});
         } catch (\Throwable $e) {
             \Log::error($e->getMessage());
         }
