@@ -4,17 +4,19 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\FeedbackChat;
+use App\Models\FeedbackMessageFile;
 use App\Models\FeedbackReason;
 use App\Models\ProductImage;
 use App\Services\SiteService;
 use Illuminate\Http\Request;
+use Yaza\LaravelGoogleDriveStorage\Gdrive;
 
 class FeedbackController extends Controller
 {
     public function index(Request $request) {
         $this->authorize('viewAny', FeedbackChat::class);
 
-        $chats = FeedbackChat::query();
+        $chats = FeedbackChat::query()->orderBy('id', 'desc');
         $status_filter = $request->query('status', null);
         if ($status_filter !== null) {
             $chats = $chats->where('status', $status_filter);

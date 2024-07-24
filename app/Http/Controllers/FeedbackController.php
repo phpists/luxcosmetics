@@ -4,13 +4,21 @@ namespace App\Http\Controllers;
 
 use App\Models\FeedbackChat;
 use App\Models\FeedbackMessage;
+use App\Models\FeedbackMessageFile;
 use http\Message;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class FeedbackController extends Controller
 {
     public function store(Request $request) {
+        $request->validate([
+            'files.*' => ['nullable', 'file', 'max:' . 1 * 1024 * 1024]
+        ]);
+
+        DB::beginTransaction();
+
         $data = $request->all();
         $data['user_id'] = $request->user()->id;
         $data['status'] = 1;
@@ -19,9 +27,31 @@ class FeedbackController extends Controller
         $data['user_id'] = $request->user()->id;
         $data['chat_id'] = $feedback_chat->id;
         $message = new FeedbackMessage($data);
+
         if(!$message->save()) {
+            DB::rollBack();
             return redirect()->back()->with('error', 'Не удалось создать сообщение');
         }
+
+        if ($request->hasFile('files')) {
+            foreach ($request->file('files') as $file) {
+                try {
+                    $filePath = Storage::disk('google')->put(FeedbackMessageFile::FILES_PATH . $message->id, $file);
+                    $message->files()->create([
+                        'disk' => 'google',
+                        'name' => $file->hashName(),
+                        'path' => $filePath,
+                    ]);
+                } catch (\Exception $exception) {
+                    \Log::error($exception->getMessage());
+                    DB::rollBack();
+                    return redirect()->back()->with('error', 'Не удалось создать сообщение');
+                }
+            }
+        }
+
+        DB::commit();
+
         return redirect()->back()->with('success', 'Тикет успешно создан');
     }
 

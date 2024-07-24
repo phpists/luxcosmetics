@@ -2,12 +2,21 @@
 
 @section('title', 'Обратная связь')
 
+@section('styles')
+    <link href="https://unpkg.com/filepond@^4/dist/filepond.css" rel="stylesheet" />
+    <style>
+        .filepond--panel-root {
+            background-color: #ffffff;
+        }
+    </style>
+@endsection
+
 @section('page_content')
     <main class="cabinet-page__main">
         <div style="margin-bottom: 10px;">
         @include('layouts.includes.messages')
         </div>
-        <form method="POST" action="{{route('create-chat')}}" class="form form--box">
+        <form method="POST" action="{{route('create-chat')}}" class="form form--box" enctype="multipart/form-data">
             @csrf
             <div class="form__fieldset">
                 <legend class="form__label">Причина обращения *</legend>
@@ -43,7 +52,25 @@
                 <legend class="form__label">Текст вашего обращения</legend>
                 <textarea name="message" class="form__textarea"></textarea>
             </div>
+            <div class="form__fieldset">
+                <legend class="form__label">Файлы</legend>
+                <input id="filesInput" name="files[]" type="file" multiple/>
+            </div>
             <button class="btn btn--accent">Отправить на рассмотрение</button>
         </form>
     </main>
+@endsection
+
+@section('scripts')
+    <script src="https://unpkg.com/filepond@^4/dist/filepond.js"></script>
+    <script>
+        const inputElement = document.getElementById('filesInput');
+
+        // Create a FilePond instance
+        const pond = FilePond.create(inputElement, {
+            allowMultiple: true,
+            storeAsFile: true,
+            labelIdle: `Перетащите файлы или <span class="filepond--label-action">Обзор</span>`,
+        });
+    </script>
 @endsection
