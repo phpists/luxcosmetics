@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Enums\AvailableOptions;
 use App\Enums\ProductPriceTypeEnum;
+use App\Events\ProductBecameAvailableEvent;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
@@ -72,6 +73,26 @@ class Product extends Model
     protected $hidden = [
         'laravel_through_key'
     ];
+
+
+
+
+    protected static function booted (): void
+    {
+
+        self::updated(function(self $model) {
+            if ($model->isDirty('availability')) {
+                if (
+                    $model->availability == AvailableOptions::AVAILABLE->value
+                    && $model->getOriginal('availability') == AvailableOptions::NOT_AVAILABLE->value
+                ) {
+                    ProductBecameAvailableEvent::dispatch($model);
+                }
+            }
+        });
+
+    }
+
 
     public function getImages(): Collection
     {

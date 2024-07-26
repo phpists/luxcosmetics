@@ -508,6 +508,10 @@ Route::post('/comment/dislike', [App\Http\Controllers\CommentsController::class,
 Route::get('/load_comments', [App\Http\Controllers\CommentsController::class, 'loadComments'])->name('comment.load');
 Route::get('/sort_comments/{alias}', [App\Http\Controllers\CommentsController::class, 'sortComments'])->name('comment.sort');
 
+// Product Availability
+Route::resource('product-availability', \App\Http\Controllers\ProductAvailabilityWaiterController::class)
+    ->only(['store']);
+
 
 Route::get('/user/home', [App\Http\Controllers\HomeController::class, 'home'])->name('user.home');
 

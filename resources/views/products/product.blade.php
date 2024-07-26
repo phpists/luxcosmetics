@@ -198,6 +198,10 @@
                             Добавить в корзину
                             </span>
                         </button>
+                    @elseif($product->availability == \App\Enums\AvailableOptions::NOT_AVAILABLE->value)
+                        <a href="#notifyOnAvailable" class="btn btn--accent product-page__addcart popup-with-form" data-product="{{ $product->id }}" data-property="{{ $product->baseValue->id ?? '' }}">
+                            <span>Узнать о поступлении</span>
+                        </a>
                     @endif
                     <div class="product-page__deliveryinfo">{!! \App\Services\SiteConfigService::getParamValue('product_additional_info') !!}</div>
                     @if(sizeof($articles) > 0)
@@ -722,6 +726,24 @@
         </div>
     </section>
 @endsection
+
+
+<div class="hidden">
+    <div class="popupform form" id="notifyOnAvailable" style="max-width: 400px">
+        <form action="{{ route('product-availability.store') }}" method="post">
+            @csrf
+            <input type="hidden" name="product_id" value="{{ $product->id }}">
+            <div class="popupform__title">Узнать о поступлении</div>
+            <div class="form__fieldset">
+                <input type="text"  class="form__input" name="name" placeholder="Ваше имя"  required="required">
+            </div>
+            <div class="form__fieldset">
+                <input type="email"  class="form__input" name="email" placeholder="Email" required="required">
+            </div>
+            <button type="submit" class="btn btn--accent">Отправить</button>
+        </form>
+    </div>
+</div>
 
 @section('after_content')
     <div class="filters-overlay"></div>
