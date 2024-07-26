@@ -105,7 +105,7 @@ class CategoryController extends Controller
     }
 
     public function edit($id) {
-        $categories = Category::query()->get();
+        $categories = Category::query()->with('productSorts')->get();
         $category = $categories->find($id);
 
         $this->authorize('update', $category);
@@ -120,6 +120,7 @@ class CategoryController extends Controller
         $last_position = $last_position ? $last_position + 1: 1;
         $properties = PropertyCategory::query()->where('category_id', $category->id)->orderBy('position')->paginate();
         $seo = Category::query()->select('categories.*')->find($id);
+
         return view('admin.categories.edit', compact('category', 'categories', 'properties', 'tags', 'last_position', 'articles', 'seo', 'posts'));
     }
 

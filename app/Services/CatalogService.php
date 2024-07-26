@@ -7,11 +7,8 @@ use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\Property;
-use App\Models\PropertyValue;
-use Illuminate\Database\Query\Builder;
 use Illuminate\Database\Query\JoinClause;
 use Illuminate\Http\Request;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
@@ -99,10 +96,16 @@ class CatalogService
         $products = $this->getFilteredProductsQuery()
             ->selectRaw('case when user_favorite_products.product_id is null then FALSE else TRUE end as is_favourite');
 
-        if ($sort_column = $this->getSortColumn())
-            $products->orderBy($sort_column, $this->getSortDirection());
-        else
-            $products->orderBy('created_at', 'DESC')->orderBy('products.id', 'desc');
+        $sortColumn = $this->getSortColumn();
+        if ($sortColumn == 'default') {
+            $relation = $this->modelName == Brand::class ? $this->brand : $this->category;
+            if ($relation->productSorts()->count() > 0) {
+                $productSortIds = $relation->productSorts()->pluck('product_id')->implode(', ');
+                $products->orderByRaw("IF(FIELD(products.id, $productSortIds)=0, 1, 0), FIELD(products.id, $productSortIds)");
+            }
+        } else {
+            $products->orderBy($sortColumn, $this->getSortDirection());
+        }
 
         if (Auth::check()) {
             $favourites = DB::table('user_favorite_products')->select('user_favorite_products.*')->where('user_id', $this->request->user()->id);
@@ -201,12 +204,14 @@ class CatalogService
 
     private function getSortColumn()
     {
-        return explode(':', $this->request->get('sort'))[0] ?? null;
+        $sort = $this->request->get('sort');
+        return $sort ? explode(':', $sort)[0] : 'default';
     }
 
     private function getSortDirection()
     {
-        return explode(':', $this->request->get('sort'))[1] ?? null;
+        $sort = $this->request->get('sort');
+        return $sort ? explode(':', $sort)[1] : 'desc';
     }
 
 

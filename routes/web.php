@@ -467,6 +467,12 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function 
     Route::post('category_posts/update-position', [\App\Http\Controllers\Admin\CategoryPostsController::class, 'updatePosition'])->name('admin.category_posts.update_positions');
     Route::post('category_post/update-status', [\App\Http\Controllers\Admin\CategoryPostsController::class, 'updateStatus'])->name('admin.category_posts.update_status');
 
+    /** Category > ProductSort */
+    Route::post('category-product-sorts/update-positions', [\App\Http\Controllers\Admin\CategoryProductSortController::class, 'updatePositions'])
+        ->name('admin.category-product-sorts.update-positions');
+    Route::resource('category-product-sorts', \App\Http\Controllers\Admin\CategoryProductSortController::class, ['as' => 'admin'])
+        ->only(['store', 'destroy']);
+
     /** Courier Delivery Methods */
     Route::resource('courier-delivery-methods', \App\Http\Controllers\Admin\Settings\CourierDeliveryMethodController::class, [
         'as' => 'admin'
