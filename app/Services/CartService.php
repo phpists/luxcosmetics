@@ -191,7 +191,7 @@ class CartService
     }
 
     public function getBonusAmount()
-    {// 895 - 29% =
+    {
         $bonus_points = 0;
 
         foreach (self::getAllItems() as $item) {
@@ -201,8 +201,7 @@ class CartService
 
         if ($this->isUsedBonuses()) {
             $usedBonuses = $this->getUsedBonusesDiscount();
-            $totalSumMinusUsedBonuses = $this->getTotalSum() - $usedBonuses;
-            $usedBonusesPercent = round(($usedBonuses / $totalSumMinusUsedBonuses) * 100);
+            $usedBonusesPercent = round(($usedBonuses / $this->getTotalSum()) * 100);
 
             $bonus_points -= ($bonus_points * $usedBonusesPercent) / 100;
         }
