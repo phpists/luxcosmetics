@@ -492,6 +492,11 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function 
     ]);
     /** /Product Prices */
 
+    /** Product Availability Waiters */
+    Route::get('product-availability-waiters', [\App\Http\Controllers\Admin\ProductAvailabilityWaiterController::class, 'index'])
+        ->name('admin.product-availability-waiters.index');
+    /** /Product Availability Waiters */
+
 });
 
 // General Pages
