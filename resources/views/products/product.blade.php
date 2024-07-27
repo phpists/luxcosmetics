@@ -171,6 +171,7 @@
                         @endif
                     @endif
 
+                    @if($product->availability != \App\Enums\AvailableOptions::DISCONTINUED->value)
                     <div class="product-page__priceblock" @if($product->availability == \App\Enums\AvailableOptions::NOT_AVAILABLE->value) style="opacity: 0.4" @endif>
                         <div class="product-page__prices">
                             <div class="product-page__price">{{ $product->price }} ₽</div>
@@ -189,6 +190,7 @@
                             @endif
                         @endif
                     </div>
+                    @endif
                     @if($product->availability == \App\Enums\AvailableOptions::AVAILABLE->value)
                         <button class="btn btn--accent product-page__addcart addToCart @if(isset($product->baseValue->id)) @if($cartService->check($product->id, $product->baseValue->id)) isInCart @endif @endif" data-product="{{ $product->id }}" data-property="{{ $product->baseValue->id ?? '' }}">
                             <span>
@@ -202,6 +204,10 @@
                         <a href="#notifyOnAvailable" class="btn btn--accent product-page__addcart popup-with-form" data-product="{{ $product->id }}" data-property="{{ $product->baseValue->id ?? '' }}">
                             <span>Узнать о поступлении</span>
                         </a>
+                    @elseif($product->availability == \App\Enums\AvailableOptions::DISCONTINUED->value)
+                        <button class="btn btn--accent product-page__addcart" id="showSameProducts">
+                            <span>Посмотреть аналоги</span>
+                        </button>
                     @endif
                     <div class="product-page__deliveryinfo">{!! \App\Services\SiteConfigService::getParamValue('product_additional_info') !!}</div>
                     @if(sizeof($articles) > 0)
@@ -771,6 +777,13 @@
 @section('scripts')
     <script src="{{asset('/js/favourites.js')}}"></script>
     <script>
+        $(document).on('click', '#showSameProducts', function (e) {
+            $('.products-tabs .tabs .tab:nth-of-type(2)').click()
+            $([document.documentElement, document.body]).animate({
+                scrollTop: $("section.products-tabs").offset().top
+            }, 1000);
+        })
+
         document.querySelectorAll('.variation__select').forEach(function (el) {
             el.addEventListener('change', function () {
                 window.location = '/p/' + el.value;
