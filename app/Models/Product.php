@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Enums\AvailableOptions;
 use App\Enums\ProductPriceTypeEnum;
 use App\Events\ProductBecameAvailableEvent;
+use App\Services\SiteConfigService;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
@@ -354,6 +355,11 @@ class Product extends Model
     {
         if ($value || ($this->price != $this->raw_price))
             return $this->getActualBonuses($value);
+
+        if ($this->category->alias != 'sales-50') {
+            $percent = (int)SiteConfigService::getParamValue('product_bonuses_percent');
+            return floor(($this->price * $percent) / 100);
+        }
 
         return null;
     }
