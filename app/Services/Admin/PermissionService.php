@@ -97,6 +97,8 @@ class PermissionService
     const PRODUCT_PRICES_EDIT = 'product-prices.edit';
     const PRODUCT_PRICES_DELETE = 'product-prices.delete';
 
+    const PRODUCT_AVAILABILITY_WAITER_VIEW = 'product-availability-waiter.view';
+
 
     public static function getAll(): array
     {
@@ -211,7 +213,10 @@ class PermissionService
                 self::PRODUCT_PRICES_CREATE => 'Создание',
                 self::PRODUCT_PRICES_EDIT => 'Редактирование',
                 self::PRODUCT_PRICES_DELETE => 'Удаление',
-            ]
+            ],
+            'Ожидаемые товары' => [
+                self::PRODUCT_AVAILABILITY_WAITER_VIEW => 'Просмотр',
+            ],
         ];
     }
 

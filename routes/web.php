@@ -467,6 +467,12 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function 
     Route::post('category_posts/update-position', [\App\Http\Controllers\Admin\CategoryPostsController::class, 'updatePosition'])->name('admin.category_posts.update_positions');
     Route::post('category_post/update-status', [\App\Http\Controllers\Admin\CategoryPostsController::class, 'updateStatus'])->name('admin.category_posts.update_status');
 
+    /** Category > ProductSort */
+    Route::post('category-product-sorts/update-positions', [\App\Http\Controllers\Admin\CategoryProductSortController::class, 'updatePositions'])
+        ->name('admin.category-product-sorts.update-positions');
+    Route::resource('category-product-sorts', \App\Http\Controllers\Admin\CategoryProductSortController::class, ['as' => 'admin'])
+        ->only(['store', 'destroy']);
+
     /** Courier Delivery Methods */
     Route::resource('courier-delivery-methods', \App\Http\Controllers\Admin\Settings\CourierDeliveryMethodController::class, [
         'as' => 'admin'
@@ -486,6 +492,11 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function 
     ]);
     /** /Product Prices */
 
+    /** Product Availability Waiters */
+    Route::get('product-availability-waiters', [\App\Http\Controllers\Admin\ProductAvailabilityWaiterController::class, 'index'])
+        ->name('admin.product-availability-waiters.index');
+    /** /Product Availability Waiters */
+
 });
 
 // General Pages
@@ -501,6 +512,10 @@ Route::post('/comment/like', [App\Http\Controllers\CommentsController::class, 'l
 Route::post('/comment/dislike', [App\Http\Controllers\CommentsController::class, 'dislike'])->name('send.dislike');
 Route::get('/load_comments', [App\Http\Controllers\CommentsController::class, 'loadComments'])->name('comment.load');
 Route::get('/sort_comments/{alias}', [App\Http\Controllers\CommentsController::class, 'sortComments'])->name('comment.sort');
+
+// Product Availability
+Route::resource('product-availability', \App\Http\Controllers\ProductAvailabilityWaiterController::class)
+    ->only(['store']);
 
 
 Route::get('/user/home', [App\Http\Controllers\HomeController::class, 'home'])->name('user.home');

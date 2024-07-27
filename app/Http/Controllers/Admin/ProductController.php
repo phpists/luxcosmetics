@@ -198,11 +198,13 @@ class ProductController extends Controller
         $product->expiry_date = $data['expiry_date'];
         $product->spyrt = $data['spyrt'];
         $data['items_left'] = $data['items_left'] ?? 0;
-        if ($data['items_left'] > 0) {
-            $data['availability'] = AvailableOptions::AVAILABLE->value;
-        } else {
-            if ($product->availability == AvailableOptions::AVAILABLE->value)
-                $data['availability'] = AvailableOptions::NOT_AVAILABLE->value;
+        if (isset($data['availability']) && $data['availability'] != AvailableOptions::DISCONTINUED->value) {
+            if ($data['items_left'] > 0) {
+                $data['availability'] = AvailableOptions::AVAILABLE->value;
+            } else {
+                if ($product->availability == AvailableOptions::AVAILABLE->value)
+                    $data['availability'] = AvailableOptions::NOT_AVAILABLE->value;
+            }
         }
 
         if (!array_key_exists('alias', $data) || $data['alias'] === null) {

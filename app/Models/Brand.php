@@ -31,5 +31,12 @@ class Brand extends Model
         return $this->hasMany(Product::class);
     }
 
+    public function productSorts(): HasMany
+    {
+        return $this->hasMany(ProductSort::class, 'model_id')
+            ->where('model_type', self::class)
+            ->orderBy('pos');
+    }
+
 
 }

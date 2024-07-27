@@ -73,6 +73,11 @@
                                     <span class="nav-text">Статьи</span>
                                 </a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#sorting">
+                                    <span class="nav-text">Сортировка товаров</span>
+                                </a>
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -275,7 +280,7 @@
                             <!--end::Table-->
                             {{ $properties->links('vendor.pagination.super_admin_pagination') }}
                         </div>
-                        <div class="tab-pane fade show" id="kt_tab_pane_4_4" role="tabpanel"
+                        <div class="tab-pane fade" id="kt_tab_pane_4_4" role="tabpanel"
                              aria-labelledby="kt_tab_pane_4_4">
                             <div class="row mb-5">
                                 <div class="col">
@@ -675,6 +680,74 @@
                             <!--end::Table-->
                         </div>
 
+                        <div class="tab-pane fade" id="sorting" role="tabpanel"
+                             aria-labelledby="properties_tab">
+                            <div class="row mb-5">
+                                <div class="col">
+                                    <div class="mb-7">
+                                        <h3>Сортировка "По умолчанию"</h3>
+                                    </div>
+                                </div>
+                                <div class="col-auto">
+                                    <button data-toggle="modal" data-target="#createCategoryProductSortModal"
+                                            class="btn btn-primary font-weight-bold">
+                                        <i class="fas fa-plus mr-2"></i>
+                                        Добавить
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table table-head-custom table-vertical-center">
+                                    <thead>
+                                    <tr>
+                                        <th class="pl-0 text-center">
+                                            #
+                                        </th>
+                                        <th class="text-center pr-0">
+                                            Название
+                                        </th>
+                                        <th class="pr-0 text-center">
+                                            Ссылка
+                                        </th>
+                                        <th class="pr-0 text-center">
+                                            Действия
+                                        </th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="product_sorting-table">
+                                    @foreach($category->productSorts as $productSort)
+                                        <tr data-id="{{ $productSort->id }}">
+                                            <td class="handle text-center pl-0" style="cursor: pointer">
+                                                <i class="flaticon2-sort"></i>
+                                            </td>
+                                            <td class="text-center">
+                                                <span class="text-dark-75 d-block font-size-lg">
+                                                    {{ $productSort->product->title }}
+                                                </span>
+                                            </td>
+                                            <td class="text-center position">
+                                                <span class="text-dark-75 d-block font-size-lg sort_col">
+                                                    <a href="{{ route('products.product', ['alias' => $productSort->product->alias]) }}" target="_blank">{{ $productSort->product->alias }}</a>
+                                                </span>
+                                            </td>
+                                            <td class="text-center pr-0">
+                                                <form action="{{ route('admin.category-product-sorts.destroy', $productSort) }}" method="POST" style="display: inline">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-sm btn-clean btn-icon btn_delete"
+                                                            onclick="return confirm('Вы уверены, что хотите удалить сортировку товара?')"
+                                                            title="Delete"><i class="las la-trash"></i>
+                                                    </button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!--end::Table-->
+                        </div>
+
                     </div>
                 </div>
             </div>
@@ -689,6 +762,7 @@
     @include('admin.categories.modals.update-tag', ['morphable_type' => \App\Models\Category::class, 'morphable_id' => $category->id])
     @include('admin.categories.modals.create-category_post')
     @include('admin.categories.modals.update-category_post')
+    @include('admin.categories.modals.create-category_product_sort', ['products' => $category->products])
     @include('admin.products.modals.create-article', ['record_id' => $category->id, 'table_name' => 'categories'])
     @include('admin.products.modals.edit-article')
 @endsection
@@ -705,6 +779,9 @@
         $('#cat_select').select2({
             placeholder: "Выберите категорию",
             allowClear: true
+        });
+        $('#createCategoryProductSortProductId').select2({
+            placeholder: "Выберите товар",
         });
         function ajaxDelete(url, id, el_delete) {
             if(!confirm('Вы уверенны, что хотите удалить запись?')) {
@@ -765,6 +842,36 @@
             };
         }();
         $(function () {
+
+
+
+            const categoryProductSorts = document.getElementById('product_sorting-table')
+            new Sortable(categoryProductSorts, {
+                animation: 150,
+                handle: '.handle',
+                dragClass: 'table-sortable-drag',
+                onEnd: function (/**Event*/ evt) {
+                    console.log('drop');
+                    var list = [];
+                    $.each($(categoryProductSorts).find('tr'), function (idx, el) {
+                        list.push({
+                            id: $(el).data('id'),
+                            position: idx + 1
+                        })
+                    });
+
+                    $.ajax({
+                        method: 'post',
+                        url: '{{ route('admin.category-product-sorts.update-positions') }}',
+                        data: {
+                            positions: list,
+                        },
+                    });
+
+                }
+            });
+
+
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')

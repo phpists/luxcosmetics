@@ -4,6 +4,8 @@ namespace App\Models;
 
 use App\Enums\AvailableOptions;
 use App\Enums\ProductPriceTypeEnum;
+use App\Events\ProductBecameAvailableEvent;
+use App\Services\SiteConfigService;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
@@ -72,6 +74,26 @@ class Product extends Model
     protected $hidden = [
         'laravel_through_key'
     ];
+
+
+
+
+    protected static function booted (): void
+    {
+
+        self::updated(function(self $model) {
+            if ($model->isDirty('availability')) {
+                if (
+                    $model->availability == AvailableOptions::AVAILABLE->value
+                    && $model->getOriginal('availability') == AvailableOptions::NOT_AVAILABLE->value
+                ) {
+                    ProductBecameAvailableEvent::dispatch($model);
+                }
+            }
+        });
+
+    }
+
 
     public function getImages(): Collection
     {
@@ -268,7 +290,7 @@ class Product extends Model
     private function getActualPrice($price)
     {
         try {
-            return \Cache::remember('product_price_'. $this->id, now()->addHour(), function () use ($price) {
+//            return \Cache::remember('product_price_'. $this->id, now()->addHour(), function () use ($price) {
                 $allCategories = $this->getAllCategoriesArray();
                 $productPrice = ProductPrice::findCondition(ProductPriceTypeEnum::DISCOUNT, $this->brand_id, $allCategories, $this->id);
 
@@ -276,7 +298,7 @@ class Product extends Model
                     return $productPrice->getPrice($price);
 
                 return $price;
-            });
+//            });
         } catch (\Throwable $e) {
             \Log::error($e->getMessage());
         }
@@ -333,6 +355,11 @@ class Product extends Model
     {
         if ($value || ($this->price != $this->raw_price))
             return $this->getActualBonuses($value);
+
+        if ($this->category->alias != 'sales-50') {
+            $percent = (int)SiteConfigService::getParamValue('product_bonuses_percent');
+            return floor(($this->price * $percent) / 100);
+        }
 
         return null;
     }
