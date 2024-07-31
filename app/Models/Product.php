@@ -292,6 +292,7 @@ class Product extends Model
     {
         try {
 //            return \Cache::remember('product_price_'. $this->id, now()->addHour(), function () use ($price) {
+
                 $allCategories = $this->getAllCategoriesArray();
                 $productPrice = ProductPrice::findCondition(ProductPriceTypeEnum::DISCOUNT, $this->brand_id, $allCategories, $this->id);
 
