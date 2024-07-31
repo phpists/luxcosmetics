@@ -25,6 +25,33 @@ class FeedbackChat extends Model
     const VIEWED = 2;
     const CLOSED = 3;
 
+
+    protected static function booted (): void
+    {
+
+        self::deleted(function(self $model) {
+            foreach ($model->messages as $message) {
+                foreach ($message->files as $file) {
+                    try {
+                        \Storage::disk($file->disk)->delete($file->path);
+                    } catch (\Exception $exception) {
+                        \Log::error($exception->getMessage());
+                    }
+                    $file->delete();
+                }
+
+                try {
+                    \Storage::disk('google')->delete(FeedbackMessageFile::FILES_PATH . $message->id);
+                } catch (\Exception $exception) {
+                    \Log::error($exception->getMessage());
+                }
+
+                $message->delete();
+            }
+        });
+
+    }
+
     public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(User::class);
@@ -34,4 +61,10 @@ class FeedbackChat extends Model
     {
         return $this->hasMany(FeedbackMessage::class, 'chat_id');
     }
+
+    public function lastMessage()
+    {
+        return $this->hasOne(FeedbackMessage::class, 'chat_id')->latestOfMany();
+    }
+
 }
