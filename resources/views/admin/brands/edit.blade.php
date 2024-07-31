@@ -27,7 +27,14 @@
         <!--end::Info-->
     </div>
 @endsection
+
 @section('content')
+    <style>
+        .select2-container {
+            width: 100% !important;
+        }
+    </style>
+
     <!--end::Subheader-->
     <!--begin::Entry-->
     <div class="d-flex flex-column-fluid">
@@ -46,6 +53,11 @@
                             <li class="nav-item">
                                 <a class="nav-link" data-toggle="tab" href="#tags">
                                     <span class="nav-text">Теги</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#sorting">
+                                    <span class="nav-text">Сортировка товаров</span>
                                 </a>
                             </li>
                         </ul>
@@ -274,6 +286,73 @@
                             </div>
                             <!--end::Table-->
                         </div>
+                        <div class="tab-pane fade" id="sorting" role="tabpanel"
+                             aria-labelledby="properties_tab">
+                            <div class="row mb-5">
+                                <div class="col">
+                                    <div class="mb-7">
+                                        <h3>Сортировка "По умолчанию"</h3>
+                                    </div>
+                                </div>
+                                <div class="col-auto">
+                                    <button data-toggle="modal" data-target="#createBrandProductSortModal"
+                                            class="btn btn-primary font-weight-bold">
+                                        <i class="fas fa-plus mr-2"></i>
+                                        Добавить
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table table-head-custom table-vertical-center">
+                                    <thead>
+                                    <tr>
+                                        <th class="pl-0 text-center">
+                                            #
+                                        </th>
+                                        <th class="text-center pr-0">
+                                            Название
+                                        </th>
+                                        <th class="pr-0 text-center">
+                                            Ссылка
+                                        </th>
+                                        <th class="pr-0 text-center">
+                                            Действия
+                                        </th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="product_sorting-table">
+                                    @foreach($brand->productSorts as $productSort)
+                                        <tr data-id="{{ $productSort->id }}">
+                                            <td class="handle text-center pl-0" style="cursor: pointer">
+                                                <i class="flaticon2-sort"></i>
+                                            </td>
+                                            <td class="text-center">
+                                                <span class="text-dark-75 d-block font-size-lg">
+                                                    {{ $productSort->product->title }}
+                                                </span>
+                                            </td>
+                                            <td class="text-center position">
+                                                <span class="text-dark-75 d-block font-size-lg sort_col">
+                                                    <a href="{{ route('products.product', ['alias' => $productSort->product->alias]) }}" target="_blank">{{ $productSort->product->alias }}</a>
+                                                </span>
+                                            </td>
+                                            <td class="text-center pr-0">
+                                                <form action="{{ route('admin.category-product-sorts.destroy', $productSort) }}" method="POST" style="display: inline">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-sm btn-clean btn-icon btn_delete"
+                                                            onclick="return confirm('Вы уверены, что хотите удалить сортировку товара?')"
+                                                            title="Delete"><i class="las la-trash"></i>
+                                                    </button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!--end::Table-->
+                        </div>
                     </div>
                 </div>
             </div>
@@ -286,6 +365,7 @@
     <!--end::Entry-->
     @include('admin.categories.modals.create-tag', ['morphable_type' => \App\Models\Brand::class, 'morphable_id' => $brand->id])
     @include('admin.categories.modals.update-tag', ['morphable_type' => \App\Models\Brand::class, 'morphable_id' => $brand->id])
+    @include('admin.brands.modals.create-brand_product_sort', ['products' => $brand->products])
 @endsection
 
 @section('js_after')
@@ -296,65 +376,43 @@
     <script src="https://raw.githack.com/SortableJS/Sortable/master/Sortable.js"></script>
 
     <script>
-        function ajaxDelete(url, id, el_delete) {
-            if(!confirm('Вы уверенны, что хотите удалить запись?')) {
-                return;
-            }
-            $.ajax({
-                url: url,
-                method: 'delete',
-                data: {
-                    id: id
-                },
-                success: function () {
-                    document.querySelector(el_delete)?.remove();
-                },
-                error: function (res) {
-                    console.log(res)
-                }
-            })
-        }
-        document.querySelectorAll('.tag_delete').forEach((el, id) => {
-            el.addEventListener('click', () => {
-                ajaxDelete('/admin/tag', el.dataset.value, '#tag_'+el.dataset.value)
-            })
-        })
-        document.querySelectorAll('.post_delete').forEach((el, id) => {
-            el.addEventListener('click', () => {
-                ajaxDelete('/admin/category_post/delete', el.dataset.value, '#category_post_'+el.dataset.value)
-            })
-        })
-        var KTSummernoteDemo = function () {
-            // Private functions
-            var demos = function () {
-                $('.summernote').summernote($.extend(summernoteDefaultOptions, {
-                    height: 250
-                }));
-            }
-
-            return {
-                // public functions
-                init: function() {
-                    demos();
-                }
-            };
-        }();
-        var KTSummernoteLg = function () {
-            // Private functions
-            var demos = function () {
-                $('.summernote-lg').summernote($.extend(summernoteDefaultOptions, {
-                    height: 450
-                }));
-            }
-
-            return {
-                // public functions
-                init: function() {
-                    demos();
-                }
-            };
-        }();
         $(function () {
+
+
+            $('#createBrandProductSortProductId').select2({
+                placeholder: "Выберите товар",
+            });
+
+
+
+
+            const categoryProductSorts = document.getElementById('product_sorting-table')
+            new Sortable(categoryProductSorts, {
+                animation: 150,
+                handle: '.handle',
+                dragClass: 'table-sortable-drag',
+                onEnd: function (/**Event*/ evt) {
+                    console.log('drop');
+                    var list = [];
+                    $.each($(categoryProductSorts).find('tr'), function (idx, el) {
+                        list.push({
+                            id: $(el).data('id'),
+                            position: idx + 1
+                        })
+                    });
+
+                    $.ajax({
+                        method: 'post',
+                        url: '{{ route('admin.category-product-sorts.update-positions') }}',
+                        data: {
+                            positions: list,
+                        },
+                    });
+
+                }
+            });
+
+
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -501,6 +559,66 @@
                 onEnd: updateTagsPos
             });
         });
+
+
+        function ajaxDelete(url, id, el_delete) {
+            if(!confirm('Вы уверенны, что хотите удалить запись?')) {
+                return;
+            }
+            $.ajax({
+                url: url,
+                method: 'delete',
+                data: {
+                    id: id
+                },
+                success: function () {
+                    document.querySelector(el_delete)?.remove();
+                },
+                error: function (res) {
+                    console.log(res)
+                }
+            })
+        }
+        document.querySelectorAll('.tag_delete').forEach((el, id) => {
+            el.addEventListener('click', () => {
+                ajaxDelete('/admin/tag', el.dataset.value, '#tag_'+el.dataset.value)
+            })
+        })
+        document.querySelectorAll('.post_delete').forEach((el, id) => {
+            el.addEventListener('click', () => {
+                ajaxDelete('/admin/category_post/delete', el.dataset.value, '#category_post_'+el.dataset.value)
+            })
+        })
+        var KTSummernoteDemo = function () {
+            // Private functions
+            var demos = function () {
+                $('.summernote').summernote($.extend(summernoteDefaultOptions, {
+                    height: 250
+                }));
+            }
+
+            return {
+                // public functions
+                init: function() {
+                    demos();
+                }
+            };
+        }();
+        var KTSummernoteLg = function () {
+            // Private functions
+            var demos = function () {
+                $('.summernote-lg').summernote($.extend(summernoteDefaultOptions, {
+                    height: 450
+                }));
+            }
+
+            return {
+                // public functions
+                init: function() {
+                    demos();
+                }
+            };
+        }();
 
 
         function loadModelArticle() {

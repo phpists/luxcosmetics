@@ -4,12 +4,13 @@ namespace App\Providers;
 
 use App\Events\OrderCancelled;
 use App\Events\OrderCreated;
+use App\Events\ProductBecameAvailableEvent;
 use App\Listeners\MakeRefundOrder;
+use App\Listeners\NotifyProductWaitersListener;
 use App\Listeners\Order\FillAdditionalFields;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
-use Illuminate\Support\Facades\Event;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -27,6 +28,9 @@ class EventServiceProvider extends ServiceProvider
         ],
         OrderCancelled::class => [
             MakeRefundOrder::class
+        ],
+        ProductBecameAvailableEvent::class => [
+            NotifyProductWaitersListener::class,
         ]
     ];
 

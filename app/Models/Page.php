@@ -7,9 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Page extends Model
 {
-    use HasFactory;
-
-    public $timestamps = false;
 
     protected $fillable = ['title', 'link', 'content', 'is_active'];
+
 }

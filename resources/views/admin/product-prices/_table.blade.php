@@ -3,9 +3,11 @@
     <table id="productPricesTable" class="table table-head-custom table-vertical-center">
         <thead>
         <tr>
+            @if(auth()->user()->isSuperAdmin() || auth()->user()->can(\App\Services\Admin\PermissionService::PRODUCT_PRICES_EDIT))
             <th class="pl-0 text-center">
                 #
             </th>
+            @endif
             <th class="pr-0 text-center">
                 Название
             </th>
@@ -26,9 +28,11 @@
         <tbody id="table" data-update-positions-url="{{ route('admin.product-price.update-positions') }}">
         @foreach($productPrices as $productPrice)
             <tr data-id="{{ $productPrice->id }}">
+                @if(auth()->user()->isSuperAdmin() || auth()->user()->can(\App\Services\Admin\PermissionService::PRODUCT_PRICES_EDIT))
                 <td class="handle text-center pl-0" style="cursor: pointer">
                     <i class="flaticon2-sort"></i>
                 </td>
+                @endif
                 <td class="text-center pl-0">
                     {{ $productPrice->title }}
                 </td>
@@ -36,6 +40,7 @@
                     {{ $productPrice->getTypeTitle() }}
                 </td>
                 <td class="text-center pl-0">
+                    @if(auth()->user()->isSuperAdmin() || auth()->user()->can(\App\Services\Admin\PermissionService::PRODUCT_PRICES_EDIT))
                     <div class="d-flex justify-content-center">
                         <span class="switch">
                             <label>
@@ -44,12 +49,15 @@
                             </label>
                         </span>
                     </div>
+                    @else
+                        {{ $productPrice->is_active ? 'Да' : 'Нет' }}
+                    @endif
                 </td>
                 <td class="text-center pr-0">
                     {{ $productPrice->getDateString() }}
                 </td>
                 <td class="text-center pr-0">
-                    @if(auth()->user()->isSuperAdmin())
+                    @if(auth()->user()->isSuperAdmin() || auth()->user()->can(\App\Services\Admin\PermissionService::PRODUCT_PRICES_EDIT))
                         <a href="javascript:;" class="btn btn-sm btn-clean btn-icon btn_edit"
                            data-toggle="modal" data-target="#editProductPriceModal"
                            data-show-url="{{ route('admin.product-prices.show', $productPrice) }}"
@@ -57,7 +65,7 @@
                             <i class="las la-edit"></i>
                         </a>
                     @endif
-                    @if(auth()->user()->isSuperAdmin())
+                    @if(auth()->user()->isSuperAdmin() || auth()->user()->can(\App\Services\Admin\PermissionService::PRODUCT_PRICES_DELETE))
                         <form action="{{ route('admin.product-prices.destroy', $productPrice) }}" method="POST" style="display: inline">
                             @csrf
                             @method('DELETE')

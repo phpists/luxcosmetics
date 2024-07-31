@@ -199,9 +199,14 @@ class CartService
             $bonus_points += ($item['quantity'] * $product->points);
         }
 
-//        $user = Auth::user();
-//        return ($user->points + $bonus_points);
-        return $bonus_points;
+        if ($this->isUsedBonuses()) {
+            $usedBonuses = $this->getUsedBonusesDiscount();
+            $usedBonusesPercent = round(($usedBonuses / $this->getTotalSum()) * 100);
+
+            $bonus_points -= ($bonus_points * $usedBonusesPercent) / 100;
+        }
+
+        return (int) floor($bonus_points);
     }
 
     public function getTotalCount(): int

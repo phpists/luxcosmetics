@@ -17,6 +17,6 @@ jobs:
             cd public_html/
             git reset --hard
             git pull
-            /usr/local/php/cgi/8.1/bin/php ../composer.phar install
-            /usr/local/php/cgi/8.1/bin/php artisan migrate
-            /usr/local/php/cgi/8.1/bin/php artisan view:clear
+            /usr/local/php/cgi/8.2/bin/php ../composer.phar install
+            /usr/local/php/cgi/8.2/bin/php artisan migrate
+            /usr/local/php/cgi/8.2/bin/php artisan view:clear

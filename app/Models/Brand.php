@@ -12,8 +12,6 @@ class Brand extends Model
 
     protected $fillable = ['name', 'image', 'link', 'hide', 'seo_content'];
 
-    public $timestamps = false;
-
     protected $casts = [
         'seo_content' => 'json'
     ];
@@ -31,6 +29,13 @@ class Brand extends Model
     public function products(): HasMany
     {
         return $this->hasMany(Product::class);
+    }
+
+    public function productSorts(): HasMany
+    {
+        return $this->hasMany(ProductSort::class, 'model_id')
+            ->where('model_type', self::class)
+            ->orderBy('pos');
     }
 
 

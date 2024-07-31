@@ -359,6 +359,12 @@
                                             <input type="number" class="form-control" id="spyrt" name="spyrt" value="{{ $product->spyrt }}">
                                         </div>
                                     </div>
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <label for="weightField">Популярность (кол-во просмотров):</label>
+                                            <input type="number" class="form-control" id="popularity" name="popularity" value="{{ $product->popularity }}">
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="tab-container">
                                     <ul class="nav nav-tabs" role="tablist">

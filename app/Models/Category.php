@@ -89,6 +89,13 @@ class Category extends Model
             ->orderBy("position");
     }
 
+    public function productSorts(): HasMany
+    {
+        return $this->hasMany(ProductSort::class, 'model_id')
+            ->where('model_type', self::class)
+            ->orderBy('pos');
+    }
+
     public static function getChildIds($category_id): array
     {
         return \Cache::rememberForever('category_child_ids_' . $category_id, function () use ($category_id) {

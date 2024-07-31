@@ -13,6 +13,11 @@ use Illuminate\Http\Request;
 class ProductPriceController extends Controller
 {
 
+    public function __construct()
+    {
+        $this->authorizeResource(ProductPrice::class);
+    }
+
     public function index()
     {
         $productPrices = ProductPrice::paginate();
@@ -118,6 +123,8 @@ class ProductPriceController extends Controller
 
     public function updateStatus(Request $request)
     {
+        $this->authorize('update', new ProductPrice);
+
         $productPrice = ProductPrice::find($request->get('id'));
         $productPrice->update([
             'is_active' => $request->boolean('is_active'),
@@ -126,6 +133,8 @@ class ProductPriceController extends Controller
 
     public function updatePositions(Request $request)
     {
+        $this->authorize('update', new ProductPrice);
+
         $positions = $request->post('positions');
 
         if ($positions) {

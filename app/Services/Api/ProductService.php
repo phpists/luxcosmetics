@@ -200,11 +200,11 @@ class ProductService
                 $product['availability'] = AvailableOptions::NOT_AVAILABLE->value;
             }
 
-            if ($existingProduct->availability !== AvailableOptions::DISCONTINUED->value)
-                $existingProduct->update([
-                    'items_left' => $product['items_left'],
-                    'availability' => $product['availability']
-                ]);
+            if ($existingProduct->availability !== AvailableOptions::DISCONTINUED->value) {
+                $existingProduct->items_left = $product['items_left'];
+                $existingProduct->availability = $product['availability'];
+                $existingProduct->save();
+            }
         }
     }
 

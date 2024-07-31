@@ -13,7 +13,7 @@
             </th>
             @endif
             <th class="pl-0 text-center">
-                #
+                Номер
             </th>
             <th class="pr-0 text-center">
                 Причина обращения
@@ -68,11 +68,16 @@
                         <i class="las la-edit"></i>
                     </a>
                     @endif
-                    {{--                                            <a href="{{ route('admin.category.delete', $category->id) }}"--}}
-                    {{--                                               class="btn btn-sm btn-clean btn-icon"--}}
-                    {{--                                               onclick="return confirm('Вы уверенны, что хотите удалить данную запись?')">--}}
-                    {{--                                                <i class="las la-trash"></i>--}}
-                    {{--                                            </a>--}}
+                    @if(auth()->user()->isSuperAdmin() || auth()->user()->can(\App\Services\Admin\PermissionService::FEEDBACKS_DELETE))
+                        <form action="{{ route('admin.chats.destroy', $chat) }}" method="POST" style="display: inline">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-sm btn-clean btn-icon btn_delete"
+                                    onclick="return confirm('Вы уверенны?')"
+                                    title="Delete"><i class="las la-trash"></i>
+                            </button>
+                        </form>
+                    @endif
                 </td>
             </tr>
         @endforeach

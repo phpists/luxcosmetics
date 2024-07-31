@@ -299,7 +299,8 @@
                                         </ul>
                                     </div>
                                 @endif
-                                @if(auth()->user()->isSuperAdmin())
+                                @if(auth()->user()->isSuperAdmin()
+                            || auth()->user()->can(\App\Services\Admin\PermissionService::PRODUCT_PRICES_VIEW))
                                     <div class="menu-submenu" style="" kt-hidden-height="160">
                                         <i class="menu-arrow"></i>
                                         <ul class="menu-subnav">
@@ -493,6 +494,17 @@
                                 </div>
                             </li>
                         @endif
+
+                        @if(auth()->user()->isSuperAdmin() || auth()->user()->can(\App\Services\Admin\PermissionService::PRODUCT_AVAILABILITY_WAITER_VIEW))
+                            <li class="menu-item {{ Str::is('admin.product-availability-waiters.*', request()->route()->getName()) ? 'menu-item-active' : '' }}"
+                                aria-haspopup="true">
+                                <a href="{{ route('admin.product-availability-waiters.index') }}" class="menu-link">
+                                    <i class="fas fa-user-clock menu-icon"></i>
+                                    <span class="menu-text">Ожидаемые товары</span>
+                                </a>
+                            </li>
+                        @endif
+
                         @if(auth()->user()->isSuperAdmin()
                                 || auth()->user()->can(\App\Services\Admin\PermissionService::USERS_VIEW)
                                 || auth()->user()->can(\App\Services\Admin\PermissionService::COMMENTS_VIEW)

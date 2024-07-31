@@ -8,12 +8,15 @@ use App\Http\Controllers\Admin\Settings\SettingController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\QuestionController;
+use App\Http\Controllers\SitemapController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Laravel\Socialite\Facades\Socialite;
 
 /* Socialize */
 Auth::routes();
+
+Route::get('sitemap.xml', [SitemapController::class, 'index'])->name('sitemap');
 
 Route::get('/', [\App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
@@ -144,13 +147,6 @@ Route::get('cart/clear', [\App\Http\Controllers\CartController::class, 'clear'])
 Route::get('cart/login', [\App\Http\Controllers\CartController::class, 'login'])->name('cart.login')->middleware('guest');
 Route::post('fast-register', [\App\Http\Controllers\Auth\FastRegisterController::class, 'store'])
     ->name('fast-register')->middleware('guest');
-
-
-// Cart
-Route::get('cart/step1', [\App\Http\Controllers\CartController::class, 'step_first'])->name('cart.step1');
-Route::get('cart/step2', [\App\Http\Controllers\CartController::class, 'step_second'])->name('cart.step2');
-
-
 
 // Admin
 Route::get('admin', [AdminController::class, 'index'])->name('admin.home');
@@ -305,12 +301,6 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function 
 
         Route::resource('seo-templates', \App\Http\Controllers\Admin\SeoTemplateController::class);
 
-        Route::post('product-prices/update-status', [ProductPriceController::class, 'updateStatus'])
-            ->name('product-prices.update-status');
-        Route::post('product-prices/update-positions', [ProductPriceController::class, 'updatePositions'])
-            ->name('product-price.update-positions');
-        Route::resource('product-prices', \App\Http\Controllers\Admin\ProductPriceController::class);
-
     });
 
     // Tags
@@ -335,6 +325,7 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function 
     // Feedback Chat
     Route::get('chats', [\App\Http\Controllers\Admin\FeedbackController::class, 'index'])->name('admin.chats');
     Route::get('chats/{id}/edit', [\App\Http\Controllers\Admin\FeedbackController::class, 'edit'])->name('admin.chats.edit');
+    Route::delete('chats/{chat}/destroy', [\App\Http\Controllers\Admin\FeedbackController::class, 'destroy'])->name('admin.chats.destroy');
     Route::post('chats/update_status', [\App\Http\Controllers\Admin\FeedbackController::class, 'updateStatus'])->name('admin.chats.updateStatus');
 
     /* News */
@@ -477,6 +468,12 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function 
     Route::post('category_posts/update-position', [\App\Http\Controllers\Admin\CategoryPostsController::class, 'updatePosition'])->name('admin.category_posts.update_positions');
     Route::post('category_post/update-status', [\App\Http\Controllers\Admin\CategoryPostsController::class, 'updateStatus'])->name('admin.category_posts.update_status');
 
+    /** Category > ProductSort */
+    Route::post('category-product-sorts/update-positions', [\App\Http\Controllers\Admin\CategoryProductSortController::class, 'updatePositions'])
+        ->name('admin.category-product-sorts.update-positions');
+    Route::resource('category-product-sorts', \App\Http\Controllers\Admin\CategoryProductSortController::class, ['as' => 'admin'])
+        ->only(['store', 'destroy']);
+
     /** Courier Delivery Methods */
     Route::resource('courier-delivery-methods', \App\Http\Controllers\Admin\Settings\CourierDeliveryMethodController::class, [
         'as' => 'admin'
@@ -485,6 +482,21 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function 
     Route::get('get-cities', [\App\Http\Controllers\Admin\Settings\CourierDeliveryMethodController::class, 'getCities']);
     /** /Courier Delivery Methods */
 
+
+    /** Product Prices */
+    Route::post('product-prices/update-status', [ProductPriceController::class, 'updateStatus'])
+        ->name('admin.product-prices.update-status');
+    Route::post('product-prices/update-positions', [ProductPriceController::class, 'updatePositions'])
+        ->name('admin.product-price.update-positions');
+    Route::resource('product-prices', \App\Http\Controllers\Admin\ProductPriceController::class, [
+        'as' => 'admin'
+    ]);
+    /** /Product Prices */
+
+    /** Product Availability Waiters */
+    Route::get('product-availability-waiters', [\App\Http\Controllers\Admin\ProductAvailabilityWaiterController::class, 'index'])
+        ->name('admin.product-availability-waiters.index');
+    /** /Product Availability Waiters */
 
 });
 
@@ -501,6 +513,10 @@ Route::post('/comment/like', [App\Http\Controllers\CommentsController::class, 'l
 Route::post('/comment/dislike', [App\Http\Controllers\CommentsController::class, 'dislike'])->name('send.dislike');
 Route::get('/load_comments', [App\Http\Controllers\CommentsController::class, 'loadComments'])->name('comment.load');
 Route::get('/sort_comments/{alias}', [App\Http\Controllers\CommentsController::class, 'sortComments'])->name('comment.sort');
+
+// Product Availability
+Route::resource('product-availability', \App\Http\Controllers\ProductAvailabilityWaiterController::class)
+    ->only(['store']);
 
 
 Route::get('/user/home', [App\Http\Controllers\HomeController::class, 'home'])->name('user.home');

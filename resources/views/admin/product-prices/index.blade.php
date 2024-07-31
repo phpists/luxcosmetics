@@ -30,7 +30,7 @@
             <div class="card card-custom">
                 <div class="card-body">
                     <div class="row justify-content-end">
-                        @if(auth()->user()->isSuperAdmin())
+                        @if(auth()->user()->isSuperAdmin() || auth()->user()->can(\App\Services\Admin\PermissionService::PRODUCT_PRICES_CREATE))
                             <button data-toggle="modal" data-target="#createProductPriceModal"
                                     class="btn btn-success font-weight-bolder mx-5">
                                     <span class="svg-icon svg-icon-md">
