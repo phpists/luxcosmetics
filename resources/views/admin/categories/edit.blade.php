@@ -762,7 +762,7 @@
     @include('admin.categories.modals.update-tag', ['morphable_type' => \App\Models\Category::class, 'morphable_id' => $category->id])
     @include('admin.categories.modals.create-category_post')
     @include('admin.categories.modals.update-category_post')
-    @include('admin.categories.modals.create-category_product_sort', ['products' => $category->products])
+    @include('admin.categories.modals.create-category_product_sort', ['products' => $category->products->whereNotIn('id', $category->productSorts->pluck('product_id'))])
     @include('admin.products.modals.create-article', ['record_id' => $category->id, 'table_name' => 'categories'])
     @include('admin.products.modals.edit-article')
 @endsection
