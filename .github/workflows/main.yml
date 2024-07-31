@@ -2,7 +2,7 @@ name: SSH deploy on push
 on:
   push:
     branches: [ main ]
-    
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -17,6 +17,6 @@ jobs:
             cd ~/www/luxecosmetics.ru
             git reset --hard
             git pull
-            composer install
+            php composer.phar install
             php artisan migrate
             php artisan view:clear
