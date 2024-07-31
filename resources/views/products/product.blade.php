@@ -498,7 +498,7 @@
                                     </div>
                                 @endguest
                             </div>
-                            <button class="btn btn--accent">Отправить</button>
+                            <button type="submit"  class="btn btn--accent g-recaptcha" data-sitekey="{{ config('services.google.captcha.site_key') }}" data-callback='onSubmitFeedback' data-action='submit'>Отправить</button>
                             <div class="product-tabs__formclose">Закрыть</div>
                         </form>
                         <form action="{{route('product_question.create')}}" class="product-tabs__form form" id="newask-form" method="POST">
@@ -523,7 +523,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <button class="btn btn--accent">Отправить</button>
+                            <button type="submit"  class="btn btn--accent g-recaptcha" data-sitekey="{{ config('services.google.captcha.site_key') }}" data-callback='onSubmitQuestion' data-action='submit'>Отправить</button>
                             <div class="product-tabs__formclose">Закрыть</div>
                         </form>
 
@@ -924,6 +924,13 @@
 
             $('.variation__select.checked').prop('checked', true)
         });
+
+        function onSubmitFeedback(token) {
+            document.getElementById("newreview-form").requestSubmit();
+        }
+        function onSubmitQuestion(token) {
+            document.getElementById("newask-form").requestSubmit();
+        }
     </script>
 @endsection
 

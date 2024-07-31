@@ -34,6 +34,9 @@ return [
         'client_id' => env('GOOGLE_CLIENT_ID', '811922147593-kdpf4pumpbi7djhp2jvhhrba2mtmgi7d.apps.googleusercontent.com'),
         'client_secret' => env('GOOGLE_SECRET', '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'),
         'redirect' => env('GOOGLE_REDIRECT', 'http://localhost:8000/login/google/callback'),
+        'captcha' => [
+            'site_key' => env('GOOGLE_CAPTCHA_SITE_KEY'),
+        ]
     ],
 
     'facebook' => [
