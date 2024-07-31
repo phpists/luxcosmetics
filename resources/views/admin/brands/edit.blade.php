@@ -365,7 +365,7 @@
     <!--end::Entry-->
     @include('admin.categories.modals.create-tag', ['morphable_type' => \App\Models\Brand::class, 'morphable_id' => $brand->id])
     @include('admin.categories.modals.update-tag', ['morphable_type' => \App\Models\Brand::class, 'morphable_id' => $brand->id])
-    @include('admin.brands.modals.create-brand_product_sort', ['products' => $brand->products])
+    @include('admin.brands.modals.create-brand_product_sort', ['products' => $brand->products->whereNotIn('id', $brand->productSorts->pluck('product_id'))])
 @endsection
 
 @section('js_after')
