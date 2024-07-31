@@ -321,7 +321,7 @@
                         </div>
                         <div class="mailing__right">
                             <input required type="email" class="mailing__input" name="email" placeholder="Введите ваш e-mail">
-                            <button type="submit" class="mailing__button g-recaptcha" data-sitekey="{{ env('GOOGLE_CAPTCHA_SITE_KEY') }}" data-callback='onSubmit' data-action='submit'><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#circle-arrow')}}"></use></svg></button>
+                            <button type="submit" class="mailing__button g-recaptcha" data-sitekey="{{ config('services.google.captcha.site_key') }}" data-callback='onSubmit' data-action='submit'><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#circle-arrow')}}"></use></svg></button>
                         </div>
                     </form>
                 </div>
