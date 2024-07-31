@@ -22,6 +22,9 @@ class ProductController extends Controller
     public function show(Request $request, string $alias, int $variation_id = null) {
         $product = Product::query();
         $product = $product->where('alias', $alias)->firstOrFail();
+
+        $product->increment('popularity');
+
         if ($request->ajax()) {
             $images = DB::table('product_images')
                 ->select('path as image_path')

@@ -5,6 +5,7 @@
         <select name="" id="select_sort_preview" class="sort__select">
             <option value="default:desc" @if(!request()->input('sort') || (request()->input('sort') == 'default:desc')) selected @endif>По умолчанию</option>
             <option value="created_at:desc" @if((request()->input('sort') == 'created_at:desc')) selected @endif>Новизне</option>
+            <option value="popularity:desc" @if((request()->input('sort') == 'popularity:desc')) selected @endif>Популярности</option>
             <option value="price:asc" @if(request()->input('sort') == 'price:asc') selected @endif>Возрастанию цены</option>
             <option value="price:desc" @if(request()->input('sort') == 'price:desc') selected @endif>Убыванию цены</option>
         </select>
