@@ -17,6 +17,6 @@ jobs:
             cd ~/www/luxecosmetics.ru
             git reset --hard
             git pull
-            php composer.phar install
-            php artisan migrate
-            php artisan view:clear
+            /opt/php82/bin/php composer.phar install
+            /opt/php82/bin/php artisan migrate
+            /opt/php82/bin/php artisan view:clear
