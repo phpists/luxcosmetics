@@ -103,6 +103,7 @@ class CatalogService
                 $productSortIds = $relation->productSorts()->pluck('product_id')->implode(', ');
                 $products->orderByRaw("IF(FIELD(products.id, $productSortIds)=0, 1, 0), FIELD(products.id, $productSortIds)");
             }
+            $products->orderBy('created_at', 'DESC')->orderBy('products.id', 'desc');
         } else {
             $products->orderBy($sortColumn, $this->getSortDirection());
         }

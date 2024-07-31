@@ -325,6 +325,7 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function 
     // Feedback Chat
     Route::get('chats', [\App\Http\Controllers\Admin\FeedbackController::class, 'index'])->name('admin.chats');
     Route::get('chats/{id}/edit', [\App\Http\Controllers\Admin\FeedbackController::class, 'edit'])->name('admin.chats.edit');
+    Route::delete('chats/{chat}/destroy', [\App\Http\Controllers\Admin\FeedbackController::class, 'destroy'])->name('admin.chats.destroy');
     Route::post('chats/update_status', [\App\Http\Controllers\Admin\FeedbackController::class, 'updateStatus'])->name('admin.chats.updateStatus');
 
     /* News */

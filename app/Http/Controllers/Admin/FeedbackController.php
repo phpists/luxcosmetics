@@ -69,4 +69,11 @@ class FeedbackController extends Controller
             return redirect()->route('admin.chats')->with('success', 'Статус тикета обновлен');
         }
     }
+
+    public function destroy(Request $request, FeedbackChat $chat)
+    {
+        $chat->delete();
+        return to_route('admin.chats')->with('success', 'Тикет удален');
+    }
+
 }

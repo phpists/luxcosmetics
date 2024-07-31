@@ -68,7 +68,8 @@ class Product extends Model
         'allergy',
         'spyrt',
         'expiry_date',
-        'items_left'
+        'items_left',
+        'popularity',
     ];
 
     protected $hidden = [
