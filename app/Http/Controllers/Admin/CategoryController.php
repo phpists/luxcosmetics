@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Article;
 use App\Models\Category;
 use App\Models\CategoryPost;
+use App\Models\Product;
 use App\Models\PropertyCategory;
 use App\Models\Tag;
 use App\Services\FileService;
@@ -104,7 +105,7 @@ class CategoryController extends Controller
         return redirect()->back()->with('succcess', 'Категория успешно удалена');
     }
 
-    public function edit($id) {
+    public function edit(string $id) {
         $categories = Category::query()->with('productSorts')->get();
         $category = $categories->find($id);
 
@@ -121,7 +122,19 @@ class CategoryController extends Controller
         $properties = PropertyCategory::query()->where('category_id', $category->id)->orderBy('position')->paginate();
         $seo = Category::query()->select('categories.*')->find($id);
 
-        return view('admin.categories.edit', compact('category', 'categories', 'properties', 'tags', 'last_position', 'articles', 'seo', 'posts'));
+        $all_category_ids = Category::getChildIds($id);
+        $sortProducts = Product::where(function ($q) use ($all_category_ids) {
+            $q->whereIn('products.id', function ($query) use ($all_category_ids) {
+                $query->select('product_id')
+                    ->from('product_categories')
+                    ->whereIn('category_id', $all_category_ids);
+            })
+                ->orWhereIn('category_id', $all_category_ids);
+        })
+            ->whereNotIn('id', $category->productSorts->pluck('product_id'))
+            ->get();
+
+        return view('admin.categories.edit', compact('category', 'categories', 'properties', 'tags', 'last_position', 'articles', 'seo', 'posts', 'sortProducts'));
     }
 
     public function update(Request $request){
