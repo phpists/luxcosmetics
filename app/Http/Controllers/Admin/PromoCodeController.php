@@ -55,8 +55,15 @@ class PromoCodeController extends Controller
     }
 
     public function show(Request $request, PromoCode $promoCode) {
+        $promoCodeArr = $promoCode->toArray();
+
+        $orders = [];
+        foreach ($promoCode->orders as $order)
+            $orders["Заказ №{$order->num}"] = route('admin.orders.show', $order);
+        $promoCodeArr['orders'] = $orders;
+
         if ($request->wantsJson())
-            return $promoCode;
+            return $promoCodeArr;
 
         return back();
     }

@@ -86,6 +86,10 @@
                         </div>
                     </div>
 
+                    <hr>
+                    <h5>Использование:</h5>
+                    <div id="showPromoCodeUses"></div>
+
                         </div>
 
                 <div class="modal-footer">

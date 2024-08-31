@@ -85,7 +85,7 @@
                         Бонусы: {{ $order->bonuses_discount }}<br>
                     @endif
                     @if($order->promoCode)
-                        Промо код: {{ $order->promo_code_discount }}
+                        Промо код: <b>{{ $order->promoCode->code }}</b> > {{ $order->promo_code_discount }}
                     @endif
                     {{ $order->discount }}
                 </td>

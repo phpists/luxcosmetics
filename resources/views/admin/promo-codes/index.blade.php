@@ -215,6 +215,16 @@
                     $('#showQuantity').val(item.quantity);
                     $('#showStarts').val(item.starts_at);
                     $('#showEnds').val(item.ends_at);
+
+                    if (Object.keys(item.orders).length > 0) {
+                        let uses = [];
+                        for (const key in item.orders) {
+                            uses.push(`<a href="${item.orders[key]}" target="_blank">${key}</a>`)
+                        }
+                        $('#showPromoCodeUses').html(uses.join('<br>'))
+                    } else {
+                        $('#showPromoCodeUses').html('<h6>Не было использований</h6>')
+                    }
                 }
             });
         }
