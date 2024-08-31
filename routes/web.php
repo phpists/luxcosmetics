@@ -309,6 +309,7 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function 
     Route::put('/tag', [\App\Http\Controllers\Admin\TagController::class, 'update'])->name('admin.tag.update');
     Route::delete('/tag', [\App\Http\Controllers\Admin\TagController::class, 'delete'])->name('admin.tag.delete');
     Route::post('/tag/update-position', [\App\Http\Controllers\Admin\TagController::class, 'updatePosition'])->name('admin.tag.update_position');
+    Route::post('/tag/{tag}/update-is-active', [\App\Http\Controllers\Admin\TagController::class, 'updateIsActive'])->name('admin.tag.update-is-active');
 
     Route::post('update-price-from-excel', [\App\Http\Controllers\Admin\ProductController::class, 'updatePricesFromExcel'])
         ->name('admin.update-price-from-excel');

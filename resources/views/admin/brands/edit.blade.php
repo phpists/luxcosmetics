@@ -184,6 +184,9 @@
                                             Позиция
                                         </th>
                                         <th class="pr-0 text-center">
+                                            Активный
+                                        </th>
+                                        <th class="pr-0 text-center">
                                             Действия
                                         </th>
                                     </tr>
@@ -219,6 +222,14 @@
                                                 <span class="text-dark-75 d-block font-size-lg pos_tag">
                                                     {{ $tag->position }}
                                                 </span>
+                                            </td>
+                                            <td class="text-center">
+                                   <span class="switch d-flex justify-content-center tag-updatable" data-url="{{ route('admin.tag.update-is-active', $tag) }}">
+                                        <label>
+                                            <input type="checkbox" @checked($tag->is_active)/>
+                                            <span></span>
+                                        </label>
+                                    </span>
                                             </td>
                                             <td class="text-center pr-0">
                                                 <a href="javascript:;" class="btn btn-sm btn-clean btn-icon updateTag"
@@ -377,6 +388,17 @@
 
     <script>
         $(function () {
+
+
+            $(document).on('change', '.switch.tag-updatable input:checkbox', function(e) {
+                $.ajax({
+                    type: 'POST',
+                    url: $(this).parents('.switch:first').data('url'),
+                    data: {
+                        is_active: this.checked
+                    },
+                })
+            })
 
 
             $('#createBrandProductSortProductId').select2({

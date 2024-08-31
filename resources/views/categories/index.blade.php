@@ -66,7 +66,7 @@
                         </aside>
                         <main class="category-page__main">
                             <ul class="category-page__subcategories">
-                                @foreach($category->tags->where('add_to_top', true)->sortBy('position') as $tag)
+                                @foreach($category->topTags as $tag)
                                     <li>
                                         <a href="{{$tag->link}}" class="category-page__subcategory">
                                             <span class="category-page__subcategory-image"><img src="{{$tag->getImageSrcAttribute()}}" alt=""></span>
@@ -113,7 +113,7 @@
         $has_bottom_title = (isset($category->bottom_title) && $category->bottom_title !== ''  && $category->bottom_title !== '<p><br></p>');
         $has_bottom_text = (isset($category->bottom_text) && $category->bottom_text !== ''  && $category->bottom_text !== '<p><br></p>');
         $has_hidden_bottom_text = (isset($category->hidden_bottom_text) && $category->hidden_bottom_text !== '' && $category->hidden_bottom_text !== '<p><br></p>');
-        $bottom_tags = $category->tags->where('add_to_top', false);
+        $bottom_tags = $category->bottomTags;
     @endphp
     @if($has_bottom_title || $has_bottom_text || $has_hidden_bottom_text || (sizeof($bottom_tags) > 0))
     <section class="seoblock">
