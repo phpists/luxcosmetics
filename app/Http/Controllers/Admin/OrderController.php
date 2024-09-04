@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Exports\OrdersExport;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\GiftCardValue;
@@ -9,11 +10,8 @@ use App\Models\Order;
 use App\Models\OrderProduct;
 use App\Models\OrderStatus;
 use App\Models\Product;
-use App\Services\CartService;
 use App\Services\GiftService;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 
 class OrderController extends Controller
@@ -241,6 +239,15 @@ class OrderController extends Controller
         $order->delete();
 
         return back()->with('success', "Заказ №{$order->id} удален");
+    }
+
+    public function export(Request $request)
+    {
+        $orders = Order::whereIn('id', explode(',', $request->post('ids', '')))->get();
+        if ($orders->isNotEmpty())
+            return \Excel::download(new OrdersExport($orders), 'orders.xlsx');
+
+        return back()->with('error', 'Нечего експортировать');
     }
 
 }
