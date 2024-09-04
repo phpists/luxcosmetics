@@ -11,7 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        //
+        Schema::create('promo_code_cases', function (Blueprint $table) {
+            $table->id();
+            $table->foreignIdFor(\App\Models\PromoCode::class)->constrained()->cascadeOnDelete();
+            $table->morphs('model');
+            $table->timestamps();
+        });
     }
 
     /**
@@ -19,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        //
+        Schema::dropIfExists('promo_code_cases');
     }
 };

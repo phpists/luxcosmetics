@@ -96,8 +96,16 @@ class Category extends Model
             ->orderBy('pos');
     }
 
-    public static function getChildIds($category_id): array
+    public static function getChildIds(string|int|array $category_id): array
     {
+        if (is_array($category_id)) {
+            $result = [];
+            foreach ($category_id as $item)
+                $result = array_merge(self::getChildIds($item), $result);
+
+            return $result;
+        }
+
         return \Cache::rememberForever('category_child_ids_' . $category_id, function () use ($category_id) {
             $ids = [$category_id];
             $category = self::find($category_id);

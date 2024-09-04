@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\PromoCode;
+use App\Models\PromoCodeCase;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
@@ -24,7 +26,8 @@ class PromoCodeController extends Controller
         return view('admin.promo-codes.index', [
             'promo_codes' => PromoCode::latest()->paginate(),
             'categories' => Category::all(),
-            'products' => Product::all()
+            'products' => Product::all(),
+            'brands' => Brand::all(),
         ]);
     }
 
@@ -32,6 +35,10 @@ class PromoCodeController extends Controller
     {
         try {
             $data = $request->post();
+            $model_ids = $data['product_ids'] ?? $data['category_ids'] ?? $data['brand_ids'] ?? [];
+            unset($data['product_ids']);
+            unset($data['category_ids']);
+            unset($data['brand_ids']);
 
             if (isset($data['code']) && !empty($data['code'])) {
                 if ($this->isCodeExists($data['code']))
@@ -40,7 +47,18 @@ class PromoCodeController extends Controller
                 $data['code'] = $this->getUniqueCode();
             }
 
-            PromoCode::create($data);
+            $promoCode = PromoCode::create($data);
+
+            $promoCode->cases()->createMany(array_map(function($item) use($promoCode) {
+                return [
+                    'model_id' => $item,
+                    'model_type' => match ($promoCode->type) {
+                        PromoCode::TYPE_BRAND => Brand::class,
+                        PromoCode::TYPE_CATEGORY => Category::class,
+                        PromoCode::TYPE_PRODUCT => Product::class,
+                    }
+                ];
+            }, $model_ids));
 
             Session::flash('success', 'Промокод успешно создан');
 
