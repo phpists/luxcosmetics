@@ -78,6 +78,14 @@
                                     <span class="nav-text">Сортировка товаров</span>
                                 </a>
                             </li>
+                            @if(auth()->user()->isSuperAdmin()
+               || auth()->user()->can(\App\Services\Admin\PermissionService::CATALOG_BANNERS_VIEW))
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#catalogBanners">
+                                    <span class="nav-text">Баннеры в каталоге</span>
+                                </a>
+                            </li>
+                                @endif
                         </ul>
                     </div>
                 </div>
@@ -758,6 +766,8 @@
                             </div>
                             <!--end::Table-->
                         </div>
+
+                        @include('admin.catalog-banner-conditions.table', ['model' => $category])
 
                     </div>
                 </div>

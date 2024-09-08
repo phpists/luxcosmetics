@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Http\Controllers\CategoryController;
+use App\Traits\Models\HasCatalogBanners;
 use App\Traits\Models\HasTags;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -11,7 +12,7 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 class Category extends Model
 {
-    use HasTags;
+    use HasTags, HasCatalogBanners;
 
     protected $table = "categories";
 

@@ -99,6 +99,11 @@ class PermissionService
 
     const PRODUCT_AVAILABILITY_WAITER_VIEW = 'product-availability-waiter.view';
 
+    const CATALOG_BANNERS_VIEW = 'catalog-banners-view.view';
+    const CATALOG_BANNERS_CREATE = 'catalog-banners-view.create';
+    const CATALOG_BANNERS_EDIT = 'catalog-banners-view.edit';
+    const CATALOG_BANNERS_DELETE = 'catalog-banners-view.delete';
+
 
     public static function getAll(): array
     {
@@ -216,6 +221,12 @@ class PermissionService
             ],
             'Ожидаемые товары' => [
                 self::PRODUCT_AVAILABILITY_WAITER_VIEW => 'Просмотр',
+            ],
+            'Баннеры в каталоге' => [
+                self::CATALOG_BANNERS_VIEW => 'Просмотр',
+                self::CATALOG_BANNERS_CREATE => 'Создание',
+                self::CATALOG_BANNERS_EDIT => 'Редактирование',
+                self::CATALOG_BANNERS_DELETE => 'Удаление',
             ],
         ];
     }

@@ -60,6 +60,14 @@
                                     <span class="nav-text">Сортировка товаров</span>
                                 </a>
                             </li>
+                            @if(auth()->user()->isSuperAdmin()
+               || auth()->user()->can(\App\Services\Admin\PermissionService::CATALOG_BANNERS_VIEW))
+                                <li class="nav-item">
+                                    <a class="nav-link" data-toggle="tab" href="#catalogBanners">
+                                        <span class="nav-text">Баннеры в каталоге</span>
+                                    </a>
+                                </li>
+                            @endif
                         </ul>
                     </div>
                 </div>
@@ -67,7 +75,8 @@
                     <div class="tab-content">
                         <div class="tab-pane fade show active" id="general" role="tabpanel"
                              aria-labelledby="general">
-                            <form action="{{ route('admin.brands.update', $brand) }}" method="POST" enctype="multipart/form-data">
+                            <form action="{{ route('admin.brands.update', $brand) }}" method="POST"
+                                  enctype="multipart/form-data">
                                 @csrf
                                 @method('put')
                                 <div class="card-body">
@@ -77,13 +86,15 @@
                                                 <div class="col-12">
                                                     <div class="form-group">
                                                         <label>Название</label>
-                                                        <input type="text" name="name" class="form-control" required value="{{ $brand->name }}"/>
+                                                        <input type="text" name="name" class="form-control" required
+                                                               value="{{ $brand->name }}"/>
                                                     </div>
                                                 </div>
                                                 <div class="col-12">
                                                     <div class="form-group">
                                                         <label>Ссылка</label>
-                                                        <input type="text" name="link" class="form-control" required value="{{ $brand->link }}"/>
+                                                        <input type="text" name="link" class="form-control" required
+                                                               value="{{ $brand->link }}"/>
                                                     </div>
                                                 </div>
                                             </div>
@@ -93,7 +104,8 @@
                                                 <label>Изображение</label>
                                                 <div class="col-auto ml-2">
                                                     <div class="image-input image-input-outline" id="createImagePlugin">
-                                                        <div class="image-input-wrapper" id="updateImageBackground" style="background-image: url('{{ asset('images/uploads/brands/' . $brand->image) }}')"></div>
+                                                        <div class="image-input-wrapper" id="updateImageBackground"
+                                                             style="background-image: url('{{ asset('images/uploads/brands/' . $brand->image) }}')"></div>
                                                         <label
                                                             class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
                                                             data-action="change" data-toggle="tooltip"
@@ -102,10 +114,16 @@
                                                             <input type="file" name="image" accept="image/*"/>
                                                             <input type="hidden" name="image_remove"/>
                                                         </label>
-                                                        <span class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="cancel" data-toggle="tooltip" title="Cancel avatar">
+                                                        <span
+                                                            class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
+                                                            data-action="cancel" data-toggle="tooltip"
+                                                            title="Cancel avatar">
                                                             <i class="ki ki-bold-close icon-xs text-muted"></i>
                                                         </span>
-                                                        <span class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="remove" data-toggle="tooltip" title="Remove avatar">
+                                                        <span
+                                                            class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
+                                                            data-action="remove" data-toggle="tooltip"
+                                                            title="Remove avatar">
                                                             <i class="ki ki-bold-close icon-xs text-muted"></i>
                                                         </span>
                                                     </div>
@@ -117,25 +135,29 @@
                                         <div class="col-12">
                                             <div class="form-group">
                                                 <label>H1 тег</label>
-                                                <input type="text" name="seo_content[h1]" class="form-control" value="{{ $brand->getSeo('h1') }}"/>
+                                                <input type="text" name="seo_content[h1]" class="form-control"
+                                                       value="{{ $brand->getSeo('h1') }}"/>
                                             </div>
                                         </div>
                                         <div class="col-12">
                                             <div class="form-group">
                                                 <label>Заголовок внизу</label>
-                                                <input type="text" name="seo_content[bottom_title]" class="form-control" value="{{ $brand->getSeo('bottom_title') }}"/>
+                                                <input type="text" name="seo_content[bottom_title]" class="form-control"
+                                                       value="{{ $brand->getSeo('bottom_title') }}"/>
                                             </div>
                                         </div>
                                         <div class="col-12">
                                             <div class="form-group">
                                                 <label>Текст внизу</label>
-                                                <textarea name="seo_content[bottom_text]" class="summernote-lg">{{ $brand->getSeo('bottom_text') }}</textarea>
+                                                <textarea name="seo_content[bottom_text]"
+                                                          class="summernote-lg">{{ $brand->getSeo('bottom_text') }}</textarea>
                                             </div>
                                         </div>
                                         <div class="col-12">
                                             <div class="form-group">
                                                 <label>Скрытый текст внизу</label>
-                                                <textarea name="seo_content[hidden_bottom_text]" class="summernote-lg">{{ $brand->getSeo('hidden_bottom_text') }}</textarea>
+                                                <textarea name="seo_content[hidden_bottom_text]"
+                                                          class="summernote-lg">{{ $brand->getSeo('hidden_bottom_text') }}</textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -204,8 +226,10 @@
                                                 {{ $tag->id }}
                                             </td>
                                             <td class="text-center position">
-                                                <div class="mx-auto rounded-circle overflow-hidden" style="width: fit-content">
-                                                    <img src="{{ $tag->getImageSrcAttribute() }}" width="50" height="50" alt="">
+                                                <div class="mx-auto rounded-circle overflow-hidden"
+                                                     style="width: fit-content">
+                                                    <img src="{{ $tag->getImageSrcAttribute() }}" width="50" height="50"
+                                                         alt="">
                                                 </div>
                                             </td>
                                             <td class="text-center position">
@@ -224,7 +248,8 @@
                                                 </span>
                                             </td>
                                             <td class="text-center">
-                                   <span class="switch d-flex justify-content-center tag-updatable" data-url="{{ route('admin.tag.update-is-active', $tag) }}">
+                                   <span class="switch d-flex justify-content-center tag-updatable"
+                                         data-url="{{ route('admin.tag.update-is-active', $tag) }}">
                                         <label>
                                             <input type="checkbox" @checked($tag->is_active)/>
                                             <span></span>
@@ -237,7 +262,8 @@
                                                    data-id="{{ $tag->id }}">
                                                     <i class="las la-edit"></i>
                                                 </a>
-                                                <button type="button" class="btn btn-sm btn-clean btn-icon btn_delete tag_delete"
+                                                <button type="button"
+                                                        class="btn btn-sm btn-clean btn-icon btn_delete tag_delete"
                                                         data-label="{{ $tag->name }}"
                                                         data-value="{{$tag->id}}"
                                                         title="Delete"><i class="las la-trash"></i>
@@ -259,8 +285,10 @@
                                                 {{ $tag->id }}
                                             </td>
                                             <td class="text-center position">
-                                                <div class="mx-auto rounded-circle overflow-hidden" style="width: fit-content">
-                                                    <img src="{{ $tag->getImageSrcAttribute() }}" width="50" height="50" alt="">
+                                                <div class="mx-auto rounded-circle overflow-hidden"
+                                                     style="width: fit-content">
+                                                    <img src="{{ $tag->getImageSrcAttribute() }}" width="50" height="50"
+                                                         alt="">
                                                 </div>
                                             </td>
                                             <td class="text-center position">
@@ -284,7 +312,8 @@
                                                    data-id="{{ $tag->id }}">
                                                     <i class="las la-edit"></i>
                                                 </a>
-                                                <button type="button" class="btn btn-sm btn-clean btn-icon tag_delete btn_delete"
+                                                <button type="button"
+                                                        class="btn btn-sm btn-clean btn-icon tag_delete btn_delete"
                                                         data-label="{{ $tag->name }}"
                                                         data-value="{{$tag->id}}"
                                                         title="Delete"><i class="las la-trash"></i>
@@ -344,14 +373,18 @@
                                             </td>
                                             <td class="text-center position">
                                                 <span class="text-dark-75 d-block font-size-lg sort_col">
-                                                    <a href="{{ route('products.product', ['alias' => $productSort->product->alias]) }}" target="_blank">{{ $productSort->product->alias }}</a>
+                                                    <a href="{{ route('products.product', ['alias' => $productSort->product->alias]) }}"
+                                                       target="_blank">{{ $productSort->product->alias }}</a>
                                                 </span>
                                             </td>
                                             <td class="text-center pr-0">
-                                                <form action="{{ route('admin.category-product-sorts.destroy', $productSort) }}" method="POST" style="display: inline">
+                                                <form
+                                                    action="{{ route('admin.category-product-sorts.destroy', $productSort) }}"
+                                                    method="POST" style="display: inline">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="submit" class="btn btn-sm btn-clean btn-icon btn_delete"
+                                                    <button type="submit"
+                                                            class="btn btn-sm btn-clean btn-icon btn_delete"
                                                             onclick="return confirm('Вы уверены, что хотите удалить сортировку товара?')"
                                                             title="Delete"><i class="las la-trash"></i>
                                                     </button>
@@ -364,6 +397,7 @@
                             </div>
                             <!--end::Table-->
                         </div>
+                        @include('admin.catalog-banner-conditions.table', ['model' => $brand])
                     </div>
                 </div>
             </div>
@@ -390,7 +424,7 @@
         $(function () {
 
 
-            $(document).on('change', '.switch.tag-updatable input:checkbox', function(e) {
+            $(document).on('change', '.switch.tag-updatable input:checkbox', function (e) {
                 $.ajax({
                     type: 'POST',
                     url: $(this).parents('.switch:first').data('url'),
@@ -404,8 +438,6 @@
             $('#createBrandProductSortProductId').select2({
                 placeholder: "Выберите товар",
             });
-
-
 
 
             const categoryProductSorts = document.getElementById('product_sorting-table')
@@ -466,11 +498,11 @@
                     success: function (response) {
                         $('#updateTagId').val(id);
 
-                        $(`#addToTop option[value="${response.add_to_top}"]`).attr('selected','selected');
+                        $(`#addToTop option[value="${response.add_to_top}"]`).attr('selected', 'selected');
                         $('#updateName').val(response.name);
                         $('#updateLink').val(response.link);
                         $('#imageWindow').css({
-                            'background-image': 'url({{asset('/')}}images/uploads/tags/' +response.image_path + ')'
+                            'background-image': 'url({{asset('/')}}images/uploads/tags/' + response.image_path + ')'
                         });
 
                         // document.getElementById('updateFaqIsActive').checked = (response.is_active == 1)
@@ -534,7 +566,7 @@
                     },
                     success: function (res) {
                         list.forEach(function (el) {
-                            $('#tag_'+el['id']).find('.pos_tag')[0].innerText = el['position'];
+                            $('#tag_' + el['id']).find('.pos_tag')[0].innerText = el['position'];
                         })
                     }
                 });
@@ -555,7 +587,7 @@
                     },
                     success: function (res) {
                         for (const idx in res) {
-                            $('#category_post_'+idx).find('.cat_post_position')[0].innerText = res[idx];
+                            $('#category_post_' + idx).find('.cat_post_position')[0].innerText = res[idx];
                         }
                     },
                     error: (result) => {
@@ -584,7 +616,7 @@
 
 
         function ajaxDelete(url, id, el_delete) {
-            if(!confirm('Вы уверенны, что хотите удалить запись?')) {
+            if (!confirm('Вы уверенны, что хотите удалить запись?')) {
                 return;
             }
             $.ajax({
@@ -601,14 +633,15 @@
                 }
             })
         }
+
         document.querySelectorAll('.tag_delete').forEach((el, id) => {
             el.addEventListener('click', () => {
-                ajaxDelete('/admin/tag', el.dataset.value, '#tag_'+el.dataset.value)
+                ajaxDelete('/admin/tag', el.dataset.value, '#tag_' + el.dataset.value)
             })
         })
         document.querySelectorAll('.post_delete').forEach((el, id) => {
             el.addEventListener('click', () => {
-                ajaxDelete('/admin/category_post/delete', el.dataset.value, '#category_post_'+el.dataset.value)
+                ajaxDelete('/admin/category_post/delete', el.dataset.value, '#category_post_' + el.dataset.value)
             })
         })
         var KTSummernoteDemo = function () {
@@ -621,7 +654,7 @@
 
             return {
                 // public functions
-                init: function() {
+                init: function () {
                     demos();
                 }
             };
@@ -636,7 +669,7 @@
 
             return {
                 // public functions
-                init: function() {
+                init: function () {
                     demos();
                 }
             };

@@ -3,12 +3,15 @@
 namespace App\Services;
 
 use App\Enums\AvailableOptions;
+use App\Enums\CatalogBannerTypeEnum;
 use App\Models\Brand;
+use App\Models\CatalogBanner;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\Property;
 use Illuminate\Database\Query\JoinClause;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
@@ -355,6 +358,71 @@ class CatalogService
             ->whereIn('id', array_unique($this->products->pluck('brand_id')->toArray()))
             ->orderBy('name')
             ->get();
+    }
+
+
+    public function getCatalogBannerConditions()
+    {
+        $bannerConditions = match ($this->modelName) {
+            Category::class => call_user_func(function () {
+                $category = $this->category;
+                $bannerConditions = $category->activeBannerConditions()
+                    ->with('randomBanner')
+                    ->get();
+
+                while ($category->parent) {
+                    $category = $category->parent;
+                    $parentBannerConditions = $category->activeBannerConditions()
+                        ->where('share_with_child', true)
+                        ->whereNotIn('row', $bannerConditions->pluck('row'))
+                        ->with('randomBanner')
+                        ->get();
+                    $bannerConditions = $bannerConditions->merge($parentBannerConditions);
+                };
+
+                return $bannerConditions;
+            }),
+            Brand::class => $this->brand->activeBannerConditions()->with('randomBanner')->get(),
+        };
+
+        $banners = [];
+        foreach ($bannerConditions as $bannerCondition)
+            $banners[$bannerCondition->row] = $bannerCondition->randomBanner;
+
+        return $banners;
+    }
+
+    public function getGridItems(Collection $products, int $cardsPerRow = 3): array
+    {
+        $banners = $this->getCatalogBannerConditions();
+        $grid = [];
+
+        for ($row = 1; $products->isNotEmpty(); $row++) {
+            if (isset($banners[$row])) {
+                $banner = $banners[$row];
+                if ($banner->type === CatalogBannerTypeEnum::CATALOG_CARD->value) {
+                    $bannerIndex = match ($banner->data['align']) {
+                        CatalogBanner::ALIGN_LEFT => 0,
+                        CatalogBanner::ALIGN_CENTER => 1,
+                        CatalogBanner::ALIGN_RIGHT => $cardsPerRow >= 3 ? 2 : 1,
+                    };
+
+                    for ($card = 0; $card < $cardsPerRow; $card++) {
+                        if ($card === $bannerIndex)
+                            $grid[$row][] = $banner;
+                        else
+                            $grid[$row][] = $products->shift();
+                    }
+                } else { // full width
+                    $grid[$row] = [$banner];
+                }
+            } else {
+                for ($card = 0; $card < $cardsPerRow; $card++)
+                    $grid[$row][] = $products->shift();
+            }
+        }
+
+        return $grid;
     }
 
 }

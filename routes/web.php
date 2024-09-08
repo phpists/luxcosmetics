@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\CatalogBannerConditionController;
+use App\Http\Controllers\Admin\CatalogBannerController;
 use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
 use App\Http\Controllers\Admin\MenuController;
 use App\Http\Controllers\Admin\ProductPriceController;
@@ -499,6 +501,18 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function 
     Route::get('product-availability-waiters', [\App\Http\Controllers\Admin\ProductAvailabilityWaiterController::class, 'index'])
         ->name('admin.product-availability-waiters.index');
     /** /Product Availability Waiters */
+
+    /** Catalog Banners */
+    Route::get('catalog-banners/load-type/{type}', [CatalogBannerController::class, 'loadType'])
+        ->name('admin.catalog-banners.load-type');
+    Route::resource('catalog-banners', CatalogBannerController::class, ['as' => 'admin']);
+    /** /Catalog Banners */
+
+    /** Catalog Banner Conditions */
+    Route::post('catalog-banner-conditions/{catalogBannerCondition}/update-switch', [CatalogBannerConditionController::class, 'updateSwitch'])
+        ->name('admin.catalog-banner-conditions.update-switch');
+    Route::resource('catalog-banner-conditions', CatalogBannerConditionController::class, ['as' => 'admin']);
+    /** /Catalog Banner Conditions */
 
 });
 
