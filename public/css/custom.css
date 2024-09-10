@@ -28,3 +28,16 @@
 .category-page__banner {
     width: 100%;
 }
+
+.product_favourite.active svg.active-icon {
+    display: block;
+}
+.product_favourite.active svg.inactive-icon {
+    display: none;
+}
+.product_favourite svg.active-icon {
+    display: none;
+}
+.product_favourite svg.inactive-icon {
+    display: block;
+}
