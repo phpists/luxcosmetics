@@ -25,7 +25,7 @@
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label>Активній</label>
+                                <label>Активный</label>
                                 <div class="col-12">
                                     <span class="switch">
                                         <label>

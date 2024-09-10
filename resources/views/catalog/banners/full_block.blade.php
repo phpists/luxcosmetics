@@ -11,7 +11,7 @@
             <div class="prodbaner__subtitle">{!! $catalogBanner->data['body'] !!}</div>
             @endisset
             @if(isset($catalogBanner->data['button_text']) && isset($catalogBanner->data['button_link']))
-            <a href="{{ $catalogBanner->data['button_link'] }}" class="btn btn--accent popup-with-form">{{ $catalogBanner->data['button_text'] }} <svg class="icon"><use xlink:href="images/dist/sprite.svg#circle-arrow"></use></svg></a>
+            <a href="{{ $catalogBanner->data['button_link'] }}" class="btn btn--accent">{{ $catalogBanner->data['button_text'] }} <svg class="icon"><use xlink:href="images/dist/sprite.svg#circle-arrow"></use></svg></a>
             @endif
         </div>
     </div>

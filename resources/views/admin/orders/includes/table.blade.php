@@ -38,7 +38,7 @@
         </thead>
         <tbody id="table">
         @foreach($orders as $order)
-            <tr>
+            <tr data-id="{{ $order->id }}">
                 <td class="text-center pl-0">
                     {{ $order->id }}
                 </td>

@@ -155,7 +155,7 @@
                                     Заказы
                                 </h3>
                                 <div class="card-toolbar">
-                                    <form action="{{ route('admin.orders.export') }}" method="POST" class="d-inline">
+                                    <form id="exportForm" action="{{ route('admin.orders.export') }}" method="POST" class="d-inline">
                                         @csrf
                                         <input type="hidden" name="ids" value="{{ implode(',', $orders->pluck('id')->values()->toArray()) }}">
                                         <button type="submit" class="btn btn-info font-weight-bolder mr-5">Экспорт (xlsx)</button>
@@ -329,10 +329,15 @@
 
         function filter() {
             let $form = $(this);
-            console.log($form.serialize())
             $.pjax.reload({
                 container: '#content',
                 url: location.pathname + '?' + $form.serialize()
+            }).then(function () {
+                let ids = [];
+                $('#table tr').each(function (i, el) {
+                    ids.push(el.dataset.id);
+                })
+                $('#exportForm input[name="ids"]').val(ids.join(','));
             })
         }
 

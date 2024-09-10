@@ -27,7 +27,7 @@
                         Ряд
                     </th>
                     <th class="text-center pr-0">
-                        Активній
+                        Активный
                     </th>
                     <th class="pr-0 text-center">
                         Баннеры

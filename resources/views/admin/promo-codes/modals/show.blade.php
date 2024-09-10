@@ -88,7 +88,7 @@
 
                     <hr>
                     <h5>Использование:</h5>
-                    <div id="showPromoCodeUses"></div>
+                    <div id="showPromoCodeUses" style="max-height: 300px; overflow-y: auto"></div>
 
                         </div>
 
