@@ -629,24 +629,25 @@ class CartService
             if ($promoCode->min_sum && $promoCode->min_sum > $this->getTotalSum())
                 throw new Exception("Сумма в корзине должна быть не меньше {$promoCode->min_sum} для использования этого промокода");
         } elseif ($promoCode->type == PromoCode::TYPE_PRODUCT) {
-            $product_ids = $promoCode->caseProducts()->pluck('model_id')->values()->toArray();
-            if(!$this->getAllProducts()->contains('id', $product_ids)) {
-                $product_titles = Product::whereIn('id', $product_ids)->pluck('title')->join(', ');
-                throw new Exception("Прмокод действует только на товары '{$product_titles}'");
+            $productIds = $promoCode->caseProducts()->pluck('model_id')->values()->toArray();
+            if(count(array_intersect($productIds, $this->getAllProducts()->pluck('id')->toArray())) < 1) {
+                $productTitles = Product::whereIn('id', $productIds)->pluck('title')->join(', ');
+                throw new Exception("Прмокод действует только на товары '{$productTitles}'");
             }
         } elseif ($promoCode->type == PromoCode::TYPE_CATEGORY) {
-            $category_ids = Category::getChildIds($promoCode->caseCategories()->pluck('model_id')->values()->toArray());
+            $baseCategoriesIds = $promoCode->caseCategories()->pluck('model_id')->values()->toArray();
+            $categoryIds = Category::getChildIds($baseCategoriesIds);
 
-            if (!$this->checkCategoryInCart($category_ids)) {
-                $category_titles = Category::whereIn('id', $category_ids)->pluck('name')->join(', ');
-                throw new Exception("Прмокод действует только на категориях '{$category_titles}' и сопутствующих");
+            if (!$this->checkCategoryInCart($categoryIds)) {
+                $categoryTitles = Category::whereIn('id', $baseCategoriesIds)->pluck('name')->join(', ');
+                throw new Exception("Прмокод действует только на категориях '{$categoryTitles}' и сопутствующих");
             }
         } elseif ($promoCode->type == PromoCode::TYPE_BRAND) {
-            $brand_ids = $promoCode->caseBrands()->pluck('model_id')->values()->toArray();
+            $brandIds = $promoCode->caseBrands()->pluck('model_id')->values()->toArray();
 
-            if (!$this->checkBrandInCart($brand_ids)) {
-                $brand_titles = Brand::whereIn('id', $brand_ids)->pluck('name')->join(', ');
-                throw new Exception("Прмокод действует только на бренды '{$brand_titles}'");
+            if (!$this->checkBrandInCart($brandIds)) {
+                $brandTitles = Brand::whereIn('id', $brandIds)->pluck('name')->join(', ');
+                throw new Exception("Прмокод действует только на бренды '{$brandTitles}'");
             }
         }
 
@@ -682,7 +683,7 @@ class CartService
     {
         $products = $this->getAllProducts();
         foreach ($products as $product) {
-            $product_brands[] = $product->category_id;
+            $product_brands[] = $product->brand_id;
             foreach ($product_brands as $product_category_id) {
                 if (in_array($product_category_id, $brand_ids))
                     return true;
