@@ -15,6 +15,14 @@ class FaqGroup extends Model
 
     public function faqs(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
-        return $this->hasMany(Faq::class, 'group_id');
+        return $this->hasMany(Faq::class, 'group_id')
+            ->orderBy('position');
     }
+
+    public function activeFaqs(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->faqs()
+            ->where('is_active', 1);
+    }
+
 }

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Facades\DB;
 
 class PromoCode extends Model
@@ -12,14 +13,14 @@ class PromoCode extends Model
     const TYPE_CART = 'cart';
     const TYPE_CATEGORY = 'category';
     const TYPE_PRODUCT = 'product';
+    const TYPE_BRAND = 'brand';
 
     const ALL_TYPES = [
         self::TYPE_CART => 'Вся корзина',
         self::TYPE_CATEGORY => 'Категория',
-        self::TYPE_PRODUCT => 'Товар'
+        self::TYPE_PRODUCT => 'Товар',
+        self::TYPE_BRAND => 'Бренд',
     ];
-
-    use HasFactory;
 
     protected $fillable = [
         'code',
@@ -29,8 +30,6 @@ class PromoCode extends Model
         'amount',
         'percent',
         'type',
-        'category_id',
-        'product_id',
         'min_sum'
     ];
 
@@ -57,19 +56,32 @@ class PromoCode extends Model
     }
 
 
-    public function category()
+    public function cases(): HasMany
     {
-        return $this->belongsTo(Category::class);
+        return $this->hasMany(PromoCodeCase::class);
     }
 
-    public function product()
+    public function caseBrands(): HasMany
     {
-        return $this->belongsTo(Product::class);
+        return $this->cases()
+            ->whereModelType(Brand::class);
+    }
+
+    public function caseCategories(): HasMany
+    {
+        return $this->cases()
+            ->whereModelType(Category::class);
+    }
+
+    public function caseProducts(): HasMany
+    {
+        return $this->cases()
+            ->whereModelType(Product::class);
     }
 
     public function orders()
     {
-        return $this->belongsToMany(Order::class);
+        return $this->hasMany(Order::class);
     }
 
 }

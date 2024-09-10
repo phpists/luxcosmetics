@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Article;
+use App\Models\CatalogBanner;
 use App\Models\Category;
 use App\Models\CategoryPost;
 use App\Models\Product;
@@ -134,7 +135,9 @@ class CategoryController extends Controller
             ->whereNotIn('id', $category->productSorts->pluck('product_id'))
             ->get();
 
-        return view('admin.categories.edit', compact('category', 'categories', 'properties', 'tags', 'last_position', 'articles', 'seo', 'posts', 'sortProducts'));
+        $catalogBanners = CatalogBanner::all();
+
+        return view('admin.categories.edit', compact('category', 'categories', 'properties', 'tags', 'last_position', 'articles', 'seo', 'posts', 'sortProducts', 'catalogBanners'));
     }
 
     public function update(Request $request){

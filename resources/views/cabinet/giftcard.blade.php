@@ -33,61 +33,22 @@
             <div class="giftcardban__title">Нет подарочной карты?</div>
             <a href="{{ route('gif-card.index') }}" class="btn btn--accent">Купить сейчас</a>
         </div>
+        @if($faqGroup && $faqGroup->activeFaqs->isNotEmpty())
         <div class="cabinet-page__group">
             <h3 class="subheading">Вопросы и ответы</h3>
             <div class="faq-accordeon">
+                @foreach($faqGroup->activeFaqs as $faq)
                 <dl>
-                    <dt>Что такое подарочная карта?
+                    <dt>{{ $faq->title }}
                         <svg class="icon">
                             <use xlink:href="{{asset('images/dist/sprite.svg#arrow')}}"></use>
                         </svg>
                     </dt>
-                    <dd class="typography">Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                        Aperiam ea, accusamus. Numquam non commodi ipsum debitis repudiandae amet
-                        vero itaque, deserunt, ad neque libero quae officia. Facilis non, possimus
-                        doloribus! Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid
-                        quis voluptatem repellat? Blanditiis iste, exercitationem porro, magni amet
-                        cupiditate enim, labore tenetur, praesentium quam consequuntur nesciunt.
-                        Culpa dicta adipisci voluptatem.
-                    </dd>
+                    <dd class="typography">{!! $faq->answer !!}</dd>
                 </dl>
-                <dl>
-                    <dt>Что такое электронная подарочная карта?
-                        <svg class="icon">
-                            <use xlink:href="{{asset('images/dist/sprite.svg#arrow')}}"></use>
-                        </svg>
-                    </dt>
-                    <dd class="typography">Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                        Aliquid quis voluptatem repellat? Blanditiis iste, exercitationem porro,
-                        magni amet cupiditate enim, labore tenetur, praesentium quam consequuntur
-                        nesciunt. Culpa dicta adipisci voluptatem.
-                    </dd>
-                </dl>
-                <dl>
-                    <dt>Когда истечет срок действия моей подарочной карты?
-                        <svg class="icon">
-                            <use xlink:href="{{asset('images/dist/sprite.svg#arrow')}}"></use>
-                        </svg>
-                    </dt>
-                    <dd class="typography">Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                        Aliquid quis voluptatem repellat? Blanditiis iste, exercitationem porro,
-                        magni amet cupiditate enim, labore tenetur, praesentium quam consequuntur
-                        nesciunt. Culpa dicta adipisci voluptatem.
-                    </dd>
-                </dl>
-                <dl>
-                    <dt>Как я могу проверить баланс моей подарочной карты?
-                        <svg class="icon">
-                            <use xlink:href="{{asset('images/dist/sprite.svg#arrow')}}"></use>
-                        </svg>
-                    </dt>
-                    <dd class="typography">Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                        Aliquid quis voluptatem repellat? Blanditiis iste, exercitationem porro,
-                        magni amet cupiditate enim, labore tenetur, praesentium quam consequuntur
-                        nesciunt. Culpa dicta adipisci voluptatem.
-                    </dd>
-                </dl>
+                @endforeach
             </div>
         </div>
+        @endif
     </main>
 @endsection

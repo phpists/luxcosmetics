@@ -17,12 +17,14 @@ trait HasTags
     function topTags(): MorphMany
     {
         return $this->tags()
+            ->whereIsActive(true)
             ->whereAddToTop(true);
     }
 
     function bottomTags(): MorphMany
     {
         return $this->tags()
+            ->whereIsActive(true)
             ->whereAddToTop(false);
     }
 

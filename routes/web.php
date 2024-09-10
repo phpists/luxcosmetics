@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\CatalogBannerConditionController;
+use App\Http\Controllers\Admin\CatalogBannerController;
 use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
 use App\Http\Controllers\Admin\MenuController;
 use App\Http\Controllers\Admin\ProductPriceController;
@@ -309,6 +311,7 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function 
     Route::put('/tag', [\App\Http\Controllers\Admin\TagController::class, 'update'])->name('admin.tag.update');
     Route::delete('/tag', [\App\Http\Controllers\Admin\TagController::class, 'delete'])->name('admin.tag.delete');
     Route::post('/tag/update-position', [\App\Http\Controllers\Admin\TagController::class, 'updatePosition'])->name('admin.tag.update_position');
+    Route::post('/tag/{tag}/update-is-active', [\App\Http\Controllers\Admin\TagController::class, 'updateIsActive'])->name('admin.tag.update-is-active');
 
     Route::post('update-price-from-excel', [\App\Http\Controllers\Admin\ProductController::class, 'updatePricesFromExcel'])
         ->name('admin.update-price-from-excel');
@@ -434,6 +437,7 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function 
     Route::delete('/order-product/destroy/{orderProduct}', [\App\Http\Controllers\Admin\OrderProductController::class, 'destroy'])->name('admin.order_products.destroy');
     Route::post('/order-product/add', [\App\Http\Controllers\Admin\OrderProductController::class, 'add'])->name('admin.order_products.add');
     Route::post('/order-product/refresh', [\App\Http\Controllers\Admin\OrderProductController::class, 'refresh'])->name('admin.order_products.refresh');
+    Route::post('orders/export', [\App\Http\Controllers\Admin\OrderController::class, 'export'])->name('admin.orders.export');
     // Order Gifts
     Route::post('/order/gifts/table', [\App\Http\Controllers\Admin\OrderGiftController::class, 'table'])->name('admin.order-gifts.table');
 
@@ -497,6 +501,18 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function 
     Route::get('product-availability-waiters', [\App\Http\Controllers\Admin\ProductAvailabilityWaiterController::class, 'index'])
         ->name('admin.product-availability-waiters.index');
     /** /Product Availability Waiters */
+
+    /** Catalog Banners */
+    Route::get('catalog-banners/load-type/{type}', [CatalogBannerController::class, 'loadType'])
+        ->name('admin.catalog-banners.load-type');
+    Route::resource('catalog-banners', CatalogBannerController::class, ['as' => 'admin']);
+    /** /Catalog Banners */
+
+    /** Catalog Banner Conditions */
+    Route::post('catalog-banner-conditions/{catalogBannerCondition}/update-switch', [CatalogBannerConditionController::class, 'updateSwitch'])
+        ->name('admin.catalog-banner-conditions.update-switch');
+    Route::resource('catalog-banner-conditions', CatalogBannerConditionController::class, ['as' => 'admin']);
+    /** /Catalog Banner Conditions */
 
 });
 

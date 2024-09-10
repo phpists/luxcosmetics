@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Enums\AvailableOptions;
 use App\Events\OrderCreated;
 use App\Models\Address;
+use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Order;
 use App\Models\OrderProduct;
@@ -587,12 +588,15 @@ class CartService
             if ($promoCode->type == PromoCode::TYPE_CART) {
                 $amount = $total_sum * ($promoCode->percent / 100);
             } elseif ($promoCode->type == PromoCode::TYPE_CATEGORY) {
-                $category_ids = Category::getChildIds($promoCode->category_id);
+                $category_ids = Category::getChildIds($promoCode->caseCategories()->pluck('model_id')->values()->toArray());
                 $products = $this->getAllProducts($category_ids);
                 $temp_sum = $products->sum('total_sum');
                 $amount = $temp_sum * ($promoCode->percent / 100);
             } elseif ($promoCode->type == PromoCode::TYPE_PRODUCT) {
-                $product = $this->getAllProducts()->where('id', $promoCode->product_id)->first();
+                $product = $this->getAllProducts()->whereIn('id', $promoCode->caseProducts()->pluck('model_id')->values()->toArray())->first();
+                $amount = $product->total_sum * ($promoCode->percent / 100);
+            } elseif ($promoCode->type == PromoCode::TYPE_BRAND) {
+                $product = $this->getAllProducts()->whereIn('brand_id', $promoCode->caseBrands()->pluck('model_id')->values()->toArray())->first();
                 $amount = $product->total_sum * ($promoCode->percent / 100);
             }
         }
@@ -625,12 +629,25 @@ class CartService
             if ($promoCode->min_sum && $promoCode->min_sum > $this->getTotalSum())
                 throw new Exception("Сумма в корзине должна быть не меньше {$promoCode->min_sum} для использования этого промокода");
         } elseif ($promoCode->type == PromoCode::TYPE_PRODUCT) {
-            if(!$this->getAllProducts()->contains('id', $promoCode->product_id))
-                throw new Exception("Прмокод действует только на товар '{$promoCode->product->title}'");
+            $product_ids = $promoCode->caseProducts()->pluck('model_id')->values()->toArray();
+            if(!$this->getAllProducts()->contains('id', $product_ids)) {
+                $product_titles = Product::whereIn('id', $product_ids)->pluck('title')->join(', ');
+                throw new Exception("Прмокод действует только на товары '{$product_titles}'");
+            }
         } elseif ($promoCode->type == PromoCode::TYPE_CATEGORY) {
-            $category_ids = Category::getChildIds($promoCode->category_id);
-            if (!$this->checkCategoryInCart($category_ids))
-                throw new Exception("Прмокод действует только на категорию '{$promoCode->category->name}' и сопутствующие категории");
+            $category_ids = Category::getChildIds($promoCode->caseCategories()->pluck('model_id')->values()->toArray());
+
+            if (!$this->checkCategoryInCart($category_ids)) {
+                $category_titles = Category::whereIn('id', $category_ids)->pluck('name')->join(', ');
+                throw new Exception("Прмокод действует только на категориях '{$category_titles}' и сопутствующих");
+            }
+        } elseif ($promoCode->type == PromoCode::TYPE_BRAND) {
+            $brand_ids = $promoCode->caseBrands()->pluck('model_id')->values()->toArray();
+
+            if (!$this->checkBrandInCart($brand_ids)) {
+                $brand_titles = Brand::whereIn('id', $brand_ids)->pluck('name')->join(', ');
+                throw new Exception("Прмокод действует только на бренды '{$brand_titles}'");
+            }
         }
 
         return true;
@@ -654,6 +671,20 @@ class CartService
             $product_categories[] = $product->category_id;
             foreach ($product_categories as $product_category_id) {
                 if (in_array($product_category_id, $category_ids))
+                    return true;
+            }
+        }
+
+        return false;
+    }
+
+    public function checkBrandInCart(array $brand_ids): bool
+    {
+        $products = $this->getAllProducts();
+        foreach ($products as $product) {
+            $product_brands[] = $product->category_id;
+            foreach ($product_brands as $product_category_id) {
+                if (in_array($product_category_id, $brand_ids))
                     return true;
             }
         }

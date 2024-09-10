@@ -123,15 +123,21 @@
                             <!--begin::Body-->
                             <div class="card-body">
                                 <div class="d-flex">
-<span class="svg-icon svg-icon-primary svg-icon-2x"><!--begin::Svg Icon | path:/var/www/preview.keenthemes.com/metronic/releases/2021-05-14-112058/theme/html/demo1/dist/../src/media/svg/icons/Text/Filter.svg--><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+<span class="svg-icon svg-icon-primary svg-icon-2x"><!--begin::Svg Icon | path:/var/www/preview.keenthemes.com/metronic/releases/2021-05-14-112058/theme/html/demo1/dist/../src/media/svg/icons/Text/Filter.svg--><svg
+        xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px"
+        viewBox="0 0 24 24" version="1.1">
     <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
         <rect x="0" y="0" width="24" height="24"/>
-        <path d="M5,4 L19,4 C19.2761424,4 19.5,4.22385763 19.5,4.5 C19.5,4.60818511 19.4649111,4.71345191 19.4,4.8 L14,12 L14,20.190983 C14,20.4671254 13.7761424,20.690983 13.5,20.690983 C13.4223775,20.690983 13.3458209,20.6729105 13.2763932,20.6381966 L10,19 L10,12 L4.6,4.8 C4.43431458,4.5790861 4.4790861,4.26568542 4.7,4.1 C4.78654809,4.03508894 4.89181489,4 5,4 Z" fill="#000000"/>
+        <path
+            d="M5,4 L19,4 C19.2761424,4 19.5,4.22385763 19.5,4.5 C19.5,4.60818511 19.4649111,4.71345191 19.4,4.8 L14,12 L14,20.190983 C14,20.4671254 13.7761424,20.690983 13.5,20.690983 C13.4223775,20.690983 13.3458209,20.6729105 13.2763932,20.6381966 L10,19 L10,12 L4.6,4.8 C4.43431458,4.5790861 4.4790861,4.26568542 4.7,4.1 C4.78654809,4.03508894 4.89181489,4 5,4 Z"
+            fill="#000000"/>
     </g>
 </svg><!--end::Svg Icon--></span>
                                     <span class="card-title text-dark-75 font-size-h3 mb-0 ml-3">Фильтр</span>
                                 </div>
-                                <span class="card-title font-weight-bolder text-dark-75 font-size-h2 mb-0 mt-6 d-block">₽<span id="filteredTotalSum" class="card-title font-weight-bolder text-dark-75 font-size-h2 mb-0 mt-6">{{ $current_sum }}</span></span>
+                                <span class="card-title font-weight-bolder text-dark-75 font-size-h2 mb-0 mt-6 d-block">₽<span
+                                        id="filteredTotalSum"
+                                        class="card-title font-weight-bolder text-dark-75 font-size-h2 mb-0 mt-6">{{ $current_sum }}</span></span>
                                 <span class="font-weight-bold text-muted  font-size-sm">Общая сумма отфильтрованных заказов</span>
                             </div>
                             <!--end::Body-->
@@ -149,15 +155,24 @@
                                     Заказы
                                 </h3>
                                 <div class="card-toolbar">
-                                    <a href="{{ route('admin.orders.index') }}" class="btn btn-secondary font-weight-bolder mr-5">Сбросить фильтр</a>
+                                    <form id="exportForm" action="{{ route('admin.orders.export') }}" method="POST" class="d-inline">
+                                        @csrf
+                                        <input type="hidden" name="ids" value="{{ implode(',', $orders->pluck('id')->values()->toArray()) }}">
+                                        <button type="submit" class="btn btn-info font-weight-bolder mr-5">Экспорт (xlsx)</button>
+                                    </form>
+                                </div>
+
+                                <div class="card-toolbar">
+                                    <a href="{{ route('admin.orders.index') }}"
+                                       class="btn btn-secondary font-weight-bolder mr-5">Сбросить фильтр</a>
 
                                     @if(auth()->user()->isSuperAdmin() || auth()->user()->can(\App\Services\Admin\PermissionService::ORDERS_CREATE))
-                                    <a href="{{ route('admin.orders.create') }}"
-                                       class="btn btn-success font-weight-bolder">
+                                        <a href="{{ route('admin.orders.create') }}"
+                                           class="btn btn-success font-weight-bolder">
                                     <span class="svg-icon svg-icon-md">
                                         <i class="fas fa-plus"></i>
                                     </span>Создать заказ
-                                    </a>
+                                        </a>
                                     @endif
                                 </div>
                             </div>
@@ -180,7 +195,8 @@
                                         <div class="col col-md-2">
                                             <div class="form-group">
                                                 <label>Покупатель</label>
-                                                <input type="text" name="customer" class="form-control" value="{{ request()->get('customer') }}"/>
+                                                <input type="text" name="customer" class="form-control"
+                                                       value="{{ request()->get('customer') }}"/>
                                                 <span class="form-text text-muted">Email, имя, телефон</span>
                                             </div>
                                         </div>
@@ -189,10 +205,14 @@
                                                 <label>Сумма от/до</label>
                                                 <div class="row row-cols-1 row-cols-md-2">
                                                     <div class="col pr-0">
-                                                        <input type="text" name="sum_from" class="form-control rounded-right-0" value="{{ request()->get('sum_from') }}"/>
+                                                        <input type="text" name="sum_from"
+                                                               class="form-control rounded-right-0"
+                                                               value="{{ request()->get('sum_from') }}"/>
                                                     </div>
                                                     <div class="col pl-0">
-                                                        <input type="text" name="sum_to" class="form-control rounded-left-0" value="{{ request()->get('sum_to') }}"/>
+                                                        <input type="text" name="sum_to"
+                                                               class="form-control rounded-left-0"
+                                                               value="{{ request()->get('sum_to') }}"/>
                                                     </div>
                                                 </div>
                                             </div>
@@ -202,10 +222,14 @@
                                                 <label>Скидка от/до</label>
                                                 <div class="row row-cols-1 row-cols-md-2">
                                                     <div class="col pr-0">
-                                                        <input type="text" name="discount_from" class="form-control rounded-right-0" value="{{ request()->get('discount_from') }}"/>
+                                                        <input type="text" name="discount_from"
+                                                               class="form-control rounded-right-0"
+                                                               value="{{ request()->get('discount_from') }}"/>
                                                     </div>
                                                     <div class="col pl-0">
-                                                        <input type="text" name="discount_to" class="form-control rounded-left-0" value="{{ request()->get('discount_to') }}"/>
+                                                        <input type="text" name="discount_to"
+                                                               class="form-control rounded-left-0"
+                                                               value="{{ request()->get('discount_to') }}"/>
                                                     </div>
                                                 </div>
                                             </div>
@@ -215,10 +239,14 @@
                                                 <label>Дата от/до</label>
                                                 <div class="row row-cols-1 row-cols-md-2">
                                                     <div class="col pr-0">
-                                                        <input type="date" name="date_from" class="form-control rounded-right-0" value="{{ request()->get('date_from') }}"/>
+                                                        <input type="date" name="date_from"
+                                                               class="form-control rounded-right-0"
+                                                               value="{{ request()->get('date_from') }}"/>
                                                     </div>
                                                     <div class="col pl-0">
-                                                        <input type="date" name="date_to" class="form-control rounded-left-0" value="{{ request()->get('date_to') }}"/>
+                                                        <input type="date" name="date_to"
+                                                               class="form-control rounded-left-0"
+                                                               value="{{ request()->get('date_to') }}"/>
                                                     </div>
                                                 </div>
                                             </div>
@@ -239,76 +267,81 @@
         </div>
     </div>
 
+@endsection
 
-            @endsection
+@section('js_after')
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/locales/bootstrap-datepicker.uk.min.js"></script>
+    <script src="{{ asset('super_admin/js/jquery.pjax.js') }}"></script>
+    <script src="{{ asset('super_admin/js/pages/crud/forms/widgets/bootstrap-datepicker.js') }}"></script>
+    <script src="{{ asset('super_admin/js/users.js') }}"></script>
+    <script src="{{ asset('super_admin/js/pages/crud/forms/widgets/select2.js') }}"></script>
+    <script>
+        let filterTimeout;
 
-            @section('js_after')
-                <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/locales/bootstrap-datepicker.uk.min.js"></script>
-                <script src="{{ asset('super_admin/js/jquery.pjax.js') }}"></script>
-                <script src="{{ asset('super_admin/js/pages/crud/forms/widgets/bootstrap-datepicker.js') }}"></script>
-                <script src="{{ asset('super_admin/js/users.js') }}"></script>
-                <script src="{{ asset('super_admin/js/pages/crud/forms/widgets/select2.js') }}"></script>
-                <script>
-                    let filterTimeout;
+        $(function () {
+            $(document).on('change', 'select.change-status', function (e) {
+                let $this = $(this),
+                    url = $(this).data('url'),
+                    value = $(this).val();
 
-                    $(function () {
-                        $(document).on('change', 'select.change-status', function (e) {
-                            let $this = $(this),
-                                url = $(this).data('url'),
-                                value = $(this).val();
-
-                            $.ajax({
-                                url: url,
-                                type: 'PUT',
-                                dataType: 'json',
-                                data: {
-                                    status_id: value
-                                },
-                                success: function (response) {
-                                    if (response && response.completed)
-                                        $this.prop('disabled', true).next().addClass('disabled')
-                                }
-                            })
-                        })
-
-
-                        $(document).on('change', "#filter", function (e) {
-                            filter.call(this)
-                        })
-
-                        $(document).on('input', "#filter", function (e) {
-                            clearTimeout(filterTimeout)
-                            let $this = this
-
-                            filterTimeout = setTimeout(function () {
-                                filter.call($this)
-                            }, 1000)
-                        })
-
-                        $(document).pjax('[data-pjax]', '#content')
-
-                        $(document).on('pjax:end', function(e) {
-                            $('.selectpicker').selectpicker()
-                            $('#paginate').val($('#filter [name="per_page"]').val())
-                            $('#filteredTotalSum').text($('#filteredTotalSumValud').val())
-                        })
-
-                        $(document).on('change', '#paginate', function (e) {
-                            $('#filter [name="per_page"]').val(this.value).trigger('change')
-                        })
-
-                    })
-
-                    function filter() {
-                        let $form = $(this);
-                        console.log($form.serialize())
-                        $.pjax.reload({
-                            container: '#content',
-                            url: location.pathname + '?' + $form.serialize()
-                        })
+                $.ajax({
+                    url: url,
+                    type: 'PUT',
+                    dataType: 'json',
+                    data: {
+                        status_id: value
+                    },
+                    success: function (response) {
+                        if (response && response.completed)
+                            $this.prop('disabled', true).next().addClass('disabled')
                     }
+                })
+            })
 
-                </script>
+
+            $(document).on('change', "#filter", function (e) {
+                filter.call(this)
+            })
+
+            $(document).on('input', "#filter", function (e) {
+                clearTimeout(filterTimeout)
+                let $this = this
+
+                filterTimeout = setTimeout(function () {
+                    filter.call($this)
+                }, 1000)
+            })
+
+            $(document).pjax('[data-pjax]', '#content')
+
+            $(document).on('pjax:end', function (e) {
+                $('.selectpicker').selectpicker()
+                $('#paginate').val($('#filter [name="per_page"]').val())
+                $('#filteredTotalSum').text($('#filteredTotalSumValud').val())
+            })
+
+            $(document).on('change', '#paginate', function (e) {
+                $('#filter [name="per_page"]').val(this.value).trigger('change')
+            })
+
+        })
+
+        function filter() {
+            let $form = $(this);
+            $.pjax.reload({
+                container: '#content',
+                url: location.pathname + '?' + $form.serialize()
+            }).then(function () {
+                let ids = [];
+                $('#table tr').each(function (i, el) {
+                    ids.push(el.dataset.id);
+                })
+                $('#exportForm input[name="ids"]').val(ids.join(','));
+            })
+        }
+
+    </script>
 @endsection
 
 

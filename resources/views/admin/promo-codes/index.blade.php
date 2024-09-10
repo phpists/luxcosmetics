@@ -96,9 +96,20 @@
                                     <td class="text-center">
                                         <span class="text-dark-75 d-block font-size-lg">
                                             @if($promo_code->type == \App\Models\PromoCode::TYPE_CATEGORY)
-                                                Категория: <a href="{{ route('admin.category.edit', $promo_code->category) }}" target="_blank">{{ $promo_code->category->name }}
+                                                Категории:
+                                                @foreach($promo_code->caseCategories as $categoryCase)
+                                                    <a href="{{ route('admin.category.edit', $categoryCase->model_id) }}" target="_blank">{{ $categoryCase->model->name }}</a>@if(!$loop->last), @endif
+                                                @endforeach
                                             @elseif($promo_code->type == \App\Models\PromoCode::TYPE_PRODUCT)
-                                                Товар: <a href="{{ route('admin.product.edit', $promo_code->product) }}" target="_blank">{{ $promo_code->product->title }}</a>
+                                                Товар:
+                                                    @foreach($promo_code->caseProducts as $productCase)
+                                                        <a href="{{ route('admin.product.edit', $productCase->model_id) }}" target="_blank">{{ $productCase->model->title }}</a>@if(!$loop->last), @endif
+                                                    @endforeach
+                                            @elseif($promo_code->type == \App\Models\PromoCode::TYPE_BRAND)
+                                                Бренд:
+                                                    @foreach($promo_code->caseBrands as $brandCase)
+                                                        <a href="{{ route('admin.brands.edit', $brandCase->model_id) }}" target="_blank">{{ $brandCase->model->name }}</a>@if(!$loop->last), @endif
+                                                    @endforeach
                                             @else
                                                 Вся корзина {{ $promo_code->min_sum ? "(мин.сумма: {$promo_code->min_sum})" : '' }}
                                             @endif
@@ -164,17 +175,25 @@
                 let $form = $(this).parents('form:first');
 
                 if (this.value === 'category') {
-                    $form.find('[name="category_id"]').parents('div.column:first').show()
-                    $form.find('[name="product_id"]').val('').parents('div.column:first').hide()
+                    $form.find('[name="category_ids[]"]').parents('div.column:first').show()
+                    $form.find('[name="product_ids[]"]').val('').parents('div.column:first').hide()
+                    $form.find('[name="brand_ids[]"]').val('').parents('div.column:first').hide()
                     $form.find('[name="min_sum"]').val('').parents('div.column:first').hide()
                 } else if (this.value === 'product') {
-                    $form.find('[name="product_id"]').parents('div.column:first').show()
-                    $form.find('[name="category_id"]').val('').parents('div.column:first').hide()
+                    $form.find('[name="product_ids[]"]').parents('div.column:first').show()
+                    $form.find('[name="category_ids[]"]').val('').parents('div.column:first').hide()
+                    $form.find('[name="brand_ids[]"]').val('').parents('div.column:first').hide()
+                    $form.find('[name="min_sum"]').val('').parents('div.column:first').hide()
+                } else if (this.value === 'brand') {
+                    $form.find('[name="brand_ids[]"]').parents('div.column:first').show()
+                    $form.find('[name="category_ids[]"]').val('').parents('div.column:first').hide()
+                    $form.find('[name="product_ids[]"]').val('').parents('div.column:first').hide()
                     $form.find('[name="min_sum"]').val('').parents('div.column:first').hide()
                 } else {
                     $form.find('[name="min_sum"]').parents('div.column:first').show()
-                    $form.find('[name="product_id"]').val('').parents('div.column:first').hide()
-                    $form.find('[name="category_id"]').val('').parents('div.column:first').hide()
+                    $form.find('[name="product_ids[]"]').val('').parents('div.column:first').hide()
+                    $form.find('[name="category_ids[]"]').val('').parents('div.column:first').hide()
+                    $form.find('[name="brand_ids[]"]').val('').parents('div.column:first').hide()
                 }
             })
 
@@ -215,6 +234,16 @@
                     $('#showQuantity').val(item.quantity);
                     $('#showStarts').val(item.starts_at);
                     $('#showEnds').val(item.ends_at);
+
+                    if (Object.keys(item.orders).length > 0) {
+                        let uses = [];
+                        for (const key in item.orders) {
+                            uses.push(`<a href="${item.orders[key]}" target="_blank">${key}</a>`)
+                        }
+                        $('#showPromoCodeUses').html(uses.join('<br>'))
+                    } else {
+                        $('#showPromoCodeUses').html('<h6>Не было использований</h6>')
+                    }
                 }
             });
         }
