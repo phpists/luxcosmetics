@@ -33,6 +33,33 @@ class ProductPrice extends Model
         static::addGlobalScope('positionSorted', function (Builder $builder) {
             $builder->orderBy('pos');
         });
+
+        self::created(function(self $model) {
+            $model->clearProductsPriceCache();
+        });
+        self::updated(function(self $model) {
+            $model->clearProductsPriceCache();
+        });
+        self::deleted(function(self $model) {
+            $model->clearProductsPriceCache();
+        });
+    }
+
+    private function clearProductsPriceCache(): void
+    {
+        foreach ($this->caseProducts as $caseProduct) {
+            $caseProduct->product->clearProductPriceCache();
+        }
+        foreach ($this->caseBrands as $caseBrand) {
+            foreach ($caseBrand->brand->products as $caseBrandProduct) {
+                $caseBrandProduct->clearProductPriceCache();
+            }
+        }
+        foreach ($this->caseCategories as $caseCategory) {
+            foreach ($caseCategory->category->products as $caseCategoryProduct) {
+                $caseCategoryProduct->clearProductPriceCache();
+            }
+        }
     }
 
 
