@@ -27,6 +27,8 @@
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
     <![endif]-->
 
+    <meta name="yandex-verification" content="1a6e42b4fe6f0e17" />
+
     @yield('styles')
 </head>
 
