@@ -39,6 +39,8 @@ class CatalogService
     public $min_filtered_price = 1;
     public $max_filtered_price = 999999;
 
+    private array $filters_weight = [];
+
     public function __construct(Request $request, string $modelName, string $custom_alias = null)
     {
         $this->request = $request;
@@ -67,8 +69,7 @@ class CatalogService
     public function getProductsQuery(?array $with = null): \Illuminate\Database\Eloquent\Builder
     {
         $query = $this->products_query = Product::query()
-            ->select(['products.*', 'product_images.path as main_image'])
-            ->leftJoin('product_images', 'products.image_print_id', 'product_images.id')
+            ->select('products.*')
             ->when($with, function ($query) use ($with) {
                 $query->with($with);
             })
@@ -97,6 +98,8 @@ class CatalogService
     public function getFiltered()
     {
         $products = $this->getFilteredProductsQuery()
+            ->addSelect('product_images.path as main_image')
+            ->leftJoin('product_images', 'products.image_print_id', 'product_images.id')
             ->selectRaw('case when user_favorite_products.product_id is null then FALSE else TRUE end as is_favourite');
 
         $sortColumn = $this->getSortColumn();
@@ -120,8 +123,9 @@ class CatalogService
             $products = $products->leftJoin('user_favorite_products', 'user_favorite_products.product_id', '=', 'products.id');
         }
 
-        $this->min_price = $this->products->min('price');
-        $this->max_price = $this->products->max('price');
+        $prices = $this->products->pluck('price')->toArray();
+        $this->min_price = min($prices);
+        $this->max_price = max($prices);
 
         return $products->paginate(self::PER_PAGE);
     }
@@ -253,7 +257,7 @@ class CatalogService
         } elseif ($this->modelName == Product::class) {
             $filters = $this->getDynamicFilters();
         }
-        $filters_weight = $this->getFiltersWeight($filters, $this->products);
+        $filters_weight = $this->filters_weight = $this->getFiltersWeight($filters, $this->products);
         $filters = $filters->filter(function ($filter) use($filters_weight) {
             return $filter->values->filter(function ($filter_value) use ($filter, $filters_weight) {
                 return $filters_weight[$filter->id][$filter_value->id] > 0;
@@ -294,36 +298,40 @@ class CatalogService
 
     public function getFiltersWeight($properties, $products = null): array
     {
-        if (!$products) {
-            $products = $this->products;
-        }
-        $productsArray = $products->pluck('values', 'id')->toArray();
-        $result = [];
-
-        foreach ($properties as $property) {
-            $result[$property->id] = [];
-            foreach ($property->values as $property_value) {
-                $property_value_id = $property_value->id;
-                $count = 0;
-                foreach ($productsArray as $product) {
-                    $exists = false;
-                    foreach ($product as $value) {
-                        if ($value['id'] == $property_value_id)
-                            $exists = true;
-                    }
-                    if ($exists)
-                        $count++;
-                }
-                $result[$property->id][$property_value->id] = $count;
+        if ($this->filters_weight)
+            return $this->filters_weight;
+        else {
+            if (!$products) {
+                $products = $this->products;
             }
-        }
+            $productsArray = $products->pluck('values', 'id')->toArray();
+            $result = [];
 
-        $result['brands'] = [];
-        foreach (Brand::all() as $brand) {
-            $result['brands'][$brand->id] = $products->where('brand_id', $brand->id)->count();
-        }
+            foreach ($properties as $property) {
+                $result[$property->id] = [];
+                foreach ($property->values as $property_value) {
+                    $property_value_id = $property_value->id;
+                    $count = 0;
+                    foreach ($productsArray as $product) {
+                        $exists = false;
+                        foreach ($product as $value) {
+                            if ($value['id'] == $property_value_id)
+                                $exists = true;
+                        }
+                        if ($exists)
+                            $count++;
+                    }
+                    $result[$property->id][$property_value->id] = $count;
+                }
+            }
 
-        return $result;
+            $result['brands'] = [];
+            foreach (Brand::all() as $brand) {
+                $result['brands'][$brand->id] = $products->where('brand_id', $brand->id)->count();
+            }
+
+            return $result;
+        }
     }
 
     function getFilterPrices()

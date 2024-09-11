@@ -9,6 +9,7 @@ use App\Services\SiteConfigService;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 
 class Product extends Model
@@ -22,6 +23,8 @@ class Product extends Model
         self::TYPE_VOLUME => 'Объём',
         self::TYPE_COLOR => 'Цвет'
     ];
+
+    const PRODUCT_PRICE_CACHE_KEY = 'product_price';
 
     protected $fillable = [
         'title',
@@ -76,6 +79,10 @@ class Product extends Model
         'laravel_through_key'
     ];
 
+    protected $with = [
+        'productCategories'
+    ];
+
 
 
 
@@ -90,6 +97,10 @@ class Product extends Model
                 ) {
                     ProductBecameAvailableEvent::dispatch($model);
                 }
+            }
+
+            if ($model->isDirty(['price', 'old_price'])) {
+                $model->clearProductPriceCache();
             }
         });
 
@@ -284,15 +295,14 @@ class Product extends Model
 
     public function getAllCategoriesArray(): array
     {
-        return array_merge($this->productCategories()->select('category_id')->pluck('category_id')->toArray(), [$this->category_id]);
+        return array_merge($this->productCategories->pluck('category_id')->toArray(), [$this->category_id]);
     }
 
 
     private function getActualPrice($price)
     {
         try {
-//            return \Cache::remember('product_price_'. $this->id, now()->addHour(), function () use ($price) {
-
+            return Cache::remember(self::PRODUCT_PRICE_CACHE_KEY.'_'. $this->id, now()->addHour(), function () use ($price) {
                 $allCategories = $this->getAllCategoriesArray();
                 $productPrice = ProductPrice::findCondition(ProductPriceTypeEnum::DISCOUNT, $this->brand_id, $allCategories, $this->id);
 
@@ -300,12 +310,17 @@ class Product extends Model
                     return $productPrice->getPrice($price);
 
                 return $price;
-//            });
+            });
         } catch (\Throwable $e) {
             \Log::error($e->getMessage());
         }
 
         return $price;
+    }
+
+    public function clearProductPriceCache(): bool
+    {
+        return Cache::forget(self::PRODUCT_PRICE_CACHE_KEY.'_'. $this->id);
     }
 
     private function getActualBonuses($bonuses)
