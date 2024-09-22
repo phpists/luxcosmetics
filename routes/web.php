@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\CatalogBannerConditionController;
 use App\Http\Controllers\Admin\CatalogBannerController;
+use App\Http\Controllers\Admin\CatalogItemController;
 use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
 use App\Http\Controllers\Admin\MenuController;
 use App\Http\Controllers\Admin\ProductPriceController;
@@ -42,7 +43,7 @@ Route::get('b', [\App\Http\Controllers\BrandsController::class, 'index'])->name(
 Route::get('b/{link}', [\App\Http\Controllers\BrandsController::class, 'show'])->name('brands.show');
 
 // Categories
-Route::get('catalog', [CategoryController::class, 'index'])->name('categories');
+Route::get('catalog', \App\Http\Controllers\CatalogController::class)->name('catalog.index');
 Route::get('c/{alias}', [CategoryController::class, 'show'])->name('categories.show');
 // Product card
 Route::get('product/card/{product}', [\App\Http\Controllers\ProductController::class, 'productCard'])->name('product.card');
@@ -513,6 +514,14 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function 
         ->name('admin.catalog-banner-conditions.update-switch');
     Route::resource('catalog-banner-conditions', CatalogBannerConditionController::class, ['as' => 'admin']);
     /** /Catalog Banner Conditions */
+
+    /** CatalogItems */
+    Route::post('catalog-items/update-status', [CatalogItemController::class, 'updateStatus'])
+        ->name('admin.catalog-items.update-status');
+    Route::post('catalog-items/update-positions', [CatalogItemController::class, 'updatePositions'])
+        ->name('admin.catalog-items.update-positions');
+    Route::resource('catalog-items', CatalogItemController::class, ['as' => 'admin']);
+    /** /CatalogItems */
 
 });
 

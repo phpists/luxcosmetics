@@ -2,6 +2,8 @@
 
 namespace App\Enums;
 
+use App\Models\SeoTemplate;
+
 enum SeoTemplateEnum: string
 {
 
@@ -13,6 +15,7 @@ enum SeoTemplateEnum: string
     case CART = 'cart';
     case REGISTER = 'register';
     case BOOKMARK = 'bookmark';
+    case CATALOG = 'catalog';
 
 
     /**
@@ -53,11 +56,13 @@ enum SeoTemplateEnum: string
                 '{title}' => $model->title,
                 '{link}' => $model->link,
             ],
-            self::CART->value => [],
-            self::REGISTER->value => [],
-            self::BOOKMARK->value => [],
-            default => throw new \Exception('Unexpected match value')
+            default => []
         };
+    }
+
+    public function getModel()
+    {
+        return SeoTemplate::whereType($this->value)->firstOrFail();
     }
 
 }

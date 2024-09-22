@@ -63,6 +63,12 @@ class SeoTemplateSeeder extends Seeder
                 'title' => '',
                 'description' => '',
             ],
+            [
+                'type' => SeoTemplateEnum::CATALOG->value,
+                'hint' => '',
+                'title' => '',
+                'description' => '',
+            ],
         ];
 
         foreach ($seoTemplates as $seoTemplate) {

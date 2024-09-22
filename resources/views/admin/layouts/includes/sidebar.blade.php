@@ -80,7 +80,9 @@
 || request()->routeIs('admin.properties.create')
 || request()->routeIs('admin.main-block.index')
 || request()->routeIs('admin.gifts.index')
-|| request()->routeIs('admin.catalog-banners.index')) ? 'menu-item-open' : '' }}"
+|| request()->routeIs('admin.product-prices.*')
+|| request()->routeIs('admin.catalog-banners.*')
+|| request()->routeIs('admin.catalog-items.*')) ? 'menu-item-open' : '' }}"
                     aria-haspopup="true" data-menu-toggle="hover">
                     <a href="javascript:;" class="menu-link menu-toggle">
                         <i class="fas flaticon2-copy menu-icon"></i>
@@ -212,6 +214,22 @@
                                             <span></span>
                                         </i>
                                         <span class="menu-text">Баннеры каталога</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    @endif
+                    @if(auth()->user()->isSuperAdmin() || auth()->user()->can(\App\Services\Admin\PermissionService::CATALOG_ITEMS_VIEW))
+                        <div class="menu-submenu" style="" kt-hidden-height="160">
+                            <i class="menu-arrow"></i>
+                            <ul class="menu-subnav">
+                                <li class="menu-item {{ request()->routeIs('admin.catalog-items.index') ? 'menu-item-active' : '' }}"
+                                    aria-haspopup="true">
+                                    <a href="{{ route('admin.catalog-items.index') }}" class="menu-link">
+                                        <i class="menu-bullet menu-bullet-dot">
+                                            <span></span>
+                                        </i>
+                                        <span class="menu-text">Главный каталог</span>
                                     </a>
                                 </li>
                             </ul>
