@@ -1,5 +1,7 @@
 $(function () {
 
+    initCatalogItems()
+
 })
 
 
@@ -53,4 +55,47 @@ function throwMessage(message) {
             });
         }, 2000)
     })
+}
+
+function initCatalogItems() {
+    // Получаем все элементы .catitem на странице
+    const catItems = document.querySelectorAll('.catitem');
+
+    // Проверяем наличие элементов
+    if (catItems.length > 0) {
+        catItems.forEach(catItem => {
+            const links = catItem.querySelectorAll('.catitem__link');
+            const content = catItem.querySelector('.catitem__content');
+
+            // Если количество ссылок больше 6, добавляем кнопку и скрываем лишние ссылки
+            if (links.length > 6) {
+                // Создаем кнопку "Показать еще"
+                const moreButton = document.createElement('button');
+                moreButton.className = 'catitem__more';
+                moreButton.textContent = 'Показать еще';
+                content.appendChild(moreButton);
+
+                // Скрываем ссылки, начиная с 7-й
+                links.forEach((link, index) => {
+                    if (index >= 6) {
+                        link.style.display = 'none';
+                    }
+                });
+
+                // Добавляем обработчик клика на кнопку
+                moreButton.addEventListener('click', function () {
+                    const hiddenLinks = Array.from(links).slice(6);
+                    const isHidden = hiddenLinks.some(link => link.style.display === 'none');
+
+                    // Переключаем видимость ссылок
+                    hiddenLinks.forEach(link => {
+                        link.style.display = isHidden ? 'block' : 'none';
+                    });
+
+                    // Меняем текст кнопки
+                    moreButton.textContent = isHidden ? 'Скрыть' : 'Показать еще';
+                });
+            }
+        });
+    }
 }
