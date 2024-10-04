@@ -43,7 +43,7 @@
                                 <div class="col-md-6 col-12 column" style="display:none;">
                                     <div class="form-group w-100">
                                         <label for="createCategory" class=font-weight-bold">Категория</label>
-                                        <select name="category_id" id="createCategory" class="form-control selectpicker" data-live-search="true" title="Выберите...">
+                                        <select name="category_ids[]" id="createCategory" class="form-control selectpicker" data-live-search="true" title="Выберите..." multiple>
                                             @foreach($categories as $category)
                                                 <option value="{{ $category->id }}">{{ $category->name }}</option>
                                             @endforeach
@@ -53,9 +53,19 @@
                                 <div class="col-md-6 col-12 column" style="display:none;">
                                     <div class="form-group w-100">
                                         <label for="createProduct" class=font-weight-bold">Товар</label>
-                                        <select name="product_id" id="createProduct" class="form-control selectpicker" data-live-search="true" title="Выберите...">
+                                        <select name="product_ids[]" id="createProduct" class="form-control selectpicker" data-live-search="true" title="Выберите..." multiple>
                                             @foreach($products as $product)
                                                 <option value="{{ $product->id }}">{{ $product->title }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-12 column" style="display:none;">
+                                    <div class="form-group w-100">
+                                        <label for="createBrand" class=font-weight-bold">Бренд</label>
+                                        <select name="brand_ids[]" id="createBrand" class="form-control selectpicker" data-live-search="true" title="Выберите..." multiple>
+                                            @foreach($brands as $brand)
+                                                <option value="{{ $brand->id }}">{{ $brand->name }}</option>
                                             @endforeach
                                         </select>
                                     </div>

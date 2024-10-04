@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Http\Controllers\CategoryController;
+use App\Traits\Models\HasCatalogBanners;
 use App\Traits\Models\HasTags;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -11,7 +12,7 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 class Category extends Model
 {
-    use HasTags;
+    use HasTags, HasCatalogBanners;
 
     protected $table = "categories";
 
@@ -96,8 +97,16 @@ class Category extends Model
             ->orderBy('pos');
     }
 
-    public static function getChildIds($category_id): array
+    public static function getChildIds(string|int|array $category_id): array
     {
+        if (is_array($category_id)) {
+            $result = [];
+            foreach ($category_id as $item)
+                $result = array_merge(self::getChildIds($item), $result);
+
+            return $result;
+        }
+
         return \Cache::rememberForever('category_child_ids_' . $category_id, function () use ($category_id) {
             $ids = [$category_id];
             $category = self::find($category_id);

@@ -99,6 +99,16 @@ class PermissionService
 
     const PRODUCT_AVAILABILITY_WAITER_VIEW = 'product-availability-waiter.view';
 
+    const CATALOG_BANNERS_VIEW = 'catalog-banners-view.view';
+    const CATALOG_BANNERS_CREATE = 'catalog-banners-view.create';
+    const CATALOG_BANNERS_EDIT = 'catalog-banners-view.edit';
+    const CATALOG_BANNERS_DELETE = 'catalog-banners-view.delete';
+
+    const CATALOG_ITEMS_VIEW = 'catalog-items.view';
+    const CATALOG_ITEMS_CREATE = 'catalog-items.create';
+    const CATALOG_ITEMS_EDIT = 'catalog-items.edit';
+    const CATALOG_ITEMS_DELETE = 'catalog-items.delete';
+
 
     public static function getAll(): array
     {
@@ -216,6 +226,18 @@ class PermissionService
             ],
             'Ожидаемые товары' => [
                 self::PRODUCT_AVAILABILITY_WAITER_VIEW => 'Просмотр',
+            ],
+            'Баннеры в каталоге' => [
+                self::CATALOG_BANNERS_VIEW => 'Просмотр',
+                self::CATALOG_BANNERS_CREATE => 'Создание',
+                self::CATALOG_BANNERS_EDIT => 'Редактирование',
+                self::CATALOG_BANNERS_DELETE => 'Удаление',
+            ],
+            'Главный каталог' => [
+                self::CATALOG_ITEMS_VIEW => 'Просмотр',
+                self::CATALOG_ITEMS_CREATE => 'Создание',
+                self::CATALOG_ITEMS_EDIT => 'Редактирование',
+                self::CATALOG_ITEMS_DELETE => 'Удаление',
             ],
         ];
     }

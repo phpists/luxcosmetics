@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Address;
+use App\Models\FaqGroup;
 use App\Models\GiftCard;
 use App\Models\PaymentCard;
 use App\Models\User;
@@ -185,8 +186,9 @@ class ProfileController extends Controller
     public function gift_cards() {
         $user = Auth::user();
         $activeGiftCard = $user->activeGiftCard;
+        $faqGroup = FaqGroup::where('name', 'Подарочные карты')->with('activeFaqs')->first();
 
-        return view('cabinet.giftcard', compact('user', 'activeGiftCard'));
+        return view('cabinet.giftcard', compact('user', 'activeGiftCard', 'faqGroup'));
     }
 
     public function bonuses(Request $request) {

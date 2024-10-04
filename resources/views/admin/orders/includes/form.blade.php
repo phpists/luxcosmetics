@@ -167,6 +167,15 @@
             <input type="text" name="delivery_point_id" value="{{ old('over', $order->delivery_point_id) }}" class="form-control"/>
         </div>
     </div>
+
+    @if($order->promoCode)
+            <div class="col-12 col-md-3">
+                <div class="form-group">
+                    <label for="exampleSelect2">Промокод</label>
+                    <input type="text" value="{{ $order->promoCode->code }}" class="form-control" disabled/>
+                </div>
+            </div>
+    @endif
 </div>
 
 

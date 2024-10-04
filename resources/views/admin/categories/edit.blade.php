@@ -78,6 +78,14 @@
                                     <span class="nav-text">Сортировка товаров</span>
                                 </a>
                             </li>
+                            @if(auth()->user()->isSuperAdmin()
+               || auth()->user()->can(\App\Services\Admin\PermissionService::CATALOG_BANNERS_VIEW))
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#catalogBanners">
+                                    <span class="nav-text">Баннеры в каталоге</span>
+                                </a>
+                            </li>
+                                @endif
                         </ul>
                     </div>
                 </div>
@@ -319,6 +327,9 @@
                                             Позиция
                                         </th>
                                         <th class="pr-0 text-center">
+                                            Активный
+                                        </th>
+                                        <th class="pr-0 text-center">
                                             Действия
                                         </th>
                                     </tr>
@@ -354,6 +365,14 @@
                                                 <span class="text-dark-75 d-block font-size-lg pos_tag">
                                                     {{ $tag->position }}
                                                 </span>
+                                            </td>
+                                            <td class="text-center">
+                                   <span class="switch d-flex justify-content-center tag-updatable" data-url="{{ route('admin.tag.update-is-active', $tag) }}">
+                                        <label>
+                                            <input type="checkbox" @checked($tag->is_active)/>
+                                            <span></span>
+                                        </label>
+                                    </span>
                                             </td>
                                             <td class="text-center pr-0">
                                                 <a href="javascript:;" class="btn btn-sm btn-clean btn-icon updateTag"
@@ -748,6 +767,8 @@
                             <!--end::Table-->
                         </div>
 
+                        @include('admin.catalog-banner-conditions.table', ['model' => $category])
+
                     </div>
                 </div>
             </div>
@@ -776,6 +797,17 @@
     <script src="{{ asset('super_admin/js/category.js') }}"></script>
 
     <script>
+        $(document).on('change', '.switch.tag-updatable input:checkbox', function(e) {
+            $.ajax({
+                type: 'POST',
+                url: $(this).parents('.switch:first').data('url'),
+                data: {
+                    is_active: this.checked
+                },
+            })
+        })
+
+
         $('#cat_select').select2({
             placeholder: "Выберите категорию",
             allowClear: true

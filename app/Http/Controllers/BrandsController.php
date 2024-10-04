@@ -29,6 +29,7 @@ class BrandsController extends Controller
         $properties = $this->catalogService->getFilters();
         $filters_weight = $this->catalogService->getFiltersWeight($properties);
         $filter_prices = $this->catalogService->getFilterPrices();
+        $gridItems = $this->catalogService->getGridItems(collect($products->items()));
 
         $products_id = [];
         foreach ($products as $product) {
@@ -38,7 +39,7 @@ class BrandsController extends Controller
 
         if ($request->ajax()) {
             if ($request->has('load_more')) {
-                $products_list = view('categories.parts.products', compact('products', 'variations'))->render();
+                $products_list = view('categories.parts.products', compact('products', 'variations', 'gridItems'))->render();
                 $pagination = view('categories.parts.pagination', compact('products'))->render();
 
                 return response()->json([
@@ -47,7 +48,7 @@ class BrandsController extends Controller
                     'pagination' => $pagination
                 ]);
             } elseif ($request->has('load') || $request->has('change_page')) {
-                $products_list = view('categories.parts.catalog', compact('products', 'variations'))->render();
+                $products_list = view('categories.parts.catalog', compact('products', 'variations', 'gridItems'))->render();
             }
 
             return response()->json([
@@ -56,7 +57,7 @@ class BrandsController extends Controller
                 'filterPrices' => $filter_prices
             ]);
         } else {
-            $products_list = view('categories.parts.catalog', compact('products', 'variations'))->render();
+            $products_list = view('categories.parts.catalog', compact('products', 'variations', 'gridItems'))->render();
         }
         if ($request->ajax()) {
             return response()->json([

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Brand;
+use App\Models\CatalogBanner;
 use App\Services\FileService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -28,7 +29,9 @@ class BrandController extends Controller
     public function edit(Brand $brand) {
         $this->authorize('update', $brand);
 
-        return view('admin.brands.edit', compact('brand'));
+        $catalogBanners = CatalogBanner::all();
+
+        return view('admin.brands.edit', compact('brand', 'catalogBanners'));
     }
 
     public function update(Request $request, Brand $brand) {

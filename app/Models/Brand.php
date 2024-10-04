@@ -2,13 +2,14 @@
 
 namespace App\Models;
 
+use App\Traits\Models\HasCatalogBanners;
 use App\Traits\Models\HasTags;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Brand extends Model
 {
-    use HasTags;
+    use HasTags, HasCatalogBanners;
 
     protected $fillable = ['name', 'image', 'link', 'hide', 'seo_content'];
 

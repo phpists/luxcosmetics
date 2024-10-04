@@ -14,4 +14,19 @@ class ProductPriceCase extends Model
         'model_type',
     ];
 
+    public function product()
+    {
+        return $this->morphTo(Product::class);
+    }
+
+    public function brand()
+    {
+        return $this->morphTo(Brand::class);
+    }
+
+    public function category()
+    {
+        return $this->morphTo(Category::class);
+    }
+
 }

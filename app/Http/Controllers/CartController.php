@@ -253,13 +253,13 @@ class CartController extends Controller
 
 //            if ($promoCode->amount && (($this->cartService->getTotalSumWithDiscounts() - $promoCode->amount) < 0))
 //                throw new Exception('Общая сумма заказа не может быть меньше 0');
+
+            $this->cartService->usePromo($promoCode->code);
+
+            return back()->with('success', 'Промокод успешно применён');
         } catch (\Exception $exception) {
             return back()->with('error', $exception->getMessage());
         }
-
-        $this->cartService->usePromo($promoCode->code);
-
-        return back()->with('success', 'Промокод успешно применён');
     }
 
 

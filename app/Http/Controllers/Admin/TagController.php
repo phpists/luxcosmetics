@@ -67,6 +67,13 @@ class TagController extends Controller
         ]);
     }
 
+    public function updateIsActive(Tag $tag, Request $request)
+    {
+        $tag->update([
+            'is_active' => $request->boolean('is_active')
+        ]);
+    }
+
     public function delete(Request $request) {
         try {
             $tag = Tag::query()->find($request->id);

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Product;
+use App\Services\CatalogGridService;
 use App\Services\CatalogService;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Database\Query\JoinClause;
@@ -32,6 +33,7 @@ class CategoryController extends Controller
         $filters_weight = $this->catalogService->getFiltersWeight($properties);
         $filter_prices = $this->catalogService->getFilterPrices();
         $brands = $this->catalogService->getBrands();
+        $gridItems = $this->catalogService->getGridItems(collect($products->items()));
 
         $products_id = [];
         foreach ($products as $product) {
@@ -41,7 +43,7 @@ class CategoryController extends Controller
 
         if ($request->ajax()) {
             if ($request->has('load_more')) {
-                $products_list = view('categories.parts.products', compact('products', 'variations'))->render();
+                $products_list = view('categories.parts.products', compact('products', 'variations', 'gridItems'))->render();
                 $pagination = view('categories.parts.pagination', compact('products'))->render();
 
                 return response()->json([
@@ -50,7 +52,7 @@ class CategoryController extends Controller
                     'pagination' => $pagination
                 ]);
             } elseif ($request->has('load') || $request->has('change_page')) {
-                $products_list = view('categories.parts.catalog', compact('products', 'variations'))->render();
+                $products_list = view('categories.parts.catalog', compact('products', 'variations', 'gridItems'))->render();
             }
 
             return response()->json([
@@ -59,7 +61,7 @@ class CategoryController extends Controller
                 'filterPrices' => $filter_prices
             ]);
         } else {
-            $products_list = view('categories.parts.catalog', compact('products', 'variations'))->render();
+            $products_list = view('categories.parts.catalog', compact('products', 'variations', 'gridItems'))->render();
         }
         if ($request->ajax()) {
             return response()->json([
