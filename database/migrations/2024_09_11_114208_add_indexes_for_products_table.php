@@ -11,6 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
+        Schema::disableForeignKeyConstraints();
         Schema::table('products', function (Blueprint $table) {
             $table->index('availability');
             $table->foreign('category_id')->references('id')->on('categories');
@@ -43,6 +44,7 @@ return new class extends Migration
             $table->foreign('product_id')->references('id')->on('products');
             $table->foreign('relative_product_id')->references('id')->on('products');
         });
+        Schema::enableForeignKeyConstraints();
     }
 
     /**
@@ -50,6 +52,7 @@ return new class extends Migration
      */
     public function down(): void
     {
+        Schema::disableForeignKeyConstraints();
         Schema::table('products', function (Blueprint $table) {
             $table->dropIndex('products_availability_index');
             $table->dropForeign('products_category_id_foreign');
@@ -82,5 +85,6 @@ return new class extends Migration
             $table->dropForeign('related_products_product_id_foreign');
             $table->dropForeign('related_products_relative_product_id_foreign');
         });
+        Schema::enableForeignKeyConstraints();
     }
 };
