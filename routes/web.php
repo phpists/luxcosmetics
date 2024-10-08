@@ -7,6 +7,10 @@ use App\Http\Controllers\Admin\CatalogItemController;
 use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
 use App\Http\Controllers\Admin\MenuController;
 use App\Http\Controllers\Admin\ProductPriceController;
+use App\Http\Controllers\Admin\PromotionController;
+use App\Http\Controllers\Admin\PromotionProductController;
+use App\Http\Controllers\Admin\PromotionPropertyController;
+use App\Http\Controllers\Admin\SeoDataController;
 use App\Http\Controllers\Admin\Settings\SettingController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\CategoryController;
@@ -523,6 +527,31 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function 
     Route::resource('catalog-items', CatalogItemController::class, ['as' => 'admin']);
     /** /CatalogItems */
 
+    /** Promotions */
+    Route::post('promotions/{promotion}/update-status', [PromotionController::class, 'updateStatus'])
+        ->name('admin.promotions.update-status');
+    Route::resource('promotions', PromotionController::class, ['as' => 'admin'])->except('create');
+
+    // Properties
+    Route::get('promotion-properties/values', [PromotionPropertyController::class, 'getValues'])->name('admin.promotion.properties.values');
+    Route::resource('{promotion}/properties', PromotionPropertyController::class, ['as' => 'admin.promotion'])
+        ->only(['index', 'store', 'destroy']);
+
+    // Products
+    Route::post('{promotion}/products/update-positions', [PromotionProductController::class, 'updatePositions'])
+        ->name('admin.promotion.products.update-positions');
+    Route::resource('{promotion}/products', PromotionProductController::class, ['as' => 'admin.promotion'])
+        ->only(['index', 'store', 'destroy']);
+    /** /Promotions */
+
+    /** Seo Data */
+    Route::resource('seo-data', SeoDataController::class, ['as' => 'admin'])
+        ->only(['edit', 'update']);
+    /** /Seo Data */
+
+    // CKEditor file upload
+    Route::post('ckeditor/upload', [\App\Http\Controllers\Admin\CkeditorController::class, 'upload'])
+        ->name('ckeditor.upload');
 });
 
 // General Pages
@@ -531,6 +560,10 @@ Route::get('/news/{link}', [\App\Http\Controllers\NewsController::class, 'show']
 Route::get('/blog/{link}', [\App\Http\Controllers\BlogController::class, 'show'])->name('index.blog');
 Route::get('/banner/{link}', [\App\Http\Controllers\BannerController::class, 'show'])->name('index.banner');
 Route::get('/load_questions', [\App\Http\Controllers\ProductQuestionController::class, 'loadQuestions'])->name('product_questions.load');
+
+// Promotions
+Route::get('akcii', [\App\Http\Controllers\PromotionController::class, 'index'])->name('promotions.index');
+Route::get('akcii/{promotion}', [\App\Http\Controllers\PromotionController::class, 'show'])->name('promotions.show');
 
 //Comments
 Route::post('/comment', [App\Http\Controllers\CommentsController::class, 'store'])->name('send.comment');

@@ -104,7 +104,7 @@
                                                     @method('DELETE')
                                                     <input type="hidden" name="id" value="{{ $banner->id }}">
                                                     <button type="submit" class="btn btn-sm btn-clean btn-icon btn_delete"
-                                                            onclick="return confirm('Ви впевнені, що хочете банер?')"
+                                                            onclick="return confirm('Вы уверены, что хотите удалить баннер?')"
                                                             title="Видалити"><i class="las la-trash"></i>
                                                     </button>
                                                 </form>

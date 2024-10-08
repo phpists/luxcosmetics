@@ -39,7 +39,7 @@
                         @method('DELETE')
                         <input type="hidden" name="id" value="{{ $subscription_category->id }}">
                         <button type="submit" class="btn btn-sm btn-clean btn-icon btn_delete"
-                                onclick="return confirm('Ви впевнені, що хочете видалити питання \'{{ $subscription_category->name }}\'?')"
+                                onclick="return confirm('Вы уверены, что хотите удалить вопрос \'{{ $subscription_category->name }}\'?')"
                                 title="Delete"><i class="las la-trash"></i>
                         </button>
                     </form>

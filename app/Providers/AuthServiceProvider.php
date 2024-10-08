@@ -4,7 +4,9 @@ namespace App\Providers;
 
 // use Illuminate\Support\Facades\Gate;
 use App\Models\CourierDeliveryMethod;
+use App\Models\Promotion;
 use App\Policies\DeliveryMethodPolicy;
+use App\Policies\PromotionPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
 class AuthServiceProvider extends ServiceProvider
@@ -15,7 +17,8 @@ class AuthServiceProvider extends ServiceProvider
      * @var array<class-string, class-string>
      */
     protected $policies = [
-        CourierDeliveryMethod::class => DeliveryMethodPolicy::class
+        CourierDeliveryMethod::class => DeliveryMethodPolicy::class,
+        Promotion::class => PromotionPolicy::class
     ];
 
     /**

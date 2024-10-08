@@ -23,7 +23,7 @@
 </div>
 
 <div id="{{ $method }}CatalogItemLinks" class="catalogItemLinks">
-    <label>Ссілки:</label>
+    <label>Ссылки:</label>
     <div class="form-group">
         <div data-repeater-list="links">
             <div data-repeater-item class="form-group row mb-2">

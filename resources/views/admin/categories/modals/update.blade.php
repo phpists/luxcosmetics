@@ -49,8 +49,8 @@
                                            class="col-sm-12 col-form-label font-weight-bold">Главное</label>
                                     <div class="col-sm-12">
                                         <select class="form-control" id="is_main" name="is_main">
-                                            <option value="1">Так</option>
-                                            <option value="0">Ні</option>
+                                            <option value="1">Да</option>
+                                            <option value="0">Нет</option>
                                         </select>
                                     </div>
                                 </div>
@@ -62,8 +62,8 @@
                                     <label for="createSeller" class="col-sm-12 col-form-label font-weight-bold">Отображать</label>
                                     <div class="col-sm-12">
                                         <select class="form-control" id="active" name="active">
-                                            <option value="1">Так</option>
-                                            <option value="0">Ні</option>
+                                            <option value="1">Да</option>
+                                            <option value="0">Нет</option>
                                         </select>
                                     </div>
                                 </div>
