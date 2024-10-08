@@ -2,7 +2,7 @@
     <div class="category-page__pagination pagination">
 
         @if ($paginator->hasMorePages())
-        <button class="pagination__more" data-url="{{ $paginator->nextPageUrl() }}">Показать  еще <span>12 товаров</span> <svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#refresh')}}"></use></svg></button>
+        <button class="pagination__more" data-url="{{ $paginator->nextPageUrl() }}">Показать  еще <span>12 {{ $moreItemName ?? 'товаров' }}</span> <svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#refresh')}}"></use></svg></button>
         @endif
 
         <ul class="pagination__list" style="display: flex">

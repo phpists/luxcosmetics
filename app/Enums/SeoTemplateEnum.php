@@ -3,6 +3,7 @@
 namespace App\Enums;
 
 use App\Models\SeoTemplate;
+use Illuminate\Database\Eloquent\Model;
 
 enum SeoTemplateEnum: string
 {
@@ -16,20 +17,22 @@ enum SeoTemplateEnum: string
     case REGISTER = 'register';
     case BOOKMARK = 'bookmark';
     case CATALOG = 'catalog';
+    case PROMOTIONS = 'akcii';
+    case PROMOTION_ARTICLE = 'akcii.article';
 
 
     /**
      * @throws \Exception
      */
-    public function getReplaces(mixed $model)
+    public function getReplaces(?Model $model)
     {
-        return match ($this->value) {
-            self::CATEGORY->value => [
+        return match ($this) {
+            self::CATEGORY => [
                 '{id}' => $model->id,
                 '{name}' => $model->name,
                 '{alias}' => $model->alias,
             ],
-            self::PRODUCT->value => [
+            self::PRODUCT => [
                 '{id}' => $model->id,
                 '{title}' => $model->title,
                 '{alias}' => $model->alias,
@@ -40,21 +43,26 @@ enum SeoTemplateEnum: string
                 '{category}' => $model->category?->name,
                 '{brand}' => $model->brand?->name,
             ],
-            self::BRAND->value => [
+            self::BRAND => [
                 '{id}' => $model->id,
                 '{name}' => $model->name,
                 '{link}' => $model->link,
             ],
-            self::NEWS->value => [
+            self::NEWS => [
                 '{id}' => $model->id,
                 '{title}' => $model->title,
                 '{link}' => $model->link,
                 '{text}' => $model->text,
             ],
-            self::STATIC->value => [
+            self::STATIC => [
                 '{id}' => $model->id,
                 '{title}' => $model->title,
                 '{link}' => $model->link,
+            ],
+            self::PROMOTION_ARTICLE => [
+                '{id}' => $model->id,
+                '{title}' => $model->title,
+                '{slug}' => $model->slug,
             ],
             default => []
         };

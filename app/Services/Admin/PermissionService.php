@@ -109,6 +109,11 @@ class PermissionService
     const CATALOG_ITEMS_EDIT = 'catalog-items.edit';
     const CATALOG_ITEMS_DELETE = 'catalog-items.delete';
 
+    const PROMOTIONS_VIEW = 'promotions.view';
+    const PROMOTIONS_CREATE = 'promotions.create';
+    const PROMOTIONS_EDIT = 'promotions.edit';
+    const PROMOTIONS_DELETE = 'promotions.delete';
+
 
     public static function getAll(): array
     {
@@ -238,6 +243,12 @@ class PermissionService
                 self::CATALOG_ITEMS_CREATE => 'Создание',
                 self::CATALOG_ITEMS_EDIT => 'Редактирование',
                 self::CATALOG_ITEMS_DELETE => 'Удаление',
+            ],
+            'Акции' => [
+                self::PROMOTIONS_VIEW => 'Просмотр',
+                self::PROMOTIONS_CREATE => 'Создание',
+                self::PROMOTIONS_EDIT => 'Редактирование',
+                self::PROMOTIONS_DELETE => 'Удаление',
             ],
         ];
     }
