@@ -20,3 +20,5 @@ jobs:
             /opt/php82/bin/php composer.phar install
             /opt/php82/bin/php artisan migrate
             /opt/php82/bin/php artisan view:clear
+            /opt/php82/bin/php artisan db:seed --class=PermissionSeeder
+            /opt/php82/bin/php artisan db:seed --class=SeoTemplateSeeder

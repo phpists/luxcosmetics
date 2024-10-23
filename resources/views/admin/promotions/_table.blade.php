@@ -41,6 +41,9 @@
                     @endif
                 </td>
                 <td class="text-center pr-0">
+                    <a href="{{ route('promotions.show', $promotion) }}" class="btn btn-sm btn-clean btn-icon" target="_blank">
+                        <i class="las la-eye"></i>
+                    </a>
                     @if(auth()->user()->isSuperAdmin() || auth()->user()->can(\App\Services\Admin\PermissionService::PROMOTIONS_EDIT))
                         <a href="{{ route('admin.promotions.edit', $promotion) }}" class="btn btn-sm btn-clean btn-icon">
                             <i class="las la-edit"></i>
