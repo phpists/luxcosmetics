@@ -41,3 +41,19 @@
 .product_favourite svg.inactive-icon {
     display: block;
 }
+
+.form__input:not(.is-invalid) ~.invalid-feedback {
+    display: none;
+}
+
+.invalid-feedback {
+    color: red;
+}
+
+.popupform#otpModal {
+    max-width: 549px;
+}
+
+.alert-favadd {
+    z-index: 99999;
+}

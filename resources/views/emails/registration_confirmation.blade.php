@@ -6,16 +6,14 @@
 <p style="text-align: center">
     Спасибо за регистрацию на нашем сайте
 </p>
-@isset($password)
 <p style="text-align: center">
-Ваш пароль:
+Ваш номер телефона:
 </p>
-<p style="color: black;  font-weight: bold; font-size: 24px; padding: 10px">{{$password}}</p>
-@endisset
+<p style="color: black;  font-weight: bold; font-size: 24px; padding: 10px">{{ $phone }}</p>
 <p style="text-align: center">
 Ваш email:
 </p>
-<p style="color: black;  font-weight: bold; font-size: 24px; padding: 10px; text-decoration: none">{{$email}}</p>
+<p style="color: black;  font-weight: bold; font-size: 24px; padding: 10px; text-decoration: none">{{ $email }}</p>
 
 <x-mail::button :url="url()->route('home')">
     Посетить сайт

@@ -1,8 +1,60 @@
+let setCooldownInterval;
+
+$.fn.setCooldown = function(time = 5) {
+    let seconds = Math.ceil(time); // Calculate the number of seconds
+
+    return $(this).each(function() {
+        if (setCooldownInterval !== undefined)
+            return;
+
+        $(this).attr('disabled', true);
+        let disabledElem = $(this),
+            originalText = disabledElem.text().split(' (').shift().trim(); // Remember the original text content
+
+        // append the number of seconds to the text
+        disabledElem.text(originalText + ' (' + seconds + ')');
+
+        // do a set interval, using an interval of 1000 milliseconds
+        //     and clear it after the number of seconds counts down to 0
+        setCooldownInterval = setInterval(function() {
+            seconds = seconds - 1;
+            // decrement the seconds and update the text
+            disabledElem.text(originalText + ' (' + seconds + ')');
+            if (seconds === 0) { // once seconds is 0...
+                disabledElem.removeAttr('disabled')
+                    .text(originalText); //reset to original text
+                clearInterval(setCooldownInterval); // clear interval
+                setCooldownInterval = undefined;
+            }
+        }, 1000);
+    });
+};
+
 $(function () {
 
     initCatalogItems()
 
+    $('[data-modal]').on('click', function () {
+        const modal = this.dataset.modal;
+        $.magnificPopup.open({
+            items: {
+                src: modal,
+                type: 'inline'
+            }
+        });
+    })
+
+    validationStuff.init();
 })
+
+function openModal(modal) {
+    $.magnificPopup.open({
+        items: {
+            src: modal,
+            type: 'inline'
+        }
+    });
+}
 
 
 function initFilters() {
@@ -97,5 +149,76 @@ function initCatalogItems() {
                 });
             }
         });
+    }
+}
+
+function submitLiveForm($form, callback = undefined) {
+    fetch($form.attr('action'), {
+            method: $form.attr('method'),
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                'Accept': 'application/json',
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'X-Requested-With': 'XMLHttpRequest'
+            },
+            body: $form.serialize(),
+            redirect: 'follow',
+        })
+        .then(async response => {
+            if (response.redirected) {
+                window.location.replace(response.url);
+                return;
+            }
+
+            let json = await response.json();
+
+            if (response.status === 500)
+                throwMessage('ОШИБКА! Попробуйте позже')
+
+            if (response.status === 429)
+                throwMessage('Воу, не так быстро! Подождите немного')
+
+            if (response.status === 422)
+                validationStuff.showErrors(json.errors, $form.data('feedback-class'))
+
+            if (response.status === 200 || response.status === 201 || response.status === 202) {
+                if (json.redirect_url)
+                    window.location.replace(json.redirect_url);
+
+                if (json.message)
+                    throwMessage(json.message)
+            }
+
+            if (typeof callback === 'function')
+                callback(response, json);
+        })
+}
+
+const validationStuff = {
+    init: function () {
+        const self = this;
+
+        $(document).on('input', '.is-invalid', function (e) {
+            self.hideErrors(this)
+        });
+
+        $(document).on('change', '.is-invalid', function (e) {
+            self.hideErrors(this)
+        });
+    },
+    showErrors: (errors, feedbackClass = 'invalid-feedback') => {
+        for (let name in errors) {
+            const $el = $(`[name=${name}]`).addClass('is-invalid');
+            if ($el.next().hasClass(feedbackClass))
+                $el.next().text(errors[name].join(' | '))
+            else
+                $el.after(`<span class="${feedbackClass}">${errors[name].join(' | ')}</span>`)
+        }
+    },
+    hideErrors: (el = null) => {
+        if (el)
+            $(el).removeClass('is-invalid');
+        else
+            $('.is-invalid').removeClass('is-invalid');
     }
 }

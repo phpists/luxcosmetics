@@ -12,35 +12,35 @@ use App\Http\Controllers\Admin\PromotionProductController;
 use App\Http\Controllers\Admin\PromotionPropertyController;
 use App\Http\Controllers\Admin\SeoDataController;
 use App\Http\Controllers\Admin\Settings\SettingController;
-use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\SitemapController;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use Laravel\Socialite\Facades\Socialite;
+use \App\Http\Controllers\Auth\Otp\LoginController as OtpLoginController;
+use \App\Http\Controllers\Auth\Otp\CartLoginController as OtpCartLoginController;
+use \App\Http\Controllers\Auth\Otp\LogoutController as OtpLogoutController;
+use \App\Http\Controllers\Auth\Otp\RegisterController as OtpRegisterController;
+use \App\Http\Controllers\Auth\Otp\VerifyCodeController as OtpVerifyCodeController;
+use \App\Http\Controllers\Auth\Otp\ResendCodeController as OtpResendCodeController;
 
-/* Socialize */
-Auth::routes();
+
+/** Auth */
+Route::group(['middleware' => 'guest'], function () {
+    Route::get('login', [OtpLoginController::class, 'index'])->name('login');
+    Route::post('login', [OtpLoginController::class, 'login'])->name('login.store');
+    Route::post('cart/login', OtpCartLoginController::class)->name('cart.login.store');
+
+    Route::get('register', [OtpRegisterController::class, 'index'])->name('register');
+    Route::post('register', [OtpRegisterController::class, 'register'])->name('register.store');
+
+    Route::post('auth/code/verify', OtpVerifyCodeController::class)->name('auth.code.verify');
+    Route::post('auth/code/resend', OtpResendCodeController::class)
+        ->middleware('throttle:1,1')
+        ->name('auth.code.resend');
+});
 
 Route::get('sitemap.xml', [SitemapController::class, 'index'])->name('sitemap');
-
 Route::get('/', [\App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
-Route::get('login/{provider}', [LoginController::class, 'redirectToProvider'])->name('login_socialite');
-Route::match(['get', 'post'], 'login/{provider}/callback', [LoginController::class, 'handleProviderCallback']);
-
-Route::get('/auth-facebook/redirect', function () {
-    return Socialite::driver('facebook')->redirect();
-});
-
-Route::get('/auth-facebook/callback', function () {
-    $user = Socialite::driver('facebook')->user();
-
-    // $user->token
-});
-
-Route::post('/reset-password', [\App\Http\Controllers\Auth\ResetPassController::class, 'reset'])->name('password.reset-password');
 
 // Pages brand
 Route::get('b', [\App\Http\Controllers\BrandsController::class, 'index'])->name('categories');
@@ -76,6 +76,8 @@ Route::delete('favourites', [\App\Http\Controllers\FavoriteProductController::cl
 // Ask product question
 Route::post('product_question', [\App\Http\Controllers\ProductQuestionController::class, 'createQuestion'])->name('product_question.create');
 Route::group(['middleware' => 'auth'], function () {
+    Route::post('logout', OtpLogoutController::class)->name('logout');
+
     Route::post('create-chat', [\App\Http\Controllers\FeedbackController::class, 'store'])->name('create-chat');
     Route::put('update-chat/{id}', [\App\Http\Controllers\FeedbackController::class, 'update'])->name('update-chat');
     Route::post('send-message', [\App\Http\Controllers\FeedbackController::class, 'store_message'])->name('send-message');
