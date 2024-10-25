@@ -49,6 +49,7 @@ return [
         'base_url' => env('SMS_AERO_BASE_URL', 'https://gate.smsaero.ru/v2'),
         'login' => env('SMS_AERO_LOGIN'),
         'api_key' => env('SMS_AERO_API_KEY'),
+        'sign' => env('SMS_AERO_SIGN'),
     ],
 
 ];

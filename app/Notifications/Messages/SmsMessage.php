@@ -9,8 +9,8 @@ class SmsMessage
     protected string $baseUrl;
     protected string $login;
     protected string $apiKey;
+    protected string $sign;
 
-    protected string $from;
     protected null|string|array $to;
     protected array $lines;
 
@@ -25,8 +25,7 @@ class SmsMessage
         $this->baseUrl = config('services.sms_aero.base_url');
         $this->login = config('services.sms_aero.login');
         $this->apiKey = config('services.sms_aero.api_key');
-
-        $this->from = config('app.name');
+        $this->sign = config('services.sms_aero.sign');
     }
 
     public function line(string $line = ''): self
@@ -65,7 +64,7 @@ class SmsMessage
                 ->asForm()
                 ->post('sms/send', [
                     ...$to,
-                    'sign' => $this->from,
+                    'sign' => $this->sign,
                     'text' => $text,
                 ]);
         } catch (\Exception $e) {
