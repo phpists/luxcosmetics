@@ -16,10 +16,9 @@ class RegistrationConfirmation extends Mailable
 
     public $user;
 
-    public function __construct(User $user, $password=null)
+    public function __construct(User $user)
     {
         $this->user = $user;
-        $this->password = $password;
     }
 
 //    public function build()
@@ -48,7 +47,7 @@ class RegistrationConfirmation extends Mailable
             with: [
                 'userName' => $this->user->name,
                 'email' => $this->user->email,
-                'password' => $this->password
+                'phone' => $this->user->phone
             ],
         );
     }

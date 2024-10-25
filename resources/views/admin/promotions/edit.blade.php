@@ -56,6 +56,10 @@
                     </div>
 
                     <div class="card-toolbar">
+                        <a href="{{ route('promotions.show', $promotion) }}" class="btn btn-secondary mx-2" target="_blank">
+                            <i class="las la-eye"></i>
+                            Просмотр
+                        </a>
                         <button type="submit" form="editPromotionForm" class="btn btn-primary tab-submit-btn"
                                 data-tab="generalTab">Сохранить
                         </button>

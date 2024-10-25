@@ -39,6 +39,10 @@
             <div class="card card-custom">
                 <div class="card-body">
                     <div class="row justify-content-end">
+                        <a href="{{ route('promotions.index') }}" class="btn btn-secondary" target="_blank">
+                            <i class="las la-eye"></i>
+                            Акции
+                        </a>
                         @if(auth()->user()->isSuperAdmin() || auth()->user()->can(\App\Services\Admin\PermissionService::PROMOTIONS_CREATE))
                             <button data-toggle="modal" data-target="#createPromotionModal"
                                     class="btn btn-success font-weight-bolder mx-5">

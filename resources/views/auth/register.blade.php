@@ -16,7 +16,7 @@
                     <p><b>Создайте учетную запись, чтобы пользоваться эксклюзивными преимуществами</b></p>
                     <p>Включая отслеживание заказов и ранний доступ к нашим мероприятиям и специальным предложениям
                     </p>
-                    <form method="POST" action="{{ route('register') }}" class="form form--box  typography">
+                    <form id="registerForm" method="POST" action="{{ route('register.store') }}" class="form form--box  typography">
                         @csrf
                         @if ($errors->any())
                             <div class="alert alert-danger">
@@ -55,20 +55,6 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="form__row">
-                            <div class="form__col form__col--50">
-                                <div class="form__fieldset">
-                                    <legend class="form__label">Пароль *</legend>
-                                    <input type="password" name="password" id="password_inp" pattern=".{8,}" title="Пароль должен содержать минимум 8 символов" class="form__input" >
-                                </div>
-                            </div>
-                            <div class="form__col form__col--50">
-                                <div class="form__fieldset">
-                                    <legend class="form__label">Подтвердите пароль *</legend>
-                                    <input type="password" required name="password_confirmation" pattern=".{8,}" title="Пароль должен содержать минимум 8 символов" class="form__input" placeholder="Введите ваш пароль">
-                                </div>
-                            </div>
-                        </div>
                         <div class="form__fieldset">
                             <legend class="form__label">Дата рождения</legend>
                             <div class="form__row">
@@ -95,33 +81,6 @@
                                 </div>
                             </div>
                         </div>
-{{--                        <div class="form__fieldset">--}}
-{{--                            <legend class="form__label">Выберите предпочтительный способ связи--}}
-{{--                            </legend>--}}
-{{--                            @foreach(\App\Models\User::getConnectionOptions() as $option)--}}
-{{--                                <label class="checkbox">--}}
-{{--                                    <input type="radio" value="{{$option}}" name="connection_type" />--}}
-{{--                                    <div class="checkbox__text">{{\App\Services\SiteService::getConnectionOption($option)}}</div>--}}
-{{--                                </label>--}}
-{{--                            @endforeach--}}
-
-{{--                            <label class="checkbox">--}}
-{{--                                <input type="checkbox" name="communications[]" />--}}
-{{--                                <div class="checkbox__text">Электронная почта</div>--}}
-{{--                            </label>--}}
-{{--                            <label class="checkbox">--}}
-{{--                                <input type="checkbox" name="communications[]" />--}}
-{{--                                <div class="checkbox__text">SMS</div>--}}
-{{--                            </label>--}}
-{{--                            <label class="checkbox">--}}
-{{--                                <input type="checkbox" name="communications[]" />--}}
-{{--                                <div class="checkbox__text">Телефон</div>--}}
-{{--                            </label>--}}
-{{--                            <label class="checkbox">--}}
-{{--                                <input type="checkbox" name="communications[]" />--}}
-{{--                                <div class="checkbox__text">WhatsApp</div>--}}
-{{--                            </label>--}}
-{{--                        </div>--}}
                         <div class="form__fieldset">
                             <label class="checkbox">
                                 <input type="checkbox" name="newsletter" />
@@ -130,7 +89,7 @@
                         </div>
                         <div class="form__fieldset">
                             <label class="checkbox">
-                                <input type="checkbox" name="agreement" required/>
+                                <input type="checkbox" name="agreement" value="1" required/>
                                 <div class="checkbox__text">Я прочитал <a href="/pages/policy">Условия и положения</a> , а также <a href="/pages/policy">Политику конфиденциальности</a> и согласен с ними*</div>
                             </label>
                         </div>
@@ -146,12 +105,30 @@
 @endsection
 
 @section('scripts')
-    <script src="{{ asset('js/jquery.min.js') }}"></script>
     <script src="{{ asset('js/inputmask/inputmask.js') }}"></script>
-        <script src="{{ asset('js/inputmask/jquery.inputmask.js') }}"></script>
+    <script src="{{ asset('js/inputmask/jquery.inputmask.js') }}"></script>
     <script type="text/javascript">
         $(document).ready(function(){
-            Inputmask("+7 (999) 999-99-99").mask('#phone_inp');
+            Inputmask("+7 (999) 999-99-99").mask('.phone_inp');
+
+            $(document).on('submit', '#registerForm', function (e) {
+                e.preventDefault();
+                const $form = $(this);
+                submitLiveForm($form, function (response, json) {
+                    if (response.status == 200) {
+                        $('#otpForm').find('[name="phone"]').val($form.find('[name="phone"]').val())
+                        openModal('#otpModal')
+                        if (json.message)
+                            $('button:submit[form="resendCodeForm"]').setCooldown(60);
+                    }
+                })
+            })
+
+            $(document).on('submit', '#otpForm', function (e) {
+                e.preventDefault();
+                const $form = $(this);
+                submitLiveForm($form)
+            })
         });
     </script>
 @endsection

@@ -37,18 +37,6 @@
                 </a>
             </div>
         </div>
-        <div class="cabinet-page__group">
-            <h3 class="cabinet-page__subheading subheading">Пароль</h3>
-            <div class="cabinet-page__item cabinet-page__item--justify">
-                <div class="cabinet-page__data"><b>*********</b></div>
-                <a href="{{route('profile.password')}}" class="btn-edit">
-                    <svg class="icon">
-                        <use xlink:href="{{asset('images/dist/sprite.svg#edit')}}"></use>
-                    </svg>
-                    Редактировать
-                </a>
-            </div>
-        </div>
 {{--        <div class="cabinet-page__group">--}}
 {{--            <h3 class="cabinet-page__subheading subheading">Мои адреса</h3>--}}
 {{--            <div class="cabinet-page__item cabinet-page__item--justify">--}}
