@@ -208,7 +208,7 @@ const validationStuff = {
     },
     showErrors: (errors, feedbackClass = 'invalid-feedback') => {
         for (let name in errors) {
-            const $el = $(`[name=${name}]`).addClass('is-invalid');
+            const $el = $(`[name=${name}]:not(:hidden)`).addClass('is-invalid');
             if ($el.next().hasClass(feedbackClass))
                 $el.next().text(errors[name].join(' | '))
             else
