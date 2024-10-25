@@ -57,3 +57,13 @@
 .alert-favadd {
     z-index: 99999;
 }
+
+button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    filter: grayscale(10%);
+    pointer-events: none;
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+}
