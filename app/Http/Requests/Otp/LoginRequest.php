@@ -25,4 +25,11 @@ class LoginRequest extends FormRequest
             'phone' => ['required', 'exists:users,phone'],
         ];
     }
+
+    public function messages()
+    {
+        return [
+            'phone.exists' => 'Такого пользователя не существует'
+        ];
+    }
 }

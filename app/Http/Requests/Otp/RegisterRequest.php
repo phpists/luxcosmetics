@@ -33,4 +33,25 @@ class RegisterRequest extends FormRequest
             'agreement' => ['required', 'bool']
         ];
     }
+
+    public function attributes()
+    {
+        return [
+            'name' => 'Имя',
+            'surname' => 'Фамилия',
+            'email' => 'Электронная почта',
+            'phone' => 'Телефон',
+            'birthday.day' => 'Дата рождения',
+            'birthday.month' => 'Дата рождения',
+            'birthday.year' => 'Дата рождения',
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'email.unique' => 'Пользователь с таким email`ом уже зарегистрирован',
+            'phone.unique' => 'Пользователь с таким телефоном уже зарегистрирован',
+        ];
+    }
 }
