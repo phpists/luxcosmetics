@@ -63,7 +63,7 @@
                 <!--begin::Signin-->
                 <div class="login-form login-signin">
                     <!--begin::Form-->
-                    <form class="form" novalidate="novalidate" id="kt_login_signin_form" action="{{ route('login') }}"
+                    <form class="form" novalidate="novalidate" id="kt_login_signin_form" action="{{ route('admin.login') }}"
                           method="POST">
                         <!--begin::Title-->
                         @csrf

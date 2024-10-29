@@ -159,6 +159,8 @@ Route::post('fast-register', [\App\Http\Controllers\Auth\FastRegisterController:
 
 // Admin
 Route::get('admin', [AdminController::class, 'index'])->name('admin.home');
+Route::post('admin/login', [\App\Http\Controllers\Admin\LoginController::class, 'login'])->name('admin.login');
+Route::post('admin/logout', [\App\Http\Controllers\Admin\LoginController::class, 'logout'])->name('admin.logout');
 Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function () {
     // Products Info download
     Route::get('product_info/download', [AdminController::class, 'downloadProductJson'])->name('admin.product-info.download');
