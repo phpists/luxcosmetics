@@ -156,6 +156,8 @@ Route::get('cart/clear', [\App\Http\Controllers\CartController::class, 'clear'])
 Route::get('cart/login', [\App\Http\Controllers\CartController::class, 'login'])->name('cart.login')->middleware('guest');
 Route::post('fast-register', [\App\Http\Controllers\Auth\FastRegisterController::class, 'store'])
     ->name('fast-register')->middleware('guest');
+Route::put('cart/update-session-value', [\App\Http\Controllers\CartController::class, 'updateSessionValue'])
+    ->name('cart.update-session-value');
 
 // Admin
 Route::get('admin', [AdminController::class, 'index'])->name('admin.home');
