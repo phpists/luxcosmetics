@@ -23,11 +23,6 @@ class CartController extends Controller
 
 
     public function index() {
-        Session::remove('state');
-        Session::remove('city');
-        Session::remove('street');
-        Session::remove('house');
-        Session::remove('local_delivery_point_id');
         $cart_products = $this->cartService->getAllProducts();
 
         if ($cart_products->isNotEmpty()) {
