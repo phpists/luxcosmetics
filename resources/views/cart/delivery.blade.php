@@ -50,7 +50,7 @@
 
                         <form id="orderForm" action="{{ route('cart.delivery.store') }}" method="post">
                             @csrf
-                            <input id="orderFormDeliveryType" type="hidden" name="{{ \App\Services\CartService::DELIVERY_KEY }}" value="{{ old(\App\Services\CartService::DELIVERY_KEY, $cartService->getProperty(\App\Services\CartService::DELIVERY_KEY)) }}" required>
+                            <input class="live-updatable" id="orderFormDeliveryType" type="hidden" name="{{ \App\Services\CartService::DELIVERY_KEY }}" value="{{ old(\App\Services\CartService::DELIVERY_KEY, $cartService->getProperty(\App\Services\CartService::DELIVERY_KEY)) }}" required>
                         <div class="cartsteps__item cartstep">
                             <div></div>
                             <div class="cartstep__item">
@@ -59,19 +59,19 @@
                                 <a href="#changecity" id="changecity_init" class="btn btn--accent popup-with-form"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#edit')}}"></use></svg> Изменить адрес</a>
                             </div>
                             <div id="delivery_contaniner">
-                                <input type="hidden" id="delivery_state" name="state" value="{{ old(\App\Services\CartService::ADDRESS_STATE, $cartService->getProperty(\App\Services\CartService::ADDRESS_STATE)) }}" required>
-                                <input type="hidden" id="delivery_city" name="city" value="{{ old(\App\Services\CartService::ADDRESS_CITY, $cartService->getProperty(\App\Services\CartService::ADDRESS_CITY)) }}" required>
-                                <input type="hidden" id="delivery_street" name="street" value="{{ old(\App\Services\CartService::ADDRESS_STREET, $cartService->getProperty(\App\Services\CartService::ADDRESS_STREET)) }}" required>
-                                <input type="hidden" id="delivery_house" name="house" value="{{ old(\App\Services\CartService::ADDRESS_HOUSE, $cartService->getProperty(\App\Services\CartService::ADDRESS_HOUSE)) }}" required>
-                                <input type="hidden" id="delivery_building" name="building" value="{{ old(\App\Services\CartService::ADDRESS_BUILDING, $cartService->getProperty(\App\Services\CartService::ADDRESS_BUILDING)) }}">
-                                <input type="hidden" id="delivery_apartment" name="apartment" value="{{ old(\App\Services\CartService::ADDRESS_APARTMENT, $cartService->getProperty(\App\Services\CartService::ADDRESS_APARTMENT)) }}">
-                                <input type="hidden" id="delivery_intercom" name="intercom" value="{{ old(\App\Services\CartService::ADDRESS_INTERCOM, $cartService->getProperty(\App\Services\CartService::ADDRESS_INTERCOM)) }}">
-                                <input type="hidden" id="delivery_entrance" name="entrance" value="{{ old(\App\Services\CartService::ADDRESS_ENTRANCE, $cartService->getProperty(\App\Services\CartService::ADDRESS_ENTRANCE)) }}">
-                                <input type="hidden" id="delivery_over" name="over" value="{{ old(\App\Services\CartService::ADDRESS_OVER, $cartService->getProperty(\App\Services\CartService::ADDRESS_OVER)) }}">
-                                <input type="hidden" id="delivery_service" name="service" value="{{ old(\App\Services\CartService::ADDRESS_SERVICE, $cartService->getProperty(\App\Services\CartService::ADDRESS_SERVICE)) }}" required>
-                                <input type="hidden" id="delivery_zip" name="zip" value="{{ old(\App\Services\CartService::ADDRESS_ZIP, $cartService->getProperty(\App\Services\CartService::ADDRESS_ZIP)) }}" required>
-                                <input type="hidden" id="final_addr" name="address" value="{{ old(\App\Services\CartService::ADDRESS_KEY, $cartService->getProperty(\App\Services\CartService::ADDRESS_KEY)) }}" required>
-                                <input type="hidden" id="local_delivery_point_id" name="local_delivery_point_id" value="{{ old(\App\Services\CartService::DELIVERY_POINT_ID, $cartService->getProperty(\App\Services\CartService::DELIVERY_POINT_ID)) }}">
+                                <input class="live-updatable" type="hidden" id="delivery_state" name="{{ \App\Services\CartService::ADDRESS_STATE }}" value="{{ old(\App\Services\CartService::ADDRESS_STATE, $cartService->getProperty(\App\Services\CartService::ADDRESS_STATE)) }}" required>
+                                <input class="live-updatable" type="hidden" id="delivery_city" name="{{ \App\Services\CartService::ADDRESS_CITY }}" value="{{ old(\App\Services\CartService::ADDRESS_CITY, $cartService->getProperty(\App\Services\CartService::ADDRESS_CITY)) }}" required>
+                                <input class="live-updatable" type="hidden" id="delivery_street" name="{{ \App\Services\CartService::ADDRESS_STREET }}" value="{{ old(\App\Services\CartService::ADDRESS_STREET, $cartService->getProperty(\App\Services\CartService::ADDRESS_STREET)) }}" required>
+                                <input class="live-updatable" type="hidden" id="delivery_house" name="{{ \App\Services\CartService::ADDRESS_HOUSE }}" value="{{ old(\App\Services\CartService::ADDRESS_HOUSE, $cartService->getProperty(\App\Services\CartService::ADDRESS_HOUSE)) }}" required>
+                                <input class="live-updatable" type="hidden" id="delivery_building" name="{{ \App\Services\CartService::ADDRESS_BUILDING }}" value="{{ old(\App\Services\CartService::ADDRESS_BUILDING, $cartService->getProperty(\App\Services\CartService::ADDRESS_BUILDING)) }}">
+                                <input class="live-updatable" type="hidden" id="delivery_apartment" name="{{ \App\Services\CartService::ADDRESS_APARTMENT }}" value="{{ old(\App\Services\CartService::ADDRESS_APARTMENT, $cartService->getProperty(\App\Services\CartService::ADDRESS_APARTMENT)) }}">
+                                <input class="live-updatable" type="hidden" id="delivery_intercom" name="{{ \App\Services\CartService::ADDRESS_INTERCOM }}" value="{{ old(\App\Services\CartService::ADDRESS_INTERCOM, $cartService->getProperty(\App\Services\CartService::ADDRESS_INTERCOM)) }}">
+                                <input class="live-updatable" type="hidden" id="delivery_entrance" name="{{ \App\Services\CartService::ADDRESS_ENTRANCE }}" value="{{ old(\App\Services\CartService::ADDRESS_ENTRANCE, $cartService->getProperty(\App\Services\CartService::ADDRESS_ENTRANCE)) }}">
+                                <input class="live-updatable" type="hidden" id="delivery_over" name="{{ \App\Services\CartService::ADDRESS_OVER }}" value="{{ old(\App\Services\CartService::ADDRESS_OVER, $cartService->getProperty(\App\Services\CartService::ADDRESS_OVER)) }}">
+                                <input class="live-updatable" type="hidden" id="delivery_service" name="{{ \App\Services\CartService::ADDRESS_SERVICE }}" value="{{ old(\App\Services\CartService::ADDRESS_SERVICE, $cartService->getProperty(\App\Services\CartService::ADDRESS_SERVICE)) }}" required>
+                                <input class="live-updatable" type="hidden" id="delivery_zip" name="{{ \App\Services\CartService::ADDRESS_ZIP }}" value="{{ old(\App\Services\CartService::ADDRESS_ZIP, $cartService->getProperty(\App\Services\CartService::ADDRESS_ZIP)) }}" required>
+                                <input class="live-updatable" type="hidden" id="final_addr" name="{{ \App\Services\CartService::ADDRESS_KEY }}" value="{{ old(\App\Services\CartService::ADDRESS_KEY, $cartService->getProperty(\App\Services\CartService::ADDRESS_KEY)) }}" required>
+                                <input class="live-updatable" type="hidden" id="local_delivery_point_id" name="{{ \App\Services\CartService::DELIVERY_POINT_ID }}" value="{{ old(\App\Services\CartService::DELIVERY_POINT_ID, $cartService->getProperty(\App\Services\CartService::DELIVERY_POINT_ID)) }}">
                                 <div class="cartstep__item">
                                     <div class="cartstep__title">Выберите способ доставки</div>
                                     <div class="cartstep__delivery">
@@ -123,14 +123,14 @@
                                     <div class="form__row">
                                         <div class="form__col form__col--50">
                                             <div class="form__fieldset">
-                                                <legend class="form__label">Номер телефона *</legend>
-                                                <input id="phone_inp" type="text" class="form__input" readonly name="phone" value="{{ old('phone', $cartService->getProperty(\App\Services\CartService::PHONE_KEY) ?? auth()->user()->phone) }}" required>
+                                                <legend class="form__label">Номер телефона</legend>
+                                                <input id="phone_inp" type="text" class="form__input" name="phone" value="{{ old('phone', $cartService->getProperty(\App\Services\CartService::PHONE_KEY) ?? auth()->user()->phone) }}" style="pointer-events: none;">
                                             </div>
                                         </div>
                                         <div class="form__col form__col--50">
                                             <div class="form__fieldset">
-                                                <legend class="form__label">Электронная почта *</legend>
-                                                <input type="text" class="form__input" readonly name="email" value="{{ old('email', $cartService->getProperty(\App\Services\CartService::EMAIL_KEY) ?? auth()->user()->email) }}" required>
+                                                <legend class="form__label">Электронная почта</legend>
+                                                <input type="email" class="form__input" name="email" value="{{ old('email', $cartService->getProperty(\App\Services\CartService::EMAIL_KEY) ?? auth()->user()->email) }}" style="pointer-events: none;">
                                             </div>
                                         </div>
                                     </div>
@@ -196,7 +196,7 @@
 
             $(document).on('click', '.cartstep__delivery a', function (e) {
                 let deliveryType = $(this).find('input').val();
-                $('#orderFormDeliveryType').val(deliveryType)
+                $('#orderFormDeliveryType').val(deliveryType).change()
 
                 if (deliveryType == 'courier') {
                     $('#delivery_service').val('').prop('required', false)
@@ -230,7 +230,7 @@
                 })
             })
 
-            document.getElementById('send_I_btn').addEventListener('click', function(ev) {
+            document.getElementById('send_I_btn')?.addEventListener('click', function(ev) {
                 let data = {
                     grant_type: 'client_credentials',
                     client_id: 'EMscd6r9JnFiQ3bLoyjJY6eM78JrJceI',
@@ -276,6 +276,21 @@
                 }
             })
 
+            $(document).on('change', '.live-updatable', function (e) {
+                const name = $(this).attr('name'),
+                    value = $(this).val();
+
+                if (name) {
+                    $.ajax({
+                        url: '{{ route('cart.update-session-value') }}',
+                        type: 'PUT',
+                        data: {
+                            name: name,
+                            value: value,
+                        }
+                    })
+                }
+            })
         })
     </script>
 @endsection

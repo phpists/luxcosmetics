@@ -19,32 +19,36 @@ $(function () {
         address_city = document.getElementById('delivery_city').value;
 
 
-    if (address_city) {
-        let address_state_city = address_state ? address_state + ', ' + address_city : address_city;
+    if (typeof ymaps === 'undefined')
+        alert('Не удалось подключить Яндекс.Карты, пожалуйста, попробуйте перезагрузить страницу')
+    else {
+        ymaps.ready(initYandex).then(() => {
+            if (address_city) {
+                let address_state_city = address_state ? address_state + ', ' + address_city : address_city;
 
-        setTimeout(() => {
-            initMapItems(address_city)
-        }, 1000)
+                setTimeout(() => {
+                    initMapItems(address_city)
+                }, 1000)
 
-        locationItemClickHandler(address_state_city, address_city, address_state)
+                locationItemClickHandler(address_state_city, address_city, address_state)
+            }
+
+            let $checkedDeliveryInput = $('[name="delivery"][checked]');
+            if ($checkedDeliveryInput.length > 0) {
+                $checkedDeliveryInput.prop('checked', true);
+
+                if ($checkedDeliveryInput.val() == PICKUP_DELIVERY) {
+                    let pickup_addr = document.getElementById('pickup_addr');
+                    pickup_addr.innerText = document.getElementById(ADDRESS_OUTPUT_ID).value;
+                    showCartTab('pickup_delivery_tab');
+                } else if ($checkedDeliveryInput.val() == COURIER_DELIVERY) {
+                    document.getElementById('courier_addr').innerText = document.getElementById(ADDRESS_OUTPUT_ID).value;
+
+                    showCartTab('coruier_tab');
+                }
+            }
+        });
     }
-
-
-    let $checkedDeliveryInput = $('[name="delivery"][checked]');
-    if ($checkedDeliveryInput.length > 0) {
-        $checkedDeliveryInput.prop('checked', true);
-
-        if ($checkedDeliveryInput.val() == PICKUP_DELIVERY) {
-            let pickup_addr = document.getElementById('pickup_addr');
-            pickup_addr.innerText = document.getElementById(ADDRESS_OUTPUT_ID).value;
-            showCartTab('pickup_delivery_tab');
-        } else if ($checkedDeliveryInput.val() == COURIER_DELIVERY) {
-            document.getElementById('courier_addr').innerText = document.getElementById(ADDRESS_OUTPUT_ID).value;
-
-            showCartTab('coruier_tab');
-        }
-    }
-
 })
 
 
@@ -70,14 +74,11 @@ function initYandex(){
     });
 }
 
-ymaps.ready(initYandex);
-
 function isSmallSize() {
     return window.innerWidth <= WINDOW_SM_SIZE;
 }
 
-const handleRenderOrderModal = (title, address, id) => {
-    let [country, street, house] = address.split(', ')
+const handleRenderOrderModal = (title, address, id, street, house) => {
 
     const modal = document.querySelector(".overlay-order");
     const content = `
@@ -126,8 +127,10 @@ const handleOrder = () => {
             const id = btn.getAttribute("data-id");
             const title = btn.getAttribute("data-title");
             const address = btn.getAttribute("data-address");
+            const street = btn.getAttribute("data-street");
+            const house = btn.getAttribute("data-house");
 
-            handleRenderOrderModal(title, address, id);
+            handleRenderOrderModal(title, address, id, street, house);
         });
     });
 };
@@ -216,7 +219,7 @@ function handleClickBaloon(post_office_id) {
 
     // if (isSmallSize()) {
         let pickupBtn = selectedBaloon.querySelector('.pickup-item__button');
-        handleRenderOrderModal(pickupBtn.dataset.title, pickupBtn.dataset.address, post_office_id);
+        handleRenderOrderModal(pickupBtn.dataset.title, pickupBtn.dataset.address, post_office_id, pickupBtn.dataset.street, pickupBtn.dataset.house);
     // }
 }
 
@@ -348,8 +351,8 @@ function locationItemClickHandler(address, city, state) {
 
     document.getElementById('delivery_contaniner').classList.add('active');
 
-    $('#delivery_state').val(state)
-    $('#delivery_city').val(city)
+    $('#delivery_state').val(state).change()
+    $('#delivery_city').val(city).change()
 }
 
 async function handleSearch(ev) {
@@ -379,6 +382,8 @@ async function handleSearch(ev) {
                 if (el.address.component[componentKey].kind.includes('LOCALITY') && city.length < 1)
                     city = el.address.component[componentKey].name;
             }
+            if (!state)
+                state = city;
 
             location_title = el.address.formatted_address;
 
@@ -401,7 +406,7 @@ function initDeliveryOptions() {
     document.querySelectorAll('.select-delivery-type-opt').forEach((el) => {
         let delivery_value = document.querySelector('.select-delivery-type-value');
         el.addEventListener('click', async () => {
-            $('#delivery_service').val(el.dataset.value)
+            $('#delivery_service').val(el.dataset.value).change()
 
             document.querySelector('.select-delivery-type-opt.active').classList.toggle('active');
             el.classList.toggle('active');
@@ -414,15 +419,15 @@ function initDeliveryOptions() {
 }
 
 function handleSubmitDeliveryAddress(ev, id) {
-    $('#local_delivery_point_id').val(id);
-    $('#delivery_street').val(ev.currentTarget.dataset.street)
-    $('#delivery_house').val(ev.currentTarget.dataset.house)
+    $('#local_delivery_point_id').val(id).change();
+    $('#delivery_street').val(ev.currentTarget.dataset.street).change();
+    $('#delivery_house').val(ev.currentTarget.dataset.house).change();
 
     ymaps.geocode(ev.currentTarget.dataset.address, {results: 1}).then(function (res) {
         var firstGeoObject = res.geoObjects.get(0),
             vPostal = firstGeoObject.properties.get('metaDataProperty').GeocoderMetaData.Address.postal_code;
 
-        $('#delivery_zip').val(vPostal)
+        $('#delivery_zip').val(vPostal).change();
     })
 
     let pickup_addr = document.getElementById('pickup_addr');
@@ -433,6 +438,7 @@ function handleSubmitDeliveryAddress(ev, id) {
     let output_inp = document.getElementById(ADDRESS_OUTPUT_ID);
     output_inp.value = address + ', ' + post_name;
     output_inp.dataset.delivery_type = PICKUP_DELIVERY;
+    $(output_inp).change();
     pickup_addr.dataset.post_name = post_name;
 
     showCartTab('pickup_delivery_tab');
@@ -553,6 +559,7 @@ document.getElementById('coruier_form').addEventListener('submit', (ev) => {
     document.getElementById('courier_addr').innerText = location + ', ' + address;
     let output_inp = document.getElementById(ADDRESS_OUTPUT_ID);
     output_inp.value = location + ', ' + address;
+    $(output_inp).change()
     output_inp.dataset.delivery_type = COURIER_DELIVERY;
 
     showCartTab('coruier_tab');

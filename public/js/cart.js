@@ -172,9 +172,12 @@ $(function () {
         $(this.dataset.mirror).val(this.value)
     })
     $(document).on('change', "input[data-mirror]", function (e) {
-        $(this.dataset.mirror).val(this.value)
+        $(this.dataset.mirror).val(this.value).change()
     })
 
+    $('input[data-mirror]').each(function (i, el) {
+        $(el).val($(this.dataset.mirror).val())
+    })
 
 })
 

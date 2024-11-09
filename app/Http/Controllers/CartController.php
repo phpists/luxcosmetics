@@ -273,5 +273,8 @@ class CartController extends Controller
         return to_route('cart');
     }
 
-
+    public function updateSessionValue(Request $request)
+    {
+        $this->cartService->setProperty($request->post('name'), $request->post('value'));
+    }
 }
