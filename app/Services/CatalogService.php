@@ -105,7 +105,7 @@ class CatalogService
         $sortColumn = $this->getSortColumn();
         if ($sortColumn == 'default') {
             $relation = $this->modelName == Brand::class ? $this->brand : $this->category;
-            if ($relation->productSorts()->count() > 0) {
+            if ($relation?->productSorts()->count() > 0) {
                 $productSortIds = $relation->productSorts()->pluck('product_id')->implode(', ');
                 $products->orderByRaw("IF(FIELD(products.id, $productSortIds)=0, 1, 0), FIELD(products.id, $productSortIds)");
             }
@@ -124,6 +124,9 @@ class CatalogService
         }
 
         $prices = $this->products->pluck('price')->toArray();
+        if (empty($prices))
+            $prices = [self::PRICE_FROM, self::PRICE_TO];
+
         $this->min_price = min($prices);
         $this->max_price = max($prices);
 

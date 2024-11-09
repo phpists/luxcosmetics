@@ -77,7 +77,6 @@ class SearchController extends Controller
     }
 
     public function showResultsPage(Request $request) {
-        $paginate_count = 12;
         $search = $request->get('search');
 
         $catalogService = new CatalogService($request, Product::class);
@@ -97,6 +96,7 @@ class SearchController extends Controller
             $products_id[] = $product->id;
         }
         $variations = Product::getVariations($products_id);
+
         $products_list = view('categories.parts.catalog', compact('products', 'variations'))->render();
 
         if ($request->ajax()) {
@@ -118,10 +118,10 @@ class SearchController extends Controller
             ]);
         }
 
-        $shown_count = ($products->currentPage() - 1) * $paginate_count + $products->count();
         $last_page_url = $products->url($products->lastPage());
         $pagination = view('layouts.includes.pagination', compact('products', 'last_page_url'))->render();
-        return view('search', compact('products', 'properties', 'filters_weight', 'pagination', 'products_list', 'search', 'shown_count', 'filter_prices'));
+
+        return view('search', compact('products', 'properties', 'filters_weight', 'pagination', 'products_list', 'search', 'filter_prices'));
     }
     public function search_prompt(Request $request): JsonResponse
     {

@@ -83,7 +83,7 @@
                                                         @method('DELETE')
                                                         <input type="hidden" name="id" value="{{ $translate->id }}">
                                                         <button type="submit" class="btn btn-sm btn-clean btn-icon btn_delete"
-                                                                onclick="return confirm('Ви впевнені, що хочете переклад?')"
+                                                                onclick="return confirm('Вы уверены, что хотите удалить перевод?')"
                                                                 title="Видалити"><i class="las la-trash"></i>
                                                         </button>
                                                     </form>

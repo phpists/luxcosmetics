@@ -18,7 +18,7 @@ class MailService
      */
     public static function sendRegistrationMessage($user, $password=null): SentMessage
     {
-        return Mail::to($user->email)->send(new RegistrationConfirmation($user, $password));
+        return Mail::to($user->email)->send(new RegistrationConfirmation($user));
     }
 }
 

@@ -30,15 +30,11 @@ class ProfileController extends Controller
     }
 
     public function update(Request $request) {
-        $data = $request->all();
+        $data = $request->only(['name', 'surname', 'year', 'month', 'day', 'is_subscribed', 'password']);
         $date = date_create_from_format('Y-m-d', $data['year'].'-'.$data['month'].'-'.$data['day']);
         if ($date)
             $data['birthday'] = $date;
         $data['is_subscribed'] = $request->is_subscribed !== null?1:0;
-        if ($request->password !== null)
-            $data['password'] = Hash::make($data['password']);
-        else
-            unset($data['password']);
 
         User::query()->find($request->user()->id)->update($data);
 

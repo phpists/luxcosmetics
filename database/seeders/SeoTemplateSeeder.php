@@ -69,6 +69,18 @@ class SeoTemplateSeeder extends Seeder
                 'title' => '',
                 'description' => '',
             ],
+            [
+                'type' => SeoTemplateEnum::PROMOTIONS->value,
+                'hint' => '',
+                'title' => 'Акции',
+                'description' => '',
+            ],
+            [
+                'type' => SeoTemplateEnum::PROMOTION_ARTICLE->value,
+                'hint' => "Допустимые переменные:\r\n {id] = ID;\r\n {title} = название;\r\n {slug} = URL",
+                'title' => '{title}',
+                'description' => '',
+            ],
         ];
 
         foreach ($seoTemplates as $seoTemplate) {

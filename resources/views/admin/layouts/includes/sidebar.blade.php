@@ -366,7 +366,8 @@
 || request()->routeIs('admin.banner.create')
 || request()->routeIs('admin.banner.edit')
 || request()->routeIs('admin.pages.create')
-|| request()->routeIs('admin.pages.edit')) ? 'menu-item-open' : '' }}"
+|| request()->routeIs('admin.pages.edit')
+|| request()->routeIs('admin.promotions.*')) ? 'menu-item-open' : '' }}"
                     aria-haspopup="true" data-menu-toggle="hover">
                     <a href="javascript:;" class="menu-link menu-toggle">
                         <i class="fas flaticon2-copy menu-icon"></i>
@@ -406,6 +407,17 @@
                                             <span></span>
                                         </i>
                                         <span class="menu-text">Статические</span>
+                                    </a>
+                                </li>
+                            @endif
+                            @if(auth()->user()->isSuperAdmin())
+                                <li class="menu-item {{ request()->routeIs('admin.promotions.*') ? 'menu-item-active' : '' }}"
+                                    aria-haspopup="true">
+                                    <a href="{{ route('admin.promotions.index') }}" class="menu-link">
+                                        <i class="menu-bullet menu-bullet-dot">
+                                            <span></span>
+                                        </i>
+                                        <span class="menu-text">Акции</span>
                                     </a>
                                 </li>
                             @endif

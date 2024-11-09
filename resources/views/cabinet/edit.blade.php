@@ -25,13 +25,13 @@
                 <div class="form__col form__col--50">
                     <div class="form__fieldset">
                         <legend class="form__label">Номер телефона *</legend>
-                        <input type="text" value="{{$user->phone}}" name="phone" id="phone_inp" class="form__input" required>
+                        <input type="text" readonly value="{{$user->phone}}" name="phone" id="phone_inp" class="form__input">
                     </div>
                 </div>
                 <div class="form__col form__col--50">
                     <div class="form__fieldset">
                         <legend class="form__label">Электронная почта *</legend>
-                        <input type="text" name="email" readonly value="{{$user->email}}" class="form__input" required>
+                        <input type="text" name="email" readonly value="{{$user->email}}" class="form__input">
                     </div>
                 </div>
             </div>

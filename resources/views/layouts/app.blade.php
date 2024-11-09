@@ -51,6 +51,11 @@
     @yield('content')
 
     @include('layouts.includes.purchase_modal')
+
+    @guest
+        @include('layouts.modals.otp-modal')
+    @endguest
+
     @include('layouts.includes.footer', ['menu_items' => $menu_items, 'static-pages' => $static_pages, 'social' => $social])
 </div>
 @include('layouts.parts.mobile-menu', ['menu_items' => $menu_items])
@@ -126,6 +131,7 @@
 <script src="{{asset('/js/scripts.js')}}"></script>
 <script src="https://www.google.com/recaptcha/api.js"></script>
 @yield('scripts')
+@stack('scripts')
 {!! \App\Services\SiteConfigService::getParamValue('footer_scripts') !!}
 </body>
 

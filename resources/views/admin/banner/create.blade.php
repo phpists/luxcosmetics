@@ -139,7 +139,7 @@
                                         <div class="form-group">
                                             <label>Дата публикации</label>
                                             <div class="input-group date" id="kt_datetimepicker_1" data-target-input="nearest">
-                                                <input type="text" class="form-control datetimepicker-input" placeholder="Дата публікации"
+                                                <input type="text" class="form-control datetimepicker-input" placeholder="Дата публыкации"
                                                     name="published_at" required data-target="#kt_datetimepicker_1"/>
                                                 <div class="input-group-append" data-target="#kt_datetimepicker_1" data-toggle="datetimepicker">
                                                     <span class="input-group-text">

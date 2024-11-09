@@ -179,10 +179,10 @@
             class="navi-text text-muted text-hover-primary">{{ Auth::user()->email }}</span>
     </span>
                     </a>
-                    <a href="{{ route('logout') }}"
+                    <a href="{{ route('admin.logout') }}"
                        class="btn btn-sm btn-light-primary font-weight-bolder py-2 px-5"
                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Выйти</a>
-                    <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                    <form id="logout-form" action="{{ route('admin.logout') }}" method="POST"
                           style="display: none;">
                         @csrf
                     </form>

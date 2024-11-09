@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Notifications\Notification;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 
@@ -188,4 +189,8 @@ class User extends Authenticatable
         return $this->role_id === self::SUPER_ADMIN;
     }
 
+    public function routeNotificationForSms(?Notification $notification = null)
+    {
+        return $this->phone;
+    }
 }

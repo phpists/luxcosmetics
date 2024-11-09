@@ -50,8 +50,8 @@
                                            class="col-sm-12 col-form-label font-weight-bold">ГЛАВНОЕ</label>
                                     <div class="col-sm-12">
                                         <select class="form-control status" name="is_main">
-                                            <option value="1">Так</option>
-                                            <option value="0">Ні</option>
+                                            <option value="1">Да</option>
+                                            <option value="0">Нет</option>
                                         </select>
                                     </div>
                                 </div>
@@ -60,11 +60,11 @@
                         <div class="col">
                             <div class="row d-flex justify-content-around">
                                 <div class="form-group w-100">
-                                    <label for="createSeller" class="col-sm-12 col-form-label font-weight-bold">Відобразити</label>
+                                    <label for="createSeller" class="col-sm-12 col-form-label font-weight-bold">Отобразить</label>
                                     <div class="col-sm-12">
                                         <select class="form-control status" name="active">
-                                            <option value="1">Так</option>
-                                            <option value="0">Ні</option>
+                                            <option value="1">Да</option>
+                                            <option value="0">Нет</option>
                                         </select>
                                     </div>
                                 </div>
