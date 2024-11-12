@@ -22,7 +22,7 @@
                     </div>
                     <div class="chars__item">
                         <div class="chars__name"><span>Дата рождения</span></div>
-                        <div class="chars__value"><span>{{$user->birthday?$user->birthday: '-'}}</span></div>
+                        <div class="chars__value"><span>{{ $user->birthday?->format('d.m.Y') }}</span></div>
                     </div>
                     <div class="chars__item">
                         <div class="chars__name"><span>E-mail</span></div>

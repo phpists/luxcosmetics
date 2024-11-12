@@ -71,11 +71,6 @@
                             <img src="{{asset('images/dist/ico-mir.png')}}" alt="">
                             <img src="{{asset('images/dist/ico-youmoney.png')}}" alt="">
                         </div>
-                        <h3>Нужна помощь?
-                            @foreach(\App\Models\SocialMedia::whereNotNull('phone')->get() as $item)
-                                <a href="tel:{{ $item->phone }}">{{ $item->phone }}</a>
-                            @endforeach
-                        </h3>
                         {!! \App\Services\SiteConfigService::getParamValue('cart_login_support_text') !!}
                     </div>
                 </div>

@@ -274,8 +274,12 @@ function removeFromCart(product_id, $button) {
                         location.reload()
                 }
 
-                if (response.can_checkout)
-                    allowCheckout()
+                if (typeof response.can_checkout !== 'undefined') {
+                    if (response.can_checkout)
+                        allowCheckout()
+                    else
+                        disableCheckout(response.cant_checkout_message)
+                }
             }
         }
     })
@@ -302,8 +306,12 @@ function plusQuantity(product_id, $button) {
                 updateTotalBlock(response.total_block)
                 $('#modalCurrentProductSum').text(response.sum)
 
-                if (!response.can_checkout)
-                    disableCheckout(response.can_not_checkout_message)
+                if (typeof response.can_checkout !== 'undefined') {
+                    if (response.can_checkout)
+                        allowCheckout()
+                    else
+                        disableCheckout(response.cant_checkout_message)
+                }
             }
         },
         complete: function () {
@@ -333,8 +341,12 @@ function minusQuantity(product_id, $button) {
                 updateTotalBlock(response.total_block)
                 $('#modalCurrentProductSum').text(response.sum)
 
-                if (response.can_checkout)
-                    allowCheckout()
+                if (typeof response.can_checkout !== 'undefined') {
+                    if (response.can_checkout)
+                        allowCheckout()
+                    else
+                        disableCheckout(response.cant_checkout_message)
+                }
             }
         },
         complete: function () {
@@ -393,6 +405,7 @@ function findValueByName(name, serializedForm) {
 }
 
 function allowCheckout() {
+    console.log(1)
     $('button.cartSubmit').prop('disabled', false)
     $('.cart-aside > .formerror').remove()
 }
