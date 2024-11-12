@@ -40,26 +40,17 @@
                     <div class="form__fieldset">
                         <legend class="form__label">Дата рождения</legend>
                         <div class="form__row">
-                            <div class="form__col form__col--33"><input type="number" max="31" min="1" name="day" class="form__input" value="10">
+                            <div class="form__col form__col--33"><input type="number" max="31" min="1" name="day" class="form__input" value="{{ $user->birthday?->day }}">
                             </div>
                             <div class="form__col form__col--33">
                                 <select class="form__input" name="month" style="background: white">
-                                    <option value="1">Январь</option>
-                                    <option value="2">Февраль</option>
-                                    <option value="3">Март</option>
-                                    <option value="4">Апрель</option>
-                                    <option value="5">Май</option>
-                                    <option value="6">Июнь</option>
-                                    <option value="7">Июль</option>
-                                    <option value="8">Август</option>
-                                    <option value="9">Сентябрь</option>
-                                    <option value="10">Октябрь</option>
-                                    <option value="11">Ноябрь</option>
-                                    <option value="12">Декабрь</option>
+                                    @foreach(collect(range(1, 12)) as $mI)
+                                        <option value="{{ $mI }}" @selected($mI == $user->birthday?->month)>{{ now()->setMonth($mI)->locale('ru-RU')->monthName }}</option>
+                                    @endforeach
                                 </select>
                             </div>
                             <div class="form__col form__col--33">
-                                <input type="number" name="year" class="form__input" min="1900" value='{{date("Y")}}' max="{{date("Y")}}">
+                                <input type="number" name="year" class="form__input" min="1900" value='{{ $user->birthday?->year  }}' max="{{ date("Y") }}">
                             </div>
                         </div>
                     </div>

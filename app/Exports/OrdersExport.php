@@ -35,6 +35,8 @@ class OrdersExport implements FromCollection, WithHeadings, WithMapping
             'Самовывоз/Доставка',
             'Адресс',
             'Сумма',
+            'Сумма скидки (промокод)',
+            'Промокод',
         ];
     }
 
@@ -54,6 +56,8 @@ class OrdersExport implements FromCollection, WithHeadings, WithMapping
                     : ''),
             $row->address,
             $row->total_sum,
+            $row->promo_code_discount,
+            $row->promoCode?->code,
         ];
     }
 

@@ -26,9 +26,6 @@ class CartController extends Controller
         $cart_products = $this->cartService->getAllProducts();
 
         if ($cart_products->isNotEmpty()) {
-            if (!CartService::canCheckout())
-                Session::flash('error', $this->cartService->canNotCheckoutMessage());
-
             return view('cart.index', compact('cart_products'));
         } else {
             return view('cart.empty');
@@ -163,7 +160,8 @@ class CartController extends Controller
             'total_count' => $total_count,
             'total_sum' => $total_sum,
             'total_block' => view('cart.includes.total_sum')->render(),
-            'can_checkout' => CartService::canCheckout()
+            'can_checkout' => CartService::canCheckout(),
+            'cant_checkout_message' => $this->cartService->canNotCheckoutMessage()
         ]);
     }
 
@@ -181,7 +179,7 @@ class CartController extends Controller
             'total_sum' => $total_sum,
             'total_block' => view('cart.includes.total_sum')->render(),
             'can_checkout' => CartService::canCheckout(),
-            'can_not_checkout_message' => $this->cartService->canNotCheckoutMessage()
+            'cant_checkout_message' => $this->cartService->canNotCheckoutMessage()
         ]);
     }
 
@@ -198,7 +196,8 @@ class CartController extends Controller
             'total_count' => $total_count,
             'total_sum' => $total_sum,
             'total_block' => view('cart.includes.total_sum')->render(),
-            'can_checkout' => CartService::canCheckout()
+            'can_checkout' => CartService::canCheckout(),
+            'cant_checkout_message' => $this->cartService->canNotCheckoutMessage()
         ]);
     }
 
