@@ -6,6 +6,7 @@ use App\Models\MainPageBlock;
 use App\Models\Product;
 use App\Services\SiteConfigService;
 use Illuminate\Contracts\View\View;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Query\JoinClause;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -28,18 +29,12 @@ class HomeController extends Controller
             ->selectRaw('products.*, product_images.path as main_image, case when user_favorite_products.product_id is null then FALSE else TRUE end as is_favourite')
             ->join('product_images', 'products.image_print_id', 'product_images.id');
 
-        if ($auto_discount) {
-            $product_discounts = $product_discounts
-                ->whereHas('product_variations', function ($query) {
-                    $query->whereNotNull('discount_price');
-                })
-                ->orWhereNotNull('products.discount_price');
-        }
-        else {
-            $product_discounts = $product_discounts->where('show_in_discount', true);
-        }
+        if ($auto_discount)
+            $product_discounts->whereNotNull('discount')->inRandomOrder();
+        else
+            $product_discounts->where('show_in_discount', true);
 
-        $product_discounts = $product_discounts
+        $product_discounts
             ->with('brand')
             ->with('product_variations')
             ->distinct(['products.id']);
@@ -66,7 +61,7 @@ class HomeController extends Controller
             ->distinct(['products.id']);
 
         if ($auto_popular) {
-            $popular_products = $popular_products->orderBy('created_at');
+            $popular_products = $popular_products->orderBy('popularity');
         }
         else {
             $popular_products = $popular_products->where('show_in_popular', true);

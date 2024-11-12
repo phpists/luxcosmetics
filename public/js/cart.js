@@ -405,7 +405,6 @@ function findValueByName(name, serializedForm) {
 }
 
 function allowCheckout() {
-    console.log(1)
     $('button.cartSubmit').prop('disabled', false)
     $('.cart-aside > .formerror').remove()
 }
