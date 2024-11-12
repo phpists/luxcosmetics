@@ -1,6 +1,6 @@
 <div class="col-md-4">
     <div class="form-group w-100 filepond-container">
-        <label for="advantagesColor" class=font-weight-bold">Изображение</label>
+        <label for="advantagesColor" class=font-weight-bold">Изображение 451×412 (902×824 x2)</label>
         <input name="data[img]" type="file" required
                @isset($catalogBanner->data['img']) data-img="{{ $catalogBanner->getImgSrc($catalogBanner->data['img']) }}" @endisset>
     </div>

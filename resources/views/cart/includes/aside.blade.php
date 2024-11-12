@@ -61,11 +61,12 @@
 
     </div>
 
-    @if($cartService->containUnavailable())
+    @if(!$cartService->canCheckout())
         <div class="formerror">{{ $cartService->canNotCheckoutMessage() }}</div>
     @endif
+    <button type="submit" form="orderForm" class="btn btn--accent cart-aside__buy cartSubmit" @disabled(!$cartService->canCheckout())>
+        Перейти к оплате</button>
 
-    <button type="submit" form="orderForm" class="btn btn--accent cart-aside__buy cartSubmit" @disabled(!$cartService->canCheckout())>{{$custom_btn_text?? 'Перейти к оплате'}}</button>
     <div class="cart-aside__paymethods">
         <img src="{{asset('images/dist/ico-visa.png')}}" alt="visa">
         <img src="{{asset('images/dist/ico-mir.png')}}" alt="mir">
