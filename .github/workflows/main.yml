@@ -18,7 +18,7 @@ jobs:
             git reset --hard
             git pull
             /opt/php82/bin/php composer.phar install
-            /opt/php82/bin/php artisan migrate --no-interaction
-            /opt/php82/bin/php artisan view:clear --no-interaction
-            /opt/php82/bin/php artisan db:seed --class=PermissionSeeder --no-interaction
-            /opt/php82/bin/php artisan db:seed --class=SeoTemplateSeeder --no-interaction
+            /opt/php82/bin/php artisan view:clear
+            /opt/php82/bin/php artisan migrate --force
+            /opt/php82/bin/php artisan db:seed --class=PermissionSeeder --force
+            /opt/php82/bin/php artisan db:seed --class=SeoTemplateSeeder --force
