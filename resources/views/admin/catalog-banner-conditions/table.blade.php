@@ -99,7 +99,7 @@
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-sm btn-clean btn-icon btn_delete"
-                                            onclick="return confirm('Вы уверены, что хотите удалить сортировку товара?')"
+                                            onclick="return confirm('Вы уверены, что хотите удалить условие банеров?')"
                                             title="Delete"><i class="las la-trash"></i>
                                     </button>
                                 </form>

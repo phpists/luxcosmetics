@@ -377,7 +377,7 @@ class CartService
         $user->update([
             'name' => $this->getProperty(self::FIRST_NAME_KEY),
             'surname' => $this->getProperty(self::LAST_NAME_KEY),
-            'phone' => $this->getProperty(self::PHONE_KEY),
+            'email' => $this->getProperty(self::EMAIL_KEY),
         ]);
 
         $order_data = Arr::mapWithKeys(self::ALL_KEYS, function ($title, $name) {
@@ -386,7 +386,7 @@ class CartService
         $order_data['user_id'] = $user->id;
         $order_data['total_sum'] = self::getTotalSumWithDiscounts();
         $order_data['full_name'] = $this->getProperty(self::FIRST_NAME_KEY) . ' ' . $this->getProperty(self::LAST_NAME_KEY);
-        $order_data['phone'] = $this->getProperty(self::PHONE_KEY);
+        $order_data['phone'] = $user->phone;
         $order_data['promo_code_discount'] = null;
         $order_data['bonuses_discount'] = null;
         $order_data['gift_card_discount'] = null;

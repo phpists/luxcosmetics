@@ -62,7 +62,7 @@ class CartController extends Controller
         $this->cartService->setProperty(CartService::FIRST_NAME_KEY, $first_name);
         $last_name = $request->post('last_name');
         $this->cartService->setProperty(CartService::LAST_NAME_KEY, $last_name);
-        $email = Auth::user()->email;
+        $email = $request->post('email', Auth::user()->email);
         $this->cartService->setProperty(CartService::EMAIL_KEY, $email);
         $phone = Auth::user()->phone;
         $this->cartService->setProperty(CartService::PHONE_KEY, $phone);

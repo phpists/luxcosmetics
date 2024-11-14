@@ -124,13 +124,13 @@
                                         <div class="form__col form__col--50">
                                             <div class="form__fieldset">
                                                 <legend class="form__label">Номер телефона</legend>
-                                                <input id="phone_inp" type="text" class="form__input" name="phone" value="{{ old('phone', $cartService->getProperty(\App\Services\CartService::PHONE_KEY) ?? auth()->user()->phone) }}" style="pointer-events: none;">
+                                                <input id="phone_inp" type="text" class="form__input" name="phone" value="{{ auth()->user()->phone }}" style="pointer-events: none;">
                                             </div>
                                         </div>
                                         <div class="form__col form__col--50">
                                             <div class="form__fieldset">
                                                 <legend class="form__label">Электронная почта</legend>
-                                                <input type="email" class="form__input" name="email" value="{{ old('email', $cartService->getProperty(\App\Services\CartService::EMAIL_KEY) ?? auth()->user()->email) }}" style="pointer-events: none;">
+                                                <input type="email" class="form__input" name="email" value="{{ old('email', $cartService->getProperty(\App\Services\CartService::EMAIL_KEY) ?? auth()->user()->email) }}">
                                             </div>
                                         </div>
                                     </div>

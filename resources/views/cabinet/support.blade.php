@@ -62,7 +62,8 @@
 @endsection
 
 @section('scripts')
-    <script src="https://unpkg.com/filepond@^4/dist/filepond.js"></script>
+    <script src="{{ asset('super_admin/js/filepond/filepond-plugin-image-preview.js') }}"></script>
+    <script src="{{ asset('super_admin/js/filepond/filepond.js') }}"></script>
     <script>
         const inputElement = document.getElementById('filesInput');
 

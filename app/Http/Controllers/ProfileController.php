@@ -30,7 +30,7 @@ class ProfileController extends Controller
     }
 
     public function update(Request $request) {
-        $data = $request->only(['name', 'surname', 'year', 'month', 'day', 'is_subscribed', 'password']);
+        $data = $request->only(['email', 'name', 'surname', 'year', 'month', 'day', 'is_subscribed', 'password']);
         $date = date_create_from_format('Y-m-d', $data['year'].'-'.$data['month'].'-'.$data['day']);
         if ($date)
             $data['birthday'] = $date;
