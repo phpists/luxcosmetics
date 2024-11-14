@@ -32,7 +32,7 @@
                 <div class="form__col form__col--50">
                     <div class="form__fieldset">
                         <legend class="form__label">Электронная почта *</legend>
-                        <input type="email" name="email" value="{{ $user->email }}" class="form__input">
+                        <input type="email" name="email" value="{{ $user->email }}" class="form__input" required>
                     </div>
                 </div>
             </div>

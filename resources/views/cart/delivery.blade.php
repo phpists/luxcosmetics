@@ -130,7 +130,7 @@
                                         <div class="form__col form__col--50">
                                             <div class="form__fieldset">
                                                 <legend class="form__label">Электронная почта</legend>
-                                                <input type="email" class="form__input" name="email" value="{{ old('email', $cartService->getProperty(\App\Services\CartService::EMAIL_KEY) ?? auth()->user()->email) }}">
+                                                <input type="email" class="form__input" name="email" value="{{ old('email', $cartService->getProperty(\App\Services\CartService::EMAIL_KEY) ?? auth()->user()->email) }}" required>
                                             </div>
                                         </div>
                                     </div>
