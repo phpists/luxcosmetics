@@ -66,8 +66,8 @@
 @endsection
 
 @section('js_after')
-    <script src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.js"></script>
-    <script src="https://unpkg.com/filepond/dist/filepond.js"></script>
+    <script src="{{ asset('super_admin/js/filepond/filepond-plugin-image-preview.js') }}"></script>
+    <script src="{{ asset('super_admin/js/filepond/filepond.js') }}"></script>
     <script src="{{ asset('super_admin/ckeditor/ckeditor.js') }} "></script>
     <script>
         let arrows = {
