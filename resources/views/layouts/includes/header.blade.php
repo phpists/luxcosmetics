@@ -19,11 +19,14 @@
                         </button>
                     </form>
                     <div class="header__contacts">
+                        <div class="header__social social">
                         @foreach(\App\Models\SocialMedia::network()->activeInHeader()->get() as $item)
                             <a href="{{ $item->link }}" class="social__item" target="_blank">
-                                <img src="{{ $item->getIconSrcAttribute() }}" alt="social icon" height="32" width="32">
+                                <img src="{{ $item->getIconSrcAttribute() }}" alt="social icon">
                             </a>
                         @endforeach
+                        </div>
+
                         @foreach (\App\Models\SocialMedia::phone()->get() as $item)
                             @if($item->phone)
                                 <div class="header__phone"><a

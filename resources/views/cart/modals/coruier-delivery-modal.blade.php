@@ -2,7 +2,7 @@
     <div class="modalpanel__title">Адрес<br> доставки</div>
     <div class="addmodal__hdr">
         <div class="addmodal__city">г. Екатеринбург Свердловская обл</div>
-        <a href="#changecity" class="btn-edit popup-with-form"><svg class="icon"><use xlink:href="images/dist/sprite.svg#edit"></use></svg> Редактировать</a>
+        <a href="#changecity" class="btn-edit popup-with-form"><svg class="icon"><use xlink:href="{{ asset('images/dist/sprite.svg#edit') }}"></use></svg> Редактировать</a>
     </div>
     <div class="addmodal__form">
         <form class="form" id="coruier_form">
