@@ -347,7 +347,7 @@
         @endif
 
     </script>
-    <script src="https://raw.githack.com/SortableJS/Sortable/master/Sortable.js"></script>
+    <script src="{{ asset('super_admin/js/Sortable.js') }}"></script>
     <script src="{{ asset('super_admin/js/category.js') }}"></script>
     <script src="{{ asset('super_admin/js/pages/crud/forms/widgets/select2.js') }}"></script>
 @endsection
