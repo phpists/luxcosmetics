@@ -49,6 +49,11 @@ $(function () {
             }
         });
     }
+
+
+    $(document).on('click', '.select-delivery-type', function (e) {
+        $(this).parent().find('.dropdown').toggleClass('active')
+    })
 })
 
 
@@ -535,6 +540,7 @@ const showMaps = () => {
         handleToggleLoading(true);
         // await loadDeliveryPlaces();
         $(".select-delivery-type-opt:first").click()
+        $(".select-delivery-type").click() // to close dropdown
     }, 600)
 }
 

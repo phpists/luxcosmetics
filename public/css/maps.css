@@ -163,7 +163,7 @@ div.pick-up-pointmodal__map {
     padding: 10px 30px !important;
 }
 
-.select-delivery-type:focus > .dropdown {
+.dropdown.active {
     max-height: 200px;
     visibility: visible;
 }
