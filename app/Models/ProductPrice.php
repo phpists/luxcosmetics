@@ -48,15 +48,15 @@ class ProductPrice extends Model
     private function clearProductsPriceCache(): void
     {
         foreach ($this->caseProducts as $caseProduct) {
-            $caseProduct->product->clearProductPriceCache();
+            $caseProduct->model->clearProductPriceCache();
         }
         foreach ($this->caseBrands as $caseBrand) {
-            foreach ($caseBrand->brand->products as $caseBrandProduct) {
+            foreach ($caseBrand->model->products as $caseBrandProduct) {
                 $caseBrandProduct->clearProductPriceCache();
             }
         }
         foreach ($this->caseCategories as $caseCategory) {
-            foreach ($caseCategory->category->products as $caseCategoryProduct) {
+            foreach ($caseCategory->model->products as $caseCategoryProduct) {
                 $caseCategoryProduct->clearProductPriceCache();
             }
         }
