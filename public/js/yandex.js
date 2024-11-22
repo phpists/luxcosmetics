@@ -1,4 +1,4 @@
-const SUGGEST_API_KEY = '05c41b12-223c-47e0-a0df-9403b108f3cd';
+const SUGGEST_API_KEY = '441999c3-4640-4dda-8b15-0e58dfa907d0';
 const SEARCH_API_KEY = 'd46bfdd1-d9ca-4f94-959e-5c09d2a427e1';
 const ADDRESS_OUTPUT_ID = 'final_addr';
 const PICKUP_DELIVERY = 'pickup';
@@ -362,9 +362,8 @@ function locationItemClickHandler(address, city, state) {
 
 async function handleSearch(ev) {
     let search = 'Россия, ' + ev.currentTarget.value;
-    axios.get('https://suggest-maps.yandex.ru/v1/suggest', {
+    axios.get('/yandex/suggest', {
         params: {
-            apikey: SUGGEST_API_KEY,
             types: 'locality',
             text: search,
             print_address: 1
@@ -480,11 +479,10 @@ async function handleSearchStreetHouse(ev) {
     let search_inp = ev.currentTarget;
     let location_name = document.querySelector('.addmodal__city').innerText;
     let border_inp = document.getElementById('search_borders');
-    axios.get('https://suggest-maps.yandex.ru/v1/suggest', {
+    axios.get('/yandex/suggest', {
         params: {
             text: location_name + ', ' + search_inp.value,
             types: 'street',
-            apikey: SUGGEST_API_KEY,
             print_address: 1,
             bbox: border_inp.value,
             rspn: 1
