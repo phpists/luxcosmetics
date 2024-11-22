@@ -36,12 +36,15 @@ class ProductPriceController extends Controller
             $start_date = $request->get('start_date');
             $end_date = $request->get('end_date');
 
-            $productPrice = ProductPrice::create([
+            $productPrice = new ProductPrice([
                 ...$request->only('title', 'type', 'amount', 'rounding'),
                 'is_active' => $request->boolean('is_active'),
                 'start_date' => $start_date ? Carbon::parse($start_date)->format('Y-m-d') : null,
                 'end_date' => $end_date ? Carbon::parse($end_date)->format('Y-m-d') : null,
             ]);
+
+            if (!$productPrice->save())
+                throw new \Exception('Could not create product price');
 
             foreach ($request->get('cases') as $modelType => $modelIds) {
                 foreach ($modelIds as $modelId) {
@@ -87,12 +90,15 @@ class ProductPriceController extends Controller
             $start_date = $request->get('start_date');
             $end_date = $request->get('end_date');
 
-            $productPrice->update([
+            $productPrice->fill([
                 ...$request->only('title', 'type', 'amount', 'rounding'),
                 'is_active' => $request->boolean('is_active'),
                 'start_date' => $start_date ? Carbon::parse($start_date)->format('Y-m-d') : null,
                 'end_date' => $end_date ? Carbon::parse($end_date)->format('Y-m-d') : null,
             ]);
+
+            if (!$productPrice->update())
+                throw new \Exception('Could not update product price');
 
             $productPrice->cases()->delete();
             foreach ($request->get('cases') as $modelType => $modelIds) {
@@ -126,9 +132,8 @@ class ProductPriceController extends Controller
         $this->authorize('update', new ProductPrice);
 
         $productPrice = ProductPrice::find($request->get('id'));
-        $productPrice->update([
-            'is_active' => $request->boolean('is_active'),
-        ]);
+        $productPrice->is_active = $request->boolean('is_active');
+        $productPrice->update();
     }
 
     public function updatePositions(Request $request)

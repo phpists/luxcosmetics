@@ -65,7 +65,7 @@
 @section('js_after')
     <script src="{{ asset('super_admin/js/filepond/filepond-plugin-image-preview.js') }}"></script>
     <script src="{{ asset('super_admin/js/filepond/filepond.js') }}"></script>
-    <script src="https://raw.githack.com/SortableJS/Sortable/master/Sortable.js"></script>
+    <script src="{{ asset('super_admin/js/Sortable.js') }}"></script>
     <script>
         let arrows = {
             leftArrow: '<i class="la la-angle-left"></i>',
