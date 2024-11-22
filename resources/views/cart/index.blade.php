@@ -11,18 +11,6 @@
     <input type="hidden" id="min_sum" value="{{ \App\Services\SiteConfigService::getParamValue('min_checkout_sum') }}">
     <input type="hidden" id="max_sum" value="{{ \App\Services\SiteConfigService::getParamValue('max_checkout_sum') }}">
 
-<section class="crumbs">
-	<div class="container">
-		<div class="row">
-			<div class="col-lg-12">
-				<ol class="crumbs__list">
-					<li class="crumbs__item"><a href="">Главная</a></li>
-					<li class="crumbs__item">Категория</li>
-				</ol>
-			</div>
-		</div>
-	</div>
-</section>
 <section class="cart-page">
 	<div class="container">
 		<div class="row">

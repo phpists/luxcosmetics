@@ -63,7 +63,7 @@ class ProductPriceController extends Controller
                 }
             }
 
-            $productPrice->update(['is_active' => true]);
+            $productPrice->save();
 
             return to_route('admin.product-prices.index')->with('success', 'Условие успешно создано');
         } catch (\Throwable $e) {
