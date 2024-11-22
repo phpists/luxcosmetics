@@ -597,3 +597,6 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'front'], function 
     Route::get('', [\App\Http\Controllers\FrontCardController::class, 'index']);
     Route::get('/{alias}', [\App\Http\Controllers\FrontCardController::class, 'page']);
 });
+
+Route::get('yandex/suggest', [\App\Http\Controllers\YandexController::class, 'suggest'])
+    ->name('yandex.suggest');
