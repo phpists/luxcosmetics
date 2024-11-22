@@ -67,3 +67,56 @@ button:disabled {
     -moz-user-select: none;
     -webkit-user-select: none;
 }
+
+.header__social .social__item {
+    margin-left: 8px;
+    margin-right: 8px;
+}
+
+.social__item svg, .social__item img {
+    width: 32px;
+    height: 32px;
+}
+
+@media (max-width: 420px) {
+    .social__item svg, .social__item img {
+        width: 42px;
+        height: 42px;
+        max-width: initial;
+    }
+}
+
+@media (max-width: 575.98px) {
+    .cart-product__numbers {
+        top: 130px;
+    }
+}
+
+.form-group.position-relative input {
+    padding-right: 32px;
+}
+
+.form-clear {
+    align-items: center;
+    background: #cecece;
+    border-radius: 50%;
+    bottom: 8px;
+    color: rgba(0, 0, 0, .54);
+    cursor: pointer;
+    display: flex;
+    height: 24px;
+    justify-content: center;
+    position: absolute;
+    right: 8px;
+    width: 24px;
+    z-index: 10;
+}
+
+.form-text+.form-clear {
+    bottom: calc(1rem + 18px);
+}
+
+.form-clear .material-icons {
+    font-size: 16px;
+    font-weight: 500;
+}

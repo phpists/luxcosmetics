@@ -112,7 +112,7 @@
                         @include('cart.includes.aside', ['custom_btn_text' => 'Перейти к выбору доставки'])
 					</aside>
 				</div>
-                <div class="cart-page__contacts">
+                <div class="cart-page__contacts" style="margin-top: 50px;">
                     {!! \App\Services\SiteConfigService::getParamValue('cart_login_support_text') !!}
                 </div>
 			</div>

@@ -179,6 +179,21 @@ $(function () {
         $(el).val($(this.dataset.mirror).val())
     })
 
+
+    $(document).on('keydown focus', '.form__fieldset :input', function() {
+        if ($(this).val().length > 0) {
+            $(this).nextAll('.form-clear').removeClass('d-none');
+        }
+    }).on('keydown keyup blur', '.form__fieldset :input', function() {
+        if ($(this).val().length === 0) {
+            $(this).nextAll('.form-clear').addClass('d-none');
+        }
+    }).on('click', '.form-clear', function() {
+        $(this).addClass('d-none').prevAll(':input').val('');
+    });
+
+    if ($('.form__fieldset :input').val().length > 0)
+        $('.form__fieldset .form-clear').removeClass('d-none')
 })
 
 
