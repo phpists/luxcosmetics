@@ -289,7 +289,7 @@
 @endsection
 
 @section('js_after')
-    <script src="https://raw.githack.com/SortableJS/Sortable/master/Sortable.js"></script>
+    <script src="{{ asset('super_admin/js/Sortable.js') }}"></script>
     <script>
         $(function () {
             $.ajaxSetup({

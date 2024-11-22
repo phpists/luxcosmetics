@@ -230,7 +230,7 @@
     <script src="{{ asset('super_admin/js/pages/crud/ktdatatable/base/html-table.js') }}"></script>
     <script src="{{ asset('super_admin/plugins/custom/ckeditor/ckeditor-classic.bundle.js') }} "></script>
     <script src="{{ asset('super_admin/js/pages/crud/file-upload/image-input.js') }} "></script>
-    <script src="https://raw.githack.com/SortableJS/Sortable/master/Sortable.js"></script>
+    <script src="{{ asset('super_admin/js/Sortable.js') }}"></script>
     <script src="{{ asset('super_admin/js/category.js') }}"></script>
 @endsection
 
