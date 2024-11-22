@@ -46,7 +46,7 @@ class ProductPriceController extends Controller
             if (!$productPrice->save())
                 throw new \Exception('Could not create product price');
 
-            foreach ($request->get('cases') as $modelType => $modelIds) {
+            foreach ($request->get('cases', []) as $modelType => $modelIds) {
                 foreach ($modelIds as $modelId) {
                     $productPrice->cases()->create([
                         'model_type' => $modelType,
@@ -54,7 +54,7 @@ class ProductPriceController extends Controller
                     ]);
                 }
             }
-            foreach ($request->get('excepts') as $modelType => $modelIds) {
+            foreach ($request->get('excepts', []) as $modelType => $modelIds) {
                 foreach ($modelIds as $modelId) {
                     $productPrice->excepts()->create([
                         'model_type' => $modelType,
@@ -62,6 +62,8 @@ class ProductPriceController extends Controller
                     ]);
                 }
             }
+
+            $productPrice->update(['is_active' => true]);
 
             return to_route('admin.product-prices.index')->with('success', 'Условие успешно создано');
         } catch (\Throwable $e) {
@@ -101,7 +103,7 @@ class ProductPriceController extends Controller
                 throw new \Exception('Could not update product price');
 
             $productPrice->cases()->delete();
-            foreach ($request->get('cases') as $modelType => $modelIds) {
+            foreach ($request->get('cases', []) as $modelType => $modelIds) {
                 foreach ($modelIds as $modelId) {
                     $productPrice->cases()->create([
                         'model_type' => $modelType,
@@ -111,7 +113,7 @@ class ProductPriceController extends Controller
             }
 
             $productPrice->excepts()->delete();
-            foreach ($request->get('excepts') as $modelType => $modelIds) {
+            foreach ($request->get('excepts', []) as $modelType => $modelIds) {
                 foreach ($modelIds as $modelId) {
                     $productPrice->excepts()->create([
                         'model_type' => $modelType,

@@ -34,30 +34,35 @@ class ProductPrice extends Model
             $builder->orderBy('pos');
         });
 
-        self::created(function(self $model) {
+        self::saved(function(self $model) {
             $model->clearProductsPriceCache();
         });
-        self::updated(function(self $model) {
-            $model->clearProductsPriceCache();
-        });
-        self::deleted(function(self $model) {
+        self::deleting(function(self $model) {
             $model->clearProductsPriceCache();
         });
     }
 
     private function clearProductsPriceCache(): void
     {
-        foreach ($this->caseProducts as $caseProduct) {
-            $caseProduct->model->clearProductPriceCache();
-        }
-        foreach ($this->caseBrands as $caseBrand) {
-            foreach ($caseBrand->model->products as $caseBrandProduct) {
-                $caseBrandProduct->clearProductPriceCache();
+        if ($this->caseProducts) {
+            foreach ($this->caseProducts as $caseProduct) {
+                $caseProduct->model->clearProductPriceCache();
             }
         }
-        foreach ($this->caseCategories as $caseCategory) {
-            foreach ($caseCategory->model->products as $caseCategoryProduct) {
-                $caseCategoryProduct->clearProductPriceCache();
+
+        if ($this->caseBrands) {
+            foreach ($this->caseBrands as $caseBrand) {
+                foreach ($caseBrand->model->products as $caseBrandProduct) {
+                    $caseBrandProduct->clearProductPriceCache();
+                }
+            }
+        }
+
+        if ($this->caseCategories) {
+            foreach ($this->caseCategories as $caseCategory) {
+                foreach ($caseCategory->model->products as $caseCategoryProduct) {
+                    $caseCategoryProduct->clearProductPriceCache();
+                }
             }
         }
     }
