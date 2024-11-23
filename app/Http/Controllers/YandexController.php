@@ -17,7 +17,7 @@ class YandexController extends Controller
         ]);
         $data['apikey'] = env('YANDEX_SUGGEST_API_KEY');
 
-        $result = Http::get('https://suggest-maps.yandex.ru/v1/suggest', $data);
+        $result = Http::withQueryParameters($data)->get('https://suggest-maps.yandex.ru/v1/suggest');
         return Response::json($result->json(), $result->status());
     }
 }

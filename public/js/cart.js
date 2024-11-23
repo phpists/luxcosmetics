@@ -192,8 +192,10 @@ $(function () {
         $(this).addClass('d-none').prevAll(':input').val('');
     });
 
-    if ($('.form__fieldset :input').val().length > 0)
-        $('.form__fieldset .form-clear').removeClass('d-none')
+    if ($('#changecity .form__fieldset :input')?.val()?.length > 0) {
+        console.log($('#changecity .form__fieldset :input').val())
+        $('#changecity .form__fieldset .form-clear').removeClass('d-none')
+    }
 })
 
 
