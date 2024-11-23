@@ -184,8 +184,8 @@ const handleFormatPickupCard = (place) => {
         street = '';
 
     place.fullAddress.split(',').forEach((addressPart) => {
-        if (addressPart.toLowerCase().includes('ул.') || addressPart.toLowerCase().includes('улица'))
-            street = addressPart;
+        if (addressPart.toLowerCase().includes('ул') || addressPart.toLowerCase().includes('улица'))
+            street = addressPart.trim();
     })
 
     return `

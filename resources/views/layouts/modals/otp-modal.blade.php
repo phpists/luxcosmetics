@@ -14,9 +14,8 @@
         </form>
     </div>
     <div class="popupform__btns">
-        <button type="submit" form="resendCodeForm" class="btn btn--border-main close">Отправить еще раз
-        </button>
         <button type="submit" form="otpForm" class="btn btn--accent">Подтвердить</button>
+        <button type="submit" form="resendCodeForm" class="btn btn--border-main close">Отправить еще раз</button>
     </div>
     <div class="popupform__btns">
     </div>

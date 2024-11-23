@@ -51,9 +51,9 @@
 
                 $form.find('button:submit').prop('disabled', true)
 
-                grecaptcha.ready(function () {
-                    grecaptcha.execute('{{ config('services.google.captcha.site_key') }}', {action: 'submit'})
-                        .then(function (token) {
+                {{--grecaptcha.ready(function () {--}}
+                {{--    grecaptcha.execute('{{ config('services.google.captcha.site_key') }}', {action: 'submit'})--}}
+                {{--        .then(function (token) {--}}
                             submitLiveForm($form, function (response, json) {
                                 if (response.status == 200) {
                                     $('#otpForm').find('[name="phone"]').val($form.find('[name="phone"]').val())
@@ -63,8 +63,8 @@
                                 }
                                 $form.find('button:submit').prop('disabled', false)
                             })
-                        });
-                });
+                //         });
+                // });
             })
         });
     </script>
