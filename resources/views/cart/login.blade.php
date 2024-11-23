@@ -72,7 +72,7 @@
         src="https://www.google.com/recaptcha/api.js?render={{ config('services.google.captcha.site_key') }}"></script>
     <script src="{{ asset('js/inputmask/inputmask.js') }}"></script>
     <script src="{{ asset('js/inputmask/jquery.inputmask.js') }}"></script>
-    <script>
+    <script type="text/javascript">
         $(document).ready(function () {
             Inputmask("+7 (999) 999-99-99").mask('.phone_inp');
 
@@ -82,9 +82,9 @@
 
                 $form.find('button:submit').prop('disabled', true)
 
-                grecaptcha.ready(function () {
-                    grecaptcha.execute('{{ config('services.google.captcha.site_key') }}', {action: 'submit'})
-                        .then(function (token) {
+                {{--grecaptcha.ready(function () {--}}
+                {{--    grecaptcha.execute('{{ config('services.google.captcha.site_key') }}', {action: 'submit'})--}}
+                {{--        .then(function (token) {--}}
                             submitLiveForm($form, function (response, json) {
                                 if (response.status == 200) {
                                     $('#otpForm').find('[name="phone"]').val($form.find('[name="phone"]').val())
@@ -94,8 +94,8 @@
                                 }
                                 $form.find('button:submit').prop('disabled', false)
                             })
-                        });
-                });
+                //         });
+                // });
             })
         });
     </script>

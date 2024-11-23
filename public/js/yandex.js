@@ -1,5 +1,3 @@
-const SUGGEST_API_KEY = '441999c3-4640-4dda-8b15-0e58dfa907d0';
-const SEARCH_API_KEY = 'd46bfdd1-d9ca-4f94-959e-5c09d2a427e1';
 const ADDRESS_OUTPUT_ID = 'final_addr';
 const PICKUP_DELIVERY = 'pickup';
 const COURIER_DELIVERY = 'courier';
@@ -186,8 +184,8 @@ const handleFormatPickupCard = (place) => {
         street = '';
 
     place.fullAddress.split(',').forEach((addressPart) => {
-        if (addressPart.toLowerCase().includes('ул.') || addressPart.toLowerCase().includes('улица'))
-            street = addressPart;
+        if (addressPart.toLowerCase().includes('ул') || addressPart.toLowerCase().includes('улица'))
+            street = addressPart.trim();
     })
 
     return `
