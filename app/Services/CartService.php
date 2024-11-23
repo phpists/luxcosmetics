@@ -390,6 +390,7 @@ class CartService
         $order_data['promo_code_discount'] = null;
         $order_data['bonuses_discount'] = null;
         $order_data['gift_card_discount'] = null;
+        $order_data['gift_box'] ??= false;
 
         $promo_code_discount = $this->discounts['promo_code']['amount'] ?? 0;
         if ($promo_code_discount) {
