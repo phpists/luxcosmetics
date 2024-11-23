@@ -34,6 +34,9 @@ class CartController extends Controller
 
     public function indexStore(Request $request)
     {
+        if (!Auth::check())
+            return to_route('cart.login');
+
         $gift_box = $request->boolean(CartService::GIFT_BOX_KEY);
         $this->cartService->setProperty(CartService::GIFT_BOX_KEY, $gift_box);
 
