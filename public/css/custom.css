@@ -120,3 +120,10 @@ button:disabled {
     font-size: 16px;
     font-weight: 500;
 }
+
+.product__subtitle a {
+    color: #021a15;
+}
+.product__subtitle a:hover {
+    color: #cc9755;
+}

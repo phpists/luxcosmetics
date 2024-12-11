@@ -32,7 +32,8 @@
         <div class="product__title"><a
                 href="{{ route('products.product', ['alias' => $product->alias]) }}">{{$product->brand?->name}}</a>
         </div>
-        <div class="product__subtitle">{{$product->title}}</div>
+        <div class="product__subtitle"><a
+                href="{{ route('products.product', ['alias' => $product->alias]) }}">{{$product->title}}</a></div>
     </div>
     <div class="product__btm">
         <div class="product__reviews">
