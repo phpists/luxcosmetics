@@ -37,6 +37,7 @@ class UpdatePromotionRequest extends FormRequest
             'content' => ['required', 'string'],
             'btn_title' => ['nullable', 'string', 'max:255'],
             'btn_link' => ['nullable', 'string', 'max:255'],
+            'products_title' => ['required', 'string', 'max:255'],
         ];
     }
 

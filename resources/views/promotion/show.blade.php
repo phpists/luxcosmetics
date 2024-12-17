@@ -59,7 +59,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-lg-12">
-                        <h2 class="title-h2">Что будет в боксе</h2>
+                        <h2 class="title-h2">{{ $promotion->products_title }}</h2>
                         <div class="products-slider">
                             @foreach($promotion->products as $product)
                                 <div class="products-slider__item">
