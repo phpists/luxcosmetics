@@ -1,7 +1,7 @@
 <div class="row">
     <div class="col-3">
         <div class="form-group w-100 filepond-container">
-            <label for="promotionImg" class=font-weight-bold">Изображение</label>
+            <label for="promotionImg" class=font-weight-bold">Изображение (470x304)</label>
             <input id="promotionImg" name="preview_img" type="file" @if($promotion->preview_img) data-value="{{ $promotion->preview_img_src }}" @endif>
         </div>
     </div>
@@ -54,7 +54,7 @@
 <div class="row">
     <div class="col">
         <div class="form-group w-100 filepond-container">
-            <label for="promotionBgImg" class=font-weight-bold">Главное изображение</label>
+            <label for="promotionBgImg" class=font-weight-bold">Главное изображение (1920x557)</label>
             <input id="promotionBgImg" name="bg_img" type="file" @if($promotion->bg_img) data-value="{{ $promotion->bg_img_src }}" @endif>
         </div>
 
