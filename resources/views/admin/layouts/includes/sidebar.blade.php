@@ -356,7 +356,8 @@
 
             @if(auth()->user()->isSuperAdmin()
                     || auth()->user()->can(\App\Services\Admin\PermissionService::NEWS_VIEW)
-                    || auth()->user()->can(\App\Services\Admin\PermissionService::BANNERS_VIEW))
+                    || auth()->user()->can(\App\Services\Admin\PermissionService::BANNERS_VIEW)
+                    || auth()->user()->can(\App\Services\Admin\PermissionService::PROMOTIONS_VIEW))
                 <li class="menu-item menu-item-submenu
 {{ (request()->routeIs('admin.news')
 || request()->routeIs('admin.banner')
@@ -410,7 +411,7 @@
                                     </a>
                                 </li>
                             @endif
-                            @if(auth()->user()->isSuperAdmin())
+                            @if(auth()->user()->isSuperAdmin() || auth()->user()->can(\App\Services\Admin\PermissionService::PROMOTIONS_VIEW))
                                 <li class="menu-item {{ request()->routeIs('admin.promotions.*') ? 'menu-item-active' : '' }}"
                                     aria-haspopup="true">
                                     <a href="{{ route('admin.promotions.index') }}" class="menu-link">

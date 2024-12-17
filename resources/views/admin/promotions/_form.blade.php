@@ -46,6 +46,11 @@
             <textarea id="promotionShortDescription" name="short_description" class="form-control"
                       required>{{ $promotion->short_description }}</textarea>
         </div>
+        <div class="form-group w-100">
+            <label for="promotionProductsTitle" class="font-weight-bold">Подпись к товарам</label>
+            <input id="promotionProductsTitle" type="text" name="products_title" class="form-control"
+                   value="{{ $promotion->products_title }}" placeholder="Что будет в боксе" required>
+        </div>
     </div>
 </div>
 

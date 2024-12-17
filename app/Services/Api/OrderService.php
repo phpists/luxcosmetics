@@ -17,6 +17,8 @@ class OrderService
             ->get();
 
         $orders = $orders->map(function ($order) {
+            $order->makeHidden(['created_at', 'updated_at']);
+
             $order->makeHiddenIf($order->delivery_type == Order::DELIVERY_COURIER, ['delivery_point_id', 'delivery_point_code']);
 
             $order->payment_method = 'checkmo';
@@ -48,7 +50,7 @@ class OrderService
             $order->unsetRelation('orderProducts');
             $order->unsetRelation('deliveryMethod');
 
-            $order->date = $order->created_at->toAtomString();
+            $order->date = $order->created_at->setTimezone('Europe/Moscow')->toAtomString();
 
             return $order;
         });

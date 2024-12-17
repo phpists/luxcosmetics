@@ -31,6 +31,7 @@ class Promotion extends Model
         'btn_link',
         'preview_img',
         'is_active',
+        'products_title',
     ];
 
     protected $casts = [
