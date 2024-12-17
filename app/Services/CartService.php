@@ -188,7 +188,9 @@ class CartService
             }
         }
 
-        return round($total_sum, 2) ?? 0;
+        $total_sum = round($total_sum, 2) ?? 1;
+
+        return $total_sum > 0 ? $total_sum : 1;
     }
 
     public function getBonusAmount()
