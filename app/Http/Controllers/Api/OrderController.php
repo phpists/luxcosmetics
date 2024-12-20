@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\OrderChangeStatusRequest;
 use App\Http\Requests\Api\OrderReceivedBy1cRequest;
+use App\Http\Resources\New1COrdersResource;
 use App\Models\Order;
 use App\Models\OrderStatus;
 use App\Services\Api\OrderService;
@@ -20,9 +21,11 @@ class OrderController extends Controller
 
     public function getNewOrders()
     {
-        return new JsonResponse([
-            'orders' => $this->orderService->getNewOrders()
-        ]);
+        $orders = Order::newFor1C()
+            ->with(['orderProducts', 'giftProducts:article'])
+            ->get();
+
+        return new New1COrdersResource($orders);
     }
 
     public function changeStatus(OrderChangeStatusRequest $request, Order $order)
