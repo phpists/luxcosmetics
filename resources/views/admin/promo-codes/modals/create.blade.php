@@ -100,8 +100,21 @@
                                 </div>
                                 <div class="col-md-4 col-12">
                                     <div class="form-group w-100">
-                                        <label for="createStarts" class=font-weight-bold">Конец</label>
-                                        <input class="form-control" type="date" name="ends_at" id="createStarts" required/>
+                                        <label for="createEnds" class=font-weight-bold">Конец</label>
+                                        <input class="form-control" type="date" name="ends_at" id="createEnds" required/>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 col-12">
+                                    <div class="form-group w-100">
+                                    <label for="createCalcOnBase" class=font-weight-bold">Считать от РРЦ</label>
+                                    <div>
+                                        <span class="switch">
+                                            <label>
+                                                <input id="createCalcOnBase" type="checkbox" name="calc_on_base">
+                                                <span></span>
+                                            </label>
+                                        </span>
+                                    </div>
                                     </div>
                                 </div>
                             </div>

@@ -54,12 +54,12 @@
                                             </div>
                                         </div>
                                         <div class="cart-product__prices">
-                                            <div class="cart-product__price">{{ $product->price }} ₽ </div>
-                                            @if($product->old_price)
+                                            <div class="cart-product__price">{{ $actualProductPrice = $cartService->getProductPrice($product) }} ₽ </div>
+                                            @if($product->old_price && $product->old_price !== $actualProductPrice)
                                                 <div class="cart-product__oldprice">{{ $product->old_price }} ₽ </div>
                                             @endif
                                         </div>
-                                        <div class="cart-product__sum"><span class="currentSum">{{ round($product->price * $product->quantity, 2) }}</span> ₽</div>
+                                        <div class="cart-product__sum"><span class="currentSum">{{ round($actualProductPrice * $product->quantity, 2) }}</span> ₽</div>
                                         <a href="javascript:;" class="cart-product__delete removeFromCart" data-element="div.cart-product:first" data-product="{{ $product->id }}" data-property="{{ $product->baseValue->id ?? '' }}">
                                             <svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#close')}}"></use></svg>
                                         </a>

@@ -135,3 +135,22 @@
         </div>
     </div>
 </div>
+
+<div>
+    <hr>
+    <div class="row">
+        <div class="col-12">
+            <div class="form-group w-100">
+                <label for="createCalcOnBase" class=font-weight-bold">Считать от РРЦ</label>
+                <div>
+                                        <span class="switch">
+                                            <label>
+                                                <input id="createCalcOnBase" type="checkbox" name="calc_on_base">
+                                                <span></span>
+                                            </label>
+                                        </span>
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>

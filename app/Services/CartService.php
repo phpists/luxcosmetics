@@ -144,7 +144,16 @@ class CartService
 
         $products = $this->getAllProducts();
         $products->map(function ($item) use ($cart) {
-            $item->total_sum = ($cart[$item->id]['quantity'] ?? 1) * $item->price;
+            if ($this->isUsedPromo()) {
+                $promoCode = $this->getPromo();
+                if ($promoCode->calc_on_base && $promoCode->isProductIncluded($item->id)) {
+                    $item->total_sum = ($cart[$item->id]['quantity'] ?? 1) * ($item->raw_old_price ?? $item->raw_price);
+                } else {
+                    $item->total_sum = ($cart[$item->id]['quantity'] ?? 1) * $item->price;
+                }
+            } else {
+                $item->total_sum = ($cart[$item->id]['quantity'] ?? 1) * $item->price;
+            }
         });
         $totalSum = $products->sum('total_sum');
 
@@ -161,12 +170,12 @@ class CartService
 
 
             if ($with_promo_code && $this->isUsedPromo()) {
-                $discount = $this->getUsedPromoDiscount($total_sum);
+                $discount = $this->getUsedPromoDiscount();
                 $this->discounts['promo_code'] = [
                     'title' => "Промокод {$this->getPromoCode()}",
                     'amount' => $discount
                 ];
-                $total_sum -= $discount;
+                $total_sum = $this->getTotalSumWithUsedPromo($discount);
             }
 
             if ($with_bonuses && $this->isUsedBonuses()) {
@@ -577,13 +586,13 @@ class CartService
         return PromoCode::where('code', $this->getPromoCode())->first();
     }
 
-    public function getUsedPromoDiscount($total_sum = null)
+    public function getUsedPromoDiscount()
     {
+
         $promoCode = $this->getPromo();
         $amount = 0;
 
-        if (!$total_sum)
-            $total_sum = $this->getTotalSum();
+        $total_sum = $this->getTotalSum();
 
         if ($promoCode->amount) {
             $amount = $promoCode->amount;
@@ -607,6 +616,13 @@ class CartService
         $amount = min($amount, $total_sum);
 
         return $amount;
+    }
+
+    public function getTotalSumWithUsedPromo($discount)
+    {
+        $promoCode = $this->getPromo();
+
+        return $this->getTotalSum() - $discount;
     }
 
     public function dropPromo(): void
@@ -729,6 +745,19 @@ class CartService
             $bonuses_per_order,
         ], $message);
 
+    }
+
+
+    public function getProductPrice(Product $product)
+    {
+        if ($this->isUsedPromo()) {
+            $promoCode = $this->getPromo();
+
+            if ($promoCode->calc_on_base && $promoCode->isProductIncluded($product->id))
+                return $product->raw_old_price ?? $product->raw_price;
+        }
+
+        return $product->price;
     }
 
 
