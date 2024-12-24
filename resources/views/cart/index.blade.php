@@ -55,7 +55,7 @@
                                         </div>
                                         <div class="cart-product__prices">
                                             <div class="cart-product__price">{{ $actualProductPrice = $cartService->getProductPrice($product) }} ₽ </div>
-                                            @if($product->old_price && $product->old_price !== $actualProductPrice)
+                                            @if($product->old_price && $product->old_price !== $actualProductPrice && $product->old_price > $actualProductPrice)
                                                 <div class="cart-product__oldprice">{{ $product->old_price }} ₽ </div>
                                             @endif
                                         </div>
