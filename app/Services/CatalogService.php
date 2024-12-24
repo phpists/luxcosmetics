@@ -140,15 +140,7 @@ class CatalogService
 
         $products = $this->getProductsQuery(['publishedComments', 'brand', 'values', 'baseProperty', 'basePropertyValue', 'product_variations', 'images'])
             ->when($search = $this->request->get('search'), function ($query) use ($search) {
-                $query->where(function ($query) use ($search) {
-                    $query->where(function ($query) use ($search) {
-                        foreach (explode(' ', $search) as $word) {
-                            $query->where('title', 'like', '%' . $word . '%');
-                        };
-                    })->orWhere(function ($query) use ($search) {
-                        $query->orWhere('code', 'like', '%' . $search . '%');
-                    });
-                });
+                $query->titleSearch($search);
             })
             ->when($properties = $this->getProperties(), function ($q) use ($properties) {
                 $q->whereHas('values', function ($q) use($properties)  {

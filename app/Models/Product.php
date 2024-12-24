@@ -419,4 +419,18 @@ class Product extends Model
         });
     }
 
+    public function scopeTitleSearch(Builder $query, string $search)
+    {
+        $query
+            ->join('brands', 'brands.id', 'brand_id')
+            ->where(function ($query) use ($search) {
+                foreach (explode(' ', $search) as $word) {
+                    $query->where('title', 'like', '%' . $word . '%')
+                        ->orWhere('brands.name', 'like', '%' . $word . '%');
+                };
+            })->orWhere(function ($query) use ($search) {
+                $query->orWhere('code', 'like', '%' . $search . '%');
+            });
+    }
+
 }
