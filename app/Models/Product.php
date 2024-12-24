@@ -422,7 +422,7 @@ class Product extends Model
     public function scopeTitleSearch(Builder $query, string $search)
     {
         $query
-            ->with('brand:id,name')
+            ->join('brands', 'brands.id', 'brand_id')
             ->where(function ($query) use ($search) {
                 foreach (explode(' ', $search) as $word) {
                     $query->where('title', 'like', '%' . $word . '%')

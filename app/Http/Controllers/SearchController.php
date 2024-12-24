@@ -24,7 +24,6 @@ class SearchController extends Controller
         $columns = $request->get('columns') ?? 2;
 
         return Product::query()
-            ->join('brands', 'brands.id', 'brand_id')
             ->titleSearch($search_query)
             ->where(function ($q) use ($from_price, $to_price) {
                 $q->whereBetween('price', [
