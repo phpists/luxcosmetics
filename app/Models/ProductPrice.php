@@ -19,7 +19,12 @@ class ProductPrice extends Model
         'type',
         'amount',
         'rounding',
-        'pos'
+        'pos',
+        'calc_on_base',
+    ];
+
+    protected $casts = [
+        'calc_on_base' => 'bool'
     ];
 
 

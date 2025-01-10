@@ -35,6 +35,7 @@ class PromoCodeController extends Controller
     {
         try {
             $data = $request->post();
+            $data['calc_on_base'] = $request->boolean('calc_on_base');
             $model_ids = $data['product_ids'] ?? $data['category_ids'] ?? $data['brand_ids'] ?? [];
             unset($data['product_ids']);
             unset($data['category_ids']);

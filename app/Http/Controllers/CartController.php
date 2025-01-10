@@ -171,7 +171,8 @@ class CartController extends Controller
     public function plusQuantity(Request $request)
     {
         $quantity = $this->cartService->plusQuantity($request->post('product_id'));
-        $sum = round((Product::find($request->post('product_id')))->price * $quantity, 2);
+        $actualProductPrice = $this->cartService->getProductPrice(Product::find($request->post('product_id')));
+        $sum = round($actualProductPrice * $quantity, 2);
         $total_count = $this->cartService->getTotalCount();
         $total_sum = $this->cartService->getTotalSum();
 
@@ -189,7 +190,8 @@ class CartController extends Controller
     public function minusQuantity(Request $request)
     {
         $quantity = $this->cartService->minusQuantity($request->post('product_id'));
-        $sum = round((Product::find($request->post('product_id')))->price * $quantity, 2);
+        $actualProductPrice = $this->cartService->getProductPrice(Product::find($request->post('product_id')));
+        $sum = round($actualProductPrice * $quantity, 2);
         $total_count = $this->cartService->getTotalCount();
         $total_sum = $this->cartService->getTotalSum();
 

@@ -24,16 +24,7 @@ class SearchController extends Controller
         $columns = $request->get('columns') ?? 2;
 
         return Product::query()
-            ->join('brands', 'brands.id', 'brand_id')
-            ->where(function ($query) use ($search_query) {
-                $query->where(function ($query) use ($search_query) {
-                    foreach (explode(' ', $search_query) as $word) {
-                        $query->where('title', 'like', '%' . $word . '%');
-                    };
-                })->orWhere(function ($query) use ($search_query) {
-                    $query->orWhere('code', 'like', '%' . $search_query . '%');
-                });
-            })
+            ->titleSearch($search_query)
             ->where(function ($q) use ($from_price, $to_price) {
                 $q->whereBetween('price', [
                     $from_price,

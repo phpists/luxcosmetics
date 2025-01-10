@@ -139,14 +139,8 @@ class CatalogService
         $price_to = $this->getPriceTo();
 
         $products = $this->getProductsQuery(['publishedComments', 'brand', 'values', 'baseProperty', 'basePropertyValue', 'product_variations', 'images'])
-            ->when($search = $this->request->get('search'), function ($query) use($search) {
-                $query
-                    ->leftJoin('brands', 'brands.id', 'brand_id')
-                    ->where(function ($query) use ($search) {
-                    return $query->where('title', 'like', "%{$search}%")
-                        ->orWhere('brands.name', 'like', '%'.$search.'%')
-                        ->orWhere('code', 'like', '%'.$search.'%');
-                });
+            ->when($search = $this->request->get('search'), function ($query) use ($search) {
+                $query->titleSearch($search);
             })
             ->when($properties = $this->getProperties(), function ($q) use ($properties) {
                 $q->whereHas('values', function ($q) use($properties)  {

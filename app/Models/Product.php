@@ -6,6 +6,7 @@ use App\Enums\AvailableOptions;
 use App\Enums\ProductPriceTypeEnum;
 use App\Events\ProductBecameAvailableEvent;
 use App\Services\SiteConfigService;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
@@ -306,8 +307,12 @@ class Product extends Model
                 $allCategories = $this->getAllCategoriesArray();
                 $productPrice = ProductPrice::findCondition(ProductPriceTypeEnum::DISCOUNT, $this->brand_id, $allCategories, $this->id);
 
-                if ($productPrice)
+                if ($productPrice) {
+                    if ($productPrice->calc_on_base)
+                        $price = $this->raw_old_price ?? $this->raw_price;
+
                     return $productPrice->getPrice($price);
+                }
 
                 return $price;
             });
@@ -399,6 +404,32 @@ class Product extends Model
     public function getRawDiscountAttribute($value)
     {
         return $this->attributes['discount'];
+    }
+
+    public function scopeIncludeCategory(Builder $query, int|array $categoryId)
+    {
+        if (!is_array($categoryId))
+            $categoryId = [$categoryId];
+
+        $query->where(function ($query) use ($categoryId) {
+            $query->whereIn('products.category_id', $categoryId)
+                ->orWhereHas('categories', function ($query) use ($categoryId) {
+                    $query->whereIn('product_categories.category_id', $categoryId);
+                });
+        });
+    }
+
+    public function scopeTitleSearch(Builder $query, string $search)
+    {
+        $query
+            ->join('brands', 'brands.id', 'brand_id')
+            ->where(function ($query) use ($search) {
+                foreach (explode(' ', $search) as $word) {
+                    $query->where('title', 'like', '%' . $word . '%');
+                };
+            })->orWhere(function ($query) use ($search) {
+                $query->orWhere('code', 'like', '%' . $search . '%');
+            });
     }
 
 }

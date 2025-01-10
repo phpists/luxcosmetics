@@ -30,12 +30,14 @@ class PromoCode extends Model
         'amount',
         'percent',
         'type',
-        'min_sum'
+        'min_sum',
+        'calc_on_base'
     ];
 
     protected $casts = [
         'starts_at' => 'date',
-        'ends_at' => 'date'
+        'ends_at' => 'date',
+        'calc_on_base' => 'bool'
     ];
 
 
@@ -82,6 +84,27 @@ class PromoCode extends Model
     public function orders()
     {
         return $this->hasMany(Order::class);
+    }
+
+    public function isProductIncluded(int $productId): bool
+    {
+        return match ($this->type) {
+            self::TYPE_CART => true,
+            self::TYPE_CATEGORY => Product::whereId($productId)->includeCategory($this->caseCategories()->pluck('model_id')->values()->toArray())->exists(),
+            self::TYPE_PRODUCT => in_array($productId, $this->caseProducts()->pluck('model_id')->values()->toArray()),
+            self::TYPE_BRAND => Product::whereId($productId)->whereIn('brand_id', $this->caseBrands()->pluck('model_id')->values()->toArray())->exists(),
+        };
+    }
+
+    public function calculateProductPrice(int|float $price)
+    {
+        if ($this->amount) {
+            $price -= $this->amount;
+        } elseif ($this->percent) {
+            $price -= $price * ($this->percent / 100);
+        }
+
+        return $price;
     }
 
 }
