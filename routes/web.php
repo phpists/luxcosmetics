@@ -400,7 +400,7 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function 
     Route::delete('/brands/delete', [\App\Http\Controllers\Admin\BrandController::class, 'delete'])->name('admin.brands.delete');
     Route::get('/brands/show', [\App\Http\Controllers\Admin\BrandController::class, 'show'])->name('admin.brands.show');
     Route::delete('/brands/{id}/deleteImage', [\App\Http\Controllers\Admin\BrandController::class, 'deleteImage'])->name('admin.brands.deleteImage');
-    Route::get(' brands/search', [\App\Http\Controllers\Admin\BrandController::class, 'search'])->name('admin.brands.search');
+    Route::get('brands/search', [\App\Http\Controllers\Admin\BrandController::class, 'search'])->name('admin.brands.search');
     Route::get('brands/{brand}/edit', [\App\Http\Controllers\Admin\BrandController::class, 'edit'])->name('admin.brands.edit');
 
     // Product Property Values

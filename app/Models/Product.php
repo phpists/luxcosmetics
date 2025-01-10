@@ -425,8 +425,7 @@ class Product extends Model
             ->join('brands', 'brands.id', 'brand_id')
             ->where(function ($query) use ($search) {
                 foreach (explode(' ', $search) as $word) {
-                    $query->where('title', 'like', '%' . $word . '%')
-                        ->orWhere('brands.name', 'like', '%' . $word . '%');
+                    $query->where('title', 'like', '%' . $word . '%');
                 };
             })->orWhere(function ($query) use ($search) {
                 $query->orWhere('code', 'like', '%' . $search . '%');
