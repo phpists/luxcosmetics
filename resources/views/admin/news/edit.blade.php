@@ -337,15 +337,9 @@
             )
         ));
 
-        CKEDITOR.replace( 'textEditor' );
-
-
-        // Initialization
-        // jQuery(document).ready(function() {
-        //     KTCkeditor.init();
-        // });
-
         $(function () {
+            CKEDITOR.replace( 'textEditor' );
+
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')

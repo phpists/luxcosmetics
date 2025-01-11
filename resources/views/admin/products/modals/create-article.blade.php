@@ -87,10 +87,10 @@
 
                     <div class="row">
                         <div class="form-group mb-0">
-                            <label class="col-auto col-form-label" for="createFaqAnswer">Описание</label>
+                            <label class="col-auto col-form-label" for="createArticleDescription">Описание</label>
                         </div>
                         <div class="col-12">
-                            <textarea name="description" class="summernote" id="createFaqAnswer"></textarea>
+                            <textarea name="description" id="createArticleDescription"></textarea>
                         </div>
                     </div>
 

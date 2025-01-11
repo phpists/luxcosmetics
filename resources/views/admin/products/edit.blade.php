@@ -679,7 +679,7 @@
 @section('js_after')
     <script src="{{ asset('super_admin/js/pages/crud/forms/widgets/select2.js') }}"></script>
     <script src="{{ asset('super_admin/js/pages/crud/ktdatatable/base/html-table.js') }}"></script>
-    <script src="{{ asset('super_admin/plugins/custom/ckeditor/ckeditor-classic.bundle.js') }} "></script>
+    <script src="{{ asset('super_admin/ckeditor/ckeditor.js') }} "></script>
     <script src="{{ asset('super_admin/js/pages/crud/forms/widgets/bootstrap-datetimepicker.js') }}"></script>
     <script src="{{ asset('super_admin/js/Sortable.js') }}"></script>
 
@@ -692,6 +692,9 @@
         });
 
         $(document).ready(function () {
+            CKEDITOR.replace( 'createArticleDescription' );
+            CKEDITOR.replace( 'editArticleDescription' );
+
             $('.select2.property_values').select2({
                 placeholder: 'Выберете или добавьте значение',
                 tags: true,
