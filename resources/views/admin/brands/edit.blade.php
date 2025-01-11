@@ -149,15 +149,13 @@
                                         <div class="col-12">
                                             <div class="form-group">
                                                 <label>Текст внизу</label>
-                                                <textarea name="seo_content[bottom_text]"
-                                                          class="summernote-lg">{{ $brand->getSeo('bottom_text') }}</textarea>
+                                                <textarea name="seo_content[bottom_text]" id="brandSeoContentBottomText">{{ $brand->getSeo('bottom_text') }}</textarea>
                                             </div>
                                         </div>
                                         <div class="col-12">
                                             <div class="form-group">
                                                 <label>Скрытый текст внизу</label>
-                                                <textarea name="seo_content[hidden_bottom_text]"
-                                                          class="summernote-lg">{{ $brand->getSeo('hidden_bottom_text') }}</textarea>
+                                                <textarea name="seo_content[hidden_bottom_text]" id="brandSeoContentHiddenBottomText">{{ $brand->getSeo('hidden_bottom_text') }}</textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -416,13 +414,15 @@
 @section('js_after')
     <script src="{{ asset('super_admin/js/pages/crud/forms/widgets/select2.js') }}"></script>
     <script src="{{ asset('super_admin/js/pages/crud/ktdatatable/base/html-table.js') }}"></script>
-    <script src="{{ asset('super_admin/plugins/custom/ckeditor/ckeditor-classic.bundle.js') }} "></script>
+    <script src="{{ asset('super_admin/ckeditor/ckeditor.js') }} "></script>
     <script src="{{ asset('super_admin/js/pages/crud/file-upload/image-input.js') }} "></script>
     <script src="{{ asset('super_admin/js/Sortable.js') }}"></script>
 
     <script>
         $(function () {
 
+            CKEDITOR.replace( 'brandSeoContentBottomText' );
+            CKEDITOR.replace( 'brandSeoContentHiddenBottomText' );
 
             $(document).on('change', '.switch.tag-updatable input:checkbox', function (e) {
                 $.ajax({

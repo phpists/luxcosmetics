@@ -89,7 +89,7 @@
                             <label class="col-auto col-form-label" for="editArticleDescription">Описание</label>
                         </div>
                         <div class="col-12">
-                            <textarea name="description" class="summernote" id="editArticleDescription"></textarea>
+                            <textarea name="description" id="editArticleDescription"></textarea>
                         </div>
                     </div>
 

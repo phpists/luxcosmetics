@@ -679,7 +679,7 @@
 @section('js_after')
     <script src="{{ asset('super_admin/js/pages/crud/forms/widgets/select2.js') }}"></script>
     <script src="{{ asset('super_admin/js/pages/crud/ktdatatable/base/html-table.js') }}"></script>
-    <script src="{{ asset('super_admin/plugins/custom/ckeditor/ckeditor-classic.bundle.js') }} "></script>
+    <script src="{{ asset('super_admin/ckeditor/ckeditor.js') }} "></script>
     <script src="{{ asset('super_admin/js/pages/crud/forms/widgets/bootstrap-datetimepicker.js') }}"></script>
     <script src="{{ asset('super_admin/js/Sortable.js') }}"></script>
 
@@ -692,6 +692,9 @@
         });
 
         $(document).ready(function () {
+            CKEDITOR.replace( 'createArticleDescription' );
+            CKEDITOR.replace( 'editArticleDescription' );
+
             $('.select2.property_values').select2({
                 placeholder: 'Выберете или добавьте значение',
                 tags: true,
@@ -816,32 +819,16 @@
             )
         ));
 
-        var KTSummernote = function () {
-            // Private functions
-            var demos = function () {
-                $('.textEditor').summernote($.extend(summernoteDefaultOptions, {
-                    height: 1000
-                }));
-                $('.summernote').summernote($.extend(summernoteDefaultOptions, {
-                    height: 350
-                }));
-            }
-
-            return {
-                // public functions
-                init: function() {
-                    demos();
-                }
-            };
-        }();
-
         $(function () {
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
-            KTSummernote.init();
+
+            $('.textEditor').each(function (i, el) {
+                CKEDITOR.replace(el);
+            })
 
             var createImagePlugin = new KTImageInput('kt_image_1');
             var createPageImagePlugin = new KTImageInput('kt_image_1');

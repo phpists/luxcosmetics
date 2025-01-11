@@ -149,7 +149,7 @@
                             <div class="col-12">
                                 <div class="form-group">
                                     <label>Текст внизу категории</label>
-                                    <textarea name="bottom_text" class="summernote-lg"></textarea>
+                                    <textarea name="bottom_text" class="textEditor"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -157,7 +157,7 @@
                             <div class="col-12">
                                 <div class="form-group">
                                     <label>Скрытый текст внизу категории</label>
-                                    <textarea name="hidden_bottom_text" class="summernote-lg"></textarea>
+                                    <textarea name="hidden_bottom_text" class="textEditor"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -181,6 +181,7 @@
 @section('js_after')
     <script src="{{ asset('super_admin/js/pages/crud/forms/widgets/select2.js') }}"></script>
     <script src="{{ asset('super_admin/js/pages/crud/ktdatatable/base/html-table.js') }}"></script>
+    <script src="{{ asset('super_admin/ckeditor/ckeditor.js') }} "></script>
     <script>
         $("#cat_select").select2(
             {
@@ -189,28 +190,15 @@
             }
         );
         $(function () {
-            var KTSummernoteLg = function () {
-                // Private functions
-                var demos = function () {
-                    $('.summernote-lg').summernote($.extend(summernoteDefaultOptions, {
-                        height: 450
-                    }));
-                }
+            $('.textEditor').each(function (i, el) {
+                CKEDITOR.replace(el);
+            })
 
-                return {
-                    // public functions
-                    init: function() {
-                        demos();
-                    }
-                };
-            }();
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
-
-            KTSummernoteLg.init();
 
             var createImagePlugin = new KTImageInput('createImagePlugin');
             var createPageImagePlugin = new KTImageInput('createPageImagePlugin');

@@ -85,7 +85,7 @@
                                     <label class="col-auto col-form-label" for="updateBlockContent">Текст</label>
                                 </div>
                                 <div class="col-12">
-                                    <textarea name="content" class="summernote" id="updateBlockContent">{{$block->content}}</textarea>
+                                    <textarea name="content" id="updateBlockContent">{{$block->content}}</textarea>
                                 </div>
                             </div>
 
@@ -113,7 +113,12 @@
 @endsection
 
 @section('js_after')
+    <script src="{{ asset('super_admin/ckeditor/ckeditor.js') }} "></script>
     <script>
+        $(function () {
+            CKEDITOR.replace( 'updateBlockContent' );
+        })
+
         var KTSummernoteDemo = function () {
             // Private functions
             var demos = function () {

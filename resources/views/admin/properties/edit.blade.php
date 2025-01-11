@@ -144,7 +144,7 @@
                                         <div class="col-12">
                                             <div class="mb-5">
                                                 <label>Описание характеристик</label>
-                                                <textarea class="textEditor" name="description"></textarea>
+                                                <textarea id="editPropertyDescription" name="description"></textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -213,7 +213,7 @@
 @section('js_after')
     <script src="{{ asset('super_admin/js/pages/crud/forms/widgets/select2.js') }}"></script>
     <script src="{{ asset('super_admin/js/pages/crud/ktdatatable/base/html-table.js') }}"></script>
-    <script src="{{ asset('super_admin/plugins/custom/ckeditor/ckeditor-classic.bundle.js') }} "></script>
+    <script src="{{ asset('super_admin/ckeditor/ckeditor.js') }} "></script>
     <script src="{{ asset('super_admin/js/Sortable.js') }}"></script>
     <script src="{{ asset('super_admin/js/category.js') }}"></script>
 
@@ -262,6 +262,8 @@
         });
 
         $(function () {
+            CKEDITOR.replace( 'editPropertyDescription' );
+
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')

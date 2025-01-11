@@ -791,7 +791,7 @@
 @section('js_after')
     <script src="{{ asset('super_admin/js/pages/crud/forms/widgets/select2.js') }}"></script>
     <script src="{{ asset('super_admin/js/pages/crud/ktdatatable/base/html-table.js') }}"></script>
-    <script src="{{ asset('super_admin/plugins/custom/ckeditor/ckeditor-classic.bundle.js') }} "></script>
+    <script src="{{ asset('super_admin/ckeditor/ckeditor.js') }} "></script>
     <script src="{{ asset('super_admin/js/pages/crud/file-upload/image-input.js') }} "></script>
     <script src="{{ asset('super_admin/js/Sortable.js') }}"></script>
     <script src="{{ asset('super_admin/js/category.js') }}"></script>
@@ -874,6 +874,8 @@
             };
         }();
         $(function () {
+            CKEDITOR.replace( 'categoryPostContent' );
+            CKEDITOR.replace( 'updateCategoryPostContent' );
 
 
 
