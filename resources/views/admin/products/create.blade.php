@@ -332,7 +332,7 @@
 @section('js_after')
     <script src="{{ asset('super_admin/js/pages/crud/forms/widgets/select2.js') }}"></script>
     <script src="{{ asset('super_admin/js/pages/crud/ktdatatable/base/html-table.js') }}"></script>
-    <script src="{{ asset('super_admin/plugins/custom/ckeditor/ckeditor-classic.bundle.js') }} "></script>
+    <script src="{{ asset('super_admin/ckeditor/ckeditor.js') }} "></script>
     <script src="{{ asset('super_admin/js/pages/crud/forms/widgets/bootstrap-datetimepicker.js') }}"></script>
     <script>
         $('#category_select').select2({
@@ -414,22 +414,6 @@
             )
         ));
 
-        var KTSummernote = function () {
-            // Private functions
-            var demos = function () {
-                $('.textEditor').summernote($.extend(summernoteDefaultOptions, {
-                    height: 450
-                }));
-            }
-
-            return {
-                // public functions
-                init: function () {
-                    demos();
-                }
-            };
-        }();
-
         $(function () {
             $.ajaxSetup({
                 headers: {
@@ -437,7 +421,9 @@
                 }
             });
 
-            KTSummernote.init();
+            $('.textEditor').each(function (i, el) {
+                CKEDITOR.replace(el);
+            })
 
             var createImagePlugin = new KTImageInput('createImagePlugin');
             var createPageImagePlugin = new KTImageInput('createPageImagePlugin');

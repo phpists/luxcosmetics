@@ -819,32 +819,16 @@
             )
         ));
 
-        var KTSummernote = function () {
-            // Private functions
-            var demos = function () {
-                $('.textEditor').summernote($.extend(summernoteDefaultOptions, {
-                    height: 1000
-                }));
-                $('.summernote').summernote($.extend(summernoteDefaultOptions, {
-                    height: 350
-                }));
-            }
-
-            return {
-                // public functions
-                init: function() {
-                    demos();
-                }
-            };
-        }();
-
         $(function () {
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
-            KTSummernote.init();
+
+            $('.textEditor').each(function (i, el) {
+                CKEDITOR.replace(el);
+            })
 
             var createImagePlugin = new KTImageInput('kt_image_1');
             var createPageImagePlugin = new KTImageInput('kt_image_1');
