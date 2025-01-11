@@ -692,7 +692,6 @@
         });
 
         $(document).ready(function () {
-            CKEDITOR.replace( 'createArticleDescription' );
             CKEDITOR.replace( 'editArticleDescription' );
 
             $('.select2.property_values').select2({
@@ -826,7 +825,7 @@
                 }
             });
 
-            $('.textEditor').each(function (i, el) {
+            $('textarea.textEditor').each(function (i, el) {
                 CKEDITOR.replace(el);
             })
 
