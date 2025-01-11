@@ -19,7 +19,7 @@
                             <div class="form-group w-100">
                                 <label for="createType" class=font-weight-bold">Тип</label>
                                 <select name="type" id="createType" class="form-control selectpicker" required>
-                                    <option value=""></option>
+                                    <option value="" disabled selected></option>
                                     @foreach(\App\Enums\CatalogBannerTypeEnum::cases() as $case)
                                         <option value="{{ $case->value }}" data-load-url="{{ route('admin.catalog-banners.load-type', ['type' => $case->value]) }}">{{ $case->getTitle() }}</option>
                                     @endforeach

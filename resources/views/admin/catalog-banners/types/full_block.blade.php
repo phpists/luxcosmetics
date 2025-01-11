@@ -27,8 +27,9 @@
 
 <script>
     setInterval(() => {
-        $('#{{ $selector }} .fullBlockBody:not(.initialized)').summernote($.extend(summernoteDefaultOptions, {
-            height: 300
-        })).addClass('initialized');
+        $('#{{ $selector }} .fullBlockBody:not(.initialized)').each(function (i, el) {
+            CKEDITOR.replace( el )
+            $(el).addClass('initialized')
+        });
     })
 </script>

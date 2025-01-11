@@ -154,7 +154,7 @@
 @section('js_after')
     <script src="{{ asset('super_admin/js/pages/crud/forms/widgets/select2.js') }}"></script>
     <script src="{{ asset('super_admin/js/pages/crud/ktdatatable/base/html-table.js') }}"></script>
-    <script src="{{ asset('super_admin/plugins/custom/ckeditor/ckeditor-classic.bundle.js') }} "></script>
+    <script src="{{ asset('super_admin/ckeditor/ckeditor.js') }} "></script>
     <script src="{{ asset('super_admin/js/pages/crud/forms/widgets/bootstrap-datetimepicker.js') }}"></script>
     <script>
         $('#kt_select2_4').select2({
@@ -173,33 +173,9 @@
             )
         ));
 
-        var KTCkeditor = function () {
-            // Private functions
-            var demos = function () {
-                ClassicEditor
-                    .create( document.querySelector( '#textEditor' ) )
-                    .then( editor => {
-                        console.log( editor );
-                    } )
-                    .catch( error => {
-                        console.error( error );
-                    } );
-            }
-
-            return {
-                // public functions
-                init: function() {
-                    demos();
-                }
-            };
-        }();
-
-        // Initialization
-        jQuery(document).ready(function() {
-            KTCkeditor.init();
-        });
-
         $(function () {
+            CKEDITOR.replace( 'textEditor' );
+
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
