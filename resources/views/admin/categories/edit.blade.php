@@ -199,7 +199,7 @@
                                         <div class="col-12">
                                             <div class="form-group">
                                                 <label>Текст внизу категории</label>
-                                                <textarea name="bottom_text" class="summernote-lg">{{$category->bottom_text}}</textarea>
+                                                <textarea name="bottom_text" class="textEditor">{{$category->bottom_text}}</textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -207,7 +207,7 @@
                                         <div class="col-12">
                                             <div class="form-group">
                                                 <label>Скрытый текст внизу категории</label>
-                                                <textarea name="hidden_bottom_text" class="summernote-lg">{{$category->hidden_bottom_text}}</textarea>
+                                                <textarea name="hidden_bottom_text" class="textEditor">{{$category->hidden_bottom_text}}</textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -843,41 +843,14 @@
                 ajaxDelete('/admin/category_post/delete', el.dataset.value, '#category_post_'+el.dataset.value)
             })
         })
-        var KTSummernoteDemo = function () {
-            // Private functions
-            var demos = function () {
-                $('.summernote').summernote($.extend(summernoteDefaultOptions, {
-                    height: 250
-                }));
-            }
 
-            return {
-                // public functions
-                init: function() {
-                    demos();
-                }
-            };
-        }();
-        var KTSummernoteLg = function () {
-            // Private functions
-            var demos = function () {
-                $('.summernote-lg').summernote($.extend(summernoteDefaultOptions, {
-                    height: 450
-                }));
-            }
-
-            return {
-                // public functions
-                init: function() {
-                    demos();
-                }
-            };
-        }();
         $(function () {
             CKEDITOR.replace( 'categoryPostContent' );
             CKEDITOR.replace( 'updateCategoryPostContent' );
 
-
+            $('.textEditor').each(function (i, el) {
+                CKEDITOR.replace(el);
+            })
 
             const categoryProductSorts = document.getElementById('product_sorting-table')
             new Sortable(categoryProductSorts, {
@@ -919,10 +892,6 @@
             var createCatPostImagePlugin = new KTImageInput('createCatPostImagePlugin');
             var createArticleImage = new KTImageInput('createArticleImage');
             var editArticleImage = new KTImageInput('editArticleImage');
-
-            KTSummernoteDemo.init();
-
-            KTSummernoteLg.init();
 
             $(document).on('click', '.updateTag', loadTag);
 
