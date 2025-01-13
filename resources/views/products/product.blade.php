@@ -734,22 +734,6 @@
 @endsection
 
 
-<div class="hidden">
-    <div class="popupform form" id="notifyOnAvailable" style="max-width: 400px">
-        <form action="{{ route('product-availability.store') }}" method="post">
-            @csrf
-            <input type="hidden" name="product_id" value="{{ $product->id }}">
-            <div class="popupform__title">Узнать о поступлении</div>
-            <div class="form__fieldset">
-                <input type="text"  class="form__input" name="name" placeholder="Ваше имя"  required="required">
-            </div>
-            <div class="form__fieldset">
-                <input type="email"  class="form__input" name="email" placeholder="Email" required="required">
-            </div>
-            <button type="submit" class="btn btn--accent">Отправить</button>
-        </form>
-    </div>
-</div>
 
 @section('after_content')
     <div class="filters-overlay"></div>
@@ -770,6 +754,22 @@
             <div class="done-window__icn"></div>
             <div class="done-window__title">Ваша заявка принята</div>
             <div class="done-window__subtitle">Наш менеджер свяжется с Вами в течении 15 минут</div>
+        </div>
+    </div>
+    <div class="hidden">
+        <div class="popupform form" id="notifyOnAvailable" style="max-width: 400px">
+            <form action="{{ route('product-availability.store') }}" method="post">
+                @csrf
+                <input type="hidden" name="product_id" value="{{ $product->id }}">
+                <div class="popupform__title">Узнать о поступлении</div>
+                <div class="form__fieldset">
+                    <input type="text"  class="form__input" name="name" placeholder="Ваше имя"  required="required">
+                </div>
+                <div class="form__fieldset">
+                    <input type="email"  class="form__input" name="email" placeholder="Email" required="required">
+                </div>
+                <button type="submit" class="btn btn--accent">Отправить</button>
+            </form>
         </div>
     </div>
 @endsection

@@ -65,6 +65,7 @@
                             <div class="category-page__image"><img src="" alt=""></div>
                         </aside>
                         <main class="category-page__main">
+                            @if($category->topTags?->isNotEmpty())
                             <ul class="category-page__subcategories">
                                 @foreach($category->topTags as $tag)
                                     <li>
@@ -75,8 +76,10 @@
                                     </li>
                                 @endforeach
                             </ul>
+                            @endif
 
                             <div id="catalog">
+                                @if($category->posts?->isNotEmpty())
                                 <div class="category-page__events">
                                     @foreach($category->posts as $post)
                                         <div class="category-page__event catevent">
@@ -86,6 +89,7 @@
                                         </div>
                                     @endforeach
                                 </div>
+                                @endif
                                 {!! $products_list !!}
                             </div>
 
