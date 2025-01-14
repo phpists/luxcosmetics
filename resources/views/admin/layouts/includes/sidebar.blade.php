@@ -632,7 +632,7 @@ request()->routeIs('admin.menu.edit', \App\Models\Menu::TOP_MENU) ? 'menu-item-o
                         <div class="menu-submenu">
                             <i class="menu-arrow"></i>
                             <ul class="menu-subnav">
-                                @if(auth()->user()->isSuperAdmin())
+                                @if(auth()->user()->isSuperAdmin() || auth()->user()->can(\App\Services\Admin\PermissionService::ROBOTS_VIEW))
                                     <li class="menu-item  menu-item-parent" aria-haspopup="true">
                                         <span class="menu-link"><span class="menu-text">Общие</span></span>
                                     </li>
@@ -656,13 +656,15 @@ request()->routeIs('admin.menu.edit', \App\Models\Menu::TOP_MENU) ? 'menu-item-o
                                             <span class="menu-text">Sitemap Generator</span>
                                         </a>
                                     </li>
-                                    <li class="menu-item {{ request()->routeIs('admin.robots') ? 'menu-item-active' : '' }}"
+                                    @if(auth()->user()->isSuperAdmin() || auth()->user()->can(\App\Services\Admin\PermissionService::ROBOTS_VIEW))
+                                    <li class="menu-item {{ request()->routeIs('admin.robots.index') ? 'menu-item-active' : '' }}"
                                         aria-haspopup="true">
-                                        <a href="" class="menu-link">
+                                        <a href="{{ route('admin.robots.index') }}" class="menu-link">
                                             <i class="menu-bullet menu-bullet-dot"><span></span></i>
                                             <span class="menu-text">Robots.txt</span>
                                         </a>
                                     </li>
+                                    @endif
                                 @endif
                                 @if(auth()->user()->isSuperAdmin() || auth()->user()->can(\App\Services\Admin\PermissionService::CONFIG_VIEW))
                                     <li class="menu-item {{ request()->routeIs('admin.settings.index') ? 'menu-item-active' : '' }}"
