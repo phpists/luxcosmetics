@@ -114,6 +114,9 @@ class PermissionService
     const PROMOTIONS_EDIT = 'promotions.edit';
     const PROMOTIONS_DELETE = 'promotions.delete';
 
+    const ROBOTS_VIEW = 'robots.view';
+    const ROBOTS_EDIT = 'robots.edit';
+
 
     public static function getAll(): array
     {
@@ -249,6 +252,10 @@ class PermissionService
                 self::PROMOTIONS_CREATE => 'Создание',
                 self::PROMOTIONS_EDIT => 'Редактирование',
                 self::PROMOTIONS_DELETE => 'Удаление',
+            ],
+            'Robots.txt' => [
+                self::ROBOTS_VIEW => 'Просмотр',
+                self::ROBOTS_EDIT => 'Редактирование',
             ],
         ];
     }
