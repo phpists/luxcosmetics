@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\ProductPriceController;
 use App\Http\Controllers\Admin\PromotionController;
 use App\Http\Controllers\Admin\PromotionProductController;
 use App\Http\Controllers\Admin\PromotionPropertyController;
+use App\Http\Controllers\Admin\RobotsController;
 use App\Http\Controllers\Admin\SeoDataController;
 use App\Http\Controllers\Admin\Settings\SettingController;
 use App\Http\Controllers\CategoryController;
@@ -558,6 +559,10 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function 
     // CKEditor file upload
     Route::post('ckeditor/upload', [\App\Http\Controllers\Admin\CkeditorController::class, 'upload'])
         ->name('ckeditor.upload');
+
+    // Robots.txt
+    Route::get('robots', [RobotsController::class, 'index'])->name('admin.robots.index');
+    Route::put('robots', [RobotsController::class, 'update'])->name('admin.robots.update');
 });
 
 // General Pages
