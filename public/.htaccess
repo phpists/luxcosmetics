@@ -26,4 +26,12 @@
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^ index.php [L]
+
+    # remove index.php
+    RewriteCond %{REQUEST_URI} ^/index\.php [NC]
+    RewriteRule ^index\.php(.*)$ https://%{HTTP_HOST}/$1 [R=301,L]
+
+    # remove index.html
+    RewriteCond %{THE_REQUEST} ^[A-Z]{3,}\s(.*)/index\.(php|html)\ HTTP [NC]
+    RewriteRule (^|/)index\.(php|html)$ /%1 [NC,R=301,L]
 </IfModule>
