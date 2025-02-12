@@ -10,6 +10,7 @@ use App\Services\SiteConfigService;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 
 class Order extends Model
@@ -133,6 +134,11 @@ class Order extends Model
                 if ($order->status_id == self::STATUS_CANCELLED && $order->invoice_id)
                     event(new OrderCancelled($order));
             }
+        });
+
+        self::saved(function (Order $order) {
+            if ($order->lastStatusHistory?->order_status_id != $order->status_id)
+                $order->statusHistories()->create(['order_status_id' => $order->status_id]);
         });
 
         self::deleted(function (Order $order) {
@@ -296,5 +302,25 @@ class Order extends Model
         return $this->belongsTo(DeliveryPoint::class, 'local_delivery_point_id', 'id');
     }
 
+    public function statusHistories()
+    {
+        return $this->hasMany(OrderStatusHistory::class);
+    }
+
+    public function lastStatusHistory()
+    {
+        return $this->hasOne(OrderStatusHistory::class, 'order_id', 'id')
+            ->latest();
+    }
+
+    public function statuses()
+    {
+        return $this->belongsToMany(
+            OrderStatus::class,
+            'order_status_histories',
+            'order_id',
+            'order_status_id'
+        )->withTimestamps();
+    }
 
 }

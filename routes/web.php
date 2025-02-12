@@ -112,24 +112,20 @@ Route::group(['middleware' => 'auth'], function () {
     });
 
     // Cart
-    Route::get('cart/delivery', [\App\Http\Controllers\CartController::class, 'delivery'])
-        ->middleware('can-checkout')
-        ->name('cart.delivery');
-    Route::post('cart/delivery', [\App\Http\Controllers\CartController::class, 'deliveryStore'])
-        ->middleware('can-checkout')
-        ->name('cart.delivery.store');
-    Route::get('cart/payment', [\App\Http\Controllers\CartController::class, 'payment'])
-        ->middleware('can-checkout')
-        ->name('cart.payment');
-    Route::post('cart/checkout', [\App\Http\Controllers\CartController::class, 'checkoutStore'])
-        ->middleware('can-checkout')
-        ->name('cart.checkout.store');
-    Route::post('cart/use-bonuses', [\App\Http\Controllers\CartController::class, 'useBonuses'])
-        ->middleware('can-checkout')
-        ->name('cart.use-bonuses');
-    Route::post('cart/use-promo', [\App\Http\Controllers\CartController::class, 'usePromo'])
-        ->middleware('can-checkout')
-        ->name('cart.use-promo');
+    Route::group(['middleware' => ['can-checkout']], function () {
+        Route::get('cart/delivery', [\App\Http\Controllers\CartController::class, 'delivery'])
+            ->name('cart.delivery');
+        Route::post('cart/delivery', [\App\Http\Controllers\CartController::class, 'deliveryStore'])
+            ->name('cart.delivery.store');
+        Route::get('cart/payment', [\App\Http\Controllers\CartController::class, 'payment'])
+            ->name('cart.payment');
+        Route::post('cart/checkout', [\App\Http\Controllers\CartController::class, 'checkoutStore'])
+            ->name('cart.checkout.store');
+        Route::post('cart/use-bonuses', [\App\Http\Controllers\CartController::class, 'useBonuses'])
+            ->name('cart.use-bonuses');
+        Route::post('cart/use-promo', [\App\Http\Controllers\CartController::class, 'usePromo'])
+            ->name('cart.use-promo');
+    });
     Route::get('cart/success/{order}', [\App\Http\Controllers\CartController::class, 'success'])->name('cart.success');
     Route::get('cart/error', [\App\Http\Controllers\CartController::class, 'error'])->name('cart.error');
 
