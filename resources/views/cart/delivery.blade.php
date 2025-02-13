@@ -137,7 +137,7 @@
 						@include('cart.includes.products_list_static')
 					</main>
 					<aside class="cart-page__aside">
-                        @include('cart.includes.aside', ['custom_btn_text' => 'Перейти к выбору способа оплаты'])
+                        @include('cart.includes.aside', ['custom_btn_text' => 'Продолжить'])
                     </aside>
 				</div>
 			</div>

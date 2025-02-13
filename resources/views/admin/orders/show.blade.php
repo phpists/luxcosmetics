@@ -54,15 +54,17 @@
                                 <h1 class="display-4 font-weight-boldest mb-10">Заказ №{{ $order->id }}</h1>
                                 <div class="d-flex flex-column align-items-md-end px-0">
                                     <span class=" d-flex flex-column align-items-md-end opacity-70">
-                                    <span>Статус: <span class="color: {{ $order->status->color }}"><i class='fas fa-circle mr-2 ml-4' style='color: {{ $order->status->color }}'></i>{{ $order->status->title }}</span></span>
+                                    <span>Текущий статус: <span class="color: {{ $order->status->color }}"><i class='fas fa-circle mr-2 ml-4' style='color: {{ $order->status->color }}'></i>{{ $order->status->title }}</span></span>
                                 </span>
                                 </div>
                             </div>
                             <div class="border-bottom w-100"></div>
                             <div class="d-flex justify-content-between pt-6">
                                 <div class="d-flex flex-column flex-root">
-                                    <span class="font-weight-bolder mb-2">Создан</span>
-                                    <span class="opacity-70">{{ $order->created_at->format('d.m.y') }}</span>
+                                    <span class="font-weight-bolder mb-2">История статусов</span>
+                                    @foreach($order->statuses->sortByDesc('pivot.created_at') as $status)
+                                        <span class="opacity-70">{{ $status->pivot->created_at->format('H:i d.m.y') }}<i class='fas fa-circle mr-2 ml-4' style='color: {{ $status->color }}'></i>{{ $status->title }}</span>
+                                    @endforeach
                                 </div>
                                 <div class="d-flex flex-column flex-root">
                                     <span class="font-weight-bolder mb-2">Покупатель</span>
@@ -80,7 +82,7 @@
                                 <div class="col">
                                     <ul class="list-group list-group-flush w-100">
                                         <li class="list-group-item"><span class="opacity-70">Имя:</span> {{ $order->full_name }}</li>
-                                        <li class="list-group-item"><span class="opacity-70">Адреcс:</span> {{ $order->address }}</li>
+                                        <li class="list-group-item"><span class="opacity-70">Адреc:</span> {{ $order->address }}</li>
                                     </ul>
                                 </div>
                                 <div class="col">
