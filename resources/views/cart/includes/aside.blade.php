@@ -66,7 +66,7 @@
     @endif
 
     <button type="submit" form="orderForm" class="btn btn--accent cart-aside__buy cartSubmit" @disabled(!$cartService->canCheckout())>
-        Перейти к оплате</button>
+        {{ $custom_btn_text ?? 'Перейти к оплате' }}</button>
 
     <div class="cart-aside__paymethods">
         <img src="{{asset('images/dist/ico-visa.png')}}" alt="visa">

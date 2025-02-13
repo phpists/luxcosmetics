@@ -20,7 +20,7 @@ class CanCheckout
         if (CartService::canCheckout())
             return $next($request);
 
-        return redirect('cart')->with('error', 'Минимальная сума заказа '
-            . SiteConfigService::getParamValue('min_checkout_sum'));
+        return redirect('cart');
+//            ->with('error', 'Минимальная сума заказа ' . SiteConfigService::getParamValue('min_checkout_sum'));
     }
 }
