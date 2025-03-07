@@ -115,7 +115,7 @@
                                 <div class="d-flex flex-column pb-3">
                                     <form method="POST" action="{{ route('admin.update-price-from-excel') }}" enctype="multipart/form-data">
                                         @csrf
-                                        <label>Обновить цены с excel файла</label>
+                                        <label data-placement="left" data-trigger="hover" data-toggle="popover" title="Структура таблицы" data-html="true" data-content='Артикул | Цена | Старая цена | РРЦ | Скидка | Бонусы'>Обновить цены с excel файла</label>
                                         <div></div>
                                         <div class="custom-file">
                                             <input type="file" class="custom-file-input" id="excelFile" name="file" onchange="$(this).parents('form:first').submit()" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">

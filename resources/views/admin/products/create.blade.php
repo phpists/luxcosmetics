@@ -110,14 +110,17 @@
                                             </div>
                                             <div class="col-md-2">
                                                 <label for="exampleSelect2">Цена</label>
-                                                <input type="number" step="any" name="price" class="form-control"
-                                                       required/>
+                                                <input type="number" step="any" name="price" class="form-control"/>
                                             </div>
                                             <div class="col-md-2">
                                                 <label for="exampleSelect2">Старая цена</label>
                                                 <input type="number" step="any" name="old_price" class="form-control"/>
                                             </div>
                                             <div class="col-md-2">
+                                                <label for="exampleSelect2">РРЦ</label>
+                                                <input type="number" name="rrp" class="form-control" required/>
+                                            </div>
+                                            <div class="col-md-1">
                                                 <label for="exampleSelect2">Скидка в %</label>
                                                 <input type="number" step="any" name="discount" class="form-control"/>
                                             </div>

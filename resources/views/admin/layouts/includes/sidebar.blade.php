@@ -494,6 +494,15 @@
                         </a>
                     </li>
                 @endif
+                @if(auth()->user()->isSuperAdmin() || auth()->user()->can(\App\Services\Admin\PermissionService::LOYALTY_STATUS_VIEW))
+                    <li class="menu-item {{ request()->routeIs('admin.loyalty-statuses.index') ? 'menu-item-active' : '' }}"
+                        aria-haspopup="true">
+                        <a href="{{route('admin.loyalty-statuses.index')}}" class="menu-link">
+                            <i class="far fa-user menu-icon"></i>
+                            <span class="menu-text">Накопительная система</span>
+                        </a>
+                    </li>
+                @endif
                 @if(auth()->user()->isSuperAdmin()
                         || auth()->user()->can(\App\Services\Admin\PermissionService::COMMENTS_VIEW)
                         || auth()->user()->can(\App\Services\Admin\PermissionService::QUESTIONS_VIEW))

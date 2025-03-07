@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Events\OrderCancelled;
+use App\Events\OrderCompletedEvent;
 use App\Mail\Admin\OrderCreated;
 use App\Mail\OrderStatusChangedMail;
 use App\Services\OrderPaymentService;
@@ -133,6 +134,9 @@ class Order extends Model
 
                 if ($order->status_id == self::STATUS_CANCELLED && $order->invoice_id)
                     event(new OrderCancelled($order));
+
+                if ($order->status_id == self::STATUS_COMPLETED)
+                    event(new OrderCompletedEvent($order));
             }
         });
 

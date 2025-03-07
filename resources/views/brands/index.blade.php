@@ -4,6 +4,7 @@
 @section('description', $metaDescription = $brands->description_meta ?? getSeoTemplateDescription(\App\Enums\SeoTemplateEnum::BRAND, $brands))
 @section('og:title', $metaTitle)
 @section('og:description', $metaDescription)
+@section('og:url', request()->url())
 
 @section('styles')
     <style>

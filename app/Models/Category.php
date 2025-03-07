@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Support\Facades\Cache;
 
 class Category extends Model
 {
@@ -107,7 +108,7 @@ class Category extends Model
             return $result;
         }
 
-        return \Cache::rememberForever('category_child_ids_' . $category_id, function () use ($category_id) {
+        return Cache::rememberForever('category_child_ids_' . $category_id, function () use ($category_id) {
             $ids = [$category_id];
             $category = self::find($category_id);
 

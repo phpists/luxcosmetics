@@ -90,7 +90,25 @@
                                             <input type="text" class="form-control" id="editUserPoints" name="points" value="{{ $user->points }}">
                                         </div>
                                     </div>
+                                    <div class="col-md-6 col-12">
+                                        <div class="form-group">
+                                            <label>Статус в накопительной системе</label>
+                                            <select class="form-control" id="editUserLoyaltyStatusId" name="loyalty_status_id">
+                                                <option></option>
+                                                @foreach($loyaltyStatuses as $loyaltyStatus)
+                                                    <option value="{{ $loyaltyStatus->id }}" @selected($user->loyalty_status_id === $loyaltyStatus->id)>{{ $loyaltyStatus->full_title }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-12">
+                                        <div class="form-group">
+                                            <label>Принудительный % скидки в накопительной системе</label>
+                                            <input type="text" class="form-control" id="editUserLoyaltyDiscountPercent" name="loyalty_discount_percent" value="{{ $user->custom_loyalty_discount_percent }}">
+                                        </div>
+                                    </div>
                                 </div>
+
                                 <div class="row">
                                     <div class="col-6">
                                         <div class="form-group">

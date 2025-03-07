@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Brand;
+use App\Models\Category;
 use App\Models\Product;
 use App\Services\BrandsService;
 use App\Services\CatalogService;
@@ -11,18 +12,24 @@ use Illuminate\Http\Request;
 class BrandsController extends Controller
 {
 
-    private CatalogService $catalogService;
+//    private CatalogService $catalogService;
 
-    public function __construct(Request $request)
-    {
-        $this->catalogService = new CatalogService($request, Brand::class);
-    }
+//    public function __construct(Request $request)
+//    {
+//        $this->catalogService = new CatalogService($request, Brand::class);
+//    }
 
     function index() {
         return view('brands.index_archived');
     }
 
     public function show(Request $request, string $link) {
+        $brand = Brand::where('link', $link)->first();
+        $category = Category::with(['tags', 'posts'])
+            ->firstOrFail();
+
+        return view('brands.lw-index', compact('brand', 'category'));
+
         $brands = $this->catalogService->brand;
         $category = $this->catalogService->category;
         $products = $this->catalogService->getFiltered();

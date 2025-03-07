@@ -7,7 +7,7 @@ $(document).ready(function () {
         });
     })
 // Add to favourites
-    $('.product_favourite').on('click', function () {
+    $(document).on('click', '.product_favourite', function () {
         let id = this.getAttribute('data-value');
 
         if (this.classList.contains('active')) {

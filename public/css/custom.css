@@ -127,3 +127,63 @@ button:disabled {
 .product__subtitle a:hover {
     color: #cc9755;
 }
+
+#filters::-webkit-scrollbar {
+    display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+#filters {
+    overflow-y: auto;
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+
+.filter__wrap.is-open {
+    overflow-y: auto;
+}
+
+.filter__wrap::-webkit-scrollbar-track
+{
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    background-color: #F5F5F5;
+}
+
+.filter__wrap::-webkit-scrollbar
+{
+    width: 4px;
+    background-color: #F5F5F5;
+}
+
+.filter__wrap::-webkit-scrollbar-thumb
+{
+    background-color: #000000;
+    border: 2px solid #555555;
+}
+
+.spinner-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 50;
+}
+.spinner {
+    width: 64px;
+    height: 64px;
+    border: 4px solid transparent;
+    border-top: 4px solid #06473a;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    display: block !important; /* Виправлення для Livewire */
+    margin: auto;
+}
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}

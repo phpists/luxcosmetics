@@ -10,13 +10,12 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 
 class Product extends Model
 {
-    use HasFactory;
-
     const TYPE_VOLUME = 1;
     const TYPE_COLOR = 2;
 
@@ -26,6 +25,7 @@ class Product extends Model
     ];
 
     const PRODUCT_PRICE_CACHE_KEY = 'product_price';
+    const LOYALTY_PRICE_CACHE_KEY = 'loyalty_price';
 
     protected $fillable = [
         'title',
@@ -55,6 +55,7 @@ class Product extends Model
         'show_in_new_page',
         'size',
         'points',
+        'rrp',
 
         'meta_title',
         'description_meta',
@@ -120,6 +121,11 @@ class Product extends Model
     public function images(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(ProductImage::class, 'record_id');
+    }
+
+    public function imagePrint()
+    {
+        return $this->belongsTo(ProductImage::class, 'image_print_id');
     }
 
 //    public function main_image()
@@ -294,33 +300,14 @@ class Product extends Model
         return trans_choice('plurals.variants_left', $count);
     }
 
+    public function getVaritationsCountLabelByCount(int $count): string
+    {
+        return trans_choice('plurals.variants_left', $count);
+    }
+
     public function getAllCategoriesArray(): array
     {
         return array_merge($this->productCategories->pluck('category_id')->toArray(), [$this->category_id]);
-    }
-
-
-    private function getActualPrice($price)
-    {
-        try {
-            return Cache::remember(self::PRODUCT_PRICE_CACHE_KEY.'_'. $this->id, now()->addHour(), function () use ($price) {
-                $allCategories = $this->getAllCategoriesArray();
-                $productPrice = ProductPrice::findCondition(ProductPriceTypeEnum::DISCOUNT, $this->brand_id, $allCategories, $this->id);
-
-                if ($productPrice) {
-                    if ($productPrice->calc_on_base)
-                        $price = $this->raw_old_price ?? $this->raw_price;
-
-                    return $productPrice->getPrice($price);
-                }
-
-                return $price;
-            });
-        } catch (\Throwable $e) {
-            \Log::error($e->getMessage());
-        }
-
-        return $price;
     }
 
     public function clearProductPriceCache(): bool
@@ -354,21 +341,62 @@ class Product extends Model
 
     public function getDiscountAttribute($value)
     {
-        if ($this->old_price)
-            return round((($this->old_price - $this->price) / $this->old_price) * 100);
+        if ($value)
+            return $value;
 
-        return $value;
+        if ($this->price != $this->rrp)
+            return round((($this->rrp - $this->price) / $this->rrp) * 100);
+
+        return 0;
     }
 
     public function getPriceAttribute($value)
     {
-        return $this->getActualPrice($value);
+        try {
+            if ($value)
+                return $value;
+
+            $modulePrice = Cache::remember(
+                self::PRODUCT_PRICE_CACHE_KEY . '_' . $this->id,
+                now()->addHour(),
+                function () {
+                    $allCategories = $this->getAllCategoriesArray();
+
+                    $productPrice = ProductPrice::findCondition(
+                        ProductPriceTypeEnum::DISCOUNT,
+                        $this->brand_id,
+                        $allCategories,
+                        $this->id
+                    );
+                    if ($productPrice)
+                        return $productPrice->getPrice($this->rrp);
+
+                    return $this->rrp;
+                }
+            );
+
+            if ($modulePrice != $this->rrp)
+                return $modulePrice;
+
+            if (Auth::check()) {
+                $user = Auth::user();
+                $price = $this->rrp - ($this->rrp * ($user->loyalty_discount_percent / 100));
+                return round($price);
+            }
+        } catch (\Throwable $e) {
+            \Log::error($e->getMessage());
+        }
+
+        return $this->rrp;
     }
 
     public function getOldPriceAttribute($value)
     {
-        if ($value || ($this->price != $this->raw_price))
-            return $this->getActualOldPrice($value);
+        if ($value)
+            return $value;
+
+        if ($this->price != $this->rrp)
+            return $this->rrp;
 
         return null;
     }

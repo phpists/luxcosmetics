@@ -18,8 +18,9 @@ class ProductPricesImport implements ToCollection, SkipsEmptyRows
             $product = Product::whereCode($row[0])->first();
             $product->price = $row[1];
             $product->old_price = $row[2] ?? null;
-            $product->discount = $row[3] ?? null;
-            $product->points = $row[4] ?? 0;
+            $product->rrp = $row[3] ?? null;
+            $product->discount = $row[4] ?? null;
+            $product->points = $row[5] ?? 0;
             $product->save();
         }
     }

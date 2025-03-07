@@ -20,8 +20,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 class ProductController extends Controller
 {
     public function show(Request $request, string $alias, int $variation_id = null) {
-        $product = Product::query();
-        $product = $product->where('alias', $alias)->firstOrFail();
+        $product = Product::where('alias', $alias)->firstOrFail();
 
         $product->increment('popularity');
 
@@ -49,7 +48,7 @@ class ProductController extends Controller
                 break;
             }
         }
-        $relative_products = Product::query()
+        $relative_products = Product::with('brand', 'baseProperty', 'basePropertyValue')
             ->select(['products.*', 'related_products.relation_type'])
             ->join('related_products', 'related_products.relative_product_id', 'products.id')
             ->where('related_products.product_id', $product->id)
@@ -69,7 +68,7 @@ class ProductController extends Controller
             ->paginate(ProductQuestion::ITEMS_PER_PAGE);
 
         $has_more_questions = $questions->hasMorePages();
-        $random_products = Product::query()->inRandomOrder()->limit(12)->get();
+        $random_products = Product::with('brand', 'baseProperty', 'basePropertyValue')->inRandomOrder()->limit(12)->get();
         $product_variations = CatalogService::getProductVariations($product->id, $product->base_property_id);
         $user = null;
         if (Auth::check()) {
@@ -107,7 +106,12 @@ class ProductController extends Controller
 
     public function productCard(Product $product)
     {
+        $product->loadCount('product_variations');
+        $product->is_favourite = Auth::check() ? Auth::user()->userFavoriteProducts()->where('product_id', $product->id)->exists() : false;
+
         return new JsonResponse([
+            1 => Auth::user()->userFavoriteProducts(),
+            'product' => $product,
             'html' => view('products._card', compact('product'))->render()
         ]);
     }

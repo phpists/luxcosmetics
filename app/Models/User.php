@@ -7,6 +7,7 @@ namespace App\Models;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -37,7 +38,9 @@ class User extends Authenticatable
         'points',
         'is_active',
         'gift_card_balance',
-        'role_id'
+        'role_id',
+        'loyalty_status_id',
+        'custom_loyalty_discount_percent',
     ];
 
     /**
@@ -193,5 +196,20 @@ class User extends Authenticatable
     public function routeNotificationForSms(?Notification $notification = null)
     {
         return $this->phone;
+    }
+
+    public function userFavoriteProducts(): HasMany
+    {
+        return $this->hasMany(UserFavoriteProduct::class, 'user_id');
+    }
+
+    public function loyaltyStatus(): BelongsTo
+    {
+        return $this->belongsTo(LoyaltyStatus::class);
+    }
+
+    public function loyaltyDiscountPercent(): Attribute
+    {
+        return Attribute::get(fn() => $this->custom_loyalty_discount_percent ?? $this->loyaltyStatus->discount_percent);
     }
 }

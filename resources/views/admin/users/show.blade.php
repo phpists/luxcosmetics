@@ -108,6 +108,14 @@
                                         <th>Номер карты</th>
                                         <th></th>
                                     </tr>
+                                    <tr>
+                                        <th>Накопительная система</th>
+                                        <th>{{ $user->loyaltyStatus->full_title }}</th>
+                                    </tr>
+                                    <tr>
+                                        <th>Принудительный % скидки</th>
+                                        <th>{{ $user->cutom_loyalty_discount_percent }}</th>
+                                    </tr>
                                 </table>
                             </div>
                         </div>
