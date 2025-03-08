@@ -2,9 +2,11 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class PromoCode extends Model
@@ -31,7 +33,8 @@ class PromoCode extends Model
         'percent',
         'type',
         'min_sum',
-        'calc_on_base'
+        'calc_on_base',
+        'uses_per_user',
     ];
 
     protected $casts = [
@@ -55,6 +58,29 @@ class PromoCode extends Model
             $q->whereNull('ends_at')
                 ->orWhere('ends_at', '>=', $currentDate);
         });
+    }
+
+    public function scopeAvailableForUser(Builder $query, ?int $userId = null): void
+    {
+        $userId = $userId ?? Auth::id();
+
+        $query->where(function ($q) use ($userId) {
+            $q->whereNull('uses_per_user') // Необмежені промокоди
+            ->orWhereDoesntHave('orders', function ($subQuery) use ($userId) {
+                $subQuery->where('orders.user_id', $userId)
+                    ->groupBy('orders.promo_code_id')
+                    ->havingRaw('COUNT(orders.id) >= promo_codes.uses_per_user');
+            });
+        });
+    }
+
+    public function isAvailableForUser(int $userId): bool
+    {
+        if (is_null($this->uses_per_user))
+            return true; // необмежений
+
+        $usageCount = $this->orders()->where('user_id', $userId)->count();
+        return $usageCount < $this->uses_per_user;
     }
 
 

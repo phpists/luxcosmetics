@@ -315,7 +315,7 @@ class Product extends Model
         return Cache::forget(self::PRODUCT_PRICE_CACHE_KEY.'_'. $this->id);
     }
 
-    private function getActualBonuses($bonuses)
+    public function getActualBonuses($bonuses)
     {
         try {
             $allCategories = $this->getAllCategoriesArray();
@@ -356,27 +356,31 @@ class Product extends Model
             if ($value)
                 return $value;
 
-            $modulePrice = Cache::remember(
-                self::PRODUCT_PRICE_CACHE_KEY . '_' . $this->id,
-                now()->addHour(),
-                function () {
-                    $allCategories = $this->getAllCategoriesArray();
+            $user = Auth::user();
 
-                    $productPrice = ProductPrice::findCondition(
-                        ProductPriceTypeEnum::DISCOUNT,
-                        $this->brand_id,
-                        $allCategories,
-                        $this->id
-                    );
-                    if ($productPrice)
-                        return $productPrice->getPrice($this->rrp);
+            if (!$user || !$user->loyaltyStatus?->is_over_pp) {
+                $modulePrice = Cache::remember(
+                    self::PRODUCT_PRICE_CACHE_KEY . '_' . $this->id,
+                    now()->addHour(),
+                    function () {
+                        $allCategories = $this->getAllCategoriesArray();
 
-                    return $this->rrp;
-                }
-            );
+                        $productPrice = ProductPrice::findCondition(
+                            ProductPriceTypeEnum::DISCOUNT,
+                            $this->brand_id,
+                            $allCategories,
+                            $this->id
+                        );
+                        if ($productPrice)
+                            return $productPrice->getPrice($this->rrp);
 
-            if ($modulePrice != $this->rrp)
-                return $modulePrice;
+                        return $this->rrp;
+                    }
+                );
+
+                if ($modulePrice != $this->rrp)
+                    return $modulePrice;
+            }
 
             if (Auth::check()) {
                 $user = Auth::user();
@@ -403,7 +407,7 @@ class Product extends Model
 
     public function getPointsAttribute($value)
     {
-        if ($value || ($this->price != $this->raw_price))
+        if ($value)
             return $this->getActualBonuses($value);
 
         if ($this->category->alias != 'sales-50') {

@@ -11,8 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('tags', function (Blueprint $table) {
-            //
+        Schema::table('promo_codes', function (Blueprint $table) {
+            $table->integer('uses_per_user')->nullable();
         });
     }
 
@@ -21,8 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('tags', function (Blueprint $table) {
-            //
+        Schema::table('promo_codes', function (Blueprint $table) {
+            $table->dropColumn('uses_per_user');
         });
     }
 };

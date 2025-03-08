@@ -17,7 +17,10 @@ class LoyaltyStatusController extends Controller
 
     public function store(Request $request)
     {
-        LoyaltyStatus::create($request->all());
+        $data = $request->all();
+        $data['is_over_pp'] = isset($data['is_over_pp']) ? 1 : 0;
+
+        LoyaltyStatus::create($data);
 
         return to_route('admin.loyalty-statuses.index')
             ->with('success', 'Статус успешно создан');
@@ -30,7 +33,10 @@ class LoyaltyStatusController extends Controller
 
     public function update(Request $request, LoyaltyStatus $loyaltyStatus)
     {
-        $loyaltyStatus->update($request->all());
+        $data = $request->all();
+        $data['is_over_pp'] = isset($data['is_over_pp']) ? 1 : 0;
+
+        $loyaltyStatus->update($data);
 
         return to_route('admin.loyalty-statuses.index')
             ->with('success', 'Статус успешно обновлен');

@@ -38,6 +38,21 @@
                                     </div>
                                 </div>
                             </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="form-group w-100">
+                                <label for="createIsOverPp" class=font-weight-bold">Перекрывает "Модуль ценников"</label>
+                                <div>
+                                        <span class="switch">
+                                            <label>
+                                                <input id="createIsOverPp" type="checkbox" name="is_over_pp">
+                                                <span></span>
+                                            </label>
+                                        </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
                         </div>
 

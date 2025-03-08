@@ -170,15 +170,15 @@ class CartController extends Controller
 
     public function plusQuantity(Request $request)
     {
-        $quantity = $this->cartService->plusQuantity($request->post('product_id'));
-        $actualProductPrice = $this->cartService->getProductPrice(Product::find($request->post('product_id')));
-        $sum = round($actualProductPrice * $quantity, 2);
+        $product_id = $request->post('product_id');
+        $quantity = $this->cartService->plusQuantity($product_id);
+        $product = $this->cartService->getCartProduct($product_id);
         $total_count = $this->cartService->getTotalCount();
         $total_sum = $this->cartService->getTotalSum();
 
         return response()->json([
             'quantity' => $quantity,
-            'sum' => $sum,
+            'sum' => $product->total_sum,
             'total_count' => $total_count,
             'total_sum' => $total_sum,
             'total_block' => view('cart.includes.total_sum')->render(),
@@ -189,15 +189,15 @@ class CartController extends Controller
 
     public function minusQuantity(Request $request)
     {
-        $quantity = $this->cartService->minusQuantity($request->post('product_id'));
-        $actualProductPrice = $this->cartService->getProductPrice(Product::find($request->post('product_id')));
-        $sum = round($actualProductPrice * $quantity, 2);
+        $product_id = $request->post('product_id');
+        $quantity = $this->cartService->minusQuantity($product_id);
+        $product = $this->cartService->getCartProduct($product_id);
         $total_count = $this->cartService->getTotalCount();
         $total_sum = $this->cartService->getTotalSum();
 
         return response()->json([
             'quantity' => $quantity,
-            'sum' => $sum,
+            'sum' => $product->total_sum,
             'total_count' => $total_count,
             'total_sum' => $total_sum,
             'total_block' => view('cart.includes.total_sum')->render(),

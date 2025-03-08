@@ -11,6 +11,11 @@ class LoyaltyStatus extends Model
         'title',
         'achieve_sum',
         'discount_percent',
+        'is_over_pp',
+    ];
+
+    protected $casts = [
+        'is_over_pp' => 'boolean',
     ];
 
     public function fullTitle(): Attribute
