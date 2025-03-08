@@ -16,11 +16,11 @@ class ProductPricesImport implements ToCollection, SkipsEmptyRows
     {
         foreach ($collection as $row) {
             $product = Product::whereCode($row[0])->first();
-            $product->price = $row[1];
+            $product->price = $row[1] ?? null;
             $product->old_price = $row[2] ?? null;
             $product->rrp = $row[3] ?? null;
             $product->discount = $row[4] ?? null;
-            $product->points = $row[5] ?? 0;
+            $product->points = $row[5] ?? null;
             $product->save();
         }
     }
