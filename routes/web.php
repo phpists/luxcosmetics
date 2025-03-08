@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\CatalogBannerConditionController;
 use App\Http\Controllers\Admin\CatalogBannerController;
 use App\Http\Controllers\Admin\CatalogItemController;
 use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
+use App\Http\Controllers\Admin\LoyaltyStatusController;
 use App\Http\Controllers\Admin\MenuController;
 use App\Http\Controllers\Admin\ProductPriceController;
 use App\Http\Controllers\Admin\PromotionController;
@@ -16,6 +17,7 @@ use App\Http\Controllers\Admin\Settings\SettingController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\SitemapController;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use \App\Http\Controllers\Auth\Otp\LoginController as OtpLoginController;
 use \App\Http\Controllers\Auth\Otp\CartLoginController as OtpCartLoginController;
@@ -559,6 +561,10 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function 
     // Robots.txt
     Route::get('robots', [RobotsController::class, 'index'])->name('admin.robots.index');
     Route::put('robots', [RobotsController::class, 'update'])->name('admin.robots.update');
+
+    // Loyalty Statuses
+    Route::resource('loyalty-statuses', LoyaltyStatusController::class, ['as' => 'admin'])
+        ->except(['create', 'edit']);
 });
 
 // General Pages
@@ -601,3 +607,14 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'front'], function 
 
 Route::get('yandex/suggest', [\App\Http\Controllers\YandexController::class, 'suggest'])
     ->name('yandex.suggest');
+
+Route::get('fix', function (Request $request) {
+    \App\Models\Product::cursor()->each(function ($product) {
+        $product->update([
+            'rrp' => $product->old_price ?? $product->price,
+            'price' => null,
+            'old_price' => null,
+            'discount' => null
+        ]);
+    });
+});

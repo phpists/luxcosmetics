@@ -1,0 +1,119 @@
+<div class="category-page__container">
+    <aside class="category-page__aside">
+        <div class="filters" id="filters">
+            <livewire:filter :model-class="$modelClass" :category="$category" :all-products="$allProducts" key="{{ now() }}" lazy/>
+        </div>
+
+        <div class="category-page__image"><img src="" alt=""></div>
+    </aside>
+
+    <main class="category-page__main">
+        @if($category->topTags?->isNotEmpty())
+            <ul class="category-page__subcategories">
+                @foreach($category->topTags as $tag)
+                    <li>
+                        <a href="{{ $tag->link }}" class="category-page__subcategory">
+                                        <span class="category-page__subcategory-image"><img
+                                                src="{{ $tag->image_src }}" alt=""></span>
+                            <span class="category-page__subcategory-title">{{ $tag->name }}</span>
+                        </a>
+                    </li>
+                @endforeach
+            </ul>
+        @endif
+
+        <div id="catalog">
+            @if($category->posts?->isNotEmpty())
+                <div class="category-page__events">
+                    @foreach($category->posts as $post)
+                        <div class="category-page__event catevent">
+                            <div class="catevent__image"><img
+                                    src="{{asset('/images/uploads/category_posts/'.$post->image_path)}}"
+                                    alt=""></div>
+                            <div class="catevent__title">{{$post->title}}</div>
+                            <div class="catevent__subtitle">{!! $post->content !!}</div>
+                        </div>
+                    @endforeach
+                </div>
+            @endif
+
+            <div class="category-page__sortblock sortblock">
+                    <div class="sortblock__total">Показано <b><span id="currentlyShowedCount">{{ $products->count() }}</span> из {{ $products->total() }}</b></div>
+                <div class="sortblock__sort sort">
+                    <span class="sort__title">Сортировать по</span>
+                    <select name="" id="select_sort_preview" class="sort__select" wire:model.live="sort">
+                        <option value="default:desc">По умолчанию</option>
+                        <option value="created_at:desc">Новизне</option>
+                        <option value="popularity:desc">Популярности</option>
+                        <option value="price:asc">Возрастанию цены</option>
+                        <option value="price:desc">Убыванию цены</option>
+                    </select>
+                </div>
+            </div>
+            <div class="category-page__mobilenav">
+                <button class="category-page__mobilebtn btnfilters">
+                    <svg class="icon">
+                        <use xlink:href="{{asset('images/dist/sprite.svg#filters')}}"></use>
+                    </svg>
+                    Показать фильтры
+                </button>
+                <button class="category-page__mobilebtn btnsort">
+                    <svg class="icon">
+                        <use xlink:href="{{asset('images/dist/sprite.svg#arrows')}}"></use>
+                    </svg>
+                    Сортировать по
+                </button>
+            </div>
+            <div class="sortmobile">
+                <div class="sortmobile__close">
+                    <svg class="icon">
+                        <use xlink:href="{{asset('images/dist/sprite.svg#close')}}"></use>
+                    </svg>
+                </div>
+                <div class="sortmobile__title">Сортировать</div>
+                <label class="radio">
+                    <input type="radio" name="sort"/>
+                    <div class="radio__text">По убыванию цены</div>
+                </label>
+                <label class="radio">
+                    <input type="radio" name="sort"/>
+                    <div class="radio__text">По возрастанию цены</div>
+                </label>
+                <label class="radio">
+                    <input type="radio" name="sort"/>
+                    <div class="radio__text">По популярности</div>
+                </label>
+                <label class="radio">
+                    <input type="radio" name="sort"/>
+                    <div class="radio__text">По новизне</div>
+                </label>
+            </div>
+
+            <div class="category-page__products">
+
+                @if(isset($gridItems) && !empty($gridItems))
+                    @foreach($gridItems as $row => $items)
+                        @foreach($items as $item)
+                            @if($item instanceof \App\Models\Product)
+                                <div class="category-page__product">
+                                    @include('products._card', ['product' => $item, 'is_favourite_page' => $is_favourite_page?? false])
+                                </div>
+                            @elseif($item instanceof \App\Models\CatalogBanner)
+                                @include("catalog.banners.{$item->type}", ['catalogBanner' => $item])
+                            @endif
+                        @endforeach
+                    @endforeach
+                @else
+                    @foreach($products as $product)
+                        <div class="category-page__product">
+                            @include('products._card', ['is_favourite_page' => $is_favourite_page ?? false])
+                        </div>
+                    @endforeach
+                @endif
+
+            </div>
+
+            {!! $products->links('vendor.livewire.catalog-pagination', data: ['scrollTo' => '#catalog']) !!}
+        </div>
+    </main>
+</div>

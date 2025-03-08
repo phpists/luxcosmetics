@@ -116,9 +116,21 @@ class CartService
 
         $products = $query->get();
 
-        $products->map(function ($item) use ($cart) {
+        $promo_code = null;
+        if ($this->isUsedPromo())
+            $promo_code = $this->getPromo();
+
+        $products->map(function ($item) use ($cart, $promo_code) {
+            $item->rraw_price = $item->price;
+
+            if ($promo_code)
+                if ($promo_code->isProductIncluded($item->id))
+                    $item->price = ceil($promo_code->calculateProductPrice($promo_code->calc_on_base ? $item->rrp : $item->price));
+
             $item->quantity = $cart[$item->id]['quantity'] ?? 1;
-            $item->total_sum = $item->quantity * $item->price;
+            $item->total_sum = ceil($item->quantity * $item->price);
+            $item->raw_total_sum = ceil($item->quantity * $item->rraw_price);
+            $item->rrp_total_sum = ceil($item->quantity * $item->rrp);
         });
 
         return $products;
@@ -138,8 +150,21 @@ class CartService
         return Product::findOrFail($product_id);
     }
 
+    public function getCartProduct($product_id)
+    {
+        $products = $this->getAllProducts();
+        return $products->where('id', $product_id)->first();
+    }
+
+    public function getRawTotalSum()
+    {
+        return ceil($this->getAllProducts()->sum('raw_total_sum')) ?? 0;
+    }
+
     public function getTotalSum()
     {
+        return ceil($this->getAllProducts()->sum('rrp_total_sum')) ?? 0;
+
         $cart = session()->get(self::SESSION_KEY, []);
 
         $products = $this->getAllProducts();
@@ -162,12 +187,11 @@ class CartService
 
     public function getTotalSumWithDiscounts($with_promo_code = true, $with_bonuses = true, $with_gift_card = true)
     {
-        $total_sum = $this->getTotalSum();
+        $total_sum = ceil($this->getAllProducts()->sum('total_sum')) ?? 1;
 
-        if (Auth::check()) {
+        if (Auth::check() && $total_sum > 1) {
             $user = Auth::user();
             $this->checkDiscount();
-
 
             if ($with_promo_code && $this->isUsedPromo()) {
                 $discount = $this->getUsedPromoDiscount();
@@ -175,7 +199,7 @@ class CartService
                     'title' => "Промокод {$this->getPromoCode()}",
                     'amount' => $discount
                 ];
-                $total_sum = $this->getTotalSumWithUsedPromo($discount);
+//                $total_sum = $this->getTotalSumWithUsedPromo($discount);
             }
 
             if ($with_bonuses && $this->isUsedBonuses()) {
@@ -197,6 +221,8 @@ class CartService
             }
         }
 
+        return max(1, ceil($total_sum));
+
         $total_sum = round($total_sum, 2) ?? 1;
 
         return $total_sum > 0 ? $total_sum : 1;
@@ -205,20 +231,25 @@ class CartService
     public function getBonusAmount()
     {
         $bonus_points = 0;
+        $totalSum = $this->getTotalSumWithDiscounts();
 
-        foreach (self::getAllItems() as $item) {
-            $product = self::getProduct($item['product_id']);
-            $bonus_points += ($item['quantity'] * $product->points);
+        $minSumForBonuses = (int) SiteConfigService::getParamValue('min_checkout_sum_for_bonuses');
+        if ($totalSum < $minSumForBonuses)
+            return 0;
+
+        foreach (self::getAllProducts() as $product) {
+            if ($product->points > 0)
+                $bonus_points += $product->points * $product->quantity;
         }
 
         if ($this->isUsedBonuses()) {
             $usedBonuses = $this->getUsedBonusesDiscount();
-            $usedBonusesPercent = round(($usedBonuses / $this->getTotalSum()) * 100);
+            $usedBonusesPercent = round(($usedBonuses / $this->getTotalSumWithDiscounts()) * 100);
 
             $bonus_points -= ($bonus_points * $usedBonusesPercent) / 100;
         }
 
-        return (int) floor($bonus_points);
+        return floor($bonus_points);
     }
 
     public function getTotalCount(): int
@@ -433,7 +464,7 @@ class CartService
                     'product_id' => $item['product_id'],
                     'quantity' => $item['quantity'],
                     'price' => $product->price,
-                    'old_price' => $product->old_price
+                    'old_price' => $product->rrp
                 ]);
                 // Decrease count of products in store
                 $decrease_result = $this->decreaseAmountOfProduct($item['product_id'], $item['quantity']);
@@ -530,10 +561,10 @@ class CartService
         if ($user->points < $amount)
             throw new Exception('У вас на балансе нету столько баллов!');
 
-        $total_cart_sum = $this->getTotalSum();
+        $total_cart_sum = ceil($this->getAllProducts()->sum('total_sum')) ?? 1;
         $bonuses_per_order = (int) SiteConfigService::getParamValue('bonuses_per_order') ?? 0;
         if ($bonuses_per_order > 0) {
-            $max_bonuses_for_current_checkout = round(($bonuses_per_order / 100) * $total_cart_sum, 2);
+            $max_bonuses_for_current_checkout = floor(($bonuses_per_order / 100) * $total_cart_sum);
         } else {
             $max_bonuses_for_current_checkout = 0;
         }
@@ -588,11 +619,12 @@ class CartService
 
     public function getUsedPromoDiscount()
     {
-
         $promoCode = $this->getPromo();
         $amount = 0;
 
-        $total_sum = $this->getTotalSum();
+        $total_sum = $promoCode->calc_on_base
+            ? $this->getTotalSum()
+            : $this->getRawTotalSum();
 
         if ($promoCode->amount) {
             $amount = $promoCode->amount;
@@ -613,9 +645,7 @@ class CartService
             }
         }
 
-        $amount = min($amount, $total_sum);
-
-        return $amount;
+        return floor(min($amount, $total_sum));
     }
 
     public function getTotalSumWithUsedPromo($discount)
@@ -643,6 +673,9 @@ class CartService
 //
 //        if ($this->isUsedBonuses())
 //            throw new Exception('На этот заказ уже действует скидка от бонусов');
+
+        if (!$promoCode->isAvailableForUser(Auth::id()))
+            throw new Exception('Вы уже использовали этот промокод');
 
         if ($promoCode->type == PromoCode::TYPE_CART) {
             if ($promoCode->min_sum && $promoCode->min_sum > $this->getTotalSum())

@@ -149,19 +149,19 @@ $(function () {
     let maxFilterPrice = Math.ceil($('#filterMaxPrice').val());
     let maxCurrentPrice = Math.floor($('#filterCurrentMaxPrice').val())
 
-    $("#slider-range").slider({
-        range: true,
-        min: minFilterPrice,
-        max: maxFilterPrice,
-        values: [minCurrentPrice, maxCurrentPrice],
-        slide: function (event, ui) {
-            $("#filterCurrentMinPrice").val(ui.values[0]);
-            $("#filterCurrentMaxPrice").val(ui.values[1]);
-        }
-    });
+    // $("#slider-range").slider({
+    //     range: true,
+    //     min: minFilterPrice,
+    //     max: maxFilterPrice,
+    //     values: [minCurrentPrice, maxCurrentPrice],
+    //     slide: function (event, ui) {
+    //         $("#filterCurrentMinPrice").val(ui.values[0]);
+    //         $("#filterCurrentMaxPrice").val(ui.values[1]);
+    //     }
+    // });
 
-    $("#amount").val($("#slider-range").slider("values", 0));
-    $("#amount2").val($("#slider-range").slider("values", 1));
+    // $("#amount").val($("#slider-range").slider("values", 0));
+    // $("#amount2").val($("#slider-range").slider("values", 1));
 
 
 

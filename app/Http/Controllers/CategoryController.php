@@ -4,30 +4,29 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Product;
-use App\Services\CatalogGridService;
+use App\Services\Catalog2Service;
 use App\Services\CatalogService;
-use Illuminate\Database\Query\Builder;
-use Illuminate\Database\Query\JoinClause;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
 
 class CategoryController extends Controller
 {
 
-    private CatalogService $catalogService;
+    private Catalog2Service $catalogService;
 
-    public function __construct(Request $request)
-    {
-        $this->catalogService = new CatalogService($request, Category::class);
-    }
+//    public function __construct(Request $request)
+//    {
+//        $this->catalogService = new Catalog2Service($request, Category::class);
+//    }
 
     public function show(Request $request, string $alias) {
-        $category = $this->catalogService->category;
-        if (!$category->status) {
-            abort(404);
-        }
+//        $category = $this->catalogService->category;
+//        if (!$category->status) {
+//            abort(404);
+//        }
+        $category = Category::where('alias', $alias)->firstOrFail();
+
+        return view('categories.lw-index', compact('category'));
+
         $products = $this->catalogService->getFiltered();
         $properties = $this->catalogService->getFilters();
         $filters_weight = $this->catalogService->getFiltersWeight($properties);

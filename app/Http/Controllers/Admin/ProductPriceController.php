@@ -41,7 +41,6 @@ class ProductPriceController extends Controller
                 'is_active' => $request->boolean('is_active'),
                 'start_date' => $start_date ? Carbon::parse($start_date)->format('Y-m-d') : null,
                 'end_date' => $end_date ? Carbon::parse($end_date)->format('Y-m-d') : null,
-                'calc_on_base' => $request->boolean('calc_on_base'),
             ]);
 
             if (!$productPrice->save())
@@ -98,7 +97,6 @@ class ProductPriceController extends Controller
                 'is_active' => $request->boolean('is_active'),
                 'start_date' => $start_date ? Carbon::parse($start_date)->format('Y-m-d') : null,
                 'end_date' => $end_date ? Carbon::parse($end_date)->format('Y-m-d') : null,
-                'calc_on_base' => $request->boolean('calc_on_base'),
             ]);
 
             if (!$productPrice->update())
