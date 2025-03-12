@@ -113,7 +113,7 @@
                                             </div>
                                             <div class="col-md-2">
                                                 <label>Бонусные баллы</label>
-                                                <input type="number" step="1" min="0" value="{{$product->raw_points}}" name="points" required class="form-control"/>
+                                                <input type="number" step="1" min="0" value="{{$product->raw_points}}" name="points" class="form-control"/>
                                             </div>
                                         </div>
                                         <div class="row">
