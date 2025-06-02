@@ -91,7 +91,7 @@
                                         @endif
                                         @if($loyaltyStatus->id != 1)
                                         @if(auth()->user()->isSuperAdmin() || auth()->user()->can(\App\Services\Admin\PermissionService::LOYALTY_STATUS_DELETE))
-                                        <form action="{{ route('admin.promo_codes.destroy', $loyaltyStatus) }}" method="POST" style="display: inline">
+                                        <form action="{{ route('admin.loyalty-statuses.destroy', $loyaltyStatus) }}" method="POST" style="display: inline">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-sm btn-clean btn-icon btn_delete"
