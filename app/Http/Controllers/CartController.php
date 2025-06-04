@@ -206,6 +206,26 @@ class CartController extends Controller
         ]);
     }
 
+    public function updateQuantity(Request $request)
+    {
+        $product_id = $request->post('product_id');
+        $qty = $request->post('quantity');
+        $quantity = $this->cartService->updateQuantity($product_id, $qty);
+        $product = $this->cartService->getCartProduct($product_id);
+        $total_count = $this->cartService->getTotalCount();
+        $total_sum = $this->cartService->getTotalSum();
+
+        return response()->json([
+            'quantity' => $quantity,
+            'sum' => $product->total_sum,
+            'total_count' => $total_count,
+            'total_sum' => $total_sum,
+            'total_block' => view('cart.includes.total_sum')->render(),
+            'can_checkout' => CartService::canCheckout(),
+            'cant_checkout_message' => $this->cartService->canNotCheckoutMessage()
+        ]);
+    }
+
     public function clear()
     {
         $this->cartService->clear();

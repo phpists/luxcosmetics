@@ -86,16 +86,14 @@ class Product extends Model
     ];
 
 
-
-
-    protected static function booted (): void
+    protected static function booted(): void
     {
 
-        self::updated(function(self $model) {
+        self::updated(function (self $model) {
             if ($model->isDirty('availability')) {
                 if (
                     $model->availability == AvailableOptions::AVAILABLE->value
-                    && $model->getOriginal('availability') == AvailableOptions::NOT_AVAILABLE->value
+                && $model->getOriginal('availability') == AvailableOptions::NOT_AVAILABLE->value
                 ) {
                     ProductBecameAvailableEvent::dispatch($model);
                 }
@@ -161,7 +159,8 @@ class Product extends Model
         return $this->hasMany(ProductVariation::class);
     }
 
-    public function filterVariations($variations) {
+    public function filterVariations($variations)
+    {
         if (sizeof($variations) > 0) {
             return $variations->where('parent_id', $this->id);
         }
@@ -312,7 +311,7 @@ class Product extends Model
 
     public function clearProductPriceCache(): bool
     {
-        return Cache::forget(self::PRODUCT_PRICE_CACHE_KEY.'_'. $this->id);
+        return Cache::forget(self::PRODUCT_PRICE_CACHE_KEY . '_' . $this->id);
     }
 
     public function getActualBonuses($bonuses)
@@ -353,8 +352,9 @@ class Product extends Model
     public function getPriceAttribute($value)
     {
         try {
-            if ($value)
+            if ($value) {
                 return $value;
+            }
 
             $user = Auth::user();
 
@@ -378,8 +378,9 @@ class Product extends Model
                     }
                 );
 
-                if ($modulePrice != $this->rrp)
+                if ($modulePrice != $this->rrp) {
                     return $modulePrice;
+                }
             }
 
             if (Auth::check()) {

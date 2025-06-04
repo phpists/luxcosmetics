@@ -26,16 +26,22 @@
         <div class="container-fluid">
             @include('admin.layouts.includes.messages')
             @if(auth()->user()->isSuperAdmin() || auth()->user()->can(\App\Services\Admin\PermissionService::USERS_EDIT))
-            <div class="card-header flex-wrap border-0 pt-6 pb-0">
-                <div class="card-toolbar">
-                    <div class="dropdown dropdown-inline mr-2 mb-6">
-                        <a href="{{ route('admin.user.edit', $user->id) }}"
-                           class="btn btn-primary font-weight-bolder">
-                            <span class="svg-icon svg-icon-md"></span>Редактировать
-                        </a>
+                <div class="card-header flex-wrap border-0 pt-6 pb-0">
+                    <div class="card-toolbar">
+                        <div class="dropdown dropdown-inline mr-2 mb-6">
+                            <a href="{{ route('admin.user.edit', $user->id) }}"
+                               class="btn btn-primary font-weight-bolder">
+                                <span class="svg-icon svg-icon-md"></span>Редактировать
+                            </a>
+                        </div>
+                        <div class="dropdown dropdown-inline mr-2 mb-6">
+                            <a href="{{ url("admin/orders?per_page=&customer={$user->email}") }}"
+                               class="btn btn-success font-weight-bolder">
+                                <span class="svg-icon svg-icon-md"></span>Список заказов
+                            </a>
+                        </div>
                     </div>
                 </div>
-            </div>
             @endif
             <div class="card card-custom">
                 <div class="card-body">
@@ -114,7 +120,7 @@
                                     </tr>
                                     <tr>
                                         <th>Принудительный % скидки</th>
-                                        <th>{{ $user->cutom_loyalty_discount_percent }}</th>
+                                        <th>{{ isset($user->custom_loyalty_discount_percent) ? $user->custom_loyalty_discount_percent : ' %' }}</th>
                                     </tr>
                                 </table>
                             </div>

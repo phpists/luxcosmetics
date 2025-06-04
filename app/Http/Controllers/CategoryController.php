@@ -19,10 +19,7 @@ class CategoryController extends Controller
 //    }
 
     public function show(Request $request, string $alias) {
-//        $category = $this->catalogService->category;
-//        if (!$category->status) {
-//            abort(404);
-//        }
+
         $category = Category::where('alias', $alias)->firstOrFail();
 
         return view('categories.lw-index', compact('category'));

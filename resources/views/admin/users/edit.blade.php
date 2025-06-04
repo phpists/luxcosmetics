@@ -104,7 +104,7 @@
                                     <div class="col-md-6 col-12">
                                         <div class="form-group">
                                             <label>Принудительный % скидки в накопительной системе</label>
-                                            <input type="text" class="form-control" id="editUserLoyaltyDiscountPercent" name="loyalty_discount_percent" value="{{ $user->custom_loyalty_discount_percent }}">
+                                            <input type="text" class="form-control" id="editUserLoyaltyDiscountPercent" name="custom_loyalty_discount_percent" value="{{ $user->custom_loyalty_discount_percent }}">
                                         </div>
                                     </div>
                                 </div>
@@ -124,10 +124,8 @@
                                         </div>
                                     </div>
                                 </div>
-
-
-                                <button type="submit" class="btn btn-lg btn-primary mr-2">Сохранить</button>
-
+                                <a href="{{ url("admin/orders?per_page=&customer={$user->email}") }}" class="btn btn-lg btn-primary mr-2">Список заказов</a>
+                                <button type="submit" class="btn btn-lg btn-success mr-2">Сохранить</button>
                             </form>
                         </div>
                     </div>

@@ -82,16 +82,16 @@
                                 <div class="seoblock__content is-hidden" id="seohidden">{!! $category->hidden_bottom_text !!}</div>
                                 <div class="seoblock__morecontent">Показать еще</div>
                             @endif
-                            @if(sizeof($bottom_tags) > 0)
-                                <div class="seoblock__tags">
-                                    @foreach($bottom_tags->sortBy('position') as $idx=>$tag)
-                                        <a href="{{$tag->link}}" class="seoblock__tag">{{$tag->name}}</a>
-                                    @endforeach
-                                </div>
-                                @if(sizeof($bottom_tags) > 5)
-                                    <div class="seoblock__moretags">Развернуть</div>
+                                @if(sizeof($bottom_tags) > 0)
+                                    <div class="seoblock__tags">
+                                        @foreach($bottom_tags->sortBy('position') as $idx=>$tag)
+                                            <a href="{{$tag->link}}" class="seoblock__tag">{{$tag->name}}</a>
+                                        @endforeach
+                                    </div>
+                                    @if(sizeof($bottom_tags) > 5)
+                                        <div class="seoblock__moretags">Развернуть</div>
+                                    @endif
                                 @endif
-                            @endif
                         </div>
                 </div>
             </div>

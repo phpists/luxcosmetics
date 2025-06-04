@@ -151,6 +151,7 @@ Route::post('cart/add', [\App\Http\Controllers\CartController::class, 'add'])->n
 Route::post('cart/remove', [\App\Http\Controllers\CartController::class, 'remove'])->name('cart.remove');
 Route::post('cart/plus-quantity', [\App\Http\Controllers\CartController::class, 'plusQuantity'])->name('cart.plus-quantity');
 Route::post('cart/minus-quantity', [\App\Http\Controllers\CartController::class, 'minusQuantity'])->name('cart.minus-quantity');
+Route::post('cart/update-quantity', [\App\Http\Controllers\CartController::class, 'updateQuantity'])->name('cart.update-quantity');
 Route::get('cart/clear', [\App\Http\Controllers\CartController::class, 'clear'])->name('cart.clear');
 Route::get('cart/login', [\App\Http\Controllers\CartController::class, 'login'])->name('cart.login')->middleware('guest');
 Route::post('fast-register', [\App\Http\Controllers\Auth\FastRegisterController::class, 'store'])

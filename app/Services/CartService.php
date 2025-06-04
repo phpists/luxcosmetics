@@ -319,6 +319,17 @@ class CartService
         return $quantity;
     }
 
+    public function updateQuantity($product_id, $quantity): int
+    {
+        $cart = session()->get(self::SESSION_KEY, []);
+        if (isset($cart[$product_id])) {
+            $cart[$product_id]['quantity'] = $quantity;
+            session([self::SESSION_KEY => $cart]);
+        }
+
+        return $quantity;
+    }
+
 
     /**
      * Перевіряє чи можна додати товар в корзину
