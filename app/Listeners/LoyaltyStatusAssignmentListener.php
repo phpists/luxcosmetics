@@ -16,18 +16,24 @@ class LoyaltyStatusAssignmentListener
         $user = $event->order->user;
         $achievedStatusSum = $user->loyaltyStatus?->achieve_sum;
 
-        // not VIP
         if (!is_null($achievedStatusSum)) {
             $allOrdersTotalSum = $user->orders()
                 ->completed()
                 ->sum('total_sum');
 
-            $nextStatus = LoyaltyStatus::whereNotNull('achieve_sum')
-                ->where('achieve_sum', '>', $achievedStatusSum)
-                ->first();
+            $total = intval($achievedStatusSum + $allOrdersTotalSum);
 
-            if ($nextStatus && $allOrdersTotalSum >= $nextStatus->achieve_sum)
-                $user->update(['loyalty_status_id' => $nextStatus->id]);
+            if ($total > $achievedStatusSum) {
+                $nextStatus = LoyaltyStatus::whereNotNull('achieve_sum')
+                    ->where('achieve_sum', '<=', $total)
+                    ->orderByDesc('discount_percent')
+                    ->first();
+
+                if ($nextStatus) {
+                    $user->update(['loyalty_status_id' => $nextStatus->id]);
+                }
+            }
         }
     }
+
 }
