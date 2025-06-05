@@ -116,11 +116,11 @@
                                     </tr>
                                     <tr>
                                         <th>Накопительная система</th>
-                                        <th>{{ $user->loyaltyStatus->full_title }}</th>
+                                        <th>{{ isset($user->loyaltyStatus) ? $user->loyaltyStatus->full_title : '' }}</th>
                                     </tr>
                                     <tr>
                                         <th>Принудительный % скидки</th>
-                                        <th>{{ isset($user->custom_loyalty_discount_percent) ? $user->custom_loyalty_discount_percent : ' %' }}</th>
+                                        <th>{{ isset($user->custom_loyalty_discount_percent) ? $user->custom_loyalty_discount_percent . ' %' : '' }}</th>
                                     </tr>
                                 </table>
                             </div>

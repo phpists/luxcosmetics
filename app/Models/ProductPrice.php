@@ -166,7 +166,6 @@ class ProductPrice extends Model
         }
     }
 
-
     public static function findCondition(ProductPriceTypeEnum $priceTypeEnum, int $brand_id, array $categories_id, int $product_id): ?self
     {
         return self::query()
@@ -180,14 +179,11 @@ class ProductPrice extends Model
                     return $query->whereIn('model_id', $categories_id);
                 })->orWhereHas('caseProducts', function ($query) use ($product_id) {
                     return $query->whereModelId($product_id);
-                });
-            })
-            ->where(function ($query) use ($brand_id, $categories_id, $product_id) {
-                $query->whereDoesntHave('exceptBrands', function ($query) use ($brand_id) {
+                })->orWhereDoesntHave('exceptBrands', function ($query) use ($brand_id) {
                     return $query->whereModelId($brand_id);
-                })->whereDoesntHave('exceptCategories', function ($query) use ($categories_id) {
+                })->orWhereDoesntHave('exceptCategories', function ($query) use ($categories_id) {
                     return $query->whereIn('model_id', $categories_id);
-                })->whereDoesntHave('exceptProducts', function ($query) use ($product_id) {
+                })->orWhereDoesntHave('exceptProducts', function ($query) use ($product_id) {
                     return $query->whereModelId($product_id);
                 });
             })

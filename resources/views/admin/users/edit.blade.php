@@ -94,7 +94,7 @@
                                         <div class="form-group">
                                             <label>Статус в накопительной системе</label>
                                             <select class="form-control" id="editUserLoyaltyStatusId" name="loyalty_status_id">
-                                                <option></option>
+                                                <option value="0"></option>
                                                 @foreach($loyaltyStatuses as $loyaltyStatus)
                                                     <option value="{{ $loyaltyStatus->id }}" @selected($user->loyalty_status_id === $loyaltyStatus->id)>{{ $loyaltyStatus->full_title }}</option>
                                                 @endforeach

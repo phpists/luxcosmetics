@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ProductPrice\ProductPriceStoreRequest;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Product;
@@ -30,9 +31,13 @@ class ProductPriceController extends Controller
         ]);
     }
 
-    public function store(Request $request)
+    public function store(ProductPriceStoreRequest $request)
     {
         try {
+
+
+
+
             $start_date = $request->get('start_date');
             $end_date = $request->get('end_date');
 

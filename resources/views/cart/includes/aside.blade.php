@@ -10,7 +10,7 @@
                 <form action="{{ route('cart.use-promo') }}" method="POST" class="form">
                     @csrf
                     <input type="text" class="form__input" placeholder="Введите промокод" name="code" @if($cartService->isUsedPromo()) value="{{ $cartService->getPromoCode() }}" @endif>
-                    <button type="submit" class="btn btn--accent">Применить</button>
+                    <button type="submit" class="btn btn--accent checkPromoCode">Применить</button>
                 </form>
             </dd>
         </dl>

@@ -371,8 +371,9 @@ class Product extends Model
                             $allCategories,
                             $this->id
                         );
-                        if ($productPrice)
+                        if ($productPrice) {
                             return $productPrice->getPrice($this->rrp);
+                        }
 
                         return $this->rrp;
                     }
