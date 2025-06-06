@@ -99,6 +99,17 @@
     <hr>
     <div class="row">
         <div class="col-12">
+            <label for="{{ $method }}ProductPriceIsExclusion">Включить исключения</label>
+            <div>
+            <span class="switch">
+                <label>
+                    <input id="{{ $method }}ProductPriceIsExclusion" type="checkbox" name="is_exclusion" checked>
+                    <span></span>
+                </label>
+            </span>
+            </div>
+        </div>
+        <div class="col-12">
             <div class="form-group w-100">
                 <label for="{{ $method }}ProductPriceExceptBrand" class="font-weight-bold">Исключить бренд</label>
                 <select id="{{ $method }}ProductPriceExceptBrand" class="form-control select2" name="excepts[{{ \App\Models\Brand::class }}][]"

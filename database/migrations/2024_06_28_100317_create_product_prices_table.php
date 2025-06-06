@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->boolean('is_active');
+            $table->boolean('is_exclusion')->default(0);
             $table->date('start_date')->nullable();
             $table->date('end_date')->nullable();
             $table->string('type');

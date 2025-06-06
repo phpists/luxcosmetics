@@ -91,6 +91,7 @@
 
                         $('#editProductPriceTitle').val(response.title)
                         $('#editProductPriceIsActive').attr('checked', response.is_active === 1)
+                        $('#editProductPriceIsExclusion').attr('checked', response.is_exclusion === 1)
                         $('#editProductPriceType').val(response.type).trigger('change')
                         $('#editProductPriceAmount').val(response.amount)
                         $('#editProductPriceRounding').val(response.rounding)
