@@ -167,24 +167,48 @@ class ProductPrice extends Model
         }
     }
 
+    public static function getAllNestedCategoryIds(array $ids): array
+    {
+        $all = collect($ids);
+
+        $stackDown = $ids;
+        while (!empty($stackDown)) {
+            $children = Category::whereIn('category_id', $stackDown)->pluck('id')->all();
+            $stackDown = $children;
+            $all = $all->merge($children);
+        }
+
+        $stackUp = $ids;
+        while (!empty($stackUp)) {
+            $parents = Category::whereIn('id', $stackUp)->pluck('category_id')->filter()->all();
+            $stackUp = $parents;
+            $all = $all->merge($parents);
+        }
+
+        return $all->unique()->values()->all();
+    }
+
+
     public static function findCondition(ProductPriceTypeEnum $priceTypeEnum, int $brand_id, array $categories_id, int $product_id): ?self
     {
+        $allCategoryIds = self::getAllNestedCategoryIds($categories_id);
+
         return self::query()
             ->whereType($priceTypeEnum->value)
             ->active()
             ->actual()
-            ->where(function ($query) use ($brand_id, $categories_id, $product_id) {
-                $query->where(function ($q) use ($brand_id, $categories_id, $product_id) {
+            ->where(function ($query) use ($brand_id, $allCategoryIds, $product_id) {
+                $query->where(function ($q) use ($brand_id, $allCategoryIds, $product_id) {
                     $q->where('is_exclusion', 1)
                         ->whereDoesntHave('exceptBrands', fn($q) => $q->whereModelId($brand_id))
-                        ->whereDoesntHave('exceptCategories', fn($q) => $q->whereIn('model_id', $categories_id))
+                        ->whereDoesntHave('exceptCategories', fn($q) => $q->whereIn('model_id', $allCategoryIds))
                         ->whereDoesntHave('exceptProducts', fn($q) => $q->whereModelId($product_id));
                 })
-                    ->orWhere(function ($q) use ($brand_id, $categories_id, $product_id) {
+                    ->orWhere(function ($q) use ($brand_id, $allCategoryIds, $product_id) {
                         $q->where('is_exclusion', 0)
-                            ->where(function ($sub) use ($brand_id, $categories_id, $product_id) {
+                            ->where(function ($sub) use ($brand_id, $allCategoryIds, $product_id) {
                                 $sub->whereHas('caseBrands', fn($q) => $q->whereModelId($brand_id))
-                                    ->orWhereHas('caseCategories', fn($q) => $q->whereIn('model_id', $categories_id))
+                                    ->orWhereHas('caseCategories', fn($q) => $q->whereIn('model_id', $allCategoryIds))
                                     ->orWhereHas('caseProducts', fn($q) => $q->whereModelId($product_id));
                             });
                     });
@@ -197,14 +221,14 @@ class ProductPrice extends Model
     public function getPrice(int $price)
     {
         if ($this->type == ProductPriceTypeEnum::DISCOUNT->value) {
-        $price = $price - ($price * ($this->amount / 100));
+            $price = $price - ($price * ($this->amount / 100));
 
-        if ($this->rounding != 0) {
-            $price = ceil($price / $this->rounding) * $this->rounding;;
+            if ($this->rounding != 0) {
+                $price = ceil($price / $this->rounding) * $this->rounding;;
+            }
+
+            return $price;
         }
-
-        return $price;
-    }
 
         return $price;
     }
