@@ -188,7 +188,6 @@ class ProductPrice extends Model
         return $all->unique()->values()->all();
     }
 
-
     public static function findCondition(ProductPriceTypeEnum $priceTypeEnum, int $brand_id, array $categories_id, int $product_id): ?self
     {
         $allCategoryIds = self::getAllNestedCategoryIds($categories_id);
@@ -198,12 +197,19 @@ class ProductPrice extends Model
             ->active()
             ->actual()
             ->where(function ($query) use ($brand_id, $allCategoryIds, $product_id) {
-                $query->where(function ($q) use ($brand_id, $allCategoryIds, $product_id) {
-                    $q->where('is_exclusion', 1)
-                        ->whereDoesntHave('exceptBrands', fn($q) => $q->whereModelId($brand_id))
-                        ->whereDoesntHave('exceptCategories', fn($q) => $q->whereIn('model_id', $allCategoryIds))
-                        ->whereDoesntHave('exceptProducts', fn($q) => $q->whereModelId($product_id));
-                })
+                $query
+                    ->orWhere(function ($q) use ($brand_id, $allCategoryIds, $product_id) {
+                        $q->where('is_exclusion', 1)
+                            ->whereDoesntHave('exceptBrands', fn($q) => $q->whereModelId($brand_id))
+                            ->whereDoesntHave('exceptCategories', fn($q) => $q->whereIn('model_id', $allCategoryIds))
+                            ->whereDoesntHave('exceptProducts', fn($q) => $q->whereModelId($product_id));
+                    })
+                    ->orWhere(function ($q) {
+                        $q->where('is_exclusion', 0)
+                            ->whereDoesntHave('caseBrands')
+                            ->whereDoesntHave('caseCategories')
+                            ->whereDoesntHave('caseProducts');
+                    })
                     ->orWhere(function ($q) use ($brand_id, $allCategoryIds, $product_id) {
                         $q->where('is_exclusion', 0)
                             ->where(function ($sub) use ($brand_id, $allCategoryIds, $product_id) {
@@ -216,7 +222,6 @@ class ProductPrice extends Model
             ->orderByDesc('is_exclusion')
             ->first();
     }
-
 
     public function getPrice(int $price)
     {
