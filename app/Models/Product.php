@@ -340,11 +340,13 @@ class Product extends Model
 
     public function getDiscountAttribute($value)
     {
-        if ($value)
+        if ($value) {
             return $value;
+        }
 
-        if ($this->price != $this->rrp)
+        if ($this->price != $this->rrp && $this->rrp != 0) {
             return round((($this->rrp - $this->price) / $this->rrp) * 100);
+        }
 
         return 0;
     }

@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\CatalogBannerConditionController;
 use App\Http\Controllers\Admin\CatalogBannerController;
 use App\Http\Controllers\Admin\CatalogItemController;
 use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
+use App\Http\Controllers\Admin\LoyaltyStatusController;
 use App\Http\Controllers\Admin\MenuController;
 use App\Http\Controllers\Admin\ProductPriceController;
 use App\Http\Controllers\Admin\PromotionController;
@@ -16,6 +17,7 @@ use App\Http\Controllers\Admin\Settings\SettingController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\SitemapController;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use \App\Http\Controllers\Auth\Otp\LoginController as OtpLoginController;
 use \App\Http\Controllers\Auth\Otp\CartLoginController as OtpCartLoginController;
@@ -149,6 +151,7 @@ Route::post('cart/add', [\App\Http\Controllers\CartController::class, 'add'])->n
 Route::post('cart/remove', [\App\Http\Controllers\CartController::class, 'remove'])->name('cart.remove');
 Route::post('cart/plus-quantity', [\App\Http\Controllers\CartController::class, 'plusQuantity'])->name('cart.plus-quantity');
 Route::post('cart/minus-quantity', [\App\Http\Controllers\CartController::class, 'minusQuantity'])->name('cart.minus-quantity');
+Route::post('cart/update-quantity', [\App\Http\Controllers\CartController::class, 'updateQuantity'])->name('cart.update-quantity');
 Route::get('cart/clear', [\App\Http\Controllers\CartController::class, 'clear'])->name('cart.clear');
 Route::get('cart/login', [\App\Http\Controllers\CartController::class, 'login'])->name('cart.login')->middleware('guest');
 Route::post('fast-register', [\App\Http\Controllers\Auth\FastRegisterController::class, 'store'])
@@ -411,13 +414,13 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function 
     Route::put('/feedback-reason', [\App\Http\Controllers\Admin\FeedbackReasonController::class, 'update'])->name('admin.feedback-reason.update');
     Route::delete('/feedback-reason', [\App\Http\Controllers\Admin\FeedbackReasonController::class, 'delete'])->name('admin.feedback-reason.delete');
 
-     /* Users */
-     Route::get('users', [\App\Http\Controllers\Admin\UserController::class, 'index'])->name('admin.users');
-     Route::get('user/show/{id}', [\App\Http\Controllers\Admin\UserController::class, 'show'])->name('admin.user.show');
-     Route::get('user/edit/{id}', [\App\Http\Controllers\Admin\UserController::class, 'edit'])->name('admin.user.edit');
-     Route::post('user/update', [\App\Http\Controllers\Admin\UserController::class, 'update'])->name('admin.user.update');
-     Route::get('user/delete/{id}', [\App\Http\Controllers\Admin\UserController::class, 'delete'])->name('admin.user.delete');
-     Route::post('user/generate-password', [\App\Http\Controllers\Admin\UserController::class, 'generate_password'])->name('admin.user.generate-password');
+    /* Users */
+    Route::get('users', [\App\Http\Controllers\Admin\UserController::class, 'index'])->name('admin.users');
+    Route::get('user/show/{id}', [\App\Http\Controllers\Admin\UserController::class, 'show'])->name('admin.user.show');
+    Route::get('user/edit/{id}', [\App\Http\Controllers\Admin\UserController::class, 'edit'])->name('admin.user.edit');
+    Route::post('user/update', [\App\Http\Controllers\Admin\UserController::class, 'update'])->name('admin.user.update');
+    Route::get('user/delete/{id}', [\App\Http\Controllers\Admin\UserController::class, 'delete'])->name('admin.user.delete');
+    Route::post('user/generate-password', [\App\Http\Controllers\Admin\UserController::class, 'generate_password'])->name('admin.user.generate-password');
 
     /* Subscribers */
     Route::get('subscribers', [\App\Http\Controllers\Admin\SubscribersController::class, 'index'])->name('admin.subscribers.index');
@@ -559,6 +562,10 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function 
     // Robots.txt
     Route::get('robots', [RobotsController::class, 'index'])->name('admin.robots.index');
     Route::put('robots', [RobotsController::class, 'update'])->name('admin.robots.update');
+
+    // Loyalty Statuses
+    Route::resource('loyalty-statuses', LoyaltyStatusController::class, ['as' => 'admin'])
+        ->except(['create', 'edit']);
 });
 
 // General Pages
@@ -601,3 +608,14 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'front'], function 
 
 Route::get('yandex/suggest', [\App\Http\Controllers\YandexController::class, 'suggest'])
     ->name('yandex.suggest');
+
+Route::get('fix', function (Request $request) {
+    \App\Models\Product::cursor()->each(function ($product) {
+        $product->update([
+            'rrp' => $product->old_price ?? $product->price,
+            'price' => null,
+            'old_price' => null,
+            'discount' => null
+        ]);
+    });
+});
