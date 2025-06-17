@@ -28,7 +28,7 @@
     <![endif]-->
 
     <meta name="yandex-verification" content="1a6e42b4fe6f0e17" />
-
+    @livewireStyles
     @yield('styles')
 </head>
 
@@ -130,6 +130,7 @@
 <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 <script src="{{asset('/js/scripts.js')}}"></script>
 <script src="https://www.google.com/recaptcha/api.js"></script>
+@livewireScripts
 @yield('scripts')
 @stack('scripts')
 {!! \App\Services\SiteConfigService::getParamValue('footer_scripts') !!}

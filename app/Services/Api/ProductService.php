@@ -75,6 +75,7 @@ class ProductService
             if (!$dbProduct->exists) {
                 $dbProduct->size = '';
                 $dbProduct->price = 0;
+                $dbProduct->rrp = 0;
                 $dbProduct->show_in_discount = 0;
                 $dbProduct->show_in_popular = 0;
                 $dbProduct->show_in_new = 0;

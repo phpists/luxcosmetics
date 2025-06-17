@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ProductPrice\ProductPriceStoreRequest;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Product;
@@ -30,9 +31,13 @@ class ProductPriceController extends Controller
         ]);
     }
 
-    public function store(Request $request)
+    public function store(ProductPriceStoreRequest $request)
     {
         try {
+
+
+
+
             $start_date = $request->get('start_date');
             $end_date = $request->get('end_date');
 
@@ -41,7 +46,6 @@ class ProductPriceController extends Controller
                 'is_active' => $request->boolean('is_active'),
                 'start_date' => $start_date ? Carbon::parse($start_date)->format('Y-m-d') : null,
                 'end_date' => $end_date ? Carbon::parse($end_date)->format('Y-m-d') : null,
-                'calc_on_base' => $request->boolean('calc_on_base'),
             ]);
 
             if (!$productPrice->save())
@@ -96,9 +100,9 @@ class ProductPriceController extends Controller
             $productPrice->fill([
                 ...$request->only('title', 'type', 'amount', 'rounding'),
                 'is_active' => $request->boolean('is_active'),
+                'is_exclusion' => $request->boolean('is_exclusion'),
                 'start_date' => $start_date ? Carbon::parse($start_date)->format('Y-m-d') : null,
                 'end_date' => $end_date ? Carbon::parse($end_date)->format('Y-m-d') : null,
-                'calc_on_base' => $request->boolean('calc_on_base'),
             ]);
 
             if (!$productPrice->update())

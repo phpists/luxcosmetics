@@ -234,6 +234,11 @@
 <script src="{{ asset('super_admin/js/select2-uk.js') }}"></script>
 
 <script src="{{ asset('super_admin/js/toastr.min.js') }}"></script>
+<script>
+    $(function () {
+        $('[data-toggle="popover"]').popover()
+    })
+</script>
 @yield('js_after')
 <!--end::Page Scripts-->
 </body>

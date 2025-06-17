@@ -119,6 +119,16 @@
                                 </div>
                             </div>
 
+                            <div class="row">
+                                <div class="col-md-6 col-12">
+                                    <div class="form-group w-100">
+                                        <label for="createUsesPerUser" class=font-weight-bold">Кол-во использований на 1 пользователя</label>
+                                        <input type="number" class="form-control" id="createUsesPerUser" min="1" name="uses_per_user" value="1">
+                                        <span class="form-text text-muted">Неограниченое, если оставить пустым</span>
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
 
                 <div class="modal-footer">

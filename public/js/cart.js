@@ -43,13 +43,42 @@ $(function () {
 
         let current_amount = parseInt(this.parentElement.querySelector('.currentQuantity').value);
 
+        console.log('$item ' + $item.data('product'));
+        console.log('max_amount ' + max_amount);
+        console.log('current_amount ' + current_amount);
+
         if ($item && (max_amount > current_amount)) {
             let product_id = $item.data('product');
             plusQuantity(product_id, $(this))
-        } else if($item && (max_amount <= current_amount)) {
+        } else if ($item && (max_amount <= current_amount)) {
             toastr.warning(`Нельзя заказать больше чем ${max_amount}`)
         }
-    })
+    });
+
+    $(document).on('input', '.currentQuantity', function (e) {
+        let input = $(this);
+        let value = input.val();
+        let $item = $(this).closest('.numbers').find('.plusQuantity').data('element');
+        let max_amount = $(this).closest('.numbers').find('.plusQuantity').data('end');
+        let current_amount = parseInt(value);
+        let product_id = $(this).closest('.cart-product').data('product');
+        let button = $('.plusQuantity');
+
+        value = value.replace(/[^0-9]/g, '');
+
+        if (value.startsWith('0')) {
+            value = value.replace(/^0+/, '');
+        }
+
+        input.val(value);
+
+        if ($item && (max_amount > current_amount)) {
+            updateQuantity(product_id, button, current_amount)
+        } else if ($item && (max_amount <= current_amount)) {
+            toastr.warning(`Нельзя заказать больше чем ${max_amount}`)
+        }
+    });
+
 
     $(document).on('click', '.minusQuantity', function (e) {
         e.preventDefault()
@@ -149,22 +178,19 @@ $(function () {
     let maxFilterPrice = Math.ceil($('#filterMaxPrice').val());
     let maxCurrentPrice = Math.floor($('#filterCurrentMaxPrice').val())
 
-    $("#slider-range").slider({
-        range: true,
-        min: minFilterPrice,
-        max: maxFilterPrice,
-        values: [minCurrentPrice, maxCurrentPrice],
-        slide: function (event, ui) {
-            $("#filterCurrentMinPrice").val(ui.values[0]);
-            $("#filterCurrentMaxPrice").val(ui.values[1]);
-        }
-    });
+    // $("#slider-range").slider({
+    //     range: true,
+    //     min: minFilterPrice,
+    //     max: maxFilterPrice,
+    //     values: [minCurrentPrice, maxCurrentPrice],
+    //     slide: function (event, ui) {
+    //         $("#filterCurrentMinPrice").val(ui.values[0]);
+    //         $("#filterCurrentMaxPrice").val(ui.values[1]);
+    //     }
+    // });
 
-    $("#amount").val($("#slider-range").slider("values", 0));
-    $("#amount2").val($("#slider-range").slider("values", 1));
-
-
-
+    // $("#amount").val($("#slider-range").slider("values", 0));
+    // $("#amount2").val($("#slider-range").slider("values", 1));
 
 
     // Data mirroring
@@ -180,15 +206,15 @@ $(function () {
     })
 
 
-    $(document).on('keydown focus', '.form__fieldset :input', function() {
+    $(document).on('keydown focus', '.form__fieldset :input', function () {
         if ($(this).val().length > 0) {
             $(this).nextAll('.form-clear').removeClass('d-none');
         }
-    }).on('keydown keyup blur', '.form__fieldset :input', function() {
+    }).on('keydown keyup blur', '.form__fieldset :input', function () {
         if ($(this).val().length === 0) {
             $(this).nextAll('.form-clear').addClass('d-none');
         }
-    }).on('click', '.form-clear', function() {
+    }).on('click', '.form-clear', function () {
         $(this).addClass('d-none').prevAll(':input').val('');
     });
 
@@ -199,10 +225,9 @@ $(function () {
 })
 
 
-
 function validateForm(form) {
     let isValid = true;
-    $(form).find('input[required]').each(function() {
+    $(form).find('input[required]').each(function () {
 
         if ($(this).attr('type') === 'radio') {
 
@@ -371,6 +396,39 @@ function minusQuantity(product_id, $button) {
         }
     })
 }
+
+function updateQuantity(product_id, $button, quantity) {
+    $.ajax({
+        type: 'post',
+        url: '/cart/update-quantity',
+        dataType: 'json',
+        data: {
+            product_id: product_id,
+            quantity: quantity,
+        },
+        success: function (response) {
+            if (response) {
+                updateTotalCount(response.total_count)
+                $button.addClass('isInCart')
+                $button.parents($button.data('element')).find('.currentQuantity').val(response.quantity)
+                $button.parents('div.cart-product:first').find('.currentSum').text(response.sum)
+                updateTotalBlock(response.total_block)
+                $('#modalCurrentProductSum').text(response.sum)
+
+                if (typeof response.can_checkout !== 'undefined') {
+                    if (response.can_checkout)
+                        allowCheckout()
+                    else
+                        disableCheckout(response.cant_checkout_message)
+                }
+            }
+        },
+        complete: function () {
+            $button.prop('disabled', false)
+        }
+    })
+}
+
 
 function updateTotalCount(count) {
     $('.cart_small_link_count').text(count)

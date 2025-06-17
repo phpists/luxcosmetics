@@ -90,7 +90,25 @@
                                             <input type="text" class="form-control" id="editUserPoints" name="points" value="{{ $user->points }}">
                                         </div>
                                     </div>
+                                    <div class="col-md-6 col-12">
+                                        <div class="form-group">
+                                            <label>Статус в накопительной системе</label>
+                                            <select class="form-control" id="editUserLoyaltyStatusId" name="loyalty_status_id">
+                                                <option value="0"></option>
+                                                @foreach($loyaltyStatuses as $loyaltyStatus)
+                                                    <option value="{{ $loyaltyStatus->id }}" @selected($user->loyalty_status_id === $loyaltyStatus->id)>{{ $loyaltyStatus->full_title }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-12">
+                                        <div class="form-group">
+                                            <label>Принудительный % скидки в накопительной системе</label>
+                                            <input type="text" class="form-control" id="editUserLoyaltyDiscountPercent" name="custom_loyalty_discount_percent" value="{{ $user->custom_loyalty_discount_percent }}">
+                                        </div>
+                                    </div>
                                 </div>
+
                                 <div class="row">
                                     <div class="col-6">
                                         <div class="form-group">
@@ -106,10 +124,8 @@
                                         </div>
                                     </div>
                                 </div>
-
-
-                                <button type="submit" class="btn btn-lg btn-primary mr-2">Сохранить</button>
-
+                                <a href="{{ url("admin/orders?per_page=&customer={$user->email}") }}" class="btn btn-lg btn-primary mr-2">Список заказов</a>
+                                <button type="submit" class="btn btn-lg btn-success mr-2">Сохранить</button>
                             </form>
                         </div>
                     </div>

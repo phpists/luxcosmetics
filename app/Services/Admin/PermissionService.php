@@ -117,6 +117,11 @@ class PermissionService
     const ROBOTS_VIEW = 'robots.view';
     const ROBOTS_EDIT = 'robots.edit';
 
+    const LOYALTY_STATUS_VIEW = 'loyalty-status.view';
+    const LOYALTY_STATUS_CREATE = 'loyalty-status.create';
+    const LOYALTY_STATUS_EDIT = 'loyalty-status.edit';
+    const LOYALTY_STATUS_DELETE = 'loyalty-status.delete';
+
 
     public static function getAll(): array
     {
@@ -256,6 +261,12 @@ class PermissionService
             'Robots.txt' => [
                 self::ROBOTS_VIEW => 'Просмотр',
                 self::ROBOTS_EDIT => 'Редактирование',
+            ],
+            'Накопительная система' => [
+                self::LOYALTY_STATUS_VIEW => 'Просмотр',
+                self::LOYALTY_STATUS_CREATE => 'Создание',
+                self::LOYALTY_STATUS_EDIT => 'Редактирование',
+                self::LOYALTY_STATUS_DELETE => 'Удаление',
             ],
         ];
     }

@@ -14,6 +14,7 @@ class ProductPrice extends Model
     protected $fillable = [
         'title',
         'is_active',
+        'is_exclusion',
         'start_date',
         'end_date',
         'type',
@@ -39,10 +40,10 @@ class ProductPrice extends Model
             $builder->orderBy('pos');
         });
 
-        self::saved(function(self $model) {
+        self::saved(function (self $model) {
             $model->clearProductsPriceCache();
         });
-        self::deleting(function(self $model) {
+        self::deleting(function (self $model) {
             $model->clearProductsPriceCache();
         });
     }
@@ -166,31 +167,59 @@ class ProductPrice extends Model
         }
     }
 
+    public static function getAllNestedCategoryIds(array $ids): array
+    {
+        $all = collect($ids);
+
+        $stackDown = $ids;
+        while (!empty($stackDown)) {
+            $children = Category::whereIn('category_id', $stackDown)->pluck('id')->all();
+            $stackDown = $children;
+            $all = $all->merge($children);
+        }
+
+        $stackUp = $ids;
+        while (!empty($stackUp)) {
+            $parents = Category::whereIn('id', $stackUp)->pluck('category_id')->filter()->all();
+            $stackUp = $parents;
+            $all = $all->merge($parents);
+        }
+
+        return $all->unique()->values()->all();
+    }
 
     public static function findCondition(ProductPriceTypeEnum $priceTypeEnum, int $brand_id, array $categories_id, int $product_id): ?self
     {
+        $allCategoryIds = self::getAllNestedCategoryIds($categories_id);
+
         return self::query()
             ->whereType($priceTypeEnum->value)
             ->active()
             ->actual()
-            ->where(function ($query) use ($brand_id, $categories_id, $product_id) {
-                $query->whereHas('caseBrands', function ($query) use ($brand_id) {
-                    return $query->whereModelId($brand_id);
-                })->orWhereHas('caseCategories', function ($query) use ($categories_id) {
-                    return $query->whereIn('model_id', $categories_id);
-                })->orWhereHas('caseProducts', function ($query) use ($product_id) {
-                    return $query->whereModelId($product_id);
-                });
+            ->where(function ($query) use ($brand_id, $allCategoryIds, $product_id) {
+                $query
+                    ->orWhere(function ($q) use ($brand_id, $allCategoryIds, $product_id) {
+                        $q->where('is_exclusion', 1)
+                            ->whereDoesntHave('exceptBrands', fn($q) => $q->whereModelId($brand_id))
+                            ->whereDoesntHave('exceptCategories', fn($q) => $q->whereIn('model_id', $allCategoryIds))
+                            ->whereDoesntHave('exceptProducts', fn($q) => $q->whereModelId($product_id));
+                    })
+                    ->orWhere(function ($q) {
+                        $q->where('is_exclusion', 0)
+                            ->whereDoesntHave('caseBrands')
+                            ->whereDoesntHave('caseCategories')
+                            ->whereDoesntHave('caseProducts');
+                    })
+                    ->orWhere(function ($q) use ($brand_id, $allCategoryIds, $product_id) {
+                        $q->where('is_exclusion', 0)
+                            ->where(function ($sub) use ($brand_id, $allCategoryIds, $product_id) {
+                                $sub->whereHas('caseBrands', fn($q) => $q->whereModelId($brand_id))
+                                    ->orWhereHas('caseCategories', fn($q) => $q->whereIn('model_id', $allCategoryIds))
+                                    ->orWhereHas('caseProducts', fn($q) => $q->whereModelId($product_id));
+                            });
+                    });
             })
-            ->where(function ($query) use ($brand_id, $categories_id, $product_id) {
-                $query->whereDoesntHave('exceptBrands', function ($query) use ($brand_id) {
-                    return $query->whereModelId($brand_id);
-                })->whereDoesntHave('exceptCategories', function ($query) use ($categories_id) {
-                    return $query->whereIn('model_id', $categories_id);
-                })->whereDoesntHave('exceptProducts', function ($query) use ($product_id) {
-                    return $query->whereModelId($product_id);
-                });
-            })
+            ->orderByDesc('is_exclusion')
             ->first();
     }
 
@@ -212,14 +241,14 @@ class ProductPrice extends Model
     public function getBonuses(int $bonuses)
     {
         if ($this->type == ProductPriceTypeEnum::BONUSES->value) {
-            $bonuses = $bonuses * $this->amount;
+        $bonuses = $bonuses * $this->amount;
 
-            if ($this->rounding != 0) {
-                $bonuses = ceil($bonuses / $this->rounding) * $this->rounding;;
-            }
-
-            return $bonuses;
+        if ($this->rounding != 0) {
+            $bonuses = ceil($bonuses / $this->rounding) * $this->rounding;;
         }
+
+        return $bonuses;
+    }
 
         return $bonuses;
     }

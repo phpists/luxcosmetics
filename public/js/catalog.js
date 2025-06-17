@@ -110,17 +110,17 @@ $(document).ready(function () {
         $('#filterForm').trigger('change')
     })
 
-    $(document).on('slidechange', '#slider-range', function(e) {
-        $('#filterForm').trigger('change')
-    })
-    $(document).on('change', '#amount', function(e) {
-        $('#filterForm').trigger('change')
-        $('#slider-range').slider( "values", 0, this.value);
-    })
-    $(document).on('change', '#amount2', function(e) {
-        $('#filterForm').trigger('change')
-        $('#slider-range').slider( "values", 1, this.value);
-    })
+    // $(document).on('slidechange', '#slider-range', function(e) {
+    //     $('#filterForm').trigger('change')
+    // })
+    // $(document).on('change', '#amount', function(e) {
+    //     $('#filterForm').trigger('change')
+    //     $('#slider-range').slider( "values", 0, this.value);
+    // })
+    // $(document).on('change', '#amount2', function(e) {
+    //     $('#filterForm').trigger('change')
+    //     $('#slider-range').slider( "values", 1, this.value);
+    // })
 
     $(document).on('change', '#filterForm', function(e) {
         let data = $(this).serializeArray();
@@ -216,10 +216,10 @@ function updateFilter() {
             $slider = $("#slider-range");
 
         if (Number(filterMinPrice.value) !== Number(prices.filteredMin) || Number(filterMaxPrice.value) !== Number(prices.filteredMax)) {
-            $slider.slider({
-                'min': prices.filteredMin,
-                'max': prices.filteredMax
-            });
+            // $slider.slider({
+            //     'min': prices.filteredMin,
+            //     'max': prices.filteredMax
+            // });
             filterMinPrice.value = prices.filteredMin;
             filterMaxPrice.value = prices.filteredMax
 

@@ -62,8 +62,7 @@ class CatalogService
             $this->brand = Brand::where('link', $request->link)->firstOrFail();
         }
 
-
-        $this->products = $this->getProductsQuery(['values'])->get();
+        $this->products = $this->getProductsQuery()->get();
     }
 
     public function getProductsQuery(?array $with = null): \Illuminate\Database\Eloquent\Builder
@@ -138,7 +137,7 @@ class CatalogService
         $price_from = $this->getPriceFrom();
         $price_to = $this->getPriceTo();
 
-        $products = $this->getProductsQuery(['publishedComments', 'brand', 'values', 'baseProperty', 'basePropertyValue', 'product_variations', 'images'])
+        $products = $this->getProductsQuery(['publishedComments', 'brand', 'baseProperty', 'basePropertyValue', 'product_variations', 'images'])
             ->when($search = $this->request->get('search'), function ($query) use ($search) {
                 $query->titleSearch($search);
             })
@@ -167,16 +166,13 @@ class CatalogService
 
         $sql = $products->toSql();
         $bindings = $products->getBindings();
-        $result = DB::select("SELECT MIN(price) as min_price, MAX(price) as max_price FROM ({$sql}) as subquery", $bindings);
+        $result = DB::select("SELECT MIN(rrp) as min_price, MAX(rrp) as max_price FROM ({$sql}) as subquery", $bindings);
         $this->min_filtered_price = $result[0]->min_price;
         $this->max_filtered_price = $result[0]->max_price;
 
         return $products
             ->where(function ($q) use ($price_from, $price_to) {
-                $q->whereBetween('price', [
-                    $price_from,
-                    $price_to
-                ])->orWhereBetween('old_price', [
+                $q->whereBetween('rrp', [
                     $price_from,
                     $price_to
                 ]);
@@ -298,27 +294,27 @@ class CatalogService
         if ($this->filters_weight)
             return $this->filters_weight;
         else {
-            if (!$products) {
+            if (!$products)
                 $products = $this->products;
-            }
-            $productsArray = $products->pluck('values', 'id')->toArray();
+
+            $productValuesArray = $products->load('values:id')->pluck('values', 'id')->toArray();
             $result = [];
 
             foreach ($properties as $property) {
                 $result[$property->id] = [];
-                foreach ($property->values as $property_value) {
-                    $property_value_id = $property_value->id;
+                foreach ($property->values as $propertyValue) {
+                    $propertyValueId = $propertyValue->id;
                     $count = 0;
-                    foreach ($productsArray as $product) {
+                    foreach ($productValuesArray as $productId => $productValues) {
                         $exists = false;
-                        foreach ($product as $value) {
-                            if ($value['id'] == $property_value_id)
+                        foreach ($productValues as $value) {
+                            if ($value['id'] == $propertyValueId)
                                 $exists = true;
                         }
                         if ($exists)
                             $count++;
                     }
-                    $result[$property->id][$property_value->id] = $count;
+                    $result[$property->id][$propertyValue->id] = $count;
                 }
             }
 
@@ -352,14 +348,13 @@ class CatalogService
 
     private function isAppliedAnyFilters(): bool
     {
-        return request('search') || request('brands')
-            || request('category_id') || request('properties');
+        return request('search') || request('brands') || request('category_id') || request('properties');
     }
 
 
     public function getBrands()
     {
-        return \App\Models\Brand::select(['id', 'name'])
+        return Brand::select(['id', 'name'])
             ->whereIn('id', array_unique($this->products->pluck('brand_id')->toArray()))
             ->orderBy('name')
             ->get();

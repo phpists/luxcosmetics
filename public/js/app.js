@@ -106,18 +106,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
-		// $( "#slider-range" ).slider({
-		// 	range: true,
-		// 	min: 0,
-		// 	max: 750000,
-		// 	values: [ 7500, 300000 ],
-		// 	slide: function( event, ui ) {
-		// 		$( "#amount" ).val( ui.values[ 0 ]);
-		// 		$( "#amount2" ).val( ui.values[ 1 ]);
-		// 	}
-		// });
-		// $( "#amount" ).val( $( "#slider-range" ).slider( "values", 0 ) );
-		// $( "#amount2" ).val( $( "#slider-range" ).slider( "values", 1 ) );
+		$( "#slider-range" ).slider({
+			range: true,
+			min: 0,
+			max: 750000,
+			values: [ 7500, 300000 ],
+			slide: function( event, ui ) {
+				$( "#amount" ).val( ui.values[ 0 ]);
+				$( "#amount2" ).val( ui.values[ 1 ]);
+			}
+		});
+		$( "#amount" ).val( $( "#slider-range" ).slider( "values", 0 ) );
+		$( "#amount2" ).val( $( "#slider-range" ).slider( "values", 1 ) );
 
 
 
@@ -566,8 +566,8 @@ document.addEventListener('DOMContentLoaded', () => {
 							return '';
 						}
 					},
-					
-					
+
+
 				});
 			});
 
@@ -741,10 +741,10 @@ document.addEventListener('DOMContentLoaded', () => {
 $(document).ready(function() {
 	$('.rulesmenu a[href^="#"]').on('click', function(e) {
 	    e.preventDefault();
-    
+
 	    var target = this.hash;
 	    var $target = $(target);
-    
+
 	    // Плавная прокрутка к элементу
 	    $('html, body').stop().animate({
 		'scrollTop': $target.offset().top
@@ -753,4 +753,3 @@ $(document).ready(function() {
 	    });
 	});
     });
-    

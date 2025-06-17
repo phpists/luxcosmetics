@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Mail\ResetPassword;
 use App\Models\Address;
+use App\Models\LoyaltyStatus;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -98,7 +99,9 @@ class UserController extends Controller
             abort(404);
         }
 
-        return view('admin.users.edit', compact('user'));
+        $loyaltyStatuses = LoyaltyStatus::all();
+
+        return view('admin.users.edit', compact('user', 'loyaltyStatuses'));
     }
 
     public function update(Request $request)
@@ -113,6 +116,8 @@ class UserController extends Controller
             $user->phone = $request->phone;
             $user->email = $request->email;
             $user->points = $request->points;
+            $user->loyalty_status_id = $request->loyalty_status_id;
+            $user->custom_loyalty_discount_percent = $request->custom_loyalty_discount_percent;
             $user->update();
         }
 

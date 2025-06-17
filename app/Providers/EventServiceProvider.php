@@ -3,8 +3,10 @@
 namespace App\Providers;
 
 use App\Events\OrderCancelled;
+use App\Events\OrderCompletedEvent;
 use App\Events\OrderCreated;
 use App\Events\ProductBecameAvailableEvent;
+use App\Listeners\LoyaltyStatusAssignmentListener;
 use App\Listeners\MakeRefundOrder;
 use App\Listeners\MigrateFavouriteProducts;
 use App\Listeners\NotifyProductWaitersListener;
@@ -34,6 +36,9 @@ class EventServiceProvider extends ServiceProvider
         ],
         ProductBecameAvailableEvent::class => [
             NotifyProductWaitersListener::class,
+        ],
+        OrderCompletedEvent::class => [
+            LoyaltyStatusAssignmentListener::class,
         ]
     ];
 

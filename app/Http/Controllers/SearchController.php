@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\AvailableOptions;
 use App\Models\Category;
 use App\Models\Product;
 use App\Services\CatalogService;
@@ -34,6 +35,8 @@ class SearchController extends Controller
                     $to_price
                 ]);
             })
+            ->whereNot('availability', AvailableOptions::DISCONTINUED->value)
+            ->orderBy('availability')
             ->limit($per_page);
     }
 
@@ -73,6 +76,8 @@ class SearchController extends Controller
 
     public function showResultsPage(Request $request) {
         $search = $request->get('search');
+        return view('lw-search', compact('search'));
+
 
         $catalogService = new CatalogService($request, Product::class);
         $products = $catalogService->getFiltered();

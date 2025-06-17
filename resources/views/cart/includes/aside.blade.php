@@ -10,6 +10,23 @@
                 <form action="{{ route('cart.use-promo') }}" method="POST" class="form">
                     @csrf
                     <input type="text" class="form__input" placeholder="Введите промокод" name="code" @if($cartService->isUsedPromo()) value="{{ $cartService->getPromoCode() }}" @endif>
+                    <button type="submit" class="btn btn--accent checkPromoCode">Применить</button>
+                </form>
+            </dd>
+        </dl>
+        <dl>
+            <dt>Использовать баллы
+                <svg class="icon">
+                    <use xlink:href="{{asset('images/dist/sprite.svg#arrow')}}"></use>
+                </svg>
+            </dt>
+            <dd>
+                @if(auth()->check())
+                    <div class="formsuccess">{!! $cartService->getUserBonusesMessage() !!}</div>
+                @endif
+                <form action="{{ route('cart.use-bonuses') }}" method="POST" class="form">
+                    @csrf
+                    <input type="text" class="form__input" placeholder="Введите количество баллов" name="amount" @if($cartService->isUsedBonuses()) value="{{ $cartService->getUsedBonusesDiscount() }}" @endif>
                     <button type="submit" class="btn btn--accent">Применить</button>
                 </form>
             </dd>
@@ -25,23 +42,6 @@
                     @csrf
                     <input type="text" class="form__input" name="code" placeholder="Введите номер подарочной карты">
                     <button class="btn btn--accent">Применить</button>
-                </form>
-            </dd>
-        </dl>
-        <dl>
-            <dt>Использовать баллы
-                <svg class="icon">
-                    <use xlink:href="{{asset('images/dist/sprite.svg#arrow')}}"></use>
-                </svg>
-            </dt>
-            <dd>
-                @if(auth()->check())
-                <div class="formsuccess">{!! $cartService->getUserBonusesMessage() !!}</div>
-                @endif
-                <form action="{{ route('cart.use-bonuses') }}" method="POST" class="form">
-                    @csrf
-                    <input type="text" class="form__input" placeholder="Введите количество баллов" name="amount" @if($cartService->isUsedBonuses()) value="{{ $cartService->getUsedBonusesDiscount() }}" @endif>
-                    <button type="submit" class="btn btn--accent">Применить</button>
                 </form>
             </dd>
         </dl>
