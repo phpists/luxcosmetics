@@ -609,6 +609,8 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'front'], function 
 Route::get('yandex/suggest', [\App\Http\Controllers\YandexController::class, 'suggest'])
     ->name('yandex.suggest');
 
+Route::get('test', [\App\Http\Controllers\YandexController::class, 'test']);
+
 Route::get('fix', function (Request $request) {
     \App\Models\Product::cursor()->each(function ($product) {
         $product->update([
