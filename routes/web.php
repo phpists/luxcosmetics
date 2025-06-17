@@ -614,7 +614,7 @@ Route::get('test', [\App\Http\Controllers\YandexController::class, 'test']);
 Route::get('fix', function (Request $request) {
     \App\Models\Product::cursor()->each(function ($product) {
         $product->update([
-            'rrp' => $product->old_price ?? $product->price,
+            'rrp' => !empty($product->old_price) ? $product->old_price : $product->price,
             'price' => null,
             'old_price' => null,
             'discount' => null
