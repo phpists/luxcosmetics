@@ -145,8 +145,11 @@
                         $modal.find('#editAchieveSum').val(item.achieve_sum);
                         $modal.find('#editDiscountPercent').val(item.discount_percent);
                         $modal.find('#editIsOverPp').prop('checked', item.is_over_pp);
-                        if (item.id == 1)
+                        if (item.id == 1) {
                             $modal.find('#editAchieveSum').prop('readonly', true);
+                        } else {
+                            $modal.find('#editAchieveSum').prop('readonly', false);
+                        }
                     }
                 });
             })
