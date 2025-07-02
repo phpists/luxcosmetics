@@ -142,31 +142,41 @@
     {{--    <script src="{{ asset('super_admin/js/Sortable.js') }}"></script>--}}
 {{--    <script src="{{ asset('super_admin/js/product.js') }}"></script>--}}
     <script>
-        function change_val_input(container_id, type, id, value=null) {
+        function change_val_input(container_id, type, id, value = null) {
+            const TYPE_TEXT = '{{ \App\Services\SiteConfigService::TEXT }}';
+            const TYPE_BOOL = '{{ \App\Services\SiteConfigService::BOOL }}';
+            const TYPE_NUMERIC = '{{ \App\Services\SiteConfigService::NUMERIC }}';
+            const TYPE_WYSIWYG = '{{ \App\Services\SiteConfigService::WYSIWYG }}';
+
             let element = document.getElementById(container_id);
             if (element.firstChild) {
                 element.firstChild.remove();
             }
-            if (type === '{{\App\Services\SiteConfigService::TEXT}}') {
-                element.innerHTML = `<input type="text" required name="value" value="${value}" class="form-control" id="${id}">`
-            }
-            else if (type === '{{\App\Services\SiteConfigService::BOOL}}') {
-                element.innerHTML = `
-                    <select id="${id}" class="form-control" required name="value">
-                        <option value="1">Да</option>
-                        <option value="0">Нет</option>
-                    </select>
-                `
-                if (value !== null) {
-                    $(`#${id} option[value='` + value + "']").select();
+
+            if (type === TYPE_TEXT) {
+                if (value && value.includes('<script')) {
+                    element.innerHTML = `<textarea required id="${id}" name="value" class="form-control" rows="10">${value.replace(/</g, "&lt;")}</textarea>`;
+                } else {
+                    element.innerHTML = `<input type="text" required name="value" value="${value}" class="form-control" id="${id}">`;
                 }
             }
-            else if (type === '{{\App\Services\SiteConfigService::NUMERIC}}') {
-                element.innerHTML = `<input type="number" required name="value" value="${value}" class="form-control" id="${id}">`
+            else if (type === TYPE_BOOL) {
+                element.innerHTML = `
+            <select id="${id}" class="form-control" required name="value">
+                <option value="1">Да</option>
+                <option value="0">Нет</option>
+            </select>
+        `;
+                if (value !== null) {
+                    document.querySelector(`#${id} option[value="${value}"]`).selected = true;
+                }
             }
-            else if (type === '{{\App\Services\SiteConfigService::WYSIWYG}}') {
-                element.innerHTML = `<textarea required id="${id}" name="value">${value}</textarea>`
-                CKEDITOR.replace( id );
+            else if (type === TYPE_NUMERIC) {
+                element.innerHTML = `<input type="number" required name="value" value="${value}" class="form-control" id="${id}">`;
+            }
+            else if (type === TYPE_WYSIWYG) {
+                element.innerHTML = `<textarea required id="${id}" name="value">${value ?? ''}</textarea>`;
+                CKEDITOR.replace(id);
             }
         }
         $('.updateCfg').on('click', function (ev) {

@@ -135,7 +135,6 @@
 @stack('scripts')
 {!! \App\Services\SiteConfigService::getParamValue('footer_scripts') !!}
 </body>
-
 </html>
 
 

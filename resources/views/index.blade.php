@@ -1,407 +1,1817 @@
-@extends('layouts.app')
+@extends('layouts.app_new')
 
 @section('title', 'Luxe Cosmetics - интернет-магазин люксовой косметики и парфюмерии')
 @section('description', 'Интернет магазин элитной косметики и парфюмерии 💄 | Мировые бренды, широкий ассортимент, акции и бонусные программы | Купить косметику с доставкой по Москве и России ❤️ ')
 
 @section('content')
-    <section class="mainaction">
-        <div class="container">
-            @php
-                $item = \App\Services\BannerService::getBanner();
-                $positionIds = [];
-                foreach ($item as $banner) {
-                    $position = $banner->position;
-                    if (!isset($positionIds[$position])) {
-                        $positionIds[$position] = [];
-                    }
-                    $positionIds[$position][] = $banner->id;
-                }
-            @endphp
-            <div class="row">
-                @if (isset($positionIds['first'][0]) && $selectedItem = $item->find($positionIds['first'][0]))
-                <div class="col-lg-12">
-                    <div class="mainaction__one">
-                        <a href="{{ $selectedItem->link }}">
-                            <picture>
-                                <source  srcset="{{asset('images/uploads/banner/' . $selectedItem->image)}}" media="(min-width: 576px)">
-                                <source srcset="{{asset('images/uploads/banner/'. $selectedItem->getSmallImage())}}" media="(max-width: 575px)" >
-                                <img src="{{asset('images/uploads/banner/' . $selectedItem->image)}}">
-                            </picture>
-                        </a>
-                    </div>
-                </div>
-                @endif
-            </div>
-
-            @if (isset($positionIds['second'][0]) && $selectedItem = $item->find($positionIds['second'][0]))
-            <div class="row">
-                <div class="col-lg-6 col-md-6">
-                    <div class="article">
-                        <div class="article__wrap">
-                            <div class="article__image">
-                                <picture>
-                                    <source  srcset="{{asset('images/uploads/banner/' . $selectedItem->image)}}" media="(min-width: 768px)">
-                                    <source srcset="{{asset('images/uploads/banner/' . $selectedItem->getMediumImage
-())}}" media="(min-width: 576px) and (max-width: 767px)" >
-                                    <source srcset="{{asset('images/uploads/banner/' . $selectedItem->getSmallImage())}}" media="(max-width: 575px)" >
-                                    <img src="{{asset('images/uploads/banner/' . $selectedItem->image)}}">
-                                </picture>
-                            </div>
-                            <div class="article__title"><a href="{{ $selectedItem->link }}">{{ $selectedItem->title }}</a></div>
-                            <div class="article__intro">{{ strip_tags($selectedItem->text) }}</div>
-                        </div>
-                        <a href="{{ $selectedItem->link }}" class="article__more">Подробнее</a>
-                    </div>
-                </div>
-                @endif
-                @if(isset($positionIds['second'][1]) && $selectedItem = $item->find($positionIds['second'][1]))
-                <div class="col-lg-6 col-md-6">
-                    <div class="article">
-                        <div class="article__wrap">
-                            <div class="article__image">
-                                <picture>
-                                    <source  srcset="{{asset('images/uploads/banner/' . $selectedItem->image)}}" media="(min-width: 768px)">
-                                    <source srcset="{{asset('images/uploads/banner/' . $selectedItem->getMediumImage())}}" media="(min-width: 576px) and (max-width: 767px)" >
-                                    <source srcset="{{asset('images/uploads/banner/' . $selectedItem->getSmallImage())}}" media="(max-width: 575px)" >
-                                    <img src="{{asset('images/uploads/banner/' . $selectedItem->image)}}">
-                                </picture>
-                            </div>
-                            <div class="article__title"><a href="{{ $selectedItem->link }}">{{ $selectedItem->title }}</a></div>
-                            <div class="article__intro">{{ strip_tags($selectedItem->text) }}</div>
-                        </div>
-                        <a href="{{ $selectedItem->link }}" class="article__more">Подробнее</a>
-                    </div>
-                </div>
-                @endif
-            </div>
-            <div class="row">
-                @if(isset($positionIds['third'][0]) && $selectedItem = $item->find($positionIds['third'][0]))
-                <div class="col-lg-4 col-md-4">
-                    <div class="article article--threecol">
-                        <div class="article__wrap">
-                            <div class="article__image">
-                                <picture>
-                                    <source  srcset="{{asset('images/uploads/banner/' . $selectedItem->image)}}" media="(min-width: 768px)">
-                                    <source srcset="{{asset('images/uploads/banner/' . $selectedItem->getMediumImage())}}" media="(min-width: 576px) and (max-width: 767px)" >
-                                    <source srcset="{{asset('images/uploads/banner/' . $selectedItem->getSmallImage())}}" media="(max-width: 575px)" >
-                                    <img src="{{asset('images/uploads/banner/' . $selectedItem->image)}}">
-                                </picture>
-                            </div>
-                            <div class="article__title"><a href="{{ $selectedItem->link }}">{{ $selectedItem->title }}</a></div>
-                            <div class="article__intro">{{ strip_tags($selectedItem->text) }}</div>
-                        </div>
-                        <a href="{{ $selectedItem->link }}" class="article__more">Подробнее</a>
-                    </div>
-                </div>
-                @endif
-                @if(isset($positionIds['third'][1]) && $selectedItem = $item->find($positionIds['third'][1]))
-                <div class="col-lg-4 col-md-4">
-                    <div class="article article--threecol">
-                        <div class="article__wrap">
-                            <div class="article__image">
-                                <picture>
-                                    <source  srcset="{{asset('images/uploads/banner/' . $selectedItem->image)}}" media="(min-width: 768px)">
-                                    <source srcset="{{asset('images/uploads/banner/' . $selectedItem->getMediumImage())}}" media="(min-width: 576px) and (max-width: 767px)" >
-                                    <source srcset="{{asset('images/uploads/banner/' . $selectedItem->getSmallImage())}}" media="(max-width: 575px)" >
-                                    <img src="{{asset('images/uploads/banner/' . $selectedItem->image)}}">
-                                </picture>
-                            </div>
-                            <div class="article__title"><a href="{{ $selectedItem->link }}">{{ $selectedItem->title }}</a></div>
-                            <div class="article__intro">{{ strip_tags($selectedItem->text) }}</div>
-                        </div>
-                        <a href="{{ $selectedItem->link }}" class="article__more">Подробнее</a>
-                    </div>
-                </div>
-                @endif
-                @if(isset($positionIds['third'][2]) && $selectedItem = $item->find($positionIds['third'][2]))
-                <div class="col-lg-4 col-md-4">
-                    <div class="article article--threecol">
-                        <div class="article__wrap">
-                            <div class="article__image">
-                                <picture>
-                                    <source  srcset="{{asset('images/uploads/banner/' . $selectedItem->image)}}" media="(min-width: 768px)">
-                                    <source srcset="{{asset('images/uploads/banner/' . $selectedItem->getMediumImage())}}" media="(min-width: 576px) and (max-width: 767px)" >
-                                    <source srcset="{{asset('images/uploads/banner/' . $selectedItem->getSmallImage())}}" media="(max-width: 575px)" >
-                                    <img src="{{asset('images/uploads/banner/' . $selectedItem->image)}}">
-                                </picture>
-                            </div>
-                            <div class="article__title"><a href="{{ $selectedItem->link }}">{{ $selectedItem->title }}</a></div>
-                            <div class="article__intro">{{ strip_tags($selectedItem->text) }}</div>
-                        </div>
-                        <a href="{{ $selectedItem->link }}" class="article__more">Подробнее</a>
-                    </div>
-                </div>
-                @endif
-            </div>
-        </div>
-    </section>
-    @if($show_new_products = \App\Services\SiteConfigService::getParam('показывать_блок_новинки')['value'] ?? false == 1)
-    <section class="productsblock">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <h2 class="title-h2">Новинки</h2>
-                    <div class="products-slider">
-                        @foreach($new_products as $product)
-                            <div class="products-slider__item">
-                                @include('products._card')
-                            </div>
-                        @endforeach
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    @endif
-    @if($show_new_products = \App\Services\SiteConfigService::getParam('показывать_блок_из_видео')['value'] ?? false == 1)
-    <section class="videoblock">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-6 col-md-6">
-                    <div class="videoblock__wrapper">
-                        <h2 class="videoblock__title">{{$main_block->title ?? ''}}</h2>
-                        {!! $main_block->content ?? ''!!}
-                    </div>
-
-                </div>
-            </div>
-        </div>
-        @if($main_block)
-        <a class="videoblock__video popup-video" style="background-image: url(images/uploads/main_block/{{ $main_block->image_path ?? ''}});"></a>
-        <div class="mfp-hide" style="max-width: 1049px; margin: 0 auto" id="video_popup">
-            <video width="100%" controls src="{{asset('images/uploads/main_block/'.$main_block->video_path ?? '')}}"></video>
-        </div>
-        @endif
-    </section>
-    @endif
-    @if($show_new_products = \App\Services\SiteConfigService::getParam('показывать_блок_популярные')['value'] ?? false == 1)
-        <section class="productsblock">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <h2 class="title-h2">Популярные</h2>
-                    <div class="products-slider">
-                        @foreach($popular_products as $product)
-                            <div class="products-slider__item">
-                                @include('products._card')
-                            </div>
-                        @endforeach
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    @endif
-    <section class="maincategory">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="maincategory__grid">
-                        @if(isset($positionIds['fourth'][0]) && $selectedItem = $item->find($positionIds['fourth'][0]))
-                        <div class="maincategory__item">
-                            <div class="category">
-                                <div class="category__image" style="background-image: url({{asset('images/uploads/banner/' . $selectedItem->image)}});"></div>
-                                <div class="category__title"><a href="{{ $selectedItem->link }}">{{ $selectedItem->title }}</a></div>
-                                <div class="category__subtitle">{{ Str::limit(strip_tags($selectedItem->text), $limit = 120, $end = '...') }}</div>
-                            </div>
-                        </div>
-                        @endif
-                        @if(isset($positionIds['fourth'][1]) && $selectedItem = $item->find($positionIds['fourth'][1]))
-                        <div class="maincategory__item">
-                            <div class="category">
-                                <div class="category__image" style="background-image: url({{asset('images/uploads/banner/' . $selectedItem->image)}});"></div>
-                                <div class="category__title"><a href="{{ $selectedItem->link }}">{{ $selectedItem->title }}</a></div>
-                                <div class="category__subtitle">{{ Str::limit(strip_tags($selectedItem->text), $limit = 120, $end = '...') }}</div>
-                            </div>
-                        </div>
-                        @endif
-                        @if(isset($positionIds['fourth'][2]) && $selectedItem = $item->find($positionIds['fourth'][2]))
-                        <div class="maincategory__item">
-                            <div class="category">
-                                <div class="category__image" style="background-image: url({{asset('images/uploads/banner/' . $selectedItem->image)}});"></div>
-                                <div class="category__title"><a href="{{ $selectedItem->link }}">{{ $selectedItem->title }}</a></div>
-                                <div class="category__subtitle">{{ Str::limit(strip_tags($selectedItem->text), $limit = 120, $end = '...') }}</div>
-                            </div>
-                        </div>
-                        @endif
-                        @if(isset($positionIds['fourth'][3]) && $selectedItem = $item->find($positionIds['fourth'][3]))
-                        <div class="maincategory__item">
-                            <div class="category">
-                                <div class="category__image" style="background-image: url({{asset('images/uploads/banner/' . $selectedItem->image)}});"></div>
-                                <div class="category__title"><a href="{{ $selectedItem->link }}">{{ $selectedItem->title }}</a></div>
-                                <div class="category__subtitle">{{ Str::limit(strip_tags($selectedItem->text), $limit = 120, $end = '...') }}</div>
-                            </div>
-                        </div>
-                        @endif
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    @if($show_new_products = \App\Services\SiteConfigService::getParam('показывать_блок_товары_со_скидкой')['value'] ?? false == 1)
-        <section class="productsblock">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <h2 class="title-h2">Товары со скидкой</h2>
-                    <div class="products-slider">
-                        @foreach($product_discounts  as $product)
-                            <div class="products-slider__item">
-                                @include('products._card')
-                            </div>
-                        @endforeach
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    @endif
-    <section class="maincategory maincategory--threecol">
-        <div class="container">
-            <div class="row">
-                @if(isset($positionIds['fifth'][0]) && $selectedItem = $item->find($positionIds['fifth'][0]))
-                <div class="col-lg-4 col-md-4 col-sm-4">
-                    <div class="category">
-                        <div class="category__image" style="background-image: url({{asset('images/uploads/banner/' . $selectedItem->image)}});"></div>
-                        <div class="category__title"><a href="{{ $selectedItem->link }}">{{ $selectedItem->title }}</a></div>
-                        <div class="category__subtitle">{{ Str::limit(strip_tags($selectedItem->text), $limit = 120, $end = '...') }}</div>
-                    </div>
-                </div>
-                @endif
-                @if(isset($positionIds['fifth'][1]) && $selectedItem = $item->find($positionIds['fifth'][1]))
-                <div class="col-lg-4 col-md-4 col-sm-4">
-                    <div class="category">
-                        <div class="category__image" style="background-image: url({{asset('images/uploads/banner/' . $selectedItem->image)}});"></div>
-                        <div class="category__title"><a href="{{ $selectedItem->link }}">{{ $selectedItem->title }}</a></div>
-                        <div class="category__subtitle">{{ Str::limit(strip_tags($selectedItem->text), $limit = 120, $end = '...') }}</div>
-                    </div>
-                </div>
-                @endif
-                @if(isset($positionIds['fifth'][2]) && $selectedItem = $item->find($positionIds['fifth'][2]))
-                <div class="col-lg-4 col-md-4 col-sm-4">
-                    <div class="category">
-                        <div class="category__image" style="background-image: url({{asset('images/uploads/banner/' . $selectedItem->image)}});"></div>
-                        <div class="category__title"><a href="{{ $selectedItem->link }}">{{ $selectedItem->title }}</a></div>
-                        <div class="category__subtitle">{{ Str::limit(strip_tags($selectedItem->text), $limit = 120, $end = '...') }}</div>
-                    </div>
-                </div>
-                @endif
-            </div>
-        </div>
-    </section>
-    <section class="newsblock">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <h2 class="title-h2">Новости</h2>
-                </div>
-                <div class="newsblock__container">
-                @foreach (\App\Services\NewsService::getNews(3) as $item)
-                    <div class="article article--news">
-                        <div class="article__image"><a href="{{ route('news.post', $item->link) }}"><img src="{{ $item->thumbnail_src }}" alt=""></a></div>
-                        <div class="article__date"><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#calendar')}}"></use></svg>{{ \Carbon\Carbon::parse($item->published_at)->locale('ru')->isoFormat('D.MMMM.YYYY') }}</div>
-                        <div class="article__title"><a href="{{ route('news.post', $item->link) }}">{{ $item->title }}</a></div>
-                        <div class="article__intro">{{ Str::limit(strip_tags($item->text), $limit = 90, $end = '...') }}</div>
-                    </div>
-                @endforeach
-                </div>
-            </div>
-        </div>
-    </section>
-    @if($show_new_products = \App\Services\SiteConfigService::getParam('показывать_блок_подписаться_на_рассылку')['value'] ?? false == 1)
-        <section class="mailing">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <form id="subscribeMailForm" action="{{route('subscribe')}}" class="mailing__form" method="POST">
-                        @csrf
-                        <div class="mailing__left">
-                            <h2 class="mailing__title">Подписаться на&nbsp;рассылку</h2>
-                            <div class="mailing__subtitle">Узнавайте первыми о новых поступлениях, акциях и мероприятиях в магазине</div>
-                        </div>
-                        <div class="mailing__right">
-                            <input required type="email" class="mailing__input" name="email" placeholder="Введите ваш e-mail">
-                            <button type="submit" class="mailing__button g-recaptcha" data-sitekey="{{ config('services.google.captcha.site_key') }}" data-callback='onSubmit' data-action='submit'><svg class="icon"><use xlink:href="{{asset('images/dist/sprite.svg#circle-arrow')}}"></use></svg></button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </section>
-    @endif
-    @if($show_new_products = \App\Services\SiteConfigService::getParam('показывать_слайдер-блок_бренды')['value'] ?? false == 1)
-    <section class="brands">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <h2 class="title-h2">Бренды</h2>
-                    <div class="brands-slider">
-                        @foreach(\App\Models\Brand::whereHas('products')->get() as $item)
-                            <div class="brands-slider__item">
-                                <a href="{{ route('brands.show', ['link' => strtolower($item->link)]) }}">
-                                    <div class="brand">
-                                        <img src="{{ asset('images/uploads/brands/' . $item->image) }}" alt="">
-                                    </div>
+    <section class="heroslider">
+        <div class="slider swiper">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide slider__slide">
+                    <video class="slider__media" muted autoplay playsinline loop poster="" data-swiper-parallax="40%">
+                        <source src="files/214737.mp4" type="video/mp4">
+                    </video>
+                    <div class="slider__content" data-swiper-parallax="10%">
+                        <div class="container">
+                            <div class="slider__contentwrapper">
+                                <div class="slider__title">
+                                    Больше заказ,<br> больше скидка
+                                </div>
+                                <div class="slider__subtitle">
+                                    примените промокод и получите<br> дополнительную скидку до −25%
+                                </div>
+                                <a class="slider__btnmore btn btn--primary" href="">
+                                    Узнать подробнее
+                                    <svg>
+                                        <use xlink:href="./images/sprite.svg#arrow-right"></use>
+                                    </svg>
                                 </a>
                             </div>
-                        @endforeach
+                        </div>
+                    </div>
+                    <div class="slider__overlay" style="opacity: 0.5;"></div>
+                </div>
+                <div class="swiper-slide slider__slide">
+                    <div class="slider__media" data-swiper-parallax="40%"><img src="images/slider/2.png" alt=""></div>
+                    <div class="slider__content" data-swiper-parallax="10%">
+                        <div class="container">
+                            <div class="slider__contentwrapper">
+                                <div class="slider__title">
+                                    Акция 2
+                                </div>
+                                <div class="slider__subtitle">
+                                    примените промокод и получите<br> дополнительную скидку до −25%
+                                </div>
+                                <a class="slider__btnmore btn btn--primary" href="">
+                                    Узнать подробнее
+                                    <svg>
+                                        <use xlink:href="./images/sprite.svg#arrow-right"></use>
+                                    </svg>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slider__overlay" style="opacity: 0.5;"></div>
+                </div>
+                <div class="swiper-slide slider__slide">
+                    <video class="slider__media" muted autoplay playsinline loop poster="" data-swiper-parallax="40%">
+                        <source src="files/257927.mp4" type="video/mp4">
+                    </video>
+                    <div class="slider__content" data-swiper-parallax="10%">
+                        <div class="container">
+                            <div class="slider__contentwrapper">
+                                <div class="slider__title">
+                                    Больше заказ,больше скидка
+                                </div>
+                                <div class="slider__subtitle">
+                                    примените промокод и получите<br> дополнительную скидку до −25%
+                                </div>
+                                <a class="slider__btnmore btn btn--primary" href="">
+                                    Узнать подробнее
+                                    <svg>
+                                        <use xlink:href="./images/sprite.svg#arrow-right"></use>
+                                    </svg>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slider__overlay" style="opacity: 0.5;"></div>
+                </div>
+                <div class="swiper-slide slider__slide">
+                    <div class="slider__media" data-swiper-parallax="40%"><img src="images/slider/3.png" alt=""></div>
+                    <div class="slider__content" data-swiper-parallax="10%">
+                        <div class="container">
+                            <div class="slider__contentwrapper">
+                                <div class="slider__title">
+                                    Акция 3
+                                </div>
+                                <div class="slider__subtitle">
+                                    примените промокод и получите<br> дополнительную скидку до −25%
+                                </div>
+                                <a class="slider__btnmore btn btn--primary" href="">
+                                    Узнать подробнее
+                                    <svg>
+                                        <use xlink:href="./images/sprite.svg#arrow-right"></use>
+                                    </svg>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slider__overlay" style="opacity: 0.5;"></div>
+                </div>
+            </div>
+            <button class="slider__btn slider__btn--prev">
+                <svg>
+                    <use xlink:href="./images/sprite.svg#arrow-left"></use>
+                </svg>
+            </button>
+            <button class="slider__btn slider__btn--next">
+                <svg>
+                    <use xlink:href="./images/sprite.svg#arrow-right"></use>
+                </svg>
+            </button>
+        </div>
+    </section>
+    <section class="topcategories">
+        <div class="container">
+            <div class="topcategories__container">
+                <div class="topcategories__item topcat">
+                    <div class="topcat__image"><img src="images/categories/1.png" alt=""></div>
+                    <a class="topcat__title" href="">Бестселлеры</a>
+                    <div class="topcat__subtitle">
+                        Лучшие средства ухода и самые востребованные парфюмерные композиции со всего мира
+                    </div>
+                </div>
+                <div class="topcategories__item topcat">
+                    <div class="topcat__image"><img src="images/categories/2.png" alt=""></div>
+                    <a class="topcat__title" href="">Парфюмерия</a>
+                    <div class="topcat__subtitle">
+                        Самые изысканные ароматы со всего мира, которые не оставят равнодушными даже самых искушенных
+                        потребителей
+                    </div>
+                </div>
+                <div class="topcategories__item topcat">
+                    <div class="topcat__image"><img src="images/categories/3.png" alt=""></div>
+                    <a class="topcat__title" href="">Уход за кожей</a>
+                    <div class="topcat__subtitle">
+                        Последние достижения науки, воплощенные в таких эффективныхсредствах ухода, как сыворотки,
+                        крема, маски, тоники и др.
+                    </div>
+                </div>
+                <div class="topcategories__item topcat">
+                    <div class="topcat__image"><img src="images/categories/4.png" alt=""></div>
+                    <a class="topcat__title" href="">Уход за волосами</a>
+                    <div class="topcat__subtitle">
+                        Эффективные средства для красоты и здоровья ваших волос
                     </div>
                 </div>
             </div>
         </div>
     </section>
-    @endif
-@endsection
-
-@section('after_content')
-    <div class="filters-overlay"></div>
-    <div class="hidden">
-        <!-- <form action="" class="form" id="callback">
-            <h3>Оставить сообщение</h3>
-
-            <input type="text"  name="Имя" placeholder="Ваше имя"  required="required">
-            <input type="text"  name="Телефон" placeholder="Номер телефона" required="required">
-            <input type="text"  name="E-mail" placeholder="E-mail" required="required">
-            <textarea name="Сообщение" placeholder="Сообщение"></textarea>
-            <button class="btn btn-feed">Отправить</button>
-        </form> -->
-        @include('layouts.includes.purchase_modal')
-    </div>
-    <div class="done-w">
-        <div class="done-window">
-            <div class="done-window__icn"></div>
-            <div class="done-window__title">Ваша заявка принята</div>
-            <div class="done-window__subtitle">Наш менеджер свяжется с Вами в течении 15 минут</div>
+    <section class="marquee" id="marquee">
+        <div class="marquee__item"><a href=""> <img src="images/brands/1.png" alt=""></a></div>
+        <div class="marquee__item"><a href=""> <img src="images/brands/2.png" alt=""></a></div>
+        <div class="marquee__item"><a href=""> <img src="images/brands/3.png" alt=""></a></div>
+        <div class="marquee__item"><a href=""> <img src="images/brands/4.png" alt=""></a></div>
+        <div class="marquee__item"><a href=""> <img src="images/brands/5.png" alt=""></a></div>
+        <div class="marquee__item"><a href=""> <img src="images/brands/6.png" alt=""></a></div>
+        <div class="marquee__item"><a href=""> <img src="images/brands/7.png" alt=""></a></div>
+        <div class="marquee__item"><a href=""> <img src="images/brands/8.png" alt=""></a></div>
+    </section>
+    <section class="prodblock">
+        <div class="container">
+            <div class="prodblock__row">
+                <div class="prodblock__col prodblock__col--2">
+                    <div class="prodblock__wrap">
+                        <h2 class="heading">
+                            Новинки</h2>
+                        <div class="intro">
+                            Будьте в курсе новинок и первыми попробуйте лучшие косметические продукты
+                        </div>
+                    </div>
+                    <div class="prodblock__btns">
+                        <button class="btn-slider prodblock__prev" id="prod-new-prev">
+                            <svg>
+                                <use xlink:href="./images/sprite.svg#arrow-left"></use>
+                            </svg>
+                        </button>
+                        <button class="btn-slider prodblock__next" id="prod-new-next">
+                            <svg>
+                                <use xlink:href="./images/sprite.svg#arrow-right"></use>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                <div class="prodblock__col prodblock__col--10">
+                    <div class="prodblock__slider newprod-slider swiper">
+                        <div class="swiper-wrapper">
+                            <div class="swiper-slide prodblock-slider__item">
+                                <article class="product">
+                                    <div class="product__image"><a href=""> <img class="product__front"
+                                                                                 src="images/home/1.png" alt=""><img
+                                                class="product__back" src="images/home/2.png" alt=""><img
+                                                class="product__empty" src="images/home/2.png" alt=""></a>
+                                        <div class="product__labels">
+                                            <div class="product__label product__label--red">
+                                                -4%
+                                            </div>
+                                            <div class="product__label product__label--green">Новинка</div>
+                                            <div class="product__label product__label--yellow">
+                                                Хит
+                                            </div>
+                                        </div>
+                                        <button class="product__btnbuy">
+                                            <svg>
+                                                <use xlink:href="./images/sprite.svg#cart"></use>
+                                            </svg>
+                                        </button>
+                                        <button class="product__btnfav">
+                                            <svg>
+                                                <use xlink:href="./images/sprite.svg#heart"></use>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                    <div class="product__body">
+                                        <div class="product__wrap">
+                                            <div class="product__prices" data-title="За объем 10 мл.">
+                                                <div class="product__price">7 911 ₽</div>
+                                                <div class="product__oldprice">8 790 ₽</div>
+                                            </div>
+                                            <div class="product__options">
+                                                <label class="product__option option">
+                                                    <input class="option__input" type="radio" name="volume">
+                                                    <div class="option__text">10</div>
+                                                </label>
+                                                <label class="product__option option">
+                                                    <input class="option__input" type="radio" name="volume">
+                                                    <div class="option__text">50</div>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <a class="product__title" href=""><span>Парфюмерная вода</span> Cashmere Kumquat
+                                            Eau de Parfume KORRES, 50мл</a>
+                                        <div class="product__footer">
+                                            <div class="product__rating">
+                                                <svg>
+                                                    <use xlink:href="./images/sprite.svg#star"></use>
+                                                </svg>
+                                                4,7
+                                            </div>
+                                            <div class="product__reviews">
+                                                2 отзыва
+                                            </div>
+                                        </div>
+                                    </div>
+                                </article>
+                            </div>
+                            <div class="swiper-slide prodblock-slider__item">
+                                <article class="product">
+                                    <div class="product__image"><a href=""> <img class="product__front"
+                                                                                 src="images/home/1.png" alt=""><img
+                                                class="product__back" src="images/home/2.png" alt=""><img
+                                                class="product__empty" src="images/home/2.png" alt=""></a>
+                                        <div class="product__labels">
+                                            <div class="product__label product__label--red">
+                                                -4%
+                                            </div>
+                                            <div class="product__label product__label--green">Новинка</div>
+                                            <div class="product__label product__label--yellow">
+                                                Хит
+                                            </div>
+                                        </div>
+                                        <button class="product__btnbuy">
+                                            <svg>
+                                                <use xlink:href="./images/sprite.svg#cart"></use>
+                                            </svg>
+                                        </button>
+                                        <button class="product__btnfav">
+                                            <svg>
+                                                <use xlink:href="./images/sprite.svg#heart"></use>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                    <div class="product__body">
+                                        <div class="product__wrap">
+                                            <div class="product__prices" data-title="За объем 10 мл.">
+                                                <div class="product__price">7 911 ₽</div>
+                                                <div class="product__oldprice">8 790 ₽</div>
+                                            </div>
+                                            <div class="product__options">
+                                                <label class="product__option option">
+                                                    <input class="option__input" type="radio" name="volume">
+                                                    <div class="option__text">10</div>
+                                                </label>
+                                                <label class="product__option option">
+                                                    <input class="option__input" type="radio" name="volume">
+                                                    <div class="option__text">50</div>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <a class="product__title" href=""><span>Парфюмерная вода</span> Cashmere Kumquat
+                                            Eau de Parfume KORRES, 50мл</a>
+                                        <div class="product__footer">
+                                            <div class="product__rating">
+                                                <svg>
+                                                    <use xlink:href="./images/sprite.svg#star"></use>
+                                                </svg>
+                                                4,7
+                                            </div>
+                                            <div class="product__reviews">
+                                                2 отзыва
+                                            </div>
+                                        </div>
+                                    </div>
+                                </article>
+                            </div>
+                            <div class="swiper-slide prodblock-slider__item">
+                                <article class="product">
+                                    <div class="product__image"><a href=""> <img class="product__front"
+                                                                                 src="images/home/1.png" alt=""><img
+                                                class="product__back" src="images/home/2.png" alt=""><img
+                                                class="product__empty" src="images/home/2.png" alt=""></a>
+                                        <div class="product__labels">
+                                            <div class="product__label product__label--red">
+                                                -4%
+                                            </div>
+                                            <div class="product__label product__label--green">Новинка</div>
+                                            <div class="product__label product__label--yellow">
+                                                Хит
+                                            </div>
+                                        </div>
+                                        <button class="product__btnbuy">
+                                            <svg>
+                                                <use xlink:href="./images/sprite.svg#cart"></use>
+                                            </svg>
+                                        </button>
+                                        <button class="product__btnfav">
+                                            <svg>
+                                                <use xlink:href="./images/sprite.svg#heart"></use>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                    <div class="product__body">
+                                        <div class="product__wrap">
+                                            <div class="product__prices" data-title="За объем 10 мл.">
+                                                <div class="product__price">7 911 ₽</div>
+                                                <div class="product__oldprice">8 790 ₽</div>
+                                            </div>
+                                            <div class="product__options">
+                                                <label class="product__option option">
+                                                    <input class="option__input" type="radio" name="volume">
+                                                    <div class="option__text">10</div>
+                                                </label>
+                                                <label class="product__option option">
+                                                    <input class="option__input" type="radio" name="volume">
+                                                    <div class="option__text">50</div>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <a class="product__title" href=""><span>Парфюмерная вода</span> Cashmere Kumquat
+                                            Eau de Parfume KORRES, 50мл</a>
+                                        <div class="product__footer">
+                                            <div class="product__rating">
+                                                <svg>
+                                                    <use xlink:href="./images/sprite.svg#star"></use>
+                                                </svg>
+                                                4,7
+                                            </div>
+                                            <div class="product__reviews">
+                                                2 отзыва
+                                            </div>
+                                        </div>
+                                    </div>
+                                </article>
+                            </div>
+                            <div class="swiper-slide prodblock-slider__item">
+                                <article class="product">
+                                    <div class="product__image"><a href=""> <img class="product__front"
+                                                                                 src="images/home/1.png" alt=""><img
+                                                class="product__back" src="images/home/2.png" alt=""><img
+                                                class="product__empty" src="images/home/2.png" alt=""></a>
+                                        <div class="product__labels">
+                                            <div class="product__label product__label--red">
+                                                -4%
+                                            </div>
+                                            <div class="product__label product__label--green">Новинка</div>
+                                            <div class="product__label product__label--yellow">
+                                                Хит
+                                            </div>
+                                        </div>
+                                        <button class="product__btnbuy">
+                                            <svg>
+                                                <use xlink:href="./images/sprite.svg#cart"></use>
+                                            </svg>
+                                        </button>
+                                        <button class="product__btnfav">
+                                            <svg>
+                                                <use xlink:href="./images/sprite.svg#heart"></use>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                    <div class="product__body">
+                                        <div class="product__wrap">
+                                            <div class="product__prices" data-title="За объем 10 мл.">
+                                                <div class="product__price">7 911 ₽</div>
+                                                <div class="product__oldprice">8 790 ₽</div>
+                                            </div>
+                                            <div class="product__options">
+                                                <label class="product__option option">
+                                                    <input class="option__input" type="radio" name="volume">
+                                                    <div class="option__text">10</div>
+                                                </label>
+                                                <label class="product__option option">
+                                                    <input class="option__input" type="radio" name="volume">
+                                                    <div class="option__text">50</div>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <a class="product__title" href=""><span>Парфюмерная вода</span> Cashmere Kumquat
+                                            Eau de Parfume KORRES, 50мл</a>
+                                        <div class="product__footer">
+                                            <div class="product__rating">
+                                                <svg>
+                                                    <use xlink:href="./images/sprite.svg#star"></use>
+                                                </svg>
+                                                4,7
+                                            </div>
+                                            <div class="product__reviews">
+                                                2 отзыва
+                                            </div>
+                                        </div>
+                                    </div>
+                                </article>
+                            </div>
+                            <div class="swiper-slide prodblock-slider__item">
+                                <article class="product">
+                                    <div class="product__image"><a href=""> <img class="product__front"
+                                                                                 src="images/home/1.png" alt=""><img
+                                                class="product__back" src="images/home/2.png" alt=""><img
+                                                class="product__empty" src="images/home/2.png" alt=""></a>
+                                        <div class="product__labels">
+                                            <div class="product__label product__label--red">
+                                                -4%
+                                            </div>
+                                            <div class="product__label product__label--green">Новинка</div>
+                                            <div class="product__label product__label--yellow">
+                                                Хит
+                                            </div>
+                                        </div>
+                                        <button class="product__btnbuy">
+                                            <svg>
+                                                <use xlink:href="./images/sprite.svg#cart"></use>
+                                            </svg>
+                                        </button>
+                                        <button class="product__btnfav">
+                                            <svg>
+                                                <use xlink:href="./images/sprite.svg#heart"></use>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                    <div class="product__body">
+                                        <div class="product__wrap">
+                                            <div class="product__prices" data-title="За объем 10 мл.">
+                                                <div class="product__price">7 911 ₽</div>
+                                                <div class="product__oldprice">8 790 ₽</div>
+                                            </div>
+                                            <div class="product__options">
+                                                <label class="product__option option">
+                                                    <input class="option__input" type="radio" name="volume">
+                                                    <div class="option__text">10</div>
+                                                </label>
+                                                <label class="product__option option">
+                                                    <input class="option__input" type="radio" name="volume">
+                                                    <div class="option__text">50</div>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <a class="product__title" href=""><span>Парфюмерная вода</span> Cashmere Kumquat
+                                            Eau de Parfume KORRES, 50мл</a>
+                                        <div class="product__footer">
+                                            <div class="product__rating">
+                                                <svg>
+                                                    <use xlink:href="./images/sprite.svg#star"></use>
+                                                </svg>
+                                                4,7
+                                            </div>
+                                            <div class="product__reviews">
+                                                2 отзыва
+                                            </div>
+                                        </div>
+                                    </div>
+                                </article>
+                            </div>
+                            <div class="swiper-slide prodblock-slider__item">
+                                <article class="product">
+                                    <div class="product__image"><a href=""> <img class="product__front"
+                                                                                 src="images/home/1.png" alt=""><img
+                                                class="product__back" src="images/home/2.png" alt=""><img
+                                                class="product__empty" src="images/home/2.png" alt=""></a>
+                                        <div class="product__labels">
+                                            <div class="product__label product__label--red">
+                                                -4%
+                                            </div>
+                                            <div class="product__label product__label--green">Новинка</div>
+                                            <div class="product__label product__label--yellow">
+                                                Хит
+                                            </div>
+                                        </div>
+                                        <button class="product__btnbuy">
+                                            <svg>
+                                                <use xlink:href="./images/sprite.svg#cart"></use>
+                                            </svg>
+                                        </button>
+                                        <button class="product__btnfav">
+                                            <svg>
+                                                <use xlink:href="./images/sprite.svg#heart"></use>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                    <div class="product__body">
+                                        <div class="product__wrap">
+                                            <div class="product__prices" data-title="За объем 10 мл.">
+                                                <div class="product__price">7 911 ₽</div>
+                                                <div class="product__oldprice">8 790 ₽</div>
+                                            </div>
+                                            <div class="product__options">
+                                                <label class="product__option option">
+                                                    <input class="option__input" type="radio" name="volume">
+                                                    <div class="option__text">10</div>
+                                                </label>
+                                                <label class="product__option option">
+                                                    <input class="option__input" type="radio" name="volume">
+                                                    <div class="option__text">50</div>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <a class="product__title" href=""><span>Парфюмерная вода</span> Cashmere Kumquat
+                                            Eau de Parfume KORRES, 50мл</a>
+                                        <div class="product__footer">
+                                            <div class="product__rating">
+                                                <svg>
+                                                    <use xlink:href="./images/sprite.svg#star"></use>
+                                                </svg>
+                                                4,7
+                                            </div>
+                                            <div class="product__reviews">
+                                                2 отзыва
+                                            </div>
+                                        </div>
+                                    </div>
+                                </article>
+                            </div>
+                            <div class="swiper-slide prodblock-slider__item">
+                                <article class="product">
+                                    <div class="product__image"><a href=""> <img class="product__front"
+                                                                                 src="images/home/1.png" alt=""><img
+                                                class="product__back" src="images/home/2.png" alt=""><img
+                                                class="product__empty" src="images/home/2.png" alt=""></a>
+                                        <div class="product__labels">
+                                            <div class="product__label product__label--red">
+                                                -4%
+                                            </div>
+                                            <div class="product__label product__label--green">Новинка</div>
+                                            <div class="product__label product__label--yellow">
+                                                Хит
+                                            </div>
+                                        </div>
+                                        <button class="product__btnbuy">
+                                            <svg>
+                                                <use xlink:href="./images/sprite.svg#cart"></use>
+                                            </svg>
+                                        </button>
+                                        <button class="product__btnfav">
+                                            <svg>
+                                                <use xlink:href="./images/sprite.svg#heart"></use>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                    <div class="product__body">
+                                        <div class="product__wrap">
+                                            <div class="product__prices" data-title="За объем 10 мл.">
+                                                <div class="product__price">7 911 ₽</div>
+                                                <div class="product__oldprice">8 790 ₽</div>
+                                            </div>
+                                            <div class="product__options">
+                                                <label class="product__option option">
+                                                    <input class="option__input" type="radio" name="volume">
+                                                    <div class="option__text">10</div>
+                                                </label>
+                                                <label class="product__option option">
+                                                    <input class="option__input" type="radio" name="volume">
+                                                    <div class="option__text">50</div>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <a class="product__title" href=""><span>Парфюмерная вода</span> Cashmere Kumquat
+                                            Eau de Parfume KORRES, 50мл</a>
+                                        <div class="product__footer">
+                                            <div class="product__rating">
+                                                <svg>
+                                                    <use xlink:href="./images/sprite.svg#star"></use>
+                                                </svg>
+                                                4,7
+                                            </div>
+                                            <div class="product__reviews">
+                                                2 отзыва
+                                            </div>
+                                        </div>
+                                    </div>
+                                </article>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
-@endsection
-
-@section('scripts')
-    <script src="{{asset('/js/favourites.js')}}"></script>
-    <script>
-        $(document).ready(function () {
-            $('a.popup-video').on('click', function () {
-                $.magnificPopup.open({
-                    items: {
-                        src: '#video_popup',
-                        type: 'inline'
-                    }
-                });
-            })
-        })
-        $('button.product__addcart').on('click', function () {
-            $.magnificPopup.open({
-                items: {
-                    src: '#addproduct',
-                    type: 'inline'
-                }
-            });
-        })
-
-        function onSubmit(token) {
-            document.getElementById("subscribeMailForm").requestSubmit();
-        }
-    </script>
+    </section>
+    <section class="promotionssliderblock">
+        <div class="container">
+            <div class="promotionssliderblock__header">
+                <h2 class="heading">
+                    Клиентские дни</h2>
+                <div class="promotionssliderblock__nav">
+                    <button class="btn-slider promotionssliderblock__prev">
+                        <svg>
+                            <use xlink:href="./images/sprite.svg#arrow-left"></use>
+                        </svg>
+                    </button>
+                    <button class="btn-slider promotionssliderblock__next">
+                        <svg>
+                            <use xlink:href="./images/sprite.svg#arrow-right"></use>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="promotions-slider swiper">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide">
+                    <div class="promotion">
+                        <div class="promotion__image"><a href=""> <img src="images/tmp/banner-8.png" alt=""></a></div>
+                        <div class="promotion__content">
+                            <div class="promotion__wrap"><a class="promotion__title" href="">
+                                    Rinfoltil до −25%</a>
+                                <div class="promotion__subtitle">
+                                    уход против выпадения волос
+                                </div>
+                            </div>
+                            <div class="promotion__date">
+                                6 — 9<br> февраля
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-slide">
+                    <div class="promotion">
+                        <div class="promotion__image"><a href=""> <img src="images/tmp/banner-8.png" alt=""></a></div>
+                        <div class="promotion__content">
+                            <div class="promotion__wrap"><a class="promotion__title" href="">
+                                    Rinfoltil до −25%</a>
+                                <div class="promotion__subtitle">
+                                    уход против выпадения волос
+                                </div>
+                            </div>
+                            <div class="promotion__date">
+                                6 — 9<br> февраля
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-slide">
+                    <div class="promotion">
+                        <div class="promotion__image"><a href=""> <img src="images/tmp/banner-8.png" alt=""></a></div>
+                        <div class="promotion__content">
+                            <div class="promotion__wrap"><a class="promotion__title" href="">
+                                    Rinfoltil до −25%</a>
+                                <div class="promotion__subtitle">
+                                    уход против выпадения волос
+                                </div>
+                            </div>
+                            <div class="promotion__date">
+                                6 — 9<br> февраля
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-slide">
+                    <div class="promotion">
+                        <div class="promotion__image"><a href=""> <img src="images/tmp/banner-8.png" alt=""></a></div>
+                        <div class="promotion__content">
+                            <div class="promotion__wrap"><a class="promotion__title" href="">
+                                    Rinfoltil до −25%</a>
+                                <div class="promotion__subtitle">
+                                    уход против выпадения волос
+                                </div>
+                            </div>
+                            <div class="promotion__date">
+                                6 — 9<br> февраля
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-slide">
+                    <div class="promotion">
+                        <div class="promotion__image"><a href=""> <img src="images/tmp/banner-8.png" alt=""></a></div>
+                        <div class="promotion__content">
+                            <div class="promotion__wrap"><a class="promotion__title" href="">
+                                    Rinfoltil до −25%</a>
+                                <div class="promotion__subtitle">
+                                    уход против выпадения волос
+                                </div>
+                            </div>
+                            <div class="promotion__date">
+                                6 — 9<br> февраля
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-slide">
+                    <div class="promotion">
+                        <div class="promotion__image"><a href=""> <img src="images/tmp/banner-8.png" alt=""></a></div>
+                        <div class="promotion__content">
+                            <div class="promotion__wrap"><a class="promotion__title" href="">
+                                    Rinfoltil до −25%</a>
+                                <div class="promotion__subtitle">
+                                    уход против выпадения волос
+                                </div>
+                            </div>
+                            <div class="promotion__date">
+                                6 — 9<br> февраля
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-slide">
+                    <div class="promotion">
+                        <div class="promotion__image"><a href=""> <img src="images/tmp/banner-8.png" alt=""></a></div>
+                        <div class="promotion__content">
+                            <div class="promotion__wrap"><a class="promotion__title" href="">
+                                    Rinfoltil до −25%</a>
+                                <div class="promotion__subtitle">
+                                    уход против выпадения волос
+                                </div>
+                            </div>
+                            <div class="promotion__date">
+                                6 — 9<br> февраля
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-slide">
+                    <div class="promotion">
+                        <div class="promotion__image"><a href=""> <img src="images/tmp/banner-8.png" alt=""></a></div>
+                        <div class="promotion__content">
+                            <div class="promotion__wrap"><a class="promotion__title" href="">
+                                    Rinfoltil до −25%</a>
+                                <div class="promotion__subtitle">
+                                    уход против выпадения волос
+                                </div>
+                            </div>
+                            <div class="promotion__date">
+                                6 — 9<br> февраля
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="prodblock prodblock--reverse">
+        <div class="container">
+            <div class="prodblock__row">
+                <div class="prodblock__col prodblock__col--2">
+                    <div class="prodblock__wrap">
+                        <h2 class="heading">
+                            Популярные</h2>
+                        <div class="intro">
+                            Лучшие формулы, эффективные составы и тренды, которые остаются актуальными
+                        </div>
+                    </div>
+                    <div class="prodblock__btns">
+                        <button class="btn-slider prodblock__prev" id="prod-popular-prev">
+                            <svg>
+                                <use xlink:href="./images/sprite.svg#arrow-left"></use>
+                            </svg>
+                        </button>
+                        <button class="btn-slider prodblock__next" id="prod-popular-next">
+                            <svg>
+                                <use xlink:href="./images/sprite.svg#arrow-right"></use>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                <div class="prodblock__col prodblock__col--10">
+                    <div class="prodblock__slider popular-slider swiper">
+                        <div class="swiper-wrapper">
+                            <div class="swiper-slide prodblock-slider__item">
+                                <article class="product">
+                                    <div class="product__image"><a href=""> <img class="product__front"
+                                                                                 src="images/home/1.png" alt=""><img
+                                                class="product__back" src="images/home/2.png" alt=""><img
+                                                class="product__empty" src="images/home/2.png" alt=""></a>
+                                        <div class="product__labels">
+                                            <div class="product__label product__label--red">
+                                                -4%
+                                            </div>
+                                            <div class="product__label product__label--green">Новинка</div>
+                                            <div class="product__label product__label--yellow">
+                                                Хит
+                                            </div>
+                                        </div>
+                                        <button class="product__btnbuy">
+                                            <svg>
+                                                <use xlink:href="./images/sprite.svg#cart"></use>
+                                            </svg>
+                                        </button>
+                                        <button class="product__btnfav">
+                                            <svg>
+                                                <use xlink:href="./images/sprite.svg#heart"></use>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                    <div class="product__body">
+                                        <div class="product__wrap">
+                                            <div class="product__prices" data-title="За объем 10 мл.">
+                                                <div class="product__price">7 911 ₽</div>
+                                                <div class="product__oldprice">8 790 ₽</div>
+                                            </div>
+                                            <div class="product__options">
+                                                <label class="product__option option">
+                                                    <input class="option__input" type="radio" name="volume">
+                                                    <div class="option__text">10</div>
+                                                </label>
+                                                <label class="product__option option">
+                                                    <input class="option__input" type="radio" name="volume">
+                                                    <div class="option__text">50</div>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <a class="product__title" href=""><span>Парфюмерная вода</span> Cashmere Kumquat
+                                            Eau de Parfume KORRES, 50мл</a>
+                                        <div class="product__footer">
+                                            <div class="product__rating">
+                                                <svg>
+                                                    <use xlink:href="./images/sprite.svg#star"></use>
+                                                </svg>
+                                                4,7
+                                            </div>
+                                            <div class="product__reviews">
+                                                2 отзыва
+                                            </div>
+                                        </div>
+                                    </div>
+                                </article>
+                            </div>
+                            <div class="swiper-slide prodblock-slider__item">
+                                <article class="product">
+                                    <div class="product__image"><a href=""> <img class="product__front"
+                                                                                 src="images/home/1.png" alt=""><img
+                                                class="product__back" src="images/home/2.png" alt=""><img
+                                                class="product__empty" src="images/home/2.png" alt=""></a>
+                                        <div class="product__labels">
+                                            <div class="product__label product__label--red">
+                                                -4%
+                                            </div>
+                                            <div class="product__label product__label--green">Новинка</div>
+                                            <div class="product__label product__label--yellow">
+                                                Хит
+                                            </div>
+                                        </div>
+                                        <button class="product__btnbuy">
+                                            <svg>
+                                                <use xlink:href="./images/sprite.svg#cart"></use>
+                                            </svg>
+                                        </button>
+                                        <button class="product__btnfav">
+                                            <svg>
+                                                <use xlink:href="./images/sprite.svg#heart"></use>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                    <div class="product__body">
+                                        <div class="product__wrap">
+                                            <div class="product__prices" data-title="За объем 10 мл.">
+                                                <div class="product__price">7 911 ₽</div>
+                                                <div class="product__oldprice">8 790 ₽</div>
+                                            </div>
+                                            <div class="product__options">
+                                                <label class="product__option option">
+                                                    <input class="option__input" type="radio" name="volume">
+                                                    <div class="option__text">10</div>
+                                                </label>
+                                                <label class="product__option option">
+                                                    <input class="option__input" type="radio" name="volume">
+                                                    <div class="option__text">50</div>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <a class="product__title" href=""><span>Парфюмерная вода</span> Cashmere Kumquat
+                                            Eau de Parfume KORRES, 50мл</a>
+                                        <div class="product__footer">
+                                            <div class="product__rating">
+                                                <svg>
+                                                    <use xlink:href="./images/sprite.svg#star"></use>
+                                                </svg>
+                                                4,7
+                                            </div>
+                                            <div class="product__reviews">
+                                                2 отзыва
+                                            </div>
+                                        </div>
+                                    </div>
+                                </article>
+                            </div>
+                            <div class="swiper-slide prodblock-slider__item">
+                                <article class="product">
+                                    <div class="product__image"><a href=""> <img class="product__front"
+                                                                                 src="images/home/1.png" alt=""><img
+                                                class="product__back" src="images/home/2.png" alt=""><img
+                                                class="product__empty" src="images/home/2.png" alt=""></a>
+                                        <div class="product__labels">
+                                            <div class="product__label product__label--red">
+                                                -4%
+                                            </div>
+                                            <div class="product__label product__label--green">Новинка</div>
+                                            <div class="product__label product__label--yellow">
+                                                Хит
+                                            </div>
+                                        </div>
+                                        <button class="product__btnbuy">
+                                            <svg>
+                                                <use xlink:href="./images/sprite.svg#cart"></use>
+                                            </svg>
+                                        </button>
+                                        <button class="product__btnfav">
+                                            <svg>
+                                                <use xlink:href="./images/sprite.svg#heart"></use>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                    <div class="product__body">
+                                        <div class="product__wrap">
+                                            <div class="product__prices" data-title="За объем 10 мл.">
+                                                <div class="product__price">7 911 ₽</div>
+                                                <div class="product__oldprice">8 790 ₽</div>
+                                            </div>
+                                            <div class="product__options">
+                                                <label class="product__option option">
+                                                    <input class="option__input" type="radio" name="volume">
+                                                    <div class="option__text">10</div>
+                                                </label>
+                                                <label class="product__option option">
+                                                    <input class="option__input" type="radio" name="volume">
+                                                    <div class="option__text">50</div>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <a class="product__title" href=""><span>Парфюмерная вода</span> Cashmere Kumquat
+                                            Eau de Parfume KORRES, 50мл</a>
+                                        <div class="product__footer">
+                                            <div class="product__rating">
+                                                <svg>
+                                                    <use xlink:href="./images/sprite.svg#star"></use>
+                                                </svg>
+                                                4,7
+                                            </div>
+                                            <div class="product__reviews">
+                                                2 отзыва
+                                            </div>
+                                        </div>
+                                    </div>
+                                </article>
+                            </div>
+                            <div class="swiper-slide prodblock-slider__item">
+                                <article class="product">
+                                    <div class="product__image"><a href=""> <img class="product__front"
+                                                                                 src="images/home/1.png" alt=""><img
+                                                class="product__back" src="images/home/2.png" alt=""><img
+                                                class="product__empty" src="images/home/2.png" alt=""></a>
+                                        <div class="product__labels">
+                                            <div class="product__label product__label--red">
+                                                -4%
+                                            </div>
+                                            <div class="product__label product__label--green">Новинка</div>
+                                            <div class="product__label product__label--yellow">
+                                                Хит
+                                            </div>
+                                        </div>
+                                        <button class="product__btnbuy">
+                                            <svg>
+                                                <use xlink:href="./images/sprite.svg#cart"></use>
+                                            </svg>
+                                        </button>
+                                        <button class="product__btnfav">
+                                            <svg>
+                                                <use xlink:href="./images/sprite.svg#heart"></use>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                    <div class="product__body">
+                                        <div class="product__wrap">
+                                            <div class="product__prices" data-title="За объем 10 мл.">
+                                                <div class="product__price">7 911 ₽</div>
+                                                <div class="product__oldprice">8 790 ₽</div>
+                                            </div>
+                                            <div class="product__options">
+                                                <label class="product__option option">
+                                                    <input class="option__input" type="radio" name="volume">
+                                                    <div class="option__text">10</div>
+                                                </label>
+                                                <label class="product__option option">
+                                                    <input class="option__input" type="radio" name="volume">
+                                                    <div class="option__text">50</div>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <a class="product__title" href=""><span>Парфюмерная вода</span> Cashmere Kumquat
+                                            Eau de Parfume KORRES, 50мл</a>
+                                        <div class="product__footer">
+                                            <div class="product__rating">
+                                                <svg>
+                                                    <use xlink:href="./images/sprite.svg#star"></use>
+                                                </svg>
+                                                4,7
+                                            </div>
+                                            <div class="product__reviews">
+                                                2 отзыва
+                                            </div>
+                                        </div>
+                                    </div>
+                                </article>
+                            </div>
+                            <div class="swiper-slide prodblock-slider__item">
+                                <article class="product">
+                                    <div class="product__image"><a href=""> <img class="product__front"
+                                                                                 src="images/home/1.png" alt=""><img
+                                                class="product__back" src="images/home/2.png" alt=""><img
+                                                class="product__empty" src="images/home/2.png" alt=""></a>
+                                        <div class="product__labels">
+                                            <div class="product__label product__label--red">
+                                                -4%
+                                            </div>
+                                            <div class="product__label product__label--green">Новинка</div>
+                                            <div class="product__label product__label--yellow">
+                                                Хит
+                                            </div>
+                                        </div>
+                                        <button class="product__btnbuy">
+                                            <svg>
+                                                <use xlink:href="./images/sprite.svg#cart"></use>
+                                            </svg>
+                                        </button>
+                                        <button class="product__btnfav">
+                                            <svg>
+                                                <use xlink:href="./images/sprite.svg#heart"></use>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                    <div class="product__body">
+                                        <div class="product__wrap">
+                                            <div class="product__prices" data-title="За объем 10 мл.">
+                                                <div class="product__price">7 911 ₽</div>
+                                                <div class="product__oldprice">8 790 ₽</div>
+                                            </div>
+                                            <div class="product__options">
+                                                <label class="product__option option">
+                                                    <input class="option__input" type="radio" name="volume">
+                                                    <div class="option__text">10</div>
+                                                </label>
+                                                <label class="product__option option">
+                                                    <input class="option__input" type="radio" name="volume">
+                                                    <div class="option__text">50</div>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <a class="product__title" href=""><span>Парфюмерная вода</span> Cashmere Kumquat
+                                            Eau de Parfume KORRES, 50мл</a>
+                                        <div class="product__footer">
+                                            <div class="product__rating">
+                                                <svg>
+                                                    <use xlink:href="./images/sprite.svg#star"></use>
+                                                </svg>
+                                                4,7
+                                            </div>
+                                            <div class="product__reviews">
+                                                2 отзыва
+                                            </div>
+                                        </div>
+                                    </div>
+                                </article>
+                            </div>
+                            <div class="swiper-slide prodblock-slider__item">
+                                <article class="product">
+                                    <div class="product__image"><a href=""> <img class="product__front"
+                                                                                 src="images/home/1.png" alt=""><img
+                                                class="product__back" src="images/home/2.png" alt=""><img
+                                                class="product__empty" src="images/home/2.png" alt=""></a>
+                                        <div class="product__labels">
+                                            <div class="product__label product__label--red">
+                                                -4%
+                                            </div>
+                                            <div class="product__label product__label--green">Новинка</div>
+                                            <div class="product__label product__label--yellow">
+                                                Хит
+                                            </div>
+                                        </div>
+                                        <button class="product__btnbuy">
+                                            <svg>
+                                                <use xlink:href="./images/sprite.svg#cart"></use>
+                                            </svg>
+                                        </button>
+                                        <button class="product__btnfav">
+                                            <svg>
+                                                <use xlink:href="./images/sprite.svg#heart"></use>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                    <div class="product__body">
+                                        <div class="product__wrap">
+                                            <div class="product__prices" data-title="За объем 10 мл.">
+                                                <div class="product__price">7 911 ₽</div>
+                                                <div class="product__oldprice">8 790 ₽</div>
+                                            </div>
+                                            <div class="product__options">
+                                                <label class="product__option option">
+                                                    <input class="option__input" type="radio" name="volume">
+                                                    <div class="option__text">10</div>
+                                                </label>
+                                                <label class="product__option option">
+                                                    <input class="option__input" type="radio" name="volume">
+                                                    <div class="option__text">50</div>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <a class="product__title" href=""><span>Парфюмерная вода</span> Cashmere Kumquat
+                                            Eau de Parfume KORRES, 50мл</a>
+                                        <div class="product__footer">
+                                            <div class="product__rating">
+                                                <svg>
+                                                    <use xlink:href="./images/sprite.svg#star"></use>
+                                                </svg>
+                                                4,7
+                                            </div>
+                                            <div class="product__reviews">
+                                                2 отзыва
+                                            </div>
+                                        </div>
+                                    </div>
+                                </article>
+                            </div>
+                            <div class="swiper-slide prodblock-slider__item">
+                                <article class="product">
+                                    <div class="product__image"><a href=""> <img class="product__front"
+                                                                                 src="images/home/1.png" alt=""><img
+                                                class="product__back" src="images/home/2.png" alt=""><img
+                                                class="product__empty" src="images/home/2.png" alt=""></a>
+                                        <div class="product__labels">
+                                            <div class="product__label product__label--red">
+                                                -4%
+                                            </div>
+                                            <div class="product__label product__label--green">Новинка</div>
+                                            <div class="product__label product__label--yellow">
+                                                Хит
+                                            </div>
+                                        </div>
+                                        <button class="product__btnbuy">
+                                            <svg>
+                                                <use xlink:href="./images/sprite.svg#cart"></use>
+                                            </svg>
+                                        </button>
+                                        <button class="product__btnfav">
+                                            <svg>
+                                                <use xlink:href="./images/sprite.svg#heart"></use>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                    <div class="product__body">
+                                        <div class="product__wrap">
+                                            <div class="product__prices" data-title="За объем 10 мл.">
+                                                <div class="product__price">7 911 ₽</div>
+                                                <div class="product__oldprice">8 790 ₽</div>
+                                            </div>
+                                            <div class="product__options">
+                                                <label class="product__option option">
+                                                    <input class="option__input" type="radio" name="volume">
+                                                    <div class="option__text">10</div>
+                                                </label>
+                                                <label class="product__option option">
+                                                    <input class="option__input" type="radio" name="volume">
+                                                    <div class="option__text">50</div>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <a class="product__title" href=""><span>Парфюмерная вода</span> Cashmere Kumquat
+                                            Eau de Parfume KORRES, 50мл</a>
+                                        <div class="product__footer">
+                                            <div class="product__rating">
+                                                <svg>
+                                                    <use xlink:href="./images/sprite.svg#star"></use>
+                                                </svg>
+                                                4,7
+                                            </div>
+                                            <div class="product__reviews">
+                                                2 отзыва
+                                            </div>
+                                        </div>
+                                    </div>
+                                </article>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="promotions promoslider">
+        <div class="container">
+            <div class="promoslider__header">
+                <h2 class="heading">
+                    Блогеры<br> советуют</h2>
+                <div class="promoslider__btns">
+                    <button class="btn-slider promoslider__prev">
+                        <svg>
+                            <use xlink:href="./images/sprite.svg#arrow-left"></use>
+                        </svg>
+                    </button>
+                    <button class="btn-slider promoslider__next">
+                        <svg>
+                            <use xlink:href="./images/sprite.svg#arrow-right"></use>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            <div class="promoslider-slider swiper">
+                <div class="swiper-wrapper">
+                    <div class="promoslider__item swiper-slide">
+                        <div class="promotion">
+                            <div class="promotion__image"><a href=""> <img src="images/tmp/banner-4.png" alt=""></a>
+                            </div>
+                            <div class="promotion__content">
+                                <div class="promotion__wrap"><a class="promotion__title" href="">
+                                        Rinfoltil до −25%</a>
+                                    <div class="promotion__subtitle">
+                                        уход против выпадения волос
+                                    </div>
+                                </div>
+                                <div class="promotion__date">
+                                    6 — 9<br> февраля
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="promoslider__item swiper-slide">
+                        <div class="promotion">
+                            <div class="promotion__image"><a href=""> <img src="images/tmp/banner-4.png" alt=""></a>
+                            </div>
+                            <div class="promotion__content">
+                                <div class="promotion__wrap"><a class="promotion__title" href="">
+                                        Rinfoltil до −25%</a>
+                                    <div class="promotion__subtitle">
+                                        уход против выпадения волос
+                                    </div>
+                                </div>
+                                <div class="promotion__date">
+                                    6 — 9<br> февраля
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="prodblock">
+        <div class="container">
+            <div class="prodblock__row">
+                <div class="prodblock__col prodblock__col--2">
+                    <div class="prodblock__wrap">
+                        <h2 class="heading">
+                            Товары<br> со&nbsp;скидкой</h2>
+                        <div class="intro">
+                            Собрали для вас лучшие предложения на косметику от мировых брендов
+                        </div>
+                    </div>
+                    <div class="prodblock__btns">
+                        <button class="btn-slider prodblock__prev" id="prod-discount-prev">
+                            <svg>
+                                <use xlink:href="./images/sprite.svg#arrow-left"></use>
+                            </svg>
+                        </button>
+                        <button class="btn-slider prodblock__next" id="prod-discount-next">
+                            <svg>
+                                <use xlink:href="./images/sprite.svg#arrow-right"></use>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                <div class="prodblock__col prodblock__col--10">
+                    <div class="prodblock__slider discount-slider swiper">
+                        <div class="swiper-wrapper">
+                            <div class="swiper-slide prodblock-slider__item">
+                                <article class="product">
+                                    <div class="product__image"><a href=""> <img class="product__front"
+                                                                                 src="images/home/1.png" alt=""><img
+                                                class="product__back" src="images/home/2.png" alt=""><img
+                                                class="product__empty" src="images/home/2.png" alt=""></a>
+                                        <div class="product__labels">
+                                            <div class="product__label product__label--red">
+                                                -4%
+                                            </div>
+                                            <div class="product__label product__label--green">Новинка</div>
+                                            <div class="product__label product__label--yellow">
+                                                Хит
+                                            </div>
+                                        </div>
+                                        <button class="product__btnbuy">
+                                            <svg>
+                                                <use xlink:href="./images/sprite.svg#cart"></use>
+                                            </svg>
+                                        </button>
+                                        <button class="product__btnfav">
+                                            <svg>
+                                                <use xlink:href="./images/sprite.svg#heart"></use>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                    <div class="product__body">
+                                        <div class="product__wrap">
+                                            <div class="product__prices" data-title="За объем 10 мл.">
+                                                <div class="product__price">7 911 ₽</div>
+                                                <div class="product__oldprice">8 790 ₽</div>
+                                            </div>
+                                            <div class="product__options">
+                                                <label class="product__option option">
+                                                    <input class="option__input" type="radio" name="volume">
+                                                    <div class="option__text">10</div>
+                                                </label>
+                                                <label class="product__option option">
+                                                    <input class="option__input" type="radio" name="volume">
+                                                    <div class="option__text">50</div>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <a class="product__title" href=""><span>Парфюмерная вода</span> Cashmere Kumquat
+                                            Eau de Parfume KORRES, 50мл</a>
+                                        <div class="product__footer">
+                                            <div class="product__rating">
+                                                <svg>
+                                                    <use xlink:href="./images/sprite.svg#star"></use>
+                                                </svg>
+                                                4,7
+                                            </div>
+                                            <div class="product__reviews">
+                                                2 отзыва
+                                            </div>
+                                        </div>
+                                    </div>
+                                </article>
+                            </div>
+                            <div class="swiper-slide prodblock-slider__item">
+                                <article class="product">
+                                    <div class="product__image"><a href=""> <img class="product__front"
+                                                                                 src="images/home/1.png" alt=""><img
+                                                class="product__back" src="images/home/2.png" alt=""><img
+                                                class="product__empty" src="images/home/2.png" alt=""></a>
+                                        <div class="product__labels">
+                                            <div class="product__label product__label--red">
+                                                -4%
+                                            </div>
+                                            <div class="product__label product__label--green">Новинка</div>
+                                            <div class="product__label product__label--yellow">
+                                                Хит
+                                            </div>
+                                        </div>
+                                        <button class="product__btnbuy">
+                                            <svg>
+                                                <use xlink:href="./images/sprite.svg#cart"></use>
+                                            </svg>
+                                        </button>
+                                        <button class="product__btnfav">
+                                            <svg>
+                                                <use xlink:href="./images/sprite.svg#heart"></use>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                    <div class="product__body">
+                                        <div class="product__wrap">
+                                            <div class="product__prices" data-title="За объем 10 мл.">
+                                                <div class="product__price">7 911 ₽</div>
+                                                <div class="product__oldprice">8 790 ₽</div>
+                                            </div>
+                                            <div class="product__options">
+                                                <label class="product__option option">
+                                                    <input class="option__input" type="radio" name="volume">
+                                                    <div class="option__text">10</div>
+                                                </label>
+                                                <label class="product__option option">
+                                                    <input class="option__input" type="radio" name="volume">
+                                                    <div class="option__text">50</div>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <a class="product__title" href=""><span>Парфюмерная вода</span> Cashmere Kumquat
+                                            Eau de Parfume KORRES, 50мл</a>
+                                        <div class="product__footer">
+                                            <div class="product__rating">
+                                                <svg>
+                                                    <use xlink:href="./images/sprite.svg#star"></use>
+                                                </svg>
+                                                4,7
+                                            </div>
+                                            <div class="product__reviews">
+                                                2 отзыва
+                                            </div>
+                                        </div>
+                                    </div>
+                                </article>
+                            </div>
+                            <div class="swiper-slide prodblock-slider__item">
+                                <article class="product">
+                                    <div class="product__image"><a href=""> <img class="product__front"
+                                                                                 src="images/home/1.png" alt=""><img
+                                                class="product__back" src="images/home/2.png" alt=""><img
+                                                class="product__empty" src="images/home/2.png" alt=""></a>
+                                        <div class="product__labels">
+                                            <div class="product__label product__label--red">
+                                                -4%
+                                            </div>
+                                            <div class="product__label product__label--green">Новинка</div>
+                                            <div class="product__label product__label--yellow">
+                                                Хит
+                                            </div>
+                                        </div>
+                                        <button class="product__btnbuy">
+                                            <svg>
+                                                <use xlink:href="./images/sprite.svg#cart"></use>
+                                            </svg>
+                                        </button>
+                                        <button class="product__btnfav">
+                                            <svg>
+                                                <use xlink:href="./images/sprite.svg#heart"></use>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                    <div class="product__body">
+                                        <div class="product__wrap">
+                                            <div class="product__prices" data-title="За объем 10 мл.">
+                                                <div class="product__price">7 911 ₽</div>
+                                                <div class="product__oldprice">8 790 ₽</div>
+                                            </div>
+                                            <div class="product__options">
+                                                <label class="product__option option">
+                                                    <input class="option__input" type="radio" name="volume">
+                                                    <div class="option__text">10</div>
+                                                </label>
+                                                <label class="product__option option">
+                                                    <input class="option__input" type="radio" name="volume">
+                                                    <div class="option__text">50</div>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <a class="product__title" href=""><span>Парфюмерная вода</span> Cashmere Kumquat
+                                            Eau de Parfume KORRES, 50мл</a>
+                                        <div class="product__footer">
+                                            <div class="product__rating">
+                                                <svg>
+                                                    <use xlink:href="./images/sprite.svg#star"></use>
+                                                </svg>
+                                                4,7
+                                            </div>
+                                            <div class="product__reviews">
+                                                2 отзыва
+                                            </div>
+                                        </div>
+                                    </div>
+                                </article>
+                            </div>
+                            <div class="swiper-slide prodblock-slider__item">
+                                <article class="product">
+                                    <div class="product__image"><a href=""> <img class="product__front"
+                                                                                 src="images/home/1.png" alt=""><img
+                                                class="product__back" src="images/home/2.png" alt=""><img
+                                                class="product__empty" src="images/home/2.png" alt=""></a>
+                                        <div class="product__labels">
+                                            <div class="product__label product__label--red">
+                                                -4%
+                                            </div>
+                                            <div class="product__label product__label--green">Новинка</div>
+                                            <div class="product__label product__label--yellow">
+                                                Хит
+                                            </div>
+                                        </div>
+                                        <button class="product__btnbuy">
+                                            <svg>
+                                                <use xlink:href="./images/sprite.svg#cart"></use>
+                                            </svg>
+                                        </button>
+                                        <button class="product__btnfav">
+                                            <svg>
+                                                <use xlink:href="./images/sprite.svg#heart"></use>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                    <div class="product__body">
+                                        <div class="product__wrap">
+                                            <div class="product__prices" data-title="За объем 10 мл.">
+                                                <div class="product__price">7 911 ₽</div>
+                                                <div class="product__oldprice">8 790 ₽</div>
+                                            </div>
+                                            <div class="product__options">
+                                                <label class="product__option option">
+                                                    <input class="option__input" type="radio" name="volume">
+                                                    <div class="option__text">10</div>
+                                                </label>
+                                                <label class="product__option option">
+                                                    <input class="option__input" type="radio" name="volume">
+                                                    <div class="option__text">50</div>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <a class="product__title" href=""><span>Парфюмерная вода</span> Cashmere Kumquat
+                                            Eau de Parfume KORRES, 50мл</a>
+                                        <div class="product__footer">
+                                            <div class="product__rating">
+                                                <svg>
+                                                    <use xlink:href="./images/sprite.svg#star"></use>
+                                                </svg>
+                                                4,7
+                                            </div>
+                                            <div class="product__reviews">
+                                                2 отзыва
+                                            </div>
+                                        </div>
+                                    </div>
+                                </article>
+                            </div>
+                            <div class="swiper-slide prodblock-slider__item">
+                                <article class="product">
+                                    <div class="product__image"><a href=""> <img class="product__front"
+                                                                                 src="images/home/1.png" alt=""><img
+                                                class="product__back" src="images/home/2.png" alt=""><img
+                                                class="product__empty" src="images/home/2.png" alt=""></a>
+                                        <div class="product__labels">
+                                            <div class="product__label product__label--red">
+                                                -4%
+                                            </div>
+                                            <div class="product__label product__label--green">Новинка</div>
+                                            <div class="product__label product__label--yellow">
+                                                Хит
+                                            </div>
+                                        </div>
+                                        <button class="product__btnbuy">
+                                            <svg>
+                                                <use xlink:href="./images/sprite.svg#cart"></use>
+                                            </svg>
+                                        </button>
+                                        <button class="product__btnfav">
+                                            <svg>
+                                                <use xlink:href="./images/sprite.svg#heart"></use>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                    <div class="product__body">
+                                        <div class="product__wrap">
+                                            <div class="product__prices" data-title="За объем 10 мл.">
+                                                <div class="product__price">7 911 ₽</div>
+                                                <div class="product__oldprice">8 790 ₽</div>
+                                            </div>
+                                            <div class="product__options">
+                                                <label class="product__option option">
+                                                    <input class="option__input" type="radio" name="volume">
+                                                    <div class="option__text">10</div>
+                                                </label>
+                                                <label class="product__option option">
+                                                    <input class="option__input" type="radio" name="volume">
+                                                    <div class="option__text">50</div>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <a class="product__title" href=""><span>Парфюмерная вода</span> Cashmere Kumquat
+                                            Eau de Parfume KORRES, 50мл</a>
+                                        <div class="product__footer">
+                                            <div class="product__rating">
+                                                <svg>
+                                                    <use xlink:href="./images/sprite.svg#star"></use>
+                                                </svg>
+                                                4,7
+                                            </div>
+                                            <div class="product__reviews">
+                                                2 отзыва
+                                            </div>
+                                        </div>
+                                    </div>
+                                </article>
+                            </div>
+                            <div class="swiper-slide prodblock-slider__item">
+                                <article class="product">
+                                    <div class="product__image"><a href=""> <img class="product__front"
+                                                                                 src="images/home/1.png" alt=""><img
+                                                class="product__back" src="images/home/2.png" alt=""><img
+                                                class="product__empty" src="images/home/2.png" alt=""></a>
+                                        <div class="product__labels">
+                                            <div class="product__label product__label--red">
+                                                -4%
+                                            </div>
+                                            <div class="product__label product__label--green">Новинка</div>
+                                            <div class="product__label product__label--yellow">
+                                                Хит
+                                            </div>
+                                        </div>
+                                        <button class="product__btnbuy">
+                                            <svg>
+                                                <use xlink:href="./images/sprite.svg#cart"></use>
+                                            </svg>
+                                        </button>
+                                        <button class="product__btnfav">
+                                            <svg>
+                                                <use xlink:href="./images/sprite.svg#heart"></use>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                    <div class="product__body">
+                                        <div class="product__wrap">
+                                            <div class="product__prices" data-title="За объем 10 мл.">
+                                                <div class="product__price">7 911 ₽</div>
+                                                <div class="product__oldprice">8 790 ₽</div>
+                                            </div>
+                                            <div class="product__options">
+                                                <label class="product__option option">
+                                                    <input class="option__input" type="radio" name="volume">
+                                                    <div class="option__text">10</div>
+                                                </label>
+                                                <label class="product__option option">
+                                                    <input class="option__input" type="radio" name="volume">
+                                                    <div class="option__text">50</div>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <a class="product__title" href=""><span>Парфюмерная вода</span> Cashmere Kumquat
+                                            Eau de Parfume KORRES, 50мл</a>
+                                        <div class="product__footer">
+                                            <div class="product__rating">
+                                                <svg>
+                                                    <use xlink:href="./images/sprite.svg#star"></use>
+                                                </svg>
+                                                4,7
+                                            </div>
+                                            <div class="product__reviews">
+                                                2 отзыва
+                                            </div>
+                                        </div>
+                                    </div>
+                                </article>
+                            </div>
+                            <div class="swiper-slide prodblock-slider__item">
+                                <article class="product">
+                                    <div class="product__image"><a href=""> <img class="product__front"
+                                                                                 src="images/home/1.png" alt=""><img
+                                                class="product__back" src="images/home/2.png" alt=""><img
+                                                class="product__empty" src="images/home/2.png" alt=""></a>
+                                        <div class="product__labels">
+                                            <div class="product__label product__label--red">
+                                                -4%
+                                            </div>
+                                            <div class="product__label product__label--green">Новинка</div>
+                                            <div class="product__label product__label--yellow">
+                                                Хит
+                                            </div>
+                                        </div>
+                                        <button class="product__btnbuy">
+                                            <svg>
+                                                <use xlink:href="./images/sprite.svg#cart"></use>
+                                            </svg>
+                                        </button>
+                                        <button class="product__btnfav">
+                                            <svg>
+                                                <use xlink:href="./images/sprite.svg#heart"></use>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                    <div class="product__body">
+                                        <div class="product__wrap">
+                                            <div class="product__prices" data-title="За объем 10 мл.">
+                                                <div class="product__price">7 911 ₽</div>
+                                                <div class="product__oldprice">8 790 ₽</div>
+                                            </div>
+                                            <div class="product__options">
+                                                <label class="product__option option">
+                                                    <input class="option__input" type="radio" name="volume">
+                                                    <div class="option__text">10</div>
+                                                </label>
+                                                <label class="product__option option">
+                                                    <input class="option__input" type="radio" name="volume">
+                                                    <div class="option__text">50</div>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <a class="product__title" href=""><span>Парфюмерная вода</span> Cashmere Kumquat
+                                            Eau de Parfume KORRES, 50мл</a>
+                                        <div class="product__footer">
+                                            <div class="product__rating">
+                                                <svg>
+                                                    <use xlink:href="./images/sprite.svg#star"></use>
+                                                </svg>
+                                                4,7
+                                            </div>
+                                            <div class="product__reviews">
+                                                2 отзыва
+                                            </div>
+                                        </div>
+                                    </div>
+                                </article>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="promotions promotions--full">
+        <div class="container">
+            <h2 class="heading">
+                Клиентские дни</h2>
+        </div>
+        <div class="promotions__container">
+            <div class="promotions__item">
+                <div class="promotion">
+                    <div class="promotion__image"><a href="">
+                            <picture>
+                                <source srcset="images/tmp/banner-6.png" media="(min-width: 992px)" type="image/png"/>
+                                <source srcset="images/tmp/banner-5.png" media="(min-width: 576px) and (max-width: 991px)"
+                                        type="image/png"/>
+                                <source srcset="images/tmp/banner-5.png" media="(max-width: 575px)" type="image/png"/>
+                                <img src="images/tmp/banner-6.png" alt="banner"/>
+                            </picture>
+                        </a></div>
+                    <div class="promotion__content">
+                        <div class="promotion__wrap"><a class="promotion__title" href="">
+                                Rinfoltil до −25%</a>
+                            <div class="promotion__subtitle">
+                                уход против выпадения волос
+                            </div>
+                        </div>
+                        <div class="promotion__date">
+                            6 — 9<br> февраля
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="lastnews">
+        <div class="container">
+            <div class="lastnews__header">
+                <h2 class="heading">
+                    Последние<br> новости</h2><a class="more" href="">Смотреть<br> все новости</a>
+            </div>
+            <div class="lastnews__items">
+                <article class="lastnews__item news">
+                    <div class="news__image">
+                        <picture>
+                            <source srcset="images/tmp/news.png" media="(min-width: 992px)" type="image/png"/>
+                            <source srcset="images/tmp/news.png" media="(min-width: 576px) and (max-width: 991px)"
+                                    type="image/png"/>
+                            <source srcset="images/tmp/news.png" media="(max-width: 575px)" type="image/png"/>
+                            <img src="images/tmp/news.png" alt="article"/>
+                        </picture>
+                    </div>
+                    <div class="news__date">
+                        <svg>
+                            <use xlink:href="./images/sprite.svg#calendar"></use>
+                        </svg>
+                        28 ноября 2024
+                    </div>
+                    <a class="news__title" href="">Коллаборация Canteen x Luxe Cosmetics </a>
+                    <div class="news__intro">
+                        Canteen x Luxe Cosmetics Встречайте праздничный special-десерт «Шишка», который был р...
+                    </div>
+                </article>
+                <article class="lastnews__item news">
+                    <div class="news__image">
+                        <picture>
+                            <source srcset="images/tmp/news-big.png" media="(min-width: 992px)" type="image/png"/>
+                            <source srcset="images/tmp/news.png" media="(min-width: 576px) and (max-width: 991px)"
+                                    type="image/png"/>
+                            <source srcset="images/tmp/news.png" media="(max-width: 575px)" type="image/png"/>
+                            <img src="images/tmp/news-big.png" alt="article"/>
+                        </picture>
+                    </div>
+                    <div class="news__date">
+                        <svg>
+                            <use xlink:href="./images/sprite.svg#calendar"></use>
+                        </svg>
+                        28 ноября 2024
+                    </div>
+                    <a class="news__title" href="">Вечер исполнения желаний KORRES в ресторане Canteen</a>
+                    <div class="news__intro">
+                        27 ноября, в минувшую среду, прошел традиционный вечер исполнения желаний косметического б...
+                    </div>
+                </article>
+                <article class="lastnews__item news">
+                    <div class="news__image">
+                        <picture>
+                            <source srcset="images/tmp/news.png" media="(min-width: 992px)" type="image/png"/>
+                            <source srcset="images/tmp/news.png" media="(min-width: 576px) and (max-width: 991px)"
+                                    type="image/png"/>
+                            <source srcset="images/tmp/news.png" media="(max-width: 575px)" type="image/png"/>
+                            <img src="images/tmp/news.png" alt="article"/>
+                        </picture>
+                    </div>
+                    <div class="news__date">
+                        <svg>
+                            <use xlink:href="./images/sprite.svg#calendar"></use>
+                        </svg>
+                        28 ноября 2024
+                    </div>
+                    <a class="news__title" href="">Греческое меню от KORRES в ресторане FLANER</a>
+                    <div class="news__intro">
+                        15 августа ресторан ближневосточной кухни Flâner и греческий бренд натуральной косметики KORRES
+                        запускают совместное меню...
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
 @endsection
 
 
