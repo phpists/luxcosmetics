@@ -538,6 +538,12 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function 
         ->name('admin.promotions.update-status');
     Route::resource('promotions', PromotionController::class, ['as' => 'admin'])->except('create');
 
+    // Home
+    Route::resource('home', \App\Http\Controllers\Admin\HomeController::class, ['as' => 'admin'])->except('create');
+
+    // Home best sellers
+    Route::resource('best-seller', \App\Http\Controllers\Admin\BestSellerController::class, ['as' => 'admin'])->except('create');
+
     // Properties
     Route::get('promotion-properties/values', [PromotionPropertyController::class, 'getValues'])->name('admin.promotion.properties.values');
     Route::resource('{promotion}/properties', PromotionPropertyController::class, ['as' => 'admin.promotion'])

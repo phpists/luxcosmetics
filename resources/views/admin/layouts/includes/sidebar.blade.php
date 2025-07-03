@@ -368,6 +368,7 @@
 || request()->routeIs('admin.banner.edit')
 || request()->routeIs('admin.pages.create')
 || request()->routeIs('admin.pages.edit')
+|| request()->routeIs('admin.home.*')
 || request()->routeIs('admin.promotions.*')) ? 'menu-item-open' : '' }}"
                     aria-haspopup="true" data-menu-toggle="hover">
                     <a href="javascript:;" class="menu-link menu-toggle">
@@ -378,6 +379,17 @@
                     <div class="menu-submenu" style="" kt-hidden-height="160">
                         <i class="menu-arrow"></i>
                         <ul class="menu-subnav">
+                            @if(auth()->user()->isSuperAdmin() || auth()->user()->can(\App\Services\Admin\PermissionService::PROMOTIONS_VIEW))
+                                <li class="menu-item {{ request()->routeIs('admin.home.*') ? 'menu-item-active' : '' }}"
+                                    aria-haspopup="true">
+                                    <a href="{{ route('admin.home.index') }}" class="menu-link">
+                                        <i class="menu-bullet menu-bullet-dot">
+                                            <span></span>
+                                        </i>
+                                        <span class="menu-text">Главная</span>
+                                    </a>
+                                </li>
+                            @endif
                             @if(auth()->user()->isSuperAdmin() || auth()->user()->can(\App\Services\Admin\PermissionService::NEWS_VIEW))
                                 <li class="menu-item {{ (request()->routeIs('admin.news') || request()->routeIs('admin.news.edit') || request()->routeIs('admin.news.create')) ? 'menu-item-active' : '' }}"
                                     aria-haspopup="true">

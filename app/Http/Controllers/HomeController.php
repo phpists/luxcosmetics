@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\BestSeller;
 use App\Models\MainPageBlock;
 use App\Models\Product;
 use App\Services\SiteConfigService;
@@ -89,7 +90,9 @@ class HomeController extends Controller
         $popular_products = $popular_products->limit((int)SiteConfigService::getParamValue('карусель_популярные'))->get();
 
         $main_block = MainPageBlock::query()->first();
-        return view('index', compact('product_discounts', 'new_products', 'popular_products', 'main_block'));
+        $bestSeller = BestSeller::all();
+
+        return view('index', compact('product_discounts', 'new_products', 'popular_products', 'main_block', 'bestSeller'));
     }
 
 
