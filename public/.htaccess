@@ -27,5 +27,7 @@
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^ index.php [L]
 
-    RewriteRule ^index.php(/.*)?$ /$1 [R=301,L]
+#    RewriteRule ^index.php(/.*)?$ /$1 [R=301,L]
 </IfModule>
+
+
