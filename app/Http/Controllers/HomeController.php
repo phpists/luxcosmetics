@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\BestSeller;
+use App\Models\HomeMainSlider;
 use App\Models\MainPageBlock;
 use App\Models\Product;
 use App\Services\SiteConfigService;
@@ -18,9 +19,9 @@ class HomeController extends Controller
     public function index(): View|\Illuminate\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\Foundation\Application
     {
         $user_statement = '';
-        if (Auth::check()) {
-            $user_statement = ' or user_favorite_products.user_id != '.Auth::user()->id;
-        }
+//        if (Auth::check()) {
+//            $user_statement = ' or user_favorite_products.user_id != '.Auth::user()->id;
+//        }
 
         $auto_popular = (bool)SiteConfigService::getParamValue('автоматически_популярные');
         $auto_new = (bool)SiteConfigService::getParamValue('автоматически_новые');
@@ -90,9 +91,10 @@ class HomeController extends Controller
         $popular_products = $popular_products->limit((int)SiteConfigService::getParamValue('карусель_популярные'))->get();
 
         $main_block = MainPageBlock::query()->first();
+        $mainSlider = HomeMainSlider::all();
         $bestSeller = BestSeller::all();
 
-        return view('index', compact('product_discounts', 'new_products', 'popular_products', 'main_block', 'bestSeller'));
+        return view('index', compact('product_discounts', 'new_products', 'popular_products', 'main_block', 'mainSlider', 'bestSeller'));
     }
 
 

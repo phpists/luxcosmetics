@@ -36,14 +36,14 @@
                             <li class="nav-item" data-tab="tab_1">
                                 <a class="nav-link @if($tab_id === 'tab_1') active @endif" data-toggle="tab"
                                    href="#tab_1">
-                                    <span class="nav-text">Бестселлеры</span>
+                                    <span class="nav-text">Главный слайдер</span>
                                 </a>
                             </li>
                             <li class="nav-item" data-tab="tab_2">
                                 <a class="nav-link @if($tab_id === 'tab_2') active @endif"
                                    data-toggle="tab"
                                    href="#tab_2">
-                                    <span class="nav-text">Description</span>
+                                    <span class="nav-text">Бестселлеры</span>
                                 </a>
                             </li>
                             <li class="nav-item" data-tab="tab_3">
@@ -60,8 +60,106 @@
                 <div class="card-body pb-3">
                     <div class="tab-content">
                         <div class="tab-pane fade @if($tab_id === 'tab_1') show active @endif" id="tab_1"
-                             role="tabpanel"
-                             aria-labelledby="tab_1">
+                             role="tabpanel" aria-labelledby="tab_1">
+                            <div class="row mb-5">
+                                <div class="col">
+                                    <div class="mb-7">
+                                        <h3>Главный слайдер</h3>
+                                    </div>
+                                </div>
+                                <div class="col-auto">
+                                    <button data-toggle="modal" data-target="#createMainSliderModal"
+                                            class="btn btn-primary font-weight-bold">
+                                        <i class="fas fa-plus mr-2"></i>Добавить
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table table-head-custom table-vertical-center">
+                                    <thead>
+                                    <tr>
+                                        <th class="pl-0 text-center">
+                                            #
+                                        </th>
+                                        <th class="pr-0 text-center">
+                                            Название
+                                        </th>
+                                        <th class="text-center pr-0">
+                                            Краткое описание
+                                        </th>
+                                        <th class="text-center pr-0">
+                                            Ссылка
+                                        </th>
+                                        <th class="text-center pr-0">
+                                            Надпись кнопки
+                                        </th>
+                                        <th class="text-center pr-0">
+                                            Изображения
+                                        </th>
+                                        <th class="pr-0 text-center">
+                                            Действия
+                                        </th>
+                                    </tr>
+                                    </thead>
+                                    @foreach($homeMainSlider as $item)
+                                        <tr id="post_{{$item->id}}" data-id="{{ $item->id }}">
+                                            <td class="text-center pl-0">
+                                                {{ $item->id }}
+                                            </td>
+                                            <td class="text-center pr-0">
+                                                {!! $item->title !!}
+                                            </td>
+                                            <td class="text-center pr-0">
+                                                {!! $item->description !!}
+                                            </td>
+                                            <td class="text-center pr-0">
+                                                {{ $item->link }}
+                                            </td>
+                                            <td class="text-center pr-0">
+                                                {{ $item->btn_title }}
+                                            </td>
+                                            <td class="text-center pr-0">
+                                                <div class="article__image">
+                                                    @if (Str::endsWith($item->file, ['.mp4']))
+                                                        <video  muted autoplay playsinline loop poster="" data-swiper-parallax="40%" style="height: 80px; width: auto;">
+                                                            <source src="{{ $item->getImage() }}" type="video/mp4" >
+                                                        </video>
+                                                    @else
+                                                        <img src="{{ $item->getImage() }}" alt="" style="height: 80px; width: auto;">
+                                                    @endif
+                                                </div>
+                                            </td>
+                                            <td class="text-center pr-0">
+                                                {{ date('m Y, H:i:s', strtotime($item->created_at)) }}
+                                            </td>
+                                            <td class="text-center pr-0">
+                                                <a href="javascript:;"
+                                                   class="btn btn-sm btn-clean btn-icon editMainSliderBtn"
+                                                   data-toggle="modal"
+                                                   data-target="#updateMainSliderModal"
+                                                   data-id="{{ $item->id }}">
+                                                    <i class="las la-edit"></i>
+                                                </a>
+
+                                                <form class="flex-fill"
+                                                      action="{{ route('admin.main-slider.destroy', $item->id) }}"
+                                                      method="POST">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button class="btn btn--accent" style="width: 100%"
+                                                            onclick="return confirm('Вы уверенны, что хотите удалить данную запись?')">
+                                                        <i class="las la-trash"></i>
+                                                    </button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+
+                                </table>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade @if($tab_id === 'tab_2') show active @endif" id="tab_2"
+                             data-tab="tab_2" role="tabpanel" aria-labelledby="tab_2">
                             <div class="row mb-5">
                                 <div class="col">
                                     <div class="mb-7">
@@ -151,30 +249,6 @@
                                 </table>
                             </div>
                         </div>
-                        <div class="tab-pane fade @if($tab_id === 'tab_2') show active @endif" id="tab_2"
-                             data-tab="tab_2"
-                             role="tabpanel"
-                             aria-labelledby="tab_2">
-                            <div class="row mb-5">
-                                <div class="col">
-                                    <div class="mb-7">
-                                        <h3>Description</h3>
-                                    </div>
-                                </div>
-                                <div class="col-auto">
-                                    <button type="submit" form="brand_form" class="btn btn-success font-weight-bold">
-                                        Save
-                                    </button>
-                                </div>
-                            </div>
-                            <div class="table-responsive">
-                                <form id="brand_form" action="#" method="POST">
-                                    @csrf
-                                    <textarea class="form-control summernote" name="brand_description"
-                                              rows="10"></textarea>
-                                </form>
-                            </div>
-                        </div>
                         <div class="tab-pane fade @if($tab_id === 'tab_3') show active @endif" id="tab_3"
                              role="tabpanel" aria-labelledby="tab_3">
                             <div class="row">
@@ -248,15 +322,22 @@
 
     @include('admin.home.modals.best_sellers.create')
     @include('admin.home.modals.best_sellers.update')
+
+    @include('admin.home.modals.main_slider.create')
+    @include('admin.home.modals.main_slider.update')
 @endsection
 
 @section('js_after')
     <script src="{{ asset('super_admin/js/Sortable.js') }}"></script>
     <script src="{{ asset('super_admin/js/best_seller.js') }}"></script>
+    <script src="{{ asset('super_admin/js/home_slider.js') }}"></script>
     <script src="{{ asset('super_admin/js/pages/crud/forms/widgets/select2.js') }}"></script>
 
     <script>
         var createImagePlugin = new KTImageInput('createImagePlugin');
         var updateImagePlugin = new KTImageInput('updateImagePlugin');
+
+        var createMainSliderImagePlugin = new KTImageInput('createMainSliderImagePlugin');
+        var updateMainSliderImagePlugin = new KTImageInput('updateMainSliderImagePlugin');
     </script>
 @endsection

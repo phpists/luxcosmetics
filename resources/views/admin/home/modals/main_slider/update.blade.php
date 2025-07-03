@@ -1,31 +1,33 @@
 <!-- Modal -->
-<div class="modal fade" id="createBestSellersModal" tabindex="-1" role="dialog" aria-labelledby="createModalTitle" aria-hidden="true">
+<div class="modal fade" id="updateMainSliderModal" tabindex="-1" role="dialog" aria-labelledby="createModalTitle" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="createModalTitle">Добавить</h5>
+                <h5 class="modal-title" id="createModalTitle">Редактировать</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <i aria-hidden="true" class="ki ki-close"></i>
                 </button>
             </div>
 
-            <form action="{{ route('admin.best-seller.store') }}" method="POST" enctype="multipart/form-data">
+            <form id="homeSliderForm" action="{{ route('admin.main-slider.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
+                @method('PUT')
+                <input type="hidden" id="homeSliderId" name="id">
+
                 <div class="modal-body">
                     <div class="tab-content" id="createTabContent">
                         <div class="tab-pane fade show active" id="general_tab" role="tabpanel">
                             <div class="row">
                                 <div class="col-auto ml-2">
-                                    <div class="image-input  image-input-outline" id="createImagePlugin"
+                                    <div class="image-input  image-input-outline" id="updateMainSliderImagePlugin"
                                          style="max-height: 150px;">
-                                        <div class="image-input-wrapper" id="createImageBackground"></div>
-
+                                        <div class="image-input-wrapper" id="homeSliderImage"></div>
                                         <label
                                             class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
                                             data-action="change" data-toggle="tooltip" title=""
                                             data-original-title="Change avatar">
                                             <i class="fa fa-pen icon-sm text-muted"></i>
-                                            <input type="file" name="image" accept="image/*" required/>
+                                            <input type="file" name="image" accept="image/*"/>
                                             <input type="hidden" name="image_remove"/>
                                         </label>
                                     </div>
@@ -35,16 +37,19 @@
                                     <div class="form-group w-100">
                                         <label for="createTitle" class="col-auto col-form-label font-weight-bold">Название</label>
                                         <div class="col-sm-12">
-                                            <input type="text" class="form-control" id="createTitle" name="title"
-                                                   required>
+                                            <input type="text" class="form-control" id="homeSliderTitle" name="title" required>
                                         </div>
                                         <label for="createTitle" class="col-auto col-form-label font-weight-bold">Краткое описание</label>
                                         <div class="col-sm-12">
-                                            <textarea name="description" class="form-control" rows="10"></textarea>
+                                            <textarea name="description" class="form-control" id="homeSliderDescription" rows="10"></textarea>
+                                        </div>
+                                        <label for="createTitle" class="col-auto col-form-label font-weight-bold">Надпись кнопки</label>
+                                        <div class="col-sm-12">
+                                            <input type="text" class="form-control" id="homeSliderBtnTitle" name="btn_title">
                                         </div>
                                         <label for="createTitle" class="col-auto col-form-label font-weight-bold">Ссылка</label>
                                         <div class="col-sm-12">
-                                            <input type="text" class="form-control" id="createTitle" name="link">
+                                            <input type="text" class="form-control" id="homeSliderLink" name="link">
                                         </div>
                                     </div>
                                 </div>

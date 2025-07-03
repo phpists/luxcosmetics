@@ -7,107 +7,52 @@
     <section class="heroslider">
         <div class="slider swiper">
             <div class="swiper-wrapper">
-                <div class="swiper-slide slider__slide">
-                    <video class="slider__media" muted autoplay playsinline loop poster="" data-swiper-parallax="40%">
-                        <source src="files/214737.mp4" type="video/mp4">
-                    </video>
-                    <div class="slider__content" data-swiper-parallax="10%">
-                        <div class="container">
-                            <div class="slider__contentwrapper">
-                                <div class="slider__title">
-                                    Больше заказ,<br> больше скидка
+                @foreach($mainSlider as $item)
+                    <div class="swiper-slide slider__slide">
+                        @if (Str::endsWith($item->file, ['.mp4']))
+                            <video class="slider__media" muted autoplay playsinline loop poster=""
+                                   data-swiper-parallax="40%">
+                                <source src="{{ $item->getImage() }}" type="video/mp4">
+                            </video>
+                        @else
+                            <div class="slider__media" data-swiper-parallax="40%">
+                                <img src="{{ $item->getImage() }}" alt="">
+                            </div>
+                        @endif
+                        <div class="slider__content" data-swiper-parallax="10%">
+                            <div class="container">
+                                <div class="slider__contentwrapper">
+                                    @if(isset($item->title))
+                                        <div class="slider__title">
+                                            {!! $item->title !!}
+                                        </div>
+                                    @endif
+                                    @if(isset($item->description))
+                                        <div class="slider__subtitle">
+                                            {!! $item->description !!}
+                                        </div>
+                                    @endif
+                                    <a class="slider__btnmore btn btn--primary" href="{{ $item->link }}">
+                                        {!! $item->btn_title !!}
+                                        <svg>
+                                            <use xlink:href="{{ asset('images/sprite.svg#arrow-right') }}"></use>
+                                        </svg>
+                                    </a>
                                 </div>
-                                <div class="slider__subtitle">
-                                    примените промокод и получите<br> дополнительную скидку до −25%
-                                </div>
-                                <a class="slider__btnmore btn btn--primary" href="">
-                                    Узнать подробнее
-                                    <svg>
-                                        <use xlink:href="./images/sprite.svg#arrow-right"></use>
-                                    </svg>
-                                </a>
                             </div>
                         </div>
+                        <div class="slider__overlay" style="opacity: 0.5;"></div>
                     </div>
-                    <div class="slider__overlay" style="opacity: 0.5;"></div>
-                </div>
-                <div class="swiper-slide slider__slide">
-                    <div class="slider__media" data-swiper-parallax="40%"><img src="images/slider/2.png" alt=""></div>
-                    <div class="slider__content" data-swiper-parallax="10%">
-                        <div class="container">
-                            <div class="slider__contentwrapper">
-                                <div class="slider__title">
-                                    Акция 2
-                                </div>
-                                <div class="slider__subtitle">
-                                    примените промокод и получите<br> дополнительную скидку до −25%
-                                </div>
-                                <a class="slider__btnmore btn btn--primary" href="">
-                                    Узнать подробнее
-                                    <svg>
-                                        <use xlink:href="./images/sprite.svg#arrow-right"></use>
-                                    </svg>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="slider__overlay" style="opacity: 0.5;"></div>
-                </div>
-                <div class="swiper-slide slider__slide">
-                    <video class="slider__media" muted autoplay playsinline loop poster="" data-swiper-parallax="40%">
-                        <source src="files/257927.mp4" type="video/mp4">
-                    </video>
-                    <div class="slider__content" data-swiper-parallax="10%">
-                        <div class="container">
-                            <div class="slider__contentwrapper">
-                                <div class="slider__title">
-                                    Больше заказ,больше скидка
-                                </div>
-                                <div class="slider__subtitle">
-                                    примените промокод и получите<br> дополнительную скидку до −25%
-                                </div>
-                                <a class="slider__btnmore btn btn--primary" href="">
-                                    Узнать подробнее
-                                    <svg>
-                                        <use xlink:href="./images/sprite.svg#arrow-right"></use>
-                                    </svg>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="slider__overlay" style="opacity: 0.5;"></div>
-                </div>
-                <div class="swiper-slide slider__slide">
-                    <div class="slider__media" data-swiper-parallax="40%"><img src="images/slider/3.png" alt=""></div>
-                    <div class="slider__content" data-swiper-parallax="10%">
-                        <div class="container">
-                            <div class="slider__contentwrapper">
-                                <div class="slider__title">
-                                    Акция 3
-                                </div>
-                                <div class="slider__subtitle">
-                                    примените промокод и получите<br> дополнительную скидку до −25%
-                                </div>
-                                <a class="slider__btnmore btn btn--primary" href="">
-                                    Узнать подробнее
-                                    <svg>
-                                        <use xlink:href="./images/sprite.svg#arrow-right"></use>
-                                    </svg>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="slider__overlay" style="opacity: 0.5;"></div>
-                </div>
+                @endforeach
             </div>
             <button class="slider__btn slider__btn--prev">
                 <svg>
-                    <use xlink:href="./images/sprite.svg#arrow-left"></use>
+                    <use xlink:href="{{ asset('images/sprite.svg#arrow-left') }}"></use>
                 </svg>
             </button>
             <button class="slider__btn slider__btn--next">
                 <svg>
-                    <use xlink:href="./images/sprite.svg#arrow-right"></use>
+                    <use xlink:href="{{ asset('images/sprite.svg#arrow-right') }}"></use>
                 </svg>
             </button>
         </div>

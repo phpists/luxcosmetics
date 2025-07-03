@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\CatalogBannerConditionController;
 use App\Http\Controllers\Admin\CatalogBannerController;
 use App\Http\Controllers\Admin\CatalogItemController;
 use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
+use App\Http\Controllers\Admin\HomeMainSliderController;
 use App\Http\Controllers\Admin\LoyaltyStatusController;
 use App\Http\Controllers\Admin\MenuController;
 use App\Http\Controllers\Admin\ProductPriceController;
@@ -540,6 +541,9 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function 
 
     // Home
     Route::resource('home', \App\Http\Controllers\Admin\HomeController::class, ['as' => 'admin'])->except('create');
+
+    // Home best sellers
+    Route::resource('main-slider', HomeMainSliderController::class, ['as' => 'admin'])->except('create');
 
     // Home best sellers
     Route::resource('best-seller', \App\Http\Controllers\Admin\BestSellerController::class, ['as' => 'admin'])->except('create');

@@ -46,7 +46,7 @@
                 </div>
                 <div class="col-lg-4 mb-lg-0 d-flex flex-column">
                     <label>Статус</label>
-                    <div class="input-group input-group-sm">
+                    <div class="input-group input-group">
                         <select class="form-control status" name="availability">
                             <option value>Все</option>
                             <option @if(request()->availability === '1') selected @endif value="1">{{\App\Services\SiteService::getProductStatus(1)}}</option>

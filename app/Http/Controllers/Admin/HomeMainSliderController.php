@@ -3,19 +3,16 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\BestSeller\BestSellerCreate;
-use App\Http\Requests\BestSeller\BestSellerStore;
-use App\Http\Requests\BestSeller\BestSellerUpdate;
-use App\Models\BestSeller;
+use App\Models\HomeMainSlider;
 use App\Services\FileService;
 use Illuminate\Http\Request;
 
-class BestSellerController extends Controller
+class HomeMainSliderController extends Controller
 {
     public function show(Request $request)
     {
         $data = $request->all();
-        $item = BestSeller::find($data['id']);
+        $item = HomeMainSlider::find($data['id']);
 
         if ($item) {
             $item->image = $item->getImage();
@@ -23,51 +20,53 @@ class BestSellerController extends Controller
 
         return response()->json([
             'item' => $item,
-            'route' => route('admin.best-seller.update', $item->id),
+            'route' => route('admin.main-slider.update', $item->id),
         ]);
     }
 
-    public function store(BestSellerStore $request)
+    public function store(Request $request)
     {
         $data = $request->all();
         $data['image'] = null;
 
         if ($request->hasFile('image')) {
-            $image = FileService::saveFile('uploads', "best_sellers", $request->image);
+            $image = FileService::saveFile('uploads', "home_main_slider", $request->image);
             $data['image'] = $image;
         }
 
-        BestSeller::create([
+        HomeMainSlider::create([
             'title' => $data['title'],
             'description' => $data['description'],
             'link' => $data['link'],
-            'image' => $data['image']
+            'btn_title' => $data['btn_title'],
+            'file' => $data['image']
         ]);
 
         return redirect()->back()->with('success', 'Данные успешно сохранены');
     }
 
-    public function update(BestSellerUpdate $request)
+    public function update(Request $request)
     {
         $data = $request->all();
 
         if ($request->hasFile('image')) {
             $image = FileService::saveFile('uploads', "best_sellers", $request->image);
-            $params['image'] = $image;
+            $params['file'] = $image;
         }
 
         $params['title'] = $data['title'];
         $params['description'] = $data['description'];
         $params['link'] = $data['link'];
+        $params['btn_title'] = $data['btn_title'];
 
-        BestSeller::where('id', $data['id'])->update($params);
+        HomeMainSlider::where('id', $data['id'])->update($params);
 
         return redirect()->back()->with('success', 'Данные успешно отредактированы');
     }
 
     public function destroy(Request $request, $id)
     {
-        $item = BestSeller::find($id);
+        $item = HomeMainSlider::find($id);
 
         if ($item){
             $item->delete();
